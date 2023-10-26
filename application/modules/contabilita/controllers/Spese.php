@@ -1355,9 +1355,18 @@ class Spese extends MY_Controller
             if (!empty($input['spesa_id'])) {
                 $this->db->delete('spese_articoli', ['spese_articoli_spesa' => $input['spesa_id']]);
             }
+            $prodotti_movimentabili = false;
             if (isset($input['products']) && !empty($input['products'])) {
                 foreach ($input['products'] as $prodotto) {
                     if (!empty($prodotto['spese_articoli_name'])) {
+
+                        if ($prodotto['spese_articoli_prodotto_id'] && $ext_prodotto = $this->apilib->view('fw_products', $prodotto['spese_articoli_prodotto_id'])) {
+                            if (!empty($ext_prodotto['fw_products_stock_management'])) {
+                                $prodotti_movimentabili = true;
+                            }
+                        }
+
+
                         $prodotto['spese_articoli_spesa'] = $spesa_id;
                         $this->apilib->create("spese_articoli", $prodotto);
 
@@ -1397,6 +1406,17 @@ class Spese extends MY_Controller
                 $tipologia_autofatturazione['documenti_contabilita_tipologie_fatturazione_codice'] = '';
             }
 
+            $append_script = '';
+            //TODO: se nella spesa sono presenti fw_products_id, chiedo acneh se movimentare
+            if ($prodotti_movimentabili && $this->datab->module_installed('magazzino')) {
+                $append_script .= '
+                    if (confirm(\'Vuoi creare un movimento di magazzino per questo ordine?\') == true) {
+                            window.open(\'' . base_url("main/layout/nuovo_movimento?spesa_id={$spesa_id}") . '\',\'_blank\');
+                        }
+                ';
+            }
+            //debug($append_script,true);
+
             if (in_array($tipologia_autofatturazione['documenti_contabilita_tipologie_fatturazione_codice'], ['TD17', 'TD18', 'TD19'])) {
                 $document_type = 'Fattura+Reverse';
 
@@ -1416,7 +1436,7 @@ class Spese extends MY_Controller
                         array(
                             'status' => 9,
                             'txt' => "
-
+                            $append_script
                     if (confirm('Hai selezionato un " . $tipologia_autofatturazione['documenti_contabilita_tipologie_fatturazione_codice'] . " come tipologia di fatturazione. Vuoi procedere alla registrazione dell\'autofattura (Fattura reverse)?') == true) {
                         location.href='" . base_url("main/layout/nuovo_documento?doc_type=" . $document_type . "&serie=R&spesa_id={$spesa_id}") . "';
                     } else {
@@ -1426,6 +1446,7 @@ class Spese extends MY_Controller
                             location.href='" . base_url('main/layout/elenco_spese') . "';
                         }
                     }
+                    
                 ",
                         )
                     );
@@ -1434,11 +1455,13 @@ class Spese extends MY_Controller
                         array(
                             'status' => 9,
                             'txt' => "
+                            $append_script
             if (confirm('Hai selezionato un " . $tipologia_autofatturazione['documenti_contabilita_tipologie_fatturazione_codice'] . " come tipologia di fatturazione. Vuoi procedere alla registrazione dell\'autofattura?') == true) {
                 location.href='" . base_url("main/layout/nuovo_documento?doc_type=" . $document_type . "&serie=R&spesa_id={$spesa_id}") . "';
             } else {
                 location.href='" . base_url('main/layout/elenco_spese') . "';
             }
+            
         ",
                         )
                     );
@@ -1450,7 +1473,7 @@ class Spese extends MY_Controller
                         array(
                             'status' => 9,
                             'txt' => "
-
+                            $append_script
                     if (confirm('Vuoi procedere anche con la registrazione in prima nota?') == true) {
                         location.href='" . base_url("main/layout/prima-nota?modello={$spesa['spese_modello_prima_nota']}&spesa_id={$spesa_id}") . "';
                     } else {

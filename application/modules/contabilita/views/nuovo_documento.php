@@ -195,6 +195,7 @@ td.js_actions {
 $this->load->model('contabilita/docs');
 if ($this->datab->module_installed('magazzino')) {
     $this->load->model('magazzino/mov');
+    
 }
 $field_azienda = $this->db->query("SELECT * FROM fields WHERE fields_name = 'documenti_contabilita_azienda'")->row()->fields_id;
 
@@ -268,6 +269,7 @@ $centri_di_costo = $this->apilib->search('centri_di_costo_ricavo');
 $templates = $this->apilib->search('documenti_contabilita_template_pdf');
 $fonts = $this->apilib->search('documenti_contabilita_font');
 $tipi_ritenuta = $this->apilib->search('documenti_contabilita_tipo_ritenuta');
+$tipi_cassa_pro = $this->apilib->search('documenti_contabilita_cassa_professionisti_tipo');
 $valute = $this->apilib->search('valute', [], null, 0, 'valute_codice');
 $clone = $this->input->get('clone');
 $tipo_destinatario = $this->apilib->search('documenti_contabilita_tipo_destinatario');
@@ -1549,7 +1551,7 @@ $xml_articoli_altri_dati_gestionale = [
 
                         <div class="panel_acc">
                             <div class="row rcr_label">
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-md-4 col-sm-6">
                                     <div class="form-group">
                                         <label>Rivalsa INPS: </label>
                                         <div class="input-group">
@@ -1558,16 +1560,7 @@ $xml_articoli_altri_dati_gestionale = [
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="form-group">
-                                        <label>Cassa professionisti: </label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="documenti_contabilita_cassa_professionisti_perc" value="<?php if (!empty($documento['documenti_contabilita_cassa_professionisti_perc'])): ?><?php echo number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, '.', ''); ?><?php else: ?>0<?php endif; ?>" />
-                                            <span class="input-group-addon" id="basic-addon2">%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-md-4 col-sm-6">
                                     <div class="form-group">
                                         <label>Ritenuta d'acconto: </label>
                                         <div class="input-group">
@@ -1576,13 +1569,42 @@ $xml_articoli_altri_dati_gestionale = [
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-6">
+                                <div class="col-md-4 col-sm-6">
                                     <div class="form-group">
                                         <label>% sull'imponibile: </label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" name="documenti_contabilita_ritenuta_acconto_perc_imponibile" value="<?php if (!empty($documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'])): ?><?php echo number_format((float) $documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'], 2, '.', ''); ?><?php else: ?>100<?php endif; ?>" />
                                             <span class="input-group-addon" id="basic-addon2">%</span>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row rcr_label">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Cassa professionisti: </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="documenti_contabilita_cassa_professionisti_perc" value="<?php if (!empty($documento['documenti_contabilita_cassa_professionisti_perc'])): ?><?php echo number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, '.', ''); ?><?php else: ?>0<?php endif; ?>" />
+                                            <span class="input-group-addon" id="basic-addon2">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Tipo: </label>
+                                        <select name="documenti_contabilita_cassa_professionisti_tipo" class="form-control select2_standard" style="width: 100%;">
+                                            <option value="">---</option>
+                                            <?php foreach($tipi_cassa_pro as $tipo): ?>
+                                                <?php
+                                                $selected = '';
+                                                
+                                                if (!empty($documento['documenti_contabilita_cassa_professionisti_tipo']) && $documento['documenti_contabilita_cassa_professionisti_tipo'] == $tipo['documenti_contabilita_cassa_professionisti_tipo_id']) {
+                                                    $selected = 'selected="selected"';
+                                                }
+                                                ?>
+                                                <option value="<?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_id'] ?>" <?php echo $selected; ?>><?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_codice'] . ' - ' . $tipo['documenti_contabilita_cassa_professionisti_tipo_value'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -2393,13 +2415,24 @@ $xml_articoli_altri_dati_gestionale = [
 </div>
 <?php if ($this->datab->module_installed('magazzino')) : ?>
     <?php $magazzino_settings = $this->apilib->searchFirst('magazzino_settings'); ?>
-<?php $this->load->module_view('magazzino/views','lotti_modal', ['settings' => $magazzino_settings], false); ?>
+    <?php $this->load->module_view('magazzino/views','lotti_modal', ['settings' => $magazzino_settings], false); ?>
+    <script>
+    var movimenta_per = <?php echo json_encode(array_keys($magazzino_settings['magazzino_settings_movimenta_per'])); ?>;
+        </script>
+    <?php else: ?>
+        <script>
+            var movimenta_per = [];
+            </script>
 <?php endif; ?>
 
 <?php $this->layout->addModuleJavascript('contabilita', 'nuovo_documento.js'); ?>
 <?php $this->layout->addModuleJavascript('contabilita', 'xsd_to_form.js'); ?>
 
 <script>
+
+
+
+
 var template_scadenze = <?php echo json_encode($template_scadenze); ?>;
 var listini = <?php echo json_encode($listini); ?>;
 var metodi_pagamenti_map = <?php echo json_encode($metodi_pagamento_map) ?>;
@@ -3148,22 +3181,17 @@ cliente_tipo = 'F';
 
             if (cliente['sedi'].length == 1) {
                 var confirmed = false;
-
-                if (tipo_documento == '8') {
+                // console.log(movimenta_per);
+                // alert(1);
+                if (movimenta_per.includes(parseInt(tipo_documento)) && confirm('Ho trovato una sede per questo cliente, vuoi inserirla nei dati trasporto?')) {
                     confirmed = true;
-                } else if (confirm('Ho trovato una sede per questo cliente, vuoi inserirla nei dati trasporto?')) {
-                    confirmed = true;
-                }
-
-                if (confirmed) {
                     compilaSede(cliente['sedi'][0]);
                 }
+
             } else if (cliente['sedi'].length > 1) {
                 var confirmed = false;
 
-                if (tipo_documento == '8') {
-                    confirmed = true;
-                } else if (confirm('Ho trovato più sedi per questo cliente, vuoi inserirne una nei dati trasporto?')) {
+                if (movimenta_per.includes(parseInt(tipo_documento)) && confirm('Ho trovato più sedi per questo cliente, vuoi inserirne una nei dati trasporto?')) {
                     confirmed = true;
                 }
 

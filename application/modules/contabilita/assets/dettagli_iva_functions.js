@@ -428,10 +428,13 @@ var popolaRigheIva = function (righe, lock_values) {
             }
 
             var valore_iva_perc_no_sigh = i.replace('-', '');
+
             //Trovo la prima iva con quella percentuale
             log(riga);
+
             var natura = riga.prime_note_righe_iva_natura;
-            var iva_id = $('.js_iva_codice option[data-perc="' + valore_iva_perc_no_sigh + '"][data-natura="' + natura + '"]', $nuovaRiga).val();
+            //var iva_id = $('.js_iva_codice option[data-perc="' + valore_iva_perc_no_sigh + '"][data-natura="' + natura + '"]', $nuovaRiga).val();
+            var iva_id = $('.js_iva_codice option[value="' + riga.prime_note_righe_iva_iva + '"]', $nuovaRiga).val();
             log('iva: ' + i + ', iva_id: ' + iva_id);
             riga.iva_id = iva_id;
 
@@ -446,7 +449,9 @@ var popolaRigheIva = function (righe, lock_values) {
         $('.js_iva_codice', $nuovaRiga).val(riga.iva_id).trigger('change');
         $('.js_iva_imponibile', $nuovaRiga).val(parseFloat(riga.prime_note_righe_iva_imponibile).toFixed(2));
         $('.js_iva_importo', $nuovaRiga).val(parseFloat(riga.prime_note_righe_iva_importo_iva).toFixed(2));
-
+        if (riga.prime_note_righe_iva_ml > 0) {
+            $('.js_iva_ml', $nuovaRiga).val(riga.prime_note_righe_iva_ml);
+        }
         console.log(riga.prime_note_righe_iva_imponibile_indet);
         console.log(parseFloat(riga.prime_note_righe_iva_imponibile_indet));
         console.log(parseFloat(riga.prime_note_righe_iva_imponibile_indet).toFixed(2));
