@@ -442,6 +442,7 @@ class Datab extends CI_Model
                 break;
             case 'static_value':
                 $value = $fields['forms_fields_default_value'];
+                
                 break;
 
             case 'function':
@@ -709,8 +710,10 @@ class Datab extends CI_Model
 
             $operators = unserialize(OPERATORS);
             foreach ($fields as $key => $field) {
-
+                
                 $fields[$key] = $this->processFieldMapping($field, $form);
+
+                
 
             }
             unset($field);
@@ -718,7 +721,7 @@ class Datab extends CI_Model
             /*
              * Combino i form data col get per fare il render dei fields
              */
-
+            
             $formData = array_merge($formData, $this->input->get() ?: [], array_filter($formData, function ($val) {
                 return is_null($val) or $val === '';
             }));
@@ -743,6 +746,7 @@ class Datab extends CI_Model
             }
 
             foreach ($hidden as $k => $field) {
+                
                 $hidden[$k] = $this->build_form_input($field, isset($formData[$field['fields_name']]) ? $formData[$field['fields_name']] : null, $value_id);
             }
 
@@ -780,7 +784,7 @@ class Datab extends CI_Model
                     'onclick' => $field['fields_draw_onclick'] ? sprintf('onclick="%s"', $field['fields_draw_onclick']) : '',
                     'original_field' => $field,
                 ];
-
+                
                 $dati = ['forms' => $form, 'forms_hidden' => $hidden, 'forms_fields' => $shown];
                 if ($this->mycache->isCacheEnabled() && $this->mycache->isActive('database_schema')) {
                     $this->mycache->save($cache_key, $dati, $this->mycache->CACHE_TIME, $this->mycache->buildTagsFromEntity($form['forms_entity_id']));
@@ -1326,6 +1330,7 @@ class Datab extends CI_Model
                                     //continue;
 
                                     //Non so come gestirlo ma ci provo mettendo il filtro così com'è (es.: customers.customers_group = 2, sperando che customers sia joinata in qualche modo...)
+                                    $field_referencing = $field;
                                     $where_prefix = "({$other_entity['entity_name']}.";
                                 }
 
@@ -2877,6 +2882,35 @@ class Datab extends CI_Model
                         $path = base_url_admin('images/no-image-50x50.gif');
                         return "<img src='{$path}' style='width: 50px;' />";
                     }
+                case 'single_upload':
+                    if (!empty($value)) {
+                        $item = json_decode($value, true);
+                        
+                        $filename = is_array($item) ? $item['client_name'] : 'Download file';
+                        $value = is_array($item) ? $item['path_local'] : $value;
+                        
+                        if (file_exists(FCPATH . "uploads/$value")) {
+                            $file = mime_content_type(FCPATH . "uploads/$value");
+                            $doc_ext = array('doc', 'docx', 'ods', 'odt', 'html', 'htm', 'xls', 'xlsx', 'ppt', 'pptx', 'txt');
+                            $ext = pathinfo($value, PATHINFO_EXTENSION);
+                            if (in_array($ext, $doc_ext)) {
+                                return "<a href=" . base_url_uploads("uploads/$value") . " class='fancybox'><img width='30px' height='30px' src=" . base_url("images/download.png") . ">{$filename}</a>";
+                            } elseif (strstr($file, "audio/")) {
+                                // this code for audio
+                                return "<a href=" . base_url("uploads/$value") . " target='_blank'>Ascolta file</a>";
+                            } elseif (strstr($file, "video/")) {
+                                return anchor(base_url_uploads("uploads/$value"), 'Download ' . $filename, array('class' => 'js_open_modal_link_file'));
+                            } elseif (strstr($file, "image/")) {
+                                return "<a href=" . base_url_uploads("uploads/$value") . " class='fancybox'><img src=" . base_url_uploads("thumb/50/50/1/uploads/$value") . " alt='{$filename}'></a>";
+                            } else {
+                                return anchor(base_url_uploads("uploads/$value"), $filename, array('class' => 'js_open_modal_link_file'));
+                            }
+                        } else {
+                            return "";
+                        }
+                    } else {
+                        return "";
+                    }
                 // no break
                 case 'multi_upload':
                 case 'multi_upload_no_preview':
@@ -3078,9 +3112,12 @@ class Datab extends CI_Model
     public function build_form_input(array $field, $value = null, $value_id = null)
     {
 
-
-        if (!$value && !empty($field['forms_fields_default_value'])) {
+        
+        if (!$value && $field['forms_fields_default_value'] <> '') {
+            
             $value = $this->get_default_fields_value($field, $value_id);
+
+            
         }
 
         $output = '';
@@ -3177,6 +3214,10 @@ class Datab extends CI_Model
             }
 
             if ($baseType == 'multi_upload') {
+            }
+            
+            if ($baseType == 'single_upload') {
+                $baseType = 'upload';
             }
 
             $view = $this->load->view("box/form_fields/{$baseType}", $data, true);
@@ -3355,6 +3396,21 @@ class Datab extends CI_Model
             case "calendar":
                 $data = $this->get_calendar($contentRef);
                 $data['cal_layout'] = $this->db->get_where('calendars', ['calendars_id' => $contentRef])->row_array();
+                
+                // Rimpiazzo i placeholders sul campo "link / extra parameters"
+                if ($layoutEntityData !== null && is_array($layoutEntityData) && !empty($data['cal_layout']['calendars_link'])) {
+                    $layoutEntityData['value_id'] = $value_id;
+                    $replace_data = array();
+                    foreach ($layoutEntityData as $key => $value) {
+                        if (!is_numeric($key) && !is_array($value)) {
+                            $replace_data['{' . $key . '}'] = $value;
+                        }
+                    }
+                    
+                    $data['cal_layout']['calendars_link'] = str_replace(array_keys($replace_data), array_values($replace_data), $data['cal_layout']['calendars_link']);
+                    $data['cal_layout']['calendars_link'] = $this->replace_superglobal_data($data['cal_layout']['calendars_link']);
+                }
+                
                 $cal_layout = $data['cal_layout']['calendars_layout'] ?: DEFAULT_LAYOUT_CALENDAR;
                 return $this->load->view("pages/layouts/calendars/{$cal_layout}", array('data' => $data, 'value_id' => $value_id, 'layout_data_detail' => $layoutEntityData), true);
 
@@ -3620,7 +3676,7 @@ class Datab extends CI_Model
             $tr = [];
 
             foreach ($grid['grids_fields'] as $field) {
-                $tr[] = trim(strip_tags($this->datab->build_grid_cell($field, $dato, false, true, true)));
+                $tr[] = trim(strip_tags($this->build_grid_cell($field, $dato, false, true, true)));
 
             }
 
