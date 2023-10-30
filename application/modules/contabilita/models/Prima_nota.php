@@ -365,7 +365,7 @@ class Prima_nota extends CI_Model
                     $sdi_xml_json = json_decode($spesa['spese_json'], true);
                     $righe = $sdi_xml_json['FatturaElettronicaBody']['DatiBeniServizi']['DatiRiepilogo'];
                     //debug($sdi_xml_json, true);
-                    if (is_array($righe[0])) {
+                    if (!empty($righe[0]) && is_array($righe[0])) {
                         foreach ($righe as $riga) {
                             if ($riga['Imposta'] < 0) {
                                 $prepend_negative_sign = '-';
@@ -1956,7 +1956,6 @@ class Prima_nota extends CI_Model
                             'prime_note_registrazioni_sottoconto_dare' => $sottoconto_replace['documenti_contabilita_sottoconti_id'],
                         ]);
                     }
-
                 }
             }
 

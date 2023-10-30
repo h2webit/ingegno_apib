@@ -990,8 +990,8 @@ if (!empty($spesa[$key])): ?><?php echo $spesa[$key]; ?><?php endif;?>">
         } else {
             $("input[name='products[" + rowid + "][spese_articoli_iva]']").val(parseInt(prodotto['fw_products_tax_value']));
         }
-
-        $("input[name='products[" + rowid + "][spese_articoli_prodotti_id]']").val(prodotto['fw_products_id']);
+        
+        $("input[name='products[" + rowid + "][spese_articoli_prodotto_id]']").val(prodotto['fw_products_id']);
 
         $("input[name='products[" + rowid + "][spese_articoli_quantita]']").val(1);
 

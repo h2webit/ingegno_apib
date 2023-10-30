@@ -416,6 +416,7 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_rivalsa_inps_valore'] = $input['documenti_contabilita_rivalsa_inps_valore'];
             $documents['documenti_contabilita_competenze_lordo_rivalsa'] = $input['documenti_contabilita_competenze_lordo_rivalsa'];
             $documents['documenti_contabilita_cassa_professionisti_valore'] = $input['documenti_contabilita_cassa_professionisti_valore'];
+            $documents['documenti_contabilita_cassa_professionisti_tipo'] =  (!empty($input['documenti_contabilita_cassa_professionisti_tipo']) ? $input['documenti_contabilita_cassa_professionisti_tipo'] : null);
             $documents['documenti_contabilita_imponibile'] = $input['documenti_contabilita_imponibile'];
             $documents['documenti_contabilita_imponibile_scontato'] = $input['documenti_contabilita_imponibile_scontato'];
             $documents['documenti_contabilita_ritenuta_acconto_valore'] = $input['documenti_contabilita_ritenuta_acconto_valore'];
@@ -1546,8 +1547,36 @@ class Documenti extends MX_Controller
         $conto_articolo_no_fornitore = 0;
         foreach ($articoli as $articolo) {
             if ($articolo['fw_products_supplier']) {
+
+                
                 if (!array_key_exists($articolo['fw_products_supplier'], $ordini_fornitori)) {
-                    $ordini_fornitori[$articolo['fw_products_supplier']] = [];
+                    $ordini_fornitori[$articolo['fw_products_supplier']] = []; 
+                    //Inserisco riferimento all'ordine se sto generando un ordine fornitore da un solo ordine cliente (di fatto è come se avessi fatto "clona")
+                    if (count($this->input->post('ddt_ids')) == 1) {
+                        $documento = $this->apilib->view('documenti_contabilita', $articolo['documenti_contabilita_articoli_documento']);
+                        $riga_desc_rif_doc = [
+                            'documenti_contabilita_articoli_id' => null,
+                            'documenti_contabilita_articoli_rif_riga_articolo' => null,
+                            'documenti_contabilita_articoli_riga_desc' => DB_BOOL_TRUE,
+                            'documenti_contabilita_articoli_codice' => null,
+                            'documenti_contabilita_articoli_name' => 'Rif. ' . $documento['documenti_contabilita_tipo_value'] . ' n. ' . $documento['documenti_contabilita_numero'] . '' . (!empty($documento['documenti_contabilita_serie']) ? '/' . $documento['documenti_contabilita_serie'] : ''),
+                            'documenti_contabilita_articoli_descrizione' => 'del ' . dateFormat($documento['documenti_contabilita_data_emissione']),
+                            'documenti_contabilita_articoli_prezzo' => 0,
+                            'documenti_contabilita_articoli_imponibile' => 0,
+                            'documenti_contabilita_articoli_iva' => '',
+                            'documenti_contabilita_articoli_prodotto_id' => '',
+                            'documenti_contabilita_articoli_codice_asin' => '',
+                            'documenti_contabilita_articoli_codice_ean' => '',
+                            'documenti_contabilita_articoli_unita_misura' => '',
+                            'documenti_contabilita_articoli_quantita' => 1,
+                            'documenti_contabilita_articoli_sconto' => '',
+                            'documenti_contabilita_articoli_applica_ritenute' => '',
+                            'documenti_contabilita_articoli_applica_sconto' => '',
+                            'documenti_contabilita_articoli_importo_totale' => '',
+                            'documenti_contabilita_articoli_iva_id' => 1,
+                        ];
+                        $ordini_fornitori[$articolo['fw_products_supplier']][] = $riga_desc_rif_doc;
+                    }
                 }
                 $ordini_fornitori[$articolo['fw_products_supplier']][] = $articolo;
             } else {
@@ -1559,6 +1588,9 @@ class Documenti extends MX_Controller
                 die("Il prodotto '{$articolo['documenti_contabilita_articoli_name']}' (id: {$articolo[$campo_id_prodotto]}) non ha fornitore associato!");*/
             }
         }
+
+        
+
         if (!empty($this->input->post('_from_commessa')) && $this->input->post('_from_commessa') == '1' && $conto_articolo_no_fornitore != 0) {
             //caso in cui qualche prodotto non ha il fornitore di default.
             $articoli_post = $this->input->post('articoli_ids');
@@ -1593,6 +1625,9 @@ class Documenti extends MX_Controller
             e_json(['status' => 1, 'txt' => 'ok', 'fornitore' => $fornitore_id, 'data' => $articoli_data]);
             exit;
         }
+
+        
+
         foreach ($ordini_fornitori as $supplier_id => $articoli) {
             //debug($articoli);
             $articoli_qty = [];

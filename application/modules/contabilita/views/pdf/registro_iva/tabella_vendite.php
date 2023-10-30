@@ -113,7 +113,7 @@ window.onload = function() {
 </style>
 
 
-<div style="margin-bottom:30px">
+<div style="margin-bottom:30px;padding-top:30px;">
 
     <?php foreach ($filtri as $filtro) : ?>
     <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo $filtro['value']; ?></p>

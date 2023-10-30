@@ -177,7 +177,8 @@ class RibaAbiCbi extends CI_Model
             //         [8] = indirizzo_creditore variabile lunghezza 24 alfanumerico
             9 => $settings['documenti_contabilita_settings_company_zipcode'] . " " . $settings['documenti_contabilita_settings_company_city'] . " " . $settings['documenti_contabilita_settings_company_province'],
             //         [9] = cap_citta_prov_creditore variabile lunghezza 24 alfanumerico
-            10 => $settings['documenti_contabilita_settings_company_codice_fiscale'], //         [10] = codice_fiscale_creditore variabile lunghezza 16 alfanumerico opzionale default ""
+            10 => $settings['documenti_contabilita_settings_company_codice_fiscale'],
+            //         [10] = codice_fiscale_creditore variabile lunghezza 16 alfanumerico opzionale default ""
         ];
         $ricevute = [];
         $scadenze = [];
@@ -198,6 +199,7 @@ class RibaAbiCbi extends CI_Model
             $dest = json_decode($documento['documenti_contabilita_destinatario'], true);
             if ($documento['documenti_contabilita_customer_id']) {
                 $dest = array_merge($dest, $this->apilib->view('customers', $documento['documenti_contabilita_customer_id']));
+                $dest = array_merge($dest, $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_customer_id' => $documento['documenti_contabilita_customer_id']]));
             }
             //debug($dest, true);
             // if (!empty($dest['iban'])) {
@@ -222,6 +224,7 @@ class RibaAbiCbi extends CI_Model
 
             //     }
             // }
+            //debug($dest,true);
             $ricevute[] = [
                 0 => $documento['documenti_contabilita_numero'],
                 //        [0] = numero ricevuta lunghezza 10 numerico
@@ -239,18 +242,19 @@ class RibaAbiCbi extends CI_Model
                 //        [6] = cap debitore lunghezza 5 numerico
                 7 => $dest['provincia'],
                 //        [7] = comune provincia debitore lunghezza 25 alfanumerico
-                8 => $iban_data['abi'],
+                8 => $dest['customers_bank_accounts_abi'],
                 //        [8] = abi banca domiciliataria lunghezza 5 numerico
-                9 => $iban_data['cab'],
+                9 => $dest['customers_bank_accounts_cab'],
                 //        [9] = cab banca domiciliataria lunghezza 5 numerico
-                10 => 'TEST1',
+                10 => 'XXXXX',
                 //        [10] = descrizione banca domiciliataria lunghezza 50 alfanumerico
-                11 => 'TEST2',
+                11 => 'XXXXX',
                 //        [11] = codice cliente attribuito dal creditore lunghezza 16 numerico
-                12 => 'TEST3', //        [12] = descrizione del debito lunghezza 40 alfanumerico
+                12 => 'XXXXX',
+                //        [12] = descrizione del debito lunghezza 40 alfanumerico
             ];
         }
-
+        //debug($ricevute,true);
         return $this->creaFile($intestazione, $ricevute);
     }
 }
