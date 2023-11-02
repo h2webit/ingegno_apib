@@ -15,6 +15,8 @@ class Sync extends MY_Controller
         }
         
         $this->apib_db_connect();
+        
+        set_log_scope('sync-pagamenti');
     }
     
     private function apib_db_connect() {
@@ -85,8 +87,8 @@ class Sync extends MY_Controller
                 
                 progress(++$c, $t);
             } catch (Exception $e) {
-                debug($e->getMessage());
-                debug($pagamento, true);
+                echo "errore inserimento pagamento";
+                my_log('error', "errore inserimento pagamento: {$e->getMessage()}");
             }
         }
     }
