@@ -5,6 +5,7 @@ if (!defined('BASEPATH'))
 
 class Sync extends MY_Controller
 {
+    private $apib_db;
     function __construct ()
     {
         parent::__construct();
@@ -12,10 +13,11 @@ class Sync extends MY_Controller
         if (!$this->auth->check()) {
             die("Unauthorized");
         }
+        
+        $this->apib_db_connect();
     }
     
-    public function import_pagamenti()
-    {
+    private function apib_db_connect() {
         //Mi connetto al db postgres
         $db['crm_postgres']['hostname'] = ($_SERVER['SERVER_NAME'] == 'apib.ingegnosuite.it') ? 'localhost' : "crm.apibinfermieribologna.com"; // Cambiare per testare in linea
         $db['crm_postgres']['database'] = 'mastercrm_apib';
@@ -34,8 +36,11 @@ class Sync extends MY_Controller
         $db['crm_postgres']['autoinit'] = true;
         $db['crm_postgres']['stricton'] = false;
         
-        $crm_postgres = $this->load->database($db['crm_postgres'], true);
-        
+        $this->apib_db = $this->load->database($db['crm_postgres'], true);
+    }
+    
+    public function import_pagamenti()
+    {
         $associati = $this->db
             ->where("documenti_contabilita_settings_company_codice_fiscale IS NOT NULL AND documenti_contabilita_settings_company_codice_fiscale <> ''")
             ->get('documenti_contabilita_settings')->result_array();
@@ -45,27 +50,29 @@ class Sync extends MY_Controller
         $pagamenti_id_importati = array_key_map($this->db->get('pagamenti')->result_array(), 'pagamenti_id_esterno');
         $pagamenti_id_importati[] = '-1';
         
-        $pagamenti = $crm_postgres
+        $pagamenti = $this->apib_db
             ->where_not_in('pagamenti_id', $pagamenti_id_importati)
+            ->where('pagamenti_approvato', 't')
             ->where('pagamenti_anno >', '2022')
             ->get('pagamenti')->result_array();
         
-//        debug($pagamenti, true);
+        if (empty($pagamenti)) {
+            echo 'nessun pagamento da importare';
+            return false;
+        }
         
-        $count = count($pagamenti);
+        $t = count($pagamenti);
         $c = 0;
-        
         foreach ($pagamenti as $pagamento) {
-            $associato_old = $crm_postgres->where('associati_id', $pagamento['pagamenti_associato'])->get('associati')->row_array();
+            $associato_old = $this->apib_db->where('associati_id', $pagamento['pagamenti_associato'])->get('associati')->row_array();
             
-            $c++;
-            progress($c, $count);
             $pagamento['pagamenti_id_esterno'] = $pagamento['pagamenti_id'];
             
             unset($pagamento['pagamenti_data_creazione']);
             unset($pagamento['pagamenti_data_modifica']);
             
             $pagamento['pagamenti_pagato'] = ($pagamento['pagamenti_pagato'] == 't') ? DB_BOOL_TRUE : DB_BOOL_FALSE;
+            $pagamento['pagamenti_approvato'] = ($pagamento['pagamenti_approvato'] == 't') ? DB_BOOL_TRUE : DB_BOOL_FALSE;
             
             if (!empty($associati_cf[$associato_old['associati_cf']])) {
                 $pagamento['pagamenti_associato'] = $associati_cf[$associato_old['associati_cf']];
@@ -75,6 +82,8 @@ class Sync extends MY_Controller
             
             try {
                 $this->apilib->create('pagamenti', $pagamento);
+                
+                progress(++$c, $t);
             } catch (Exception $e) {
                 debug($e->getMessage());
                 debug($pagamento, true);
