@@ -10,22 +10,29 @@ if (!$where_grid) {
 
 if ($customer_id) {
     $customer = $this->apilib->view('customers', $customer_id);
-    $where_registrazioni = "prime_note_registrazioni_prima_nota NOT IN (SELECT prime_note_id FROM prime_note WHERE prime_note_modello = 1) AND
-    (prime_note_registrazioni_sottoconto_dare = '{$customer['customers_sottoconto']}'
-    OR
-    prime_note_registrazioni_sottoconto_avere = '{$customer['customers_sottoconto']}')
-";
-    $titolo = $customer['customers_company'];
-} else {
-    $where_registrazioni = "prime_note_registrazioni_prima_nota NOT IN (SELECT prime_note_id FROM prime_note WHERE prime_note_modello = 1) AND
-                (prime_note_registrazioni_sottoconto_dare = '{$sottoconto_id}'
-                OR
-                prime_note_registrazioni_sottoconto_avere = '{$sottoconto_id}')
-            ";
+    $sottoconto_id = $customer['customers_sottoconto'];
     $sottoconto = $this->apilib->view('documenti_contabilita_sottoconti', $sottoconto_id);
+
+
+    $titolo = "{$sottoconto['documenti_contabilita_sottoconti_codice_completo']} - {$customer['customers_company']}";
+} else {
+    $sottoconto = $this->apilib->view('documenti_contabilita_sottoconti', $sottoconto_id);
+
+
+
     $titolo = $sottoconto['documenti_contabilita_sottoconti_codice_completo'] . ' - ' . $sottoconto['documenti_contabilita_sottoconti_descrizione'];
 }
-
+$where_registrazioni = "prime_note_registrazioni_prima_nota NOT IN (SELECT prime_note_id FROM prime_note WHERE prime_note_modello = 1) AND
+                (
+                    (prime_note_registrazioni_sottoconto_dare = '{$sottoconto_id}'
+                    OR
+                    prime_note_registrazioni_sottoconto_avere = '{$sottoconto_id}')
+                OR
+                    (prime_note_registrazioni_codice_dare_testuale = '{$sottoconto['documenti_contabilita_sottoconti_codice_completo']}'
+                    OR
+                    prime_note_registrazioni_codice_avere_testuale = '{$sottoconto['documenti_contabilita_sottoconti_codice_completo']}')
+                )
+            ";
 $where = [
     "prime_note_id IN (
         SELECT
@@ -82,4 +89,5 @@ foreach ($primeNoteData as $conto => $data) {
 $this->load->view('contabilita/pdf/base_stampa', [
     'primeNoteData' => $primeNoteData,
     'type' => 'sottoconto',
+    'titolo' => $titolo
 ]);

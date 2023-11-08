@@ -1,23 +1,23 @@
 {
     "modules_id": "85",
-    "modules_name": "Ingegno Template",
+    "modules_name": "INGEGNO Core",
     "modules_description": "Template ingegno",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.3",
+    "modules_version": "1.0.4",
     "modules_identifier": "ingegno-template",
     "modules_base64_zip": null,
     "modules_raw_data_install": "558",
     "modules_raw_data_update": "558",
     "modules_created_by_user": "1",
-    "modules_version_code": "13",
+    "modules_version_code": "14",
     "modules_thumbnail": "0d34ba2324a05fb976294ab781889e1f.png",
     "modules_min_client_version": "2.4.0",
     "modules_version_date": "2023-02-03 16:46:58",
     "modules_auto_update": "0",
     "modules_last_update": "2023-02-03 16:46:58",
     "modules_core": "0",
-    "modules_notification_message": null,
+    "modules_notification_message": "",
     "module_identifier": "ingegno-template",
     "entities": {
         "558": {
@@ -51,6 +51,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -72,6 +74,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -93,6 +97,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -114,6 +120,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -135,6 +143,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -156,6 +166,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -177,6 +189,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload"
                 },
                 {
@@ -198,6 +212,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -461,6 +477,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -497,6 +515,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -533,6 +553,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -581,7 +603,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "ingegno-template-forms_fields-2416_4163",
-                    "forms_fields_module": "ingegno-template"
+                    "forms_fields_module": "ingegno-template",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2416",
@@ -603,7 +626,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "ingegno-template-forms_fields-2416_4164",
-                    "forms_fields_module": "ingegno-template"
+                    "forms_fields_module": "ingegno-template",
+                    "forms_field_full_data": "0"
                 }
             ]
         }

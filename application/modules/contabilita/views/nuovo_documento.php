@@ -520,39 +520,40 @@ elseif ($this->input->post('articoli') && is_array($this->input->post('articoli'
         if (!empty($articolo['codice'])) {
             $codice = trim($articolo['codice']);
         }
-
+        
         $quantita = 1;
         if (!empty($articolo['quantita']) && is_numeric($articolo['quantita'])) {
             $quantita = $articolo['quantita'];
         }
-
-        $importo = 0;
-        if (!empty($articolo['importo']) && is_numeric($articolo['importo'])) {
-            $importo = $prezzo * $quantita;
-        }
-
+        
         $documento['articoli'][$index] = [
-            'documenti_contabilita_articoli_id' => null,
-            'documenti_contabilita_articoli_rif_riga_articolo' => $articolo['id_riga'] ?? null,
-            'documenti_contabilita_articoli_riga_desc' => null,
+            //            'documenti_contabilita_articoli_id' => null,
+            
             'documenti_contabilita_articoli_codice' => $codice,
             'documenti_contabilita_articoli_name' => $nome_articolo,
             'documenti_contabilita_articoli_descrizione' => $desc,
+            
+            'documenti_contabilita_articoli_rif_riga_articolo' => $articolo['id_riga'] ?? null,
+            'documenti_contabilita_articoli_riga_desc' => (string) (isset($articolo['riga_desc']) && $articolo['riga_desc']),
+            
             'documenti_contabilita_articoli_prezzo' => $prezzo,
-            'documenti_contabilita_articoli_imponibile' => $importo,
-            'documenti_contabilita_articoli_iva' => '',
-            'documenti_contabilita_articoli_prodotto_id' => '',
-            'documenti_contabilita_articoli_codice_asin' => '',
-            'documenti_contabilita_articoli_codice_ean' => '',
-            'documenti_contabilita_articoli_unita_misura' => '',
             'documenti_contabilita_articoli_quantita' => $quantita,
-            'documenti_contabilita_articoli_sconto' => '',
-            'documenti_contabilita_articoli_applica_ritenute' => '',
-            'documenti_contabilita_articoli_applica_sconto' => '',
-            'documenti_contabilita_articoli_importo_totale' => '',
-            'documenti_contabilita_articoli_iva_id' => 1,
+            'documenti_contabilita_articoli_imponibile' => 0,
+            'documenti_contabilita_articoli_iva_id' => $articolo['iva_id'] ?? 1,
+            'documenti_contabilita_articoli_iva' => 0,
+            'documenti_contabilita_articoli_iva_perc' => $articolo['iva_perc'] ?? 0,
+            'documenti_contabilita_articoli_importo_totale' => 0,
+            
+            'documenti_contabilita_articoli_prodotto_id' => null,
+            'documenti_contabilita_articoli_codice_asin' => null,
+            'documenti_contabilita_articoli_codice_ean' => null,
+            'documenti_contabilita_articoli_unita_misura' => null,
+            'documenti_contabilita_articoli_sconto' => 0,
+            'documenti_contabilita_articoli_applica_ritenute' => DB_BOOL_TRUE,
+            'documenti_contabilita_articoli_applica_sconto' => DB_BOOL_TRUE,
         ];
-
+        
+        
         // aggiungo campi personalizzati all'array $documento['articoli']
         if (!empty($campi_personalizzati[1])) {
             foreach ($campi_personalizzati[1] as $campo) {
@@ -621,6 +622,7 @@ elseif ($this->input->post('articoli') && is_array($this->input->post('articoli'
     // $documento['documenti_contabilita_destinatario']['nazione'] = '';
     $documento['entity_destinatario'] = 'customers';
 }
+$azienda_get = $this->input->get('documenti_contabilita_settings') ?? null;
 $settings = $this->apilib->search('documenti_contabilita_settings');
 $impostazioni = $settings[0];
 
@@ -810,7 +812,9 @@ $tipologie_fatturazione = $this->apilib->search('documenti_contabilita_tipologie
 $ddts = $this->apilib->search('documenti_contabilita', ['documenti_contabilita_tipo' => '8']); // @todo - 20190704 - Michael E. - Aggiungere poi il filtro documenti_contabilita_utente_id per filtrare solo i ddt dell'utente loggato
 
 //Mi costruisco un oggetto da riutilizzare per le scadenze automatiche
-$template_scadenze = $this->apilib->search('documenti_contabilita_template_pagamenti');
+$template_scadenze = $this->apilib->search('documenti_contabilita_template_pagamenti', [
+    'documenti_contabilita_template_pagamenti_id IN (SELECT documenti_contabilita_tpl_pag_scadenze_tpl_id FROM documenti_contabilita_tpl_pag_scadenze)'
+]);
 foreach ($template_scadenze as $key => $tpl_scad) {
     //Riordino le sotto scadenze sul campo "giorni"
     usort($tpl_scad['documenti_contabilita_tpl_pag_scadenze'], function ($a, $b) {
@@ -1282,7 +1286,21 @@ $xml_articoli_altri_dati_gestionale = [
                             <label>Azienda: </label>
                             <select name="documenti_contabilita_azienda" class="form-control documenti_contabilita_azienda">
                                 <?php foreach ($settings as $setting): ?>
-                                    <option value="<?php echo $setting['documenti_contabilita_settings_id']; ?>" <?php if ((empty($documento_id) && $azienda_in_sessione == $setting['documenti_contabilita_settings_id']) || ((!empty($documento_id)) && (!empty($documento['documenti_contabilita_azienda']) && $documento['documenti_contabilita_azienda'] == $setting['documenti_contabilita_settings_id']))): ?> selected="selected" <?php endif; ?>><?php echo $setting['documenti_contabilita_settings_company_name']; ?></option>
+                                    <?php
+                                    $selected = '';
+                                    
+                                    if (!empty($documento_id)) {
+                                        if (!empty($documento['documenti_contabilita_azienda']) && $documento['documenti_contabilita_azienda'] == $setting['documenti_contabilita_settings_id']) {
+                                            $selected = 'selected="selected"';
+                                        }
+                                    } else {
+                                        if ($azienda_in_sessione == $setting['documenti_contabilita_settings_id'] || (!empty($azienda_get) && $azienda_get == $setting['documenti_contabilita_settings_id'] )) {
+                                            $selected = 'selected="selected"';
+                                        }
+                                    }
+                                    ?>
+                                    
+                                    <option value="<?php echo $setting['documenti_contabilita_settings_id']; ?>" <?php echo $selected; ?> ><?php echo $setting['documenti_contabilita_settings_company_name']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -1879,7 +1897,7 @@ $xml_articoli_altri_dati_gestionale = [
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>2.1.2.1 Ordine d'acquisto - Rif. N° Linea</label>
+                        <label>2.1.2.1 Ord. d'acquisto - Rif. N° Linea</label>
                         <input type="text" class="form-control" name="documenti_contabilita_fe_ordineacquisto[riferimento_numero_linea]" value="<?php echo (!empty($documento['documenti_contabilita_fe_ordineacquisto']['riferimento_numero_linea'])) ? $documento['documenti_contabilita_fe_ordineacquisto']['riferimento_numero_linea'] : ''; ?>" />
                     </div>
                 </div>
@@ -1891,8 +1909,8 @@ $xml_articoli_altri_dati_gestionale = [
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>2.1.2.3 Ordine d'acquisto - Data</label>
-                        <input type="text" class="form-control" name="documenti_contabilita_fe_ordineacquisto[data]" value="<?php echo (!empty($documento['documenti_contabilita_fe_ordineacquisto']['data'])) ? $documento['documenti_contabilita_fe_ordineacquisto']['data'] : ''; ?>" />
+                        <label>2.1.2.3 Ordine d'acquisto - Data (YYYY-MM-DD)</label>
+                        <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="documenti_contabilita_fe_ordineacquisto[data]" value="<?php echo (!empty($documento['documenti_contabilita_fe_ordineacquisto']['data'])) ? $documento['documenti_contabilita_fe_ordineacquisto']['data'] : ''; ?>" />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -1949,8 +1967,8 @@ $xml_articoli_altri_dati_gestionale = [
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>2.1.3.3 Dati Contratto - Data</label>
-                        <input type="text" class="form-control" name="documenti_contabilita_fe_dati_contratto[data]" value="<?php echo (!empty($documento['documenti_contabilita_fe_dati_contratto']['data'])) ? $documento['documenti_contabilita_fe_dati_contratto']['data'] : ''; ?>" />
+                        <label>2.1.3.3 Dati Contratto - Data (YYYY-MM-DD)</label>
+                        <input type="text" class="form-control" placeholder="YYYY-MM-DD" name="documenti_contabilita_fe_dati_contratto[data]" value="<?php echo (!empty($documento['documenti_contabilita_fe_dati_contratto']['data'])) ? $documento['documenti_contabilita_fe_dati_contratto']['data'] : ''; ?>" />
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -2417,7 +2435,7 @@ $xml_articoli_altri_dati_gestionale = [
     <?php $magazzino_settings = $this->apilib->searchFirst('magazzino_settings'); ?>
     <?php $this->load->module_view('magazzino/views','lotti_modal', ['settings' => $magazzino_settings], false); ?>
     <script>
-    var movimenta_per = <?php echo json_encode(array_keys($magazzino_settings['magazzino_settings_movimenta_per'])); ?>;
+    var movimenta_per = <?php echo (!empty($magazzino_settings['magazzino_settings_movimenta_per'])) ? json_encode(array_keys($magazzino_settings['magazzino_settings_movimenta_per'])) : '[]'; ?>;
         </script>
     <?php else: ?>
         <script>
@@ -4331,8 +4349,8 @@ $(document).ready(function() {
     <?php if (!$documento_id && !$clone): ?>
         $('#js_add_product').trigger('click');
     <?php endif; ?>
-
-    <?php if ($accorpamento_documenti || (!$accorpamento_documenti && $clone == DB_BOOL_TRUE)): ?>
+    
+    <?php if ($accorpamento_documenti || (!$accorpamento_documenti && $clone == DB_BOOL_TRUE) || (!empty($this->input->post('articoli')))): ?>
         $('.js_documenti_contabilita_articoli_prezzo:visible').filter(':first').trigger('change');
     <?php endif; ?>
 });

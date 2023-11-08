@@ -290,7 +290,7 @@ class Prima_nota extends CI_Model
         $righe_iva = [];
         $numero_riga = 1;
 
-        $aliquote_iva = array_key_value_map($this->apilib->search('iva'), 'iva_valore', 'iva_id');
+        $aliquote_iva = array_key_value_map(array_reverse($this->apilib->search('iva', [], null, 0, 'iva_codice_esterno IS NULL, iva_codice_esterno, iva_order')), 'iva_valore', 'iva_id');
 
         if ($doc_id) {
             if ($is_fattura) {
@@ -1472,7 +1472,7 @@ class Prima_nota extends CI_Model
         $this->salvaRegistrazioniPrimaNota($registrazioni, $giroconto['prime_note_id']);
     }
 
-    public function getIvaData($where_arr = [], $progress = false, $what = null)
+    public function getIvaData($where_arr = [], $progress = false, $what = null, $reverse_fix = false)
     {
         $data = [];
         // Filtro tabella e dati prima nota
@@ -1493,6 +1493,8 @@ class Prima_nota extends CI_Model
         $where_corrispettivi[] = "sezionali_iva_tipo = 6"; //Corrispettivi
 
         $where_vendite_reverse[] = "(sezionali_iva_tipo = 1 OR sezionali_iva_tipo = 9) AND prime_note_id IN (SELECT prime_note_righe_iva_prima_nota FROM prime_note_righe_iva LEFT JOIN iva ON (iva_id = prime_note_righe_iva_iva) WHERE iva_reverse = 1)";
+        //TODO: correggere qui! Se ci sono due righe iva (di cui una reverse e una no) le prende comunque entrambe e non va bene!
+        //debug('INTERVENIRE QUI!!!', true);
         $where_acquisti_reverse[] = "sezionali_iva_tipo = 2 AND prime_note_id IN (SELECT prime_note_righe_iva_prima_nota FROM prime_note_righe_iva LEFT JOIN iva ON (iva_id = prime_note_righe_iva_iva) WHERE iva_reverse = 1)";
 
         $primeNoteData_acquisti = $this->getPrimeNoteData($where_acquisti, null, 'prime_note_protocollo', 0, false, true, '', $progress);
@@ -1502,7 +1504,7 @@ class Prima_nota extends CI_Model
         $primeNoteData_corrispettivi = $this->getPrimeNoteData($where_corrispettivi, null, 'prime_note_scadenza', 0, false, true, '', $progress);
 
         $primeNoteData_acquisti_reverse = $this->getPrimeNoteData($where_acquisti_reverse, null, 'prime_note_protocollo', 0, false, true, '', $progress);
-
+        //debug($primeNoteData_acquisti_reverse,true);
         $primeNoteData_vendite_reverse = $this->getPrimeNoteData($where_vendite_reverse, null, 'prime_note_protocollo', 0, false, true, '', $progress);
         //debug($primeNoteData_vendite_reverse,true);
 
@@ -1565,11 +1567,27 @@ class Prima_nota extends CI_Model
                 $pn = 0;
                 $totale_prime_note = count($primeNoteData);
                 foreach ($primeNoteData as $prime_note_id => $prima_nota) {
+
+
+
                     $pn++;
                     if ($progress) {
                         progress($pn, $totale_prime_note, "Elaborazione registrazioni sezionale '$sezionale'");
                     }
                     foreach ($prima_nota["registrazioni_iva"] as $registrazione) {
+                        if ($sezionale == 'Reverse (vendite)') {
+                            // debug($tipo);
+                            // debug($registrazione, true);
+                        }
+                        if ($reverse_fix) {
+                            if (in_array($tipo, ['acquisti_reverse', 'vendite_reverse']) && !$registrazione['iva_reverse']) {
+                                continue;
+                            } elseif (!in_array($tipo, ['acquisti_reverse', 'vendite_reverse']) && $registrazione['iva_reverse']) {
+                                continue;
+                            }
+                        }
+
+
                         // if (!empty($prima_nota['prime_note_causale_mastro_dare_documenti_contabilita_mastri_natura_value'])) {
                         //     if ($prima_nota['prime_note_causale_mastro_dare_documenti_contabilita_mastri_natura_value'] == 'Passività') {
                         //         $registrazione['prime_note_righe_iva_imponibile'] = -$registrazione['prime_note_righe_iva_imponibile'];
@@ -1598,6 +1616,7 @@ class Prima_nota extends CI_Model
                             $totali[$registrazione['iva_id']]['iva_descrizione'] = $registrazione['iva_descrizione'];
                             $totali[$registrazione['iva_id']]['iva_label'] = $registrazione['iva_label'];
                             $totali[$registrazione['iva_id']]['iva_percentuale_indetraibilita'] = $registrazione['iva_percentuale_indetraibilita'];
+                            $totali[$registrazione['iva_id']]['iva_codice_esterno'] = $registrazione['iva_codice_esterno'];
 
                         }
                         if (empty($totali[$registrazione['iva_id']]['intra']['imponibile'])) {

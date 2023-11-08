@@ -310,18 +310,37 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
                     </DatiBollo>
                 <?php endif;?>
 
-                <?php
-/* <!--<DatiCassaPrevidenziale>
-<TipoCassa></TipoCassa>
-<AlCassa></AlCassa>
-<ImportoContributoCassa></ImportoContributoCassa>
-<ImponibileCassa></ImponibileCassa>
-<AliquotaIVA></AliquotaIVA>
-<Ritenuta></Ritenuta>
-<Natura></Natura>
-<RiferimentoAmministrazione></RiferimentoAmministrazione>
-</DatiCassaPrevidenziale>--> */?>
                 
+                <?php
+if ($dati['fattura']['documenti_contabilita_cassa_professionisti_perc'] > 0) {
+    $cassa_tipo = $this->apilib->view('documenti_contabilita_cassa_professionisti_tipo', $dati['fattura']['documenti_contabilita_cassa_professionisti_tipo']);
+    if ($cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'] && $iva_cassa = $this->apilib->view('iva', $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'])) {
+                        //debug($iva_cassa,true);                
+        $aliquota_iva_cassa = $iva_cassa['iva_valore'];
+                        $natura_cassa = $iva_cassa['iva_codice'];
+    }        else {
+                        $aliquota_iva_cassa = 0;
+                        $natura_cassa = '';
+    }         
+    
+    //debug($dati['fattura'], true);
+    $percentuale_contributo = $dati['fattura']['documenti_contabilita_cassa_professionisti_perc'];
+                    $imponibile_fattura = $dati['fattura']['documenti_contabilita_competenze'];
+                    $imponibile_calcolo = $imponibile_fattura;
+                    $importoCassa = $imponibile_fattura / 100 * $percentuale_contributo;
+                    //debug($imponibile_fattura,true); 
+    ?>
+                <DatiCassaPrevidenziale>
+                    <TipoCassa><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_codice']; ?></TipoCassa>
+                    <AlCassa><?php echo $percentuale_contributo; ?></AlCassa>
+                    <ImportoContributoCassa><?php echo $importoCassa; ?></ImportoContributoCassa>
+                    <ImponibileCassa><?php echo $imponibile_calcolo; ?></ImponibileCassa>
+                    <AliquotaIVA><?php echo $aliquota_iva_cassa; ?></AliquotaIVA>
+                    <?php /*<Ritenuta></Ritenuta>*/ ?>
+                    <?php if ($aliquota_iva_cassa == 0) : ?><Natura><?php echo $natura_cassa; ?></Natura><?php endif; ?>
+                    <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/ ?>
+                </DatiCassaPrevidenziale>
+                <?php } ?>
                 <?php
                 
                     if ($dati['fattura']['documenti_contabilita_split_payment'] == DB_BOOL_TRUE) {

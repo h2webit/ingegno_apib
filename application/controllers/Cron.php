@@ -199,10 +199,10 @@ class Cron extends MY_Controller
                             SELECT user_token_id, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY token_date DESC) as row_num
                             FROM user_tokens
                         ) t
-                        WHERE t.row_num <= 3
+                        WHERE t.row_num <= 10
                     );");
                 $this->db->where("_queue_pp_date < now() - interval 7 day", null, false)->where('_queue_pp_executed', '1')->delete('_queue_pp');
-                
+
             } else {
                 $this->db
                     ->where("log_api_date < NOW() - INTERVAL '6 MONTH'", null, false)
@@ -469,7 +469,7 @@ class Cron extends MY_Controller
 
             $cmd = "cd " . FCPATH . " && " . $cron['crons_file'];
         }
-        
+
         echo_log("debug", "Execute CURL via CLI: $cmd");
 
         $output = shell_exec($cmd);
@@ -602,10 +602,20 @@ class Cron extends MY_Controller
 
 
             if (empty($function['fi_events_post_process_id'])) {
-                $this->apilib->runEvent($function, $data);
+                try {
+                    $this->apilib->runEvent($function, $data);
+                } catch (Exception $e) {
+                    my_log('error', $e->getMessage());
+                }
+
             } else {
                 //TODO: deprecated... use onlu fi_events table
-                eval($function['post_process_what']);
+                try {
+                    eval($function['post_process_what']);
+                } catch (Exception $e) {
+                    my_log('error', $e->getMessage());
+                }
+
             }
         }
     }

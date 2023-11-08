@@ -88,10 +88,11 @@ class Main extends MY_Controller
             'customers_vat_number' => $data['piva'],
             'customers_cf' => $data['cf'],
             'customers_group' => 2,
+            'customers_country_id' => 105, // italia
         ];
 
         //verifico se esiste già qualche cliente:
-        $esistente = $this->apilib->searchFirst('customers', ['customers_vat_number' => $data['piva']]);
+        $esistente = $this->apilib->searchFirst('customers', ['customers_vat_number' => $data['piva'], 'customers_type' => '1']);
         if (!empty($esistente)) {
             echo json_encode(array('success' => false, 'message' => "cliente già esistente"));
             exit;

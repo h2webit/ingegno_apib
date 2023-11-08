@@ -198,7 +198,16 @@ class Documenti extends MX_Controller
             );
             exit;
         }
-
+        if ($input['documenti_contabilita_cassa_professionisti_valore'] > 0 && empty($input['documenti_contabilita_cassa_professionisti_tipo'])) {
+            echo json_encode(
+                array(
+                    'status' => 0,
+                    'txt' => "Cassa professionisti impostata senza tipo. Quando impostata una cassa professionisti è obbligatorio specificarne il tipo dalla tendina.",
+                    'data' => '',
+                )
+            );
+            exit;
+        }
 
         if ($this->form_validation->run() == false) {
             echo json_encode(
@@ -416,6 +425,7 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_rivalsa_inps_valore'] = $input['documenti_contabilita_rivalsa_inps_valore'];
             $documents['documenti_contabilita_competenze_lordo_rivalsa'] = $input['documenti_contabilita_competenze_lordo_rivalsa'];
             $documents['documenti_contabilita_cassa_professionisti_valore'] = $input['documenti_contabilita_cassa_professionisti_valore'];
+            
             $documents['documenti_contabilita_cassa_professionisti_tipo'] =  (!empty($input['documenti_contabilita_cassa_professionisti_tipo']) ? $input['documenti_contabilita_cassa_professionisti_tipo'] : null);
             $documents['documenti_contabilita_imponibile'] = $input['documenti_contabilita_imponibile'];
             $documents['documenti_contabilita_imponibile_scontato'] = $input['documenti_contabilita_imponibile_scontato'];

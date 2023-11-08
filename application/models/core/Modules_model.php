@@ -12,19 +12,21 @@ class Modules_model extends CI_Model
         parent::__construct();
 
 
-        $this->load->model('utils', 'utils_base');
+        //$this->load->model('utils', 'utils_base');
 
         // Load utils model
-        if ($this->db->dbdriver == 'postgre') {
-            $this->load->model('Utils/postgre_utils', 'utils');
-        } else if ($this->db->dbdriver == 'mysqli') {
-            $this->load->model('Utils/mysqli_utils', 'utils');
-        }
+        // if ($this->db->dbdriver == 'postgre') {
+        //     $this->load->model('Utils/postgre_utils', 'utils');
+        // } else if ($this->db->dbdriver == 'mysqli') {
+        //     $this->load->model('Utils/mysqli_utils', 'utils');
+        // }
 
         $this->settings = $this->apilib->searchFirst('modules_manager_settings');
         $this->temp_folder = FCPATH . 'uploads/tmp/';
         $this->_license_token = $this->settings['modules_manager_settings_license_token'];
         $this->_project_id = (defined('ADMIN_PROJECT') && !empty(ADMIN_PROJECT)) ? ADMIN_PROJECT : 0;
+        
+        $this->load->model('entities');
     }
     public function installModule($identifier, $update_repository_url = null)
     {
