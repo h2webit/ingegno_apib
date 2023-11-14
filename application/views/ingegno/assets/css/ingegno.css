@@ -652,7 +652,7 @@ a:focus {
 .main-header {
     position: relative;
     max-height: 100px;
-    z-index: 1030;
+    z-index: 811;
 }
 
 .main-header .navbar {
@@ -8970,8 +8970,8 @@ nav.navbar .nav_container_custom .right #help_widget>a {
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
+    font-size: 18px;
+    line-height: 20px;
     color: #111111;
     text-transform: capitalize;
     padding: 0;
@@ -9043,8 +9043,15 @@ nav.navbar .nav_container_custom .right #help_widget>a {
     color: #2A2A2A;
 }
 
+.navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li.notification {
+    padding: 8px 4px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
 .navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li.notification>a {
     border: none;
+    padding: 0px;
 }
 
 .navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li.notification>a>h4 {

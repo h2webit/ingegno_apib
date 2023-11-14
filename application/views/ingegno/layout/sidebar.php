@@ -69,7 +69,22 @@
                 <?php if ($isCurrent) : ?><span class="selected"></span><?php endif; ?>
                 <?php if ($hasSubmenu) : ?><span class="pull-right-container"><i class="fas fa-angle-right pull-right"></i></span><?php endif; ?>
             </a>
+            <?php if (!empty($menu['layouts_id'])): ?>
+            <div class="js_button_user_permissions btn-group btn-spaced hide label_highlight" style=" width:auto" data-toggle="tooltip"
+                    data-placement="bottom" data-container="body" title="Check users permissions not available...">
 
+                    <button type="button" class="btn btn-default dropdown-toggle js_check_users_permissions"
+                        data-toggle="dropdown" aria-expanded="true">
+                        <span class="fas fa-exclamation"></span>
+                    </button>
+
+                    <ul class="dropdown-menu js_users_can_view" role="menu" style="z-index: 9999;">
+                        <li class="divider"></li>
+                        <li><a target="_blank" href="<?php echo base_url('main/permissions'); ?>">Go to permissions</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
             <?php if ($hasSubmenu) : ?>
             <ul class="treeview-menu">
                 <?php foreach ($menu['submenu'] as $sub_menu) : ?>
@@ -84,6 +99,23 @@
                         <i class="<?php echo $sub_menu['menu_icon_class'] ?: 'fas fa-empty'; ?>"></i>
                         <?php e(ucfirst(str_replace(array('_', '-'), ' ', $sub_menu['menu_label'])), true, ['module_name' => $sub_menu['menu_module']]); ?>
                     </a>
+                    <?php if (!empty($sub_menu['layouts_id'])): ?>
+                        <div class="js_button_user_permissions btn-group btn-spaced hide label_highlight" style=" width:auto"
+                            data-toggle="tooltip" data-placement="bottom" data-container="body"
+                            title="Check users permissions not available...">
+    
+                            <button type="button" class="btn btn-default dropdown-toggle js_check_users_permissions" data-toggle="dropdown"
+                                aria-expanded="true">
+                                <span class="fas fa-exclamation"></span>
+                            </button>
+    
+                            <ul class="dropdown-menu js_users_can_view" role="menu" style="z-index: 9999;">
+                                <li class="divider"></li>
+                                <li><a target="_blank" href="<?php echo base_url('main/permissions'); ?>">Go to permissions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                 </li>
                 <?php endforeach; ?>
             </ul>

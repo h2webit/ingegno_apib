@@ -65,6 +65,9 @@ $lang = $this->db->join('languages', 'languages_id = settings_default_language',
 <link rel="stylesheet" type="text/css"
     href="<?php echo base_url_template("script/global/plugins/dropzone/css/dropzone.css?v=" . VERSION); ?>" />
 
+<link rel="stylesheet" type="text/css"
+    href="<?php echo base_url_template("template/adminlte_custom/base_components.css?v=" . VERSION); ?>" />
+
 <!-- LEAFLET -->
 <link rel="stylesheet" type="text/css"
     href="<?php echo base_url_template("script/lib/leaflet-1.7.1/leaflet.css?v=" . VERSION); ?>" />
@@ -84,7 +87,6 @@ $lang = $this->db->join('languages', 'languages_id = settings_default_language',
 <link href='<?php echo base_url_scripts('script/lib/fullcalendar-4/timegrid/main.css') ?>' rel='stylesheet' />
 
 <!-- CUSTOM CSS -->
-<?php echo $this->layout->addTemplateStylesheet("ingegno", "css/action_colors.css"); ?>
 <?php echo $this->layout->addTemplateStylesheet('ingegno', "css/ingegno.css"); ?>
 <?php echo $this->layout->addTemplateStylesheet("ingegno", "css/custom.css"); ?>
 

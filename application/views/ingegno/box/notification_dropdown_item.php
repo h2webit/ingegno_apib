@@ -5,7 +5,7 @@
         $notification['notifications_id'],
         ($notification['notifications_read'] === DB_BOOL_FALSE) ? 'unread' : '',
         $notification['notifications_title'],
-        $notification['notifications_message'],
+        htmlspecialchars($notification['notifications_message'], ENT_QUOTES, 'UTF-8'),
         $notification['notifications_type']
     );
 ?>

@@ -4,20 +4,20 @@
     "modules_description": "Settings page and entity booster",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.0",
+    "modules_version": "1.1.1",
     "modules_identifier": "settings-manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "551,410",
     "modules_raw_data_update": "551",
     "modules_created_by_user": "1",
-    "modules_version_code": "37",
+    "modules_version_code": "38",
     "modules_thumbnail": "117c017b7b78e094eb4157f6f06548ba.png",
     "modules_min_client_version": "2.9.4",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
     "modules_core": "1",
-    "modules_notification_message": null,
+    "modules_notification_message": "",
     "module_identifier": "settings-manager",
     "entities": {
         "5": {
@@ -51,6 +51,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -72,6 +74,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -93,6 +97,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload_image"
                 },
                 {
@@ -114,6 +120,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "textarea"
                 },
                 {
@@ -135,6 +143,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -156,6 +166,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -177,6 +189,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -198,6 +212,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -219,6 +235,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -240,6 +258,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -261,6 +281,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -282,6 +304,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -303,6 +327,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -324,6 +350,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -345,6 +373,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -366,6 +396,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_hidden"
                 },
                 {
@@ -387,6 +419,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -408,6 +442,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload_image"
                 },
                 {
@@ -429,6 +465,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload_image"
                 },
                 {
@@ -450,6 +488,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -471,6 +511,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload_image"
                 },
                 {
@@ -492,6 +534,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -513,6 +557,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "color"
                 },
                 {
@@ -534,6 +580,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -555,6 +603,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_hidden"
                 },
                 {
@@ -576,6 +626,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -597,6 +649,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -618,6 +672,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -639,6 +695,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -660,7 +718,32 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_hidden"
+                },
+                {
+                    "fields_id": "4801",
+                    "fields_entity_id": "5",
+                    "fields_default": null,
+                    "fields_name": "settings_background_pp",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "input_numeric"
                 }
             ],
             "fields_draw": [
@@ -1053,6 +1136,19 @@
                     "fields_draw_display_none": "0",
                     "fields_draw_enabled": "1",
                     "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "4803",
+                    "fields_draw_fields_id": "4801",
+                    "fields_draw_label": "Background pp",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_numeric",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
                 }
             ],
             "fields_validation": [],
@@ -1090,6 +1186,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1111,6 +1209,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -1177,6 +1277,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1198,6 +1300,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1219,6 +1323,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1240,6 +1346,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1261,6 +1369,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1282,6 +1392,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload"
                 }
             ],
@@ -1388,11 +1500,11 @@
                 {
                     "settings_template_id": "3",
                     "settings_template_creation_date": null,
-                    "settings_template_modified_date": null,
+                    "settings_template_modified_date": "2023-10-30 15:19:09",
                     "settings_template_name": "Ingegno",
                     "settings_template_folder": "ingegno",
-                    "settings_template_version": "1.0.0",
-                    "settings_template_upload_zip": null
+                    "settings_template_version": "1.0.5",
+                    "settings_template_upload_zip": "0\/d\/4\/0d46d5f885b39ce3b9acc813dad472b9.zip"
                 },
                 {
                     "settings_template_id": "6",
@@ -1437,6 +1549,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1458,6 +1572,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -1716,6 +1832,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1752,6 +1870,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1788,6 +1908,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1824,6 +1946,8 @@
                     "fields_xssclean": null,
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -1942,6 +2066,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1978,6 +2104,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2014,6 +2142,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2050,6 +2180,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2086,6 +2218,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2122,6 +2256,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2158,6 +2294,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2194,6 +2332,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2230,6 +2370,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2266,6 +2408,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2302,6 +2446,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2338,6 +2484,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2374,6 +2522,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2410,6 +2560,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2446,6 +2598,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2482,6 +2636,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2518,6 +2674,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2554,6 +2712,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2590,6 +2750,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2626,6 +2788,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2662,6 +2826,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2698,6 +2864,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2816,6 +2984,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2852,6 +3022,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2937,6 +3109,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2973,6 +3147,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3038,7 +3214,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_41",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3060,7 +3237,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_42",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3082,7 +3260,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_44",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3104,7 +3283,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_45",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3126,7 +3306,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_46",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3148,7 +3329,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_47",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3170,7 +3352,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_48",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3192,7 +3375,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_49",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3214,7 +3398,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_50",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3236,7 +3421,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_51",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3258,7 +3444,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_52",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3280,7 +3467,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_53",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3302,7 +3490,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_54",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3324,7 +3513,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_55",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3346,7 +3536,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_56",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2235",
@@ -3368,7 +3559,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2235_57",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3413,7 +3605,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2236_2924",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3458,7 +3651,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2237_2271",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2237",
@@ -3480,7 +3674,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2237_2273",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2237",
@@ -3502,7 +3697,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2237_2795",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2237",
@@ -3524,7 +3720,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2237_2980",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2237",
@@ -3546,7 +3743,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2237_43",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2237",
@@ -3568,7 +3766,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2237_3006",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3613,7 +3812,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2238_2716",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2238",
@@ -3635,7 +3835,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2238_2945",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2238",
@@ -3657,7 +3858,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2238_4081",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2238",
@@ -3679,7 +3881,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2238_4083",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2238",
@@ -3701,7 +3904,31 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2238_4084",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2238",
+                    "forms_fields_fields_id": "4801",
+                    "forms_fields_order": "999",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "settings-manager-forms_fields-2238_4801",
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3746,7 +3973,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2239_3018",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2239",
@@ -3768,7 +3996,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2239_3019",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2239",
@@ -3790,7 +4019,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2239_3020",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2239",
@@ -3812,7 +4042,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2239_3294",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3857,7 +4088,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "settings-manager-forms_fields-2397_4086",
-                    "forms_fields_module": "settings-manager"
+                    "forms_fields_module": "settings-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         }
@@ -4061,7 +4293,7 @@
         {
             "fi_events_id": "711",
             "fi_events_when": "pre-delete",
-            "fi_events_json_data": "{\"_when\":\"pre\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"420\",\"post_process_when\":\"delete\",\"post_process_entity_id\":\"410\",\"post_process_module\":\"settings-manager\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"\\\/*if (\\n    !empty(trim($data['data']['settings_template_folder']))\\n    && file_exists(APPPATH . 'views\\\/' . $data['data']['settings_template_folder'])\\n    && is_dir(APPPATH . 'views\\\/' . $data['data']['settings_template_folder'])\\n) {\\n    @rmdir(APPPATH . 'views\\\/' . trim($data['data']['settings_template_folder']));\\n}*\\\/\"},\"fi_events_title\":\"[SETTINGS & TPLs] Reset template to base when deleted and check if deleted template is not base\",\"save\":\"0\"}",
+            "fi_events_json_data": "{\"_when\":\"pre\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"420\",\"post_process_when\":\"delete\",\"post_process_entity_id\":\"410\",\"post_process_module\":\"settings-manager\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"\\\/*if (\\n    !empty(trim($data['data']['settings_template_folder']))\\n    && file_exists(APPPATH . 'views\\\/' . $data['data']['settings_template_folder'])\\n    && is_dir(APPPATH . 'views\\\/' . $data['data']['settings_template_folder'])\\n) {\\n    @rmdir(APPPATH . 'views\\\/' . trim($data['data']['settings_template_folder']));\\n}*\\\/\"},\"fi_events_title\":\"[SETTINGS & TPLs] Reset template to base when deleted and check if deleted template is not base\",\"save\":\"1\"}",
             "fi_events_title": "[SETTINGS & TPLs] Reset template to base when deleted and check if deleted template is not base",
             "fi_events_module": "settings-manager",
             "fi_events_type": "database",

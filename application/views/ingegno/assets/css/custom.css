@@ -455,7 +455,7 @@ body {
 div.upload-drop-zone {
   min-height: 200px !important;
   border-width: 3px !important;
-  background: url("../../images/drop_zone.png");
+  background: url("/images/drop_zone.png");
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 300px auto;
@@ -1148,11 +1148,11 @@ fieldset.fieldset_visible {
 
 
 /* THEME TOGGLER */
-nav .nav_container_custom .right .navbar-custom-menu ul.nav li.theme_toggler {
+nav .nav_container_custom .right .navbar-custom-menu ul.nav li.navbar-circle {
   margin-right: 16px;
 }
 
-nav .nav_container_custom .right .navbar-custom-menu ul.nav li.theme_toggler button {
+nav .nav_container_custom .right .navbar-custom-menu ul.nav li.navbar-circle button {
   width: 40px;
   height: 40px;
   background-color: #ffffff;
@@ -1161,6 +1161,7 @@ nav .nav_container_custom .right .navbar-custom-menu ul.nav li.theme_toggler but
   font-size: 20px;
   border: none;
 }
+
 
 
 /**
@@ -1456,11 +1457,13 @@ body.dark .navbar-custom-menu>.navbar-nav>li#header_notification_bar .dropdown-m
   color: #ffffff;
 }
 
-.navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu li.notification:hover {
+.navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu li.notification:hover,
+.navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu li.notification.unread {
   background-color: #f3f3fa;
 }
 
-body.dark .navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu li.notification:hover {
+body.dark .navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu li.notification:hover,
+body.dark .navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu li.notification.unread {
   background-color: rgba(53, 173, 220, .10);
 }
 
@@ -1852,4 +1855,11 @@ body.dark .daterangepicker .ranges ul li:hover {
 
 body.dark .daterangepicker .ranges ul li.active {
   background-color: #35addc;
+}
+
+/* Permission menu tooltip */
+.js_users_can_view:not(.btn-toolbar .js_users_can_view) {
+  top: auto;
+  bottom: 100%;
+  padding: 8px;
 }
