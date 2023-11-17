@@ -1962,3 +1962,7 @@ $lang['Acconto'] = 'Acconto';
 $lang['Totale variazioni'] = 'Totale variazioni';
 $lang['Pie di lista'] = 'Pie di lista';
 $lang['pagamenti'] = 'pagamenti';
+$lang['Importa Pagamenti'] = 'Importa Pagamenti';
+$lang['Approvato'] = 'Approvato';
+$lang['Importa Pagamenti'] = 'Importa Pagamenti';
+$lang['Approvato'] = 'Approvato';

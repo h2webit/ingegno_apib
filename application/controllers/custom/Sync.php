@@ -56,6 +56,7 @@ class Sync extends MY_Controller
             ->where_not_in('pagamenti_id', $pagamenti_id_importati)
             ->where('pagamenti_approvato', 't')
             ->where('pagamenti_anno >', '2022')
+            ->where('pagamenti_acconto > 0', null, false)
             ->get('pagamenti')->result_array();
         
         if (empty($pagamenti)) {
@@ -66,6 +67,7 @@ class Sync extends MY_Controller
         $t = count($pagamenti);
         $c = 0;
         foreach ($pagamenti as $pagamento) {
+            //debug($pagamento,true);
             $associato_old = $this->apib_db->where('associati_id', $pagamento['pagamenti_associato'])->get('associati')->row_array();
             
             $pagamento['pagamenti_id_esterno'] = $pagamento['pagamenti_id'];
