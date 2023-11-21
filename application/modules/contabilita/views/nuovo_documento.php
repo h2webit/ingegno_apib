@@ -1527,8 +1527,17 @@ $xml_articoli_altri_dati_gestionale = [
                                                     $categoria_template = $this->apilib->searchFirst('documenti_contabilita_tipo', ['documenti_contabilita_tipo_id' => $template['documenti_contabilita_template_pdf_tipo']]);
                                                     $categoria_template = $categoria_template['documenti_contabilita_tipo_value'] . ' - ';
                                                 }
+                                                
+                                                $tpl_selezionato = '';
+                                                if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_template_pdf']) && $documento['documenti_contabilita_template_pdf'] == $template['documenti_contabilita_template_pdf_id'])) {
+                                                    $tpl_selezionato = 'selected="selected"';
+                                                } else {
+                                                    if (!empty($this->input->get('template_contabilita')) && $this->input->get('template_contabilita') == $template['documenti_contabilita_template_pdf_id']) {
+                                                        $tpl_selezionato = 'selected="selected"';
+                                                    }
+                                                }
                                                 ?>
-                                                <option data-tipo="<?php echo $template['documenti_contabilita_template_pdf_tipo']; ?>" value='<?php echo $template['documenti_contabilita_template_pdf_id']; ?>' <?php if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_template_pdf']) && $documento['documenti_contabilita_template_pdf'] == $template['documenti_contabilita_template_pdf_id'])): ?> selected="selected" <?php endif; ?>><?php echo $categoria_template . $template['documenti_contabilita_template_pdf_nome']; ?></option>
+                                                <option data-tipo="<?php echo $template['documenti_contabilita_template_pdf_tipo']; ?>" value='<?php echo $template['documenti_contabilita_template_pdf_id']; ?>' <?php echo $tpl_selezionato; ?>><?php echo $categoria_template . $template['documenti_contabilita_template_pdf_nome']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -1604,7 +1613,17 @@ $xml_articoli_altri_dati_gestionale = [
                                     <div class="form-group">
                                         <label>Cassa professionisti: </label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="documenti_contabilita_cassa_professionisti_perc" value="<?php if (!empty($documento['documenti_contabilita_cassa_professionisti_perc'])): ?><?php echo number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, '.', ''); ?><?php else: ?>0<?php endif; ?>" />
+                                            <?php
+                                            $cassa_professionisti_perc = 0;
+                                            if (!empty($documento['documenti_contabilita_cassa_professionisti_perc'])) {
+                                                $cassa_professionisti_perc = number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, '.', '');
+                                            } else {
+                                                if (!empty($this->input->get('cassa_professionisti_perc'))) {
+                                                    $cassa_professionisti_perc = number_format((float) $this->input->get('cassa_professionisti_perc'), 2, '.', '');
+                                                }
+                                            }
+                                            ?>
+                                            <input type="text" class="form-control" name="documenti_contabilita_cassa_professionisti_perc" value="<?php echo $cassa_professionisti_perc ?>" />
                                             <span class="input-group-addon" id="basic-addon2">%</span>
                                         </div>
                                     </div>
@@ -1620,6 +1639,10 @@ $xml_articoli_altri_dati_gestionale = [
                                                 
                                                 if (!empty($documento['documenti_contabilita_cassa_professionisti_tipo']) && $documento['documenti_contabilita_cassa_professionisti_tipo'] == $tipo['documenti_contabilita_cassa_professionisti_tipo_id']) {
                                                     $selected = 'selected="selected"';
+                                                } else {
+                                                    if (!empty($this->input->get('cassa_professionisti_tipo')) && $this->input->get('cassa_professionisti_tipo') == $tipo['documenti_contabilita_cassa_professionisti_tipo_id']) {
+                                                        $selected = 'selected="selected"';
+                                                    }
                                                 }
                                                 ?>
                                                 <option value="<?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_id'] ?>" <?php echo $selected; ?>><?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_codice'] . ' - ' . $tipo['documenti_contabilita_cassa_professionisti_tipo_value'] ?></option>
@@ -1633,7 +1656,17 @@ $xml_articoli_altri_dati_gestionale = [
                                     <div class="form-group">
                                         <label>2.1.1.6.2 - Importo bollo: </label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="documenti_contabilita_importo_bollo" value="<?php if (!empty($documento['documenti_contabilita_importo_bollo'])): ?><?php echo number_format((float) $documento['documenti_contabilita_importo_bollo'], 2, '.', ''); ?><?php else: ?>0<?php endif; ?>" />
+                                            <?php
+                                            $importo_bollo = 0;
+                                            if (!empty($documento['documenti_contabilita_importo_bollo'])) {
+                                                $importo_bollo = number_format((float) $documento['documenti_contabilita_importo_bollo'], 2, '.', '');
+                                            } else {
+                                                if (!empty($this->input->get('importo_bollo'))) {
+                                                    $importo_bollo = number_format((float) $this->input->get('importo_bollo'), 2, '.', '');
+                                                }
+                                            }
+                                            ?>
+                                            <input type="text" class="form-control" name="documenti_contabilita_importo_bollo" value="<?php echo $importo_bollo; ?>" />
                                             <span class="input-group-addon" id="basic-addon2">€</span>
                                         </div>
                                         <!--<span>
@@ -4348,7 +4381,7 @@ $(document).ready(function() {
     }*/
     <?php endif; ?>
 
-    <?php if (!$documento_id && !$clone): ?>
+    <?php if (!$documento_id && !$clone && empty($this->input->get('no_add_product'))): /* 20231120 - michael - aggiunto il parametro get "no_add_product" così si può gestire il fatto che non venga creata una riga nel caso si passino anche degli articoli in post (altrimenti in certe situazioni sballa i contenggi iva etc) */ ?>
         $('#js_add_product').trigger('click');
     <?php endif; ?>
     
