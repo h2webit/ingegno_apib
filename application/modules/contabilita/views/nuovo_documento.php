@@ -197,6 +197,8 @@ if ($this->datab->module_installed('magazzino')) {
     $this->load->model('magazzino/mov');
     
 }
+$general_settings = $this->apilib->searchFirst('documenti_contabilita_general_settings');
+
 $field_azienda = $this->db->query("SELECT * FROM fields WHERE fields_name = 'documenti_contabilita_azienda'")->row()->fields_id;
 
 $filtro_fatture = (array) @$this->session->userdata(SESS_WHERE_DATA)['filtro_elenchi_documenti_contabilita'];
@@ -322,7 +324,7 @@ if ($documento_id) {
     //$documento['articoli'] = $this->apilib->search('documenti_contabilita_articoli', ['documenti_contabilita_articoli_documento' => $documento_id]);
     $documento['articoli'] = $this->docs->getArticoliFromDocumento($documento_id);
     
-    if ($clone == DB_BOOL_TRUE && !empty($documento)) {
+    if ($clone == DB_BOOL_TRUE && !empty($documento) && $general_settings['documenti_contabilita_general_settings_auto_rif_doc']) {
         $riga_desc_rif_doc = [
             'documenti_contabilita_articoli_id' => null,
             'documenti_contabilita_articoli_rif_riga_articolo' => null,

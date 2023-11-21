@@ -1715,20 +1715,28 @@ class Prima_nota extends CI_Model
 
                             // Se l'iva indetraibile è < 100 devo sommare il restante alle imposte/imponibile della giusta colonna
                             if ($registrazione['iva_percentuale_indetraibilita'] < 100) {
-
-                                if ($registrazione['sezionali_iva_origine'] == 3) { //INTRA
-
-                                    $totali[$registrazione['iva_id']]['intra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
-                                    $totali[$registrazione['iva_id']]['intra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
-                                } else if ($registrazione['sezionali_iva_origine'] == 4) { // EXTRA
-                                    $totali[$registrazione['iva_id']]['extra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
-                                    $totali[$registrazione['iva_id']]['extra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
-                                } else if ($registrazione['sezionali_iva_origine'] == 1) { // ITALIA
-                                    $totali[$registrazione['iva_id']]['italia']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
-                                    $totali[$registrazione['iva_id']]['italia']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
+                                if ($registrazione['iva_reverse']) {
+                                    $totali[$registrazione['iva_id']]['reverse']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
+                                    $totali[$registrazione['iva_id']]['reverse']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
+                                } elseif ($registrazione['iva_split']) {
+                                    $totali[$registrazione['iva_id']]['split']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
+                                    $totali[$registrazione['iva_id']]['split']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                                 } else {
-                                    debug($registrazione, true);
+                                    if ($registrazione['sezionali_iva_origine'] == 3) { //INTRA
+
+                                        $totali[$registrazione['iva_id']]['intra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
+                                        $totali[$registrazione['iva_id']]['intra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
+                                    } else if ($registrazione['sezionali_iva_origine'] == 4) { // EXTRA
+                                        $totali[$registrazione['iva_id']]['extra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
+                                        $totali[$registrazione['iva_id']]['extra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
+                                    } else if ($registrazione['sezionali_iva_origine'] == 1) { // ITALIA
+                                        $totali[$registrazione['iva_id']]['italia']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
+                                        $totali[$registrazione['iva_id']]['italia']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
+                                    } else {
+                                        debug($registrazione, true);
+                                    }
                                 }
+
                             }
                             // if ($registrazione['iva_id'] == 46) {
 
@@ -1749,21 +1757,29 @@ class Prima_nota extends CI_Model
                             $totali_per_sezionale[$sezionale]['detraibile']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
                             $totali_per_sezionale[$sezionale]['detraibile']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
 
-                            // intra -- Provvisorio, per ora verifica ==1 cioè intra, ma ci sarà anche intra extra CEE e Intra CEE nelle origini dei sezionali?
-                            if ($registrazione['sezionali_iva_origine'] == 1) { // ITALIA
-                                $totali[$registrazione['iva_id']]['italia']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
-                                $totali[$registrazione['iva_id']]['italia']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
-                            } else if ($registrazione['sezionali_iva_origine'] == 3) { // INTRA
-
-                                $totali[$registrazione['iva_id']]['intra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
-                                $totali[$registrazione['iva_id']]['intra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
-                            } else if ($registrazione['sezionali_iva_origine'] == 4) { // EXTRA
-                                //debug($registrazione, true);
-                                $totali[$registrazione['iva_id']]['extra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
-                                $totali[$registrazione['iva_id']]['extra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
-
+                            if (!$reverse_fix && $registrazione['iva_reverse']) {
+                                $totali[$registrazione['iva_id']]['reverse']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
+                                $totali[$registrazione['iva_id']]['reverse']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
+                            } elseif ($registrazione['iva_split']) {
+                                $totali[$registrazione['iva_id']]['split']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
+                                $totali[$registrazione['iva_id']]['split']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                             } else {
-                                debug($registrazione, true);
+                                // intra -- Provvisorio, per ora verifica ==1 cioè intra, ma ci sarà anche intra extra CEE e Intra CEE nelle origini dei sezionali?
+                                if ($registrazione['sezionali_iva_origine'] == 1) { // ITALIA
+                                    $totali[$registrazione['iva_id']]['italia']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
+                                    $totali[$registrazione['iva_id']]['italia']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
+                                } elseif ($registrazione['sezionali_iva_origine'] == 3) { // INTRA
+
+                                    $totali[$registrazione['iva_id']]['intra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
+                                    $totali[$registrazione['iva_id']]['intra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
+                                } elseif ($registrazione['sezionali_iva_origine'] == 4) { // EXTRA
+                                    //debug($registrazione, true);
+                                    $totali[$registrazione['iva_id']]['extra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
+                                    $totali[$registrazione['iva_id']]['extra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
+
+                                } else {
+                                    debug($registrazione, true);
+                                }
                             }
                         }
                     }

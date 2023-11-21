@@ -1567,8 +1567,8 @@ class Docs extends CI_Model
                 documenti_contabilita_articoli_rif_riga_articolo = '{$riga_articolo['documenti_contabilita_articoli_id']}'
                 AND
                 documenti_contabilita_tipo <> '{$riga_articolo['documenti_contabilita_tipo']}'
-                AND documenti_contabilita_tipo NOT IN (4,11,12)
-                ")->row()->s; //I documenti di tipo nota di credito, fattura reverse e nota di credito reverse non vanno a chiudere un ordine cui son legati
+                AND documenti_contabilita_tipo NOT IN (4,11,12,6)
+                ")->row()->s; //I documenti di tipo nota di credito, fattura reverse e nota di credito reverse non vanno a chiudere un ordine cui son legati. Nemmeno gli ordini fornitore!!!
 
         if ($this->datab->module_installed('magazzino')) {
             $this->load->model('magazzino/mov');

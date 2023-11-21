@@ -18,7 +18,10 @@ class Documenti extends MX_Controller
         $this->load->model('contabilita/docs');
 
         $this->settings = $this->db->get('settings')->row_array();
-        $this->contabilita_settings = $this->apilib->searchFirst('documenti_contabilita_settings');
+        if ($this->input->post('documenti_contabilita_azienda')) { //20231121 - MP - I dati di documenti contabilita settings posso caricarli solo se mi è stata passata un'azienda, altrimenti non ha senso e si rischia di associare all'azienda sbagliata eventuali dati (prima c'era un searchFirst e, ad esempio, il nome file era sempre quello della prima azienda...)
+            $this->contabilita_settings = $this->apilib->view('documenti_contabilita_settings', $this->input->post('documenti_contabilita_azienda'));
+        }
+        
 
         require APPPATH . "modules/contabilita/third_party/vendor/autoload.php";
     }
@@ -1148,97 +1151,6 @@ class Documenti extends MX_Controller
         $this->load->view('contabilita/pdf/visualizzazione_completa', ['xml' => $content_xml, 'file_xsl' => $file_xsl]);
     }
 
-    //20220316 - MP - Deprecato a favore del nuovo metodo con generazione a runtime da xsl
-    // public function _____visualizza_fattura_elettronica($id)
-    // {
-    // die('DEPRECATO');
-
-    // $this->load->helper('download');
-
-    // $dati['fattura'] = $this->apilib->view('documenti_contabilita', $id);
-
-    // $settings = $this->apilib->searchFirst('documenti_contabilita_settings');
-    // $general_settings = $this->apilib->searchFirst('documenti_contabilita_general_settings');
-    // $xsl_url_ordinaria = $general_settings['documenti_contabilita_general_settings_xsl_fattura_ordinaria'];
-    // $xsl_url_pa = $general_settings['documenti_contabilita_general_settings_xsl_fattura_pa'];
-
-    // $filename = date('Ymd-H-i-s');
-    // $physicalDir = FCPATH . "uploads/";
-
-    // // Create a temporary file with the view html
-    // $tmpHtml = "{$physicalDir}/{$filename}.html";
-    // $tmpXml = "{$physicalDir}/{$filename}.xml";
-
-    // // Verifico se è per soggetti privati (e aziende) oppure pubblica amministrazione perche hanno due xslt diversi
-    // if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3) {
-    // $xsl_url = $xsl_url_pa;
-    // $tmpXsl = $physicalDir . basename($xsl_url_pa);
-    // } else {
-    // $xsl_url = $xsl_url_ordinaria;
-    // $tmpXsl = $physicalDir . basename($xsl_url_ordinaria);
-    // }
-
-    // if (!is_dir($physicalDir)) {
-    // mkdir($physicalDir, 0755, true);
-    // }
-
-    // // Se non ce foglio xsl salvarlo.. Per modificare il file caricarlo sui general settings.
-    // if (!file_exists($tmpXsl)) {
-    // log_message('debug', "XSL Foglio di stile fattura elettronica non trovato, lo scarico e lo salvo.");
-    // file_put_contents($tmpXsl, file_get_contents($xsl_url));
-    // } else {
-    // log_message('debug', "XSL Foglio di stile fattura elettronica trovato correttamente: " . $tmpXsl);
-    // }
-    // // Scarico sempre il file di stile
-    // $arrContextOptions = array(
-    // "ssl" => array(
-    // "verify_peer" => false,
-    // "verify_peer_name" => false,
-    // ),
-    // );
-
-    // //file_put_contents($tmpXsl, file_get_contents("https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2/fatturaordinaria_v1.2.xsl", false, stream_context_create($arrContextOptions)));
-
-    // // Creo xml temporaneo
-    // file_put_contents($tmpXml, base64_decode($dati['fattura']['documenti_contabilita_file']), LOCK_EX);
-
-    // // Tento di generarlo
-    // //echo "xsltproc -o {$tmpHtml} {$tmpXsl} {$tmpXml}"; // Per debug comando decommentare
-    // exec("xsltproc -o {$tmpHtml} {$tmpXsl} {$tmpXml}");
-
-    // // Check se html generato correttamente lo mostro altrimenti carico xml perchè potrebbe avere dei die con gli errori
-    // if (file_exists($tmpHtml)) {
-    // // Storicizzo la preview
-    // $pdfFile = $this->layout->generate_pdf(file_get_contents($tmpHtml), "portrait", "", [], null, true);
-    // $this->apilib->edit("documenti_contabilita", $id, ['documenti_contabilita_file_preview_xml' => base64_encode(file_get_contents($pdfFile))]);
-
-    // header('Content-Type: application/pdf');
-    // echo file_get_contents($pdfFile);
-    // } else {
-    // echo file_get_contents($tmpXml);
-    // }
-    // }
-
-    // Deprecato
-    // public function download_fattura_elettronica($id)
-    // {
-    // $this->load->helper('download');
-
-    // $dati['fattura'] = $this->apilib->view('documenti_contabilita', $id);
-    // $settings = $this->contabilita_settings;
-
-    // $file = base64_decode($dati['fattura']['documenti_contabilita_file']);
-
-    // $prefisso = "IT" . $settings['documenti_contabilita_settings_company_vat_number'];
-
-    // if (empty($dati['fattura']['documenti_contabilita_nome_file_xml'])) {
-    // $xmlfilename = $this->docs->generateXmlFilename($prefisso, $dati['fattura']['documenti_contabilita_id']);
-    // } else {
-    // $xmlfilename = $dati['fattura']['documenti_contabilita_nome_file_xml'];
-    // }
-    // force_download($xmlfilename, $file);
-    // }
-
     public function generaRiba()
     {
         $ids = json_decode($this->input->post('ids'));
@@ -1480,20 +1392,23 @@ class Documenti extends MX_Controller
     {
         $ddt_ids = json_decode($this->input->post('ddt_ids'), true);
         $data_emissione = (!empty($this->input->post('data_emissione'))) ? $this->input->post('data_emissione') : date('Y-m-d');
-        
+        $general_settings = $this->apilib->searchFirst('documenti_contabilita_general_settings');
         $fatture_da_generare = [];
         //debug($ddt_ids, true);
         $ordinamento = 1;
         foreach ($ddt_ids as $ddt_id) {
             $documento_old = $this->apilib->view('documenti_contabilita', $ddt_id);
             $articoli_old = $this->db->where('documenti_contabilita_articoli_documento', $ddt_id)->get('documenti_contabilita_articoli')->result_array();
-            array_unshift($articoli_old, [
-                'documenti_contabilita_articoli_riga_desc' => DB_BOOL_TRUE,
-                'documenti_contabilita_articoli_name' => "Rif. {$documento_old['documenti_contabilita_tipo_value']} {$documento_old['documenti_contabilita_numero']}" . (($documento_old['documenti_contabilita_serie']) ? "/{$documento_old['documenti_contabilita_serie']}" : ''),
-                'documenti_contabilita_articoli_descrizione' => "del " . dateFormat($documento_old['documenti_contabilita_data_emissione']),
-                'documenti_contabilita_articoli_position' => $ordinamento++,
+            if ($general_settings['documenti_contabilita_general_settings_auto_rif_doc']) {
+                array_unshift($articoli_old, [
+                    'documenti_contabilita_articoli_riga_desc' => DB_BOOL_TRUE,
+                    'documenti_contabilita_articoli_name' => "Rif. {$documento_old['documenti_contabilita_tipo_value']} {$documento_old['documenti_contabilita_numero']}" . (($documento_old['documenti_contabilita_serie']) ? "/{$documento_old['documenti_contabilita_serie']}" : ''),
+                    'documenti_contabilita_articoli_descrizione' => "del " . dateFormat($documento_old['documenti_contabilita_data_emissione']),
+                    'documenti_contabilita_articoli_position' => $ordinamento++,
 
-            ]);
+                ]);
+            }
+            
             foreach ($articoli_old as $key_articolo => $articolo) {
                 unset($articoli_old[$key_articolo]['documenti_contabilita_articoli_id']);
                 $articoli_old[$key_articolo]['documenti_contabilita_articoli_position'] = $ordinamento++;
@@ -1555,38 +1470,44 @@ class Documenti extends MX_Controller
         }
         $ordini_fornitori = [];
         $conto_articolo_no_fornitore = 0;
+
+        $general_settings = $this->apilib->searchFirst('documenti_contabilita_general_settings');
+
         foreach ($articoli as $articolo) {
             if ($articolo['fw_products_supplier']) {
 
                 
                 if (!array_key_exists($articolo['fw_products_supplier'], $ordini_fornitori)) {
-                    $ordini_fornitori[$articolo['fw_products_supplier']] = []; 
-                    //Inserisco riferimento all'ordine se sto generando un ordine fornitore da un solo ordine cliente (di fatto è come se avessi fatto "clona")
-                    if (count($this->input->post('ddt_ids')) == 1) {
-                        $documento = $this->apilib->view('documenti_contabilita', $articolo['documenti_contabilita_articoli_documento']);
-                        $riga_desc_rif_doc = [
-                            'documenti_contabilita_articoli_id' => null,
-                            'documenti_contabilita_articoli_rif_riga_articolo' => null,
-                            'documenti_contabilita_articoli_riga_desc' => DB_BOOL_TRUE,
-                            'documenti_contabilita_articoli_codice' => null,
-                            'documenti_contabilita_articoli_name' => 'Rif. ' . $documento['documenti_contabilita_tipo_value'] . ' n. ' . $documento['documenti_contabilita_numero'] . '' . (!empty($documento['documenti_contabilita_serie']) ? '/' . $documento['documenti_contabilita_serie'] : ''),
-                            'documenti_contabilita_articoli_descrizione' => 'del ' . dateFormat($documento['documenti_contabilita_data_emissione']),
-                            'documenti_contabilita_articoli_prezzo' => 0,
-                            'documenti_contabilita_articoli_imponibile' => 0,
-                            'documenti_contabilita_articoli_iva' => '',
-                            'documenti_contabilita_articoli_prodotto_id' => '',
-                            'documenti_contabilita_articoli_codice_asin' => '',
-                            'documenti_contabilita_articoli_codice_ean' => '',
-                            'documenti_contabilita_articoli_unita_misura' => '',
-                            'documenti_contabilita_articoli_quantita' => 1,
-                            'documenti_contabilita_articoli_sconto' => '',
-                            'documenti_contabilita_articoli_applica_ritenute' => '',
-                            'documenti_contabilita_articoli_applica_sconto' => '',
-                            'documenti_contabilita_articoli_importo_totale' => '',
-                            'documenti_contabilita_articoli_iva_id' => 1,
-                        ];
-                        $ordini_fornitori[$articolo['fw_products_supplier']][] = $riga_desc_rif_doc;
-                    }
+                    $ordini_fornitori[$articolo['fw_products_supplier']] = [];
+                    if ($general_settings['documenti_contabilita_general_settings_auto_rif_doc']) {
+                        //Inserisco riferimento all'ordine se sto generando un ordine fornitore da un solo ordine cliente (di fatto è come se avessi fatto "clona")
+                        if (count($this->input->post('ddt_ids')) == 1) {
+                            $documento = $this->apilib->view('documenti_contabilita', $articolo['documenti_contabilita_articoli_documento']);
+                            $riga_desc_rif_doc = [
+                                'documenti_contabilita_articoli_id' => null,
+                                'documenti_contabilita_articoli_rif_riga_articolo' => null,
+                                'documenti_contabilita_articoli_riga_desc' => DB_BOOL_TRUE,
+                                'documenti_contabilita_articoli_codice' => null,
+                                'documenti_contabilita_articoli_name' => 'Rif. ' . $documento['documenti_contabilita_tipo_value'] . ' n. ' . $documento['documenti_contabilita_numero'] . '' . (!empty($documento['documenti_contabilita_serie']) ? '/' . $documento['documenti_contabilita_serie'] : ''),
+                                'documenti_contabilita_articoli_descrizione' => 'del ' . dateFormat($documento['documenti_contabilita_data_emissione']),
+                                'documenti_contabilita_articoli_prezzo' => 0,
+                                'documenti_contabilita_articoli_imponibile' => 0,
+                                'documenti_contabilita_articoli_iva' => '',
+                                'documenti_contabilita_articoli_prodotto_id' => '',
+                                'documenti_contabilita_articoli_codice_asin' => '',
+                                'documenti_contabilita_articoli_codice_ean' => '',
+                                'documenti_contabilita_articoli_unita_misura' => '',
+                                'documenti_contabilita_articoli_quantita' => 1,
+                                'documenti_contabilita_articoli_sconto' => '',
+                                'documenti_contabilita_articoli_applica_ritenute' => '',
+                                'documenti_contabilita_articoli_applica_sconto' => '',
+                                'documenti_contabilita_articoli_importo_totale' => '',
+                                'documenti_contabilita_articoli_iva_id' => 1,
+                            ];
+                            $ordini_fornitori[$articolo['fw_products_supplier']][] = $riga_desc_rif_doc;
+                        }
+                    }  
+                
                 }
                 $ordini_fornitori[$articolo['fw_products_supplier']][] = $articolo;
             } else {

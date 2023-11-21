@@ -6,8 +6,8 @@ if ($this->input->get('provvisorio')) {
     $data = $this->prima_nota->getIvaData([], false, 'acquisti');
 } else {
     $data = $this->prima_nota->getIvaData([
-    ['prime_note_stampa_definitiva_acquisti IS NULL']
-], false, 'acquisti');
+        ['prime_note_stampa_definitiva_acquisti IS NULL']
+    ], false, 'acquisti');
 }
 
 //debug($data['acquisti'], true);
@@ -63,7 +63,7 @@ if (!empty($totali['iva_zero'])) {
     }
 
     .totali_documento {
-        font-size: 0.9em;
+        font-size: 0.8em;
 
     }
 
@@ -76,13 +76,15 @@ if (!empty($totali['iva_zero'])) {
 
         border-right: 1px dotted #CCC;
     }
-.breakpage {
+
+    .breakpage {
         page-break-before: always !important;
     }
+
     .totali_documento td {
         text-align: right;
         border-bottom: solid 1px #cccccc !important;
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .totali_documento th {
@@ -92,7 +94,7 @@ if (!empty($totali['iva_zero'])) {
 
     .totali_documento tfoot td {
         font-weight: bold;
-        font-size: 14px;
+        font-size: 11px;
         text-align: right;
     }
 </style>
@@ -100,8 +102,12 @@ if (!empty($totali['iva_zero'])) {
 <div style="margin-bottom:30px">
 
     <?php foreach ($filtri as $filtro): ?>
-        <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo $filtro['value']; ?></p>
-    <?php endforeach;?>
+        <p><strong>
+                <?php echo $filtro['label']; ?>
+            </strong>:
+            <?php echo $filtro['value']; ?>
+        </p>
+    <?php endforeach; ?>
 
 </div>
 
@@ -109,7 +115,9 @@ if (!empty($totali['iva_zero'])) {
 
 
 
-    <h5 class="breakpage">Sezionale n.<?php echo (!empty($primeNoteData[0])) ? $primeNoteData[0]['sezionali_iva_numero'] . " " . $sezionale : '-'; ?></h5>
+    <h5 class="breakpage">Sezionale n.
+        <?php echo (!empty($primeNoteData[0])) ? $primeNoteData[0]['sezionali_iva_numero'] . " " . $sezionale : '-'; ?>
+    </h5>
     <table class="table js_prime_note slim_table">
         <thead>
             <tr>
@@ -132,101 +140,118 @@ if (!empty($totali['iva_zero'])) {
         </thead>
         <tbody>
             <?php
-$i = 0;
-foreach ($primeNoteData as $prime_note_id => $prima_nota): ?>
+            $i = 0;
+            foreach ($primeNoteData as $prime_note_id => $prima_nota): ?>
 
 
                 <?php
-foreach ($prima_nota["registrazioni_iva"] as $registrazione): $i++;?>
-		                    <?php
-    $destinatario = json_decode($registrazione['spese_fornitore'], true);
-    if (!$destinatario) {
-        foreach ($prima_nota['registrazioni'] as $_riga) {
-            if ($_riga['sottocontoavere']) {
+                foreach ($prima_nota["registrazioni_iva"] as $registrazione):
+                    $i++; ?>
+                    <?php
+                    $destinatario = json_decode($registrazione['spese_fornitore'], true);
+                    if (!$destinatario) {
+                        foreach ($prima_nota['registrazioni'] as $_riga) {
+                            if ($_riga['sottocontoavere']) {
 
-                $fornitore = $this->apilib->searchFirst('customers', ['customers_sottoconto' => $_riga['prime_note_registrazioni_sottoconto_avere']]);
-                if (!$fornitore) {
-                    $fornitore = $this->apilib->searchFirst('customers', ['customers_codice_sottoconto' => "{$_riga['mastroavere']}.{$_riga['contoavere']}.{$_riga['sottocontoavere']}"]);
-                    if (!$fornitore) {
-                                                $fornitore['customers_vat_number'] = '';
+                                $fornitore = $this->apilib->searchFirst('customers', ['customers_sottoconto' => $_riga['prime_note_registrazioni_sottoconto_avere']]);
+                                if (!$fornitore) {
+                                    $fornitore = $this->apilib->searchFirst('customers', ['customers_codice_sottoconto' => "{$_riga['mastroavere']}.{$_riga['contoavere']}.{$_riga['sottocontoavere']}"]);
+                                    if (!$fornitore) {
+                                        $fornitore['customers_vat_number'] = '';
+                                    }
+                                }
+                                $destinatario = [
+                                    'ragione_sociale' => $_riga['sottocontoavere_descrizione'],
+                                    'partita_iva' => $fornitore['customers_vat_number'],
+                                ];
+                                break;
+                            }
+                        }
                     }
-                }
-                $destinatario = [
-                    'ragione_sociale' => $_riga['sottocontoavere_descrizione'],
-                    'partita_iva' => $fornitore['customers_vat_number'],
-                ];
-                break;
-            }
-        }
-    }
-    ?>
+                    ?>
 
-		                    <tr class="js_tr_prima_nota <?php echo (is_odd($i)) ? 'prima_nota_odd' : 'prima_nota_even'; ?>" data-id="<?php echo $prime_note_id; ?>">
-		                        <td><?php echo dateFormat($prima_nota['prime_note_data_registrazione']); ?></td>
-		                        <td class="text-center">
-		                            <?php echo ($registrazione['prime_note_protocollo']); ?>
-		                        </td>
-		                        <td><?php echo (dateFormat($registrazione['prime_note_scadenza'])); ?></td>
-		                        <td><?php //debug($registrazione);
-    echo ($registrazione['prime_note_numero_documento']) ? $registrazione['prime_note_numero_documento'] : $registrazione['spese_numero']; ?></td>
+                    <tr class="js_tr_prima_nota <?php echo (is_odd($i)) ? 'prima_nota_odd' : 'prima_nota_even'; ?>"
+                        data-id="<?php echo $prime_note_id; ?>">
+                        <td>
+                            <?php echo dateFormat($prima_nota['prime_note_data_registrazione']); ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo ($registrazione['prime_note_protocollo']); ?>
+                        </td>
+                        <td>
+                            <?php echo (dateFormat($registrazione['prime_note_scadenza'])); ?>
+                        </td>
+                        <td>
+                            <?php //debug($registrazione);
+                                        echo ($registrazione['prime_note_numero_documento']) ? $registrazione['prime_note_numero_documento'] : $registrazione['spese_numero']; ?>
+                        </td>
 
-		                        <td class="text-center">
+                        <td class="text-center">
 
-		                            <?php echo ($registrazione['prime_note_progressivo_giornaliero']); ?>
+                            <?php echo ($registrazione['prime_note_progressivo_giornaliero']); ?>
 
-		                        </td>
-		                        <td>
-		                            <?php echo ($registrazione['sezionali_iva_sezionale']); ?>
+                        </td>
+                        <td>
+                            <?php echo ($registrazione['sezionali_iva_sezionale']); ?>
 
-		                        </td>
-		                        <td>
-		                            <?php echo (($destinatario) ? $destinatario['ragione_sociale'] : debug($registrazione)); ?>
-		                        </td>
-		                        <td class="text-center">
-		                            <?php echo (($destinatario) ? $destinatario['partita_iva'] : ''); ?>
-		                        </td>
+                        </td>
+                        <td>
+                            <?php echo (($destinatario) ? $destinatario['ragione_sociale'] : debug($registrazione)); ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo (($destinatario) ? $destinatario['partita_iva'] : ''); ?>
+                        </td>
 
-		                        <td class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif;?> text-right">
-                            <?php e_money($registrazione['prime_note_righe_iva_imponibile'], '€ {number}');?>
+                        <td
+                            class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif; ?> text-right">
+                            <?php e_money($registrazione['prime_note_righe_iva_imponibile'], '€ {number}'); ?>
                         </td>
 
 
-                        <td class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif;?> text-right">
+                        <td
+                            class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif; ?> text-right">
                             <?php
-e_money($registrazione['prime_note_righe_iva_importo_iva'], '€ {number}');
-?>
+                            e_money($registrazione['prime_note_righe_iva_importo_iva'], '€ {number}');
+                            ?>
                         </td>
 
 
-                        <td class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif;?> text-right">
+                        <td
+                            class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif; ?> text-right">
                             <?php echo ($registrazione['iva_label']); ?>
                         </td>
-                        <td class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif;?> text-right">
+                        <td
+                            class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif; ?> text-right">
                             <?php echo ($registrazione['prime_note_righe_iva_indetraibilie_perc']) ? ((int) $registrazione['prime_note_righe_iva_indetraibilie_perc'] . '%') : ''; ?>
                         </td>
-                        <td class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif;?> text-right">
+                        <td
+                            class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif; ?> text-right">
                             <!-- TODO Dubbio perche registrando una prima nota manuale di un documento cartaceo questo dato sarebbe vuoto? -->
                             <?php //echo ($registrazione['spese_totale'] > 0) ? number_format($registrazione['spese_totale'], 2, ',', '.') : ''; ?>
-                            <?php e_money($registrazione['prime_note_righe_iva_imponibile']+$registrazione['prime_note_righe_iva_importo_iva'], '€ {number}'); ?>
+                            <?php e_money($registrazione['prime_note_righe_iva_imponibile'] + $registrazione['prime_note_righe_iva_importo_iva'], '€ {number}'); ?>
                         </td>
                     </tr>
-                <?php endforeach;?>
+                <?php endforeach; ?>
 
-            <?php endforeach;?>
+            <?php endforeach; ?>
 
             <tr>
-                    <td colspan="8">
-                        <strong>TOTALI (Sezionale <?php echo $sezionale; ?>)</strong>
-                    </td>
-                    <td  style="text-align:right;">
-                        <strong><?php e_money($totali_per_sezionale[$sezionale]['imponibile'], '€ {number}');?>
-            </strong>
-            </td>
-               <td  style="text-align:right;">
-                             <strong><?php e_money($totali_per_sezionale[$sezionale]['imposta'], '€ {number}');?>
-            </strong>
-            </td>
-            <td colspan=2></td>
+                <td colspan="8">
+                    <strong>TOTALI (Sezionale
+                        <?php echo $sezionale; ?>)
+                    </strong>
+                </td>
+                <td style="text-align:right;">
+                    <strong>
+                        <?php e_money($totali_per_sezionale[$sezionale]['imponibile'], '€ {number}'); ?>
+                    </strong>
+                </td>
+                <td style="text-align:right;">
+                    <strong>
+                        <?php e_money($totali_per_sezionale[$sezionale]['imposta'], '€ {number}'); ?>
+                    </strong>
+                </td>
+                <td colspan=2></td>
             </tr>
         </tbody>
     </table>
@@ -234,44 +259,54 @@ e_money($registrazione['prime_note_righe_iva_importo_iva'], '€ {number}');
 
 
 
-    <h3 style="text-align:center;">Riepilogo totali sezionale (<?php echo $sezionale; ?>)</h3>
-<table style="margin-bottom:150px; " class="table totali_documento slim_table">
-    <thead>
-        <tr>
+    <h3 style="text-align:center;">Riepilogo totali sezionale (
+        <?php echo $sezionale; ?>)
+    </h3>
+    <table style="margin-bottom:150px; " class="table totali_documento slim_table">
+        <thead>
+            <tr>
 
 
-            <th colspan="" style="text-align: right;">IMPONIBILE TOTALE</th>
-            <th colspan="" style="text-align: right;">IMPOSTA TOTALE</th>
+                <th colspan="" style="text-align: right;">IMPONIBILE TOTALE</th>
+                <th colspan="" style="text-align: right;">IMPOSTA TOTALE</th>
 
-            <th colspan="" style="text-align: right;">IMPOSTA DETRAIBILE</th>
-            <th colspan="" style="text-align: right;">IMPOSTA INDETRAIBILE</th>
+                <th colspan="" style="text-align: right;">IMPOSTA DETRAIBILE</th>
+                <th colspan="" style="text-align: right;">IMPOSTA INDETRAIBILE</th>
 
-        </tr>
+            </tr>
 
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
 
 
             <tr>
 
 
                 <!-- italia imponibile-->
-                <td><?php e_money($totali_per_sezionale[$sezionale]['imponibile'], '€ {number}');?></td>
+                <td>
+                    <?php e_money($totali_per_sezionale[$sezionale]['imponibile'], '€ {number}'); ?>
+                </td>
                 <!-- italia imposta-->
-                <td><?php e_money($totali_per_sezionale[$sezionale]['imposta'], '€ {number}');?></td>
+                <td>
+                    <?php e_money($totali_per_sezionale[$sezionale]['imposta'], '€ {number}'); ?>
+                </td>
                 <!-- indetraibile imponibile-->
-                <td><?php e_money($totali_per_sezionale[$sezionale]['detraibile']['imposta'], '€ {number}');?></td>
-                <td><?php e_money($totali_per_sezionale[$sezionale]['indetraibile']['imposta'], '€ {number}');?></td>
+                <td>
+                    <?php e_money($totali_per_sezionale[$sezionale]['detraibile']['imposta'], '€ {number}'); ?>
+                </td>
+                <td>
+                    <?php e_money($totali_per_sezionale[$sezionale]['indetraibile']['imposta'], '€ {number}'); ?>
+                </td>
             </tr>
 
 
-    </tbody>
+        </tbody>
 
-</table>
+    </table>
 
 
-<?php endforeach;?>
-    <!-- <table class="table slim_table">
+<?php endforeach; ?>
+<!-- <table class="table slim_table">
         <thead>
             <tr>
                 <th>TOTALI:</th>
@@ -284,17 +319,17 @@ e_money($registrazione['prime_note_righe_iva_importo_iva'], '€ {number}');
 
                 <th>Imponibile:</th>
                 <th>
-                    <?php e_money($imponibili, '€ {number}');?>
+                    <?php e_money($imponibili, '€ {number}'); ?>
                 </th>
                 <th>Imposta:</th>
             <th>
 
-                <?php e_money($imposte, '€ {number}');?>
+                <?php e_money($imposte, '€ {number}'); ?>
             </th>
             <th>Totale:</th>
             <th>
 
-                <?php e_money($imponibili + $imposte, '€ {number}');?>
+                <?php e_money($imponibili + $imposte, '€ {number}'); ?>
             </th>
             </tr>
         </thead>
@@ -346,6 +381,7 @@ foreach ($totali as $iva) {
             <th>&nbsp;</th>
 
             <th colspan="2">ITALIA</th>
+            <th colspan="2">REVERSE</th>
             <th colspan="2">INDETRAIBILE</th>
 
             <th colspan="2">INTRA</th>
@@ -359,12 +395,14 @@ foreach ($totali as $iva) {
             <th>Ind.</th>
             <th>Imponibile</th>
             <th>Imposta</th>
+            <th>Imponibile</th>
+            <th>Imposta</th>
 
             <th>Imponibile</th>
             <th>Imposta</th>
             <th>Imponibile</th>
             <th>Imposta</th>
-<th>Imponibile</th>
+            <th>Imponibile</th>
             <th>Imposta</th>
         </tr>
     </thead>
@@ -374,80 +412,140 @@ foreach ($totali as $iva) {
             <tr>
 
                 <!-- Descrizione iva -->
-                <td style="text-align:left"><?php echo (int) $totale['iva_valore']; ?>%</td>
+                <td style="text-align:left">
+                    <?php echo (int) $totale['iva_valore']; ?>%
+                </td>
                 <!-- perc iva-->
-                <td><?php echo number_format($totale['iva_valore'], 0); ?>%</td>
+                <td>
+                    <?php echo number_format($totale['iva_valore'], 0); ?>%
+                </td>
                 <!-- indetraibilitò-->
-                <td><?php echo number_format($totale['iva_percentuale_indetraibilita'], 0); ?>%</td>
+                <td>
+                    <?php echo number_format($totale['iva_percentuale_indetraibilita'], 0); ?>%
+                </td>
                 <!-- italia imponibile-->
-                <td><?php e_money($totale['italia']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['italia']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- italia imposta-->
-                <td><?php e_money($totale['italia']['imposta'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['italia']['imposta'], '€ {number}');
+                    ?>
+                </td>
+
+                <!-- reverse imponibile-->
+                <td>
+                    <?php e_money($totale['reverse']['imponibile'], '€ {number}'); ?>
+                </td>
+                <!-- reverse imposta-->
+                <td>
+                    <?php e_money($totale['reverse']['imposta'], '€ {number}'); ?>
+                </td>
                 <!-- indetraibile imponibile-->
-                <td><?php e_money($totale['indetraibile']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['indetraibile']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- indetraibile imposta-->
-                <td><?php e_money($totale['indetraibile']['imposta'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['indetraibile']['imposta'], '€ {number}');
+                    ?>
+                </td>
 
 
                 <!-- intra imponibile-->
-                <td><?php e_money($totale['intra']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['intra']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- extra imponibile-->
-                <td><?php e_money($totale['intra']['imposta'], '€ {number}');
-?></td>
-                <td><?php
-e_money($totale['extra']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['intra']['imposta'], '€ {number}');
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    e_money($totale['extra']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- extra imponibile-->
-                <td><?php e_money($totale['extra']['imposta'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['extra']['imposta'], '€ {number}');
+                    ?>
+                </td>
             </tr>
-        <?php endforeach;?>
+        <?php endforeach; ?>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3">Totali</td>
+            <td colspan="3">Tot.</td>
             <!-- italia imponibile -->
-            <td><?php e_money($totale_italia_imponibile, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_italia_imponibile, '€ {number}'); ?>
+            </td>
             <!-- italia imposta -->
-            <td><?php e_money($totale_italia_imposta, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_italia_imposta, '€ {number}'); ?>
+            </td>
+
+            <!-- italia reverse -->
+            <td>
+                <?php e_money($totale_reverse_imponibile, '€ {number}'); ?>
+            </td>
+            <!-- italia reverse -->
+            <td>
+                <?php e_money($totale_reverse_imposta, '€ {number}'); ?>
+            </td>
             <!-- indetraibile imponibile -->
-            <td><?php e_money($totale_indetraibile_imponibile, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_indetraibile_imponibile, '€ {number}'); ?>
+            </td>
             <!-- indetraibile imposta -->
-            <td><?php e_money($totale_indetraibile_imposta, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_indetraibile_imposta, '€ {number}'); ?>
+            </td>
 
             <!-- intra imponibile -->
-            <td><?php e_money($totale_intra_imponibile, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_intra_imponibile, '€ {number}'); ?>
+            </td>
             <!-- intra imposta -->
-            <td><?php e_money($totale_intra_imposta, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_intra_imposta, '€ {number}'); ?>
+            </td>
             <!-- extra imponibile -->
-            <td><?php e_money($totale_extra_imponibile, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_extra_imponibile, '€ {number}'); ?>
+            </td>
             <!-- extra imposta -->
-            <td><?php e_money($totale_extra_imposta, '€ {number}');?></td>
+            <td>
+                <?php e_money($totale_extra_imposta, '€ {number}'); ?>
+            </td>
         </tr>
         <tr>
-            <td colspan="5">
-
-                <h4>TOTALE IMPONIBILE DETRAIBILE: € <?php
-echo $totale_italia_imponibile
-
- + $totale_intra_imponibile
- + $totale_extra_imponibile
-
-?></h4>
-            </td>
             <td colspan="6">
-                <h4>TOTALE IMPOSTA DETRAIBILE: € <?php echo
-$totale_italia_imposta
 
- + $totale_intra_imposta
- + $totale_extra_imposta
+                <h4>TOTALE IMPONIBILE DETRAIBILE: €
+                    <?php
+                    echo $totale_italia_imponibile
 
-?></h4>
+                        + $totale_intra_imponibile
+                        + $totale_extra_imponibile
+
+                        ?>
+                </h4>
+            </td>
+            <td colspan="7">
+                <h4>TOTALE IMPOSTA DETRAIBILE: €
+                    <?php echo
+                        $totale_italia_imposta
+
+                        + $totale_intra_imposta
+                        + $totale_extra_imposta
+
+                        ?>
+                </h4>
             </td>
 
         </tr>
@@ -495,40 +593,64 @@ $totale_italia_imposta
         <?php foreach ($iva_zero as $totale): ?>
             <tr>
                 <!-- Cod-->
-                <td><?php echo $totale['iva_id']; ?></td>
+                <td>
+                    <?php echo $totale['iva_id']; ?>
+                </td>
                 <!-- Descrizione iva -->
-                <td style="text-align:left"><?php echo $totale['iva_label']; ?></td>
+                <td style="text-align:left">
+                    <?php echo $totale['iva_label']; ?>
+                </td>
                 <!-- perc iva-->
-                <td><?php echo number_format($totale['iva_valore'], 0); ?>%</td>
+                <td>
+                    <?php echo number_format($totale['iva_valore'], 0); ?>%
+                </td>
                 <!-- indetraibilitò-->
-                <td><?php echo number_format($totale['iva_percentuale_indetraibilita'], 0); ?>%</td>
+                <td>
+                    <?php echo number_format($totale['iva_percentuale_indetraibilita'], 0); ?>%
+                </td>
                 <!-- italia imponibile-->
-                <td><?php e_money($totale['italia']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['italia']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- italia imposta-->
-                <td><?php e_money($totale['italia']['imposta'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['italia']['imposta'], '€ {number}');
+                    ?>
+                </td>
                 <!-- indetraibile imponibile-->
-                <td><?php e_money($totale['indetraibile']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['indetraibile']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- indetraibile imposta-->
-                <td><?php e_money($totale['indetraibile']['imposta'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['indetraibile']['imposta'], '€ {number}');
+                    ?>
+                </td>
 
                 <!-- intra imponibile-->
-                <td><?php e_money($totale['intra']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['intra']['imponibile'], '€ {number}');
+                    ?>
+                </td>
                 <!-- intra imponibile-->
-                <td><?php e_money($totale['intra']['imposta'], '€ {number}');
-?></td>
-     <!-- extra imponibile-->
-     <td><?php e_money($totale['extra']['imponibile'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['intra']['imposta'], '€ {number}');
+                    ?>
+                </td>
                 <!-- extra imponibile-->
-                <td><?php e_money($totale['extra']['imposta'], '€ {number}');
-?></td>
+                <td>
+                    <?php e_money($totale['extra']['imponibile'], '€ {number}');
+                    ?>
+                </td>
+                <!-- extra imponibile-->
+                <td>
+                    <?php e_money($totale['extra']['imposta'], '€ {number}');
+                    ?>
+                </td>
             </tr>
-        <?php endforeach;?>
+        <?php endforeach; ?>
     </tbody>
 
 </table>

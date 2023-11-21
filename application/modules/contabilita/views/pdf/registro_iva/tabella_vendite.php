@@ -328,6 +328,7 @@ extract($data['vendite']);
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th colspan="2">ITALIA</th>
+                <th colspan="2">REVERSE</th>
 
                 <th colspan="2">Intra UE</th>
                 <th colspan="2">Extra UE</th>
@@ -340,7 +341,8 @@ extract($data['vendite']);
                 <th>Ind.</th>
                 <th>Imponibile</th>
                 <th>Imposta</th>
-
+                <th>Imponibile</th>
+                <th>Imposta</th>
                 <th>Imponibile</th>
                 <th>Imposta</th>
                 <th>Imponibile</th>
@@ -384,6 +386,18 @@ extract($data['vendite']);
 
                     </td>
 
+                    <!-- reverse imponibile-->
+                    <td>
+                        <?php e_money($totale['reverse']['imponibile'], '€ {number}'); ?>
+                    </td>
+                    <!-- reverse imposta-->
+                    <td>
+                        <?php e_money($totale['reverse']['imposta'], '€ {number}'); ?>
+                    </td>
+
+
+
+
                     <!-- intra ue imponibile-->
                     <td>
                         <?php e_money($totale['intra']['imponibile'], '€ {number}'); ?>
@@ -392,6 +406,10 @@ extract($data['vendite']);
                     <td>
                         <?php e_money($totale['intra']['imposta'], '€ {number}'); ?>
                     </td>
+
+
+
+
 
                     <!-- extra ue imponibile-->
                     <td>
@@ -429,6 +447,15 @@ extract($data['vendite']);
                 <!-- italia imposta -->
                 <td>
                     <?php e_money($totale_italia_imposta, '€ {number}'); ?>
+                </td>
+
+                <!-- italia reverse -->
+                <td>
+                    <?php e_money($totale_reverse_imponibile, '€ {number}'); ?>
+                </td>
+                <!-- italia reverse -->
+                <td>
+                    <?php e_money($totale_reverse_imposta, '€ {number}'); ?>
                 </td>
 
                 <!-- intra imponibile -->

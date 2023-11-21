@@ -1527,7 +1527,10 @@ class Primanota extends MX_Controller
     {
 
         $doc = $this->db->query("SELECT * FROM contabilita_stampe_definitive WHERE contabilita_stampe_definitive_id = '{$riga_id}'")->row();
-        //dd($dettagli_riga);
+        if ($doc->contabilita_stampe_definitive_zip_file) {
+            redirect(base_url('uploads/' . $doc->contabilita_stampe_definitive_zip_file));
+            exit;
+        }
         $zip = new ZipArchive();
 
         $filename = 'contabilita_stampe_definitive' . $riga_id . '.zip';

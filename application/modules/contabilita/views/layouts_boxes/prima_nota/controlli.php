@@ -40,10 +40,12 @@ $protocollo_mancante = $this->db->query("
         FROM prime_note 
         WHERE 
         prime_note_modello <> 1 
+        AND prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH)
         AND prime_note_id IN (
                 SELECT prime_note_righe_iva_prima_nota FROM prime_note_righe_iva
             ) 
             AND (prime_note_protocollo IS NULL ) ")
+
     ->result_array();
 
 foreach ($protocollo_mancante as $key => $prima_nota) {
@@ -57,6 +59,7 @@ $protocolli_iva_anomali = $this->db->query("
     prime_note_modello <> '1'
     AND prime_note_sezionale IS NOT NULL AND prime_note_sezionale <> ''
     AND prime_note_sezionale IN (SELECT sezionali_iva_id FROM sezionali_iva WHERE sezionali_iva_tipo = 2)
+    AND prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH) 
    GROUP BY p1.prime_note_sezionale
    HAVING m > COUNT(p1.prime_note_protocollo) 
 ")->result_array();
@@ -64,7 +67,8 @@ $protocolli_iva_anomali = $this->db->query("
 foreach ($protocolli_iva_anomali as $key => $prot_iva_anomalo) {
     $prime_note = $this->apilib->search('prime_note', [
         'prime_note_sezionale' => $prot_iva_anomalo['prime_note_sezionale'],
-        'prime_note_modello <> ' => 1
+        'prime_note_modello <> ' => 1,
+        'prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH)'
     ], 0, null, 'prime_note_protocollo');
     $protocolli = array_key_map_data($prime_note, 'prime_note_id');
     $prot_expected = 0;
@@ -92,7 +96,8 @@ $sottoconti_mancanti = $this->db->query("
         SELECT *
         FROM prime_note_registrazioni
         LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) 
-        WHERE prime_note_modello <> 1
+        WHERE prime_note_modello <> 1 
+            AND prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH)
             AND (prime_note_registrazioni_sottoconto_dare IS NULL OR prime_note_registrazioni_sottoconto_dare = '') AND (prime_note_registrazioni_sottoconto_avere IS NULL OR prime_note_registrazioni_sottoconto_avere = '')")
     ->result_array();
 
@@ -106,6 +111,7 @@ $righe_iva_senza_imponibile = $this->db->query("
     LEFT JOIN prime_note ON (prime_note_id = prime_note_righe_iva_prima_nota) 
     WHERE 
         (prime_note_righe_iva_imponibile IS NULL OR prime_note_righe_iva_imponibile = '' OR prime_note_righe_iva_imponibile = 0) 
+        AND prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH)
         AND prime_note_righe_iva_prima_nota NOT IN (
 	        SELECT prime_note_id FROM prime_note WHERE prime_note_modello = 1
         )
@@ -123,6 +129,7 @@ $note_di_credito_importo_positivo_iva = $this->db->query("
     LEFT JOIN prime_note_mappature_tipo ON (prime_note_mappature_chiave = prime_note_mappature_tipo_id)
     WHERE 
         prime_note_mappature_tipo_identifier IN ('modello_nota_di_credito_vendita_ita', 'modello_nota_di_credito_acquisto_ita','modello_nota_di_credito_acquisto_ita')
+        AND prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH)
         AND (prime_note_righe_iva_imponibile > 0 OR prime_note_righe_iva_importo_iva > 0)
         AND prime_note_righe_iva_prima_nota NOT IN (
 	        SELECT prime_note_id FROM prime_note WHERE prime_note_modello = 1
@@ -152,6 +159,7 @@ $registro_iva_inconsistente = $this->db->query("
             OR 
             ROUND(CAST(prime_note_righe_iva_importo_iva / 100 * prime_note_righe_iva_indetraibilie_perc AS FLOAT),2) <> ROUND(CAST(prime_note_righe_iva_iva_valore_indet AS FLOAT),2)
         )
+        AND prime_note_data_registrazione > DATE_SUB(CURDATE(), INTERVAL 4 MONTH)
         AND prime_note_righe_iva_prima_nota NOT IN (
 	        SELECT prime_note_id FROM prime_note WHERE prime_note_modello = 1
         )
@@ -233,8 +241,8 @@ foreach (['mastri', 'conti', 'sottoconti'] as $cosa) {
 
                             <button class="btn btn-edit-primanota bg-yellow js-action_button btn-grid-action-s"
                                 onclick="javascript:initPrimanotaFormAjax('<?php echo $prima_nota_id; ?>',false,true)">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                <i class="fas fa-edit"></i>
+                            </button>
                         <?php endif; ?>
                     </li>
                 <?php endforeach; ?>
