@@ -116,10 +116,10 @@ class Docs extends CI_Model
             return $pagina;
         }
     }
-
+    
     public function generate_beautify_name($documento)
     {
-        return $documento['documenti_contabilita_tipo_value'] . "_" . $documento['documenti_contabilita_numero'] . $documento['documenti_contabilita_serie'] . "_" . date('d-m-Y', strtotime($documento['documenti_contabilita_data_emissione'])) . ".pdf";
+        return $documento['documenti_contabilita_tipo_value'] . "_" . $documento['documenti_contabilita_numero'] . $documento['documenti_contabilita_serie'] . "_" . url_title($documento['documenti_contabilita_settings_company_name']) . "_" . date('d-m-Y', strtotime($documento['documenti_contabilita_data_emissione'])) . ".pdf";
     }
 
     public function salva_file_fisico($filename, $folder, $content)
