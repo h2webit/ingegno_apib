@@ -13,7 +13,7 @@ foreach ($campi_filtro as $campo) {
 
 $filtro_movimenti = @$this->session->userdata(SESS_WHERE_DATA)['filtro_flussi_movimenti'];
 //debug($filtro_movimenti);
-$where = ['1=1'];
+$where = $where_not_saldo = ['1=1'];
 
 if (!empty($filtro_movimenti)) {
     foreach ($filtro_movimenti as $field => $filtro) {
@@ -27,8 +27,10 @@ if (!empty($filtro_movimenti)) {
                 $data_da = $data_expl[0];
                 $data_a = @$data_expl[1];
                 $data_a_mysql = implode('-', array_reverse(explode('/', $data_a)));
+                $data_da_mysql = implode('-', array_reverse(explode('/', $data_da)));
                 //debug($data_a_mysql);
                 $where[] = "date(flussi_cassa_data) <= '$data_a_mysql'";
+                $where_not_saldo[] = "date(flussi_cassa_data) >= '$data_da_mysql'";
 
                 break;
             case $flussi_cassa_risorsa: //Risorsa
@@ -59,8 +61,8 @@ if (!empty($filtro_movimenti)) {
         }
     }
 }
-
-$where_str = implode(' AND ', $where);
+//debug($where,true);
+$where_str = implode(' AND ', array_merge($where, $where_not_saldo));
 //debug($where_str);
 
 $grid_id = $this->datab->get_grid_id_by_identifier('flussi_cassa_movimenti');
@@ -90,6 +92,7 @@ foreach ($_uscite as $uscita) {
 }
 
 sort($righe);
+
 ?>
 <table class="table bilancino" data-totalable="1">
     <thead>
@@ -129,9 +132,19 @@ sort($righe);
                 </td>
                 <td style="text-align: right;">
                     <?php
-                    $somma = $this->db->query("SELECT SUM(CASE flussi_cassa_tipo WHEN '1' THEN flussi_cassa_importo WHEN '2' THEN -1*flussi_cassa_importo ELSE 0 END) as s FROM flussi_cassa WHERE $where_str")->row()->s;
+                    $where_str_saldo = implode(' AND ', $where);
+                    $somma = $this->db->query("
+                        SELECT 
+                            SUM(CASE flussi_cassa_tipo WHEN '1' THEN flussi_cassa_importo WHEN '2' THEN -1*flussi_cassa_importo ELSE 0 END) as s 
+                        FROM flussi_cassa 
+                        WHERE 
+                            $where_str_saldo
+                            AND 
+                            CONCAT(YEAR(flussi_cassa_data), '-', LPAD(MONTH(flussi_cassa_data),2,0)) <= '$data'
+                        ")->row()->s;
 
                     $saldo_iniziale = $this->db->query("SELECT SUM(COALESCE(conti_correnti_saldo_iniziale,0)) AS saldo_iniziale FROM conti_correnti WHERE conti_correnti_id IN (SELECT flussi_cassa_risorsa FROM flussi_cassa WHERE $where_str)")->row()->saldo_iniziale;
+                    //$saldo_iniziale = 0;
                     //debug($saldo_iniziale);
                     ?>
                     &euro;

@@ -181,6 +181,7 @@ class Spese extends MY_Controller
      */
     public function elaborazione_documenti_da_sdi($file_id = null)
     {
+        $this->mycache->clearCache();
         $general_settings = $this->apilib->searchFirst('documenti_contabilita_general_settings');
         $drop_existing = $this->input->get('drop');
         // Recupero i file zip da elaborare
@@ -843,7 +844,7 @@ class Spese extends MY_Controller
                                 // Se metodo di pagamento contanti o carta imposto data di pagamento come quella del documento oppure come data scadenza pagamento (se impostata)
                                 // Forte dubbio su questo array ma non vedo altre soluzioni
                                 $metodi_auto_saldo = array("MP01", "MP02", "MP03", "MP04", "MP08", "MP22");
-                                if (in_array((string) $scadenza->ModalitaPagamento, $metodi_auto_saldo)) {
+                                if ($this->settings['documenti_contabilita_settings_imp_saldate'] && in_array((string) $scadenza->ModalitaPagamento, $metodi_auto_saldo)) {
                                     $spesa_scadenza['spese_scadenze_data_saldo'] = ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data;
                                     $spese_scadenza['spese_scadenze_saldata'] = DB_BOOL_TRUE;
                                 }

@@ -31,7 +31,7 @@ $destinatario = json_decode($documento['documenti_contabilita_destinatario'], tr
 
 $scadenze = $this->apilib->search('documenti_contabilita_scadenze', ['documenti_contabilita_scadenze_documento' => $id]);
 
-$settings = $this->apilib->searchFirst('documenti_contabilita_settings', ['documenti_contabilita_settings_id' => $documento['documenti_contabilita_azienda']]);
+$settings = $this->apilib->view('documenti_contabilita_settings', $documento['documenti_contabilita_azienda']);
 
 $valuta = array(
     'AED' => '&#1583;.&#1573;',

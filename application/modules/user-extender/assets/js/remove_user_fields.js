@@ -1,7 +1,6 @@
 $(document).ready(function () {
     'use strict';
     var fields = [
-        'users_type',
         'users_show_in_social',
         'users_cost_per_hour',
         'users_show_in_kanban',

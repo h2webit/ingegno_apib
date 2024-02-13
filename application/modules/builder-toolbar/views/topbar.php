@@ -1,5 +1,10 @@
 <?php $this->layout->addModuleStylesheet('builder-toolbar', 'css/topbar.css');
 $dev_mode = $this->session->userdata('dev_mode');
+
+$users = $this->apilib->search("users", ["users_active = " . DB_BOOL_TRUE], 'users_type_value');
+$configurations = $this->apilib->searchFirst('users_manager_configurations');
+$salt = $configurations['users_manager_configurations_salt'];
+// debug($users);
 ?>
 
 
@@ -49,7 +54,29 @@ $dev_mode = $this->session->userdata('dev_mode');
                 <?php endif; ?>
                 <!-- Live/Debug -->
 
-                
+
+                <!-- Users -->
+
+                <div class="btn-group btn-spaced" style=" width:auto" data-toggle="tooltip" data-placement="bottom"
+                    data-container="body" title="All users">
+
+                    <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown"
+                        aria-expanded="true">
+                        <span class="fas fa-user"></span>
+                    </button>
+
+                    <ul class="dropdown-menu " role="menu" style="z-index: 9999;">
+
+                        <?php foreach ($users as $user): ?>
+
+                            <li><a target="_blank"
+                                    href="<?php echo base_url('user-extender/accessextender/login_force/' . $user['users_id'] . '/' . md5($salt . $user['users_id'])); ?>">
+                                    <?php echo "<strong>" . $user['users_first_name'] . " " . $user['users_last_name'] . "</strong> " . $user['users_type_value']; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
 
                 <!-- Permissions -->
 

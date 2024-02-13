@@ -58,3 +58,4 @@ Se si vuole creare una scadenza ricorrente partendo da una scadenza già present
 La ricorrenza non può essere modificata o creata a posteriori: questa va sempre impostata in fase di creazione.<br />
 <br />
 Se si vuole creare una scadenza ricorrente partendo da una scadenza già presente nel gestionale, eliminare quella scadenza e crearne una nuova.';
+$lang['Promemoria'] = 'Promemoria';

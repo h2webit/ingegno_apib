@@ -40,13 +40,13 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">FATTURATO <?php echo date("Y"); ?></span>
-                    <span class="info-box-number">€ <?php echo number_format($fatturato_anno['fatturato'], 0, ',', '.'); ?></span>
+                    <span class="info-box-number">€ <?php echo number_format( ($fatturato_anno['imponibile'] ?? 0), 0, ',', '.'); ?></span>
 
                     <div class="progress">
                         <div class="progress-bar w100"></div>
                     </div>
                     <span class="progress-description">
-                        € <?php echo number_format($fatturato_anno['iva'], 0,',','.'); ?> iva
+                        € <?php echo number_format( ($fatturato_anno['iva'] ?? 0), 0,',','.'); ?> iva
                     </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -55,12 +55,12 @@
         </div>
 
         <div class="col-md-12">
-            <div class="info-box <?php echo ($fatturato_globale['fatturato'] > 0) ? 'bg-green' : 'bg-red'; ?>">
+            <div class="info-box <?php echo (($fatturato_globale['imponibile'] ?? 0) > 0) ? 'bg-green' : 'bg-red'; ?>">
                 <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">FATTURATO GLOBALE</span>
-                    <span class="info-box-number">€ <?php echo number_format($fatturato_globale['fatturato'], 0, ',', '.'); ?></span>
+                    <span class="info-box-number">€ <?php echo number_format($fatturato_globale['imponibile'], 0, ',', '.'); ?></span>
 
                     <div class="progress">
                         <div class="progress-bar w100"></div>
@@ -75,12 +75,12 @@
         </div>
 
         <div class="col-md-12">
-            <div class="info-box <?php echo ($insolvenze['fatturato'] > 0) ? 'bg-red' : 'bg-green'; ?>">
+            <div class="info-box <?php echo ( ($insolvenze['imponibile'] ?? 0) > 0) ? 'bg-red' : 'bg-green'; ?>">
                 <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">INSOLVENZE</span>
-                    <span class="info-box-number <?php echo ($insolvenze['fatturato'] > 0) ? 'blink_me' : ''; ?>">€ <?php echo number_format($insolvenze['fatturato'], 0, ',', '.'); ?></span>
+                    <span class="info-box-number <?php echo ($insolvenze['imponibile'] > 0) ? 'blink_me' : ''; ?>">€ <?php echo number_format($insolvenze['imponibile'], 0, ',', '.'); ?></span>
 
                     <div class="progress">
                         <div class="progress-bar w100"></div>

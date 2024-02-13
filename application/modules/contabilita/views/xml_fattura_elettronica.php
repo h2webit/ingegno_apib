@@ -76,7 +76,7 @@ if ($dest_nazione == 'IT') {
     $dest_partitaiva = substr($dest_ragionesociale, 0, 27);
 }
 
-$dest_indirizzo = substr($destinatario['indirizzo'],0,50);
+$dest_indirizzo = substr($destinatario['indirizzo'], 0, 50);
 $dest_cap = !empty($destinatario['cap']) ? $destinatario['cap'] : '00000';
 $dest_citta = ($destinatario['citta']);
 $dest_provincia = ($destinatario['provincia']);
@@ -162,27 +162,43 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
 // debug($importo_sconto);
 // debug($dati['fattura'],true);
 
-?><?php echo '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
-<p:FatturaElettronica versione="<?php if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3): ?>FPA12<?php else: ?>FPR12<?php endif;?>" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
+?>
+<?php echo '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
+<p:FatturaElettronica
+    versione="<?php if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3): ?>FPA12<?php else: ?>FPR12<?php endif; ?>"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
     <FatturaElettronicaHeader>
         <DatiTrasmissione>
             <IdTrasmittente>
-                <IdPaese><?php echo $country; ?></IdPaese>
-                <IdCodice><?php echo $codice_fiscale; ?></IdCodice>
+                <IdPaese>
+                    <?php echo $country; ?>
+                </IdPaese>
+                <IdCodice>
+                    <?php echo $codice_fiscale; ?>
+                </IdCodice>
             </IdTrasmittente>
 
-            <ProgressivoInvio><?php echo str_pad($dati['fattura']['documenti_contabilita_progressivo_invio'], 10, '0', STR_PAD_LEFT); ?></ProgressivoInvio>
+            <ProgressivoInvio>
+                <?php echo str_pad($dati['fattura']['documenti_contabilita_progressivo_invio'], 10, '0', STR_PAD_LEFT); ?>
+            </ProgressivoInvio>
             <?php if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3): ?>
                 <FormatoTrasmissione>FPA12</FormatoTrasmissione>
             <?php else: ?>
                 <FormatoTrasmissione>FPR12</FormatoTrasmissione>
-            <?php endif;?>
+            <?php endif; ?>
             <?php /* <!--            Da rivedere, non chiaro--> */?>
-            <CodiceDestinatario><?php echo $codice_destinatario; ?></CodiceDestinatario>
+            <CodiceDestinatario>
+                <?php echo $codice_destinatario; ?>
+            </CodiceDestinatario>
             <?php /* <!--            Il campo sembra essere standard, http://www.fatturapa.gov.it/export/fatturazione/it/c-13.htm--> */?>
             <?php if (!empty($pec)): ?>
-                <PECDestinatario><?php echo $pec; ?></PECDestinatario>
-            <?php endif;?>
+                <PECDestinatario>
+                    <?php echo $pec; ?>
+                </PECDestinatario>
+            <?php endif; ?>
             <?php /* <!--<ContattiTrasmittente>
 <Telefono></Telefono>
 <Email></Email>
@@ -192,42 +208,72 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
         <CedentePrestatore>
             <DatiAnagrafici>
                 <IdFiscaleIVA>
-                    <IdPaese><?php echo $country; ?></IdPaese>
-                    <IdCodice><?php echo $vat_num; ?></IdCodice>
+                    <IdPaese>
+                        <?php echo $country; ?>
+                    </IdPaese>
+                    <IdCodice>
+                        <?php echo $vat_num; ?>
+                    </IdCodice>
                 </IdFiscaleIVA>
 
                 <?php /* <!--<CodiceFiscale></CodiceFiscale>--> */?>
                 <Anagrafica>
-                    <Denominazione><?php echo htmlspecialchars($company_name); ?></Denominazione>
+                    <Denominazione>
+                        <?php echo htmlspecialchars($company_name); ?>
+                    </Denominazione>
                     <?php /* <!--<Nome></Nome>--> */?>
                     <?php /* <!--<Cognome></Cognome>--> */?>
                     <?php /* <!--<Titolo></Titolo>
 <CodEORI></CodEORI>--> */?>
                 </Anagrafica>
 
-                <RegimeFiscale><?php echo $regime_fiscale; ?></RegimeFiscale>
+                <RegimeFiscale>
+                    <?php echo $regime_fiscale; ?>
+                </RegimeFiscale>
             </DatiAnagrafici>
             <Sede>
-                <Indirizzo><?php echo htmlspecialchars($company_address); ?></Indirizzo>
-                <CAP><?php echo $company_cap; ?></CAP>
-                <Comune><?php echo $company_city; ?></Comune>
-                <Provincia><?php echo strtoupper($company_province); ?></Provincia>
-                <Nazione><?php echo $country; ?></Nazione>
+                <Indirizzo>
+                    <?php echo htmlspecialchars($company_address); ?>
+                </Indirizzo>
+                <CAP>
+                    <?php echo $company_cap; ?>
+                </CAP>
+                <Comune>
+                    <?php echo $company_city; ?>
+                </Comune>
+                <Provincia>
+                    <?php echo strtoupper($company_province); ?>
+                </Provincia>
+                <Nazione>
+                    <?php echo $country; ?>
+                </Nazione>
             </Sede>
             <?php if (!empty($company_numero_rea)): ?>
                 <IscrizioneREA>
-                    <Ufficio><?php echo strtoupper($company_ufficio_rea); ?></Ufficio>
-                    <NumeroREA><?php echo $company_numero_rea; ?></NumeroREA>
-                    <CapitaleSociale><?php echo number_format($company_capitale_sociale, 2, '.', ''); ?></CapitaleSociale>
-                    <SocioUnico><?php echo $company_socio_unico; ?></SocioUnico>
-                    <StatoLiquidazione><?php echo $company_stato_liquidazione; ?></StatoLiquidazione>
+                    <Ufficio>
+                        <?php echo strtoupper($company_ufficio_rea); ?>
+                    </Ufficio>
+                    <NumeroREA>
+                        <?php echo $company_numero_rea; ?>
+                    </NumeroREA>
+                    <CapitaleSociale>
+                        <?php echo number_format($company_capitale_sociale, 2, '.', ''); ?>
+                    </CapitaleSociale>
+                    <SocioUnico>
+                        <?php echo $company_socio_unico; ?>
+                    </SocioUnico>
+                    <StatoLiquidazione>
+                        <?php echo $company_stato_liquidazione; ?>
+                    </StatoLiquidazione>
                 </IscrizioneREA>
-            <?php endif;?>
+            <?php endif; ?>
             <?php if (!empty($dati_contratto = json_decode($dati['fattura']['documenti_contabilita_fe_dati_contratto'], true)) && array_filter($dati_contratto)): ?>
                 <?php if (!empty($dati_contratto['riferimento_amministrazione'])): ?>
-                    <RiferimentoAmministrazione><?php echo $dati_contratto['riferimento_amministrazione']; ?></RiferimentoAmministrazione>
-                <?php endif;?>
-            <?php endif;?>
+                    <RiferimentoAmministrazione>
+                        <?php echo $dati_contratto['riferimento_amministrazione']; ?>
+                    </RiferimentoAmministrazione>
+                <?php endif; ?>
+            <?php endif; ?>
 
             <?php /* <!--<RiferimentoAmministrazione><?php echo $company_name; ?></RiferimentoAmministrazione>--> */?>
         </CedentePrestatore>
@@ -236,15 +282,23 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
             <DatiAnagrafici>
                 <?php if (!empty($dest_partitaiva)): ?>
                     <IdFiscaleIVA>
-                        <IdPaese><?php echo $dest_nazione; ?></IdPaese>
-                        <IdCodice><?php echo $dest_partitaiva; ?></IdCodice>
+                        <IdPaese>
+                            <?php echo $dest_nazione; ?>
+                        </IdPaese>
+                        <IdCodice>
+                            <?php echo $dest_partitaiva; ?>
+                        </IdCodice>
                     </IdFiscaleIVA>
-                <?php endif;?>
+                <?php endif; ?>
                 <?php if ($dest_nazione == 'IT' && $dest_codicefiscale): ?>
-                    <CodiceFiscale><?php echo strtoupper($dest_codicefiscale); ?></CodiceFiscale>
-                <?php endif;?>
+                    <CodiceFiscale>
+                        <?php echo strtoupper($dest_codicefiscale); ?>
+                    </CodiceFiscale>
+                <?php endif; ?>
                 <Anagrafica>
-                    <Denominazione><?php echo htmlspecialchars($dest_ragionesociale); ?></Denominazione>
+                    <Denominazione>
+                        <?php echo htmlspecialchars($dest_ragionesociale); ?>
+                    </Denominazione>
                     <?php /* <!--<Nome></Nome>--> */?>
                     <?php /* <!--<Cognome></Cognome>--> */?>
                     <?php /* <!--<Titolo></Titolo>
@@ -252,12 +306,22 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
                 </Anagrafica>
             </DatiAnagrafici>
             <Sede>
-                <Indirizzo><?php echo $dest_indirizzo; ?></Indirizzo>
+                <Indirizzo>
+                    <?php echo $dest_indirizzo; ?>
+                </Indirizzo>
                 <?php /* <!--<NumeroCivico></NumeroCivico>--> */?>
-                <CAP><?php echo $dest_cap; ?></CAP>
-                <Comune><?php echo $dest_citta; ?></Comune>
-                <Provincia><?php echo strtoupper($dest_provincia); ?></Provincia>
-                <Nazione><?php echo $dest_nazione; ?></Nazione>
+                <CAP>
+                    <?php echo $dest_cap; ?>
+                </CAP>
+                <Comune>
+                    <?php echo $dest_citta; ?>
+                </Comune>
+                <Provincia>
+                    <?php echo strtoupper($dest_provincia); ?>
+                </Provincia>
+                <Nazione>
+                    <?php echo $dest_nazione; ?>
+                </Nazione>
             </Sede>
         </CessionarioCommittente>
 
@@ -273,7 +337,7 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
 </DatiAnagrafici>
 </TerzoIntermediarioOSoggettoEmittente>
 <SoggettoEmittente>TZ</SoggettoEmittente>
- */?>
+*/?>
 
 
     </FatturaElettronicaHeader>
@@ -281,79 +345,122 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
         <DatiGenerali>
             <DatiGeneraliDocumento>
                 <?php /* <!-- TODO: Creazione campo --> */?>
-                <TipoDocumento><?php echo $fattura_tipo; ?></TipoDocumento>
-                <Divisa><?php echo $fattura_valuta; ?></Divisa>
-                <Data><?php echo $fattura_dataemissione; ?></Data>
-                <Numero><?php echo $fattura_numero; ?></Numero>
+                <TipoDocumento>
+                    <?php echo $fattura_tipo; ?>
+                </TipoDocumento>
+                <Divisa>
+                    <?php echo $fattura_valuta; ?>
+                </Divisa>
+                <Data>
+                    <?php echo $fattura_dataemissione; ?>
+                </Data>
+                <Numero>
+                    <?php echo $fattura_numero; ?>
+                </Numero>
                 <?php if (false && $dati['fattura']['documenti_contabilita_sconto_percentuale'] != 0): //20230906 - Rimosso in quanto ora lo sconto viene applicato alle singole righe articolo sopra ?>
                     <ScontoMaggiorazione>
                         <Tipo>SC</Tipo>
-                        <Percentuale><?php echo number_format($dati['fattura']['documenti_contabilita_sconto_percentuale'], 2, '.', ''); ?></Percentuale>
-                        <Importo><?php echo $importo_sconto ?></Importo>
+                        <Percentuale>
+                            <?php echo number_format($dati['fattura']['documenti_contabilita_sconto_percentuale'], 2, '.', ''); ?>
+                        </Percentuale>
+                        <Importo>
+                            <?php echo $importo_sconto ?>
+                        </Importo>
                     </ScontoMaggiorazione>
-                <?php endif;?>
+                <?php endif; ?>
 
                 <?php if ($dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'] != 0): ?>
                     <DatiRitenuta>
-                        <TipoRitenuta><?php echo $dati['fattura']['documenti_contabilita_tipo_ritenuta_value']; ?></TipoRitenuta>
-                        <ImportoRitenuta><?php echo number_format($dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'], 2, '.', ''); ?></ImportoRitenuta>
-                        <AliquotaRitenuta><?php echo number_format($dati['fattura']['documenti_contabilita_ritenuta_acconto_perc'], 2, '.', ''); ?></AliquotaRitenuta>
-                        <CausalePagamento><?php echo $dati['fattura']['documenti_contabilita_causale_pagamento_ritenuta']; ?></CausalePagamento>
+                        <TipoRitenuta>
+                            <?php echo $dati['fattura']['documenti_contabilita_tipo_ritenuta_value']; ?>
+                        </TipoRitenuta>
+                        <ImportoRitenuta>
+                            <?php echo number_format($dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'], 2, '.', ''); ?>
+                        </ImportoRitenuta>
+                        <AliquotaRitenuta>
+                            <?php echo number_format($dati['fattura']['documenti_contabilita_ritenuta_acconto_perc'], 2, '.', ''); ?>
+                        </AliquotaRitenuta>
+                        <CausalePagamento>
+                            <?php echo $dati['fattura']['documenti_contabilita_causale_pagamento_ritenuta']; ?>
+                        </CausalePagamento>
                     </DatiRitenuta>
-                <?php endif;?>
+                <?php endif; ?>
 
                 <?php if ($dati['fattura']['documenti_contabilita_importo_bollo'] != 0 && $dati['fattura']['documenti_contabilita_applica_bollo'] == DB_BOOL_TRUE && $dati['fattura']['documenti_contabilita_bollo_virtuale'] == DB_BOOL_TRUE): ?>
                     <DatiBollo>
                         <BolloVirtuale>SI</BolloVirtuale>
-                        <ImportoBollo><?php echo number_format($dati['fattura']['documenti_contabilita_importo_bollo'], 2, '.', ''); ?></ImportoBollo>
+                        <ImportoBollo>
+                            <?php echo number_format($dati['fattura']['documenti_contabilita_importo_bollo'], 2, '.', ''); ?>
+                        </ImportoBollo>
 
                     </DatiBollo>
-                <?php endif;?>
+                <?php endif; ?>
 
-                
+
                 <?php
-if ($dati['fattura']['documenti_contabilita_cassa_professionisti_perc'] > 0) {
-    $cassa_tipo = $this->apilib->view('documenti_contabilita_cassa_professionisti_tipo', $dati['fattura']['documenti_contabilita_cassa_professionisti_tipo']);
-    if ($cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'] && $iva_cassa = $this->apilib->view('iva', $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'])) {
+                $importoCassa = 0;
+                if ($dati['fattura']['documenti_contabilita_cassa_professionisti_perc'] > 0) {
+                    $cassa_tipo = $this->apilib->view('documenti_contabilita_cassa_professionisti_tipo', $dati['fattura']['documenti_contabilita_cassa_professionisti_tipo']);
+                    if ($cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'] && $iva_cassa = $this->apilib->view('iva', $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'])) {
                         //debug($iva_cassa,true);                
-        $aliquota_iva_cassa = $iva_cassa['iva_valore'];
+                        $aliquota_iva_cassa = $iva_cassa['iva_valore'];
                         $natura_cassa = $iva_cassa['iva_codice'];
-    }        else {
+                    } else {
                         $aliquota_iva_cassa = 0;
                         $natura_cassa = '';
-    }         
-    
-    //debug($dati['fattura'], true);
-    $percentuale_contributo = $dati['fattura']['documenti_contabilita_cassa_professionisti_perc'];
+                    }
+
+                    //debug($dati['fattura'], true);
+                    $percentuale_contributo = $dati['fattura']['documenti_contabilita_cassa_professionisti_perc'];
                     $imponibile_fattura = $dati['fattura']['documenti_contabilita_competenze'];
                     $imponibile_calcolo = $imponibile_fattura;
                     $importoCassa = $imponibile_fattura / 100 * $percentuale_contributo;
                     //debug($imponibile_fattura,true); 
-    ?>
-                <DatiCassaPrevidenziale>
-                    <TipoCassa><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_codice']; ?></TipoCassa>
-                    <AlCassa><?php echo $percentuale_contributo; ?></AlCassa>
-                    <ImportoContributoCassa><?php echo number_format(round($importoCassa, 2), 2, '.', ''); ?></ImportoContributoCassa>
-                    <ImponibileCassa><?php echo $imponibile_calcolo; ?></ImponibileCassa>
-                    <AliquotaIVA><?php echo $aliquota_iva_cassa; ?></AliquotaIVA>
-                    <?php /*<Ritenuta></Ritenuta>*/ ?>
-                    <?php if ($aliquota_iva_cassa == 0) : ?><Natura><?php echo $natura_cassa; ?></Natura><?php endif; ?>
-                    <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/ ?>
-                </DatiCassaPrevidenziale>
+                    ?>
+                    <DatiCassaPrevidenziale>
+                        <TipoCassa>
+                            <?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_codice']; ?>
+                        </TipoCassa>
+                        <AlCassa>
+                            <?php echo $percentuale_contributo; ?>
+                        </AlCassa>
+                        <ImportoContributoCassa>
+                            <?php echo number_format(round($importoCassa, 2), 2, '.', ''); ?>
+                        </ImportoContributoCassa>
+                        <ImponibileCassa>
+                            <?php echo $imponibile_calcolo; ?>
+                        </ImponibileCassa>
+                        <AliquotaIVA>
+                            <?php echo $aliquota_iva_cassa; ?>
+                        </AliquotaIVA>
+                        <?php /*<Ritenuta></Ritenuta>*/?>
+                        <?php if ($aliquota_iva_cassa == 0): ?>
+                            <Natura>
+                                <?php echo $natura_cassa; ?>
+                            </Natura>
+                        <?php endif; ?>
+                        <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/?>
+                    </DatiCassaPrevidenziale>
                 <?php } ?>
                 <?php
-                
-                    if ($dati['fattura']['documenti_contabilita_split_payment'] == DB_BOOL_TRUE) {
-                        $importo_totale_documento = number_format($fattura_totale + $dati['fattura']['documenti_contabilita_iva'], 2, '.', '');
-                    } elseif ($dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'] != 0) {
-                        $importo_totale_documento = number_format($fattura_totale + $dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'], 2, '.', '');
-                    } else {
-                        $importo_totale_documento = number_format($fattura_totale, 2, '.', '');
-                    }
+
+                if ($dati['fattura']['documenti_contabilita_split_payment'] == DB_BOOL_TRUE) {
+                    $importo_totale_documento = number_format($fattura_totale + $dati['fattura']['documenti_contabilita_iva'], 2, '.', '');
+                } elseif ($dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'] != 0) {
+                    $importo_totale_documento = number_format($fattura_totale + $dati['fattura']['documenti_contabilita_ritenuta_acconto_valore'], 2, '.', '');
+                } else {
+                    $importo_totale_documento = number_format($fattura_totale, 2, '.', '');
+                }
                 ?>
-                
-                <ImportoTotaleDocumento><?php echo trim($importo_totale_documento); ?></ImportoTotaleDocumento>
-                <?php if (!empty($dati['fattura']['documenti_contabilita_oggetto'])): ?><Causale><?php echo $dati['fattura']['documenti_contabilita_oggetto']; ?></Causale><?php endif;?>
+
+                <ImportoTotaleDocumento>
+                    <?php echo trim($importo_totale_documento); ?>
+                </ImportoTotaleDocumento>
+                <?php if (!empty($dati['fattura']['documenti_contabilita_oggetto'])): ?>
+                    <Causale>
+                        <?php echo $dati['fattura']['documenti_contabilita_oggetto']; ?>
+                    </Causale>
+                <?php endif; ?>
                 <?php /* <!--
 <Arrotondamento></Arrotondamento>
 
@@ -363,35 +470,91 @@ if ($dati['fattura']['documenti_contabilita_cassa_professionisti_perc'] > 0) {
 
             <?php if (!empty($ordine_acquisto = json_decode($dati['fattura']['documenti_contabilita_fe_ordineacquisto'], true)) && array_filter($ordine_acquisto)): ?>
                 <DatiOrdineAcquisto>
-                    <?php if (!empty($ordine_acquisto['riferimento_numero_linea'])): ?><RiferimentoNumeroLinea><?php echo $ordine_acquisto['riferimento_numero_linea']; ?></RiferimentoNumeroLinea><?php endif;?>
-                    <?php if (!empty($ordine_acquisto['id_documento'])): ?><IdDocumento><?php echo $ordine_acquisto['id_documento']; ?></IdDocumento><?php endif;?>
-                    <?php if (!empty($ordine_acquisto['data'])): ?><Data><?php echo $ordine_acquisto['data']; ?></Data><?php endif;?>
-                    <?php if (!empty($ordine_acquisto['num_item'])): ?><NumItem><?php echo $ordine_acquisto['num_item']; ?></NumItem><?php endif;?>
-                    <?php if (!empty($ordine_acquisto['codice_commessa_convenzione'])): ?><CodiceCommessaConvenzione><?php echo $ordine_acquisto['codice_commessa_convenzione']; ?></CodiceCommessaConvenzione><?php endif;?>
-                    <?php if (!empty($ordine_acquisto['codice_cup'])): ?><CodiceCUP><?php echo $ordine_acquisto['codice_cup']; ?></CodiceCUP><?php endif;?>
-                    <?php if (!empty($ordine_acquisto['codice_cig'])): ?><CodiceCIG><?php echo $ordine_acquisto['codice_cig']; ?></CodiceCIG><?php endif;?>
+                    <?php if (!empty($ordine_acquisto['riferimento_numero_linea'])): ?>
+                        <RiferimentoNumeroLinea>
+                            <?php echo $ordine_acquisto['riferimento_numero_linea']; ?>
+                        </RiferimentoNumeroLinea>
+                    <?php endif; ?>
+                    <?php if (!empty($ordine_acquisto['id_documento'])): ?>
+                        <IdDocumento>
+                            <?php echo $ordine_acquisto['id_documento']; ?>
+                        </IdDocumento>
+                    <?php endif; ?>
+                    <?php if (!empty($ordine_acquisto['data'])): ?><Data>
+                            <?php echo $ordine_acquisto['data']; ?>
+                        </Data>
+                    <?php endif; ?>
+                    <?php if (!empty($ordine_acquisto['num_item'])): ?>
+                        <NumItem>
+                            <?php echo $ordine_acquisto['num_item']; ?>
+                        </NumItem>
+                    <?php endif; ?>
+                    <?php if (!empty($ordine_acquisto['codice_commessa_convenzione'])): ?>
+                        <CodiceCommessaConvenzione>
+                            <?php echo $ordine_acquisto['codice_commessa_convenzione']; ?>
+                        </CodiceCommessaConvenzione>
+                    <?php endif; ?>
+                    <?php if (!empty($ordine_acquisto['codice_cup'])): ?>
+                        <CodiceCUP>
+                            <?php echo $ordine_acquisto['codice_cup']; ?>
+                        </CodiceCUP>
+                    <?php endif; ?>
+                    <?php if (!empty($ordine_acquisto['codice_cig'])): ?>
+                        <CodiceCIG>
+                            <?php echo $ordine_acquisto['codice_cig']; ?>
+                        </CodiceCIG>
+                    <?php endif; ?>
                 </DatiOrdineAcquisto>
-            <?php endif;?>
+            <?php endif; ?>
 
             <?php if (!empty($ddt)): ?>
                 <DatiDDT>
-                    <NumeroDDT><?=$ddt['documenti_contabilita_numero'];?></NumeroDDT>
-                    <DataDDT><?=date('Y-m-d', strtotime($ddt['documenti_contabilita_data_emissione']));?></DataDDT>
+                    <NumeroDDT>
+                        <?= $ddt['documenti_contabilita_numero']; ?>
+                    </NumeroDDT>
+                    <DataDDT><?= date('Y-m-d', strtotime($ddt['documenti_contabilita_data_emissione'])); ?></DataDDT>
                     <!--<RiferimentoNumeroLinea></RiferimentoNumeroLinea>-->
                 </DatiDDT>
-            <?php endif;?>
+            <?php endif; ?>
 
             <?php if (!empty($dati_contratto = json_decode($dati['fattura']['documenti_contabilita_fe_dati_contratto'], true)) && array_filter($dati_contratto)): ?>
                 <DatiContratto>
-                    <?php if (!empty($dati_contratto['riferimento_numero_linea'])): ?><RiferimentoNumeroLinea><?php echo $dati_contratto['riferimento_numero_linea']; ?></RiferimentoNumeroLinea><?php endif;?>
-                    <?php if (!empty($dati_contratto['id_documento'])): ?><IdDocumento><?php echo $dati_contratto['id_documento']; ?></IdDocumento><?php endif;?>
-                    <?php if (!empty($dati_contratto['data'])): ?><Data><?php echo $dati_contratto['data']; ?></Data><?php endif;?>
-                    <?php if (!empty($dati_contratto['num_item'])): ?><NumItem><?php echo $dati_contratto['num_item']; ?></NumItem><?php endif;?>
-                    <?php if (!empty($dati_contratto['codice_commessa_convenzione'])): ?><CodiceCommessaConvenzione><?php echo $dati_contratto['codice_commessa_convenzione']; ?></CodiceCommessaConvenzione><?php endif;?>
-                    <?php if (!empty($dati_contratto['codice_cup'])): ?><CodiceCUP><?php echo $dati_contratto['codice_cup']; ?></CodiceCUP><?php endif;?>
-                    <?php if (!empty($dati_contratto['codice_cig'])): ?><CodiceCIG><?php echo $dati_contratto['codice_cig']; ?></CodiceCIG><?php endif;?>
+                    <?php if (!empty($dati_contratto['riferimento_numero_linea'])): ?>
+                        <RiferimentoNumeroLinea>
+                            <?php echo $dati_contratto['riferimento_numero_linea']; ?>
+                        </RiferimentoNumeroLinea>
+                    <?php endif; ?>
+                    <?php if (!empty($dati_contratto['id_documento'])): ?>
+                        <IdDocumento>
+                            <?php echo $dati_contratto['id_documento']; ?>
+                        </IdDocumento>
+                    <?php endif; ?>
+                    <?php if (!empty($dati_contratto['data'])): ?><Data>
+                            <?php echo $dati_contratto['data']; ?>
+                        </Data>
+                    <?php endif; ?>
+                    <?php if (!empty($dati_contratto['num_item'])): ?>
+                        <NumItem>
+                            <?php echo $dati_contratto['num_item']; ?>
+                        </NumItem>
+                    <?php endif; ?>
+                    <?php if (!empty($dati_contratto['codice_commessa_convenzione'])): ?>
+                        <CodiceCommessaConvenzione>
+                            <?php echo $dati_contratto['codice_commessa_convenzione']; ?>
+                        </CodiceCommessaConvenzione>
+                    <?php endif; ?>
+                    <?php if (!empty($dati_contratto['codice_cup'])): ?>
+                        <CodiceCUP>
+                            <?php echo $dati_contratto['codice_cup']; ?>
+                        </CodiceCUP>
+                    <?php endif; ?>
+                    <?php if (!empty($dati_contratto['codice_cig'])): ?>
+                        <CodiceCIG>
+                            <?php echo $dati_contratto['codice_cig']; ?>
+                        </CodiceCIG>
+                    <?php endif; ?>
                 </DatiContratto>
-            <?php endif;?>
+            <?php endif; ?>
             <?php /* <!--
 <DatiOrdineAcquisto>
 <RiferimentoNumeroLinea></RiferimentoNumeroLinea>
@@ -493,163 +656,219 @@ if ($dati['fattura']['documenti_contabilita_cassa_professionisti_perc'] > 0) {
             <?php foreach ($articoli as $key => $articolo): ?>
 
                 <DettaglioLinee>
-                    <NumeroLinea><?php echo $key + 1; ?></NumeroLinea>
+                    <NumeroLinea>
+                        <?php echo $key + 1; ?>
+                    </NumeroLinea>
                     <?php /* <!--<TipoCessionePrestazione></TipoCessionePrestazione>--> */?>
-                    
-                    <?php if (!empty($articolo['documenti_contabilita_articoli_codice'])): ?>
+
+                    <?php if (!empty(trim($articolo['documenti_contabilita_articoli_codice']))): ?>
                         <CodiceArticolo>
                             <CodiceTipo>SKU</CodiceTipo>
-                            <CodiceValore><?= htmlspecialchars($articolo['documenti_contabilita_articoli_codice']);?></CodiceValore>
+                            <CodiceValore>
+                                <?= htmlspecialchars($articolo['documenti_contabilita_articoli_codice']); ?>
+                            </CodiceValore>
                         </CodiceArticolo>
-                    <?php endif;?>
+                    <?php endif; ?>
 
-                    <?php if (!empty($articolo['documenti_contabilita_articoli_codice_ean'])): ?>
+                    <?php if (!empty(trim($articolo['documenti_contabilita_articoli_codice_ean']))): ?>
                         <CodiceArticolo>
                             <CodiceTipo>EAN</CodiceTipo>
-                            <CodiceValore><?= htmlspecialchars($articolo['documenti_contabilita_articoli_codice_ean']);?></CodiceValore>
+                            <CodiceValore>
+                                <?= htmlspecialchars($articolo['documenti_contabilita_articoli_codice_ean']); ?>
+                            </CodiceValore>
                         </CodiceArticolo>
-                    <?php endif;?>
+                    <?php endif; ?>
 
-                    <?php if (!empty($articolo['documenti_contabilita_articoli_codice_asin'])): ?>
+                    <?php if (!empty(trim($articolo['documenti_contabilita_articoli_codice_asin']))): ?>
                         <CodiceArticolo>
                             <CodiceTipo>ASIN</CodiceTipo>
-                            <CodiceValore><?= htmlspecialchars($articolo['documenti_contabilita_articoli_codice_asin']);?></CodiceValore>
+                            <CodiceValore>
+                                <?= htmlspecialchars($articolo['documenti_contabilita_articoli_codice_asin']); ?>
+                            </CodiceValore>
                         </CodiceArticolo>
-                    <?php endif;?>
-                    
+                    <?php endif; ?>
+
                     <?php // michael - 06.09.2023 - ho cambiato il replace di € da &euro; a EUR perchè altrimenti si rompe completamente la generazione dell'xml con errore "Message: DOMDocument::loadXML(): Entity 'euro' not defined in Entity, line: 138".. E' già stato testato un replace con ad esempio l'unicode ma poi non viene interpretato ne visualizzato correttamente sulle conversioni in pdf e nel xml da inviare allo sdi ?>
-                    <Descrizione><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $articolo['documenti_contabilita_articoli_name'] . ' - ' . $articolo['documenti_contabilita_articoli_descrizione']), 0, 900); ?></Descrizione>
-                    <Quantita><?php echo number_format($articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?></Quantita>
-                    <UnitaMisura><?php echo ($articolo['documenti_contabilita_articoli_unita_misura']) ?: 'Pz'; ?></UnitaMisura>
+                    <Descrizione>
+                        <?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $articolo['documenti_contabilita_articoli_name'] . ' - ' . $articolo['documenti_contabilita_articoli_descrizione']), 0, 900); ?>
+                    </Descrizione>
+                    <Quantita>
+                        <?php echo number_format($articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?>
+                    </Quantita>
+                    <UnitaMisura>
+                        <?php echo ($articolo['documenti_contabilita_articoli_unita_misura']) ?: 'Pz'; ?>
+                    </UnitaMisura>
 
                     <?php /* <!--<DataInizioPeriodo></DataInizioPeriodo>
 <DataFinePeriodo></DataFinePeriodo>--> */?>
                     <?php
-$prezzo_senza_seri = number_format($articolo['documenti_contabilita_articoli_prezzo'], 8, '.', '');
-                $prezzo_esploso = explode('.', $prezzo_senza_seri);
-                $parte_decimale = $prezzo_esploso[1];
-                $parte_intera = $prezzo_esploso[0];
+                    $prezzo_senza_seri = number_format($articolo['documenti_contabilita_articoli_prezzo'], 8, '.', '');
+                    $prezzo_esploso = explode('.', $prezzo_senza_seri);
+                    $parte_decimale = $prezzo_esploso[1];
+                    $parte_intera = $prezzo_esploso[0];
 
-                while (strrpos($parte_decimale, '0') === strlen($parte_decimale) - 1 && strlen($parte_decimale) > 2) {
-                    $parte_decimale = rtrim($parte_decimale, '0');
-                }
+                    while (strrpos($parte_decimale, '0') === strlen($parte_decimale) - 1 && strlen($parte_decimale) > 2) {
+                        $parte_decimale = rtrim($parte_decimale, '0');
+                    }
 
-                $prezzo_esploso[1] = $parte_decimale;
-                $prezzo_senza_seri = implode('.', $prezzo_esploso);
-                ?>
+                    $prezzo_esploso[1] = $parte_decimale;
+                    $prezzo_senza_seri = implode('.', $prezzo_esploso);
+                    ?>
 
-                    <PrezzoUnitario><?php echo number_format($prezzo_senza_seri, max([2, strlen($parte_decimale)]), '.', ''); ?></PrezzoUnitario>
+                    <PrezzoUnitario>
+                        <?php echo number_format($prezzo_senza_seri, max([2, strlen($parte_decimale)]), '.', ''); ?>
+                    </PrezzoUnitario>
 
                     <?php
-                //Se ci sono due sconti, prima devo applicarne uno, poi l'altro... non posso sommare i due sconti e dividere per 100!
-                $sconto_da_applicare = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) ? ($articolo['documenti_contabilita_articoli_sconto'] + ($dati['fattura']['documenti_contabilita_sconto_percentuale'] / 100 * (100 - $articolo['documenti_contabilita_articoli_sconto']))) : 0;
-                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto2'] > 0) {
-                    $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto2'];
-                }
-                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto3'] > 0) {
-                    $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto3'];
-                }
-                ?>
+                    //Se ci sono due sconti, prima devo applicarne uno, poi l'altro... non posso sommare i due sconti e dividere per 100!
+                    $sconto_da_applicare = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) ? ($articolo['documenti_contabilita_articoli_sconto'] + ($dati['fattura']['documenti_contabilita_sconto_percentuale'] / 100 * (100 - $articolo['documenti_contabilita_articoli_sconto']))) : 0;
+                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto2'] > 0) {
+                        $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto2'];
+                    }
+                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto3'] > 0) {
+                        $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto3'];
+                    }
+                    ?>
 
                     <?php if ($sconto_da_applicare > 0 && ($articolo['documenti_contabilita_articoli_sconto'] > 0 || ($dati['fattura']['documenti_contabilita_sconto_percentuale'] > 0 && $dati['fattura']['documenti_contabilita_sconto_su_imponibile']))): ?>
                         <ScontoMaggiorazione>
 
                             <Tipo>SC</Tipo>
-                            <Percentuale><?php echo number_format($sconto_da_applicare, 2, '.', ''); ?></Percentuale>
+                            <Percentuale>
+                                <?php echo number_format($sconto_da_applicare, 2, '.', ''); ?>
+                            </Percentuale>
                             <!--<Percentuale><?php echo number_format($articolo['documenti_contabilita_articoli_sconto'], 2, '.', ''); ?></Percentuale>-->
                         </ScontoMaggiorazione>
-                    <?php endif;?>
-                    <PrezzoTotale><?php echo $segno . number_format((($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100 * (100 - $sconto_da_applicare)), 2, '.', ''); ?></PrezzoTotale>
-                    <?php /*<PrezzoTotale><?php echo $segno . number_format(($articolo['documenti_contabilita_articoli_prezzo'] / 100 * (100 - ($articolo['documenti_contabilita_articoli_sconto']))) * $articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?></PrezzoTotale>*/ ?>
-                    <AliquotaIVA><?php echo number_format($articolo['iva_valore'], 2, '.', ''); ?></AliquotaIVA>
+                    <?php endif; ?>
+                    <PrezzoTotale>
+                        <?php echo $segno . number_format((($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100 * (100 - $sconto_da_applicare)), 2, '.', ''); ?>
+                    </PrezzoTotale>
+                    <?php /*<PrezzoTotale><?php echo $segno . number_format(($articolo['documenti_contabilita_articoli_prezzo'] / 100 * (100 - ($articolo['documenti_contabilita_articoli_sconto']))) * $articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?></PrezzoTotale>*/?>
+                    <AliquotaIVA>
+                        <?php echo number_format($articolo['iva_valore'], 2, '.', ''); ?>
+                    </AliquotaIVA>
 
                     <?php if (!empty($articolo['iva_codice'])): ?>
-                        <Natura><?php echo $articolo['iva_codice']; ?></Natura>
+                        <Natura>
+                            <?php echo $articolo['iva_codice']; ?>
+                        </Natura>
                         <?php /* <RiferimentoAmministrazione><?php echo $articolo['iva_descrizione']; ?></RiferimentoAmministrazione>*/?>
-                    <?php endif;?>
-                    <?php 
+                    <?php endif; ?>
+                    <?php
                     /* 
                     <Ritenuta></Ritenuta>
 */
                     $attributi_avanzati_assoc = [];
                     if (!empty($articolo['documenti_contabilita_articoli_attributi_sdi']) && $attributi_avanzati = json_decode($articolo['documenti_contabilita_articoli_attributi_sdi'], true)) {
-                        
+
                         foreach ($attributi_avanzati as $attributo_sdi) {
                             if (!empty($attributo_sdi['value'])) {
                                 $attributi_avanzati_assoc[$attributo_sdi['name']] = $attributo_sdi['value'];
                             }
                         }
                     }
-                     if ($attributi_avanzati_assoc) :   
-                    ?>
-                    <AltriDatiGestionali>
-                        <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[TipoDato]'])) : ?><TipoDato><?php echo $attributi_avanzati_assoc['AltriDatiGestionali[TipoDato]']; ?></TipoDato><?php endif; ?>
-                        <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoTesto]'])) : ?><RiferimentoTesto><?php echo $attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoTesto]']; ?></RiferimentoTesto><?php endif; ?>
-                        <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoNumero]'])) : ?><RiferimentoNumero><?php echo $attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoNumero]']; ?></RiferimentoNumero><?php endif; ?>
-                        <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoData]'])) : ?><RiferimentoData><?php echo $attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoData]']; ?></RiferimentoData><?php endif; ?>
-                    </AltriDatiGestionali>
+                    if ($attributi_avanzati_assoc):
+                        ?>
+                        <AltriDatiGestionali>
+                            <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[TipoDato]'])): ?>
+                                <TipoDato>
+                                    <?php echo $attributi_avanzati_assoc['AltriDatiGestionali[TipoDato]']; ?>
+                                </TipoDato>
+                            <?php endif; ?>
+                            <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoTesto]'])): ?>
+                                <RiferimentoTesto>
+                                    <?php echo $attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoTesto]']; ?>
+                                </RiferimentoTesto>
+                            <?php endif; ?>
+                            <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoNumero]'])): ?>
+                                <RiferimentoNumero>
+                                    <?php echo $attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoNumero]']; ?>
+                                </RiferimentoNumero>
+                            <?php endif; ?>
+                            <?php if (!empty($attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoData]'])): ?>
+                                <RiferimentoData>
+                                    <?php echo $attributi_avanzati_assoc['AltriDatiGestionali[RiferimentoData]']; ?>
+                                </RiferimentoData>
+                            <?php endif; ?>
+                        </AltriDatiGestionali>
                     <?php endif; ?>
                 </DettaglioLinee>
-            <?php endforeach;?>
+            <?php endforeach; ?>
 
 
             <?php foreach (json_decode($dati['fattura']['documenti_contabilita_iva_json'], true) as $iva_id => $__iva):
                 if ($iva_id == 0) {
-                    continue;}$aliquota = $__iva[0];
-                $iva = $__iva[1];?>
-				                <DatiRiepilogo>
-				                    <AliquotaIVA><?php echo number_format($aliquota, 2, '.', ''); ?></AliquotaIVA>
+                    continue;
+                }
+                $aliquota = $__iva[0];
+                $iva = $__iva[1]; ?>
+                <DatiRiepilogo>
+                    <AliquotaIVA>
+                        <?php echo number_format($aliquota, 2, '.', ''); ?>
+                    </AliquotaIVA>
 
-				                    <?php if (!$aliquota): ?>
-				                        <Natura><?php echo $classi_iva[$iva_id]['iva_codice']; ?></Natura>
+                    <?php if (!$aliquota): ?>
+                        <Natura>
+                            <?php echo $classi_iva[$iva_id]['iva_codice']; ?>
+                        </Natura>
 
-				                    <?php endif;?>
+                    <?php endif; ?>
 
                     <?php /* <!--<SpeseAccessorie></SpeseAccessorie>
 <Arrotondamento></Arrotondamento>--> */?>
 
                     <?php
-//devo fare così per capire quant'è la base imponibile di questa classe iva sulla quale è stata calcolata l'imposta totale)
-$imponibile = 0;
-                //debug($articoli, true);
-                foreach ($articoli as $articolo) {
-                    if ($articolo['documenti_contabilita_articoli_iva_id'] == $iva_id) {
-                        if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) {
-                                    $sconto_da_applicare = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) ? ($articolo['documenti_contabilita_articoli_sconto'] + ($dati['fattura']['documenti_contabilita_sconto_percentuale'] / 100 * (100 - $articolo['documenti_contabilita_articoli_sconto']))) : 0;
-                                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto2'] > 0) {
-                                        $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto2'];
-                                    }
-                                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto3'] > 0) {
-                                        $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto3'];
-                                    }
+                    //devo fare così per capire quant'è la base imponibile di questa classe iva sulla quale è stata calcolata l'imposta totale)
+                    $imponibile = 0;
+                    //debug($articoli, true);
+                    foreach ($articoli as $articolo) {
+                        if ($articolo['documenti_contabilita_articoli_iva_id'] == $iva_id) {
+                            if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) {
+                                $sconto_da_applicare = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) ? ($articolo['documenti_contabilita_articoli_sconto'] + ($dati['fattura']['documenti_contabilita_sconto_percentuale'] / 100 * (100 - $articolo['documenti_contabilita_articoli_sconto']))) : 0;
+                                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto2'] > 0) {
+                                    $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto2'];
+                                }
+                                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto3'] > 0) {
+                                    $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto3'];
+                                }
 
 
 
 
-                                    $imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $sconto_da_applicare);
-                        } else {
-                            //$imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $dati['fattura']['documenti_contabilita_sconto_percentuale']);
-                            $imponibile += ($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']);
-                        }
-                    } else {
-                                // debug($iva_id);
-                                // debug($articolo,true);
+                                $imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $sconto_da_applicare);
+                            } else {
+                                //$imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $dati['fattura']['documenti_contabilita_sconto_percentuale']);
+                                $imponibile += ($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']);
                             }
-                }
-                    
-                ?>
+                        } else {
+                            // debug($iva_id);
+                            // debug($articolo,true);
+                        }
+                    }
 
-                    <ImponibileImporto><?php echo number_format($imponibile, 2, '.', ''); ?></ImponibileImporto>
-                    <Imposta><?php echo number_format($iva, 2, '.', ''); ?></Imposta>
-                    <EsigibilitaIVA><?php if ($dati['fattura']['documenti_contabilita_split_payment'] == DB_BOOL_TRUE): ?>S<?php else: ?>I<?php endif;?></EsigibilitaIVA>
+                    ?>
+
+                    <ImponibileImporto>
+                        <?php echo number_format($imponibile + $importoCassa, 2, '.', ''); ?>
+                    </ImponibileImporto>
+                    <Imposta>
+                        <?php echo number_format($iva, 2, '.', ''); ?>
+                    </Imposta>
+                    <EsigibilitaIVA>
+                        <?php if ($dati['fattura']['documenti_contabilita_split_payment'] == DB_BOOL_TRUE): ?>S
+                        <?php else: ?>I
+                        <?php endif; ?>
+                    </EsigibilitaIVA>
                     <?php if (!empty($classi_iva[$iva_id]['iva_descrizione'])): ?>
-                        <RiferimentoNormativo><?php echo $classi_iva[$iva_id]['iva_descrizione']; ?></RiferimentoNormativo>
+                        <RiferimentoNormativo>
+                            <?php echo $classi_iva[$iva_id]['iva_descrizione']; ?>
+                        </RiferimentoNormativo>
                     <?php elseif ($dati['fattura']['documenti_contabilita_split_payment'] == DB_BOOL_TRUE): ?>
                         <RiferimentoNormativo>Emessa ai sensi dell'articolo 17 ter DPR 633/1972 e s.m.i.</RiferimentoNormativo>
-                    <?php endif;?>
+                    <?php endif; ?>
 
                 </DatiRiepilogo>
-            <?php endforeach;?>
+            <?php endforeach; ?>
         </DatiBeniServizi>
 
         <?php /* <!--<DatiVeicoli>
@@ -659,52 +878,77 @@ $imponibile = 0;
         <?php foreach ($dati['fattura']['scadenze'] as $key => $scadenza): ?>
             <?php if ($scadenza['documenti_contabilita_scadenze_ammontare'] != '0.00'): ?>
                 <DatiPagamento>
-                    <CondizioniPagamento><?php if (count($dati['fattura']['scadenze']) > 1 && $key == 0): //Acconto
-                        ?>TP03<?php elseif (count($dati['fattura']['scadenze']) > 1): //A rate
-                            ?>TP01<?php else: //Soluzione unice
-                                ?>TP02<?php endif;?></CondizioniPagamento>
+                    <CondizioniPagamento>
+                        <?php if (count($dati['fattura']['scadenze']) > 1 && $key == 0): //Acconto
+                                        ?>TP03
+                        <?php elseif (count($dati['fattura']['scadenze']) > 1): //A rate
+                                        ?>TP01
+                        <?php else: //Soluzione unice
+                                        ?>TP02
+                        <?php endif; ?>
+                    </CondizioniPagamento>
                     <DettaglioPagamento>
                         <?php /* <!--<Beneficiario></Beneficiario>--> */?>
-                        <ModalitaPagamento><?php echo $metodi_pagamento[$scadenza['documenti_contabilita_scadenze_saldato_con']]; ?></ModalitaPagamento>
+                        <ModalitaPagamento>
+                            <?php echo $metodi_pagamento[$scadenza['documenti_contabilita_scadenze_saldato_con']]; ?>
+                        </ModalitaPagamento>
                         <?php /* <!--<DataRiferimentoTerminiPagamento></DataRiferimentoTerminiPagamento>
-<GiorniTerminiPagamento></GiorniTerminiPagamento>--> */?>
+   <GiorniTerminiPagamento></GiorniTerminiPagamento>--> */?>
 
 
-                        <DataScadenzaPagamento><?php echo date('Y-m-d', strtotime($scadenza['documenti_contabilita_scadenze_scadenza'])); ?></DataScadenzaPagamento>
+                        <DataScadenzaPagamento>
+                            <?php echo date('Y-m-d', strtotime($scadenza['documenti_contabilita_scadenze_scadenza'])); ?>
+                        </DataScadenzaPagamento>
 
-                        <ImportoPagamento><?php echo $segno . number_format($scadenza['documenti_contabilita_scadenze_ammontare'], 2, '.', ''); ?></ImportoPagamento>
+                        <ImportoPagamento>
+                            <?php echo $segno . number_format($scadenza['documenti_contabilita_scadenze_ammontare'], 2, '.', ''); ?>
+                        </ImportoPagamento>
                         <?php /* <!--<CodUfficioPostale></CodUfficioPostale>
-<CognomeQuietanzante></CognomeQuietanzante>
-<NomeQuietanzante></NomeQuietanzante>
-<CFQuietanzante></CFQuietanzante>
-<TitoloQuietanzante></TitoloQuietanzante>
-<IstitutoFinanziario></IstitutoFinanziario>-->*/?>
-                        <?php if (!empty($conto_corrente_nome_istituto)): ?><IstitutoFinanziario><?php echo $conto_corrente_nome_istituto; ?></IstitutoFinanziario><?php endif;?>
-                        <?php if (!empty($conto_corrente_iban)): ?><IBAN><?php echo $conto_corrente_iban; ?></IBAN><?php endif;?>
+   <CognomeQuietanzante></CognomeQuietanzante>
+   <NomeQuietanzante></NomeQuietanzante>
+   <CFQuietanzante></CFQuietanzante>
+   <TitoloQuietanzante></TitoloQuietanzante>
+   <IstitutoFinanziario></IstitutoFinanziario>-->*/?>
+                        <?php if (!empty($conto_corrente_nome_istituto)): ?>
+                            <IstitutoFinanziario>
+                                <?php echo $conto_corrente_nome_istituto; ?>
+                            </IstitutoFinanziario>
+                        <?php endif; ?>
+                        <?php if (!empty($conto_corrente_iban)): ?>
+                            <IBAN>
+                                <?php echo $conto_corrente_iban; ?>
+                            </IBAN>
+                        <?php endif; ?>
 
                         <?php /*<!--<ABI></ABI>
-<CAB></CAB>
-<BIC></BIC>
-<ScontoPagamentoAnticipato></ScontoPagamentoAnticipato>
-<DataLimitePagamentoAnticipato></DataLimitePagamentoAnticipato>
-<PenalitaPagamentiRitardati></PenalitaPagamentiRitardati>
-<DataDecorrenzaPenale></DataDecorrenzaPenale>
---> */?>
+   <CAB></CAB>
+   <BIC></BIC>
+   <ScontoPagamentoAnticipato></ScontoPagamentoAnticipato>
+   <DataLimitePagamentoAnticipato></DataLimitePagamentoAnticipato>
+   <PenalitaPagamentiRitardati></PenalitaPagamentiRitardati>
+   <DataDecorrenzaPenale></DataDecorrenzaPenale>
+   --> */?>
                         <?php if (1 == 5 && $dati['fattura']['documenti_contabilita_note_interne']): ?>
-                            <CodicePagamento><?php //echo substr($dati['fattura']['documenti_contabilita_note_interne'], 0, 59);
-?></CodicePagamento>
-                        <?php endif;?>
+                            <CodicePagamento>
+                                <?php //echo substr($dati['fattura']['documenti_contabilita_note_interne'], 0, 59);
+                                            ?>
+                            </CodicePagamento>
+                        <?php endif; ?>
                     </DettaglioPagamento>
                 </DatiPagamento>
-            <?php endif;?>
-        <?php endforeach;?>
+            <?php endif; ?>
+        <?php endforeach; ?>
 
-        <?php if ($dati['fattura']['documenti_contabilita_file_pdf'] && file_exists(FCPATH."uploads/".$dati['fattura']['documenti_contabilita_file_pdf'])):?>
-        <Allegati>
-            <NomeAttachment><?php echo basename(FCPATH."uploads/".$dati['fattura']['documenti_contabilita_file_pdf']);?></NomeAttachment>
-            <FormatoAttachment>PDF</FormatoAttachment>
-            <Attachment><?php echo base64_encode(file_get_contents(FCPATH."uploads/".$dati['fattura']['documenti_contabilita_file_pdf']));?></Attachment>
-        </Allegati>
-        <?php endif;?>
+        <?php if ($dati['fattura']['documenti_contabilita_file_pdf'] && file_exists(FCPATH . "uploads/" . $dati['fattura']['documenti_contabilita_file_pdf'])): ?>
+            <Allegati>
+                <NomeAttachment>
+                    <?php echo basename(FCPATH . "uploads/" . $dati['fattura']['documenti_contabilita_file_pdf']); ?>
+                </NomeAttachment>
+                <FormatoAttachment>PDF</FormatoAttachment>
+                <Attachment>
+                    <?php echo base64_encode(file_get_contents(FCPATH . "uploads/" . $dati['fattura']['documenti_contabilita_file_pdf'])); ?>
+                </Attachment>
+            </Allegati>
+        <?php endif; ?>
     </FatturaElettronicaBody>
 </p:FatturaElettronica>

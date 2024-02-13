@@ -240,7 +240,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 
                 </div>
 
-                <table class="table table-condensed table-hover">
+                <!--<table class="table table-condensed table-hover">
                     <tbody>
                         <tr>
                             <th class="text-right">
@@ -269,7 +269,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table>-->
             </div>
         <?php endforeach; ?>
     </div>

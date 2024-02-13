@@ -1,5 +1,5 @@
 <?php
-
+$this->load->model('contabilita/conteggi');
 $grid_id = $this->datab->get_grid_id_by_identifier('contabilita_spese');
 $where_spese_str = $this->datab->generate_where("grids", $grid_id, $value_id);
 
@@ -7,40 +7,22 @@ if (!$where_spese_str) {
     $where_spese_str = '(1=1)';
 }
 
-$query_spese = " SELECT
+/*$query_spese = " SELECT
     SUM(spese_totale) as s
     FROM
         spese
     WHERE spese_tipologia_fatturazione NOT IN (4) AND $where_spese_str
     ";
-$spese_totale = $this->db->query($query_spese)->row()->s;
+$spese_totale = $this->db->query($query_spese)->row()->s;*/
+$conteggi_spese = $this->conteggi->getSpeseAnno(null, "$where_spese_str");
+$spese_totale_imponibile = $conteggi_spese['imponibile'];
+$iva_spese = $conteggi_spese['iva'];
 
-$query_note_di_credito = " SELECT
-    SUM(spese_totale) as s
-    FROM
-        spese
-    WHERE spese_tipologia_fatturazione IN (4) AND $where_spese_str
-    ";
-$note_di_credito_totale = $this->db->query($query_note_di_credito)->row()->s;
+$conteggi_note_di_credito = $this->conteggi->getSpeseAnno(null, "spese_tipologia_fatturazione = 4 AND $where_spese_str");
+$note_di_credito_totale_imponibile = abs($conteggi_note_di_credito['imponibile']);
+$iva_note_di_credito = abs($conteggi_note_di_credito['iva']);
 
-$query_iva_spese = " SELECT
-    SUM(spese_iva) as s
-    FROM
-        spese
-    WHERE spese_tipologia_fatturazione NOT IN (4) AND $where_spese_str
-    ";
-$iva_spese = $this->db->query($query_iva_spese)->row()->s;
 
-$query_iva_note_di_credito = " SELECT
-    SUM(spese_iva) as s
-    FROM
-        spese
-    WHERE spese_tipologia_fatturazione IN (4) AND $where_spese_str
-    ";
-$iva_note_di_credito = $this->db->query($query_iva_note_di_credito)->row()->s;
-
-$spese_totale_imponibile = $spese_totale - $iva_spese;
-$note_di_credito_totale_imponibile = $note_di_credito_totale - $iva_note_di_credito;
 
 ?>
 
@@ -52,11 +34,11 @@ $note_di_credito_totale_imponibile = $note_di_credito_totale - $iva_note_di_cred
 
             <div class="info-box-content">
                 <span class="info-box-text">Riepilogo Totale</span>
-                <span class="info-box-number ">€ <?php echo number_format($spese_totale_imponibile - $note_di_credito_totale_imponibile, 2, ',', '.'); ?> <small>Imponibile</small></span>
+                <span class="info-box-number ">€ <?php echo number_format($spese_totale_imponibile, 2, ',', '.'); ?> <small>Imponibile</small></span>
                 <div class="progress">
                     <div class="progress-bar" style="width: 100.00%"></div>
                 </div>
-                <span class="info-box-number">€ <?php echo number_format($iva_spese - $iva_note_di_credito, 2, ',', '.'); ?> <small>Iva</small></span>
+                <span class="info-box-number">€ <?php echo number_format($iva_spese, 2, ',', '.'); ?> <small>Iva</small></span>
 
                 </div>
 

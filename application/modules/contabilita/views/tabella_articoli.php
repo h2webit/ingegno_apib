@@ -278,7 +278,7 @@
                                                                     $data = [
                                                                         'lang' => '',
                                                                         'field' => $campo,
-                                                                        'value' => $prodotto[$campo['campi_righe_articoli_map_to']]??'',
+                                                                        'value' => ($prodotto[$campo['campi_righe_articoli_map_to']]) ?? '',
                                                                         'label' => '', // '<label class="control-label">' . $field['fields_draw_label'] . '</label>',
                                                                         'placeholder' => '',
                                                                         'help' => '',

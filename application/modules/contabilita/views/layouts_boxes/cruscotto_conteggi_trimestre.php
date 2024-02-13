@@ -2,20 +2,22 @@
 
 $this->load->model('contabilita/conteggi');
 
+$anno = (!empty($this->input->get('anno'))) ? $this->input->get('anno') : date('Y');
 
-$getFatturatoAnnoMensile = $this->conteggi->getFatturatoAnnoMensile();
-$getSpeseAnnoMensile = $this->conteggi->getSpeseAnnoMensile();
+$getFatturatoAnnoMensile = $this->conteggi->getFatturatoAnnoMensile($anno);
+$getSpeseAnnoMensile = $this->conteggi->getSpeseAnnoMensile($anno);
+
 
 // Trimestri
-$fatturato[1] = $getFatturatoAnnoMensile[0]['imponibile']+$getFatturatoAnnoMensile[1]['imponibile']+$getFatturatoAnnoMensile[2]['imponibile'];
-$fatturato[2] = $getFatturatoAnnoMensile[3]['imponibile']+$getFatturatoAnnoMensile[4]['imponibile']+$getFatturatoAnnoMensile[5]['imponibile'];
-$fatturato[3] = $getFatturatoAnnoMensile[6]['imponibile']+$getFatturatoAnnoMensile[7]['imponibile']+$getFatturatoAnnoMensile[8]['imponibile'];
-$fatturato[4] = $getFatturatoAnnoMensile[9]['imponibile']+$getFatturatoAnnoMensile[10]['imponibile']+$getFatturatoAnnoMensile[11]['imponibile'];
+$fatturato[1] = @$getFatturatoAnnoMensile[0]['imponibile']+ @$getFatturatoAnnoMensile[1]['imponibile']+ @$getFatturatoAnnoMensile[2]['imponibile'];
+$fatturato[2] = @$getFatturatoAnnoMensile[3]['imponibile']+ @$getFatturatoAnnoMensile[4]['imponibile']+ @$getFatturatoAnnoMensile[5]['imponibile'];
+$fatturato[3] = @$getFatturatoAnnoMensile[6]['imponibile']+ @$getFatturatoAnnoMensile[7]['imponibile']+ @$getFatturatoAnnoMensile[8]['imponibile'];
+$fatturato[4] = @$getFatturatoAnnoMensile[9]['imponibile']+ @$getFatturatoAnnoMensile[10]['imponibile']+ @$getFatturatoAnnoMensile[11]['imponibile'];
 
-$fatturato_iva[1] = $getFatturatoAnnoMensile[0]['iva']+$getFatturatoAnnoMensile[1]['iva']+$getFatturatoAnnoMensile[2]['iva'];
-$fatturato_iva[2] = $getFatturatoAnnoMensile[3]['iva']+$getFatturatoAnnoMensile[4]['iva']+$getFatturatoAnnoMensile[5]['iva'];
-$fatturato_iva[3] = $getFatturatoAnnoMensile[6]['iva']+$getFatturatoAnnoMensile[7]['iva']+$getFatturatoAnnoMensile[8]['iva'];
-$fatturato_iva[4] = $getFatturatoAnnoMensile[9]['iva']+$getFatturatoAnnoMensile[10]['iva']+$getFatturatoAnnoMensile[11]['iva'];
+$fatturato_iva[1] = @$getFatturatoAnnoMensile[0]['iva']+ @$getFatturatoAnnoMensile[1]['iva']+ @$getFatturatoAnnoMensile[2]['iva'];
+$fatturato_iva[2] = @$getFatturatoAnnoMensile[3]['iva']+ @$getFatturatoAnnoMensile[4]['iva']+ @$getFatturatoAnnoMensile[5]['iva'];
+$fatturato_iva[3] = @$getFatturatoAnnoMensile[6]['iva']+ @$getFatturatoAnnoMensile[7]['iva']+ @$getFatturatoAnnoMensile[8]['iva'];
+$fatturato_iva[4] = @$getFatturatoAnnoMensile[9]['iva']+ @$getFatturatoAnnoMensile[10]['iva']+ @$getFatturatoAnnoMensile[11]['iva'];
 
 $spese[1] = $getSpeseAnnoMensile[0]['imponibile']+$getSpeseAnnoMensile[1]['imponibile']+$getSpeseAnnoMensile[2]['imponibile'];
 $spese[2] = $getSpeseAnnoMensile[3]['imponibile']+$getSpeseAnnoMensile[4]['imponibile']+$getSpeseAnnoMensile[5]['imponibile'];

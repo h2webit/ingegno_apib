@@ -87,8 +87,11 @@ class Builder extends MY_Controller
             $only_super_admin = true;
         }
 
+        //Detect if layout is refering to a module
+        $layout = $this->db->get_where('layouts', ['layouts_id' => $layout_id])->row_array();
+
         // $only_super_admin = true;
-        echo json_encode(array('only_super_admin' => $only_super_admin, 'all_groups' => $all_groups, 'users_can_view' => $users_can_view));
+        echo json_encode(array('only_super_admin' => $only_super_admin, 'all_groups' => $all_groups, 'users_can_view' => $users_can_view,'layout' => $layout));
     }
 
     public function add_group_permission($layout_id, $group = false, $checked = false, $recursion_call = false)
@@ -109,16 +112,31 @@ class Builder extends MY_Controller
             $this->db->query("DELETE FROM unallowed_layouts WHERE unallowed_layouts_layout = $layout_id AND unallowed_layouts_user IN (SELECT permissions_user_id FROM permissions WHERE permissions_group = '$group')");
         } else {
             $query = "INSERT INTO unallowed_layouts (unallowed_layouts_layout,unallowed_layouts_user) SELECT $layout_id, permissions_user_id FROM permissions WHERE permissions_group = '$group' AND permissions_group IS NOT NULL AND permissions_user_id IS NOT NULL";
-            debug($query);
+            
             $this->db->query($query);
+        }
+
+        $module = $this->input->post('module');
+        
+        if ($module) {
+            if ($recursion_call) {
+                $_children_layouts = [];
+            } else {
+                $_children_layouts = $this->db->select('layouts_id as layout_id')->get_where('layouts', ['layouts_module' => $module])->result_array();
+            }
+            
+        } else {
+            $_children_layouts = $this->db->query("SELECT layouts_boxes_content_ref as layout_id FROM layouts_boxes WHERE layouts_boxes_content_type = 'layout' AND layouts_boxes_layout = '$layout_id' AND layouts_boxes_content_ref IS NOT NULL AND layouts_boxes_content_ref IN (SELECT layouts_id FROM layouts)")->result_array();
+            
         }
         
         
-        $_children_layouts = $this->db->query("SELECT layouts_boxes_content_ref as layout_id FROM layouts_boxes WHERE layouts_boxes_content_type = 'layout' AND layouts_boxes_layout = '$layout_id' AND layouts_boxes_content_ref IS NOT NULL AND layouts_boxes_content_ref IN (SELECT layouts_id FROM layouts)")->result_array();
-        
         foreach ($_children_layouts as $lay) {
             if ($lay['layout_id']) {
-                $this->add_group_permission($lay['layout_id'], $group, $checked, true);
+                //debug($lay);
+                    $this->add_group_permission($lay['layout_id'], $group, $checked, true);
+                
+                
             }
             
         }

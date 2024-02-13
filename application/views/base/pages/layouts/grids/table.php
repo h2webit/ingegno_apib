@@ -32,8 +32,7 @@ $append_class = '';
 if ($grid['grids']['grids_design'] == 2) { //Slim
     $append_class .= ' table-condensed ';
 }
-
-if (defined('DEFAULT_GRID_LIMIT')) {
+if(defined('DEFAULT_GRID_LIMIT')) {
     $limit = DEFAULT_GRID_LIMIT;
 } elseif ($grid['grids']['grids_pagination']) {
     $limit = $grid['grids']['grids_pagination'];

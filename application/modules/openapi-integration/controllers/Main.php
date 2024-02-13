@@ -370,22 +370,50 @@ class Main extends MY_Controller
         debug($res, true);
     }
     
-    public function get_invoice_notifications($documento_id = null) {
-        if (!$documento_id) die(e_json(['status' => 3, 'txt' => 'ID documento non fornito']));
+    public function get_invoice_notifications($documento_id = null, $html = false) {
+        if (!$documento_id) {
+            if ($html) {
+                throw new ApiException('ID documento non fornito');
+            }
+            e_json(['status' => 0, 'txt' => 'ID documento non fornito']);
+            return false;
+        }
         
         $documento = $this->apilib->view('documenti_contabilita', $documento_id);
         
         if (empty($documento)) {
-            die(e_json(['status' => 3, 'txt' => 'Documento non trovato.']));
+            if ($html) {
+                throw new ApiException('Documento non trovato.');
+            }
+            
+            e_json(['status' => 0, 'txt' => 'Documento non trovato.']);
+            return false;
         }
         
         if (empty($documento['documenti_contabilita_uuid_openapi'])) {
-            die(e_json(['status' => 3, 'txt' => 'Questo documento non ha un ID OpenAPI']));
+            if ($html) {
+                throw new ApiException('Questo documento non ha un ID OpenAPI');
+            }
+            
+            e_json(['status' => 0, 'txt' => 'Questo documento non ha un ID OpenAPI']);
+            return false;
         }
         
-        $res = $this->openapi->get_invoice_notifications($documento['documenti_contabilita_uuid_openapi']);
+        $type = 'json';
+        if (!empty($this->input->get('xml')) && $this->input->get('xml') == '1') {
+            $type = 'xml';
+        }
         
-        debug($res, true);
+        $azienda = $this->db->get_where('documenti_contabilita_settings', ['documenti_contabilita_settings_id' => $documento['documenti_contabilita_azienda']])->row_array();
+        
+        $res = $this->openapi->get_invoice_notifications($documento['documenti_contabilita_uuid_openapi'], $azienda, $type);
+        
+        if ($html) {
+            echo '<pre>' . var_export( ($type == 'json' ? json_decode($res, true) : $res) , true) . '</pre>';
+        } else {
+            e_json(['status' => 1, 'txt' => $res]);
+        }
+        return true;
     }
 
     public function verifica_eu_vat()

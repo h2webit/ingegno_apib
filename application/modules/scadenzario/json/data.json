@@ -4,15 +4,15 @@
     "modules_description": "Scadenzario con email di reminder, gestione delle ricorrenze e calendario",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.5",
+    "modules_version": "1.0.8",
     "modules_identifier": "scadenzario",
     "modules_base64_zip": null,
     "modules_raw_data_install": "371,369,372",
     "modules_raw_data_update": "369",
     "modules_created_by_user": "1",
-    "modules_version_code": "22",
+    "modules_version_code": "27",
     "modules_thumbnail": "83395301aa940305c3e802c6bd42dc7b.png",
-    "modules_min_client_version": "2.3.1",
+    "modules_min_client_version": "3.6.5",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -52,6 +52,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -74,6 +75,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -96,6 +98,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date"
                 },
                 {
@@ -118,6 +121,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -140,6 +144,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -162,6 +167,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_money"
                 },
                 {
@@ -184,6 +190,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "multiselect"
                 },
                 {
@@ -206,6 +213,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -228,6 +236,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "textarea"
                 },
                 {
@@ -250,6 +259,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -272,6 +282,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date"
                 },
                 {
@@ -294,6 +305,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -316,6 +328,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -338,6 +351,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -360,6 +374,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -382,6 +397,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "checkbox"
                 },
                 {
@@ -404,6 +420,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date"
                 },
                 {
@@ -426,6 +443,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -448,6 +466,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -464,12 +483,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "automezzi_tipologia IS NOT NULL",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": "",
                     "fields_draw_html_type": "select"
                 }
             ],
@@ -771,6 +791,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -793,6 +814,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -1017,6 +1039,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1039,6 +1062,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -1119,6 +1143,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1141,6 +1166,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1163,6 +1189,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1185,6 +1212,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "color"
                 }
             ],
@@ -1342,6 +1370,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1364,6 +1393,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1386,6 +1416,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -1408,6 +1439,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -1430,6 +1462,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 }
             ],
@@ -1829,17 +1862,59 @@
             "layouts_boxes_content_type": "grid",
             "layouts_boxes_content_ref": "1452",
             "layouts_boxes_content": "",
-            "layouts_boxes_position": "4",
+            "layouts_boxes_position": "2",
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
             "layouts_boxes_collapsed": "0",
             "layouts_boxes_reloadable": "0",
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
-            "layouts_boxes_show_container": "1",
+            "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6238",
+            "layouts_boxes_layout": "971",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "menu_group",
+            "layouts_boxes_content_type": "menu_group",
+            "layouts_boxes_content_ref": "Scadenze automezzo",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": "0",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6239",
+            "layouts_boxes_layout": "971",
+            "layouts_boxes_css": "box",
+            "layouts_boxes_title": "Filtri",
+            "layouts_boxes_content_type": "form",
+            "layouts_boxes_content_ref": "2648",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "1",
+            "layouts_boxes_collapsed": "1",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "box-primary",
             "conditions": []
         }
     ],
@@ -1894,7 +1969,7 @@
                     "grids_fields_id": "14332",
                     "grids_fields_grids_id": "930",
                     "grids_fields_fields_id": "2773",
-                    "grids_fields_order": "5",
+                    "grids_fields_order": "7",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": null,
@@ -1925,6 +2000,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1962,13 +2038,14 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
                     "grids_fields_id": "14334",
                     "grids_fields_grids_id": "930",
                     "grids_fields_fields_id": "2775",
-                    "grids_fields_order": "7",
+                    "grids_fields_order": "4",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": null,
@@ -1999,50 +2076,14 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "14335",
-                    "grids_fields_grids_id": "930",
-                    "grids_fields_fields_id": "2776",
-                    "grids_fields_order": "8",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "scadenzario-grids_fields-14335",
-                    "grids_fields_module": "scadenzario",
-                    "grids_fields_width": null,
-                    "fields_id": "2776",
-                    "fields_entity_id": "368",
-                    "fields_default": null,
-                    "fields_name": "reminders_repetition_interval",
-                    "fields_type": "integer",
-                    "fields_size": null,
-                    "fields_required": "1",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": "reminders_repetition_interval",
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
                     "grids_fields_id": "14352",
                     "grids_fields_grids_id": "930",
                     "grids_fields_fields_id": "2782",
-                    "grids_fields_order": "9",
+                    "grids_fields_order": "8",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": "",
                     "grids_fields_column_name": "Completed",
@@ -2073,13 +2114,14 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
                     "grids_fields_id": "14356",
                     "grids_fields_grids_id": "930",
                     "grids_fields_fields_id": "2787",
-                    "grids_fields_order": "10",
+                    "grids_fields_order": "9",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": null,
@@ -2110,6 +2152,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2147,13 +2190,14 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
                     "grids_fields_id": "14358",
                     "grids_fields_grids_id": "930",
                     "grids_fields_fields_id": null,
-                    "grids_fields_order": "4",
+                    "grids_fields_order": "3",
                     "grids_fields_replace_type": "eval",
                     "grids_fields_replace": "<?php\n if(!empty($data['reminders_amount'])) {\n     echo e_money($data['reminders_amount'], '\u20ac {number}');\n }\n?>",
                     "grids_fields_column_name": "Amount",
@@ -2184,6 +2228,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2221,117 +2266,83 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "17988",
+                    "grids_fields_id": "21061",
                     "grids_fields_grids_id": "930",
-                    "grids_fields_fields_id": "3292",
-                    "grids_fields_order": "3",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "scadenzario-grids_fields-17988",
-                    "grids_fields_module": "scadenzario",
-                    "grids_fields_width": null,
-                    "fields_id": "3292",
-                    "fields_entity_id": "368",
-                    "fields_default": null,
-                    "fields_name": "reminders_customer_email",
-                    "fields_type": "varchar",
-                    "fields_size": "250",
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "17989",
-                    "grids_fields_grids_id": "930",
-                    "grids_fields_fields_id": "2771",
+                    "grids_fields_fields_id": null,
                     "grids_fields_order": "2",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php echo $data['customers_full_name'];?>\n<br \/><small><?php echo $data['reminders_customer_email'];?><\/small>",
+                    "grids_fields_column_name": "Customer",
                     "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_eval_cache_data": "customers_full_name",
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "scadenzario-grids_fields-17989",
+                    "grids_fields_module_key": "scadenzario-grids_fields-21061",
                     "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
-                    "fields_id": "2771",
-                    "fields_entity_id": "368",
+                    "fields_id": null,
+                    "fields_entity_id": null,
                     "fields_default": null,
-                    "fields_name": "reminders_customer",
-                    "fields_type": "integer",
+                    "fields_name": null,
+                    "fields_type": null,
                     "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": "customers",
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
-                    "fields_searchable": "1",
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "17990",
+                    "grids_fields_id": "21063",
                     "grids_fields_grids_id": "930",
-                    "grids_fields_fields_id": "4457",
-                    "grids_fields_order": "0",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "5",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php echo $data['reminders_repetition_interval_value'];?>\n<br \/><small><?php echo ($data['reminders_calendar_end_date']) ? \"Fino al: \".dateFormat($data['reminders_calendar_end_date'], 'd\/m\/Y') : \"\";?><\/small>",
+                    "grids_fields_column_name": "Durata",
                     "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_eval_cache_data": "",
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "scadenzario-grids_fields-17990",
+                    "grids_fields_module_key": "scadenzario-grids_fields-21063",
                     "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
-                    "fields_id": "4457",
-                    "fields_entity_id": "368",
+                    "fields_id": null,
+                    "fields_entity_id": null,
                     "fields_default": null,
-                    "fields_name": "reminders_altre_email_cliente",
-                    "fields_type": "varchar",
-                    "fields_size": "250",
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
                     "fields_ref": null,
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
-                    "fields_searchable": "1",
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2467,6 +2478,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2504,6 +2516,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2541,6 +2554,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2578,6 +2592,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2615,6 +2630,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2652,6 +2668,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2689,6 +2706,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2726,6 +2744,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2763,6 +2782,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2866,6 +2886,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2903,6 +2924,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3022,6 +3044,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3059,6 +3082,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3096,6 +3120,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3133,6 +3158,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3219,6 +3245,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3256,6 +3283,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3293,7 +3321,7 @@
             "grids_layout": "table",
             "grids_order_by": "reminders_date DESC",
             "grids_group_by": null,
-            "grids_filter_session_key": "filter_reminders",
+            "grids_filter_session_key": "filter_reminders_automezzo",
             "grids_bulk_mode": null,
             "grids_bulk_edit_form": null,
             "grids_exportable": "0",
@@ -3338,7 +3366,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14332",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": "2773",
                     "fields_entity_id": "368",
@@ -3359,6 +3387,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3375,7 +3404,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14333",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": "2774",
                     "fields_entity_id": "368",
@@ -3396,6 +3425,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3412,7 +3442,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14334",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": "2775",
                     "fields_entity_id": "368",
@@ -3433,6 +3463,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3449,7 +3480,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14335",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": "2776",
                     "fields_entity_id": "368",
@@ -3470,6 +3501,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3486,7 +3518,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "scadenzario-grids_fields-14352",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": "2782",
                     "fields_entity_id": "368",
@@ -3507,6 +3539,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3523,7 +3556,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14356",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": "2787",
                     "fields_entity_id": "368",
@@ -3544,6 +3577,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3560,7 +3594,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14357",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -3581,6 +3615,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3597,7 +3632,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14358",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -3618,6 +3653,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3634,7 +3670,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "scadenzario-grids_fields-14362",
-                    "grids_fields_module": "flotte-automezzi",
+                    "grids_fields_module": "scadenzario",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -3655,6 +3691,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3790,6 +3827,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3827,6 +3865,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3961,6 +4000,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -4064,6 +4104,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -4101,6 +4142,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -4138,6 +4180,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -4175,6 +4218,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -4202,6 +4246,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2120",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2120",
@@ -4223,7 +4268,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2769",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4245,12 +4291,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2770",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
                     "forms_fields_fields_id": "2771",
-                    "forms_fields_order": "9",
+                    "forms_fields_order": "10",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -4267,7 +4314,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "altre opzioni",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2771",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4289,7 +4337,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2772",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4311,7 +4360,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2773",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4333,7 +4383,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2774",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4355,7 +4406,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2775",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4377,7 +4429,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2776",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4399,7 +4452,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2777",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
@@ -4421,12 +4475,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_2787",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
                     "forms_fields_fields_id": "3292",
-                    "forms_fields_order": "10",
+                    "forms_fields_order": "11",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -4443,12 +4498,13 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "altre opzioni",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_3292",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
                     "forms_fields_fields_id": "4457",
-                    "forms_fields_order": "11",
+                    "forms_fields_order": "12",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -4465,12 +4521,13 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "altre opzioni",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_4457",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2120",
                     "forms_fields_fields_id": "4856",
-                    "forms_fields_order": "999",
+                    "forms_fields_order": "9",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -4487,7 +4544,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "altre opzioni",
                     "forms_fields_module_key": "scadenzario-forms_fields-2120_4856",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4511,6 +4569,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2121",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2121",
@@ -4532,7 +4591,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2121_2779",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4556,6 +4616,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2122",
+            "forms_public": "0",
             "fields": []
         },
         {
@@ -4578,6 +4639,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2123",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2123",
@@ -4599,7 +4661,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2123_2781",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4623,6 +4686,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2124",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2124",
@@ -4644,7 +4708,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2124_2771",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2124",
@@ -4666,7 +4731,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2124_2770",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2124",
@@ -4688,7 +4754,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2124_2773",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2124",
@@ -4710,7 +4777,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2124_2776",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2124",
@@ -4732,7 +4800,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2124_2782",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2124",
@@ -4754,7 +4823,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "scadenzario-forms_fields-2124_2769",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4778,6 +4848,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2125",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2125",
@@ -4799,7 +4870,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2125_2785",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2125",
@@ -4821,7 +4893,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2125_2786",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4845,6 +4918,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2126",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2126",
@@ -4866,7 +4940,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2769",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
@@ -4888,12 +4963,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2770",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "2771",
-                    "forms_fields_order": "2",
+                    "forms_fields_order": "8",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -4910,12 +4986,13 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "altre opzioni",
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2771",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "2772",
-                    "forms_fields_order": "4",
+                    "forms_fields_order": "2",
                     "forms_fields_default_type": "",
                     "forms_fields_default_value": "",
                     "forms_fields_override_type": null,
@@ -4932,12 +5009,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2772",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "2774",
-                    "forms_fields_order": "5",
+                    "forms_fields_order": "3",
                     "forms_fields_default_type": "",
                     "forms_fields_default_value": "",
                     "forms_fields_override_type": null,
@@ -4954,12 +5032,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2774",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "2773",
-                    "forms_fields_order": "6",
+                    "forms_fields_order": "4",
                     "forms_fields_default_type": "",
                     "forms_fields_default_value": "",
                     "forms_fields_override_type": null,
@@ -4976,12 +5055,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2773",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "2775",
-                    "forms_fields_order": "7",
+                    "forms_fields_order": "5",
                     "forms_fields_default_type": "",
                     "forms_fields_default_value": "",
                     "forms_fields_override_type": null,
@@ -4998,12 +5078,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2775",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "2789",
-                    "forms_fields_order": "8",
+                    "forms_fields_order": "6",
                     "forms_fields_default_type": "",
                     "forms_fields_default_value": "",
                     "forms_fields_override_type": null,
@@ -5020,12 +5101,13 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_2789",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2126",
                     "forms_fields_fields_id": "3292",
-                    "forms_fields_order": "3",
+                    "forms_fields_order": "9",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -5042,7 +5124,31 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "altre opzioni",
                     "forms_fields_module_key": "scadenzario-forms_fields-2126_3292",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2126",
+                    "forms_fields_fields_id": "4856",
+                    "forms_fields_order": "7",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "altre opzioni",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2126_4856",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -5066,6 +5172,7 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2282",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2282",
@@ -5087,7 +5194,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2282_3483",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2282",
@@ -5109,7 +5217,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "scadenzario-forms_fields-2282_3484",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2282",
@@ -5131,7 +5240,8 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "scadenzario-forms_fields-2282_3485",
-                    "forms_fields_module": "scadenzario"
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -5155,7 +5265,424 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "scadenzario-form-2283",
+            "forms_public": "0",
             "fields": []
+        },
+        {
+            "forms_id": "2647",
+            "forms_entity_id": "368",
+            "forms_name": "Scadenze automezzo",
+            "forms_action": "",
+            "forms_default": "0",
+            "forms_layout": "horizontal",
+            "forms_one_record": "0",
+            "forms_show_delete": "0",
+            "forms_css_extra": null,
+            "forms_display_none": "0",
+            "forms_filter_session_key": null,
+            "forms_success_status": "7",
+            "forms_success_message": "",
+            "forms_success_status_edit": null,
+            "forms_success_message_edit": "",
+            "forms_identifier": "",
+            "forms_submit_button_label": null,
+            "forms_json": null,
+            "forms_module_key": "scadenzario-form-2647",
+            "forms_public": "0",
+            "fields": [
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2769",
+                    "forms_fields_order": "7",
+                    "forms_fields_default_type": "function",
+                    "forms_fields_default_value": "{different_date}, +30",
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": "Due date",
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2769",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2770",
+                    "forms_fields_order": "2",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2770",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2771",
+                    "forms_fields_order": "10",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "altre opzioni",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2771",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2772",
+                    "forms_fields_order": "3",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": "100.00",
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2772",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2773",
+                    "forms_fields_order": "5",
+                    "forms_fields_default_type": "session",
+                    "forms_fields_default_value": "{session_login users_id}",
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2773",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2774",
+                    "forms_fields_order": "4",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": "3",
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2774",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2775",
+                    "forms_fields_order": "6",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2775",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2776",
+                    "forms_fields_order": "8",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": "Repetition",
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2776",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2777",
+                    "forms_fields_order": "9",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2777",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "2787",
+                    "forms_fields_order": "1",
+                    "forms_fields_default_type": "session",
+                    "forms_fields_default_value": "{session_login users_id}",
+                    "forms_fields_override_type": "input_hidden",
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_2787",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "3292",
+                    "forms_fields_order": "11",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": "Email cliente",
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "altre opzioni",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_3292",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "4457",
+                    "forms_fields_order": "12",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "altre opzioni",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_4457",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2647",
+                    "forms_fields_fields_id": "4856",
+                    "forms_fields_order": "0",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": "input_hidden",
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "",
+                    "forms_fields_module_key": "scadenzario-forms_fields-2120_4856",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                }
+            ]
+        },
+        {
+            "forms_id": "2648",
+            "forms_entity_id": "368",
+            "forms_name": "Filtri reminders automezzo",
+            "forms_action": "",
+            "forms_default": "0",
+            "forms_layout": "filter_select",
+            "forms_one_record": "0",
+            "forms_show_delete": "0",
+            "forms_css_extra": null,
+            "forms_display_none": "0",
+            "forms_filter_session_key": "filter_reminders_automezzo",
+            "forms_success_status": "7",
+            "forms_success_message": "",
+            "forms_success_status_edit": "7",
+            "forms_success_message_edit": "",
+            "forms_identifier": "",
+            "forms_submit_button_label": "",
+            "forms_json": null,
+            "forms_module_key": "scadenzario-form-2648",
+            "forms_public": "0",
+            "fields": [
+                {
+                    "forms_fields_forms_id": "2648",
+                    "forms_fields_fields_id": "2770",
+                    "forms_fields_order": "1",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "4",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2648_2770",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2648",
+                    "forms_fields_fields_id": "2782",
+                    "forms_fields_order": "2",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "4",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2648_2782",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2648",
+                    "forms_fields_fields_id": "2769",
+                    "forms_fields_order": "0",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "4",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "scadenzario-forms_fields-2648_2769",
+                    "forms_fields_module": "scadenzario",
+                    "forms_field_full_data": "0"
+                }
+            ]
         }
     ],
     "calendars": [
@@ -5398,7 +5925,7 @@
             "menu_link": "",
             "menu_parent": null,
             "menu_icon_class": "far fa-calendar-check",
-            "menu_order": "11",
+            "menu_order": "12",
             "menu_position": "sidebar",
             "menu_layout": "533",
             "menu_css_class": "",
@@ -5443,6 +5970,24 @@
             "menu_module_key": "scadenzario-menu-1701",
             "menu_type": "layout",
             "menu_form": null,
+            "menu_html_attr": "",
+            "conditions": []
+        },
+        {
+            "menu_id": "1802",
+            "menu_label": "Scadenza",
+            "menu_link": "?reminders_automezzo={value_id}",
+            "menu_parent": null,
+            "menu_icon_class": "fas fa-plus",
+            "menu_order": "1",
+            "menu_position": "Scadenze automezzo",
+            "menu_layout": null,
+            "menu_css_class": "btn-primary",
+            "menu_modal": "1",
+            "menu_module": "scadenzario",
+            "menu_module_key": "scadenzario-menu-1802",
+            "menu_type": "form",
+            "menu_form": "2647",
             "menu_html_attr": "",
             "conditions": []
         }
@@ -5506,14 +6051,14 @@
         {
             "fi_events_id": "510",
             "fi_events_when": "pre-update",
-            "fi_events_json_data": "{\"_when\":\"pre\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"295\",\"post_process_when\":\"update\",\"post_process_entity_id\":\"368\",\"post_process_module\":\"scadenzario\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if ($data['post']['reminders_edit_future_reminders'] == DB_BOOL_TRUE) {\\n    $id = $data['value_id'];\\n\\n    $reminder = $this->apilib->view('reminders', $id);\\n    if (empty($reminder['reminders_generated_from'])) {\\n        $reminders = $this->apilib->search('reminders', ['reminders_generated_from' => $id]);\\n        $reminders[] = $reminder;\\n    } else {\\n        $reminders = $this->apilib->search('reminders', [\\n            'reminders_generated_from' => $reminder['reminders_generated_from'],\\n            \\\"reminders_date >= '{$reminder['reminders_date']}'\\\"\\n        ]);\\n        $id = $reminder['reminders_generated_from'];\\n    }\\n\\n    if (!empty($reminders)) {       \\n        $post = $data['post'];\\n        $reminder_edit = [\\n            'reminders_category' => $post['reminders_category'],\\n            'reminders_customer' => $post['reminders_customer'],\\n            'reminders_customer_email' => $post['reminders_customer_email'] ?? '',\\n            'reminders_amount' => $post['reminders_amount'],\\n            'reminders_all_day' => $post['reminders_all_day'],\\n\\t\\t\\t'reminders_send_notify_to' => $data['original_post']['reminders_send_notify_to'] ?? [],\\n            'reminders_reminder_day' => $post['reminders_reminder_day'],\\n            'reminders_description' => $post['reminders_description'],\\n            'reminders_calendar_end_date' => $post['reminders_date'] \\\/\\\/data fine calendar\\n        ];\\n\\n        foreach ($reminders as $reminder) {\\n            try {\\n                $this->apilib->edit('reminders', $reminder['reminders_id'], $reminder_edit);\\n            } catch (ApiException $e) {\\n                $this->showError($e->getMessage(), $e->getCode());\\n            }\\n        }\\n    }\\n\\n    $data['post']['reminders_edit_future_reminders'] = DB_BOOL_FALSE;\\n}\"},\"fi_events_title\":\"[MODULE SCADENZARIO] - Modifica reminder futuri\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"_when\":\"pre\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"295\",\"post_process_when\":\"update\",\"post_process_entity_id\":\"368\",\"post_process_module\":\"scadenzario\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if ($data['post']['reminders_edit_future_reminders'] == DB_BOOL_TRUE) {\\n    $id = $data['value_id'];\\n\\n    $reminder = $this->apilib->view('reminders', $id);\\n    if (empty($reminder['reminders_generated_from'])) {\\n        $reminders = $this->apilib->search('reminders', ['reminders_generated_from' => $id]);\\n        $reminders[] = $reminder;\\n    } else {\\n        $reminders = $this->apilib->search('reminders', [\\n            'reminders_generated_from' => $reminder['reminders_generated_from'],\\n            \\\"reminders_date >= '{$reminder['reminders_date']}'\\\"\\n        ]);\\n        $id = $reminder['reminders_generated_from'];\\n    }\\n\\n    if (!empty($reminders)) {       \\n        $post = $data['post'];\\n        $reminder_edit = [\\n            'reminders_category' => $post['reminders_category'],\\n            'reminders_customer' => $post['reminders_customer'],\\n            'reminders_customer_email' => $post['reminders_customer_email'] ?? '',\\n            'reminders_amount' => $post['reminders_amount'],\\n            'reminders_all_day' => $post['reminders_all_day'],\\n\\t\\t\\t'reminders_send_notify_to' => $data['original_post']['reminders_send_notify_to'] ?? [],\\n            'reminders_reminder_day' => $post['reminders_reminder_day'],\\n            'reminders_description' => $post['reminders_description'],\\n            'reminders_calendar_end_date' => $post['reminders_date'], \\\/\\\/data fine calendar\\n            'reminders_automezzo' => $post['reminders_automezzo']\\n        ];\\n\\n        foreach ($reminders as $reminder) {\\n            try {\\n                $this->apilib->edit('reminders', $reminder['reminders_id'], $reminder_edit);\\n            } catch (ApiException $e) {\\n                $this->showError($e->getMessage(), $e->getCode());\\n            }\\n        }\\n    }\\n\\n    $data['post']['reminders_edit_future_reminders'] = DB_BOOL_FALSE;\\n}\"},\"fi_events_title\":\"[MODULE SCADENZARIO] - Modifica reminder futuri\",\"save\":\"1\"}",
             "fi_events_title": "[MODULE SCADENZARIO] - Modifica reminder futuri",
             "fi_events_module": "scadenzario",
             "fi_events_type": "database",
             "fi_events_ref_id": "368",
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"if ($data['post']['reminders_edit_future_reminders'] == DB_BOOL_TRUE) {\\n    $id = $data['value_id'];\\n\\n    $reminder = $this->apilib->view('reminders', $id);\\n    if (empty($reminder['reminders_generated_from'])) {\\n        $reminders = $this->apilib->search('reminders', ['reminders_generated_from' => $id]);\\n        $reminders[] = $reminder;\\n    } else {\\n        $reminders = $this->apilib->search('reminders', [\\n            'reminders_generated_from' => $reminder['reminders_generated_from'],\\n            \\\"reminders_date >= '{$reminder['reminders_date']}'\\\"\\n        ]);\\n        $id = $reminder['reminders_generated_from'];\\n    }\\n\\n    if (!empty($reminders)) {       \\n        $post = $data['post'];\\n        $reminder_edit = [\\n            'reminders_category' => $post['reminders_category'],\\n            'reminders_customer' => $post['reminders_customer'],\\n            'reminders_customer_email' => $post['reminders_customer_email'] ?? '',\\n            'reminders_amount' => $post['reminders_amount'],\\n            'reminders_all_day' => $post['reminders_all_day'],\\n\\t\\t\\t'reminders_send_notify_to' => $data['original_post']['reminders_send_notify_to'] ?? [],\\n            'reminders_reminder_day' => $post['reminders_reminder_day'],\\n            'reminders_description' => $post['reminders_description'],\\n            'reminders_calendar_end_date' => $post['reminders_date'] \\\/\\\/data fine calendar\\n        ];\\n\\n        foreach ($reminders as $reminder) {\\n            try {\\n                $this->apilib->edit('reminders', $reminder['reminders_id'], $reminder_edit);\\n            } catch (ApiException $e) {\\n                $this->showError($e->getMessage(), $e->getCode());\\n            }\\n        }\\n    }\\n\\n    $data['post']['reminders_edit_future_reminders'] = DB_BOOL_FALSE;\\n}\"}",
-            "fi_events_active": "1",
+            "fi_events_actiondata": "{\"code\":\"if ($data['post']['reminders_edit_future_reminders'] == DB_BOOL_TRUE) {\\n    $id = $data['value_id'];\\n\\n    $reminder = $this->apilib->view('reminders', $id);\\n    if (empty($reminder['reminders_generated_from'])) {\\n        $reminders = $this->apilib->search('reminders', ['reminders_generated_from' => $id]);\\n        $reminders[] = $reminder;\\n    } else {\\n        $reminders = $this->apilib->search('reminders', [\\n            'reminders_generated_from' => $reminder['reminders_generated_from'],\\n            \\\"reminders_date >= '{$reminder['reminders_date']}'\\\"\\n        ]);\\n        $id = $reminder['reminders_generated_from'];\\n    }\\n\\n    if (!empty($reminders)) {       \\n        $post = $data['post'];\\n        $reminder_edit = [\\n            'reminders_category' => $post['reminders_category'],\\n            'reminders_customer' => $post['reminders_customer'],\\n            'reminders_customer_email' => $post['reminders_customer_email'] ?? '',\\n            'reminders_amount' => $post['reminders_amount'],\\n            'reminders_all_day' => $post['reminders_all_day'],\\n\\t\\t\\t'reminders_send_notify_to' => $data['original_post']['reminders_send_notify_to'] ?? [],\\n            'reminders_reminder_day' => $post['reminders_reminder_day'],\\n            'reminders_description' => $post['reminders_description'],\\n            'reminders_calendar_end_date' => $post['reminders_date'], \\\/\\\/data fine calendar\\n            'reminders_automezzo' => $post['reminders_automezzo']\\n        ];\\n\\n        foreach ($reminders as $reminder) {\\n            try {\\n                $this->apilib->edit('reminders', $reminder['reminders_id'], $reminder_edit);\\n            } catch (ApiException $e) {\\n                $this->showError($e->getMessage(), $e->getCode());\\n            }\\n        }\\n    }\\n\\n    $data['post']['reminders_edit_future_reminders'] = DB_BOOL_FALSE;\\n}\"}",
+            "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": "1",
             "fi_events_crm": "1",

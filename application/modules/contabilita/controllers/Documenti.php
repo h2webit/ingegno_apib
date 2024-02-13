@@ -21,7 +21,7 @@ class Documenti extends MX_Controller
         if ($this->input->post('documenti_contabilita_azienda')) { //20231121 - MP - I dati di documenti contabilita settings posso caricarli solo se mi è stata passata un'azienda, altrimenti non ha senso e si rischia di associare all'azienda sbagliata eventuali dati (prima c'era un searchFirst e, ad esempio, il nome file era sempre quello della prima azienda...)
             $this->contabilita_settings = $this->apilib->view('documenti_contabilita_settings', $this->input->post('documenti_contabilita_azienda'));
         }
-        
+
 
         require APPPATH . "modules/contabilita/third_party/vendor/autoload.php";
     }
@@ -29,7 +29,6 @@ class Documenti extends MX_Controller
     public function create_document()
     {
         $input = $this->input->post();
-
         if (!empty($input['spesa_id'])) {
             $spesa_id = $input['spesa_id'];
             unset($input['spesa_id']);
@@ -81,7 +80,7 @@ class Documenti extends MX_Controller
         if ($this->input->post('documenti_contabilita_formato_elettronico') == DB_BOOL_TRUE) {
             if (in_array($tipo, ['1', '4'])) {
                 if ($this->input->post('nazione') == 'IT') {
-                    if (empty($input['partita_iva'])) {
+                    if (empty($input['partita_iva']) && $input['documenti_contabilita_tipo_destinatario'] != 3) { //Per le PA ci sono casi in cui la piva va lasciata vuota (vedi associazioni cf che iniziano col "9")
                         $this->form_validation->set_rules('codice_fiscale', 'codice fiscale', 'required');
                     }
                 }
@@ -258,7 +257,7 @@ class Documenti extends MX_Controller
             if ($this->input->post('documenti_contabilita_tipo_destinatario') == 2) { //Privato
                 $customer = [
                     $clienti_nome => $input['ragione_sociale'],
-                    
+
                 ];
             } else {
                 $customer = [
@@ -357,7 +356,7 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_formato_elettronico'] = (!empty($input['documenti_contabilita_formato_elettronico']) ? $input['documenti_contabilita_formato_elettronico'] : DB_BOOL_FALSE);
             $documents['documenti_contabilita_extra_param'] = ($input['documenti_contabilita_extra_param']) ?: null;
             $documents['documenti_contabilita_rif_documento_id'] = ($input['documenti_contabilita_rif_documento_id']) ?: null;
-//            $documents['documenti_contabilita_rif_documenti'] = ($input['documenti_contabilita_rif_documenti']) ?explode(',', $input['documenti_contabilita_rif_documenti']): []; // disattivato per incompatibilità della relazione con la stessa entità referenziata
+            //            $documents['documenti_contabilita_rif_documenti'] = ($input['documenti_contabilita_rif_documenti']) ?explode(',', $input['documenti_contabilita_rif_documenti']): []; // disattivato per incompatibilità della relazione con la stessa entità referenziata
             $documents['documenti_contabilita_da_sollecitare'] = (!empty($input['documenti_contabilita_da_sollecitare']) ? $input['documenti_contabilita_da_sollecitare'] : DB_BOOL_FALSE);
             $documents['documenti_contabilita_tipologia_fatturazione'] = (!empty($input['documenti_contabilita_tipologia_fatturazione'])) ? $input['documenti_contabilita_tipologia_fatturazione'] : null;
             $documents['documenti_contabilita_oggetto'] = (!empty($input['documenti_contabilita_oggetto'])) ? $input['documenti_contabilita_oggetto'] : null;
@@ -428,8 +427,8 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_rivalsa_inps_valore'] = $input['documenti_contabilita_rivalsa_inps_valore'];
             $documents['documenti_contabilita_competenze_lordo_rivalsa'] = $input['documenti_contabilita_competenze_lordo_rivalsa'];
             $documents['documenti_contabilita_cassa_professionisti_valore'] = $input['documenti_contabilita_cassa_professionisti_valore'];
-            
-            $documents['documenti_contabilita_cassa_professionisti_tipo'] =  (!empty($input['documenti_contabilita_cassa_professionisti_tipo']) ? $input['documenti_contabilita_cassa_professionisti_tipo'] : null);
+
+            $documents['documenti_contabilita_cassa_professionisti_tipo'] = (!empty($input['documenti_contabilita_cassa_professionisti_tipo']) ? $input['documenti_contabilita_cassa_professionisti_tipo'] : null);
             $documents['documenti_contabilita_imponibile'] = $input['documenti_contabilita_imponibile'];
             $documents['documenti_contabilita_imponibile_scontato'] = $input['documenti_contabilita_imponibile_scontato'];
             $documents['documenti_contabilita_ritenuta_acconto_valore'] = $input['documenti_contabilita_ritenuta_acconto_valore'];
@@ -488,7 +487,7 @@ class Documenti extends MX_Controller
                     $this->docs->associaDocumenti($documento_id, $rif_docs);
                 }
             }
-            
+
             //20230323 - MP - Sopra io sovrascrivo il documento in caso di edit, quindi $documento contiene ancora i dati "ante" modifica. Devo forzare un reload!
             $documento = $this->apilib->view('documenti_contabilita', $documento_id);
 
@@ -602,7 +601,7 @@ class Documenti extends MX_Controller
                     $prodotto['documenti_contabilita_articoli_attributi_sdi'] = base64_decode($prodotto['documenti_contabilita_articoli_attributi_sdi']);
                 }
 
-                if (!empty($input['documenti_contabilita_aggiungi_articoli']) && $input['documenti_contabilita_aggiungi_articoli'] == DB_BOOL_TRUE && empty($prodotto['documenti_contabilita_articoli_id'])) {
+                if (!empty($input['documenti_contabilita_aggiungi_articoli']) && $input['documenti_contabilita_aggiungi_articoli'] == DB_BOOL_TRUE && empty($prodotto['documenti_contabilita_articoli_prodotto_id'])) {
                     //SENZA mappature cerco l'unità di misura corrispondente
                     $misura = $this->apilib->searchFirst('fw_products_unita_misura', ['fw_products_unita_misura_value' => $prodotto['documenti_contabilita_articoli_unita_misura']]);
                     if ($misura) {
@@ -657,7 +656,7 @@ class Documenti extends MX_Controller
             }
             //debug($padri_da_aggiornare,true);
             foreach ($padri_da_aggiornare as $padre) {
-                
+
                 $this->docs->aggiornaStatoDocumento($padre, $documents['documenti_contabilita_tipo']);
             }
             //@TODO gestire eventuali ordini multi commessa ed eventuali aggiunte/modifiche al documento
@@ -689,6 +688,11 @@ class Documenti extends MX_Controller
                             'projects_items_project' => $input['documenti_contabilita_commessa'],
                         ]);
                     }
+                    //se è un ordine interno, associo la commessa al documento
+                    $this->apilib->create("documenti_contabilita_commesse", [
+                        'documenti_contabilita_commesse_projects_id' => $input['documenti_contabilita_commessa'],
+                        'documenti_contabilita_commesse_documenti_contabilita_id' => $documento_id,
+                    ]);
                 }
 
             }
@@ -934,6 +938,9 @@ class Documenti extends MX_Controller
 
     public function numeroSucessivo($azienda, $tipo, $serie = null)
     {
+        if (!$serie && !empty($this->input->get('serie'))) {
+            $serie = $this->input->get('serie');
+        }
         $data = $this->input->post('data_emissione');
         echo $this->docs->numero_sucessivo($azienda, $tipo, $serie, $data);
     }
@@ -1164,11 +1171,24 @@ class Documenti extends MX_Controller
         //debug($conto,true);
 
         $this->load->model('contabilita/ribaabicbi');
-        $file_content = $this->ribaabicbi->creaFileFromDocumenti($this->apilib->searchFirst('documenti_contabilita_settings'), $documenti, $accorpata);
+
+        if ($documenti) {
+            $settings = $this->apilib->view('documenti_contabilita_settings', $documenti[0]['documenti_contabilita_azienda']);
+        } else {
+            die('Nessun documento selezionato');
+        }
+
+        $file_content = $this->ribaabicbi->creaFileFromDocumenti($settings, $documenti, $accorpata);
 
         header("Content-type: text/plain");
         header("Content-Disposition: attachment; filename={$conto['conti_correnti_nome_istituto']}_{$data}.dat");
         echo $file_content;
+
+        $this->db->where_in('documenti_contabilita_scadenze_id', $ids)->update('documenti_contabilita_scadenze', [
+            'documenti_contabilita_scadenze_rid_riba_emesso' => DB_BOOL_TRUE,
+            'documenti_contabilita_scadenze_rid_riba_banca' => $this->input->post('conto_riba')
+        ]);
+        $this->mycache->clearEntityCache('documenti_contabilita_scadenze');
         die();
     }
 
@@ -1180,14 +1200,15 @@ class Documenti extends MX_Controller
         //debug($conto, true);
         $documenti = $this->apilib->search('documenti_contabilita_scadenze', "documenti_contabilita_scadenze_id IN (" . implode(',', $ids) . ")");
 
+        if ($documenti) {
+            $settings = $this->apilib->view('documenti_contabilita_settings', $documenti[0]['documenti_contabilita_azienda']);
+        } else {
+            die('Nessun documento selezionato');
+        }
+
         foreach ($documenti as $index => $documento) {
             $documenti[$index]['cliente'] = $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_customer_id' => $documento['documenti_contabilita_customer_id']]);
         }
-
-        $settings = $this->apilib->searchFirst('documenti_contabilita_settings', [], 0, 'documenti_contabilita_settings_creation_date', 'ASC');
-
-        // dump($settings);
-        // dump($documenti);
 
         $sdd = [];
 
@@ -1202,7 +1223,7 @@ class Documenti extends MX_Controller
         $sdd['total'] = number_format($tot_docs, 2, '.', '');
         $sdd['sdd_id'] = 'SDDXml-' . date('dmY-Hi');
         $sdd['creation_datetime'] = (new DateTime())->format(DateTime::ATOM);
-        $sdd['number_of_transactions'] = (int)count($ids);
+        $sdd['number_of_transactions'] = (int) count($ids);
         $sdd['azienda'] = $settings;
         $sdd['documenti'] = $documenti;
 
@@ -1214,6 +1235,12 @@ class Documenti extends MX_Controller
 
         header("Content-type: text/xml");
         header("Content-Disposition: attachment; filename=sdd.xml");
+
+        $this->db->where_in('documenti_contabilita_scadenze_id', $ids)->update('documenti_contabilita_scadenze', [
+            'documenti_contabilita_scadenze_rid_riba_emesso' => DB_BOOL_TRUE,
+            'documenti_contabilita_scadenze_rid_riba_banca' => $this->input->post('conto_sdd_b2b')
+        ]);
+        $this->mycache->clearEntityCache('documenti_contabilita_scadenze');
 
         die($file_content);
     }
@@ -1263,6 +1290,8 @@ class Documenti extends MX_Controller
 
         $zip->close();
 
+
+
         force_download('fatture.zip', file_get_contents($destination_file));
     }
 
@@ -1278,12 +1307,12 @@ class Documenti extends MX_Controller
         $ids = json_decode($this->input->post('ids'));
         $tpl = $this->input->post('tpl');
         $documenti = $this->apilib->search('documenti_contabilita', ["documenti_contabilita_id IN (" . implode(',', $ids) . ")"]);
-        
+
         $template_pdf = null;
         if (is_numeric($tpl)) {
             $template_pdf = $this->apilib->searchFirst('documenti_contabilita_template_pdf', ['documenti_contabilita_template_pdf_id' => $tpl]);
         }
-        
+
         $files = [];
         foreach ($documenti as $key => $documento) {
             //var_dump(base64_decode($documento[$field_name]));
@@ -1296,7 +1325,7 @@ class Documenti extends MX_Controller
                 $pdf_file = FCPATH . $key . '.pdf';
                 file_put_contents(FCPATH . $key . '.pdf', file_get_contents(FCPATH . "uploads/" . $documento['documenti_contabilita_file_pdf']));
             }
-            
+
             $files[] = $pdf_file;
         }
         $output = '';
@@ -1408,7 +1437,7 @@ class Documenti extends MX_Controller
 
                 ]);
             }
-            
+
             foreach ($articoli_old as $key_articolo => $articolo) {
                 unset($articoli_old[$key_articolo]['documenti_contabilita_articoli_id']);
                 $articoli_old[$key_articolo]['documenti_contabilita_articoli_position'] = $ordinamento++;
@@ -1426,6 +1455,7 @@ class Documenti extends MX_Controller
                     'cliente_id' => $customer_id,
                     'articoli_data' => $articoli_old,
                     'data_emissione' => $data_emissione,
+                    'azienda' => $documento_old['documenti_contabilita_azienda']
                 ];
             } else {
                 $fatture_da_generare[$customer_id]['articoli_data'] = array_merge($fatture_da_generare[$customer_id]['articoli_data'], $articoli_old);
@@ -1476,7 +1506,7 @@ class Documenti extends MX_Controller
         foreach ($articoli as $articolo) {
             if ($articolo['fw_products_supplier']) {
 
-                
+
                 if (!array_key_exists($articolo['fw_products_supplier'], $ordini_fornitori)) {
                     $ordini_fornitori[$articolo['fw_products_supplier']] = [];
                     if ($general_settings['documenti_contabilita_general_settings_auto_rif_doc']) {
@@ -1506,8 +1536,8 @@ class Documenti extends MX_Controller
                             ];
                             $ordini_fornitori[$articolo['fw_products_supplier']][] = $riga_desc_rif_doc;
                         }
-                    }  
-                
+                    }
+
                 }
                 $ordini_fornitori[$articolo['fw_products_supplier']][] = $articolo;
             } else {
@@ -1520,7 +1550,7 @@ class Documenti extends MX_Controller
             }
         }
 
-        
+
 
         if (!empty($this->input->post('_from_commessa')) && $this->input->post('_from_commessa') == '1' && $conto_articolo_no_fornitore != 0) {
             //caso in cui qualche prodotto non ha il fornitore di default.
@@ -1557,7 +1587,7 @@ class Documenti extends MX_Controller
             exit;
         }
 
-        
+
 
         foreach ($ordini_fornitori as $supplier_id => $articoli) {
             //debug($articoli);
@@ -1761,7 +1791,7 @@ class Documenti extends MX_Controller
     {
         $fatture = $this->apilib->search('documenti_contabilita', [
             'documenti_contabilita_tipo' => 1,
-            "documenti_contabilita_data_emissione > '2023-08-27'"
+            "documenti_contabilita_data_emissione > '2040-11-30'"
         ]);
 
         $c = count($fatture);
@@ -1853,7 +1883,7 @@ class Documenti extends MX_Controller
     {
         $field_id = $this->db->query("SELECT * FROM fields WHERE fields_name = 'documenti_contabilita_data_emissione'")->row()->fields_id;
 
-        $filtro_fatture = (array)@$this->session->userdata(SESS_WHERE_DATA)['filtro_elenchi_documenti_contabilita'];
+        $filtro_fatture = (array) @$this->session->userdata(SESS_WHERE_DATA)['filtro_elenchi_documenti_contabilita'];
 
         $filtro_fatture[$field_id] = [
             'value' => '01/01/' . $anno . ' - 31/12/' . $anno,
@@ -2074,10 +2104,10 @@ class Documenti extends MX_Controller
         if ($options_html) {
             foreach ($documenti as $documento) {
                 ?>
-                <option data-tipo_documento="<?php echo $documento['documenti_contabilita_tipo']; ?>" data-data_documento="<?php echo dateFormat($documento['documenti_contabilita_data_emissione'], 'd/m/Y'); ?>" data-rif="<?php echo $documento['documenti_contabilita_numero']; ?><?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?>" value="<?php echo $documento['documenti_contabilita_id']; ?>" <?php if (!empty($movimento['movimenti_documento_id']) && $movimento['movimenti_documento_id'] == $documento['documenti_contabilita_id']): ?> selected="selected" <?php endif; ?>>
-                    <?php echo $documento['documenti_contabilita_numero']; ?> <?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?> - <?php echo json_decode($documento['documenti_contabilita_destinatario'], true)['ragione_sociale']; ?>
-                </option>
-                <?php
+                                            <option data-tipo_documento="<?php echo $documento['documenti_contabilita_tipo']; ?>" data-data_documento="<?php echo dateFormat($documento['documenti_contabilita_data_emissione'], 'd/m/Y'); ?>" data-rif="<?php echo $documento['documenti_contabilita_numero']; ?><?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?>" value="<?php echo $documento['documenti_contabilita_id']; ?>" <?php if (!empty($movimento['movimenti_documento_id']) && $movimento['movimenti_documento_id'] == $documento['documenti_contabilita_id']): ?> selected="selected" <?php endif; ?>>
+                                                <?php echo $documento['documenti_contabilita_numero']; ?>                 <?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?> - <?php echo json_decode($documento['documenti_contabilita_destinatario'], true)['ragione_sociale']; ?>
+                                            </option>
+                                            <?php
             }
         } else {
             e_json($documenti);
@@ -2526,12 +2556,12 @@ class Documenti extends MX_Controller
             die('ANOMALIA: Dati non passati');
         }
 
-        if (empty($post['data_emissione']) || empty($post['data_scadenza']) || empty($post['tipo_documento'])) {
+        if (empty($post['data_emissione']) || /*empty($post['data_scadenza']) ||*/empty($post['tipo_documento'])) {
             die('ANOMALIA: Data emissione e/o scadenza e/o tipo documento non definiti');
         }
 
         if (in_array($post['tipo_documento'], [1, 4, 11, 12]) && empty($post['tipologia'])) {
-            die('ANOMALIA: Data emissione e/o scadenza e/o tipo documento non definiti');
+            die('ANOMALIA: Tipologia documento non valida per il tipo documento selezionato');
         }
 
         $ids_array = json_decode($post['ids'], true);
@@ -2567,7 +2597,7 @@ class Documenti extends MX_Controller
                 'iva_json' => $doc['documenti_contabilita_iva_json'],
                 'imponibile_iva_json' => $doc['documenti_contabilita_imponibile_iva_json'],
                 'documenti_contabilita_totale' => $doc['documenti_contabilita_totale'],
-//                'documenti_contabilita_rif_documento_id' => $doc['documenti_contabilita_id'], // 08-06 - DISATTIVATO IN QUANTO SOSTITUITO DALLA RELAZIONE rif_documenti
+                //                'documenti_contabilita_rif_documento_id' => $doc['documenti_contabilita_id'], // 08-06 - DISATTIVATO IN QUANTO SOSTITUITO DALLA RELAZIONE rif_documenti
                 'rif_documenti' => [$doc['documenti_contabilita_id']],
                 'ritenuta_acconto_perc' => $doc['documenti_contabilita_ritenuta_acconto_perc'],
                 'ritenuta_acconto_valore' => $doc['documenti_contabilita_ritenuta_acconto_valore'],
@@ -2578,7 +2608,7 @@ class Documenti extends MX_Controller
                 'oggetto' => $doc['documenti_contabilita_oggetto'],
                 'tipo_fatturazione' => $post['tipologia'],
                 'tipo_documento' => $post['tipo_documento'],
-                'data_emissione' => $post['data_emissione']
+                'data_emissione' => $post['data_emissione'],
             ];
 
             $articoli = $this->db->where('documenti_contabilita_articoli_documento', $doc['documenti_contabilita_id'])->get('documenti_contabilita_articoli')->result_array();
@@ -2603,13 +2633,19 @@ class Documenti extends MX_Controller
                     $clone['articoli_data'] = $articoli;
                 }
             }
-            $scadenza = $this->db->where('documenti_contabilita_scadenze_documento', $doc['documenti_contabilita_id'])->get('documenti_contabilita_scadenze')->row_array();
-            if (!empty($scadenza)) {
-                $scadenza['documenti_contabilita_scadenze_saldata'] = DB_BOOL_FALSE;
-                $scadenza['documenti_contabilita_scadenze_data_saldo'] = null;
-                $scadenza['documenti_contabilita_scadenze_scadenza'] = $post['data_scadenza'];
-                $clone['scadenza'] = $scadenza;
+
+            if (!empty($post['data_scadenza'])) {
+                $scadenza = $this->db->where('documenti_contabilita_scadenze_documento', $doc['documenti_contabilita_id'])->get('documenti_contabilita_scadenze')->row_array();
+
+                if (!empty(!empty($scadenza))) {
+                    $scadenza['documenti_contabilita_scadenze_saldata'] = DB_BOOL_FALSE;
+                    $scadenza['documenti_contabilita_scadenze_data_saldo'] = null;
+                    $scadenza['documenti_contabilita_scadenze_scadenza'] = $post['data_scadenza'];
+
+                    $clone['scadenza'] = $scadenza;
+                }
             }
+
             try {
                 $this->docs->doc_express_save($clone);
             } catch (Exception $e) {
@@ -2732,7 +2768,16 @@ class Documenti extends MX_Controller
 
         $post = $this->security->xss_clean($this->input->post());
 
-        $pagamenti_ids = json_decode($post['pagamenti_ids'], true);
+        if (!empty($post['pagamenti_ids']) && empty($post['ids'])) {
+            $post['ids'] = $post['pagamenti_ids'];
+            unset($post['pagamenti_ids']);
+        }
+
+        if (!is_array($post['ids'])) {
+            $pagamenti_ids = json_decode($post['ids'], true);
+        } else {
+            $pagamenti_ids = $post['ids'];
+        }
 
         if (empty($pagamenti_ids)) {
             die(json_encode(['status' => 0, 'txt' => 'ANOMALIA: Dati non passati']));
@@ -2755,12 +2800,17 @@ class Documenti extends MX_Controller
             $pagamenti_clienti[$pagamento_db['payments_customer']][] = $pagamento_db;
         }
 
+        if ($post['serie'] === '---') {
+            $post['serie'] = '';
+        }
         foreach ($pagamenti_clienti as $cliente_id => $pagamenti) {
             $fattura = [
                 'cliente_id' => $cliente_id,
                 'azienda' => $azienda['documenti_contabilita_settings_id'],
                 'tipo_documento' => 1,
-                'data_emissione' => date('Y-m-d'),
+                'data_emissione' => array_get($post, 'data_emissione', date('Y-m-d')),
+                'data_scadenza' => array_get($post, 'data_scadenza', ''),
+                'serie' => array_get($post, 'serie', ''),
                 'stato' => 1,
                 'formato_elettronico' => 1,
             ];
@@ -2774,14 +2824,13 @@ class Documenti extends MX_Controller
                     'documenti_contabilita_articoli_prezzo' => number_format($pagamento['payments_amount'], 2, '.', ''),
                     'documenti_contabilita_articoli_quantita' => 1,
                     'documenti_contabilita_articoli_iva_id' => 1,
-                    'documenti_contabilita_articoli_iva_perc' => 22
+                    'documenti_contabilita_articoli_iva_perc' => 22,
+                    'documenti_contabilita_articoli_sconto' => 0,
+                    'documenti_contabilita_articoli_applica_sconto' => 1,
                 ];
-
-                $totale += $pagamento['payments_amount'];
             }
 
             $fattura['articoli_data'] = $articoli_data;
-            $fattura['totale'] = number_format($totale, 2, '.', '');
 
             try {
                 $documento_id = $this->docs->doc_express_save($fattura);
@@ -2819,5 +2868,15 @@ class Documenti extends MX_Controller
         $xml = $this->load->module_view('contabilita/views', 'xml_liquidazione_periodica', $view_data, true);
 
         $this->output->set_content_type('text/xml')->set_output($xml);
+    }
+    public function get_tpl_pagamento_banca($tpl_pagamento = null) {
+        if (!$tpl_pagamento) {
+            e_json(['status' => 0, 'txt' => 'Template pagamento fornito']);
+            return false;
+        }
+        
+        $tpl_pag_scadenza = $this->apilib->searchFirst('documenti_contabilita_tpl_pag_scadenze', [ 'documenti_contabilita_tpl_pag_scadenze_tpl_id' => $tpl_pagamento ]);
+        
+        e_json(['status' => 1, 'txt' => $tpl_pag_scadenza]);
     }
 }

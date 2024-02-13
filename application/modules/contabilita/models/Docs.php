@@ -90,6 +90,15 @@ class Docs extends CI_Model
 
         if (!$reverse) {
             $pagina = $this->load->module_view("contabilita/views", 'xml_fattura_elettronica', ['dati' => $dati], true);
+            // Utilizza un'espressione regolare più generale per catturare tutti i tipi di spazi bianchi
+            // Rimuove gli spazi bianchi tra il tag e il suo contenuto
+            $pagina = preg_replace('/>\s+/', '>', $pagina);
+            $pagina = preg_replace('/\s+</', '<', $pagina);
+
+            // Rimuove gli spazi bianchi tra i tag XML
+            $pagina = preg_replace('/>\s+</', '><', $pagina);
+
+            //debug($pagina,true);
         } else {
             $pagina = $this->load->module_view("contabilita/views", 'xml_fattura_elettronica_reverse', ['dati' => $dati], true);
         }
@@ -275,11 +284,16 @@ class Docs extends CI_Model
             throw new ApiException('Id cliente o fornitore non trovato.');
             exit;
         }
-
+        
+        /** MICHAEL, 24/01/2023
+         * Ripristinata logica precedente al commit di Matteo del 15/01, in quanto questa logica è, secondo me, corretta.
+         * Perchè qui già prende l'azienda nel caso venga passata.
+         * In caso ci fossero casi in cui viene presa l'azienda sbagliata, allora è da sistemare all'origine, dove viene chiamato il metodo.
+        */
         $settings_db = $this->apilib->searchFirst('documenti_contabilita_settings', [], 0, 'documenti_contabilita_settings_id', 'DESC');
-
+        
         $azienda = array_get($data, 'azienda', $settings_db['documenti_contabilita_settings_id'] ?? null);
-
+        
         $settings_db = $this->apilib->searchFirst('documenti_contabilita_settings', ['documenti_contabilita_settings_id' => $azienda]);
 
         if ($settings_db['documenti_contabilita_settings_serie_default']) {
@@ -321,7 +335,7 @@ class Docs extends CI_Model
             'documenti_contabilita_supplier_id' => $fornitore_id ?? null,
             'documenti_contabilita_data_emissione' => $data_emissione,
             //'documenti_contabilita_metodo_pagamento' => array_get($data, 'metodo_pagamento', 'carta di credito'),
-            'documenti_contabilita_template_pagamento' => array_get($data, 'template_pagamento', null),
+            'documenti_contabilita_template_pagamento' => array_get($data, 'template_pagamento', ($cliente['customers_template_pagamento']) ?? null),
             'documenti_contabilita_tipo_destinatario' => $tipo_destinatario,
             'documenti_contabilita_azienda' => $azienda,
             'documenti_contabilita_utente_id' => array_get($data, 'utente', $this->auth->get('users_id')),
@@ -329,6 +343,15 @@ class Docs extends CI_Model
             'documenti_contabilita_stato' => array_get($data, 'stato', 1),
         ];
 
+        if (!empty($cliente['customers_template_pagamento'])) {
+            $tpl_pagamento = $this->db
+                ->where('documenti_contabilita_tpl_pag_scadenze_id', $cliente['customers_template_pagamento'])
+                ->get('documenti_contabilita_tpl_pag_scadenze')->row_array();
+            
+            if (!empty($tpl_pagamento['documenti_contabilita_tpl_pag_scadenze_banca_di_riferimento'])) {
+                $data['conto_corrente'] = $tpl_pagamento['documenti_contabilita_tpl_pag_scadenze_banca_di_riferimento'];
+            }
+        }
         // Cerco se c'è un template di default uso quello altrimenti il primo che creato che si presume il generico
         if (empty($data['documenti_contabilita_template_pdf'])) {
             $tpl_pdf_db = $this->apilib->searchFirst('documenti_contabilita_template_pdf', ["documenti_contabilita_template_pdf_default" => DB_BOOL_TRUE], 0, 'documenti_contabilita_template_pdf_id', 'ASC');
@@ -356,7 +379,7 @@ class Docs extends CI_Model
         $dati_documento['documenti_contabilita_cassa_professionisti_perc'] = null;
 
         //Accompagnatoria/DDT
-        $dati_documento['documenti_contabilita_fattura_accompagnatoria'] = DB_BOOL_FALSE;
+        $dati_documento['documenti_contabilita_fattura_accompagnatoria'] = array_get($data, 'dati_trasporto', DB_BOOL_FALSE);
         $dati_documento['documenti_contabilita_n_colli'] = array_get($data, 'n_colli', null);
         $dati_documento['documenti_contabilita_peso'] = array_get($data, 'peso', null);
         $dati_documento['documenti_contabilita_volume'] = array_get($data, 'volume', null);
@@ -421,11 +444,16 @@ class Docs extends CI_Model
 
                     $iva_valore = ($importo * $iva_perc) / 100;
 
-                    $iva[$articolo['documenti_contabilita_articoli_iva_id']][] = $iva_valore;
+                    if (array_key_exists($articolo['documenti_contabilita_articoli_iva_id'], $iva)) {
+                        $iva[$articolo['documenti_contabilita_articoli_iva_id']][1] += $iva_valore;
+                    } else {
+                        $iva[$articolo['documenti_contabilita_articoli_iva_id']] = [$iva_perc, $iva_valore];
+                    }
 
                     $competenze += $importo;
+                    $imponibile += $importo;
                     $iva_tot += $iva_valore;
-                    $imponibile += ($importo + $iva_valore);
+                    $totale += ($importo + $iva_valore);
                 }
             }
         } elseif (!empty($articoli)) {
@@ -452,8 +480,9 @@ class Docs extends CI_Model
                 $iva[$articolo['iva_valore']][] = $iva_valore;
 
                 $competenze += $importo;
+                $imponibile += $importo;
                 $iva_tot += $iva_valore;
-                $imponibile += ($importo + $iva_valore);
+                $totale += ($importo + $iva_valore);
             }
         }
 
@@ -466,7 +495,7 @@ class Docs extends CI_Model
         // debug($dati_documento['documenti_contabilita_sconto_percentuale'],true);
         //$dati_documento['documenti_contabilita_imponibile_scontato'] = array_get($data, 'imponibile_scontato', 0);
         //Importi
-        //debug($imponibile);
+        //debug($imponibile,true);
         $dati_documento['documenti_contabilita_imponibile'] = array_get($data, 'imponibile', $imponibile);
         if (array_get($data, 'importo_scontato')) {
             $iva_tot = $iva_tot - ($iva_tot * $dati_documento['documenti_contabilita_sconto_percentuale'] / 100);
@@ -483,7 +512,7 @@ class Docs extends CI_Model
         $dati_documento['documenti_contabilita_iva_json'] = array_get($data, 'iva_json', json_encode($iva));
         $dati_documento['documenti_contabilita_imponibile_iva_json'] = array_get($data, 'imponibile_iva_json', json_encode([]));
 
-        $dati_documento['documenti_contabilita_totale'] = array_get($data, 'documenti_contabilita_totale', number_format($imponibile, 2, '.', ''));
+        $dati_documento['documenti_contabilita_totale'] = array_get($data, 'documenti_contabilita_totale', number_format($totale, 2, '.', ''));
 
         $dati_documento['documenti_contabilita_rivalsa_inps_valore'] = 0;
         $dati_documento['documenti_contabilita_competenze_lordo_rivalsa'] = 0;
@@ -498,6 +527,7 @@ class Docs extends CI_Model
         $dati_documento['documenti_contabilita_causale_pagamento_ritenuta'] = array_get($data, 'causale_pagamento_ritenuta', null);
         $dati_documento['documenti_contabilita_stato_pagamenti'] = array_get($data, 'stato_pagamenti', 1);
         try {
+            //debug($dati_documento,true);
             $documento = $this->apilib->create('documenti_contabilita', $dati_documento);
 
             $documento_id = $documento['documenti_contabilita_id'];
@@ -518,7 +548,7 @@ class Docs extends CI_Model
                     $iva_perc = str_ireplace(',', '.', $articolo['documenti_contabilita_articoli_iva_perc']);
                     $importo = ($prezzo_unit * $articolo['documenti_contabilita_articoli_quantita'] / 100) * (100 - (int) $articolo['documenti_contabilita_articoli_sconto']);
                     $iva_valore = ($importo * $iva_perc) / 100;
-                    $iva[$articolo['documenti_contabilita_articoli_iva_perc']][] = $iva_valore;
+                    $iva[$articolo['documenti_contabilita_articoli_iva_id']][] = $iva_valore;
                     //trovo il valore dell'iva, se ce ne sono di più, prendo la prima
 
                     if ($iva_perc == '0.00') {
@@ -532,9 +562,11 @@ class Docs extends CI_Model
                         $articolo['documenti_contabilita_articoli_iva_id'] = $iva['iva_id'];
                     }
                     $articolo['documenti_contabilita_articoli_iva'] = $iva_valore;
-                    $competenze += $importo;
-                    $iva_tot += $iva_valore;
-                    $imponibile += ($importo + $iva_valore);
+                    // $competenze += $importo;
+                    // $imponibile += $importo;
+                    // $iva_tot += $iva_valore;
+                    // $totale += ($importo + $iva_valore);
+
                     $articolo['documenti_contabilita_articoli_applica_sconto'] = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_FALSE) ? DB_BOOL_FALSE : DB_BOOL_TRUE;
 
                     $articolo['documenti_contabilita_articoli_imponibile'] = $importo;
@@ -681,7 +713,8 @@ class Docs extends CI_Model
             //Mi costruisco un oggetto da riutilizzare per le scadenze automatiche
             //20230203 - MP - Perchè non WHERE il template è quello del cliente??? Vedi anche sotto l'if inutile...
 
-            $template_scadenze = $this->apilib->search('documenti_contabilita_template_pagamenti');
+            $template_scadenze = $this->apilib->search('documenti_contabilita_template_pagamenti', ['documenti_contabilita_template_pagamenti_id' => $template_pagamento]);
+
             foreach ($template_scadenze as $key => $tpl_scad) {
                 //Riordino le sotto scadenze sul campo "giorni"
                 usort($tpl_scad['documenti_contabilita_tpl_pag_scadenze'], function ($a, $b) {
@@ -691,58 +724,81 @@ class Docs extends CI_Model
             }
 
             foreach ($template_scadenze as $template_scadenza) {
-                if ($template_scadenza['documenti_contabilita_template_pagamenti_id'] == $template_pagamento) { //20230203 - MP - Questo è l'if inutile... bastava prendere solo il template del cliente
-                    $residuo = $totale;
-                    $count_scadenze = count($template_scadenza['documenti_contabilita_tpl_pag_scadenze']);
-                    foreach ($template_scadenza['documenti_contabilita_tpl_pag_scadenze'] as $index => $tpl_pag_scadenza) {
-                        switch ($tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_tipo_value']) {
-                            case 'Fine mese':
-                                // qui va la data fine mese (ossia se sono al 17/01, la data sarà 01/02...
-                                // se c'è anche calcolo giorni (es 90), sarà 01/05)
-                                $data_scadenza = (DateTime::createFromFormat('Y-m-d', (!empty($data['data_scadenza']) ? $data['data_scadenza'] : $data_emissione)))
-                                    ->modify('last day of')
-                                    ->modify('+' . $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni'] . ' days')
-                                    ->format('Y-m-d H:i:s');
-                                break;
 
-                            case 'Data Fattura':
-                                $data_scadenza = (DateTime::createFromFormat('Y-m-d', (!empty($data['data_scadenza']) ? $data['data_scadenza'] : $data_emissione)))
-                                    ->modify('+' . $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni'] . ' days')
-                                    ->format('Y-m-d H:i:s');
+                $residuo = $totale;
+                $count_scadenze = count($template_scadenza['documenti_contabilita_tpl_pag_scadenze']);
+                foreach ($template_scadenza['documenti_contabilita_tpl_pag_scadenze'] as $index => $tpl_pag_scadenza) {
+                    // creo l'oggetto datetime partendo dalla data cadenza passata in post (se presente, altrimenti data emissione)
+                    $dataScadenzaBaseObj = DateTime::createFromFormat('Y-m-d', (!empty($data['data_scadenza']) ? $data['data_scadenza'] : $data_emissione));
+
+                    if (!empty($tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni'])) {
+                        switch($tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni']) {
+                            // michael,matteo - 31/01/2024 - fatto questo fix in quanto c'erano casi in cui calcolava male il mese successivo. per info leggi qui: https://stackoverflow.com/questions/28351285/php-february-date-2015-01-31-1-month-2015-03-30-how-to-fix
+                            case '30':
+                            case '60':
+                            case '90':
+                            case '120':
+                                for ( $i = 1; $i <= (int) ( $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni'] / 30 ); $i++ ) {
+                                    $dataScadenzaBaseObj->modify('last day of');
+                                    $dataScadenzaBaseObj->modify('+1 day');
+                                    $dataScadenzaBaseObj->modify('last day of');
+                                }
                                 break;
                             default:
-                                // qui va data di oggi
-                                $data_scadenza = (DateTime::createFromFormat('Y-m-d', (!empty($data['data_scadenza']) ? $data['data_scadenza'] : $data_emissione)))->format('Y-m-d H:i:s');
+                                $dataScadenzaBaseObj->modify("+{$tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni']} day");
                                 break;
                         }
+                    }
+                    switch ($tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_tipo_value']) {
+                        case 'Fine mese':
+                            // qui va la data fine mese (ossia se sono al 17/01, la data sarà 01/02...
+                            // se c'è anche calcolo giorni (es 90), sarà 01/05)
+                            $dataScadenzaBaseObj->modify('last day of');
+                            break;
+                        case 'Data Fattura':
+                            $dataScadenzaBaseObj->modify('+' . $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_giorni'] . ' days');
+                            break;
+                        default:
+                            // qui non modifico l'oggetto datetime
+                            break;
+                    }
 
-                        $ammontare = (($totale / 100) * $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_percentuale']);
-                        //20230203 - MP - index non mi sembra definita... forse funziona ma volevo capire
-                        if ($index + 1 >= $count_scadenze) {
-                            $ammontare = $residuo;
-                        } else {
-                            $residuo -= $ammontare;
-                        }
+                    if (!empty($cliente['customers_pag_gg_spostamento']) && $cliente['customers_pag_gg_spostamento'] > 0) {
+                        $dataScadenzaBaseObj->modify("+{$cliente['customers_pag_gg_spostamento']} days");
+                    } elseif (!empty($cliente['customers_pag_giorno_fisso']) && $cliente['customers_pag_giorno_fisso'] > 0) {
+                        $dataScadenzaBaseObj->setDate($dataScadenzaBaseObj->format('Y'), $dataScadenzaBaseObj->format('m'), $cliente['customers_pag_giorno_fisso']);
+                    } else {
+                    }
 
-                        $scadenza = [
-                            'documenti_contabilita_scadenze_documento' => $documento_id,
-                            'documenti_contabilita_scadenze_ammontare' => $ammontare,
-                            'documenti_contabilita_scadenze_saldato_con' => $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_metodo'],
-                            'documenti_contabilita_scadenze_saldata' => DB_BOOL_FALSE,
-                            'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
-                            'documenti_contabilita_scadenze_data_saldo' => null,
-                            'documenti_contabilita_scadenze_scadenza' => $data_scadenza, //20230203 - MP - Questo è rischioso, visto per caso: diamo sempre nomi alle variabili a prova di "duplicato"... per fortuna sotto c'è un array che si chiama dati_scadenza che non centra niente con la "data" scadenza... per evitare darei nomi sicuri
-                        ];
+                    $data_scadenza = $dataScadenzaBaseObj->format('Y-m-d H:i:s');
 
-                        try {
-                            $this->apilib->create('documenti_contabilita_scadenze', $scadenza);
-                        } catch (Exception $e) {
-                            log_message('error', $e->getMessage());
-                            throw new ApiException('Si è verificato un errore.');
-                            exit;
-                        }
+                    $ammontare = (($totale / 100) * $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_percentuale']);
+                    //20230203 - MP - index non mi sembra definita... forse funziona ma volevo capire
+                    if ($index + 1 >= $count_scadenze) {
+                        $ammontare = $residuo;
+                    } else {
+                        $residuo -= $ammontare;
+                    }
+
+                    $scadenza = [
+                        'documenti_contabilita_scadenze_documento' => $documento_id,
+                        'documenti_contabilita_scadenze_ammontare' => $ammontare,
+                        'documenti_contabilita_scadenze_saldato_con' => $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_metodo'],
+                        'documenti_contabilita_scadenze_saldata' => DB_BOOL_FALSE,
+                        'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
+                        'documenti_contabilita_scadenze_data_saldo' => null,
+                        'documenti_contabilita_scadenze_scadenza' => $data_scadenza, //20230203 - MP - Questo è rischioso, visto per caso: diamo sempre nomi alle variabili a prova di "duplicato"... per fortuna sotto c'è un array che si chiama dati_scadenza che non centra niente con la "data" scadenza... per evitare darei nomi sicuri
+                    ];
+
+                    try {
+                        $this->apilib->create('documenti_contabilita_scadenze', $scadenza);
+                    } catch (Exception $e) {
+                        log_message('error', $e->getMessage());
+                        throw new ApiException('Si è verificato un errore.');
+                        exit;
                     }
                 }
+
             }
         } else { // altrimenti creo la scadenza alla vecchia maniera...
             if (!empty($data['data_scadenza'])) {
@@ -859,11 +915,11 @@ class Docs extends CI_Model
             exit;
         }
 
-        $settings_db = $this->apilib->searchFirst('documenti_contabilita_settings', [], 0, 'documenti_contabilita_settings_id', 'DESC');
+        
 
         $azienda = array_get($data, 'azienda', $settings_db['documenti_contabilita_settings_id'] ?? null);
 
-        $settings_db = $this->apilib->searchFirst('documenti_contabilita_settings', ['documenti_contabilita_settings_id' => $azienda]);
+        $settings_db = $this->apilib->view('documenti_contabilita_settings', $azienda);
 
         if ($settings_db['documenti_contabilita_settings_serie_default']) {
             $serie_db = $this->apilib->view('documenti_contabilita_serie', $settings_db['documenti_contabilita_settings_serie_default']);
@@ -1621,7 +1677,7 @@ class Docs extends CI_Model
         $righe_articolo = $this->db->get_where('documenti_contabilita_articoli', [
             'documenti_contabilita_articoli_documento' => $documento_id
         ])->result_array();
-        
+
         $stato = 1; //Di default aperto
         foreach ($righe_articolo as $key => $riga) {
             if (empty($riga['documenti_contabilita_articoli_prodotto_id'])) {
@@ -1641,12 +1697,13 @@ class Docs extends CI_Model
             $stato = 3; //Chiuso
         }
 
-        
+
 
         $this->apilib->edit('documenti_contabilita', $documento_id, ['documenti_contabilita_stato' => $stato]);
         return $stato;
     }
-    public function getPdfFormatoCompatto($documento) {
+    public function getPdfFormatoCompatto($documento)
+    {
         $basepath = FCPATH . '/uploads/';
         $view_content = file_get_contents($basepath . $documento['documenti_contabilita_file_xml']);
         // URL del file XSL
@@ -1674,16 +1731,17 @@ class Docs extends CI_Model
 
         return $pdfFile;
     }
-    
-    public function getPdfTemplate($documento, $template) {
+
+    public function getPdfTemplate($documento, $template)
+    {
         if (!empty($template['documenti_contabilita_template_pdf_file_html'])) {
             $html = file_get_contents(FCPATH . 'uploads/' . $template['documenti_contabilita_template_pdf_file_html']);
         } elseif (!empty($template['documenti_contabilita_template_pdf_html'])) {
             $html = $template['documenti_contabilita_template_pdf_html'];
         }
-        
+
         $pdfFile = $this->layout->generate_pdf($html, "portrait", "", ['documento_id' => $documento['documenti_contabilita_id']], 'contabilita', true);
-        
+
         return $pdfFile;
     }
 }

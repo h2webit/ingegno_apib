@@ -1,4 +1,11 @@
 <?php
+$message_validation = '';
+if ($this->datab->module_installed('user-extender')) {
+    $user_manager = $this->apilib->searchFirst('users_manager_configurations');
+    if(!empty($user_manager)){
+        $message_validation = $user_manager['users_manager_configurations_password_validation_message'];
+    }
+}
 // What is today's date - number
 $day = date("z");
 
@@ -78,6 +85,14 @@ endif;
     }
     $this->layout->addDinamicStylesheet($data, "login.css");
     ?>
+
+<style>
+
+    .js_show_password {
+        pointer-events: initial;
+        cursor: pointer;
+    }
+    </style>
 </head>
 
 <body class="hold-transition login-page">
@@ -112,22 +127,25 @@ endif;
                 </div>
 
                 <div class="login_form_container">
+                    
                     <form id="lost" class="formAjax" action="<?php echo base_url('access/change_expired_password'); ?>" method="post">
                         <?php add_csrf(); ?>
                         <h4 class="title login-p text-center"><?php e("Change password"); ?></h4>
                         <p class="login-p text-center"><?php e("Every six months you have to change your password."); ?></p>
 
-                        <div class="input_container">
-                            <input class="form-control" type="password" autocomplete="off" placeholder="<?php e('Current password'); ?>" name="users_users_current_password">
+                        <p style="color:black;" class="text-center"><?php e($message_validation); ?></p>
+
+                        <input class="form-control" type="hidden" autocomplete="off" value="<?php echo $actual_password; ?>" name="users_users_current_password">
+
+                        <div class="input_container password_container">
+                            <input type="password" class="form-control password_input" placeholder="<?php e('New password'); ?>" name="users_users_password">
+                            <span style="top:6px!important;"class="glyphicon glyphicon-eye-open form-control-feedback js_show_password"></span>
                         </div>
 
-                        <div class="input_container">
-                            <input class="form-control" type="password" autocomplete="off" placeholder="<?php e('New password'); ?>" name="users_users_password">
-                        </div>
-
-                        <div class="input_container">
-                            <input class="form-control" type="password" autocomplete="off" placeholder="<?php e('Confirm password'); ?>" name="users_users_confirm_password">
-                        </div>
+                        <div class="input_container password_container">
+                            <input type="password" class="form-control password_input" placeholder="<?php e('Confirm password'); ?>" name="users_users_confirm_password">
+                            <span style="top:6px!important;"class="glyphicon glyphicon-eye-open form-control-feedback js_show_password"></span>
+                        </div>                        
 
                         <div class="form-group">
                             <div class="controls">
@@ -227,3 +245,25 @@ endif;
 </body>
 
 </html>
+<script>
+    $(function() {
+    const handleShowPassword = $('.js_show_password');
+
+    handleShowPassword.on("click", function() {
+        const container = $(this).closest('.password_container');
+        const passwordInput = container.find('.password_input');
+
+        if (passwordInput.attr('type') === 'password') {
+            passwordInput.attr('type', 'text');
+        } else {
+            passwordInput.attr('type', 'password');
+        }
+
+        $(this).toggleClass('glyphicon-eye-open glyphicon-eye-close');
+    });
+});
+
+
+
+
+</script>

@@ -43,7 +43,7 @@ if (!$where_spese_str) {
 $query_all_days = "with recursive all_dates(dt) as (\r\n\r\n
     select '$data_da' dt\r\n
         union all \r\n
-    select dt + interval 1 day from all_dates where dt + interval 1 day <= '$data_a'\r\n
+    select DATE_ADD(dt, INTERVAL 1 DAY) from all_dates where dt <= '$data_a'\r\n
 ) \r\n
 
 ";
@@ -54,12 +54,12 @@ $query_spese = $query_all_days . " SELECT
     extract(year FROM dt) as anno
     FROM
         all_dates d
-        left join spese spese on CAST(spese.spese_data_emissione AS DATE) = d.dt
+        left join spese spese on DATE(spese.spese_data_emissione) = d.dt
 
 
     WHERE $where_spese_str
-    GROUP BY extract(month FROM dt),extract(year FROM dt)
-    ORDER BY extract(year FROM dt), extract(month from dt)";
+    GROUP BY MONTH(dt),YEAR(dt)
+    ORDER BY YEAR(dt), MONTH(dt)";
 $spese_mensile = $this->db->query($query_spese)->result_array();
 
 //debug($this->db->last_query());

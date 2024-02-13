@@ -6,6 +6,13 @@ $where_documenti = $where_spese = ["1=1"];
 
 if (!empty($filtro_fatture)) {
     foreach ($filtro_fatture as $key => $filtro) {
+
+        if (!empty($filtro['reverse'])) {
+            $not = 'NOT ';
+        } else {
+            $not = '';
+        }
+
         $field_id = $filtro['field_id'];
         $value = $filtro['value'];
         if ($value !== '' && $value != -1) {
@@ -21,24 +28,25 @@ if (!empty($filtro_fatture)) {
                     $data_da = "{$data_da_expl[2]}-{$data_da_expl[1]}-{$data_da_expl[0]}";
                     $data_a_expl = explode('/', $data_expl[1]);
                     $data_a = "{$data_a_expl[2]}-{$data_a_expl[1]}-{$data_a_expl[0]}";
-                    $where_documenti[] = "DATE(documenti_contabilita_data_emissione) <= '$data_a' AND DATE(documenti_contabilita_data_emissione) >= '$data_da'";
-                    $where_spese[] = "DATE(spese_data_emissione) <= '$data_a' AND DATE(spese_data_emissione) >= '$data_da'";
+                    $where_documenti[] = "$not(DATE(documenti_contabilita_data_emissione) <= '$data_a' AND DATE(documenti_contabilita_data_emissione) >= '$data_da')";
+                    $where_spese[] = "$not(DATE(spese_data_emissione) <= '$data_a' AND DATE(spese_data_emissione) >= '$data_da')";
 
                     break;
                 case 'documenti_contabilita_serie':
-                    $where_documenti[] = "documenti_contabilita_serie IN ('" . implode("','", $value) . "')";
+                    
+                    $where_documenti[] = "$not(documenti_contabilita_serie IN ('" . implode("','", $value) . "'))";
                     break;
                 case 'documenti_contabilita_centro_di_ricavo':
-                    $where_documenti[] = "documenti_contabilita_centro_di_ricavo = '$value'";
+                    $where_documenti[] = "$not(documenti_contabilita_centro_di_ricavo = '$value')";
                     break;
                 case 'documenti_contabilita_stato_pagamenti':
-                    $where_documenti[] = "documenti_contabilita_stato_pagamenti = '$value'";
+                    $where_documenti[] = "$not(documenti_contabilita_stato_pagamenti = '$value')";
                     break;
                 case 'documenti_contabilita_customer_id':
-                    $where_documenti[] = "documenti_contabilita_customer_id = '$value'";
+                    $where_documenti[] = "$not(documenti_contabilita_customer_id = '$value')";
                     break;
                 case 'documenti_contabilita_azienda':
-                    $where_documenti[] = "documenti_contabilita_azienda = '$value'";
+                    $where_documenti[] = "$not(documenti_contabilita_azienda = '$value')";
                     break;
                 default:
 
@@ -54,13 +62,43 @@ $where_documenti_str = implode(' AND ', $where_documenti);
 
 $where_spese_str = implode(' AND ', $where_spese);
 
-$fatturati = $this->db->query("SELECT SUM(CASE WHEN documenti_contabilita_tipo IN (1,11,12) THEN documenti_contabilita_totale ELSE -documenti_contabilita_totale END) as s,SUM(CASE WHEN documenti_contabilita_tipo IN (1,11,12) THEN documenti_contabilita_iva ELSE -documenti_contabilita_iva END) as iva, EXTRACT(MONTH FROM documenti_contabilita_data_emissione) as mese FROM documenti_contabilita WHERE (documenti_contabilita_tipo IN (1,4,11,12)) AND $where_documenti_str GROUP BY EXTRACT(MONTH FROM documenti_contabilita_data_emissione)")->result_array();
+$fatturati = $this->db->query("SELECT 
+    SUM(CASE 
+        WHEN documenti_contabilita_tipo IN (1) 
+        THEN documenti_contabilita_totale - COALESCE(documenti_contabilita_importo_bollo, 0)
+        ELSE -(documenti_contabilita_totale - COALESCE(documenti_contabilita_importo_bollo, 0))
+    END) as s,
+    SUM(CASE 
+        WHEN documenti_contabilita_tipo IN (1) AND documenti_contabilita_split_payment != 1 
+        THEN documenti_contabilita_iva 
+        WHEN documenti_contabilita_tipo IN (1) AND documenti_contabilita_split_payment = 1 
+        THEN 0
+        ELSE -documenti_contabilita_iva 
+    END) as iva, 
+    EXTRACT(MONTH FROM documenti_contabilita_data_emissione) as mese 
+FROM documenti_contabilita 
+WHERE (documenti_contabilita_tipo IN (1,4)) AND $where_documenti_str 
+GROUP BY EXTRACT(MONTH FROM documenti_contabilita_data_emissione)")->result_array();
 
 //debug($this->db->last_query(),true);
 
 $spese = $this->db->query("SELECT SUM(CASE WHEN COALESCE(spese_totale,0) > 0 THEN spese_totale ELSE COALESCE(spese_imponibile+spese_iva,0) END) as s, SUM(spese_iva) as iva, SUM((spese_iva/100)*spese_deduc_iva) as iva_deducibile, EXTRACT(MONTH FROM spese_data_emissione) as mese FROM spese WHERE $where_spese_str GROUP BY EXTRACT(MONTH FROM spese_data_emissione)")->result_array();
 
-$fatturati_totali = $this->db->query("SELECT SUM(CASE WHEN documenti_contabilita_tipo IN (1,11,12) THEN documenti_contabilita_totale ELSE -documenti_contabilita_totale END) as fatturato,SUM(CASE WHEN documenti_contabilita_tipo IN (1,11,12) THEN documenti_contabilita_iva ELSE -documenti_contabilita_iva END) as iva FROM documenti_contabilita WHERE (documenti_contabilita_tipo IN (1,11,12,4)) AND $where_documenti_str")->row_array();
+$fatturati_totali = $this->db->query("SELECT 
+    SUM(CASE 
+        WHEN documenti_contabilita_tipo IN (1) 
+        THEN documenti_contabilita_totale - COALESCE(documenti_contabilita_importo_bollo, 0)
+        ELSE -(documenti_contabilita_totale - COALESCE(documenti_contabilita_importo_bollo, 0))
+    END) as fatturato,
+    SUM(CASE 
+        WHEN documenti_contabilita_tipo IN (1) AND documenti_contabilita_split_payment != 1 
+        THEN documenti_contabilita_iva 
+        WHEN documenti_contabilita_tipo IN (1) AND documenti_contabilita_split_payment = 1 
+        THEN 0
+        ELSE -documenti_contabilita_iva 
+    END) as iva 
+FROM documenti_contabilita 
+WHERE (documenti_contabilita_tipo IN (1,4)) AND $where_documenti_str")->row_array();
 
 $spese_totali = $this->db->query("SELECT SUM(CASE WHEN COALESCE(spese_totale,0) > 0 THEN spese_totale ELSE COALESCE(spese_imponibile+spese_iva,0) END) as spese_fatturato, SUM(spese_iva) as iva, SUM((spese_iva/100)*spese_deduc_iva) as spese_iva_deducibile FROM spese WHERE $where_spese_str")->row_array();
 

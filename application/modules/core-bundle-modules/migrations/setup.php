@@ -10,7 +10,9 @@ $core_modules = [
     'mailer',
     'core-file-manager',
     'upgrade-new-notification-core',
-    'support-table-manager'
+    'support-table-manager',
+    'core-modules-permissions',
+    'infobox'
 ];
 foreach ($core_modules as $module) {
     if ($this->datab->module_installed($module)) {

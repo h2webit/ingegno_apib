@@ -31,7 +31,21 @@ button {
 }
 
 .button_selected {
-    opacity: 0.6;
+    /*opacity: 0.6;*/
+    color: #fff;
+    background-color: #00c0ef;
+    border-color: #00acd6;
+}
+
+.button_selected:hover {
+    color: #fff;
+    background-color: #00acd6;
+}
+
+.button_selected:focus {
+    color: #fff;
+    background-color: #31b0d5;
+    border-color: #1b6d85;
 }
 
 .table_prodotti td {
@@ -268,7 +282,7 @@ usort($documenti_tipo, function ($t1, $t2) use ($ordinamento_documenti_tipo) {
 //debug($documenti_tipo,true);
 
 $centri_di_costo = $this->apilib->search('centri_di_costo_ricavo');
-$templates = $this->apilib->search('documenti_contabilita_template_pdf');
+$templates = $this->apilib->search('documenti_contabilita_template_pdf', [], null, 0, "(documenti_contabilita_template_pdf_default = '1')", 'DESC');
 $fonts = $this->apilib->search('documenti_contabilita_font');
 $tipi_ritenuta = $this->apilib->search('documenti_contabilita_tipo_ritenuta');
 $tipi_cassa_pro = $this->apilib->search('documenti_contabilita_cassa_professionisti_tipo');
@@ -411,10 +425,10 @@ if ($documento_id) {
                 //Il primo lo skippo perchè lo processerò qua...
                 continue;
             } ?>
-            <script>
-            window.open('<?php echo base_url(); ?>main/layout/nuovo_documento/?ddt_id=<?php echo $id; ?>', '_blank');
-            </script>
-            <?php
+<script>
+window.open('<?php echo base_url(); ?>main/layout/nuovo_documento/?ddt_id=<?php echo $id; ?>', '_blank');
+</script>
+<?php
         }
         //Una volta aperte le tab (una per ddt) continuo con questo, quindi tolgo gli altri da ids...
         $ids = [$ids[0]];
@@ -983,77 +997,76 @@ $xml_articoli_altri_dati_gestionale = [
 
 <!-- CHECK DOCUMENTO XML IMPORTATO -->
 <?php if (!$clone && !empty($documento) && isset($documento['documenti_contabilita_importata_da_xml']) && $documento['documenti_contabilita_importata_da_xml'] == DB_BOOL_TRUE): ?>
-    <section class="content-header">
-        <div class="callout callout-warning">
-            <h4>Attenzione!</h4>
-            <p>Il documento che stai modificando è un documento importato tramite la funzione di import XML massiva. Non è un documento generato da questo sistema di fatturazione.</p>
-        </div>
-    </section>
+<section class="content-header">
+    <div class="callout callout-warning">
+        <h4>Attenzione!</h4>
+        <p>Il documento che stai modificando è un documento importato tramite la funzione di import XML massiva. Non è un documento generato da questo sistema di fatturazione.</p>
+    </div>
+</section>
 <?php endif; ?>
 
 <!-- CHECK DOCUMENTO CONSEGNATO ALLO SDI -->
 <?php if (!$clone && !empty($documento) && !empty($documento['documenti_contabilita_stato_invio_sdi']) && in_array($documento['documenti_contabilita_stato_invio_sdi'], [2, 3, 5, 7, 8, 9, 10, 11, 12, 14, 15])): ?>
-    <section class="content-header">
-        <div class="callout callout-danger">
-            <h4>Attenzione!</h4>
-            <p>Il documento che stai modificando è già stato inviato allo SDI.<br /><br />
-                <br />
-                Si consiglia di NON apportare alcuna modifica a questo documento.<br />
-                Eventuali modifiche potrebbero causare un <u>disallineamento</u> tra le informazioni ricevute dallo SDI e quelle presenti nel gestionale.<br />
-                <br />
-                Qualora fosse necessaria una modifica su un documento già inviato allo SDI, ti invitiamo a rivolgerti al <u>tuo commercialista</u>.
-            </p>
-        </div>
-    </section>
+<section class="content-header">
+    <div class="callout callout-danger">
+        <h4>Attenzione!</h4>
+        <p>Il documento che stai modificando è già stato inviato allo SDI.<br /><br />
+            <br />
+            Si consiglia di NON apportare alcuna modifica a questo documento.<br />
+            Eventuali modifiche potrebbero causare un <u>disallineamento</u> tra le informazioni ricevute dallo SDI e quelle presenti nel gestionale.<br />
+            <br />
+            Qualora fosse necessaria una modifica su un documento già inviato allo SDI, ti invitiamo a rivolgerti al <u>tuo commercialista</u>.
+        </p>
+    </div>
+</section>
 <?php endif; ?>
 
 
 <?php if ($show_iva_advisor): ?>
-    <section class="content-header">
-        <div class="callout callout-warning">
-            <h4>Nuove specifiche in vigore dal 01/01/2021</h4>
+<section class="content-header">
+    <div class="callout callout-warning">
+        <h4>Nuove specifiche in vigore dal 01/01/2021</h4>
 
-            <p>Il documento che stai modificando o duplicando è stato creato prima del 01/01/2021, data in cui sono entrate in vigore le nuove regole SDI per le classi iva. Verificare attentamente che le righe articolo riportino l'indicazione di iva corretta.</p>
-        </div>
-    </section>
+        <p>Il documento che stai modificando o duplicando è stato creato prima del 01/01/2021, data in cui sono entrate in vigore le nuove regole SDI per le classi iva. Verificare attentamente che le righe articolo riportino l'indicazione di iva corretta.</p>
+    </div>
+</section>
 <?php endif; ?>
 
 <div class="row">
-<?php if(!empty($ddt_gia_fatturati)): ?>
-<div class="col-sm-6">
-    <section class="content-header">
-        <div class="callout callout-warning">
-            <h4 style="font-weight: 900">ATTENZIONE</h4>
-            <p>I seguenti DDT risultano già fatturati:</p>
-            <ul>
-                <li><?php echo implode('</li><li>', $ddt_gia_fatturati); ?></li>
-            </ul>
-        </div>
-    </section>
-</div>
-<?php endif; ?>
+    <?php if(!empty($ddt_gia_fatturati)): ?>
+    <div class="col-sm-6">
+        <section class="content-header">
+            <div class="callout callout-warning">
+                <h4 style="font-weight: 900">ATTENZIONE</h4>
+                <p>I seguenti DDT risultano già fatturati:</p>
+                <ul>
+                    <li><?php echo implode('</li><li>', $ddt_gia_fatturati); ?></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <?php endif; ?>
 
-<?php if(!empty($ddt_con_sconto)): ?>
-        <div class="col-sm-6">
-            <section class="content-header">
-                <div class="callout callout-warning">
-                    <h4 style="font-weight: 900">ATTENZIONE</h4>
-                    <p>I seguenti DDT contengono uno sconto generale:</p>
-                    <ul>
-                        <li><?php echo implode('</li><li>', $ddt_con_sconto); ?></li>
-                    </ul>
-                </div>
-            </section>
-        </div>
-<?php endif; ?>
+    <?php if(!empty($ddt_con_sconto)): ?>
+    <div class="col-sm-6">
+        <section class="content-header">
+            <div class="callout callout-warning">
+                <h4 style="font-weight: 900">ATTENZIONE</h4>
+                <p>I seguenti DDT contengono uno sconto generale:</p>
+                <ul>
+                    <li><?php echo implode('</li><li>', $ddt_con_sconto); ?></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <?php endif; ?>
 </div>
 
 <div class="row mb-15" id="botton_back" style="margin-bottom:10px;">
     <div class="col-md-2 col-sm-12">
         <div>
-            <?php if ($this->input->get('doc_type') == 'DDT Fornitore' && $this->input->get('lock_type')): ?> 
-            <a href="<?php echo base_url('main/layout/elenco_spese'); ?>" class="btn btn-success js_elenco_documenti"><i
-                        class="fa fa-arrow-left"></i> Elenco acquisti</a>
+            <?php if ($this->input->get('doc_type') == 'DDT Fornitore' && $this->input->get('lock_type')): ?>
+            <a href="<?php echo base_url('main/layout/elenco_spese'); ?>" class="btn btn-success js_elenco_documenti"><i class="fa fa-arrow-left"></i> Elenco acquisti</a>
             <?php else: ?>
             <a href="<?php echo base_url('main/layout/elenco_documenti'); ?>" class="btn btn-success js_elenco_documenti"><i class="fa fa-arrow-left"></i> Elenco Documenti</a>
             <?php endif; ?>
@@ -1063,15 +1076,15 @@ $xml_articoli_altri_dati_gestionale = [
 <form class="formAjax" id="new_fattura" method="post" action="<?php echo base_url('contabilita/documenti/create_document'); ?>">
     <?php add_csrf(); ?>
     <?php if ($documento_id && !$clone): ?>
-        <input name="documento_id" type="hidden" value="<?php echo $documento_id; ?>" />
+    <input name="documento_id" type="hidden" value="<?php echo $documento_id; ?>" />
     <?php endif; ?>
 
     <?php if ($spesa_id): ?>
-        <input name="spesa_id" type="hidden" value="<?php echo $spesa_id; ?>" />
+    <input name="spesa_id" type="hidden" value="<?php echo $spesa_id; ?>" />
     <?php endif; ?>
 
     <?php if (!empty($this->input->get('payment_id'))): ?>
-        <input name="payment_id" type="hidden" value="<?php echo $this->input->get('payment_id'); ?>" />
+    <input name="payment_id" type="hidden" value="<?php echo $this->input->get('payment_id'); ?>" />
     <?php endif; ?>
 
     <input type="hidden" name="documenti_contabilita_totale" value="<?php echo ($documento_id && $documento['documenti_contabilita_totale']) ? number_format((float) $documento['documenti_contabilita_totale'], 2, '.', '') : ''; ?>" />
@@ -1098,25 +1111,25 @@ $xml_articoli_altri_dati_gestionale = [
     if ($this->input->get('commessa')):
         $dettaglio_commessa = $this->apilib->searchFirst('projects', ['projects_id' => $this->input->get('commessa')]);
         ?>
-        <div class="row mb-15">
-            <div class="col-md-12 col-sm-12" style="margin-bottom:20px;">
+    <div class="row mb-15">
+        <div class="col-md-12 col-sm-12" style="margin-bottom:20px;">
 
-                <div class="alert alert-info" role="alert">
-                    Stai associando questo documento alla commessa #<?php echo $this->input->get('commessa'); ?> (<?php echo $dettaglio_commessa['projects_name']; ?> - <?php echo $dettaglio_commessa['customers_name']; ?>)
-                </div>
-
+            <div class="alert alert-info" role="alert">
+                Stai associando questo documento alla commessa #<?php echo $this->input->get('commessa'); ?> (<?php echo $dettaglio_commessa['projects_name']; ?> - <?php echo $dettaglio_commessa['customers_name']; ?>)
             </div>
+
         </div>
-        <?php
+    </div>
+    <?php
     endif;
     ?>
     <input type="hidden" name="documenti_contabilita_commessa" value="<?php echo $this->input->get('commessa'); ?>" />
-    
+
     <div class="row mb-15">
         <div class="col-md-12 col-sm-12" style="margin-bottom:20px;">
             <div class="btn-group">
                 <?php foreach ($documenti_tipo as $tipo): ?>
-                    <?php 
+                <?php 
                     //Lascio solo il tipo DDT fornitore se arrivo da documenti di acquisto 
                      if ($this->input->get('from') == 'spese' && $tipo['documenti_contabilita_tipo_id'] != 10) {
                             continue;
@@ -1124,7 +1137,7 @@ $xml_articoli_altri_dati_gestionale = [
                             continue;
                      }
                     ?>
-                    <button style="font-size:11px;" type="button" class="btn <?php if (($documento_id && ($documento_id && $documento['documenti_contabilita_tipo'] == $tipo['documenti_contabilita_tipo_id'])) || $tipo['documenti_contabilita_tipo_value'] == $this->input->get('doc_type')): ?>btn-primary<?php else: ?>btn-default<?php endif; ?> js_btn_tipo" data-tipo="<?php echo $tipo['documenti_contabilita_tipo_id']; ?>"><?php echo $tipo['documenti_contabilita_tipo_value']; ?></button>
+                <button style="font-size:11px;" type="button" class="btn <?php if (($documento_id && ($documento_id && $documento['documenti_contabilita_tipo'] == $tipo['documenti_contabilita_tipo_id'])) || $tipo['documenti_contabilita_tipo_value'] == $this->input->get('doc_type')): ?>btn-primary<?php else: ?>btn-default<?php endif; ?> js_btn_tipo" data-tipo="<?php echo $tipo['documenti_contabilita_tipo_id']; ?>"><?php echo $tipo['documenti_contabilita_tipo_value']; ?></button>
                 <?php endforeach; ?>
 
                 <input type="hidden" name="documenti_contabilita_tipo" class="js_documenti_contabilita_tipo" value="<?php if (($documento_id || $spesa_id) && $documento['documenti_contabilita_tipo']): ?><?php echo $documento['documenti_contabilita_tipo']; ?><?php else: ?><?php echo 1; ?><?php endif; ?>" />
@@ -1141,9 +1154,9 @@ $xml_articoli_altri_dati_gestionale = [
                             Dati del destinatario
 
                             <?php if ($_dest_id): ?>
-                                <a href="<?php echo base_url('main/layout/customer-detail/' . $_dest_id); ?>" target="_blank" class="btn btn-primary btn-xs pull-right" id="btn_dettaglio_customer">Vai all'anagrafica</a>
+                            <a href="<?php echo base_url('main/layout/customer-detail/' . $_dest_id); ?>" target="_blank" class="btn btn-primary btn-xs pull-right" id="btn_dettaglio_customer">Vai all'anagrafica</a>
                             <?php else: ?>
-                                <a style="display:none;" href="" target="_blank" class="btn btn-primary btn-xs pull-right" id="btn_dettaglio_customer">Vai all'anagrafica</a>
+                            <a style="display:none;" href="" target="_blank" class="btn btn-primary btn-xs pull-right" id="btn_dettaglio_customer">Vai all'anagrafica</a>
                             <?php endif; ?>
                         </h4>
                     </div>
@@ -1155,11 +1168,11 @@ $xml_articoli_altri_dati_gestionale = [
                 <div class="row">
                     <div class="form-group">
                         <?php foreach ($tipo_destinatario as $tipo_dest): ?>
-                            <div class="col-sm-4">
-                                <label>
-                                    <input type="radio" name="documenti_contabilita_tipo_destinatario" class="js_tipo_destinatario" <?php if (!empty($documento['documenti_contabilita_tipo_destinatario']) && $documento['documenti_contabilita_tipo_destinatario'] == $tipo_dest['documenti_contabilita_tipo_destinatario_id']): ?> checked="checked" <?php endif; ?> value="<?php echo $tipo_dest['documenti_contabilita_tipo_destinatario_id']; ?>"> <?php echo $tipo_dest['documenti_contabilita_tipo_destinatario_value']; ?>
-                                </label>
-                            </div>
+                        <div class="col-sm-4">
+                            <label>
+                                <input type="radio" name="documenti_contabilita_tipo_destinatario" class="js_tipo_destinatario" <?php if (!empty($documento['documenti_contabilita_tipo_destinatario']) && $documento['documenti_contabilita_tipo_destinatario'] == $tipo_dest['documenti_contabilita_tipo_destinatario_id']): ?> checked="checked" <?php endif; ?> value="<?php echo $tipo_dest['documenti_contabilita_tipo_destinatario_id']; ?>"> <?php echo $tipo_dest['documenti_contabilita_tipo_destinatario_value']; ?>
+                            </label>
+                        </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -1196,9 +1209,9 @@ $xml_articoli_altri_dati_gestionale = [
                     <div class="col-md-12">
                         <div class="form-group">
                             <?php if (!empty($nazioni)): ?>
-                                <select name="nazione" id="nazione" class="form-control select2_standard js_dest_nazione">
-                                    <?php foreach ($nazioni as $nazione): ?>
-                                        <?php
+                            <select name="nazione" id="nazione" class="form-control select2_standard js_dest_nazione">
+                                <?php foreach ($nazioni as $nazione): ?>
+                                <?php
                                         $selected = '';
                                         if (
                                             (empty($documento['documenti_contabilita_destinatario']['nazione']) && $nazione['countries_iso'] == 'IT')
@@ -1209,11 +1222,11 @@ $xml_articoli_altri_dati_gestionale = [
                                         }
                                         ?>
 
-                                        <option value="<?php echo $nazione['countries_iso']; ?>" <?php echo $selected ?>><?php echo $nazione['countries_name']; ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                                <option value="<?php echo $nazione['countries_iso']; ?>" <?php echo $selected ?>><?php echo $nazione['countries_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                             <?php else: ?>
-                                <input type="text" name="nazione" maxlength="2" minlength="2" class="form-control js_dest_nazione" placeholder="Nazione" value="<?php if (!empty($documento['documenti_contabilita_destinatario']) && (strlen($documento['documenti_contabilita_destinatario']['nazione']) < 3)): ?><?php echo $documento['documenti_contabilita_destinatario']['nazione']; ?><?php else: ?><?php echo 'IT'; ?><?php endif; ?>" />
+                            <input type="text" name="nazione" maxlength="2" minlength="2" class="form-control js_dest_nazione" placeholder="Nazione" value="<?php if (!empty($documento['documenti_contabilita_destinatario']) && (strlen($documento['documenti_contabilita_destinatario']['nazione']) < 3)): ?><?php echo $documento['documenti_contabilita_destinatario']['nazione']; ?><?php else: ?><?php echo 'IT'; ?><?php endif; ?>" />
                             <?php endif; ?>
                         </div>
                     </div>
@@ -1288,7 +1301,7 @@ $xml_articoli_altri_dati_gestionale = [
                             <label>Azienda: </label>
                             <select name="documenti_contabilita_azienda" class="form-control documenti_contabilita_azienda">
                                 <?php foreach ($settings as $setting): ?>
-                                    <?php
+                                <?php
                                     $selected = '';
                                     
                                     if (!empty($documento_id)) {
@@ -1301,8 +1314,8 @@ $xml_articoli_altri_dati_gestionale = [
                                         }
                                     }
                                     ?>
-                                    
-                                    <option value="<?php echo $setting['documenti_contabilita_settings_id']; ?>" <?php echo $selected; ?> ><?php echo $setting['documenti_contabilita_settings_company_name']; ?></option>
+
+                                <option value="<?php echo $setting['documenti_contabilita_settings_id']; ?>" <?php echo $selected; ?>><?php echo $setting['documenti_contabilita_settings_company_name']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -1332,7 +1345,7 @@ $xml_articoli_altri_dati_gestionale = [
                             ?>
                             <label style="min-width:80px">Valuta: </label> <select name="documenti_contabilita_valuta" class="select2 form-control documenti_contabilita_valuta">
                                 <?php foreach ($valute as $key => $valuta): ?>
-                                    <option data-id="<?php echo $valuta['valute_id']; ?>" value="<?php echo $valuta['valute_codice']; ?>" <?php if (($valuta['valute_id'] == $impostazioni['documenti_contabilita_settings_valuta_base'] && empty($documento_id)) || (!empty($documento['documenti_contabilita_valuta']) && strtoupper($documento['documenti_contabilita_valuta']) == strtoupper($valuta['valute_codice']))): ?> selected="selected" <?php endif; ?>><?php echo $valuta['valute_nome']; ?> - <?php echo $valuta['valute_simbolo']; ?></option>
+                                <option data-id="<?php echo $valuta['valute_id']; ?>" value="<?php echo $valuta['valute_codice']; ?>" <?php if (($valuta['valute_id'] == $impostazioni['documenti_contabilita_settings_valuta_base'] && empty($documento_id)) || (!empty($documento['documenti_contabilita_valuta']) && strtoupper($documento['documenti_contabilita_valuta']) == strtoupper($valuta['valute_codice']))): ?> selected="selected" <?php endif; ?>><?php echo $valuta['valute_nome']; ?> - <?php echo $valuta['valute_simbolo']; ?></option>
                                 <?php endforeach; ?>
 
                             </select>
@@ -1349,14 +1362,14 @@ $xml_articoli_altri_dati_gestionale = [
 
                 <div class="row" style="background-color:#b7d7ea;">
                     <?php if ($serie_documento): ?>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Serie: </label><br />
-                                <div class="btn-group">
-                                    <?php foreach ($serie_documento as $serie): ?>
-                                        <?php
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Serie: </label><br />
+                            <div class="btn-group">
+                                <?php foreach ($serie_documento as $serie): ?>
+                                <?php
                                         $selected = '';
-
+                                        
                                         if (!empty($value_id) && !$clone) {
                                             if (!empty($documento['documenti_contabilita_serie']) && $documento['documenti_contabilita_serie'] == $serie['documenti_contabilita_serie_value']) {
                                                 $selected = 'button_selected';
@@ -1372,10 +1385,10 @@ $xml_articoli_altri_dati_gestionale = [
                                         }
 
                                         ?>
-                                        <button type="button" class="btn js_btn_serie btn-info <?php echo $selected; ?>" data-serie="<?php echo $serie['documenti_contabilita_serie_value']; ?>">/<?php echo $serie['documenti_contabilita_serie_value']; ?></button>
-                                    <?php endforeach; ?>
+                                <button type="button" class="btn js_btn_serie btn-default <?php echo $selected; ?>" data-centro_costo_ricavo="<?php echo $serie['documenti_contabilita_serie_centro_di_ricavo']; ?>" data-serie="<?php echo $serie['documenti_contabilita_serie_value']; ?>">/<?php echo $serie['documenti_contabilita_serie_value']; ?></button>
+                                <?php endforeach; ?>
 
-                                    <?php
+                                <?php
                                     $serie_selezionata = '';
                                     if (!empty($documento['documenti_contabilita_serie'])) {
                                         $serie_selezionata = $documento['documenti_contabilita_serie'];
@@ -1386,10 +1399,10 @@ $xml_articoli_altri_dati_gestionale = [
                                     }
                                     ?>
 
-                                    <input type="hidden" class="js_documenti_contabilita_serie" name="documenti_contabilita_serie" value="<?php echo $serie_selezionata; ?>" />
-                                </div>
+                                <input type="hidden" class="js_documenti_contabilita_serie" name="documenti_contabilita_serie" value="<?php echo $serie_selezionata; ?>" />
                             </div>
                         </div>
+                    </div>
                     <?php endif; ?>
 
 
@@ -1397,8 +1410,22 @@ $xml_articoli_altri_dati_gestionale = [
                         <div class="form-group">
                             <label style="min-width:80px">Centro di ricavo: </label>
                             <select name="documenti_contabilita_centro_di_ricavo" class="select2 form-control">
+                                <option value="">---</option>
                                 <?php foreach ($centri_di_costo as $centro): ?>
-                                    <option value="<?php echo $centro['centri_di_costo_ricavo_id']; ?>" <?php if (($centro['centri_di_costo_ricavo_id'] == '1' && empty($documento_id)) || (!empty($documento['documenti_contabilita_centro_di_ricavo']) && $documento['documenti_contabilita_centro_di_ricavo'] == $centro['centri_di_costo_ricavo_id'])): ?> selected="selected" <?php endif; ?>><?php echo $centro['centri_di_costo_ricavo_nome']; ?></option>
+                                
+                                <?php
+                                    $centro_costo_ricavo_selected = '';
+                                    
+                                    if ( !empty($documento['documenti_contabilita_centro_di_ricavo']) && $documento['documenti_contabilita_centro_di_ricavo'] == $centro['centri_di_costo_ricavo_id'] ) {
+                                        $centro_costo_ricavo_selected = 'selected="selected"';
+                                    } else {
+                                        if ( !empty($impostazioni['documenti_contabilita_settings_centro_costo_ricavo_default']) && $impostazioni['documenti_contabilita_settings_centro_costo_ricavo_default'] == $centro['centri_di_costo_ricavo_id'] ) {
+                                            $centro_costo_ricavo_selected = 'selected="selected"';
+                                        }
+                                    }
+                                ?>
+                                
+                                <option value="<?php echo $centro['centri_di_costo_ricavo_id']; ?>" <?php echo $centro_costo_ricavo_selected; ?> ><?php echo $centro['centri_di_costo_ricavo_nome']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -1408,24 +1435,24 @@ $xml_articoli_altri_dati_gestionale = [
                             <label style="min-width:80px">Tipologia di fatturazione: </label>
                             <select name="documenti_contabilita_tipologia_fatturazione" class="select2 form-control js_tipologia_fatturazione">
                                 <?php if (!empty($documento_id) && empty($documento['documenti_contabilita_tipologia_fatturazione'])): ?>
-                                    <option value=""></option> <?php endif; ?>
+                                <option value=""></option> <?php endif; ?>
                                 <?php foreach ($tipologie_fatturazione as $tipologia): ?>
-                                    <option data-tipologia_codice="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_codice']; ?>" data-tipologia_genitore="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_tipo_genitore']; ?>" data-tipologia_descrizione="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_descrizione']; ?>" value="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_id']; ?>" <?php if (($tipologia['documenti_contabilita_tipologie_fatturazione_id'] == '1' && empty($documento_id)) || (!empty($documento['documenti_contabilita_tipologia_fatturazione']) && $documento['documenti_contabilita_tipologia_fatturazione'] == $tipologia['documenti_contabilita_tipologie_fatturazione_id'])): ?> selected="selected" <?php endif; ?>><?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_codice'], ' ', $tipologia['documenti_contabilita_tipologie_fatturazione_descrizione']; ?></option>
+                                <option data-tipologia_codice="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_codice']; ?>" data-tipologia_genitore="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_tipo_genitore']; ?>" data-tipologia_descrizione="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_descrizione']; ?>" value="<?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_id']; ?>" <?php if (($tipologia['documenti_contabilita_tipologie_fatturazione_id'] == '1' && empty($documento_id)) || (!empty($documento['documenti_contabilita_tipologia_fatturazione']) && $documento['documenti_contabilita_tipologia_fatturazione'] == $tipologia['documenti_contabilita_tipologie_fatturazione_id'])): ?> selected="selected" <?php endif; ?>><?php echo $tipologia['documenti_contabilita_tipologie_fatturazione_codice'], ' ', $tipologia['documenti_contabilita_tipologie_fatturazione_descrizione']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
                     <?php if (!empty($agenti_vendita)): ?>
-                        <div class='col-md-3'>
-                            <div class='form-group'>
-                                <label style='min-width:80px'>Agente vendita: </label>
-                                <select name='documenti_contabilita_agente' class='select2_standard form-control js_agente_vendita'>
-                                    <?php foreach ($agenti_vendita as $agente): ?>
-                                        <option value="<?php echo $agente['users_id']; ?>" <?php echo ($agente['users_id'] == $agente_vendita_corrente) ? 'selected="selected"' : '' ?>><?php echo $agente['users_first_name'] . ' ' . ($agente['users_last_name'] ?? ''); ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
+                    <div class='col-md-3'>
+                        <div class='form-group'>
+                            <label style='min-width:80px'>Agente vendita: </label>
+                            <select name='documenti_contabilita_agente' class='select2_standard form-control js_agente_vendita'>
+                                <?php foreach ($agenti_vendita as $agente): ?>
+                                <option value="<?php echo $agente['users_id']; ?>" <?php echo ($agente['users_id'] == $agente_vendita_corrente) ? 'selected="selected"' : '' ?>><?php echo $agente['users_first_name'] . ' ' . ($agente['users_last_name'] ?? ''); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
+                    </div>
                     <?php endif; ?>
                     <div class="col-md-3" style="display:none;">
                         <div class="form-group">
@@ -1476,10 +1503,10 @@ $xml_articoli_altri_dati_gestionale = [
                                 <select name="documenti_contabilita_template_pagamento" class="select2 form-control">
                                     <!--<option value="">Metodo di pagamento</option>-->
                                     <?php foreach ($template_scadenze as $template_pagamento): ?>
-                                        <!--<option value="<?php echo $template_pagamento['documenti_contabilita_template_pagamenti_id']; ?>" <?php if (!empty($documento['documenti_contabilita_template_pagamento']) && $documento['documenti_contabilita_template_pagamento'] == $template_pagamento['documenti_contabilita_template_pagamenti_id']): ?> selected="selected" <?php endif; ?>> -->
-                                        <option value="<?php echo $template_pagamento['documenti_contabilita_template_pagamenti_id']; ?>" <?php if ((!empty($documento['documenti_contabilita_template_pagamento']) && $documento['documenti_contabilita_template_pagamento'] == $template_pagamento['documenti_contabilita_template_pagamenti_id']) || ($template_pagamento['documenti_contabilita_template_pagamenti_default'] == DB_BOOL_TRUE && empty($documento_id) && !$clone)): ?> selected="selected" <?php endif; ?>>
-                                            <?php echo ucfirst($template_pagamento['documenti_contabilita_template_pagamenti_codice']); ?> - <?php echo ucfirst($template_pagamento['documenti_contabilita_template_pagamenti_nome']); ?>
-                                        </option>
+                                    <!--<option value="<?php echo $template_pagamento['documenti_contabilita_template_pagamenti_id']; ?>" <?php if (!empty($documento['documenti_contabilita_template_pagamento']) && $documento['documenti_contabilita_template_pagamento'] == $template_pagamento['documenti_contabilita_template_pagamenti_id']): ?> selected="selected" <?php endif; ?>> -->
+                                    <option value="<?php echo $template_pagamento['documenti_contabilita_template_pagamenti_id']; ?>" <?php if ((!empty($documento['documenti_contabilita_template_pagamento']) && $documento['documenti_contabilita_template_pagamento'] == $template_pagamento['documenti_contabilita_template_pagamenti_id']) || ($template_pagamento['documenti_contabilita_template_pagamenti_default'] == DB_BOOL_TRUE && empty($documento_id) && !$clone)): ?> selected="selected" <?php endif; ?>>
+                                        <?php echo ucfirst($template_pagamento['documenti_contabilita_template_pagamenti_codice']); ?> - <?php echo ucfirst($template_pagamento['documenti_contabilita_template_pagamenti_nome']); ?>
+                                    </option>
                                     <?php endforeach; ?>
 
                                 </select>
@@ -1496,7 +1523,7 @@ $xml_articoli_altri_dati_gestionale = [
                                     <option value="">Scegli conto corrente....</option>
 
                                     <?php foreach ($conti_correnti as $key => $conto): ?>
-                                        <option value="<?php echo $conto['conti_correnti_id']; ?>" <?php if ((empty($documento_id) && $conto['conti_correnti_default'] == DB_BOOL_TRUE) || (!empty($documento['documenti_contabilita_conto_corrente']) && $documento['documenti_contabilita_conto_corrente'] == $conto['conti_correnti_id'])): ?> selected="selected" <?php endif; ?>><?php echo $conto['conti_correnti_nome_istituto']; ?></option>
+                                    <option value="<?php echo $conto['conti_correnti_id']; ?>" <?php if ((empty($documento_id) && $conto['conti_correnti_default'] == DB_BOOL_TRUE) || (!empty($documento['documenti_contabilita_conto_corrente']) && $documento['documenti_contabilita_conto_corrente'] == $conto['conti_correnti_id'])): ?> selected="selected" <?php endif; ?>><?php echo $conto['conti_correnti_nome_istituto']; ?></option>
 
                                     <?php endforeach; ?>
                                 </select>
@@ -1521,7 +1548,7 @@ $xml_articoli_altri_dati_gestionale = [
                                     <div class="form-group">
                                         <label style="min-width:80px">Template Documento: </label> <select name="documenti_contabilita_template_pdf" class="select2 form-control js_template_pdf">
                                             <?php foreach ($templates as $template): ?>
-                                                <?php
+                                            <?php
                                                 $categoria_template = '';
                                                 if (!empty($template['documenti_contabilita_template_pdf_tipo'])) {
                                                     $categoria_template = $this->apilib->searchFirst('documenti_contabilita_tipo', ['documenti_contabilita_tipo_id' => $template['documenti_contabilita_template_pdf_tipo']]);
@@ -1536,8 +1563,12 @@ $xml_articoli_altri_dati_gestionale = [
                                                         $tpl_selezionato = 'selected="selected"';
                                                     }
                                                 }
+//
+//                                                if (empty($tpl_selezionato) && $template['']) {
+//
+//                                                }
                                                 ?>
-                                                <option data-tipo="<?php echo $template['documenti_contabilita_template_pdf_tipo']; ?>" value='<?php echo $template['documenti_contabilita_template_pdf_id']; ?>' <?php echo $tpl_selezionato; ?>><?php echo $categoria_template . $template['documenti_contabilita_template_pdf_nome']; ?></option>
+                                            <option data-tipo="<?php echo $template['documenti_contabilita_template_pdf_tipo']; ?>" value='<?php echo $template['documenti_contabilita_template_pdf_id']; ?>' <?php echo $tpl_selezionato; ?>><?php echo $categoria_template . $template['documenti_contabilita_template_pdf_nome']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -1554,7 +1585,7 @@ $xml_articoli_altri_dati_gestionale = [
                                     <div class="form-group">
                                         <label style="min-width:80px">Font: </label> <select name="documenti_contabilita_font" class="select2 form-control js_template_pdf">
                                             <?php foreach ($fonts as $font): ?>
-                                                <option data-tipo="<?php echo $font['documenti_contabilita_font_value']; ?>" value='<?php echo $font['documenti_contabilita_font_id']; ?>' <?php if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_font']) && $documento['documenti_contabilita_font'] == $font['documenti_contabilita_font_id'])): ?> selected="selected" <?php endif; ?>><?php echo $font['documenti_contabilita_font_value']; ?></option>
+                                            <option data-tipo="<?php echo $font['documenti_contabilita_font_value']; ?>" value='<?php echo $font['documenti_contabilita_font_id']; ?>' <?php if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_font']) && $documento['documenti_contabilita_font'] == $font['documenti_contabilita_font_id'])): ?> selected="selected" <?php endif; ?>><?php echo $font['documenti_contabilita_font_value']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -1634,7 +1665,7 @@ $xml_articoli_altri_dati_gestionale = [
                                         <select name="documenti_contabilita_cassa_professionisti_tipo" class="form-control select2_standard" style="width: 100%;">
                                             <option value="">---</option>
                                             <?php foreach($tipi_cassa_pro as $tipo): ?>
-                                                <?php
+                                            <?php
                                                 $selected = '';
                                                 
                                                 if (!empty($documento['documenti_contabilita_cassa_professionisti_tipo']) && $documento['documenti_contabilita_cassa_professionisti_tipo'] == $tipo['documenti_contabilita_cassa_professionisti_tipo_id']) {
@@ -1645,7 +1676,7 @@ $xml_articoli_altri_dati_gestionale = [
                                                     }
                                                 }
                                                 ?>
-                                                <option value="<?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_id'] ?>" <?php echo $selected; ?>><?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_codice'] . ' - ' . $tipo['documenti_contabilita_cassa_professionisti_tipo_value'] ?></option>
+                                            <option value="<?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_id'] ?>" <?php echo $selected; ?>><?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_codice'] . ' - ' . $tipo['documenti_contabilita_cassa_professionisti_tipo_value'] ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -1731,7 +1762,7 @@ $xml_articoli_altri_dati_gestionale = [
                                         <label>Tipo ritenuta: </label>
                                         <select name="documenti_contabilita_tipo_ritenuta" class="select2 form-control">
                                             <?php foreach ($tipi_ritenuta as $key => $tipo_ritenuta): ?>
-                                                <option value="<?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']; ?>" <?php if (!empty($documento['documenti_contabilita_tipo_ritenuta']) && $documento['documenti_contabilita_tipo_ritenuta'] == $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']): ?> selected="selected" <?php endif; ?>><?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_descrizione']; ?></option>
+                                            <option value="<?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']; ?>" <?php if (!empty($documento['documenti_contabilita_tipo_ritenuta']) && $documento['documenti_contabilita_tipo_ritenuta'] == $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']): ?> selected="selected" <?php endif; ?>><?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_descrizione']; ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <!-- todo da completare in base alle richieste -->
@@ -1812,8 +1843,8 @@ $xml_articoli_altri_dati_gestionale = [
                     <?php
                     if ($this->datab->module_installed('magazzino')):
                         ?>
-                        <label> <input type="checkbox" class="minimal js_fattura_add_articoli" name="documenti_contabilita_aggiungi_articoli" value="<?php echo DB_BOOL_TRUE; ?>">
-                            Aggiungi articoli non presenti a magazzino </label>
+                    <label> <input type="checkbox" class="minimal js_fattura_add_articoli" name="documenti_contabilita_aggiungi_articoli" value="<?php echo DB_BOOL_TRUE; ?>">
+                        Aggiungi articoli non presenti a magazzino </label>
                     <?php endif; ?>
                 </div>
             </div>
@@ -2038,9 +2069,9 @@ $xml_articoli_altri_dati_gestionale = [
                         <select name="documenti_contabilita_rif_ddt" class="select2 form-control">
                             <option value=""></option>
                             <?php foreach ($ddts as $ddt): ?>
-                                <option data-documento_id="<?php echo $ddt['documenti_contabilita_id']; ?>" value="<?php echo $ddt['documenti_contabilita_id']; ?>" <?php if ((!empty($documento['documenti_contabilita_rif_ddt']) && $documento['documenti_contabilita_rif_ddt'] == $ddt['documenti_contabilita_id'])): ?> selected="selected" <?php endif; ?>>
-                                    <?php echo 'DDT N° ', $ddt['documenti_contabilita_numero'], ' del ', date('d/m/Y', strtotime($ddt['documenti_contabilita_data_emissione'])), ' - ', json_decode($ddt['documenti_contabilita_destinatario'], true)['ragione_sociale']; ?>
-                                </option>
+                            <option data-documento_id="<?php echo $ddt['documenti_contabilita_id']; ?>" value="<?php echo $ddt['documenti_contabilita_id']; ?>" <?php if ((!empty($documento['documenti_contabilita_rif_ddt']) && $documento['documenti_contabilita_rif_ddt'] == $ddt['documenti_contabilita_id'])): ?> selected="selected" <?php endif; ?>>
+                                <?php echo 'DDT N° ', $ddt['documenti_contabilita_numero'], ' del ', date('d/m/Y', strtotime($ddt['documenti_contabilita_data_emissione'])), ' - ', json_decode($ddt['documenti_contabilita_destinatario'], true)['ragione_sociale']; ?>
+                            </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -2079,36 +2110,36 @@ $xml_articoli_altri_dati_gestionale = [
 
                     <div class="row js_rows_scadenze">
                         <?php if ($documento_id && !$clone): ?>
-                            <?php foreach ($documento['scadenze'] as $key => $scadenza): ?>
-                                <div class="row row_scadenza">
-                                    <input type="hidden" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_template_json]" value="" class="documenti_contabilita_scadenze_template_json" data-name="documenti_contabilita_scadenze_template_json" />
-                                    <div class=" col-md-3">
-                                        <div class="form-group">
-                                            <input class="js_documenti_contabilita_scadenze_id" type="hidden" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_id]" data-name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_id]" value="<?php echo $scadenza['documenti_contabilita_scadenze_id']; ?>" />
-                                            <label>Ammontare</label> <input type="text" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_ammontare]" class="form-control documenti_contabilita_scadenze_ammontare js_decimal" placeholder="Ammontare" value="<?php echo number_format((float) $scadenza['documenti_contabilita_scadenze_ammontare'], 2, '.', ''); ?>" data-name="documenti_contabilita_scadenze_ammontare" />
-                                        </div>
+                        <?php foreach ($documento['scadenze'] as $key => $scadenza): ?>
+                        <div class="row row_scadenza">
+                            <input type="hidden" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_template_json]" value="" class="documenti_contabilita_scadenze_template_json" data-name="documenti_contabilita_scadenze_template_json" />
+                            <div class=" col-md-3">
+                                <div class="form-group">
+                                    <input class="js_documenti_contabilita_scadenze_id" type="hidden" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_id]" data-name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_id]" value="<?php echo $scadenza['documenti_contabilita_scadenze_id']; ?>" />
+                                    <label>Ammontare</label> <input type="text" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_ammontare]" class="form-control documenti_contabilita_scadenze_ammontare js_decimal" placeholder="Ammontare" value="<?php echo number_format((float) $scadenza['documenti_contabilita_scadenze_ammontare'], 2, '.', ''); ?>" data-name="documenti_contabilita_scadenze_ammontare" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Scadenza</label>
+                                    <div class="input-group js_form_datepicker date ">
+                                        <input type="text" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_scadenza]" class="form-control documenti_contabilita_scadenze_scadenza" placeholder="Scadenza" value="<?php echo date('d/m/Y', strtotime($scadenza['documenti_contabilita_scadenze_scadenza'])); ?>" data-name="documenti_contabilita_scadenze_scadenza" /> <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" style="display:none"><i class="fa fa-calendar"></i></button>
+                                        </span>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Scadenza</label>
-                                            <div class="input-group js_form_datepicker date ">
-                                                <input type="text" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_scadenza]" class="form-control documenti_contabilita_scadenze_scadenza" placeholder="Scadenza" value="<?php echo date('d/m/Y', strtotime($scadenza['documenti_contabilita_scadenze_scadenza'])); ?>" data-name="documenti_contabilita_scadenze_scadenza" /> <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button" style="display:none"><i class="fa fa-calendar"></i></button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Metodo di pagamento</label>
-                                            <select name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_saldato_con]" class="_select2 form-control _js_table_select2 _js_table_select2<?php echo $key; ?> documenti_contabilita_scadenze_saldato_con" data-name="documenti_contabilita_scadenze_saldato_con">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Metodo di pagamento</label>
+                                    <select name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_saldato_con]" class="_select2 form-control _js_table_select2 _js_table_select2<?php echo $key; ?> documenti_contabilita_scadenze_saldato_con" data-name="documenti_contabilita_scadenze_saldato_con">
 
-                                                <?php foreach ($metodi_pagamento as $metodo_pagamento): ?>
-                                                    <option value="<?php echo $metodo_pagamento['documenti_contabilita_metodi_pagamento_id']; ?>" <?php if (stripos($scadenza['documenti_contabilita_scadenze_saldato_con'], $metodo_pagamento['documenti_contabilita_metodi_pagamento_id']) !== false): ?> selected="selected" <?php endif; ?>>
-                                                        <?php echo ucfirst($metodo_pagamento['documenti_contabilita_metodi_pagamento_valore']); ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                                <!--
+                                        <?php foreach ($metodi_pagamento as $metodo_pagamento): ?>
+                                        <option value="<?php echo $metodo_pagamento['documenti_contabilita_metodi_pagamento_id']; ?>" <?php if (stripos($scadenza['documenti_contabilita_scadenze_saldato_con'], $metodo_pagamento['documenti_contabilita_metodi_pagamento_id']) !== false): ?> selected="selected" <?php endif; ?>>
+                                            <?php echo ucfirst($metodo_pagamento['documenti_contabilita_metodi_pagamento_valore']); ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                        <!--
                                                 <option value="Contanti" <?php if ($scadenza['documenti_contabilita_scadenze_saldato_con'] == 'Contanti'): ?> selectefd="selected"<?php endif; ?>>
                                                     Contanti
                                                 </option>
@@ -2124,27 +2155,27 @@ $xml_articoli_altri_dati_gestionale = [
                                                 <option<?php if ($scadenza['documenti_contabilita_scadenze_saldato_con'] == 'Sepa RID'): ?> selectefd="selected"<?php endif; ?>>
                                                     Sepa RID
                                                 </option>-->
-                                            </select>
+                                    </select>
 
-                                            <script>
-                                            $('.js_table_select2<?php echo $key; ?>').val('<?php echo strtolower($scadenza['documenti_contabilita_scadenze_saldato_con']); ?>').trigger('change.select2');
-                                            </script>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Data saldo</label>
-                                            <div class="input-group js_form_datepicker date  field_68">
-                                                <input type="text" class="form-control documenti_contabilita_scadenze_data_saldo" id="empty_date" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_data_saldo]" data-name="documenti_contabilita_scadenze_data_saldo" value="<?php echo ($scadenza['documenti_contabilita_scadenze_data_saldo']) ? date('d/m/Y', strtotime($scadenza['documenti_contabilita_scadenze_data_saldo'])) : ''; ?>">
+                                    <script>
+                                    $('.js_table_select2<?php echo $key; ?>').val('<?php echo strtolower($scadenza['documenti_contabilita_scadenze_saldato_con']); ?>').trigger('change.select2');
+                                    </script>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Data saldo</label>
+                                    <div class="input-group js_form_datepicker date  field_68">
+                                        <input type="text" class="form-control documenti_contabilita_scadenze_data_saldo" id="empty_date" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_data_saldo]" data-name="documenti_contabilita_scadenze_data_saldo" value="<?php echo ($scadenza['documenti_contabilita_scadenze_data_saldo']) ? date('d/m/Y', strtotime($scadenza['documenti_contabilita_scadenze_data_saldo'])) : ''; ?>">
 
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button" style="display:none;"><i class="fa fa-calendar"></i></button>
-                                                </span>
-                                            </div>
-                                        </div>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button" style="display:none;"><i class="fa fa-calendar"></i></button>
+                                        </span>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
                         <?php else:
                             $key = -1; ?>
                         <?php endif; ?>
@@ -2174,10 +2205,10 @@ $xml_articoli_altri_dati_gestionale = [
                                     <select name="scadenze[<?php echo $key + 1; ?>][documenti_contabilita_scadenze_saldato_con]" class="select2 form-control js_table_select2 documenti_contabilita_scadenze_saldato_con" data-name="documenti_contabilita_scadenze_saldato_con">
 
                                         <?php foreach ($metodi_pagamento as $metodo_pagamento): ?>
-                                            <option value="<?php echo $metodo_pagamento['documenti_contabilita_metodi_pagamento_id']; ?>" <?php if ($metodo_pagamento['documenti_contabilita_metodi_pagamento_codice'] == 'MP05'): //bonifico
+                                        <option value="<?php echo $metodo_pagamento['documenti_contabilita_metodi_pagamento_id']; ?>" <?php if ($metodo_pagamento['documenti_contabilita_metodi_pagamento_codice'] == 'MP05'): //bonifico
                                                            ?> selected="selected" <?php endif; ?>>
-                                                <?php echo ucfirst($metodo_pagamento['documenti_contabilita_metodi_pagamento_valore']); ?>
-                                            </option>
+                                            <?php echo ucfirst($metodo_pagamento['documenti_contabilita_metodi_pagamento_valore']); ?>
+                                        </option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -2467,25 +2498,21 @@ $xml_articoli_altri_dati_gestionale = [
     <!-- /.modal-dialog -->
 </div>
 <?php if ($this->datab->module_installed('magazzino')) : ?>
-    <?php $magazzino_settings = $this->apilib->searchFirst('magazzino_settings'); ?>
-    <?php $this->load->module_view('magazzino/views','lotti_modal', ['settings' => $magazzino_settings], false); ?>
-    <script>
-    var movimenta_per = <?php echo (!empty($magazzino_settings['magazzino_settings_movimenta_per'])) ? json_encode(array_keys($magazzino_settings['magazzino_settings_movimenta_per'])) : '[]'; ?>;
-        </script>
-    <?php else: ?>
-        <script>
-            var movimenta_per = [];
-            </script>
+<?php $magazzino_settings = $this->apilib->searchFirst('magazzino_settings'); ?>
+<?php $this->load->module_view('magazzino/views','lotti_modal', ['settings' => $magazzino_settings], false); ?>
+<script>
+var movimenta_per = <?php echo (!empty($magazzino_settings['magazzino_settings_movimenta_per'])) ? json_encode(array_keys($magazzino_settings['magazzino_settings_movimenta_per'])) : '[]'; ?>;
+</script>
+<?php else: ?>
+<script>
+var movimenta_per = [];
+</script>
 <?php endif; ?>
 
 <?php $this->layout->addModuleJavascript('contabilita', 'nuovo_documento.js'); ?>
 <?php $this->layout->addModuleJavascript('contabilita', 'xsd_to_form.js'); ?>
 
 <script>
-
-
-
-
 var template_scadenze = <?php echo json_encode($template_scadenze); ?>;
 var listini = <?php echo json_encode($listini); ?>;
 var metodi_pagamenti_map = <?php echo json_encode($metodi_pagamento_map) ?>;
@@ -2583,15 +2610,15 @@ $(".js_fattura_accompagnatoria_checkbox").change(function() {
 
 //Apro i dati trasporto
 <?php if ($documento_id): ?>
-    var js_dati_trasporto_checked = <?php echo ($documento['documenti_contabilita_fattura_accompagnatoria'] == DB_BOOL_TRUE) ? 'true' : 'false'; ?>;
+var js_dati_trasporto_checked = <?php echo ($documento['documenti_contabilita_fattura_accompagnatoria'] == DB_BOOL_TRUE) ? 'true' : 'false'; ?>;
 
-    if (js_dati_trasporto_checked) {
-        if (!$('.js_fattura_accompagnatoria_checkbox').is(':checked')) {
-            $('.js_fattura_accompagnatoria_checkbox').trigger('click');
-        } else if ($('.js_fattura_accompagnatoria_checkbox').is(':checked') && $('.js_fattura_accompagnatoria_row').hasClass('hide')) {
-            $('.js_fattura_accompagnatoria_row').removeClass('hide');
-        }
+if (js_dati_trasporto_checked) {
+    if (!$('.js_fattura_accompagnatoria_checkbox').is(':checked')) {
+        $('.js_fattura_accompagnatoria_checkbox').trigger('click');
+    } else if ($('.js_fattura_accompagnatoria_checkbox').is(':checked') && $('.js_fattura_accompagnatoria_row').hasClass('hide')) {
+        $('.js_fattura_accompagnatoria_row').removeClass('hide');
     }
+}
 <?php endif; ?>
 
 $('[name="documenti_contabilita_applica_bollo"]').on('change', function() {
@@ -2656,22 +2683,22 @@ var initAutocomplete = function(autocomplete_selector) {
                     $.each(data.results.data, function(i, p) {
                         <?php if ($campo_codice && !empty($campo_fornitore_prodotto)): ?>
 
-                            var label = <?php if ($campo_preview): ?>p.<?php echo $campo_codice; ?> + ' - ' + p.<?php echo $campo_preview; ?><?php else: ?> '*impostare campo preview*'
-                            <?php endif; ?> + ' - ' + p.<?php echo $campo_fornitore_prodotto; ?> + ' - ' + p.<?php echo $campo_prezzo; ?>;
+                        var label = <?php if ($campo_preview): ?>p.<?php echo $campo_codice; ?> + ' - ' + p.<?php echo $campo_preview; ?><?php else: ?> '*impostare campo preview*'
+                        <?php endif; ?> + ' - ' + p.<?php echo $campo_fornitore_prodotto; ?> + ' - ' + p.<?php echo $campo_prezzo; ?>;
 
                         <?php elseif ($campo_codice): ?>
 
-                            var label = <?php if ($campo_preview): ?>p.<?php echo $campo_codice; ?> + ' - ' + p.<?php echo $campo_preview; ?><?php else: ?> '*impostare campo preview*';
-                            <?php endif; ?>
+                        var label = <?php if ($campo_preview): ?>p.<?php echo $campo_codice; ?> + ' - ' + p.<?php echo $campo_preview; ?><?php else: ?> '*impostare campo preview*';
+                        <?php endif; ?>
                         <?php else: ?>
 
-                            var label = <?php if ($campo_preview): ?>p.<?php echo $campo_preview; ?><?php else: ?> '*impostare campo preview*';
-                            <?php endif; ?>
+                        var label = <?php if ($campo_preview): ?>p.<?php echo $campo_preview; ?><?php else: ?> '*impostare campo preview*';
+                        <?php endif; ?>
                         <?php endif; ?>
 
 
                         <?php if ($campo_quantita): ?>
-                            label += ' (qty: ' + p.<?php echo $campo_quantita; ?> + ')';
+                        label += ' (qty: ' + p.<?php echo $campo_quantita; ?> + ')';
                         <?php endif; ?>
                         collection.push({
                             "id": p.<?php echo $campo_id; ?>,
@@ -2731,21 +2758,21 @@ var popolaProdotto = function(prodotto, rowid) {
         "RAW_DATA": prodotto
     };
     <?php if ($campo_codice): ?>
-        $("input[name='products[" + rowid + "][documenti_contabilita_articoli_codice]']").val(prodotto['<?php echo $campo_codice; ?>']);
+    $("input[name='products[" + rowid + "][documenti_contabilita_articoli_codice]']").val(prodotto['<?php echo $campo_codice; ?>']);
 
     <?php endif; ?>
     $("input[name='products[" + rowid + "][documenti_contabilita_articoli_codice_ean]']").val(prodotto['listino_prezzi_codice_ean_prodotto']);
     $("input[name='products[" + rowid + "][documenti_contabilita_articoli_codice_asin]']").val(prodotto['listino_prezzi_codice_asin_prodotto']);
     <?php if ($campo_unita_misura): ?>
-        $("input[name='products[" + rowid + "][documenti_contabilita_articoli_unita_misura]']").val(prodotto['<?php echo $campo_unita_misura; ?>']);
+    $("input[name='products[" + rowid + "][documenti_contabilita_articoli_unita_misura]']").val(prodotto['<?php echo $campo_unita_misura; ?>']);
     <?php endif; ?>
 
     <?php if ($campo_preview): ?>
-        $("input[name='products[" + rowid + "][documenti_contabilita_articoli_name]']").val(prodotto['<?php echo $campo_preview; ?>']);
+    $("input[name='products[" + rowid + "][documenti_contabilita_articoli_name]']").val(prodotto['<?php echo $campo_preview; ?>']);
 
     <?php endif; ?>
     <?php if ($campo_descrizione): ?>
-        $("textarea[name='products[" + rowid + "][documenti_contabilita_articoli_descrizione]']").html(prodotto['<?php echo $campo_descrizione; ?>']);
+    $("textarea[name='products[" + rowid + "][documenti_contabilita_articoli_descrizione]']").html(prodotto['<?php echo $campo_descrizione; ?>']);
     <?php endif; ?>
 
     if (
@@ -2759,18 +2786,18 @@ var popolaProdotto = function(prodotto, rowid) {
         $("select[name='products[" + rowid + "][documenti_contabilita_articoli_iva_id]'] option[value='" + iva_id + "']").prop('selected', true).attr('selected', 'selected').val(iva_id).trigger('change');
     } else {
         <?php if ($campo_iva): ?>
-            $("select[name='products[" + rowid + "][documenti_contabilita_articoli_iva_id]'] option").removeAttr('selected').prop('selected', false);
+        $("select[name='products[" + rowid + "][documenti_contabilita_articoli_iva_id]'] option").removeAttr('selected').prop('selected', false);
 
-            console.log(prodotto['<?php echo $campo_iva; ?>']);
+        console.log(prodotto['<?php echo $campo_iva; ?>']);
 
 
-            if (isNaN(parseInt(prodotto['<?php echo $campo_iva; ?>']))) {
-                //$("select[name='products["+rowid+"][documenti_contabilita_articoli_iva_id]']").val('0');
-            } else {
+        if (isNaN(parseInt(prodotto['<?php echo $campo_iva; ?>']))) {
+            //$("select[name='products["+rowid+"][documenti_contabilita_articoli_iva_id]']").val('0');
+        } else {
 
-                $("select[name='products[" + rowid + "][documenti_contabilita_articoli_iva_id]'] option[value='" + parseInt(prodotto['<?php echo $campo_iva; ?>']) + "']").prop('selected', true).attr('selected', 'selected').val(parseInt(prodotto['<?php echo $campo_iva; ?>'])).trigger('change');
+            $("select[name='products[" + rowid + "][documenti_contabilita_articoli_iva_id]'] option[value='" + parseInt(prodotto['<?php echo $campo_iva; ?>']) + "']").prop('selected', true).attr('selected', 'selected').val(parseInt(prodotto['<?php echo $campo_iva; ?>'])).trigger('change');
 
-            }
+        }
 
 
         <?php endif; ?>
@@ -2779,27 +2806,27 @@ var popolaProdotto = function(prodotto, rowid) {
     data.IV = $("select[name='products[" + rowid + "][documenti_contabilita_articoli_iva_id]'] option[selected]").data('perc');
 
     <?php if ($campo_provvigione): ?>
-        data.PP = prodotto['<?php echo $campo_provvigione; ?>'];
+    data.PP = prodotto['<?php echo $campo_provvigione; ?>'];
     <?php else: ?>
-        data.PP = 0;
+    data.PP = 0;
     <?php endif; ?>
 
     <?php if ($campo_ricarico): ?>
-        data.RP = prodotto['<?php echo $campo_ricarico; ?>'];
+    data.RP = prodotto['<?php echo $campo_ricarico; ?>'];
     <?php else: ?>
-        data.RP = 0;
+    data.RP = 0;
     <?php endif; ?>
 
     <?php if ($campo_sconto): ?>
-        //Commento in quanto lo sconto prodotto viene sempre applicato
-        //data.SP = prodotto['<?php echo $campo_sconto; ?>'];
-        data.SP = 0;
+    //Commento in quanto lo sconto prodotto viene sempre applicato
+    //data.SP = prodotto['<?php echo $campo_sconto; ?>'];
+    data.SP = 0;
     <?php else: ?>
-        data.SP = 0;
+    data.SP = 0;
     <?php endif; ?>
 
     <?php if ($campo_prezzo): ?>
-        
+
     //Se il cliente ha un listino base associato, prendo il prezzo dalla price list di quel listino se presente
     if (typeof cliente_raw_data !== 'undefined' && typeof cliente_raw_data['customers_price_list'] !== 'undefined' && cliente_raw_data['customers_price_list']) {
         for (var i in prodotto.price_list) {
@@ -2811,7 +2838,7 @@ var popolaProdotto = function(prodotto, rowid) {
     prodotto['<?php echo $campo_prezzo; ?>'] = prodotto['<?php echo $campo_prezzo; ?>'].replace(',', '.');
 
     <?php if ($campo_prezzo_fornitore): ?>
-        data.PF = prodotto['<?php echo $campo_prezzo_fornitore; ?>'];
+    data.PF = prodotto['<?php echo $campo_prezzo_fornitore; ?>'];
     <?php endif; ?>
 
     if (tipo_documento == 6 && '<?php echo $campo_prezzo_fornitore; ?>' != '') { //Se è un ordine fornitore e ho impostato un campo prezzo_fornitore nei settings
@@ -2827,36 +2854,36 @@ var popolaProdotto = function(prodotto, rowid) {
 
     <?php endif; ?>
     <?php if ($campo_sconto): ?>
-        $("input[name='products[" + rowid + "][documenti_contabilita_articoli_sconto]']").val(prodotto['<?php echo $campo_sconto; ?>']).trigger('change');
+    $("input[name='products[" + rowid + "][documenti_contabilita_articoli_sconto]']").val(prodotto['<?php echo $campo_sconto; ?>']).trigger('change');
     <?php endif; ?>
     <?php if ($campo_sconto2): ?>
 
-        $("input[name='products[" + rowid + "][documenti_contabilita_articoli_sconto2]']").val(prodotto['<?php echo $campo_sconto2; ?>']).trigger('change');
+    $("input[name='products[" + rowid + "][documenti_contabilita_articoli_sconto2]']").val(prodotto['<?php echo $campo_sconto2; ?>']).trigger('change');
     <?php endif; ?>
     <?php if ($campo_sconto3): ?>
-        $("input[name='products[" + rowid + "][documenti_contabilita_articoli_sconto3]']").val(prodotto['<?php echo $campo_sconto3; ?>']).trigger('change');
+    $("input[name='products[" + rowid + "][documenti_contabilita_articoli_sconto3]']").val(prodotto['<?php echo $campo_sconto3; ?>']).trigger('change');
     <?php endif; ?>
 
     <?php if ($campo_centro_costo): ?>
-        $("select[name='products[" + rowid + "][documenti_contabilita_articoli_centro_costo_ricavo]'] option[value='" + parseInt(prodotto['<?php echo $campo_centro_costo; ?>']) + "']").prop('selected', true).attr('selected', 'selected').val(parseInt(prodotto['<?php echo $campo_centro_costo; ?>'])).trigger('change');
+    $("select[name='products[" + rowid + "][documenti_contabilita_articoli_centro_costo_ricavo]'] option[value='" + parseInt(prodotto['<?php echo $campo_centro_costo; ?>']) + "']").prop('selected', true).attr('selected', 'selected').val(parseInt(prodotto['<?php echo $campo_centro_costo; ?>'])).trigger('change');
     <?php endif; ?>
 
     <?php if (!empty($campi_personalizzati)): ?>
-        <?php foreach ($campi_personalizzati as $riga => $campi_personalizzati_riga): ?>
-            <?php foreach ($campi_personalizzati_riga as $campo): ?>
-                <?php if ($campo): ?>
+    <?php foreach ($campi_personalizzati as $riga => $campi_personalizzati_riga): ?>
+    <?php foreach ($campi_personalizzati_riga as $campo): ?>
+    <?php if ($campo): ?>
 
-                    <?php if (in_array($campo['fields_draw_html_type'], ['select', 'select_ajax'])): ?>
-                        var sel = "select[name='products[" + rowid + "][<?php echo $campo['campi_righe_articoli_campo']; ?>]'] option[value=\"" + prodotto['<?php echo $campo['campi_righe_articoli_campo']; ?>'] + "\"]";
-                        //console.log(sel);
-                        $(sel).attr('selected', 'selected');
-                        $("select[name='products[" + rowid + "][<?php echo $campo['campi_righe_articoli_campo']; ?>]']").trigger('change');
-                    <?php else: ?>
-                        $("input[name='products[" + rowid + "][<?php echo $campo['campi_righe_articoli_campo']; ?>]']").val(prodotto['<?php echo $campo['campi_righe_articoli_campo']; ?>']).trigger('change');
-                    <?php endif; ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        <?php endforeach; ?>
+    <?php if (in_array($campo['fields_draw_html_type'], ['select', 'select_ajax'])): ?>
+    var sel = "select[name='products[" + rowid + "][<?php echo $campo['campi_righe_articoli_campo']; ?>]'] option[value=\"" + prodotto['<?php echo $campo['campi_righe_articoli_campo']; ?>'] + "\"]";
+    //console.log(sel);
+    $(sel).attr('selected', 'selected');
+    $("select[name='products[" + rowid + "][<?php echo $campo['campi_righe_articoli_campo']; ?>]']").trigger('change');
+    <?php else: ?>
+    $("input[name='products[" + rowid + "][<?php echo $campo['campi_righe_articoli_campo']; ?>]']").val(prodotto['<?php echo $campo['campi_righe_articoli_campo']; ?>']).trigger('change');
+    <?php endif; ?>
+    <?php endif; ?>
+    <?php endforeach; ?>
+    <?php endforeach; ?>
     <?php endif; ?>
 
 
@@ -2879,10 +2906,10 @@ var autocomplete_anagrafiche;
 $(document).ready(function() {
 
     <?php if ($documento_id): ?>
-        documento = <?php echo json_encode($documento); ?>;
+    documento = <?php echo json_encode($documento); ?>;
     <?php endif; ?>
     <?php if (($documento_id && $clone) || !$documento_id): ?>
-        checkClienteCessato();
+    checkClienteCessato();
     <?php endif; ?>
 
     /****************** AUTOCOMPLETE Destinatario *************************/
@@ -2925,21 +2952,21 @@ $(document).ready(function() {
                         } else {
                             cliente_codice = '';
                         }
-var cliente_tipo = 'C';
-if (p.customers_type == 2) {
-cliente_tipo = 'F';
-}
+                        var cliente_tipo = 'C';
+                        if (p.customers_type == 2) {
+                            cliente_tipo = 'F';
+                        }
                         if (typeof p.<?php echo $clienti_ragione_sociale; ?> !== 'undefined' && p.<?php echo $clienti_ragione_sociale; ?> !== null && p.<?php echo $clienti_ragione_sociale; ?> !== '') {
                             collection.push({
                                 "id": p.<?php echo $clienti_id; ?>,
-                                "label": '['+cliente_tipo+'] '+cliente_codice + p.<?php echo $clienti_ragione_sociale; ?>,
+                                "label": '[' + cliente_tipo + '] ' + cliente_codice + p.<?php echo $clienti_ragione_sociale; ?>,
                                 "value": cliente_codice + p.<?php echo $clienti_ragione_sociale; ?>,
                                 "data": p
                             });
                         } else {
                             collection.push({
                                 "id": p.<?php echo $clienti_id; ?>,
-                                "label": '['+cliente_tipo+'] '+cliente_codice + p.<?php echo $clienti_nome; ?> + ' ' + p.<?php echo $clienti_cognome; ?>,
+                                "label": '[' + cliente_tipo + '] ' + cliente_codice + p.<?php echo $clienti_nome; ?> + ' ' + p.<?php echo $clienti_cognome; ?>,
                                 "value": cliente_codice + p.<?php echo $clienti_nome; ?> + ' ' + p.<?php echo $clienti_cognome; ?>,
                                 "data": p
                             });
@@ -2999,21 +3026,22 @@ cliente_tipo = 'F';
             return false;
         }
     });
+
     function checkClienteCessato() {
         var customer_id = $('#js_dest_id').val();
         if (customer_id) {
             var entity_anagrafiche = $('[name="dest_entity_name"]').val();
             $.ajax({
                 method: 'post',
-                url: base_url + 'get_ajax/getJsonRecord/'+entity_anagrafiche+'/'+customer_id,
+                url: base_url + 'get_ajax/getJsonRecord/' + entity_anagrafiche + '/' + customer_id,
                 dataType: "json",
                 data: {
                     [token_name]: token_hash
                 },
                 async: false,
-                success: function (res) {
+                success: function(res) {
                     console.log(res);
-                    if(res.data.customers_status === '3'){
+                    if (res.data.customers_status === '3') {
                         alert("Attenzione: il destinatario risulta cessato.");
                     }
                     /*$("input[name='leads_mail_object']").val(res.data.mailer_template_subject);
@@ -3023,7 +3051,7 @@ cliente_tipo = 'F';
                     fillEditor("textarea[name='leads_mail_text']", res.data.mailer_template_body);*/
                 }
             })
-        }        
+        }
         /*$.ajax({
                 method: 'post',
                 url: base_url + "contabilita/documenti/autocomplete/" + entity_anagrafiche,
@@ -3039,9 +3067,10 @@ cliente_tipo = 'F';
                 },
                 success: function(data) {
                 }*/
-                
+
 
     }
+
     function showAddressButton() {
         var customer_id = $('#js_dest_id').val();
         if (customer_id) {
@@ -3061,8 +3090,13 @@ cliente_tipo = 'F';
         indirizzo += '\n';
         if (shipping_data.countries_name) {
             indirizzo += shipping_data.countries_name;
+            indirizzo += '\n';
         } else if (shipping_data.customers_shipping_address_country) {
             indirizzo += shipping_data.customers_shipping_address_country;
+            indirizzo += '\n';
+        }
+        if (shipping_data.customers_shipping_address_mobile) {
+            indirizzo += shipping_data.customers_shipping_address_mobile;
         }
 
         $('[name="documenti_contabilita_luogo_destinazione"]').html(indirizzo);
@@ -3100,24 +3134,24 @@ cliente_tipo = 'F';
 
 
         <?php if (!empty($clienti_sottotipo)): ?>
-            if (cliente['<?php echo $clienti_sottotipo; ?>']) {
-                var sottotipo = 2;
+        if (cliente['<?php echo $clienti_sottotipo; ?>']) {
+            var sottotipo = 2;
 
-                switch (cliente['<?php echo $clienti_sottotipo; ?>']) {
-                    case '1':
-                        sottotipo = 2; //privato
-                        break;
-                    case '2':
-                    case '3':
-                        sottotipo = 1; // azienda
-                        break;
-                    case '4':
-                        sottotipo = 3; // pa
-                        break;
-                }
-
-                $('.js_tipo_destinatario[value="' + sottotipo + '"]').trigger('click');
+            switch (cliente['<?php echo $clienti_sottotipo; ?>']) {
+                case '1':
+                    sottotipo = 2; //privato
+                    break;
+                case '2':
+                case '3':
+                    sottotipo = 1; // azienda
+                    break;
+                case '4':
+                    sottotipo = 3; // pa
+                    break;
             }
+
+            $('.js_tipo_destinatario[value="' + sottotipo + '"]').trigger('click');
+        }
         <?php endif; ?>
 
         if (typeof cliente['<?php echo $clienti_ragione_sociale; ?>'] !== 'undefined' && cliente['<?php echo $clienti_ragione_sociale; ?>'] !== null && cliente['<?php echo $clienti_ragione_sociale; ?>'] !== '') {
@@ -3137,11 +3171,11 @@ cliente_tipo = 'F';
 
         <?php if (!empty($clienti_nazione)): ?>
 
-            <?php if (!empty($mappature_autocomplete['clienti_nazione']) && $mappature_autocomplete['clienti_nazione'] != $clienti_nazione): ?>
-                $('.js_dest_nazione').val(cliente['<?php echo $mappature_autocomplete['clienti_nazione']; ?>']).trigger('change');
-            <?php else: ?>
-                $('.js_dest_nazione').val(cliente['<?php echo $clienti_nazione; ?>']).trigger('change');
-            <?php endif; ?>
+        <?php if (!empty($mappature_autocomplete['clienti_nazione']) && $mappature_autocomplete['clienti_nazione'] != $clienti_nazione): ?>
+        $('.js_dest_nazione').val(cliente['<?php echo $mappature_autocomplete['clienti_nazione']; ?>']).trigger('change');
+        <?php else: ?>
+        $('.js_dest_nazione').val(cliente['<?php echo $clienti_nazione; ?>']).trigger('change');
+        <?php endif; ?>
         <?php endif; ?>
 
 
@@ -3151,61 +3185,61 @@ cliente_tipo = 'F';
         $('.js_dest_provincia').val(cliente['<?php echo $clienti_provincia; ?>']);
 
         <?php if (!empty($clienti_partita_iva)): ?>
-            $('.js_dest_partita_iva').val(cliente['<?php echo $clienti_partita_iva; ?>']);
+        $('.js_dest_partita_iva').val(cliente['<?php echo $clienti_partita_iva; ?>']);
         <?php endif; ?>
 
         $('.js_dest_codice_fiscale').val(cliente['<?php echo $clienti_codice_fiscale; ?>']);
         <?php if (!empty($clienti_codice_sdi)): ?>
-            if (cliente['<?php echo $clienti_codice_sdi; ?>']) {
-                $('.js_dest_codice_sdi').val(cliente['<?php echo $clienti_codice_sdi; ?>']);
-            }
+        if (cliente['<?php echo $clienti_codice_sdi; ?>']) {
+            $('.js_dest_codice_sdi').val(cliente['<?php echo $clienti_codice_sdi; ?>']);
+        }
         <?php endif; ?>
         <?php if (!empty($clienti_pec)): ?>
-            $('.js_dest_pec').val(cliente['<?php echo $clienti_pec; ?>']);
+        $('.js_dest_pec').val(cliente['<?php echo $clienti_pec; ?>']);
         <?php endif; ?>
         $('#js_dest_id').val(cliente['<?php echo $clienti_id; ?>']).trigger('change');
 
         <?php if (!empty($clienti_vettore)): ?>
-            if (cliente['<?php echo $clienti_vettore; ?>']) {
-                $('[name="documenti_contabilita_trasporto_a_cura_di"]').val(cliente['<?php echo $clienti_vettore; ?>']);
+        if (cliente['<?php echo $clienti_vettore; ?>']) {
+            $('[name="documenti_contabilita_trasporto_a_cura_di"]').val(cliente['<?php echo $clienti_vettore; ?>']);
 
-                <?php if (!empty($entita_vettori)): ?>
-                    $.ajax({
-                        url: base_url + 'contabilita/documenti/autocomplete/vettori',
-                        type: 'post',
-                        dataType: 'json',
-                        data: {
-                            [token_name]: token_hash,
-                            search: cliente['<?php echo $clienti_vettore; ?>'],
-                            type: 'match'
-                        },
-                        success: function(res) {
-                            // console.log(res);
-                            if (res.results.data.length > 0) {
-                                const data = res.results.data;
-                                // console.log(data);
-                                if (data[0]) {
-                                    const vettore = data[0];
+            <?php if (!empty($entita_vettori)): ?>
+            $.ajax({
+                url: base_url + 'contabilita/documenti/autocomplete/vettori',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    [token_name]: token_hash,
+                    search: cliente['<?php echo $clienti_vettore; ?>'],
+                    type: 'match'
+                },
+                success: function(res) {
+                    // console.log(res);
+                    if (res.results.data.length > 0) {
+                        const data = res.results.data;
+                        // console.log(data);
+                        if (data[0]) {
+                            const vettore = data[0];
 
-                                    // console.log(vettore);
+                            // console.log(vettore);
 
-                                    popolaVettore(vettore);
-                                }
-                            }
-                        },
-                        error: function(status, request, error) {
-                            console.error(error);
+                            popolaVettore(vettore);
                         }
-                    })
-                <?php endif; ?>
-
-                if (!$('.js_fattura_accompagnatoria_checkbox').is(':checked')) {
-                    $('.js_fattura_accompagnatoria_checkbox').trigger('click');
+                    }
+                },
+                error: function(status, request, error) {
+                    console.error(error);
                 }
+            })
+            <?php endif; ?>
+
+            if (!$('.js_fattura_accompagnatoria_checkbox').is(':checked')) {
+                $('.js_fattura_accompagnatoria_checkbox').trigger('click');
             }
+        }
         <?php endif; ?>
 
-        
+
 
         //Cambio iva default sulle righe prodotto
         if (typeof cliente_raw_data !== 'undefined' &&
@@ -3222,9 +3256,9 @@ cliente_tipo = 'F';
         }
 
         <?php if (!empty($clienti_agente_vendita)): ?>
-            if (cliente['<?php echo $clienti_agente_vendita; ?>']) {
-                $('.js_agente_vendita').val(cliente['<?php echo $clienti_agente_vendita; ?>']).trigger('change');
-            }
+        if (cliente['<?php echo $clienti_agente_vendita; ?>']) {
+            $('.js_agente_vendita').val(cliente['<?php echo $clienti_agente_vendita; ?>']).trigger('change');
+        }
         <?php endif; ?>
 
         showAddressButton();
@@ -3259,12 +3293,12 @@ cliente_tipo = 'F';
             // This function exists
             afterPopolaCliente(cliente);
         }
-        
+
         if (typeof afterPopolaCliente === "function") {
             // This function exists
             afterPopolaCliente(cliente);
         }
-        
+
         applicaListino(false, false);
         applicaMetodoPagamento();
     }
@@ -3305,25 +3339,25 @@ cliente_tipo = 'F';
     });
 
     <?php if ($documento_id || !empty($documento['articoli'])): ?>
-        calculateTotals(<?php echo (!$clone) ? $documento_id : ''; ?>);
+    calculateTotals(<?php echo (!$clone) ? $documento_id : ''; ?>);
 
-        cliente_raw_data = documento;
-        $('#js_dest_id').filter(function() {
-            return !this.value;
-        }).trigger('change');
+    cliente_raw_data = documento;
+    $('#js_dest_id').filter(function() {
+        return !this.value;
+    }).trigger('change');
 
-        showAddressButton();
-        setTimeout(function() {
-            applicaListino(false, false);
-        }, 1000);
+    showAddressButton();
+    setTimeout(function() {
+        applicaListino(false, false);
+    }, 1000);
 
 
 
     <?php endif; ?>
 
     <?php if (!empty($customer)): ?>
-        cliente_raw_data = <?php echo json_encode($customer); ?>;
-        popolaCliente(cliente_raw_data);
+    cliente_raw_data = <?php echo json_encode($customer); ?>;
+    popolaCliente(cliente_raw_data);
     <?php endif; ?>
 });
 </script>
@@ -3353,7 +3387,7 @@ $(document).ready(function() {
         if (tipo == 12) {
             alert('Indicare gli importi col segno meno davanti!');
         }
-        
+
         switch (tipo) {
             case 11: // Fattura reverse
                 $('.js_dest_type').html('fornitore');
@@ -3369,7 +3403,7 @@ $(document).ready(function() {
                 $(".js_tipologia_fatturazione option[data-tipologia_genitore*='" + 4 + "']").attr("disabled", "true"); // Mostra tutte le tipologie che non siano la 4 ovvero la nota di credito
 
                 <?php if ($documento_id && $clone): ?>
-                    calculateTotals('<?php echo $documento_id ?>', true);
+                calculateTotals('<?php echo $documento_id ?>', true);
                 <?php endif; ?>
                 break;
             case 12: // Nota di credito Reverse
@@ -3389,7 +3423,7 @@ $(document).ready(function() {
                 $('.js_rivalsa_container').show();
 
                 <?php if ($documento_id && $clone): ?>
-                    calculateTotals('<?php echo $documento_id ?>', true);
+                calculateTotals('<?php echo $documento_id ?>', true);
                 <?php endif; ?>
                 break;
             case 6: //Ordine fornitore
@@ -3460,13 +3494,13 @@ $(document).ready(function() {
                     var tipo_fatturazione_default = '<?php echo $impostazioni['documenti_contabilita_settings_tipo_fattura_default'] ?? ''; ?>';
 
                     <?php if (!$documento_id && empty($documento)): ?>
-                        if (tipo_fatturazione_default.length > 0) {
-                            $('.js_tipologia_fatturazione').val(tipo_fatturazione_default).trigger('change');
-                        }
+                    if (tipo_fatturazione_default.length > 0) {
+                        $('.js_tipologia_fatturazione').val(tipo_fatturazione_default).trigger('change');
+                    }
                     <?php endif; ?>
 
                     <?php if ($documento_id && $clone): ?>
-                        calculateTotals('<?php echo $documento_id ?>', true);
+                    calculateTotals('<?php echo $documento_id ?>', true);
                     <?php endif; ?>
                     break;
                 case 4: //Nota di credito
@@ -3550,13 +3584,13 @@ $(document).ready(function() {
         }
 
         <?php if ($documento_id && $clone): ?>
-            <?php if (in_array($documento['documenti_contabilita_tipo'], [8, 10]) && dateFormat($documento['documenti_contabilita_data_emissione'], 'Y-m-d') !== date('Y-m-d')): ?>
-                if (tipo == '1') {
-                    if (confirm('Stai generando una fattura da un ddt.\nVuoi impostare automaticamente la tipologia "TD24 - Fattura differita?')) {
-                        $('.js_tipologia_fatturazione').val('15').trigger('change');
-                    }
-                }
-            <?php endif; ?>
+        <?php if (in_array($documento['documenti_contabilita_tipo'], [8, 10]) && dateFormat($documento['documenti_contabilita_data_emissione'], 'Y-m-d') !== date('Y-m-d')): ?>
+        if (tipo == '1') {
+            if (confirm('Stai generando una fattura da un ddt.\nVuoi impostare automaticamente la tipologia "TD24 - Fattura differita?')) {
+                $('.js_tipologia_fatturazione').val('15').trigger('change');
+            }
+        }
+        <?php endif; ?>
         <?php endif; ?>
 
         $('.js_btn_tipo').removeClass('btn-primary');
@@ -3597,13 +3631,18 @@ $('.documenti_contabilita_valuta').trigger('change');
 
 
 function getNumeroAjax(tipo, serie) {
+    var azienda = encodeURIComponent($('.documenti_contabilita_azienda').val());
+    var tipoDocumento = encodeURIComponent($('.js_documenti_contabilita_tipo').val());
+    var serieDocumento = $('.js_documenti_contabilita_serie').val();
+    serieDocumento = serieDocumento ? '?serie=' + encodeURIComponent(serieDocumento) : '';
+    
     $.ajax({
         method: 'post',
         data: {
             data_emissione: $('[name="documenti_contabilita_data_emissione"]').val(),
             [token_name]: token_hash
         },
-        url: base_url + "contabilita/documenti/numeroSucessivo/" + $('.documenti_contabilita_azienda').val() + '/' + $('.js_documenti_contabilita_tipo').val() + '/' + ($('.js_documenti_contabilita_serie').val() ?? ''),
+        url: base_url + "contabilita/documenti/numeroSucessivo/" + azienda + '/' + tipoDocumento + '/' + serieDocumento,
         success: function(numero) {
             $('[name="documenti_contabilita_numero"]').val(numero);
         }
@@ -3622,6 +3661,14 @@ function getNumeroDocumento() {
         }
     } else {
         getNumeroAjax(tipo, serie);
+    }
+    
+    
+    // michael - 2024-01-23 - associazione centro di costo a serie. gestisco quindi il cambio del centro di costo in base alla serie selezionata
+    var serie_centro_costo_ricavo = $('.js_btn_serie.button_selected').data('centro_costo_ricavo');
+    
+    if (typeof serie_centro_costo_ricavo !== 'undefined' && serie_centro_costo_ricavo !== false && serie_centro_costo_ricavo !== '') {
+        $('[name="documenti_contabilita_centro_di_ricavo"]').val(serie_centro_costo_ricavo).trigger('change');
     }
 }
 
@@ -3684,6 +3731,7 @@ $('.js_btn_serie').click(function(e) {
     if ($(this).hasClass('button_selected')) {
         $('.js_btn_serie').removeClass('button_selected');
         $('.js_documenti_contabilita_serie').val('');
+        $('[name="documenti_contabilita_centro_di_ricavo"]').val('').trigger('change');
     } else {
         $('.js_btn_serie').removeClass('button_selected');
         $(this).addClass('button_selected');
@@ -3692,14 +3740,30 @@ $('.js_btn_serie').click(function(e) {
     }
     getNumeroDocumento();
 });
+$('[name="documenti_contabilita_data_emissione"]').on('change', function() {
+
+    getNumeroDocumento();
+
+
+});
 $('.documenti_contabilita_azienda').on('change', function() {
     const azienda = getAzienda();
     getNumeroDocumento();
 
     reloadTemplatePdf();
 
-    if (azienda && azienda.documenti_contabilita_settings_iva_default) {
-        reloadIvaDefault(azienda.documenti_contabilita_settings_iva_default);
+    if (azienda) {
+        if (azienda.documenti_contabilita_settings_iva_default) {
+            reloadIvaDefault(azienda.documenti_contabilita_settings_iva_default);
+        }
+        
+        if (azienda.documenti_contabilita_settings_tipo_cassa_professionisti) {
+            $('[name="documenti_contabilita_cassa_professionisti_tipo"]').val(azienda.documenti_contabilita_settings_tipo_cassa_professionisti).trigger('change');
+        }
+        
+        if (azienda.documenti_contabilita_settings_perc_cassa_prof) {
+            $('[name="documenti_contabilita_cassa_professionisti_perc"]').val(azienda.documenti_contabilita_settings_perc_cassa_prof);
+        }
     }
 });
 
@@ -3713,14 +3777,14 @@ $('[name="documenti_contabilita_data_emissione"]').on('change', function() {
     <?php else: ?>
     calculateTotals(false, true);
     <?php endif; ?>
-    
+
 });
 
 <?php if (empty($documento['documenti_contabilita_numero']) || $clone): ?>
-    $('.js_btn_tipo[data-tipo="' + $('.js_documenti_contabilita_tipo').val() + '"]').trigger('click');
-    getNumeroDocumento();
-    //alert(1);
-    //$('.js_btn_serie').first().trigger('click');
+$('.js_btn_tipo[data-tipo="' + $('.js_documenti_contabilita_tipo').val() + '"]').trigger('click');
+getNumeroDocumento();
+//alert(1);
+//$('.js_btn_serie').first().trigger('click');
 <?php endif; ?>
 
 
@@ -3925,25 +3989,39 @@ function calculateTotals(documento_id, regenerate_scadenze) {
             competenze_no_ritenute += totale_riga_scontato_con_sconto_totale;
         }
 
-        if (totale_iva_divisa[iva_id] == undefined) {
-            //console.log(totale_iva_divisa);
-            totale_iva_divisa[iva_id] = [iva, parseFloat((totale_riga_scontato_con_sconto_totale / 100) * iva)];
+       if (totale_iva_divisa[iva_id] == undefined) {
+            // Moltiplica per 100 per lavorare con numeri interi
+            let iva_calcolata = (totale_riga_scontato_con_sconto_totale * iva);
+            
+            totale_iva_divisa[iva_id] = [iva, iva_calcolata/100];
             totale_imponibile_divisa[iva_id] = [iva, totale_riga_scontato_con_sconto_totale];
         } else {
-            totale_iva_divisa[iva_id][1] += parseFloat((totale_riga_scontato_con_sconto_totale / 100) * iva);
+            // Aggiungi all'IVA già calcolata (lavorando con numeri interi)
+            let iva_calcolata = (totale_riga_scontato_con_sconto_totale * iva)/100;
+            totale_iva_divisa[iva_id][1] += iva_calcolata;
             totale_imponibile_divisa[iva_id][1] += totale_riga_scontato_con_sconto_totale;
+
+           
         }
+
+        
+
+        
         //            console.log(totale_riga);
         //            console.log(totale_riga_scontato);
         //            console.log(totale_riga_scontato_con_sconto_totale);
         //
         //console.log(totale_iva_divisa);
         if (sconto_su_imponibile) {
-            totale_iva += parseFloat(((totale_riga_scontato_con_sconto_totale / 100) * iva).toFixed(2));
+            // Moltiplica per 100 per lavorare con numeri interi, esegui il calcolo, poi dividi per 100
+            let iva_calcolata = (totale_riga_scontato_con_sconto_totale * iva);
+            totale_iva += iva_calcolata / 100;
         } else {
-            //console.log((totale_riga_scontato / 100) * iva);
-            totale_iva += parseFloat(((totale_riga_scontato / 100) * iva).toFixed(2));
+            // Stessa logica applicata qui
+            let iva_calcolata = (totale_riga_scontato * iva);
+            totale_iva += iva_calcolata / 100;
         }
+
         totale += totale_riga_scontato_ivato;
 
 
@@ -3953,6 +4031,10 @@ function calculateTotals(documento_id, regenerate_scadenze) {
         $('.js_documenti_contabilita_articoli_imponibile', $(this)).val(parseFloat(totale_riga_scontato).toFixed(2));
 
     });
+
+    for (var i in totale_iva_divisa) {
+        totale_iva_divisa[i][1] = Math.round(totale_iva_divisa[i][1] * 100) / 100;
+    }
 
     //Fix per evitare di portarmi dietro troppe cifre decimali che poi creano problemi di arrotondamento...
     competenze = Math.round(competenze * 100) / 100;
@@ -3985,17 +4067,17 @@ function calculateTotals(documento_id, regenerate_scadenze) {
                 totale_imponibili_iva_diverse_da_max += totale_imponibile_divisa[iva_id][1];
 
             }
+            
             totale_iva_diverse_da_max += parseFloat(totale_iva_divisa[iva_id][1]);
         }
+
     }
 
+                // console.log(totale_iva_divisa[1]);
+                // console.log(parseFloat(((imponibile - totale_imponibili_iva_diverse_da_max) / 100) * iva_perc_max));
     //Aggiungo alla iva massima, ciò che manca tenendo conto delle modifiche ai totali dovute a rivalsa e cassa
-    //        console.log(imponibile);
-    //        console.log(totale_imponibili_iva_diverse_da_max);
-    // console.log(iva_perc_max);
-    // console.log(iva_id_perc_max);
-    // console.log(totale_iva_divisa);
-    totale_iva_divisa[iva_id_perc_max][1] = parseFloat(((imponibile - totale_imponibili_iva_diverse_da_max) / 100) * iva_perc_max);
+    //20240123 - MP - Tolto perchè su ecoconfort questo ricalcolo sballava l'iva sull'id documento 2454... in pratica, a volte, decommentando le due righe di console log qui sopra l'importo differiva di un centesimo...
+    //totale_iva_divisa[iva_id_perc_max][1] = parseFloat(((imponibile - totale_imponibili_iva_diverse_da_max) / 100) * iva_perc_max);
 
     //        alert('imponibile '+imponibile);
     //        alert('totale' + totale);
@@ -4166,7 +4248,31 @@ $(document).ready(function() {
     $('#new_fattura').on('change', '[name="documenti_contabilita_template_pagamento"],[name="documenti_contabilita_importo_bollo"],[name="documenti_contabilita_split_payment"], [name="documenti_contabilita_rivalsa_inps_perc"],[name="documenti_contabilita_cassa_professionisti_perc"],[name="documenti_contabilita_ritenuta_acconto_perc"],[name="documenti_contabilita_ritenuta_acconto_perc_imponibile"]', function() {
         calculateTotals(false, true);
     });
-
+    
+    $('[name="documenti_contabilita_template_pagamento"]').on('change', function() {
+        var selected = $(this).val();
+        if (selected) {
+            $.ajax({
+                url: base_url + 'contabilita/documenti/get_tpl_pagamento_banca/' + selected,
+                type: 'get',
+                dataType: 'json',
+                data: {},
+                async: false,
+                success: function(res) {
+                    if (res.status == '1') {
+                        $('[name="documenti_contabilita_conto_corrente"]').val(res.txt.documenti_contabilita_tpl_pag_scadenze_banca_di_riferimento ?? '').trigger('change');
+                    }
+                },
+                error: function(status, request, error) {
+                
+                }
+            })
+        }
+    });
+    
+    <?php if(empty($documento_id) && !$clone): ?>
+    $('[name="documenti_contabilita_template_pagamento"]').trigger('change');
+    <?php endif; ?>
     table.on('change', '.js_sconto_su_imponibile, .js-applica_ritenute,.js-applica_sconto, .js-riga_desc, .js_documenti_contabilita_articoli_quantita, .js_documenti_contabilita_articoli_prezzo, .js_documenti_contabilita_articoli_sconto,.js_documenti_contabilita_articoli_sconto2,.js_documenti_contabilita_articoli_sconto3, .js_documenti_contabilita_articoli_iva_id',
         function() {
             //console.log('dentro');
@@ -4199,7 +4305,7 @@ $(document).ready(function() {
         });
         $('.js_autocomplete_prodotto', newRow).data('id', counter).prop('data-id', counter).attr('data-id', counter);
         initAutocomplete($('.js_autocomplete_prodotto', newRow));
-        
+
         /* Line manipulation end */
 
         counter++;
@@ -4305,7 +4411,7 @@ $(document).ready(function() {
 var check_calculate = false;
 $(document).ready(function() {
     var table = $('#js_product_table');
-    
+
     //Fix per essere sicuri che i calcoli siano stati tutti fatti prima di inviare e salvare il documento.
     $('#new_fattura').on('submit', function(e) {
         /// CHECK CAMPI PER SDI SE FATTURA ELETTRONICA E SE CLIENTE E' UNA PA
@@ -4353,9 +4459,9 @@ $(document).ready(function() {
             e.stopPropagation();
             e.preventDefault();
             <?php if ($documento_id): ?>
-                calculateTotals('<?php echo (!$clone) ? $documento_id : ''; ?>', false);
+            calculateTotals('<?php echo (!$clone) ? $documento_id : ''; ?>', false);
             <?php else: ?>
-                calculateTotals(false, false);
+            calculateTotals(false, false);
             <?php endif; ?>
             check_calculate = true;
             $('#new_fattura').trigger('submit');
@@ -4372,7 +4478,7 @@ $(document).ready(function() {
         }
         <?php endif; ?>
     });
-    
+
     <?php if($clone == DB_BOOL_TRUE && !empty($documento)): ?>
     /*if (!confirm('Stai clonando un documento. Vuoi mantenere la riga descrittiva con il suo riferimento?')) {
         var riga_desc_rif_doc_row = $('.js_documenti_contabilita_articoli_descrizione:visible').filter(':first').closest('tr');
@@ -4382,11 +4488,11 @@ $(document).ready(function() {
     <?php endif; ?>
 
     <?php if (!$documento_id && !$clone && empty($this->input->get('no_add_product'))): /* 20231120 - michael - aggiunto il parametro get "no_add_product" così si può gestire il fatto che non venga creata una riga nel caso si passino anche degli articoli in post (altrimenti in certe situazioni sballa i contenggi iva etc) */ ?>
-        $('#js_add_product').trigger('click');
+    $('#js_add_product').trigger('click');
     <?php endif; ?>
-    
+
     <?php if ($accorpamento_documenti || (!$accorpamento_documenti && $clone == DB_BOOL_TRUE) || (!empty($this->input->post('articoli')))): ?>
-        $('.js_documenti_contabilita_articoli_prezzo:visible').filter(':first').trigger('change');
+    $('.js_documenti_contabilita_articoli_prezzo:visible').filter(':first').trigger('change');
     <?php endif; ?>
 });
 </script>

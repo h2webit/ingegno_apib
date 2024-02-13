@@ -360,7 +360,9 @@ class Apilib
         }
 
         $_data = $this->extractInputData($data);
+        //unset($_data[$this->security->get_csrf_token_name()]);
 
+        
         //rimuovo i campi password passati vuoti...
         $fields = $this->crmEntity->getFields($entity);
 
@@ -384,7 +386,7 @@ class Apilib
                 }
 
                 $_data[$field['fields_name']] = $date->format('Y-m-d H:i:s');
-            }
+            } 
         }
         //debug($_data);
         if ($this->processData($entity, $_data, false)) {
@@ -1295,6 +1297,7 @@ class Apilib
                         case 'upload':
                         case 'upload_image':
                         case 'single_upload':
+                        case 'signature':
                             if (!array_key_exists($field['fields_name'], $_FILES)) {
                                 $rule[] = 'required';
                             }
@@ -1375,8 +1378,87 @@ class Apilib
             if (!empty($rule)) {
                 $rules[] = array('field' => $field['fields_name'], 'label' => $field['fields_draw_label'], 'rules' => implode('|', $rule));
             }
-        }
+            //debug($data);
+            //Signature field type management
+            if ($field['fields_draw_html_type'] == 'signature' && base64_encode(base64_decode($data[$field['fields_name']], true)) === $data[$field['fields_name']]) {
+                $signature_b64 = $data[$field['fields_name']];
 
+                //debug($signature_b64);
+                //Convert to phisical file
+                //Save to uploads folder
+                //Extract other info and add them to the json array
+                //override field data with json
+                /*
+                [file_name] => 3b0ffa3bec25a33ae83f8e7601534bf8.png
+                [file_type] => image/png
+                [file_path] => /var/www/html/firegui_client_developers/uploads/
+                [full_path] => /var/www/html/firegui_client_developers/uploads/3b0ffa3bec25a33ae83f8e7601534bf8.png
+                [raw_name] => 3b0ffa3bec25a33ae83f8e7601534bf8
+                [orig_name] => Screenshot_2023-12-13_alle_10.14.34.png
+                [client_name] => Screenshot 2023-12-13 alle 10.14.34.png
+                [file_ext] => .png
+                [file_size] => 28.66
+                [is_image] => 1
+                [image_width] => 662
+                [image_height] => 177
+                [image_type] => png
+                [image_size_str] => width="662" height="177"
+                */
+                if (preg_match('/^data:image\/(\w+);base64,/', $signature_b64, $type)) {
+                    $data_img = substr($signature_b64, strpos($signature_b64, ',') + 1);
+                    $type = strtolower($type[1]); // jpg, png, gif
+                } else {
+                    $data_img = $signature_b64;
+                    $type = 'png'; // jpg, png, gif
+                }
+                $data_img = base64_decode($data_img);
+                
+                $uploadFolder = FCPATH . '/uploads/';
+                $fileName = uniqid() . '.' . $type;
+                $filePath = $uploadFolder . $fileName;
+                
+                if (!file_exists($uploadFolder)) {
+                    mkdir($uploadFolder, 0777, true);
+                }
+                
+                $name = 'signature_' . time() . '.'.$type;
+                if (file_put_contents($filePath, $data_img) !== false) {
+                    $uploadData = [
+                        'file_name' => $fileName,
+                        'file_type' => 'image/' . $type,
+                        'file_path' => $uploadFolder,
+                        'full_path' => $filePath,
+                        'raw_name' => pathinfo($fileName, PATHINFO_FILENAME),
+                        'orig_name' => $name, // Sostituisci con il nome originale, se disponibile
+                        'client_name' => $name, // Sostituisci con il nome lato client, se disponibile
+                        'file_ext' => '.' . $type,
+                        'file_size' => filesize($filePath) / 1024, // Dimensione in KB
+                        'is_image' => 1,
+                        // Le seguenti informazioni richiedono la funzione getimagesize()
+                        'image_width' => null,
+                        'image_height' => null,
+                        'image_type' => null,
+                        'image_size_str' => null,
+                    ];
+                    
+                    list($width, $height, $imageType, $sizeStr) = getimagesize($filePath);
+                    $uploadData['image_width'] = $width;
+                    $uploadData['image_height'] = $height;
+                    $uploadData['image_type'] = image_type_to_extension($imageType, false);
+                    $uploadData['image_size_str'] = $sizeStr;
+                    // Chiama la funzione moveFileToUploadsFolder
+                    $this->moveFileToUploadsFolder($uploadData);
+                    
+                    $data[$field['fields_name']] = json_encode($uploadData);
+                    //debug($field,true);
+                } else {
+                    $this->error = self::ERR_UPLOAD_FAILED;
+                    $this->errorMessage = t('Error while saving signature file');//$this->upload->display_errors();
+                    return false;
+                }
+            }
+        }
+        //debug($data,true);
         /**
          * Eseguo il process di pre-validation
          */
@@ -1385,6 +1467,9 @@ class Apilib
         $mode = $editMode ? 'update' : 'insert';
         $processed_predata_1 = $this->runDataProcessing($entity_data['entity_id'], "pre-validation-{$mode}", ['post' => $_predata, 'value_id' => $value_id, 'original_post' => $this->originalPost]); // Pre-validation specifico
         $processed_predata_2 = $this->runDataProcessing($entity_data['entity_id'], 'pre-validation', $processed_predata_1); // Pre-validation generico
+        //Tento comunque di eseguire anche i pre-validation-save (non so se per retrocompatibilità o che, ma alcuni pre-validation sono salvati come pre-validation, altri come pre-validation-save)
+        $processed_predata_2 = $this->runDataProcessing($entity_data['entity_id'], 'pre-validation-save', $processed_predata_2); // Pre-validation generico
+
         if (isset($processed_predata_2['post'])) {
             // Metto i dati processati nel post
             $_POST = $data = $processed_predata_2['post'];
@@ -1661,6 +1746,7 @@ class Apilib
         }
         if ($invalidFields) {
             if ($this->processMode !== self::MODE_CRM_FORM) {
+                
                 $this->error = self::ERR_VALIDATION_FAILED;
                 $this->errorMessage = t("Fields %s are not accepted in entity '$entity'", 0, [implode(', ', $invalidFields)]);
                 return false;
@@ -1882,6 +1968,7 @@ class Apilib
             case 'upload':
             case 'upload_image':
             case 'single_upload':
+            case 'signature':
                 $value = $value ?: null;
                 break;
 
@@ -2306,7 +2393,9 @@ class Apilib
                             '_post' => $this->input->post(),
                             'original_post' => $this->originalPost
                         ]),
-                        '_queue_pp_event_data' => json_encode($function)
+                        '_queue_pp_event_data' => json_encode($function),
+                        '_queue_pp_event_id' => $function['fi_events_id'],
+                        '_queue_pp_referer' => empty($_SERVER['HTTP_REFERER']) ? '' : $_SERVER['HTTP_REFERER'],
                     ]);
                 } else {
                     try {
@@ -2471,32 +2560,10 @@ class Apilib
 
                 // Upload ok
                 $uploadData = $this->upload->data();
+
+                $this->moveFileToUploadsFolder($uploadData);
                 
-                defined('LOGIN_ENTITY') or @include __DIR__ . '/../config/enviroment.php';
-                $uploadDepthLevel = defined('UPLOAD_DEPTH_LEVEL') ? (int) UPLOAD_DEPTH_LEVEL : 0;
-
-                if ($uploadDepthLevel > 0) {
-                    // Voglio comporre il nome locale in modo che se il nome del file fosse
-                    // pippo.jpg la cartella finale sarà: ./uploads/p/i/p/pippo.jpg
-                    $localFolder = '';
-                    for ($i = 0; $i < $uploadDepthLevel; $i++) {
-                        // Assumo che le lettere siano tutte alfanumeriche,
-                        // alla fine le immagini sono tutte delle hash md5
-                        $localFolder .= strtolower(isset($uploadData['file_name'][$i]) ? $uploadData['file_name'][$i] . DIRECTORY_SEPARATOR : '');
-                    }
-
-                    if (!is_dir(FCPATH . 'uploads/' . $localFolder)) {
-                        mkdir(FCPATH . 'uploads/' . $localFolder, DIR_WRITE_MODE, true);
-                    }
-
-                    if (rename(FCPATH . 'uploads/' . $uploadData['file_name'], FCPATH . 'uploads/' . $localFolder . $uploadData['file_name'])) {
-                        $uploadData['orig_name'] = $uploadData['file_name'];
-                        $uploadData['file_path'] = FCPATH . 'uploads/' . $localFolder;
-                        $uploadData['full_path'] = FCPATH . 'uploads/' . $localFolder . $uploadData['file_name'];
-                    }
-                    $uploadData['original_filename'] = $uploadData['client_name'];
-                    $uploadData['path_local'] = $localFolder . $uploadData['file_name'];
-                }
+                
 
 //                $output[$fieldName] = $uploadData['file_name']; // 11/10/2023 - michael - ho commentato questo e messo la riga sotto per la funzionalità del nuovo campo "single_upload" che è un upload normale che però contiene tutte le informazioni dei file... è una via di mezzo tra upload e multiupload
                 $output[$fieldName] = $uploadData;
@@ -2508,6 +2575,35 @@ class Apilib
         }
 
         return $output;
+    }
+
+    private function moveFileToUploadsFolder(&$uploadData) {
+        //debug($uploadData,true);
+        defined('LOGIN_ENTITY') or @include __DIR__ . '/../config/enviroment.php';
+        $uploadDepthLevel = defined('UPLOAD_DEPTH_LEVEL') ? (int) UPLOAD_DEPTH_LEVEL : 0;
+
+        if ($uploadDepthLevel > 0) {
+            // Voglio comporre il nome locale in modo che se il nome del file fosse
+            // pippo.jpg la cartella finale sarà: ./uploads/p/i/p/pippo.jpg
+            $localFolder = '';
+            for ($i = 0; $i < $uploadDepthLevel; $i++) {
+                // Assumo che le lettere siano tutte alfanumeriche,
+                // alla fine le immagini sono tutte delle hash md5
+                $localFolder .= strtolower(isset($uploadData['file_name'][$i]) ? $uploadData['file_name'][$i] . DIRECTORY_SEPARATOR : '');
+            }
+
+            if (!is_dir(FCPATH . 'uploads/' . $localFolder)) {
+                mkdir(FCPATH . 'uploads/' . $localFolder, DIR_WRITE_MODE, true);
+            }
+
+            if (rename(FCPATH . 'uploads/' . $uploadData['file_name'], FCPATH . 'uploads/' . $localFolder . $uploadData['file_name'])) {
+                $uploadData['orig_name'] = $uploadData['file_name'];
+                $uploadData['file_path'] = FCPATH . 'uploads/' . $localFolder;
+                $uploadData['full_path'] = FCPATH . 'uploads/' . $localFolder . $uploadData['file_name'];
+            }
+            $uploadData['original_filename'] = $uploadData['client_name'];
+            $uploadData['path_local'] = $localFolder . $uploadData['file_name'];
+        }
     }
 
     /**

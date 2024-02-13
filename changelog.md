@@ -1,13 +1,21 @@
-Changelog version 3.5.0
+Changelog version 3.6.0
  
-Cronjob now delete queue pp after 30 days
-Bugfix originalPost reset in apilib
-Alias for getAllEntities in Crmentity model
-Bugfix for filters of depth > 2
-Select and multiselect now have the possibility to retrive full record data
-Multiselect with relation now works for both related entities
-Add link for run and force background queue processes
-New functionality: single upload with json data
-queue_pp remove after 7 days
-Beta excel export dates
-New function generate_key in module model
+Removed extra empty option in select component
+added clear unmatch= true on entity preview placeholders replacing
+Added soft-delete flag (if present) to filters
+Fix getReverseGeocoding
+fix close-modal-side-view
+hot-fix datab buildFieldGridCell processMultilanguage
+Export excel with valid dates
+Bugfix for prevalidation events
+Added event_id and referer to queue pp
+Hide/show full data in events queue view
+Fix module core to get modules without modules manager settings
+add welcome layout box
+bugfix module manager
+Queue pp page improved
+Bugfix table limit
+Show submit button on status 9 (callback)
+Fix datab get_grid_data limit parameter being wrongly regardless overwrited
+Bugfix install module
+Added library query-builder.js

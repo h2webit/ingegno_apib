@@ -4,15 +4,15 @@
     "modules_description": "OpenApi module",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.15",
+    "modules_version": "1.1.2",
     "modules_identifier": "openapi-integration",
     "modules_base64_zip": null,
     "modules_raw_data_install": "424,421,422,428,419",
     "modules_raw_data_update": "424,421,422,428,419",
     "modules_created_by_user": "1",
-    "modules_version_code": "23",
+    "modules_version_code": "28",
     "modules_thumbnail": "d0099bee19270e2bdce72322b2b08574.png",
-    "modules_min_client_version": "2.3.0",
+    "modules_min_client_version": "3.6.7",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -6122,28 +6122,7 @@
             "layouts_boxes_title": "HTML\/PHP code",
             "layouts_boxes_content_type": "",
             "layouts_boxes_content_ref": "",
-            "layouts_boxes_content": "<h3>\nVorresti acquistare del credito? Contatta l'assistenza!\n<\/h3>",
-            "layouts_boxes_position": "1",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "0",
-            "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "12",
-            "layouts_boxes_color": "",
-            "conditions": []
-        },
-        {
-            "layouts_boxes_id": "4202",
-            "layouts_boxes_layout": "591",
-            "layouts_boxes_css": "",
-            "layouts_boxes_title": "HTML\/PHP code",
-            "layouts_boxes_content_type": "",
-            "layouts_boxes_content_ref": "",
-            "layouts_boxes_content": "                            <?php\n$openapi_settings = $this->db->query(\"SELECT * FROM openapi_settings\")->row_array();\n $this->load->model('openapi-integration\/openapi');\n\n?>\n\n<div class=\"col-md-12\">\n<div class=\"small-box\" style=\"background-color: #0fbcf9; color: white;\">\n<div class=\"inner\">\n<h3>\u20ac <?php echo $this->openapi->get_balance();?><\/h3>\n<p>Saldo credito<\/p>\n<\/div>\n<div class=\"icon\">\n<i class=\"fas fa-ticket-alt\"><\/i>\n<\/div>\n<\/div>\n<\/div>                        ",
+            "layouts_boxes_content": "<?php\n$openapi_settings = $this->db->query(\"SELECT * FROM openapi_settings\")->row_array();\n $this->load->model('openapi-integration\/openapi');\n\n?>\n                                   \n\n<div class=\"col-md-12\">\n<div class=\"small-box\" style=\"background-color: #0fbcf9; color: white;\">\n<div class=\"inner\">\n<h3>\u20ac <?php echo $this->openapi->get_balance();?><\/h3>\n<p>Saldo credito<\/p>\n<\/div>\n<div class=\"icon\">\n<i class=\"fas fa-ticket-alt\"><\/i>\n<\/div>\n<\/div>\n<\/div>\n\n\n<div class=\"pad no-print\">\n\n<h3>\u00a0<\/h3>\n\n<div class=\"callout callout-info\" style=\"margin-bottom: 0!important; background-color: #3c8dbc!important;\n                                         border-left: 5px solid #eee;\n                                         border-left-width: 5px;\n                                         border-left-style: solid;\n                                         border-left-color: #357ca5!important;\">\n<h4><i class=\"fa fa-info\"><\/i> Cos'\u00e8 OpenApi?:<\/h4>\nIl servizio OpenApi, del quale INGEGNO Suite \u00e8 ufficialmente partner, \u00e8 un servizio che permette di dare maggiori potenzialit\u00e0 al tuo gestionale, ovvero accedere a tanti servizi esterni con estrema comodit\u00e0, ecco alcuni esempi:\n<br>\n<ul>\n<li><strong>Ricerca anagrafiche tramite P.IVA\/CF<\/strong><\/li>\n<li><strong>Acquisto bilancio\/visure<\/strong><\/li>\n<li><strong>Invio di posta cartacea\/raccomandate<\/strong><\/li>\n<li><strong>Ricerca imprese, tramite parametri come fatturato, n. dipendenti<\/strong><\/li>\n\n<\/ul>\n<\/div>\n<\/div>\n\n<h3>\nVorresti ricaricare il credito? Contatta l'assistenza!\n<\/h3>",
             "layouts_boxes_position": "0",
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
@@ -6152,9 +6131,30 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "12",
+            "layouts_boxes_row": "0",
+            "layouts_boxes_cols": "6",
             "layouts_boxes_color": "",
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6153",
+            "layouts_boxes_layout": "591",
+            "layouts_boxes_css": "box",
+            "layouts_boxes_title": "Listino completo servizi OpenApi",
+            "layouts_boxes_content_type": "grid",
+            "layouts_boxes_content_ref": "1543",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "0",
+            "layouts_boxes_cols": "6",
+            "layouts_boxes_color": "box-primary",
             "conditions": []
         },
         {
@@ -6354,6 +6354,27 @@
             "layouts_boxes_content_type": "view",
             "layouts_boxes_content_ref": "{module openapi-integration}\/verifica_vat_europeo.php",
             "layouts_boxes_content": "",
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6188",
+            "layouts_boxes_layout": "1048",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Codebox",
+            "layouts_boxes_content_type": "",
+            "layouts_boxes_content_ref": "",
+            "layouts_boxes_content": "<div class=\"alert alert-info\">\n    Questa chiamata ha un costo di \u20ac 0.08\n<\/div>\n\n<form id=\"get_invoice_notifications\" class=\"form-inline\" style=\"margin-bottom: 15px;\">\n    <div class=\"form-group\">\n        <label for=\"id_documento\">ID Documento<\/label>\n        <input type=\"number\" class=\"form-control\" id=\"id_documento\">\n    <\/div>\n\n    <div class=\"checkbox\">\n        <label><input type=\"checkbox\" id=\"confirm\"> Sono sicuro di voler procedere<\/label>\n    <\/div>\n\n    <button type=\"submit\" class=\"btn btn-default\">Richiedi notifiche SDI<\/button>\n<\/form>\n\n<div class=\"alert alert-danger hide\" id=\"msg_get_invoice_notifications\"><\/div>\n\n<hr\/>\n<pre class=\"hide\" id=\"openapi_notifications_response\" style=\"width: 100%\"><\/pre>\n\n<script>\n    $(function() {\n        $('#get_invoice_notifications').on('submit', function(e) {\n            e.preventDefault();\n\n            var this_form = $(this);\n\n            var id_doc = $('#id_documento', this_form);\n            var confirm = $('#confirm', this_form);\n            var msg_form = $('#msg_get_invoice_notifications', this_form)\n            var openapi_res_div = $('#openapi_notifications_response');\n\n            msg_form.html('').addClass('hide');\n            openapi_res_div.html('').addClass('hide');\n\n            if (!confirm.is(':checked')) {\n                alert('Devi confermare per proseguire');\n                return false;\n            }\n\n            if (!id_doc.val()) {\n                alert('Devi inserire un id documento');\n                return false;\n            }\n\n            $.ajax({\n                url: base_url + 'openapi-integration\/main\/get_invoice_notifications\/' + id_doc.val(),\n                async: false,\n                type: 'post',\n                dataType: 'json',\n                data: {\n                    [token_name]: token_hash\n                },\n                success: function(res) {\n                    if (res.status == 0) {\n                        error(res.txt, 'get_invoice_notifications');\n\n                        return false;\n                    }\n\n                    var formattedJson = JSON.stringify(res.txt, null, 4);\n\n                    openapi_res_div.text(formattedJson).removeClass('hide')\n                }\n            });\n\n            return false;\n        });\n    });\n<\/script>",
             "layouts_boxes_position": "1",
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
@@ -10073,6 +10094,131 @@
             "actions": []
         },
         "12": {
+            "grids_id": "1543",
+            "grids_entity_id": "428",
+            "grids_sub_grid_id": null,
+            "grids_name": "Openapi Servizi - duplicated",
+            "grids_view_link": null,
+            "grids_edit_link": null,
+            "grids_view_layout": null,
+            "grids_edit_layout": null,
+            "grids_delete_link": "#",
+            "grids_where": null,
+            "grids_default": "0",
+            "grids_layout": "pdf_simple",
+            "grids_order_by": null,
+            "grids_group_by": null,
+            "grids_filter_session_key": null,
+            "grids_bulk_mode": null,
+            "grids_bulk_edit_form": null,
+            "grids_exportable": "0",
+            "grids_append_class": null,
+            "grids_inline_form": null,
+            "grids_module_key": "openapi-integration-grid-1543",
+            "grids_depth": null,
+            "grids_actions_column": "1",
+            "grids_builder_where": "openapi_servizi_attivo = 1",
+            "grids_identifier": null,
+            "grids_datatable": "0",
+            "grids_ajax": "0",
+            "grids_searchable": "0",
+            "grids_pagination": null,
+            "grids_inline_edit": "0",
+            "grids_design": null,
+            "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "428",
+            "entity_name": "openapi_servizi",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"openapi_servizi_creation_date\",\"update_time\":\"openapi_servizi_modified_date\"}",
+            "entity_module": "openapi-integration",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "grids_fields_id": "20810",
+                    "grids_fields_grids_id": "1543",
+                    "grids_fields_fields_id": "3130",
+                    "grids_fields_order": "0",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "openapi-integration-grids_fields-15059",
+                    "grids_fields_module": "openapi-integration",
+                    "grids_fields_width": null,
+                    "fields_id": "3130",
+                    "fields_entity_id": "428",
+                    "fields_default": null,
+                    "fields_name": "openapi_servizi_nome",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "20811",
+                    "grids_fields_grids_id": "1543",
+                    "grids_fields_fields_id": "3131",
+                    "grids_fields_order": "1",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": "",
+                    "grids_fields_column_name": "Costo chiamata \u20ac",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "openapi-integration-grids_fields-15060",
+                    "grids_fields_module": "openapi-integration",
+                    "grids_fields_width": null,
+                    "fields_id": "3131",
+                    "fields_entity_id": "428",
+                    "fields_default": null,
+                    "fields_name": "openapi_servizi_costo_chiamata",
+                    "fields_type": "double",
+                    "fields_size": "18,9",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                }
+            ],
+            "actions": []
+        },
+        "13": {
             "grids_id": "1012",
             "grids_entity_id": "418",
             "grids_sub_grid_id": null,
@@ -10311,7 +10457,7 @@
             ],
             "actions": []
         },
-        "13": {
+        "14": {
             "grids_id": "1013",
             "grids_entity_id": "419",
             "grids_sub_grid_id": null,
@@ -10436,7 +10582,7 @@
             ],
             "actions": []
         },
-        "16": {
+        "17": {
             "grids_id": "1016",
             "grids_entity_id": "421",
             "grids_sub_grid_id": null,
@@ -10561,7 +10707,7 @@
             ],
             "actions": []
         },
-        "19": {
+        "20": {
             "grids_id": "1019",
             "grids_entity_id": "424",
             "grids_sub_grid_id": null,
@@ -10686,7 +10832,7 @@
             ],
             "actions": []
         },
-        "21": {
+        "22": {
             "grids_id": "1021",
             "grids_entity_id": "426",
             "grids_sub_grid_id": null,
@@ -10811,7 +10957,7 @@
             ],
             "actions": []
         },
-        "22": {
+        "23": {
             "grids_id": "1022",
             "grids_entity_id": "427",
             "grids_sub_grid_id": null,
@@ -11050,7 +11196,7 @@
             ],
             "actions": []
         },
-        "25": {
+        "26": {
             "grids_id": "1025",
             "grids_entity_id": "429",
             "grids_sub_grid_id": null,
@@ -11441,7 +11587,7 @@
             ],
             "actions": []
         },
-        "26": {
+        "27": {
             "grids_id": "1026",
             "grids_entity_id": "430",
             "grids_sub_grid_id": null,
@@ -11794,7 +11940,7 @@
             ],
             "actions": []
         },
-        "31": {
+        "32": {
             "grids_id": "1081",
             "grids_entity_id": "469",
             "grids_sub_grid_id": null,
@@ -12185,7 +12331,7 @@
             ],
             "actions": []
         },
-        "32": {
+        "33": {
             "grids_id": "1084",
             "grids_entity_id": "469",
             "grids_sub_grid_id": null,
@@ -12348,7 +12494,7 @@
             ],
             "actions": []
         },
-        "33": {
+        "34": {
             "grids_id": "1085",
             "grids_entity_id": "472",
             "grids_sub_grid_id": null,
@@ -12625,7 +12771,7 @@
             ],
             "actions": []
         },
-        "34": {
+        "35": {
             "grids_id": "1086",
             "grids_entity_id": "472",
             "grids_sub_grid_id": null,
@@ -12788,7 +12934,7 @@
             ],
             "actions": []
         },
-        "36": {
+        "37": {
             "grids_id": "1351",
             "grids_entity_id": "590",
             "grids_sub_grid_id": null,
@@ -12952,6 +13098,7 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2196",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2196",
@@ -13113,6 +13260,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2197",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2197",
@@ -13159,6 +13307,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2198",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2198",
@@ -13412,6 +13561,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2199",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2199",
@@ -13458,6 +13608,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2200",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2200",
@@ -13550,6 +13701,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2201",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2201",
@@ -13757,6 +13909,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2202",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2202",
@@ -13803,6 +13956,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2203",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2203",
@@ -13918,6 +14072,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2204",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2204",
@@ -13964,6 +14119,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2205",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2205",
@@ -14079,6 +14235,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2206",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2206",
@@ -14240,6 +14397,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2207",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2207",
@@ -14447,6 +14605,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2208",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2208",
@@ -14631,6 +14790,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2209",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2209",
@@ -14907,6 +15067,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2214",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2214",
@@ -15137,6 +15298,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2264",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2264",
@@ -15344,6 +15506,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2267",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2267",
@@ -15482,6 +15645,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "openapi-integration-form-2470",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2470",
@@ -15673,12 +15837,12 @@
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
             "layouts_cachable": "1",
-            "layouts_identifier": "",
+            "layouts_identifier": "openapi-movimenti-credito",
             "layouts_module": "openapi-integration",
             "layouts_module_key": "openapi-integration-layout-591",
             "layouts_show_header": "1",
             "layouts_ajax_allowed": "1",
-            "layouts_settings": "1",
+            "layouts_settings": "0",
             "layouts_is_public": "0",
             "conditions": []
         },
@@ -15776,6 +15940,25 @@
             "layouts_settings": "0",
             "layouts_is_public": "0",
             "conditions": []
+        },
+        {
+            "layouts_id": "1048",
+            "layouts_title": "OpenApi - Visualizza Notifiche SDI",
+            "layouts_subtitle": "",
+            "layouts_is_entity_detail": "0",
+            "layouts_entity_id": null,
+            "layouts_fullscreen": "0",
+            "layouts_pdf": "0",
+            "layouts_dashboardable": "0",
+            "layouts_cachable": "0",
+            "layouts_identifier": "get_notifica_sdi",
+            "layouts_module": "openapi-integration",
+            "layouts_module_key": "openapi-integration-layout-1048",
+            "layouts_show_header": "0",
+            "layouts_ajax_allowed": "0",
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         }
     ],
     "menu": [
@@ -15839,7 +16022,7 @@
             "menu_link": "",
             "menu_parent": "1607",
             "menu_icon_class": "fas fa-mail-bulk",
-            "menu_order": "71",
+            "menu_order": "73",
             "menu_position": "sidebar",
             "menu_layout": "587",
             "menu_css_class": "",
@@ -16001,7 +16184,7 @@
             "menu_link": "",
             "menu_parent": "1607",
             "menu_icon_class": "fas fa-search-plus",
-            "menu_order": "68",
+            "menu_order": "71",
             "menu_position": "sidebar",
             "menu_layout": "594",
             "menu_css_class": "",
@@ -16245,7 +16428,7 @@
         {
             "fi_events_id": "937",
             "fi_events_when": "",
-            "fi_events_json_data": "{\"fi_events_type\":\"cron\",\"cron\":{\"crons_id\":\"116\",\"crons_type\":\"curl\",\"crons_frequency\":\"240\",\"crons_module\":\"openapi-integration\",\"crons_active\":\"1\",\"crons_cli\":\"1\"},\"fi_events_action\":\"curl\",\"fi_events_actiondata\":{\"url\":\"{base_url}openapi-integration\\\/cron\\\/get_notifiche_sdi\"},\"fi_events_title\":\"[OPENAPI] Cron ottenimento notifiche da sdi\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"fi_events_type\":\"cron\",\"cron\":{\"crons_id\":\"116\",\"crons_type\":\"curl\",\"crons_frequency\":\"480\",\"crons_module\":\"openapi-integration\",\"crons_active\":\"1\",\"crons_cli\":\"1\"},\"fi_events_action\":\"curl\",\"fi_events_actiondata\":{\"url\":\"{base_url}openapi-integration\\\/cron\\\/get_notifiche_sdi\"},\"fi_events_title\":\"[OPENAPI] Cron ottenimento notifiche da sdi\",\"save\":\"0\"}",
             "fi_events_title": "[OPENAPI] Cron ottenimento notifiche da sdi",
             "fi_events_module": "openapi-integration",
             "fi_events_type": "cron",
@@ -16257,7 +16440,7 @@
             "fi_events_api": "1",
             "fi_events_crm": "1",
             "fi_events_order": "73",
-            "fi_events_cron_frequency": "240",
+            "fi_events_cron_frequency": "480",
             "fi_events_cron_last_execution": null,
             "fi_events_hook_order": null,
             "fi_events_cron_id": "116",
@@ -16266,6 +16449,31 @@
             "fi_events_creation_date": "2023-08-30 14:39:00",
             "fi_events_ref": null,
             "fi_events_cli": "1"
+        },
+        {
+            "fi_events_id": "990",
+            "fi_events_when": "pre",
+            "fi_events_json_data": "{\"_when\":\"pre\",\"fi_events_type\":\"hook\",\"hook\":{\"hooks_id\":\"\",\"hooks_type\":\"template_hook\",\"hooks_ref\":\"sidebar_menu\",\"hooks_module\":\"openapi-integration\",\"hooks_order\":\"31\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"<?php\\n$permission = $this->datab->getPermission($this->auth->get('users_id'));\\nif (\\n    true &&\\n    $this->auth->is_admin()\\n    || (!empty($permission['permissions_group']) && in_array($permission['permissions_group'], ['Admin']))\\n):\\n\\n$this->load->model('openapi-integration\\\/openapi');\\n\\n\\\/\\\/ setto la variabile a default true\\n$openapi_active = true;\\n\\n\\\/\\\/ ottengo i settings\\n$openapi_settings = $this->db->get('openapi_settings')->row_array();\\n\\n\\\/\\\/ se son vuoti, metto variabile a false\\nif (empty($openapi_settings)) {\\n    $openapi_active = false;\\n} else {\\n    \\\/\\\/ se \\u00e8 vuota la modalit\\u00e0 metto variabile a false\\n    if (empty($openapi_settings['openapi_settings_mode'])) {\\n        $openapi_active = false;\\n    } else {\\n        \\\/\\\/ verifico che ci sia una delle due api key corrispondenti alla modalit\\u00e0\\n        if ($openapi_settings['openapi_settings_mode'] == 1) {\\n            $api_key = $openapi_settings['openapi_settings_production_key'];\\n        } else {\\n            $api_key = $openapi_settings['openapi_settings_sandbox_key'];\\n        }\\n\\n        \\\/\\\/ verifico che l'api key ci sia\\n        if (empty($api_key)) {\\n            $openapi_active = false;\\n        }\\n    }\\n}\\n\\nif ($openapi_active):\\n\\n$saldo_openapi = $this->openapi->get_balance();\\n?>\\n\\n<style>\\n    .saldo_openapi {\\n        width: 100%;\\n        display: flex;\\n        justify-content: space-between;\\n        align-items: center;\\n        font-weight: 600;\\n        margin-top: 16px;\\n    }\\n<\\\/style>\\n\\n<script>\\n    $(function() {\\n        var saldo_openapi;\\n\\n        if(!saldo_openapi){\\n            const post_sidebar_menu = $('.tpl-post-sidebar_menu');\\n            post_sidebar_menu.append('<a href=\\\"<?php echo base_url('main\\\/layout\\\/openapi-movimenti-credito'); ?>\\\" style=\\\"padding:5px 10px 5px 10px;color:#111111;text-align:center\\\" class=\\\"pull-left saldo_openapi\\\"><span>SALDO OpenApi<\\\/span> <span class=\\\"\\\">\\u20ac <?php echo $saldo_openapi; ?><\\\/span><\\\/a>');\\n\\n            saldo_openapi = true;\\n        }\\n    })\\n<\\\/script>\\n<?php endif; endif; ?>\"},\"fi_events_title\":\"Saldo servizi Extra OpenApi\",\"save\":\"1\"}",
+            "fi_events_title": "Saldo servizi Extra OpenApi",
+            "fi_events_module": "openapi-integration",
+            "fi_events_type": "hook",
+            "fi_events_ref_id": null,
+            "fi_events_action": "custom_code",
+            "fi_events_actiondata": "{\"code\":\"<?php\\n$permission = $this->datab->getPermission($this->auth->get('users_id'));\\nif (\\n    true &&\\n    $this->auth->is_admin()\\n    || (!empty($permission['permissions_group']) && in_array($permission['permissions_group'], ['Admin']))\\n):\\n\\n$this->load->model('openapi-integration\\\/openapi');\\n\\n\\\/\\\/ setto la variabile a default true\\n$openapi_active = true;\\n\\n\\\/\\\/ ottengo i settings\\n$openapi_settings = $this->db->get('openapi_settings')->row_array();\\n\\n\\\/\\\/ se son vuoti, metto variabile a false\\nif (empty($openapi_settings)) {\\n    $openapi_active = false;\\n} else {\\n    \\\/\\\/ se \\u00e8 vuota la modalit\\u00e0 metto variabile a false\\n    if (empty($openapi_settings['openapi_settings_mode'])) {\\n        $openapi_active = false;\\n    } else {\\n        \\\/\\\/ verifico che ci sia una delle due api key corrispondenti alla modalit\\u00e0\\n        if ($openapi_settings['openapi_settings_mode'] == 1) {\\n            $api_key = $openapi_settings['openapi_settings_production_key'];\\n        } else {\\n            $api_key = $openapi_settings['openapi_settings_sandbox_key'];\\n        }\\n\\n        \\\/\\\/ verifico che l'api key ci sia\\n        if (empty($api_key)) {\\n            $openapi_active = false;\\n        }\\n    }\\n}\\n\\nif ($openapi_active):\\n\\n$saldo_openapi = $this->openapi->get_balance();\\n?>\\n\\n<style>\\n    .saldo_openapi {\\n        width: 100%;\\n        display: flex;\\n        justify-content: space-between;\\n        align-items: center;\\n        font-weight: 600;\\n        margin-top: 16px;\\n    }\\n<\\\/style>\\n\\n<script>\\n    $(function() {\\n        var saldo_openapi;\\n\\n        if(!saldo_openapi){\\n            const post_sidebar_menu = $('.tpl-post-sidebar_menu');\\n            post_sidebar_menu.append('<a href=\\\"<?php echo base_url('main\\\/layout\\\/openapi-movimenti-credito'); ?>\\\" style=\\\"padding:5px 10px 5px 10px;color:#111111;text-align:center\\\" class=\\\"pull-left saldo_openapi\\\"><span>SALDO OpenApi<\\\/span> <span class=\\\"\\\">\\u20ac <?php echo $saldo_openapi; ?><\\\/span><\\\/a>');\\n\\n            saldo_openapi = true;\\n        }\\n    })\\n<\\\/script>\\n<?php endif; endif; ?>\"}",
+            "fi_events_active": "0",
+            "fi_events_apilib": "1",
+            "fi_events_api": "1",
+            "fi_events_crm": "1",
+            "fi_events_order": "31",
+            "fi_events_cron_frequency": "1",
+            "fi_events_cron_last_execution": null,
+            "fi_events_hook_order": "31",
+            "fi_events_cron_id": null,
+            "fi_events_post_process_id": null,
+            "fi_events_hook_id": null,
+            "fi_events_creation_date": "2023-12-18 12:32:37",
+            "fi_events_ref": "sidebar_menu",
+            "fi_events_cli": "0"
         }
     ],
     "emails": [],

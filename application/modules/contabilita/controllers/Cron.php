@@ -8,7 +8,7 @@ class Cron extends MX_Controller
         $this->load->model('contabilita/docs');
 
         $this->settings = $this->db->get('settings')->row_array();
-        //$this->contabilita_settings = $this->apilib->searchFirst('documenti_contabilita_settings'); // Errore puo essere multiplo
+        
     }
     
     public function cron_reminder_scadenze_fatture() {
@@ -56,7 +56,6 @@ class Cron extends MX_Controller
             
             $scadenze = $this->apilib->search('documenti_contabilita_scadenze', [
                 "(DATE(documenti_contabilita_scadenze_scadenza) <= (CURRENT_DATE + INTERVAL $giorni_prima DAY))",
-                "(DATE(documenti_contabilita_scadenze_scadenza) > CURRENT_DATE)",
                 "(documenti_contabilita_scadenze_data_saldo IS NULL OR documenti_contabilita_scadenze_data_saldo = '')",
                 "(documenti_contabilita_scadenze_saldata = '0' OR documenti_contabilita_scadenze_saldata = '' OR documenti_contabilita_scadenze_saldata IS NULL)",
                 "(documenti_contabilita_scadenze_promemoria_inviato = '0' OR documenti_contabilita_scadenze_promemoria_inviato = '' OR documenti_contabilita_scadenze_promemoria_inviato IS NULL)",
@@ -109,6 +108,107 @@ class Cron extends MX_Controller
                 ]);
                 
                 progress($c++, $t);
+            }
+        }
+    }
+    
+    public function cron_reminder_scadenze_spese() {
+        /**
+         * 1. prendo tutte le aziende che hanno il cron attivo
+         * 2. prendo le scadenze filtrato con:
+         *
+         * - azienda
+         * - saldata 0, null, ''
+         * - data saldo null, ''
+         * - data scadenza - X giorno = oggi
+         * - promemoria inviato 0, null, ''
+         */
+        
+        set_log_scope('cron-reminder-scadenze-spese');
+        
+        my_log('debug', "avvio cron invio reminder scadenza");
+        
+        $aziende = $this->apilib->search("documenti_contabilita_settings", ['documenti_contabilita_settings_cron_solleciti_spese_attivo' => DB_BOOL_TRUE]);
+        
+        if (empty($aziende)) {
+            my_log('error', "Nessuna azienda abilitata all'invio dei solleciti");
+            
+            return false;
+        }
+        
+        $mappature = $this->docs->getMappature();
+        extract($mappature);
+        
+        $this->load->library('table');
+        
+        $this->table->set_template([
+            'table_open' => '<table style="width: 100%; text-align: left">',
+        ]);
+        
+        $this->table->set_heading(['Fornitore', 'N°', 'Importo', 'Data Scadenza']);
+        
+        foreach ($aziende as $azienda) {
+            if (empty($azienda['documenti_contabilita_settings_cron_solleciti_spese_giorni_prima']) || !is_numeric($azienda['documenti_contabilita_settings_cron_solleciti_spese_giorni_prima'])) {
+                my_log('error', "L'azienda {$azienda['documenti_contabilita_settings_company_name']} non ha i giorni configurati correttamente");
+                continue;
+            }
+            
+            if (empty($azienda['documenti_contabilita_settings_cron_solleciti_spese_mail'])) {
+                my_log('error', "L'azienda {$azienda['documenti_contabilita_settings_company_name']} non ha la mail destinatario configurata");
+                continue;
+            }
+            
+            $destinatario_email = $azienda['documenti_contabilita_settings_cron_solleciti_spese_mail'];
+            
+            if (!filter_var($destinatario_email, FILTER_VALIDATE_EMAIL)) {
+                my_log('error', "Formato email destinatario '{$destinatario_email}' non valido per l'azienda '{$azienda['documenti_contabilita_settings_company_name']}'");
+                continue;
+            }
+            
+            $giorni_prima = $azienda['documenti_contabilita_settings_cron_solleciti_spese_giorni_prima'];
+            
+            $scadenze = $this->apilib->search('spese_scadenze', [
+                "(DATE(spese_scadenze_scadenza) <= (CURRENT_DATE + INTERVAL $giorni_prima DAY))",
+                "(spese_scadenze_data_saldo IS NULL OR spese_scadenze_data_saldo = '')",
+                "(spese_scadenze_saldata = '0' OR spese_scadenze_saldata = '' OR spese_scadenze_saldata IS NULL)",
+                "(spese_scadenze_promemoria_inviato = '0' OR spese_scadenze_promemoria_inviato = '' OR spese_scadenze_promemoria_inviato IS NULL)",
+                'spese_azienda' => $azienda['documenti_contabilita_settings_id'],
+            ]);
+            
+            $c = 0;
+            $t = count($scadenze);
+
+            if (!empty($scadenze)) {
+                foreach ($scadenze as $scadenza) {
+                    $fornitore = json_decode($scadenza['spese_fornitore'], true);
+                    
+                    $scadenza['spese_scadenze_scadenza'] = dateFormat($scadenza['spese_scadenze_scadenza']);
+                    $scadenza['spese_data_emissione'] = dateFormat($scadenza['spese_data_emissione']);
+                    
+                    $this->table->add_row([
+                        $fornitore['ragione_sociale'],
+                        $scadenza['spese_numero'],
+                        ['data' => number_format($scadenza['spese_scadenze_ammontare'], 2, ',', '.'), 'style' => 'text-align: right'],
+                        $scadenza['spese_scadenze_scadenza'],
+                    ]);
+                    
+                    $this->apilib->edit('spese_scadenze', $scadenza['spese_scadenze_id'], [
+                        'spese_scadenze_promemoria_inviato' => DB_BOOL_TRUE
+                    ]);
+    
+                    progress(++$c, $t);
+                }
+                
+                $mail_data = [
+                    'data_scadenze' => (new DateTime)->modify("+{$giorni_prima} day")->format('d/m/Y'),
+                    'nome_azienda' => $azienda['documenti_contabilita_settings_company_name'],
+                    'elenco_scadenze' => $this->table->generate(),
+                ];
+                
+                $this->mail_model->send($destinatario_email, 'spese_in_scadenza', '', $mail_data);
+                my_log('debug', "Mail inviata per l'azienda {$azienda['documenti_contabilita_settings_company_name']}");
+            } else {
+                my_log('debug', "Nessuna scadenza da inviare per l'azienda {$azienda['documenti_contabilita_settings_company_name']}");
             }
         }
     }

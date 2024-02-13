@@ -8,7 +8,7 @@ if (!$where_grid) {
     $where_grid = '(1=1)';
 }
 
-if ($customer_id) {
+if (!empty($customer_id)) {
     $customer = $this->apilib->view('customers', $customer_id);
     $sottoconto_id = $customer['customers_sottoconto'];
     $sottoconto = $this->apilib->view('documenti_contabilita_sottoconti', $sottoconto_id);
@@ -51,26 +51,31 @@ while ($_primeNote = $this->prima_nota->getPrimeNoteData($where, $limit, 'prime_
     $offset += $limit;
     $_primeNoteData = array_merge($_primeNoteData, $_primeNote);
 }
-
+$primeNoteData = [];
 //Mi costruisco un array più comodo da ciclare dopo (con chiave il conto)
 foreach ($_primeNoteData as $key => $data) {
     foreach ($data['registrazioni'] as $registrazione) {
         $conto = $registrazione['sottocontodare_descrizione'] ?: $registrazione['sottocontoavere_descrizione'];
+        if (empty($conto)) {
+            //debug($registrazione,true);
+        }
         if (empty($primeNoteData[$conto]['registrazioni'])) {
             $primeNoteData[$conto]['registrazioni'] = [];
         }
         $primeNoteData[$conto]['registrazioni'][] = $registrazione;
     }
 }
-//debug($primeNoteData, true);
+
 foreach ($primeNoteData as $conto => $data) {
     //debug($primeNoteData[$conto]['registrazioni']);
     usort($primeNoteData[$conto]['registrazioni'], function ($a, $b) {
         // debug($a);
         // debug($b);
 
-        $scadenza_a = $a['prime_note_scadenza'];
-        $scadenza_b = $b['prime_note_scadenza'];
+        // $scadenza_a = $a['prime_note_data_registrazione'];
+        // $scadenza_b = $b['prime_note_data_registrazione'];
+        $scadenza_a = $a['prime_note_data_registrazione'];
+        $scadenza_b = $b['prime_note_data_registrazione'];
 
         if ($scadenza_a == $scadenza_b) {
             //Ordino per progressivo

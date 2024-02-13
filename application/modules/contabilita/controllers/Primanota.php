@@ -10,13 +10,13 @@ class Primanota extends MX_Controller
         $this->load->model('contabilita/prima_nota');
 
         $this->settings = $this->db->get('settings')->row_array();
-        $this->contabilita_settings = $this->apilib->searchFirst('documenti_contabilita_settings');
+        
     }
 
     public function salva()
     {
         $input = $this->input->post();
-        
+
         if (!$input['prime_note_numero_documento']) {
             $input['prime_note_numero_documento'] = $input['_prime_note_numero_documento'];
         }
@@ -179,31 +179,31 @@ class Primanota extends MX_Controller
             e_json(['status' => 0, 'txt' => 'La data di registrazione non può essere minore della data del documento!']);
             exit;
         }
-        
+
         $causale = $this->apilib->view('prime_note_causali', $prima_nota['prime_note_causale']);
-        
+
         // Controllo "disponibilità liquidita" in caso di incasso / pagamento
-        if (in_array($causale['prime_note_causali_tipo'], [3,5])) { // se il tipo di causale è "entrata" o "uscita"...
+        if (in_array($causale['prime_note_causali_tipo'], [3, 5])) { // se il tipo di causale è "entrata" o "uscita"...
             $disp_liquide = 0;
-            
+
             //VERIFICO SE TRA I SOTTOCONTI DELLE REGISTRAZIONI CE N'E' ALMENO UNO DI TIPO "DISPONIBILIT° LIQUIDE"
             foreach ($registrazioni as $reg) {
                 $sottoconto = $this->apilib->searchFirst('documenti_contabilita_sottoconti', [
                     'documenti_contabilita_sottoconti_codice_completo' => $reg['prime_note_registrazioni_codice_dare_testuale'],
                     'documenti_contabilita_sottoconti_disponibilita_liquide' => DB_BOOL_TRUE
                 ]);
-                
+
                 if (!empty($sottoconto)) {
                     $disp_liquide += 1;
                 }
             }
-            
+
             if ($disp_liquide < 1) {
                 e_json(['status' => 0, 'txt' => "È obbligatorio indicare almeno un conto dare di tipo 'disponibilità liquida'"]);
                 exit;
             }
         }
-        
+
         $tot_dare = $tot_avere = 0;
 
         $riga = 1;
@@ -301,7 +301,7 @@ class Primanota extends MX_Controller
 
         try {
 
-            if ($prima_nota['prime_note_id']) {
+            if (!empty($prima_nota['prime_note_id'])) {
                 //debug('BUG TROVATO!', true);
             }
             if ($dettaglio_iva) {
@@ -328,14 +328,19 @@ class Primanota extends MX_Controller
         } else {
 
             if ($causale['prime_note_causali_codice'] == 'PGR') {
-                echo json_encode(array('status' => 9, 'txt' => "
+                echo json_encode(
+                    array(
+                        'status' => 9,
+                        'txt' => "
                 //let text;
                 //    if (confirm('Vuoi procedere anche con la registrazione in prima nota?') == true) {
                 //        location.href='" . base_url("main/layout/prima-nota?modello={$spesa['spese_modello_prima_nota']}&spesa_id={$spesa_id}") . "';
                 //    } else {
                         location.href='" . base_url('main/layout/nuova_spesa') . "';
                 //    }
-                "));
+                "
+                    )
+                );
             } else {
                 if ($modello_get = $this->input->get('modello')) {
                     e_json(['status' => '1', 'txt' => base_url('main/layout/prima-nota?modello=' . $modello_get)]);
@@ -620,7 +625,7 @@ class Primanota extends MX_Controller
     {
         $query = addslashes($this->input->post('search'));
 
-        $conti_selezionati = (array)$this->input->post('conti_selezionati');
+        $conti_selezionati = (array) $this->input->post('conti_selezionati');
 
         $includi_clienti = $includi_fornitori = true;
 
@@ -669,11 +674,11 @@ class Primanota extends MX_Controller
         $where_add = [];
         if (!$includi_clienti) {
             $where_add[] = "documenti_contabilita_sottoconti_codice_completo NOT LIKE '{$conto_clienti_codice_completo}%'";
-            
+
         }
         if (!$includi_fornitori) {
             $where_add[] = "documenti_contabilita_sottoconti_codice_completo NOT LIKE '{$conto_fornitori_codice_completo}%'";
-            
+
         }
         //debug($where + $where_add);
         //Prima cerco senza clienti/fornitori doppi
@@ -755,7 +760,8 @@ class Primanota extends MX_Controller
         //debug($return, true);
     }
 
-    public function genera_prime_note_da_pagamenti() {
+    public function genera_prime_note_da_pagamenti()
+    {
         $post = $this->input->post();
         //debug($post,true);
         $scadenze_pagamento_fatture_ids = explode(',', $post['ids']);
@@ -774,16 +780,16 @@ class Primanota extends MX_Controller
             //$scadenza = $this->apilib->view('documenti_contabilita_scadenze', $documenti_contabilita_scadenze_id);
             $this->prima_nota->creaPrimaNotaDaScadenzaFattura($documenti_contabilita_scadenze_id, $modello['prime_note_modelli_id']);
             if ($marca_saldate) {
-                $this->apilib->edit('documenti_contabilita_scadenze', $documenti_contabilita_scadenze_id,[
+                $this->apilib->edit('documenti_contabilita_scadenze', $documenti_contabilita_scadenze_id, [
                     'documenti_contabilita_scadenze_saldato_su' => $conto['conti_correnti_id'],
                     'documenti_contabilita_scadenze_data_saldo' => date('Y-m-d')
                 ]);
-            }   
-            
+            }
+
         }
 
         redirect('main/layout/amministrazione_scadeziario');
-        
+
     }
 
     public function generaPrimeNote($day = 1)
@@ -832,7 +838,8 @@ class Primanota extends MX_Controller
             'conto_id' => $conto_id,
         ], true);
 
-        $pdf = $this->layout->generate_pdf($content, "portrait", "", 'contabilita', false, true);
+
+        $pdf = $this->layout->generate_pdf($content, "portrait", "", [], false, true);
         $fp = fopen(
             $pdf,
             'rb'
@@ -851,7 +858,7 @@ class Primanota extends MX_Controller
             'mastro_id' => $mastro_id,
         ], true);
 
-        $pdf = $this->layout->generate_pdf($content, "portrait", "", 'contabilita', false, true);
+        $pdf = $this->layout->generate_pdf($content, "portrait", "", [], false, true);
         $fp = fopen(
             $pdf,
             'rb'
@@ -869,7 +876,7 @@ class Primanota extends MX_Controller
             'sottoconto_id' => $sottoconto_id,
         ], true);
 
-        $pdf = $this->layout->generate_pdf($content, "portrait", "", 'contabilita', false, true);
+        $pdf = $this->layout->generate_pdf($content, "portrait", "", [], false, true);
         $fp = fopen(
             $pdf,
             'rb'
@@ -888,7 +895,7 @@ class Primanota extends MX_Controller
             'customer_id' => $customer_id,
         ], true);
 
-        $pdf = $this->layout->generate_pdf($content, "portrait", "", 'contabilita', false, true);
+        $pdf = $this->layout->generate_pdf($content, "portrait", "", [], false, true);
         $fp = fopen(
             $pdf,
             'rb'
@@ -926,7 +933,7 @@ class Primanota extends MX_Controller
             // $this->db->query("UPDATE customers SET customers_sottoconto = null");
             // $this->apilib->clearCache();
             $return =
-            $this->contab_cust->generaSottoconto($this->apilib->view('customers', $customer_id));
+                $this->contab_cust->generaSottoconto($this->apilib->view('customers', $customer_id));
             echo_flush(' .');
         }
     }
@@ -957,7 +964,7 @@ class Primanota extends MX_Controller
                 AND MONTH(prime_note_data_registrazione) >= '$mese_da'
             ORDER BY prime_note_data_registrazione
         ")->result_array();
-//debug($prime_note_acquisti, true);
+        //debug($prime_note_acquisti, true);
 
         $c = 0;
         $count = count($prime_note_acquisti) + count($prime_note);
@@ -1075,7 +1082,7 @@ class Primanota extends MX_Controller
             $view_content = $this->load->view("layout/pdf", array('dati' => $dati, 'value_id' => $value_id), true);
         }
 
-        $pdfFile = $this->layout->generate_pdf($view_content, "portrait", "", [], false, true);
+        $pdfFile = $this->layout->generate_pdf($view_content, "landscape", "", [], false, true);
 
         $contents = file_get_contents($pdfFile, true);
         $pdf_b64 = base64_encode($contents);
@@ -1205,7 +1212,7 @@ class Primanota extends MX_Controller
             $view_content = $this->load->view("layout/pdf", array('dati' => $dati, 'value_id' => $value_id), true);
         }
 
-        $pdfFile = $this->layout->generate_pdf($view_content, "portrait", "", [], false, true);
+        $pdfFile = $this->layout->generate_pdf($view_content, "landscape", "", [], false, true);
 
         $contents = file_get_contents($pdfFile, true);
         $pdf_b64 = base64_encode($contents);
@@ -1335,7 +1342,7 @@ class Primanota extends MX_Controller
             $view_content = $this->load->view("layout/pdf", array('dati' => $dati, 'value_id' => $value_id), true);
         }
 
-        $pdfFile = $this->layout->generate_pdf($view_content, "portrait", "", [], false, true);
+        $pdfFile = $this->layout->generate_pdf($view_content, "landscape", "", [], false, true);
 
         $contents = file_get_contents($pdfFile, true);
 
@@ -1527,6 +1534,7 @@ class Primanota extends MX_Controller
     {
 
         $doc = $this->db->query("SELECT * FROM contabilita_stampe_definitive WHERE contabilita_stampe_definitive_id = '{$riga_id}'")->row();
+
         if ($doc->contabilita_stampe_definitive_zip_file) {
             redirect(base_url('uploads/' . $doc->contabilita_stampe_definitive_zip_file));
             exit;
@@ -1610,29 +1618,37 @@ class Primanota extends MX_Controller
             die('Errore nello generare lo zip');
         }
     }
-    public function getPrimaNotaModelloData($modello_id) {
+    public function getPrimaNotaModelloData($modello_id)
+    {
         $modello = $this->db->get_where('prime_note_modelli', ['prime_note_modelli_id' => $modello_id])->row_array();
         $prima_nota_modello = $this->prima_nota->getPrimeNoteData(
-        [
-            'prime_note_id' => $modello['prime_note_modelli_prima_nota']
-        ], 10, 'prime_note_data_registrazione DESC, prime_note_id DESC', 0, false, true);
+            [
+                'prime_note_id' => $modello['prime_note_modelli_prima_nota']
+            ],
+            10,
+            'prime_note_data_registrazione DESC, prime_note_id DESC',
+            0,
+            false,
+            true
+        );
         if (empty($prima_nota_modello)) {
             debug("Prima nota non trovata per il modello '{$modello['prime_note_modelli_nome']}'");
             $prima_nota_modello = false;
         } else {
 
             $prima_nota_modello = $prima_nota_modello[$modello['prime_note_modelli_prima_nota']];
-            
+
         }
         e_json($prima_nota_modello);
     }
-    
-    public function deletesottoconti() {
+
+    public function deletesottoconti()
+    {
         $input = $this->input->post();
         $sottoconti_da_eliminare = json_decode($input['ids'], true);
         $replace = $input['sottoconto_replace'];
         if ($replace != 'N') {
-            
+
             $sottoconto_replace = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $replace]);
             if (!$sottoconto_replace) {
                 die("Il sottoconto '$replace' non esiste!");
@@ -1640,11 +1656,11 @@ class Primanota extends MX_Controller
                 $replace = $sottoconto_replace['documenti_contabilita_sottoconti_id'];
             }
         }
-        
+
         $c = 0;
         $total = count($sottoconti_da_eliminare);
-        $this->prima_nota->deleteAndRemapSottoconti($sottoconti_da_eliminare, $replace,true);
-        echo ("<script>location.href='". base_url("main/layout/piano-dei-conti?completo=0&nascondi_conteggi=1&nascondi_orfani=1&nascondi_zero=1")."';</script>");
+        $this->prima_nota->deleteAndRemapSottoconti($sottoconti_da_eliminare, $replace, true);
+        echo ("<script>location.href='" . base_url("main/layout/piano-dei-conti?completo=0&nascondi_conteggi=1&nascondi_orfani=1&nascondi_zero=1") . "';</script>");
         //redirect();
 
     }

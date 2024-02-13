@@ -540,43 +540,48 @@ function initBuilderTools() {
 
     $('.js_sidebar_menu_item a, .menu_item').css('cursor', 'move');
 
-    // Sidebar edit button
-    document.querySelectorAll('.js_sidebar_menu_item').forEach(item => {
 
-        item.addEventListener('mouseenter', function () {
-            this.classList.add('js_menu_item_highlighted');
+   
+    // // Sidebar edit button
+    // document.querySelectorAll('.js_sidebar_menu_item > a, .js_submenu_item > a').forEach(item => {
 
-            var button = document.createElement('button');
-            button.innerHTML = '<i class="fas fa-eye"></i>';
-            button.className = 'js_sidebar_permission_button';
-            button.style.position = 'absolute';
-            button.style.right = '10px';
-            button.style.top = '50%';
-            button.style.transform = 'translateY(-50%)';
+    //     item.addEventListener('mouseenter', function () {
+    //         this.classList.add('js_menu_item_highlighted');
 
-            button.addEventListener('click', function (e) {
-                e.stopPropagation();
+    //         var button = document.createElement('button');
+    //         button.innerHTML = '<i class="fas fa-eye"></i>';
+    //         button.className = 'js_sidebar_permission_button';
+    //         button.style.position = 'absolute';
+    //         button.style.right = '0px';
+    //         button.style.top = '50%';
+    //         button.style.transform = 'translateY(-50%)';
+    //         button.dataset.layoutId = this.dataset.layoutId;
+            
+    //         button.addEventListener('click', function (e) {
+    //             e.preventDefault();
+    //             e.stopPropagation();
+    //             showLayoutPermissions(this.dataset.layoutId);
+                
+                
+    //         });
 
-                showLayoutPermissions(this.data('layout-id'));
-            });
+    //         this.appendChild(button);
+    //     });
 
-            this.appendChild(button);
-        });
+    //     item.addEventListener('mouseleave', function () {
+    //         this.classList.remove('js_menu_item_highlighted');
 
-        item.addEventListener('mouseleave', function () {
-            this.classList.remove('js_menu_item_highlighted');
+    //         var button = this.querySelector('.js_sidebar_permission_button');
+    //         if (button) {
+    //             this.removeChild(button);
+    //         }
 
-            var button = this.querySelector('.js_sidebar_permission_button');
-            if (button) {
-                this.removeChild(button);
-            }
-
-            var div = this.querySelector('.js_item_div_permissions');
-            if (div) {
-                this.removeChild(div);
-            }
-        });
-    });
+    //         var div = this.querySelector('.js_item_div_permissions');
+    //         if (div) {
+    //             this.removeChild(div);
+    //         }
+    //     });
+    // });
 
 
 
@@ -657,6 +662,13 @@ function initBuilderTools() {
         var layout_id = $(this).first().data('layout_id');
         checkPermissions(layout_id);
     });
+    $('.js_sidebar_menu_item a, js_submenu_item a').each(function () {
+        var layout_id = $(this).first().data('layout-id');
+        if (layout_id > 0) {
+            checkPermissions(layout_id, $(this).closest('li'));
+        }
+            
+    });
 }
 
 // Sortable function
@@ -696,13 +708,19 @@ function closeBuilderFrame() {
     refreshAjaxLayoutBoxes();
 }
 
-function checkPermissions(layout_id) {
-    if (typeof layout_id === 'undefined') {
-        var layout_id = $('#js_layout_content_wrapper').data('layout-id');
-        var container = $('#builder_toolbar');
+function checkPermissions(layout_id, container) {
+    if (typeof container === 'undefined') {
+        if (typeof layout_id === 'undefined') {
+            var layout_id = $('#js_layout_content_wrapper').data('layout-id');
+            var container = $('#builder_toolbar');
+        } else {
+            var container = $('.js_layout[data-layout_id="' + layout_id + '"]').first();
+
+        }
     } else {
-        var container = $('.js_layout[data-layout_id="' + layout_id +'"]').first();
+        //Dovrei aver passato tutto
     }
+    
     
 
 
@@ -745,6 +763,33 @@ function checkPermissions(layout_id) {
                         $('.js_users_can_view', container).first().prepend('<li>' + inputElement + ' <strong> ' + p.permissions_group + '</strong> </li>');
                     });
 
+                    //Se la pagina è di un modulo, mostro nuovametne tutti i gruppi per permettere di dare accesso a tutto il modulo e non solo a questo layout!
+                    
+                    //alert(1);
+                    if (data.layout.layouts_module) {
+                        
+
+                        
+                        
+                        $('.js_users_can_view', container).first().append('<li class="divider"></li>');
+                        $('.js_users_can_view', container).first().append('<li class=""><strong>Grant full access to module ' + data.layout.layouts_module + '</strong></li>');
+                        $.each(data.all_groups.slice().reverse(), function (i, p) {
+                            // Stabilisce se la checkbox dovrebbe essere selezionata
+                            var isChecked = data.users_can_view.some(function (user) {
+                                return user.permissions_group === p.permissions_group;
+                            });
+
+                            // Aggiunge la checkbox alla lista
+                            if (p.permissions_group == null) {
+                                var inputElement = ' +';
+                                p.permissions_group = nullGroupCount + ' users without group';
+                            } else {
+                                var inputElement = '<input class="js_checkbox_group" data-group-layout-id="' + layout_id + '" data-module_name="' + data.layout.layouts_module +'" type="checkbox" name="" value="' + p.permissions_group + '" ' + (isChecked ? 'checked="checked"' : '') + ' />';
+                            }
+                            $('.js_users_can_view', container).first().append('<li>' + inputElement + ' <strong> ' + p.permissions_group + '</strong> </li>');
+                        });
+                    }
+
                     // Add group permission
                     container.on('click', '.js_checkbox_group[data-group-layout-id="' + layout_id +'"]', function () {
                         var checked = $(this).is(':checked');
@@ -752,7 +797,8 @@ function checkPermissions(layout_id) {
                             var token = JSON.parse(atob($('body').data('csrf')));
                             var token_name = token.name;
                             var token_hash = token.hash;
-                            var group = $(this).val();
+                        var group = $(this).val();
+                        var module = $(this).data('module_name');
                             // Esegui la chiamata fetch quando la checkbox viene selezionata
                             // fetch(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, { // Sostituisci con il tuo URL
                             //     method: 'POST', // o 'GET', a seconda delle tue necessità
@@ -781,6 +827,7 @@ function checkPermissions(layout_id) {
                                     [token_name]: token_hash,
                                     'group': group,
                                     'checked': checked,
+                                    'module': module,
                                 },
                                 dataType: 'json',
 
@@ -821,4 +868,5 @@ function checkPermissions(layout_id) {
 
 function showLayoutPermissions(layout_id) {
     //Todo mostrare un div autogenerato (in che posizione?) che carica il checkPermission() di quel layoutid
+    checkPermissions(layout_id);
 }

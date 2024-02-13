@@ -487,14 +487,20 @@ function initComponents(container, reset = false) {
           firstDay: 1,
         },
         ranges: {
-          Oggi: [moment(), moment()],
-          Ieri: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-          "Ultimi 7 Giorni": [moment().subtract(6, "days"), moment()],
-          "Ultimi 30 Giorni": [moment().subtract(29, "days"), moment()],
-          "Mese corrente": [moment().startOf("month"), moment().endOf("month")],
-          "Mese precedente": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")],
-          "Anno corrente": [moment().startOf("year"), moment().endOf("year")],
-          "Anno precedente": [moment().subtract(1, "year").startOf("year"), moment().subtract(1, "year").endOf("year")],
+          'Oggi': [moment(), moment()],
+          'Ieri': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Domani': [moment().add(1, 'days'), moment().add(1, 'days')],
+          
+          'Ultimi 7 Giorni': [moment().subtract(6, 'days'), moment()],
+          'Ultimi 30 Giorni': [moment().subtract(29, 'days'), moment()],
+          
+          'Mese corrente': [moment().startOf('month'), moment().endOf('month')],
+          'Mese precedente': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+          'Mese successivo': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')],
+          
+          'Anno corrente': [moment().startOf('year'), moment().endOf('year')],
+          'Anno precedente': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+          'Anno successivo': [moment().add(1, 'year').startOf('year'), moment().add(1, 'year').endOf('year')]
         },
       },
       function (start, end) {
@@ -1000,6 +1006,7 @@ var mAjaxCall = null,
 
 
 function loadModal(url, data, callbackSuccess, method) {
+
   loading(true);
 
   // URL PARAMS 
@@ -1082,13 +1089,17 @@ function loadModal(url, data, callbackSuccess, method) {
           $("#modal-side-view").removeClass("modal-side-visible");
         });
         $(document).click(function (event) {
-          // Verifica se l'elemento cliccato è all'interno della modale
-          if (!$(event.target).closest("#modal-side-view").length) {
-            // Verifica se l'elemento cliccato è all'interno di una modale diversa
-            if (!$(event.target).closest(".modal").length) {
-              // Chiudi la modale solo se l'evento di clic non si è verificato all'interno di nessuna modale
-              $("#modal-side-view").removeClass("modal-side-visible");
-            }
+          // Check if the clicked element is not inside the modal or Select2 dropdown
+          if (
+            !$(event.target).closest("#modal-side-view").length &&
+            !$(event.target).closest(".modal").length &&
+            !$(event.target).closest(".fancybox-skin").length &&
+            !$(event.target).closest(".fancybox-item").length &&
+            !$(event.target).closest(".select2-selection__choice").length
+          ) {
+            // Close the modal or perform other actions
+            console.log($(event.target));
+            $("#modal-side-view").removeClass("modal-side-visible");
           }
         });
 
@@ -1099,6 +1110,7 @@ function loadModal(url, data, callbackSuccess, method) {
           .on("shown.bs.modal", function (e) {
             loading(false);
             reset_theme_components();
+            initBulkGrids(modalContainer);
             //initComponents(modalContainer);
             // Disable by default the confirmation request
             $(".modal", modalContainer).data("bs.modal").askConfirmationOnClose = false;

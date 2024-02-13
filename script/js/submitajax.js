@@ -4,6 +4,8 @@ var formAjaxShownMessage = null;
 var formAjaxIsSubmitting = false;
 
 var handleSuccess = function (msg, container = null) {
+    // console.log(msg);
+    // alert(1);
     var submittedForm = $('#'+formAjaxSubmittedFormId);
     var submitBtn = $('button[type="submit"]', submittedForm);
 
@@ -64,6 +66,7 @@ var handleSuccess = function (msg, container = null) {
             break;
         case 9:
             // Callback
+            submitBtn.show();
             eval(msg.txt);
             break;
         case 10:

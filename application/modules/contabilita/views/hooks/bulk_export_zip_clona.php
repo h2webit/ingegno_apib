@@ -21,7 +21,7 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
 <form style="display: hidden" action="<?php echo base_url(); ?>contabilita/documenti/bulk_clone" method="POST"
       id="form_bulk_clone">
     <?php add_csrf(); ?>
-
+    
     <input type="hidden" id="bulk_fatture_ids" name="ids" value=""/>
     <input type="hidden" id="bulk_data_emissione" name="data_emissione" value=""/>
     <input type="hidden" id="bulk_periodo_competenza" name="periodo_competenza" value=""/>
@@ -34,22 +34,22 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
     $(document).ready(function () {
         $('.js-bulk-action').each(function (index) {
             var grid_container = $(this).closest('div[data-layout-box]');
-
+            
             //aggiungo opzione download
             $(this).append('<option value="download_zip">Download zip</option>');
             $(this).append('<option value="bulk_clone">Duplica / Trasforma</option>');
             $(this).append('<option value="stampa_accorpata_template">Stampa accorpata (con template)</option>');
-
+            
             $(this).on('change', function () {
                 var chkbx_ids = $("input:checkbox.js_bulk_check:checked", grid_container).map(function () {
                     return $(this).val();
                 }).get();
-
+                
                 if (chkbx_ids.length <= 0) {
                     $("input:checkbox.js_bulk_check:checked", grid_container).val('').trigger('change');
                     return false;
                 }
-
+                
                 if ($(this).val() == 'stampa_accorpata_template') {
                     const pdf_templates_obj = <?php e_json($pdf_templates); ?>;
                     
@@ -91,61 +91,62 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
                         $('#form_export_zip').submit();
                     }
                 }
-
+                
                 if ($(this).val() == 'bulk_clone') {
                     // CHECK DATA EMISSIONE
                     var data_emissione = prompt("Inserisci la data emissione (in formato gg/mm/aaaa)", moment().format('DD/MM/YYYY'));
-
+                    
                     if (!data_emissione) {
                         alert("Azione annullata");
                         return false;
                     }
-
+                    
                     var _data_emissione_obj = moment(data_emissione, 'DD/MM/YYYY', true);
                     if (!_data_emissione_obj._isValid) {
                         alert("Il formato della data emissione non è corretto. Utilizzare il formato: gg/mm/aaaa");
                         return false;
                     }
-
+                    
                     // CHECK DATA SCADENZA
-                    var data_scadenza = prompt("Inserisci la data scadenza (in formato gg/mm/aaaa)", moment().format('DD/MM/YYYY'));
-
-                    if (!data_scadenza) {
-                        alert("Azione annullata");
-                        return false;
+                    var data_scadenza = prompt("Inserisci la data scadenza (in formato gg/mm/aaaa)\nLascia vuoto per calcolo automatico da template pagamento");
+                    
+                    var _data_scadenza_obj = null;
+                    if (data_scadenza) {
+                        // alert("Azione annullata");
+                        // return false;
+                        
+                        _data_scadenza_obj = moment(data_scadenza, 'DD/MM/YYYY', true);
+                        
+                        if (!_data_scadenza_obj._isValid) {
+                            alert("Il formato della data scadenza non è corretto. Utilizzare il formato: gg/mm/aaaa");
+                            return false;
+                        }
                     }
-
-                    var _data_scadenza_obj = moment(data_scadenza, 'DD/MM/YYYY', true);
-
-                    if (!_data_scadenza_obj._isValid) {
-                        alert("Il formato della data scadenza non è corretto. Utilizzare il formato: gg/mm/aaaa");
-                        return false;
-                    }
-
+                    
                     // CHECK periodo di competenza
                     var periodo_competenza = prompt("Inserisci il periodo di competenza\n\nSe valorizzato verrà aggiunto nella descrizione delle righe articolo, se lasciato vuoto, la descrizione resterà invariata.");
-
+                    
                     /** SEZIONE TIPOLOGIA (TDXX) */
                     const tipologie_obj = <?php (!empty($tipologie)) ? e_json($tipologie) : '{}'; ?>;
-
+                    
                     let tipologie_arr = [];
-
+                    
                     if (!$.isEmptyObject(tipologie_obj)) {
                         tipologie_arr = tipologie_obj.map(function (_item) {
                             return _item.documenti_contabilita_tipologie_fatturazione_codice + " " + _item.documenti_contabilita_tipologie_fatturazione_descrizione;
                         });
                         tipologie_arr.unshift('---');
                     }
-
+                    
                     /** SEZIONE TIPO DOCUMENTO */
                     const tipi_doc_obj = <?php e_json($tipi_doc); ?>;
-
+                    
                     let tipi_doc_arr = {};
-
+                    
                     tipi_doc_obj.forEach(tipo_doc => {
                         tipi_doc_arr[tipo_doc.documenti_contabilita_tipo_id] = tipo_doc.documenti_contabilita_tipo_value
                     });
-
+                    
                     var swal_tipo_fatt = Swal.fire({
                         title: 'Seleziona una tipologia...',
                         input: 'select',
@@ -166,7 +167,7 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
                         if (choosen.isConfirmed && choosen.value !== '0') {
                             $('#bulk_tipologia').val(choosen.value);
                         }
-
+                        
                         Swal.fire({
                             title: 'Seleziona il tipo documento...',
                             input: 'select',
@@ -187,10 +188,10 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
                             if (choosen.isConfirmed) {
                                 $('#bulk_tipo_doc', $('#form_bulk_clone')).val(choosen.value);
                                 $('#bulk_data_emissione', $('#form_bulk_clone')).val(_data_emissione_obj.format('YYYY-MM-DD'));
-                                $('#bulk_data_scadenza', $('#form_bulk_clone')).val(_data_scadenza_obj.format('YYYY-MM-DD'));
+                                $('#bulk_data_scadenza', $('#form_bulk_clone')).val(_data_scadenza_obj ? _data_scadenza_obj.format('YYYY-MM-DD') : '');
                                 $('#bulk_periodo_competenza', $('#form_bulk_clone')).val(periodo_competenza);
                                 $('#bulk_fatture_ids', $('#form_bulk_clone')).val(JSON.stringify(chkbx_ids));
-
+                                
                                 $('#form_bulk_clone').submit();
                             }
                         });
@@ -198,6 +199,6 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
                 }
             });
         });
-
+        
     });
 </script>

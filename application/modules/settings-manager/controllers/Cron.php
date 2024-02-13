@@ -21,6 +21,10 @@ class Cron extends MY_Controller
 
         // First check
         $settings = $this->apilib->searchFirst('settings');
+        if ($settings['settings_auto_update_client'] != DB_BOOL_TRUE) {
+            echo_log('error', "I can not update client patches, auto update is disabled");
+            return false;
+        }
         $repository_url = $settings['settings_auto_update_repository'];
         $channel = $settings['settings_auto_update_channel'];
 

@@ -70,7 +70,7 @@
   }
   .label_highlight {
     position:absolute;
-    top:-10px;
+    top:0px;
     right:0px;
     background-color:white;
     font-size:11px;
@@ -394,4 +394,7 @@ text-align: left;
   border-radius: 5px;
   width: 300px;
   height: auto;
+}
+.js_submenu_item {
+  position:relative;
 }

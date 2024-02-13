@@ -16,6 +16,7 @@ $getSpeseAnno = $this->conteggi->getSpeseAnno($anno);
 $spese = number_format($getSpeseAnno['imponibile'], 0, "", "");
 
 $getCostiDeducibili = $this->conteggi->getCostiDeducibiliAnno($anno);
+//debug($getCostiDeducibili);
 $utile = number_format($getFatturato['imponibile'] - $getCostiDeducibili['costi_deducibili'], 0, "", "");
 
 ?>

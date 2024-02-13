@@ -62,13 +62,16 @@ class RibaAbiCbi extends CI_Model
     var $totale;
     var $creditore;
 
-    function RecordIB($abi_assuntrice, $data_creazione, $nome_supporto, $codice_divisa)
+    var $codice_sia;
+
+    function RecordIB($abi_assuntrice, $data_creazione, $nome_supporto, $codice_divisa, $codice_sia)
     { //record di testa
         $this->assuntrice = str_pad($abi_assuntrice, 5, '0', STR_PAD_LEFT);
         $this->data = str_pad($data_creazione, 6, '0');
         $this->valuta = substr($codice_divisa, 0, 1);
         $this->supporto = str_pad($nome_supporto, 20, '*', STR_PAD_LEFT);
-        return " IB     " . $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 74) . $this->valuta . str_repeat(" ", 6);
+        $this->codice_sia = $codice_sia;
+        return " IB".$this->codice_sia . $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 74) . $this->valuta . str_repeat(" ", 6);
     }
 
     function Record14($scadenza, $importo, $abi_assuntrice, $cab_assuntrice, $conto, $abi_domiciliataria, $cab_domiciliataria, $codice_cliente)
@@ -110,16 +113,20 @@ class RibaAbiCbi extends CI_Model
 
     function RecordEF()
     { //record di coda
-        return " EF     " . $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 6) . str_pad($this->progressivo, 7, '0', STR_PAD_LEFT) . str_pad($this->totale, 15, '0', STR_PAD_LEFT) . str_repeat("0", 15) . str_pad($this->progressivo * 7 + 2, 7, '0', STR_PAD_LEFT) . str_repeat(" ", 24) . $this->valuta . str_repeat(" ", 6);
+        // debug($this->assuntrice);
+        // debug($this->data);
+        // debug($this->supporto);
+        // debug($this->progressivo,true);
+        return " EF" .$this->codice_sia. $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 6) . str_pad($this->progressivo, 7, '0', STR_PAD_LEFT) . str_pad($this->totale, 15, '0', STR_PAD_LEFT) . str_repeat("0", 15) . str_pad($this->progressivo * 7 + 2, 7, '0', STR_PAD_LEFT) . str_repeat(" ", 24) . $this->valuta . str_repeat(" ", 6);
     }
 
     function creaFile($intestazione, $ricevute_bancarie)
     {
-        $accumulatore = $this->RecordIB($intestazione[0], $intestazione[3], $intestazione[4], $intestazione[5]) . PHP_EOL;
+        $accumulatore = $this->RecordIB($intestazione[0], $intestazione[3], $intestazione[4], $intestazione[5], $intestazione[6]) . PHP_EOL;
         foreach ($ricevute_bancarie as $value) { //estraggo le ricevute dall'array
             $this->progressivo++;
             $accumulatore .= $this->Record14($value[1], $value[2], $intestazione[0], $intestazione[1], $intestazione[2], $value[8], $value[9], $value[11]) . PHP_EOL;
-            $accumulatore .= $this->Record20($intestazione[6], $intestazione[7], $intestazione[8], $intestazione[9]) . PHP_EOL;
+            $accumulatore .= $this->Record20($intestazione[7], $intestazione[7], $intestazione[8], $intestazione[9]) . PHP_EOL;
             $accumulatore .= $this->Record30($value[3], $value[4]) . PHP_EOL;
             $accumulatore .= $this->Record40($value[5], $value[6], $value[7], $value[10]) . PHP_EOL;
             $accumulatore .= $this->Record50($value[12], $intestazione[10]) . PHP_EOL;
@@ -169,7 +176,7 @@ class RibaAbiCbi extends CI_Model
             //         [4] = nome_supporto variabile lunghezza 20 alfanumerico
             5 => 'E',
             //         [5] = codice_divisa variabile lunghezza 1 alfanumerico opzionale default "E"
-            6 => $settings['documenti_contabilita_settings_company_name'],
+            6 => $conto['conti_correnti_codice_sia']??$settings['documenti_contabilita_settings_codice_sia'],
             //         [6] = ragione_soc1_creditore variabile lunghezza 24 alfanumerico
             7 => $settings['documenti_contabilita_settings_company_name'],
             //         [7] = ragione_soc2_creditore variabile lunghezza 24 alfanumerico
@@ -199,9 +206,21 @@ class RibaAbiCbi extends CI_Model
             $dest = json_decode($documento['documenti_contabilita_destinatario'], true);
             if ($documento['documenti_contabilita_customer_id']) {
                 $dest = array_merge($dest, $this->apilib->view('customers', $documento['documenti_contabilita_customer_id']));
-                $dest = array_merge($dest, $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_customer_id' => $documento['documenti_contabilita_customer_id']]));
+                $banca = $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_customer_id' => $documento['documenti_contabilita_customer_id']]);
+                if (!$banca) {
+                    die("Banca non configurata per il cliente '{$dest['customers_full_name']}'!");
+                }
+                $dest = array_merge($dest, $banca);
             }
-            //debug($dest, true);
+            //Se non ho ABI o CAB li recupero dall'iban
+            if (trim($dest['customers_bank_accounts_abi']) || trim($dest['customers_bank_accounts_cab'])) {
+                $iban = $dest['customers_bank_accounts_iban'];
+                $iban_data = $this->extractIbanData($iban);
+                $dest['customers_bank_accounts_abi'] = $iban_data['abi'];
+                $dest['customers_bank_accounts_cab'] = $iban_data['cab'];
+            }
+
+
             // if (!empty($dest['iban'])) {
             //     $dest_iban_data = $this->extractIbanData($dest['iban']);
             // } elseif (!empty($dest['customers_iban'])) {
@@ -224,13 +243,13 @@ class RibaAbiCbi extends CI_Model
 
             //     }
             // }
-            //debug($dest,true);
+            
             $ricevute[] = [
                 0 => $documento['documenti_contabilita_numero'],
                 //        [0] = numero ricevuta lunghezza 10 numerico
                 1 => date('dmy', strtotime($documento['documenti_contabilita_scadenze_scadenza'])),
                 //        [1] = scadenza lunghezza 6 numerico
-                2 => $documento['documenti_contabilita_scadenze_ammontare'] * 100,
+                2 => round($documento['documenti_contabilita_scadenze_ammontare'], 2) * 100,
                 //        [2] = importo in centesimi di euro lunghezza 13 numerico
                 3 => $dest['ragione_sociale'],
                 //        [3] = nome debitore lunghezza 60 alfanumerico

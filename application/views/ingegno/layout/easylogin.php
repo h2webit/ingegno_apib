@@ -242,9 +242,7 @@ if ($this->settings['settings_login_background']) {
                     <div class="text-center">
                         <?php if ($this->settings === array()): ?>
                             <h2 class="login-logo"><?php e('La tua azienda');?></h2>
-                        <?php elseif ($this->settings['settings_company_logo']): ?>
-                            <img src="<?php echo base_url_uploads("uploads/{$this->settings['settings_company_logo']}"); ?>" alt="logo" class="logo" />
-                        <?php else: ?>
+                            <img src="<?php echo base_url_uploads("uploads/ingegno_suite.png"); ?>" alt="logo" class="logo" />
                             <h2 class=" text-danger"><?php echo $this->settings['settings_company_short_name']; ?></h2>
                         <?php endif;?>
                     </div>

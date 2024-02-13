@@ -4,13 +4,13 @@
     "modules_description": "Builder Toolbar for developers",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.0",
+    "modules_version": "1.1.1",
     "modules_identifier": "builder-toolbar",
     "modules_base64_zip": null,
     "modules_raw_data_install": null,
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "16",
+    "modules_version_code": "17",
     "modules_thumbnail": "0c27709747e6c706baa587a8b2da288e.png",
     "modules_min_client_version": "3.4.0",
     "modules_version_date": "2022-08-24 17:01:41",
@@ -1109,7 +1109,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "builder-toolbar-forms_fields-2296_2714",
-                    "forms_fields_module": "builder-toolbar"
+                    "forms_fields_module": "builder-toolbar",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2296",
@@ -1131,7 +1132,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "builder-toolbar-forms_fields-2296_2715",
-                    "forms_fields_module": "builder-toolbar"
+                    "forms_fields_module": "builder-toolbar",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -1176,7 +1178,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "builder-toolbar-forms_fields-2297_2953",
-                    "forms_fields_module": "builder-toolbar"
+                    "forms_fields_module": "builder-toolbar",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2297",
@@ -1198,7 +1201,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "builder-toolbar-forms_fields-2297_2954",
-                    "forms_fields_module": "builder-toolbar"
+                    "forms_fields_module": "builder-toolbar",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2297",
@@ -1220,7 +1224,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "builder-toolbar-forms_fields-2297_2955",
-                    "forms_fields_module": "builder-toolbar"
+                    "forms_fields_module": "builder-toolbar",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2297",
@@ -1242,7 +1247,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "builder-toolbar-forms_fields-2297_2956",
-                    "forms_fields_module": "builder-toolbar"
+                    "forms_fields_module": "builder-toolbar",
+                    "forms_field_full_data": "0"
                 }
             ]
         }

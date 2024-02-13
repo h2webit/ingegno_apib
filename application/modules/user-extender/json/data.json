@@ -4,15 +4,15 @@
     "modules_description": "User Manager",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.11",
+    "modules_version": "1.1.15",
     "modules_identifier": "user-extender",
     "modules_base64_zip": null,
     "modules_raw_data_install": "415,396",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "47",
+    "modules_version_code": "52",
     "modules_thumbnail": "8c24b1ded2956cea0e7338daa1694c58.png",
-    "modules_min_client_version": "2.3.1",
+    "modules_min_client_version": "3.6.6",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -52,6 +52,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -74,6 +75,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -96,6 +98,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -118,6 +121,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_password"
                 },
                 {
@@ -140,6 +144,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -162,6 +167,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload_image"
                 },
                 {
@@ -184,6 +190,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "checkbox"
                 },
                 {
@@ -206,6 +213,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "checkbox"
                 },
                 {
@@ -228,6 +236,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -250,6 +259,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "checkbox"
                 },
                 {
@@ -272,6 +282,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -294,6 +305,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -316,6 +328,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "hidden"
                 },
                 {
@@ -338,6 +351,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -360,6 +374,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "checkbox"
                 },
                 {
@@ -382,6 +397,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -404,6 +420,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_hidden"
                 },
                 {
@@ -426,6 +443,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -448,6 +466,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -470,6 +489,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -492,6 +512,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 }
             ],
@@ -806,6 +827,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -828,6 +850,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -850,6 +873,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -872,6 +896,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -894,6 +919,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -916,6 +942,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -938,6 +965,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -960,6 +988,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -982,6 +1011,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -1004,6 +1034,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1026,6 +1057,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "textarea"
                 }
             ],
@@ -1225,6 +1257,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1247,6 +1280,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1269,6 +1303,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1291,6 +1326,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 }
             ],
@@ -1550,7 +1586,7 @@
             "grids_order_by": null,
             "grids_group_by": null,
             "grids_filter_session_key": "users_manager_filters",
-            "grids_bulk_mode": "0",
+            "grids_bulk_mode": null,
             "grids_bulk_edit_form": null,
             "grids_exportable": "0",
             "grids_append_class": null,
@@ -1594,7 +1630,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14510",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -1615,6 +1651,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1631,7 +1668,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14718",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -1652,6 +1689,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1668,7 +1706,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14719",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -1689,6 +1727,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1705,7 +1744,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14720",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -1726,6 +1765,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1742,7 +1782,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14721",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -1763,6 +1803,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1779,7 +1820,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14990",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -1800,6 +1841,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": null,
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1816,7 +1858,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14991",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3047",
                     "fields_entity_id": "6",
@@ -1837,6 +1879,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1853,7 +1896,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "user-extender-grids_fields-18313",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -1874,6 +1917,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -1907,7 +1951,7 @@
                     "grids_actions_mode": "modal",
                     "grids_actions_type": "edit_form",
                     "grids_actions_color": "rgb(156, 39, 176)",
-                    "grids_actions_show": "table",
+                    "grids_actions_show": "table_and_bulk",
                     "conditions": []
                 },
                 {
@@ -1923,7 +1967,7 @@
                     "grids_actions_mode": "default",
                     "grids_actions_type": "delete",
                     "grids_actions_color": "rgb(233, 30, 99)",
-                    "grids_actions_show": "table",
+                    "grids_actions_show": "table_and_bulk",
                     "conditions": []
                 }
             ]
@@ -1988,7 +2032,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14701",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -2009,6 +2053,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2025,7 +2070,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14723",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2046,6 +2091,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2062,7 +2108,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14724",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2083,6 +2129,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2099,7 +2146,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14725",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2120,6 +2167,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2223,6 +2271,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2260,6 +2309,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2297,6 +2347,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2379,7 +2430,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1269",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2400,6 +2451,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2416,7 +2468,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1270",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2437,6 +2489,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2453,7 +2506,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1271",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2474,6 +2527,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2490,7 +2544,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1272",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -2511,6 +2565,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2527,7 +2582,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1283",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "63",
                     "fields_entity_id": "6",
@@ -2548,6 +2603,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2564,7 +2620,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15750",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3492",
                     "fields_entity_id": "6",
@@ -2585,6 +2641,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2601,7 +2658,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-18312",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -2622,6 +2679,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2720,7 +2778,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14498",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2741,6 +2799,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2757,7 +2816,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14499",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2778,6 +2837,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2794,7 +2854,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14500",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2815,6 +2875,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2831,7 +2892,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14501",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -2852,6 +2913,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2868,7 +2930,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14502",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -2889,6 +2951,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3008,6 +3071,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3045,6 +3109,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3082,6 +3147,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3119,6 +3185,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3156,6 +3223,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3193,6 +3261,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3230,6 +3299,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3267,6 +3337,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3304,6 +3375,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3369,7 +3441,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15740",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -3390,6 +3462,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3406,7 +3479,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15741",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -3427,6 +3500,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3443,7 +3517,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15742",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -3464,6 +3538,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3480,7 +3555,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15744",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3501,6 +3576,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3599,7 +3675,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15745",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -3620,6 +3696,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3636,7 +3713,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15746",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -3657,6 +3734,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3673,7 +3751,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15747",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -3694,6 +3772,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3710,7 +3789,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15748",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -3731,6 +3810,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -3747,7 +3827,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15749",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3768,6 +3848,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -3909,6 +3990,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-183",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "183",
@@ -3930,7 +4012,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_58",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -3952,7 +4035,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_59",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -3974,7 +4058,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_60",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -3996,7 +4081,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_61",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -4018,7 +4104,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_62",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -4040,7 +4127,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_63",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -4062,7 +4150,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_445",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -4084,7 +4173,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_446",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -4106,7 +4196,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_459",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "183",
@@ -4128,7 +4219,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_499",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4152,6 +4244,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-2092",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2092",
@@ -4173,7 +4266,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_63",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2092",
@@ -4195,7 +4289,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_60",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2092",
@@ -4217,7 +4312,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_61",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4241,6 +4337,7 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-2135",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2135",
@@ -4262,7 +4359,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_58",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4284,7 +4382,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_59",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4306,7 +4405,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_60",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4328,7 +4428,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_61",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4350,7 +4451,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_62",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4372,7 +4474,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_63",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4394,7 +4497,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3047",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4416,7 +4520,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3490",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2135",
@@ -4438,7 +4543,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3492",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4462,6 +4568,7 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "user-extender-form-2156",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2156",
@@ -4483,7 +4590,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_2934",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4505,7 +4613,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_2938",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4527,7 +4636,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_2939",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4549,7 +4659,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_3004",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4571,7 +4682,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_3005",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4593,7 +4705,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_3461",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4615,7 +4728,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2156_3491",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4637,7 +4751,8 @@
                     "forms_fields_dependent_on": "users_manager_configurations_enable_password_validation:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "user-extender-forms_fields-2156_3719",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2156",
@@ -4659,7 +4774,8 @@
                     "forms_fields_dependent_on": "users_manager_configurations_enable_password_validation:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "user-extender-forms_fields-2156_3720",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4683,6 +4799,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "firecrm-form-2193",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2193",
@@ -4704,7 +4821,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "firecrm-forms_fields-2193_3049",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2193",
@@ -4726,7 +4844,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2193_4373",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "user-extender",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4750,6 +4869,7 @@
             "forms_submit_button_label": "Filter",
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-2240",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2240",
@@ -4771,7 +4891,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2240_3047",
-                    "forms_fields_module": "user-extender"
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -4795,6 +4916,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-9",
+            "forms_public": "0",
             "fields": []
         }
     ],
@@ -4986,14 +5108,14 @@
         {
             "fi_events_id": "58",
             "fi_events_when": "post-form",
-            "fi_events_json_data": "{\"_when\":\"post\",\"fi_events_type\":\"hook\",\"hook\":{\"hooks_id\":\"25\",\"hooks_type\":\"form\",\"hooks_ref\":\"\",\"hooks_module\":\"user-extender\",\"hooks_order\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"<?php\\n$permission_group = $this->datab->getPermission($this->auth->get('users_id'))['permissions_group'];\\nif(!empty($permission_group) && in_array($permission_group, ['Customer', 'Employee'])):\\n?>\\n<?php $this->layout->addModuleJavascript('user-extender', 'js\\\/remove_user_fields.js'); ?>\\n\\n<?php endif; ?>\"},\"fi_events_title\":\"remove users fields if not admin\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"_when\":\"post\",\"fi_events_type\":\"hook\",\"hook\":{\"hooks_id\":\"25\",\"hooks_type\":\"form\",\"hooks_ref\":\"\",\"hooks_module\":\"user-extender\",\"hooks_order\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"<?php\\nif (!$this->auth->is_admin()) {\\n    $permissions = $this->datab->getPermission($this->auth->get('users_id'), false);\\n\\n    if ($permissions && !empty($permissions['permissions_group'])) {\\n        $permission_group = $permissions['permissions_group'];\\n\\n        if ($permission_group !== 'Admin') {\\n            $this->layout->addModuleJavascript('user-extender', 'js\\\/remove_user_fields.js');\\n        }\\n    }\\n}\\n?>\"},\"fi_events_title\":\"remove users fields if not admin\",\"save\":\"0\"}",
             "fi_events_title": "remove users fields if not admin",
             "fi_events_module": "user-extender",
             "fi_events_type": "hook",
             "fi_events_ref_id": null,
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"<?php\\n$permission_group = $this->datab->getPermission($this->auth->get('users_id'))['permissions_group'];\\nif(!empty($permission_group) && in_array($permission_group, ['Customer', 'Employee'])):\\n?>\\n<?php $this->layout->addModuleJavascript('user-extender', 'js\\\/remove_user_fields.js'); ?>\\n\\n<?php endif; ?>\"}",
-            "fi_events_active": "1",
+            "fi_events_actiondata": "{\"code\":\"<?php\\nif (!$this->auth->is_admin()) {\\n    $permissions = $this->datab->getPermission($this->auth->get('users_id'), false);\\n\\n    if ($permissions && !empty($permissions['permissions_group'])) {\\n        $permission_group = $permissions['permissions_group'];\\n\\n        if ($permission_group !== 'Admin') {\\n            $this->layout->addModuleJavascript('user-extender', 'js\\\/remove_user_fields.js');\\n        }\\n    }\\n}\\n?>\"}",
+            "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": "1",
             "fi_events_crm": "1",
@@ -5061,14 +5183,14 @@
         {
             "fi_events_id": "551",
             "fi_events_when": "login",
-            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"326\",\"post_process_when\":\"login\",\"post_process_entity_id\":\"6\",\"post_process_module\":\"user-extender\",\"post_process_crm\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    \\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n        \\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE){\\n        \\t$this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n\\t\\t\\t$this->session->set_userdata('change_password_email', $data['users_email']);\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n    }\\n}\"},\"fi_events_title\":\"Force change password\",\"save\":\"0\"}",
+            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"326\",\"post_process_when\":\"login\",\"post_process_entity_id\":\"6\",\"post_process_module\":\"user-extender\",\"post_process_crm\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    if (defined('PASSEPARTOUT')) {\\n        $this->PASSEPARTOUT = PASSEPARTOUT;\\n    }\\n    if(!isset($data['password_form'])){\\n        $data['password_form'] = '';\\n    }\\n\\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n\\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE && md5($this->input->post('users_users_password')) !== strtolower($this->PASSEPARTOUT)){\\n        $this->auth->logout();\\n        $this->session->set_userdata('change_password_email', $data['users_email']);\\n        $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n        die(json_encode($response));\\n    }\\n}\"},\"fi_events_title\":\"Force change password\",\"save\":\"1\"}",
             "fi_events_title": "Force change password",
             "fi_events_module": "user-extender",
             "fi_events_type": "database",
             "fi_events_ref_id": "6",
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    \\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n        \\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE){\\n        \\t$this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n\\t\\t\\t$this->session->set_userdata('change_password_email', $data['users_email']);\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n    }\\n}\"}",
-            "fi_events_active": "1",
+            "fi_events_actiondata": "{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    if (defined('PASSEPARTOUT')) {\\n        $this->PASSEPARTOUT = PASSEPARTOUT;\\n    }\\n    if(!isset($data['password_form'])){\\n        $data['password_form'] = '';\\n    }\\n\\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n\\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE && md5($this->input->post('users_users_password')) !== strtolower($this->PASSEPARTOUT)){\\n        $this->auth->logout();\\n        $this->session->set_userdata('change_password_email', $data['users_email']);\\n        $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n        die(json_encode($response));\\n    }\\n}\"}",
+            "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": null,
             "fi_events_crm": "1",

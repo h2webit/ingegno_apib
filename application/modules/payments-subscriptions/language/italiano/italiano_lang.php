@@ -57,3 +57,7 @@ $lang['Qty'] = 'Qta';
 $lang['Proposal'] = 'Proposta';
 $lang['Subscription'] = 'Abbonamento';
 $lang['Genera fatture per cliente'] = 'Genera fatture per cliente';
+$lang['Customer Sublayout - Subscriptions'] = 'Customer Sublayout - Subscriptions';
+$lang['Customer Sublayout   Subscriptions'] = 'Customer Sublayout   Subscriptions';
+$lang['Customer Sublayout - Payments'] = 'Customer Sublayout - Payments';
+$lang['Customer Sublayout   Payments'] = 'Customer Sublayout   Payments';

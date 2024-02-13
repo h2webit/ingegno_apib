@@ -16,7 +16,7 @@ class Fix extends MX_Controller
         $this->load->model('contabilita/docs');
 
         $this->settings = $this->db->get('settings')->row_array();
-        $this->contabilita_settings = $this->apilib->searchFirst('documenti_contabilita_settings');
+        
     }
 
     public function migrate_spese_file() {

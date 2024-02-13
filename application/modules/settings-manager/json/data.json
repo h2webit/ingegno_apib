@@ -4,15 +4,15 @@
     "modules_description": "Settings page and entity booster",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.1",
+    "modules_version": "1.1.2",
     "modules_identifier": "settings-manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "551,410",
     "modules_raw_data_update": "551",
     "modules_created_by_user": "1",
-    "modules_version_code": "38",
+    "modules_version_code": "39",
     "modules_thumbnail": "117c017b7b78e094eb4157f6f06548ba.png",
-    "modules_min_client_version": "2.9.4",
+    "modules_min_client_version": "3.5.5",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -3193,6 +3193,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "settings-manager-form-2235",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2235",
@@ -3584,6 +3585,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "settings-manager-form-2236",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2236",
@@ -3630,6 +3632,7 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "settings-manager-form-2237",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2237",
@@ -3791,6 +3794,7 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "settings-manager-form-2238",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2238",
@@ -3952,6 +3956,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "settings-manager-form-2239",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2239",
@@ -4067,6 +4072,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "settings-manager-form-2397",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2397",

@@ -32,7 +32,7 @@
         </PmtTpInf>
         <ReqdColltnDt><?php echo (new DateTime($doc['documenti_contabilita_scadenze_scadenza']))->format('Y-m-d') ?></ReqdColltnDt>
         <Cdtr>
-            <Nm><?php echo substr($azienda['documenti_contabilita_settings_company_name'], 0, 65); ?></Nm>
+            <Nm><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $azienda['documenti_contabilita_settings_company_name']), 0, 65); ?></Nm>
             <PstlAdr>
                 <StrtNm><?php echo $azienda['documenti_contabilita_settings_company_address'] ?></StrtNm>
                 <PstCd><?php echo $azienda['documenti_contabilita_settings_company_zipcode'] ?></PstCd>
@@ -118,7 +118,7 @@
                     </MndtRltdInf>
                 </DrctDbtTx>
                 <Dbtr>
-                    <Nm><?php echo $dest['ragione_sociale'] ?></Nm>
+                    <Nm><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $dest['ragione_sociale']), 0,65); ?></Nm>
                     <PstlAdr>
                         <StrtNm><?php echo $dest['indirizzo'] ?></StrtNm>
                         <PstCd><?php echo $dest['cap'] ?></PstCd>

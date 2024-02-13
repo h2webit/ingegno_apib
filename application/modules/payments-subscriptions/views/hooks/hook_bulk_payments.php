@@ -30,26 +30,26 @@
         $js_bulk_action.append('<option value="genera_fatture_cliente"><?php e('Genera fatture per cliente'); ?></option>');
 
         $js_bulk_action.on('change', function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+            // e.preventDefault();
+            // e.stopImmediatePropagation();
 
             var chkbx_ids = $("input:checkbox.js_bulk_check:checked", grid_container).map(function() {
                 return $(this).val();
             }).get();
 
             if (chkbx_ids.length > 0) {
-                if ($(this).val() === 'genera_fatture_cliente') {
-                    // CHECK DATA SCADENZA
-                    var periodo_competenza = prompt("Inserisci il periodo di competenza\n\nSe valorizzato verrà aggiunto nella descrizione delle righe articolo, se lasciato vuoto, la descrizione resterà invariata.");
-
-                    if (periodo_competenza.length > 0) {
-                        $('[name="periodo_competenza"]', $('#form_crea_fattura_cliente')).val(periodo_competenza);
-                    }
-                    
-                    $('[name="pagamenti_ids"]', $('#form_crea_fattura_cliente')).val(JSON.stringify(chkbx_ids));
-
-                    $('#form_crea_fattura_cliente').submit();
-                }
+                // if ($(this).val() === 'genera_fatture_cliente') {
+                //     // CHECK DATA SCADENZA
+                //     var periodo_competenza = prompt("Inserisci il periodo di competenza\n\nSe valorizzato verrà aggiunto nella descrizione delle righe articolo, se lasciato vuoto, la descrizione resterà invariata.");
+                //
+                //     if (periodo_competenza.length > 0) {
+                //         $('[name="periodo_competenza"]', $('#form_crea_fattura_cliente')).val(periodo_competenza);
+                //     }
+                //
+                //     $('[name="pagamenti_ids"]', $('#form_crea_fattura_cliente')).val(JSON.stringify(chkbx_ids));
+                //
+                //     $('#form_crea_fattura_cliente').submit();
+                // }
 
                 if ($(this).val() == 'crea_fattura') {
                     $.ajax({
@@ -89,7 +89,7 @@
                     });
                 }
                 
-                if ($(this).val() == 'genera_fatture_distinte') {
+                if ($(this).val() == 'genera_fatture_distinte' || $(this).val() === 'genera_fatture_cliente') {
                     const serie_obj = <?php echo (!empty($serie) ? json_encode($serie) : '{}'); ?>;
 
                     let serie_arr = [];
@@ -139,8 +139,6 @@
                         //$('[name="periodo_competenza"]', $('#form_crea_fattura_cliente')).val(periodo_competenza);
                     }
 
-
-
                     const myalert = Swal.fire({
                         title: 'Seleziona una serie...',
                         input: 'select',
@@ -159,12 +157,16 @@
                         }
                     }).then(choosen => {
                         if (choosen.isConfirmed) {
-                            console.log(choosen);
-
                             const choosen_serie = serie_arr[choosen.value];
 
+                            var url_genera_fatture = base_url + 'contabilita/documenti/genera_fatture_da_pagamenti'
+                            
+                            if ($(this).val() === 'genera_fatture_cliente') {
+                                url_genera_fatture = base_url + 'contabilita/documenti/genera_fatture_da_pagamenti_cliente';
+                            }
+                            
                             $.ajax({
-                                url: base_url + 'contabilita/documenti/genera_fatture_da_pagamenti',
+                                url: url_genera_fatture,
                                 type: 'post',
                                 dataType: 'json',
                                 async: false,

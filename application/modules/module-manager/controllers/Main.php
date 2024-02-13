@@ -44,9 +44,9 @@ class Main extends MX_Controller
         } else {
             $project_id = 0;
         }
-        
+
         $data = $this->core->getModuleRepositoryData($module_identifier, $this->settings['modules_manager_settings_modules_repository'], $project_id, $this->token);
-        
+
         // Verifica se la decodifica è avvenuta correttamente
         if ($data) {
             echo json_encode($data);
@@ -69,10 +69,12 @@ class Main extends MX_Controller
         $repository_module = $this->core->installModule($identifier);
 
         if ($repository_module && !empty($repository_module['modules_repository_notification_message']) && trim($repository_module['modules_repository_notification_message']) != '') {
+
             //Se questo aggiornamento richiede una notifica, creo la notification (sfrutto il modulo core-notifications...)
             if ($this->datab->module_installed('core-notifications')) {
                 $this->load->model('core-notifications/clientnotifications');
                 $admin_users = $this->apilib->search('users', ["users_type_value = 'Admin' OR users_type IS NULL"]);
+
                 foreach ($admin_users as $user) {
                     $user_id = $user['users_id'];
                     $this->clientnotifications->create(
@@ -114,16 +116,16 @@ class Main extends MX_Controller
                 foreach ($admin_users as $user) {
                     $user_id = $user['users_id'];
                     $notifica = array(
-                                'notifications_type' => 5,
-                                'notifications_user_id' => $user_id,
-                                'notifications_title' => "Modulo {$repository_module['modules_repository_name']} aggiornato.",
-                                'notifications_message' => $repository_module['modules_repository_notification_message'],
-                            );
-                            if ($this->db->get_where('notifications', $notifica)->num_rows() == 0) {
-                                $this->clientnotifications->create(
-                                    $notifica
-                                );
-                            }
+                        'notifications_type' => 5,
+                        'notifications_user_id' => $user_id,
+                        'notifications_title' => "Modulo {$repository_module['modules_repository_name']} aggiornato.",
+                        'notifications_message' => $repository_module['modules_repository_notification_message'],
+                    );
+                    if ($this->db->get_where('notifications', $notifica)->num_rows() == 0) {
+                        $this->clientnotifications->create(
+                            $notifica
+                        );
+                    }
                 }
             }
         }
@@ -141,7 +143,7 @@ class Main extends MX_Controller
         $this->db->where('modules_id', $modules_id)->update('modules', ['modules_auto_update' => $new_val]);
         $this->mycache->clearCache();
     }
-// public function stampa($pagina, $sidebar = true)
+    // public function stampa($pagina, $sidebar = true)
 // {
 //     $this->template['head'] = $this->load->view('layout/head', array(), true);
 //     $this->template['header'] = $this->load->view('layout/header', ['projects' => $this->projects], true);

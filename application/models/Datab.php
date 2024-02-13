@@ -689,8 +689,7 @@ class Datab extends CI_Model
             }
 
             foreach ($fields as $key => $field) {
-
-                if (!$this->conditions->accessible('forms_fields', "{$field['forms_fields_forms_id']},{$field['forms_fields_fields_id']}", $value_id, $formData)) {
+                if (!$this->conditions->accessible('forms_fields', "{$field['forms_fields_forms_id']},{$field['forms_fields_fields_id']}", $value_id, $formData, $edit_id)) {
                     unset($fields[$key]);
                     continue;
                 }
@@ -711,7 +710,7 @@ class Datab extends CI_Model
             $operators = unserialize(OPERATORS);
             foreach ($fields as $key => $field) {
                 
-                $fields[$key] = $this->processFieldMapping($field, $form);
+                $fields[$key] = $this->processFieldMapping($field, $form, $edit_id);
 
                 
 
@@ -794,7 +793,7 @@ class Datab extends CI_Model
         //debug($dati['forms_fields']);
         return $dati;
     }
-    public function processFieldMapping($field, $form)
+    public function processFieldMapping($field, $form, $value_id = null)
     {
         // Il ref è il nome della tabella/entità di supporto/da joinare
         // quindi estraggo i valori da proporre
@@ -864,7 +863,8 @@ class Datab extends CI_Model
 
         // Prendo la field select where
         if (($fieldWhere = trim($field['fields_select_where']))) {
-            $wheres[] = $this->replace_superglobal_data($fieldWhere);
+            $replaces = ['value_id' => $value_id];
+            $wheres[] = $this->replace_superglobal_data(str_replace_placeholders($fieldWhere, $replaces));
         }
 
         //If any pre-search are present, run it before extract data
@@ -960,7 +960,7 @@ class Datab extends CI_Model
             }
 
             /** GRID LIMIT (Michael, 2021-12-09) */
-            if (!empty($grid['grids']['grids_limit']) && $grid['grids']['grids_limit'] > 0) {
+            if ( (!empty($grid['grids']['grids_limit']) && $grid['grids']['grids_limit'] > 0) && !$limit) {
                 $limit = $grid['grids']['grids_limit'];
             }
 
@@ -2184,7 +2184,8 @@ class Datab extends CI_Model
 
         // $query = $this->db->from('modules')->where('modules_installed', DB_BOOL_TRUE)->where("(modules_name = '{$name}' OR modules_identifier = '{$name}')", null, false)->get();
         // return $query->num_rows() > 0;
-        return $this->module->moduleExists($name);
+        
+        return $this->module->moduleExists($name,true );
     }
 
     public function module_access($name)
@@ -2685,6 +2686,8 @@ class Datab extends CI_Model
                     $style = ($idLang != $this->_currentLanguage) ? 'style="display:none"' : '';
                     $out[] = "<div data-lang='{$idLang}' {$style}>" . $this->buildFieldGridCell($field, $dato, false) . '</div>';
                 }
+            } else { // 20231129 - michael - ho aggiunto questo else perchè da qualche parte si è modificato il sistema di traduzione dei campi di tipo multilingua, di conseguenza nelle grid apparivano le celle vuote in caso di multilang
+                return $value;
             }
 
             return implode(PHP_EOL, $out);
@@ -2753,7 +2756,7 @@ class Datab extends CI_Model
 
                     //Check if entity_preview_base or custom is set
                     if ($entity_preview) {
-                        $text = str_replace_placeholders($entity_preview, $dato);
+                        $text = str_replace_placeholders($entity_preview, $dato, true, true);
                         //debug($text,true);
                     } else {
                         foreach ($field['support_fields'] as $support_field) {
@@ -2786,6 +2789,8 @@ class Datab extends CI_Model
                                             $style = ($idLang != $this->_currentLanguage) ? 'style="display:none"' : '';
                                             $previewSegment .= "<div data-lang='{$idLang}' {$style}>" . $valueLang . '</div>';
                                         }
+                                    } else {
+                                        $previewSegment = $dato[$prefixedKey];
                                     }
                                 } else {
                                     $previewSegment = $dato[$simpleKey];
@@ -2883,6 +2888,7 @@ class Datab extends CI_Model
                         return "<img src='{$path}' style='width: 50px;' />";
                     }
                 case 'single_upload':
+                    case 'signature':
                     if (!empty($value)) {
                         $item = json_decode($value, true);
                         
@@ -3147,7 +3153,8 @@ class Datab extends CI_Model
         $basePlaceholder = $field['forms_fields_override_placeholder'] ?: $field['fields_draw_placeholder'];
         $baseHelpText = $field['fields_draw_help_text'] ? '<span class="help-block">' . t($field['fields_draw_help_text']) . '</span>' : '';
         $baseShow = $field['fields_draw_display_none'] == DB_BOOL_FALSE;
-        $baseShowRequired = $field['forms_fields_show_required'] ? $field['forms_fields_show_required'] == DB_BOOL_TRUE : ($field['fields_required'] != FIELD_NOT_REQUIRED && !trim($field['fields_default']));
+        //$baseShowRequired = $field['forms_fields_show_required'] ? $field['forms_fields_show_required'] == DB_BOOL_TRUE : ($field['fields_required'] != FIELD_NOT_REQUIRED && !trim($field['fields_default']));
+        $baseShowRequired = $field['forms_fields_show_required'] ? $field['forms_fields_show_required'] == DB_BOOL_TRUE : ($field['fields_required'] != FIELD_NOT_REQUIRED);
         $baseShowLabel = $field['forms_fields_show_label'] ? $field['forms_fields_show_label'] == DB_BOOL_TRUE : true; // Se è vuoto mostro sempre la label di default, altrimenti valuto il campo
         $baseOnclick = $field['fields_draw_onclick'] ? sprintf('onclick="%s"', $field['fields_draw_onclick']) : '';
 
@@ -3662,6 +3669,8 @@ class Datab extends CI_Model
             ->result_array();
         if (!empty($params['search'])) {
             $where = $this->search_like($params['search'], array_merge($grid['grids_fields'], $preview_fields));
+        } else {
+            $where = null;
         }
         if (!empty($params['order_by'])) {
             $order_by = $params['order_by'];
@@ -3737,5 +3746,111 @@ class Datab extends CI_Model
     public function getLayoutBoxesBenchmark()
     {
         return $this->_layout_boxes_benchmark;
+    }
+    /**
+     * @param $element
+     * @param $id
+     * @param $return_data
+     */
+    public function clone_element($element, $id, $return_id = true) {
+        if (!$this->auth->is_admin()) {
+            return t('Unauthorized');
+        }
+        
+        switch($element) {
+            case 'grid':
+                return $this->clone_grid($id, $return_id);
+            case 'layout':
+            case 'layout_box':
+            case 'form':
+            // @todo 20231206 - michael - clonare gli altri elementi in base al bisogno.
+            default:
+                return t('Element unknown or unmanaged');
+        }
+    }
+    
+    private function clone_grid($id, $return_id = false)
+    {
+        if (!is_numeric($id)) {
+            $this->db->where('grids_identifier', $id);
+        } else {
+            $this->db->where('grids_id', $id);
+        }
+        
+        $grid = $this->db->get('grids')->row_array();
+        
+        if (empty($grid)) {
+            return t('Grid not found');
+        }
+        
+        $fields = $this->db->get_where('grids_fields', array('grids_fields_grids_id' => $grid['grids_id']))->result_array();
+        $actions = $this->db->get_where('grids_actions', array('grids_actions_grids_id' => $grid['grids_id']))->result_array();
+        
+        // Inserisci una nuova grid - togli l'id
+        unset($grid['grids_id']);
+        
+        $grid['grids_name'] .= " - duplicated";
+        $grid['grids_default'] = DB_BOOL_FALSE;
+        
+        unset($grid['grids_module_key']);
+        
+        $this->db->insert('grids', $grid);
+        $new_id = $this->db->insert_id();
+        
+        if (!empty($grid['grids_module_key'])) {
+            $old_key_expl = explode('-', $grid['grids_module_key']);
+            $this->db->where('grids_id', $new_id)->update('grids', ['grids_module_key' => "{$old_key_expl[0]}-grid-{$new_id}"]);
+        }
+        
+        // Aggiungi tutti i fields
+        foreach ($fields as $field) {
+            $field['grids_fields_grids_id'] = $new_id;
+            
+            unset($field['grids_fields_id']);
+            
+            $this->db->insert('grids_fields', $field);
+        }
+        
+        // Aggiungi tutte le custom actions
+        foreach ($actions as $action) {
+            unset($action['grids_actions_id']);
+            
+            $action['grids_actions_grids_id'] = $new_id;
+            
+            $this->db->insert('grids_actions', $action);
+        }
+        
+        if ($return_id) {
+            return $new_id;
+        } else {
+            return $this->get_grid($new_id);
+        }
+    }
+    
+    /**
+     * @param $type
+     * @param $id
+     * @description Function to lock an element and avoid accidental remove or overwrite (often when updating modules...)
+     * @return string|true
+     */
+    public function lock_element($type, $id)
+    {
+        if (!$this->auth->is_admin()) {
+            return t('Unauthorized');
+        }
+        
+        try {
+            //Controllo se presente, se si unlocko, se no locko
+            $exists = $this->db->get_where('locked_elements', ['locked_elements_type' => $type, 'locked_elements_ref_id' => $id]);
+            if ($exists->num_rows() >= 1) {
+                $this->db->where(['locked_elements_type' => $type, 'locked_elements_ref_id' => $id])->delete('locked_elements');
+            } else {
+                $this->db->insert('locked_elements', ['locked_elements_type' => $type, 'locked_elements_ref_id' => $id]);
+            }
+            
+            return true;
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

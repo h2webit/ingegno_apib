@@ -1718,7 +1718,7 @@ class Prima_nota extends CI_Model
                                 if ($registrazione['iva_reverse']) {
                                     $totali[$registrazione['iva_id']]['reverse']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
                                     $totali[$registrazione['iva_id']]['reverse']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
-                                } elseif ($registrazione['iva_split']) {
+                                } elseif (!empty($registrazione['iva_split'])) {
                                     $totali[$registrazione['iva_id']]['split']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
                                     $totali[$registrazione['iva_id']]['split']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                                 } else {
@@ -1760,7 +1760,7 @@ class Prima_nota extends CI_Model
                             if (!$reverse_fix && $registrazione['iva_reverse']) {
                                 $totali[$registrazione['iva_id']]['reverse']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
                                 $totali[$registrazione['iva_id']]['reverse']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
-                            } elseif ($registrazione['iva_split']) {
+                            } elseif (!empty($registrazione['iva_split'])) {
                                 $totali[$registrazione['iva_id']]['split']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
                                 $totali[$registrazione['iva_id']]['split']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                             } else {
@@ -1879,12 +1879,17 @@ class Prima_nota extends CI_Model
                     ($nascondi_orfani) ? "documenti_contabilita_conti_id IN (SELECT COALESCE(prime_note_registrazioni_conto_dare, prime_note_registrazioni_conto_avere) FROM prime_note_registrazioni WHERE prime_note_registrazioni_conto_dare IS NOT NULL OR prime_note_registrazioni_conto_avere IS NOT NULL)" : '1=1',
                 ]);
                 if ($conteggi) {
-                    $mastri_tipi[$key]['mastri'][$mastro_key]['totale'] = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as s FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_mastro_dare = '{$mastro['documenti_contabilita_mastri_id']}' OR prime_note_registrazioni_mastro_avere = '{$mastro['documenti_contabilita_mastri_id']}')")->row()->s;
+                    $somme = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare) as dare, SUM(prime_note_registrazioni_importo_avere) as avere, SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as totale FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_mastro_dare = '{$mastro['documenti_contabilita_mastri_id']}' OR prime_note_registrazioni_mastro_avere = '{$mastro['documenti_contabilita_mastri_id']}')")->row();
+                    $mastri_tipi[$key]['mastri'][$mastro_key]['totale'] = $somme->totale;
+                    $mastri_tipi[$key]['mastri'][$mastro_key]['dare'] = $somme->dare;
+                    $mastri_tipi[$key]['mastri'][$mastro_key]['avere'] = $somme->avere;
+                    
                 }
 
                 foreach ($mastri_tipi[$key]['mastri'][$mastro_key]['conti'] as $conto_key => $conto) {
                     if ($conteggi) {
                         $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['totale'] = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as s FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_conto_dare = '{$conto['documenti_contabilita_conti_id']}' OR prime_note_registrazioni_conto_avere = '{$conto['documenti_contabilita_conti_id']}')")->row()->s;
+                        
                     }
                     if ($full || (!$conto['documenti_contabilita_conti_clienti'] && !$conto['documenti_contabilita_conti_fornitori'])) {
                         $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'] = $this->apilib->search('documenti_contabilita_sottoconti', [
@@ -1897,7 +1902,11 @@ class Prima_nota extends CI_Model
                                 if ($sottoconto['documenti_contabilita_sottoconti_id'] == 54) {
                                     //debug("SELECT SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as s FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_sottoconto_dare = '{$sottoconto['documenti_contabilita_sottoconti_id']}' OR prime_note_registrazioni_sottoconto_avere = '{$sottoconto['documenti_contabilita_sottoconti_id']}')", true);
                                 }
-                                $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['totale'] = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as s FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_sottoconto_dare = '{$sottoconto['documenti_contabilita_sottoconti_id']}' OR prime_note_registrazioni_sottoconto_avere = '{$sottoconto['documenti_contabilita_sottoconti_id']}')")->row()->s;
+                                $somme = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare) as dare,SUM(prime_note_registrazioni_importo_avere) as avere, SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as totale FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_sottoconto_dare = '{$sottoconto['documenti_contabilita_sottoconti_id']}' OR prime_note_registrazioni_sottoconto_avere = '{$sottoconto['documenti_contabilita_sottoconti_id']}')")->row();
+                                $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['totale'] = $somme->totale;
+                                $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['dare'] = $somme->dare;
+                                $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['avere'] = $somme->avere;
+                                
                             }
                         }
                     } else {
@@ -1930,7 +1939,10 @@ class Prima_nota extends CI_Model
                 // }
                 foreach ($mastri_tipi[$key]['mastri'][$mastro_key]['conti'] as $conto_key => $conto) {
                     if ($conteggi) {
-                        $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['totale'] = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare-prime_note_registrazioni_importo_avere) as s FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_conto_dare = '{$conto['documenti_contabilita_conti_id']}' OR prime_note_registrazioni_conto_avere = '{$conto['documenti_contabilita_conti_id']}')")->row()->s;
+                        $somme = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare) as dare,SUM(prime_note_registrazioni_importo_avere) as avere, SUM(prime_note_registrazioni_importo_dare-prime_note_registrazioni_importo_avere) as totale FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_conto_dare = '{$conto['documenti_contabilita_conti_id']}' OR prime_note_registrazioni_conto_avere = '{$conto['documenti_contabilita_conti_id']}')")->row();
+                        $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['totale'] = $somme->totale;
+                        $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['dare'] = $somme->dare;
+                        $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['avere'] = $somme->avere;
                     }
                     // switch ($mastro['documenti_contabilita_mastri_natura_value']) {
                     //     case 'Passività': //Attività
@@ -2000,5 +2012,88 @@ class Prima_nota extends CI_Model
 
         $this->mycache->clearCache();
         return true;
+    }
+
+    public function cambiaSottocontoRegistrazione($registrazione, $replace_codice_testuale, $force_creation = false)
+    {
+
+        //Dato il codice testuale mi estraggo tutte le info
+
+        $exploded = explode('.', $replace_codice_testuale);
+        if (count($exploded) != 3) {
+            debug("Codice '$replace_codice_testuale' (rif progr anno: '{$registrazione['prime_note_progressivo_annuo']}') non nel formato XX.XX.XXXXX");
+            return;
+        }
+        $codice_mastro = $exploded[0];
+        $codice_conto = $exploded[1];
+        $codice_sottoconto = $exploded[2];
+
+        $mastro = $this->apilib->searchFirst('documenti_contabilita_mastri', ['documenti_contabilita_mastri_codice' => $codice_mastro]);
+        $conto = $this->apilib->searchFirst('documenti_contabilita_conti', [
+            'documenti_contabilita_conti_codice' => $codice_conto,
+            'documenti_contabilita_conti_mastro' => $mastro['documenti_contabilita_mastri_id']
+        ]);
+        $sottoconto = $this->apilib->searchFirst('documenti_contabilita_sottoconti', [
+            'documenti_contabilita_sottoconti_codice' => $codice_sottoconto,
+            'documenti_contabilita_sottoconti_conto' => $conto['documenti_contabilita_conti_id'],
+            'documenti_contabilita_sottoconti_blocco <> 1 OR documenti_contabilita_sottoconti_blocco IS NULL'
+        ]);
+        if (!$sottoconto) {
+            if ($force_creation) {
+                $expl_sottoconto = explode('.', $replace_codice_testuale);
+                $mastro_codice = $expl_sottoconto[0];
+                $conto_codice = @$expl_sottoconto[1];
+                if (!$conto_codice) {
+                    debug($replace_codice_testuale, true);
+                }
+                $sottoconto_codice = $expl_sottoconto[2];
+                $mastro = $this->apilib->searchFirst('documenti_contabilita_mastri', [
+                    'documenti_contabilita_mastri_codice' => $mastro_codice,
+                ]);
+                // debug($mastro);
+                $conto = $this->apilib->searchFirst('documenti_contabilita_conti', [
+                    'documenti_contabilita_conti_codice' => $conto_codice,
+                    'documenti_contabilita_conti_mastro' => $mastro['documenti_contabilita_mastri_id']
+                ]);
+                $sottoconto = $this->apilib->create('documenti_contabilita_sottoconti', [
+                    'documenti_contabilita_sottoconti_mastro' => $mastro['documenti_contabilita_mastri_id'],
+                    'documenti_contabilita_sottoconti_conto' => $conto['documenti_contabilita_conti_id'],
+                    'documenti_contabilita_sottoconti_codice' => $sottoconto_codice,
+                    'documenti_contabilita_sottoconti_descrizione' => "SOTTOCONTO MANCANTE '{$replace_codice_testuale}'",
+                    'documenti_contabilita_sottoconti_codice_completo' => $replace_codice_testuale,
+
+                ]);
+            }
+
+        }
+        if (empty($sottoconto['documenti_contabilita_sottoconti_id'])) {
+            debug($replace_codice_testuale);
+            debug($sottoconto, true);
+        }
+        if ($registrazione['prime_note_registrazioni_codice_avere_testuale']) {
+            if (
+                $registrazione['prime_note_registrazioni_codice_avere_testuale'] != $replace_codice_testuale
+                ||
+                $registrazione['prime_note_registrazioni_sottoconto_avere'] != $sottoconto['documenti_contabilita_sottoconti_id']
+            ) {
+                $this->apilib->edit('prime_note_registrazioni', $registrazione['prime_note_registrazioni_id'], [
+                    'prime_note_registrazioni_codice_avere_testuale' => $replace_codice_testuale,
+                    'prime_note_registrazioni_sottoconto_avere' => $sottoconto['documenti_contabilita_sottoconti_id'],
+                ]);
+            }
+
+        } elseif ($registrazione['prime_note_registrazioni_codice_dare_testuale']) {
+            if (
+                $registrazione['prime_note_registrazioni_codice_dare_testuale'] != $replace_codice_testuale
+                ||
+                $registrazione['prime_note_registrazioni_sottoconto_dare'] != $sottoconto['documenti_contabilita_sottoconti_id']
+            ) {
+
+                $this->apilib->edit('prime_note_registrazioni', $registrazione['prime_note_registrazioni_id'], [
+                    'prime_note_registrazioni_codice_dare_testuale' => $replace_codice_testuale,
+                    'prime_note_registrazioni_sottoconto_dare' => $sottoconto['documenti_contabilita_sottoconti_id'],
+                ]);
+            }
+        }
     }
 }

@@ -4,13 +4,13 @@
     "modules_description": "Module Manager to install, update and uninstall OpenBuilder modules.",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.4.0",
+    "modules_version": "1.4.1",
     "modules_identifier": "module-manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "554",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "38",
+    "modules_version_code": "39",
     "modules_thumbnail": "0988e03e605658fe472bdbfbb6b7dda4.png",
     "modules_min_client_version": "3.1.0",
     "modules_version_date": "2023-01-13 14:24:14",
@@ -51,6 +51,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -72,6 +74,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -93,6 +97,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -114,6 +120,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -135,6 +143,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -156,6 +166,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -177,6 +189,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -198,6 +212,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -312,13 +328,13 @@
                 {
                     "modules_manager_settings_id": "1",
                     "modules_manager_settings_creation_date": "2023-01-13 17:23:57",
-                    "modules_manager_settings_modified_date": "2023-07-03 11:55:49",
+                    "modules_manager_settings_modified_date": "2023-10-25 13:02:45",
                     "modules_manager_settings_created_by": "2",
                     "modules_manager_settings_edited_by": "2",
                     "modules_manager_settings_insert_scope": "form",
                     "modules_manager_settings_edit_scope": "form",
                     "modules_manager_settings_modules_repository": "https:\/\/admin.openbuilder.net\/",
-                    "modules_manager_settings_license_token": "##HBt4BB90"
+                    "modules_manager_settings_license_token": "HBt4BB90"
                 }
             ],
             "raw_data_update": []
@@ -554,6 +570,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -590,6 +608,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -626,6 +646,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -662,6 +684,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -698,6 +722,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -734,6 +760,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -770,6 +798,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -888,6 +918,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -924,6 +956,8 @@
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -960,6 +994,8 @@
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -1057,7 +1093,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "module-manager-forms_fields-2402_4108",
-                    "forms_fields_module": "module-manager"
+                    "forms_fields_module": "module-manager",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2402",
@@ -1079,7 +1116,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "module-manager-forms_fields-2402_4185",
-                    "forms_fields_module": "module-manager"
+                    "forms_fields_module": "module-manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         }
