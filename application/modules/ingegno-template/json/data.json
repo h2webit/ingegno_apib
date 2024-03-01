@@ -4,15 +4,15 @@
     "modules_description": "Template ingegno",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.6",
+    "modules_version": "1.0.7",
     "modules_identifier": "ingegno-template",
     "modules_base64_zip": null,
     "modules_raw_data_install": "558",
     "modules_raw_data_update": "558",
     "modules_created_by_user": "1",
-    "modules_version_code": "23",
+    "modules_version_code": "26",
     "modules_thumbnail": "0d34ba2324a05fb976294ab781889e1f.png",
-    "modules_min_client_version": "3.6.6",
+    "modules_min_client_version": "3.6.9",
     "modules_version_date": "2023-02-03 16:46:58",
     "modules_auto_update": "0",
     "modules_last_update": "2023-02-03 16:46:58",
@@ -328,26 +328,26 @@
                 {
                     "ingegno_template_id": "1",
                     "ingegno_template_creation_date": "2023-02-03 16:53:27",
-                    "ingegno_template_modified_date": "2024-01-16 12:19:11",
+                    "ingegno_template_modified_date": "2024-02-15 11:48:07",
                     "ingegno_template_created_by": "5",
                     "ingegno_template_edited_by": "22",
                     "ingegno_template_insert_scope": "form",
                     "ingegno_template_edit_scope": "form",
                     "ingegno_template_zip": "",
-                    "ingegno_template_version": "1.0.6"
+                    "ingegno_template_version": "1.0.7"
                 }
             ],
             "raw_data_update": [
                 {
                     "ingegno_template_id": "1",
                     "ingegno_template_creation_date": "2023-02-03 16:53:27",
-                    "ingegno_template_modified_date": "2024-01-16 12:19:11",
+                    "ingegno_template_modified_date": "2024-02-15 11:48:07",
                     "ingegno_template_created_by": "5",
                     "ingegno_template_edited_by": "22",
                     "ingegno_template_insert_scope": "form",
                     "ingegno_template_edit_scope": "form",
                     "ingegno_template_zip": "",
-                    "ingegno_template_version": "1.0.6"
+                    "ingegno_template_version": "1.0.7"
                 }
             ]
         }
@@ -372,6 +372,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "7",
             "layouts_boxes_color": "red",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -393,6 +394,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "5",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         }
     ],

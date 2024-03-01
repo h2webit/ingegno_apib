@@ -67,25 +67,25 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
         <div class="wk_header_filter">
             <ul>
                 <li><label class="container-checkbox ">
-                        <input type="checkbox" class="js_checkbox_conteggi" value="1" <?php if ($this->input->get('nascondi_conteggi')) : ?> checked<?php endif; ?> />
+                        <input type="checkbox" class="js_checkbox_conteggi" value="1" <?php if ($this->input->get('nascondi_conteggi')): ?> checked<?php endif; ?> />
                         <span class="checkmark"></span>
                         Nascondi conteggi </label>
                 </li>
 
                 <li><label class="container-checkbox ">
-                        <input type="checkbox" class="js_checkbox_clienti_fornitori" value="1" <?php if ($this->input->get('completo')) : ?> checked<?php endif; ?> />
+                        <input type="checkbox" class="js_checkbox_clienti_fornitori" value="1" <?php if ($this->input->get('completo')): ?> checked<?php endif; ?> />
                         <span class="checkmark"></span>
                         Includi sottoconti clienti/fornitori </label>
                 </li>
 
                 <li><label class="container-checkbox ">
-                        <input type="checkbox" class="js_checkbox_nasconti_conti_senza_registrazioni" value="1" <?php if ($this->input->get('nascondi_orfani')) : ?> checked<?php endif; ?> />
+                        <input type="checkbox" class="js_checkbox_nasconti_conti_senza_registrazioni" value="1" <?php if ($this->input->get('nascondi_orfani')): ?> checked<?php endif; ?> />
                         <span class="checkmark"></span>
                         Nascondi conti privi di registrazioni </label>
                 </li>
 
                 <li><label class="container-checkbox ">
-                        <input type="checkbox" class="js_checkbox_nascondi_importi_a_zero" value="1" <?php if ($this->input->get('nascondi_zero')) : ?> checked<?php endif; ?> />
+                        <input type="checkbox" class="js_checkbox_nascondi_importi_a_zero" value="1" <?php if ($this->input->get('nascondi_zero')): ?> checked<?php endif; ?> />
                         <span class="checkmark"></span>
                         Nascondi conti a zero</label>
                 </li>
@@ -98,7 +98,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 <div class="container-fluid box box-danger">
 
     <div class="row">
-        <?php foreach ($piano_dei_conti as $mastro_tipo) : ?>
+        <?php foreach ($piano_dei_conti as $mastro_tipo): ?>
 
 
 
@@ -107,25 +107,31 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                     <h3 class="box-title">
                         <?php echo $mastro_tipo['documenti_contabilita_mastri_tipo_value']; ?>
 
-                        <a class="btn btn-xs btn-success js_open_modal" data-toggle="tooltip" title="Aggiungi mastro" href="<?php echo base_url('get_ajax/modal_form/new-mastro/?documenti_contabilita_mastri_tipo=' . $mastro_tipo['documenti_contabilita_mastri_tipo_id']); ?>">
+                        <a class="btn btn-xs btn-success js_open_modal" data-toggle="tooltip" title="Aggiungi mastro"
+                            href="<?php echo base_url('get_ajax/modal_form/new-mastro/?documenti_contabilita_mastri_tipo=' . $mastro_tipo['documenti_contabilita_mastri_tipo_id']); ?>">
                             <i class="fa fa-plus"></i>
                         </a>
                     </h3>
                 </div>
 
                 <div class="box-body">
-                    <?php foreach ($mastro_tipo['mastri'] as $mastro) : ?>
+                    <?php foreach ($mastro_tipo['mastri'] as $mastro): ?>
                         <div class="mastro_container" id="mastro_<?php echo $mastro['documenti_contabilita_mastri_id']; ?>">
                             <h5 class="bg-primary">
-                                <strong class="text-uppercase"><?php echo $mastro['documenti_contabilita_mastri_codice']; ?> <?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?></strong>
+                                <strong class="text-uppercase">
+                                    <?php echo $mastro['documenti_contabilita_mastri_codice']; ?>
+                                    <?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?>
+                                </strong>
                                 <span class="mastro_actions">
-                                    <a class="btn btn-xs btn-success js_open_modal" data-toggle="tooltip" title="Aggiungi conto" href="<?php echo base_url('get_ajax/modal_form/new_documenti_contabilita_conto?documenti_contabilita_conti_mastro=' . $mastro['documenti_contabilita_mastri_id']); ?>">
+                                    <a class="btn btn-xs btn-success js_open_modal" data-toggle="tooltip" title="Aggiungi conto"
+                                        href="<?php echo base_url('get_ajax/modal_form/new_documenti_contabilita_conto?documenti_contabilita_conti_mastro=' . $mastro['documenti_contabilita_mastri_id']); ?>">
                                         <i class="fa fa-plus"></i>
                                     </a>
                                     <!--<a class="btn bg-orange btn-xs" data-toggle="tooltip" title="Stampa mastro" href="<?php echo base_url('contabilita/primanota/stampa_mastro/' . $mastro['documenti_contabilita_mastri_id']); ?>" target="_blank">
                                         <i class="fa fa-print"></i>
                                     </a>-->
-                                    <a data-toggle="tooltip" title="Modifica mastro" class="btn bg-purple btn-xs js_open_modal" href="<?php echo base_url('get_ajax/modal_form/new-mastro/' . $mastro['documenti_contabilita_mastri_id']); ?>">
+                                    <a data-toggle="tooltip" title="Modifica mastro" class="btn bg-purple btn-xs js_open_modal"
+                                        href="<?php echo base_url('get_ajax/modal_form/new-mastro/' . $mastro['documenti_contabilita_mastri_id']); ?>">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 </span>
@@ -136,7 +142,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                     <thead>
                                         <tr>
                                             <th>Descrizione</th>
-                                            <?php if ($conteggi) : ?>
+                                            <?php if ($conteggi): ?>
                                                 <th class="text-center">Importo</th>
                                             <?php endif; ?>
                                             <th style="min-width: 100px" class="text-right">Azioni</th>
@@ -144,17 +150,22 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                     </thead>
 
                                     <tbody>
-                                        <?php foreach ($mastro['conti'] as $conto) : ?>
+                                        <?php foreach ($mastro['conti'] as $conto): ?>
                                             <?php if ($this->input->get('nascondi_zero') == 1 && $conteggi && $conto['totale'] == 0) {
                                                 continue;
                                             } ?>
                                             <tr style="opacity: 1; color:#14518d;">
                                                 <td>
                                                     <span class="clickable" id="movimenti-55">
-                                                        &nbsp;<b><?php echo $conto['documenti_contabilita_conti_codice_completo']; ?></b> <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
+                                                        &nbsp;<b>
+                                                            <?php echo $conto['documenti_contabilita_conti_codice_completo']; ?>
+                                                        </b>
+                                                        <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
                                                     </span>
                                                     <span class="conto_actions">
-                                                        <a class="btn btn-xs btn-success js_open_modal" data-toggle="tooltip" title="Aggiungi sottoconto" href="<?php echo base_url('get_ajax/modal_form/new-sottoconto?documenti_contabilita_sottoconti_mastro=' . $mastro['documenti_contabilita_mastri_id'] . '&documenti_contabilita_sottoconti_conto=' . $conto['documenti_contabilita_conti_id']); ?>">
+                                                        <a class="btn btn-xs btn-success js_open_modal" data-toggle="tooltip"
+                                                            title="Aggiungi sottoconto"
+                                                            href="<?php echo base_url('get_ajax/modal_form/new-sottoconto?documenti_contabilita_sottoconti_mastro=' . $mastro['documenti_contabilita_mastri_id'] . '&documenti_contabilita_sottoconti_conto=' . $conto['documenti_contabilita_conti_id']); ?>">
                                                             <i class="fa fa-plus"></i>
                                                         </a>
                                                         <!--<a class="btn bg-orange btn-xs" data-toggle="tooltip" title="Stampa mastro" href="<?php echo base_url('contabilita/primanota/stampa_mastro/' . $mastro['documenti_contabilita_mastri_id']); ?>" target="_blank">
@@ -163,20 +174,26 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 
                                                     </span>
                                                 </td>
-                                                <?php if ($conteggi) : ?>
+                                                <?php if ($conteggi): ?>
                                                     <td class="text-right">
                                                         <?php e_money($conto['totale']); ?> €
                                                     </td>
                                                 <?php endif; ?>
                                                 <td class="text-right">
                                                     <span class="tools">
-                                                        <a class="btn bg-orange btn-xs" data-toggle="tooltip" title="Stampa conto" href="<?php echo base_url('contabilita/primanota/stampa_conto/' . $conto['documenti_contabilita_conti_id']); ?>" target="_blank">
+                                                        <a class="btn bg-orange btn-xs" data-toggle="tooltip" title="Stampa conto"
+                                                            href="<?php echo base_url('contabilita/primanota/stampa_conto/' . $conto['documenti_contabilita_conti_id']); ?>"
+                                                            target="_blank">
                                                             <i class="fa fa-print"></i>
                                                         </a>
-                                                        <a class="btn bg-purple btn-xs js_open_modal" data-toggle="tooltip" title="Modifica conto" href="<?php echo base_url('get_ajax/modal_form/new_documenti_contabilita_conto/' . $conto['documenti_contabilita_conti_id']); ?>">
+                                                        <a class="btn bg-purple btn-xs js_open_modal" data-toggle="tooltip"
+                                                            title="Modifica conto"
+                                                            href="<?php echo base_url('get_ajax/modal_form/new_documenti_contabilita_conto/' . $conto['documenti_contabilita_conti_id']); ?>">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
-                                                        <a class="btn btn-danger btn-xs js_confirm_button" href="<?php echo base_url('db_ajax/generic_delete/documenti_contabilita_conti/' . $conto['documenti_contabilita_conti_id']); ?>" data-toggle="tooltip" title="Elimina">
+                                                        <a class="btn btn-danger btn-xs js_confirm_button"
+                                                            href="<?php echo base_url('db_ajax/generic_delete/documenti_contabilita_conti/' . $conto['documenti_contabilita_conti_id']); ?>"
+                                                            data-toggle="tooltip" title="Elimina">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
 
@@ -184,32 +201,42 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                                 </td>
 
                                             </tr>
-                                            <?php foreach ($conto['sottoconti'] as $sottoconto) : ?>
+                                            <?php foreach ($conto['sottoconti'] as $sottoconto): ?>
 
                                                 <?php if ($this->input->get('nascondi_zero') == 1 && $conteggi && $sottoconto['totale'] == 0) {
                                                     continue;
                                                 } ?>
 
                                                 <tr>
-                                                    <td style="padding-left: 30px;opacity: 0.75;">
+                                                    <td
+                                                        style="padding-left: 30px;opacity: 0.75;<?php if ($sottoconto['documenti_contabilita_sottoconti_blocco']): ?> text-decoration: line-through; color:red;<?php endif; ?>">
                                                         <span class="clickable">
-                                                            &nbsp;<b><?php echo $sottoconto['documenti_contabilita_sottoconti_codice_completo']; ?></b> <?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?>
+                                                            &nbsp;<b>
+                                                                <?php echo $sottoconto['documenti_contabilita_sottoconti_codice_completo']; ?>
+                                                            </b>
+                                                            <?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?>
                                                         </span>
                                                     </td>
-                                                    <?php if ($conteggi) : ?>
+                                                    <?php if ($conteggi): ?>
                                                         <td class="text-right">
                                                             <?php e_money($sottoconto['totale']); ?> €
                                                         </td>
                                                     <?php endif; ?>
                                                     <td class="text-right">
                                                         <span class="tools">
-                                                            <a class="btn bg-orange btn-xs" data-toggle="tooltip" title="Stampa conto" href="<?php echo base_url('contabilita/primanota/stampa_sottoconto/' . $sottoconto['documenti_contabilita_sottoconti_id']); ?>" target="_blank">
+                                                            <a class="btn bg-orange btn-xs" data-toggle="tooltip" title="Stampa conto"
+                                                                href="<?php echo base_url('contabilita/primanota/stampa_sottoconto/' . $sottoconto['documenti_contabilita_sottoconti_id']); ?>"
+                                                                target="_blank">
                                                                 <i class="fa fa-print"></i>
                                                             </a>
-                                                            <a class="btn bg-purple btn-xs js_open_modal" data-toggle="tooltip" title="Modifica sottoconto" href="<?php echo base_url('get_ajax/modal_form/new-sottoconto/'  . $sottoconto['documenti_contabilita_sottoconti_id']); ?>">
+                                                            <a class="btn bg-purple btn-xs js_open_modal" data-toggle="tooltip"
+                                                                title="Modifica sottoconto"
+                                                                href="<?php echo base_url('get_ajax/modal_form/new-sottoconto/' . $sottoconto['documenti_contabilita_sottoconti_id']); ?>">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a class="btn btn-danger btn-xs js_confirm_button" href="<?php echo base_url('db_ajax/generic_delete/documenti_contabilita_sottoconti/' . $sottoconto['documenti_contabilita_sottoconti_id']); ?>" data-toggle="tooltip" title="Elimina">
+                                                            <a class="btn btn-danger btn-xs js_confirm_button"
+                                                                href="<?php echo base_url('db_ajax/generic_delete/documenti_contabilita_sottoconti/' . $sottoconto['documenti_contabilita_sottoconti_id']); ?>"
+                                                                data-toggle="tooltip" title="Elimina">
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
 
@@ -226,8 +253,10 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                         <tr>
                                             <th class="text-right"></th>
                                             <th class="text-right text-uppercase">Totale</th>
-                                            <?php if ($conteggi) : ?>
-                                                <th class="text-right"><?php e_money($mastro['totale']); ?> €</th>
+                                            <?php if ($conteggi): ?>
+                                                <th class="text-right">
+                                                    <?php e_money($mastro['totale']); ?> €
+                                                </th>
                                             <?php endif; ?>
                                         </tr>
                                     </tfoot>
@@ -295,7 +324,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
     }
 
     $(() => {
-        $('.js_checkbox_conteggi,.js_checkbox_clienti_fornitori,.js_checkbox_nasconti_conti_senza_registrazioni,.js_checkbox_nascondi_importi_a_zero').on('click', function() {
+        $('.js_checkbox_conteggi,.js_checkbox_clienti_fornitori,.js_checkbox_nasconti_conti_senza_registrazioni,.js_checkbox_nascondi_importi_a_zero').on('click', function () {
             var nascondi_conteggi = (!$('.js_checkbox_conteggi').is(':checked') ? '0' : '1');
             var completo = (!$('.js_checkbox_clienti_fornitori').is(':checked') ? '0' : '1');
             var nascondi_orfani = (!$('.js_checkbox_nasconti_conti_senza_registrazioni').is(':checked') ? '0' : '1');

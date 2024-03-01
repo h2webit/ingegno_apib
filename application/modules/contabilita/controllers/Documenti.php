@@ -1467,7 +1467,10 @@ class Documenti extends MX_Controller
         foreach ($fatture_da_generare as $fattura_da_generare) {
             $documento_id = $this->docs->doc_express_save($fattura_da_generare);
         }
-        //Creo ordine per questo fornitore
+        foreach ($ddt_ids as $ddt_id) {
+            //Imposto quel ddt come chiuso
+            $this->apilib->edit('documenti_contabilita', $ddt_id, ['documenti_contabilita_stato' => 3]);
+        }
 
 
         redirect('main/layout/elenco_documenti');

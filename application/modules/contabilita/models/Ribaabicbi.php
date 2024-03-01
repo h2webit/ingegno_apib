@@ -71,7 +71,7 @@ class RibaAbiCbi extends CI_Model
         $this->valuta = substr($codice_divisa, 0, 1);
         $this->supporto = str_pad($nome_supporto, 20, '*', STR_PAD_LEFT);
         $this->codice_sia = $codice_sia;
-        return " IB".$this->codice_sia . $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 74) . $this->valuta . str_repeat(" ", 6);
+        return " IB" . $this->codice_sia . $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 74) . $this->valuta . str_repeat(" ", 6);
     }
 
     function Record14($scadenza, $importo, $abi_assuntrice, $cab_assuntrice, $conto, $abi_domiciliataria, $cab_domiciliataria, $codice_cliente)
@@ -117,7 +117,7 @@ class RibaAbiCbi extends CI_Model
         // debug($this->data);
         // debug($this->supporto);
         // debug($this->progressivo,true);
-        return " EF" .$this->codice_sia. $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 6) . str_pad($this->progressivo, 7, '0', STR_PAD_LEFT) . str_pad($this->totale, 15, '0', STR_PAD_LEFT) . str_repeat("0", 15) . str_pad($this->progressivo * 7 + 2, 7, '0', STR_PAD_LEFT) . str_repeat(" ", 24) . $this->valuta . str_repeat(" ", 6);
+        return " EF" . $this->codice_sia . $this->assuntrice . $this->data . $this->supporto . str_repeat(" ", 6) . str_pad($this->progressivo, 7, '0', STR_PAD_LEFT) . str_pad($this->totale, 15, '0', STR_PAD_LEFT) . str_repeat("0", 15) . str_pad($this->progressivo * 7 + 2, 7, '0', STR_PAD_LEFT) . str_repeat(" ", 24) . $this->valuta . str_repeat(" ", 6);
     }
 
     function creaFile($intestazione, $ricevute_bancarie)
@@ -176,7 +176,7 @@ class RibaAbiCbi extends CI_Model
             //         [4] = nome_supporto variabile lunghezza 20 alfanumerico
             5 => 'E',
             //         [5] = codice_divisa variabile lunghezza 1 alfanumerico opzionale default "E"
-            6 => $conto['conti_correnti_codice_sia']??$settings['documenti_contabilita_settings_codice_sia'],
+            6 => $conto['conti_correnti_codice_sia'] ?? $settings['documenti_contabilita_settings_codice_sia'],
             //         [6] = ragione_soc1_creditore variabile lunghezza 24 alfanumerico
             7 => $settings['documenti_contabilita_settings_company_name'],
             //         [7] = ragione_soc2_creditore variabile lunghezza 24 alfanumerico
@@ -213,7 +213,7 @@ class RibaAbiCbi extends CI_Model
                 $dest = array_merge($dest, $banca);
             }
             //Se non ho ABI o CAB li recupero dall'iban
-            if (trim($dest['customers_bank_accounts_abi']) || trim($dest['customers_bank_accounts_cab'])) {
+            if (!trim($dest['customers_bank_accounts_abi']) || !trim($dest['customers_bank_accounts_cab'])) {
                 $iban = $dest['customers_bank_accounts_iban'];
                 $iban_data = $this->extractIbanData($iban);
                 $dest['customers_bank_accounts_abi'] = $iban_data['abi'];
@@ -243,7 +243,7 @@ class RibaAbiCbi extends CI_Model
 
             //     }
             // }
-            
+
             $ricevute[] = [
                 0 => $documento['documenti_contabilita_numero'],
                 //        [0] = numero ricevuta lunghezza 10 numerico
@@ -272,6 +272,7 @@ class RibaAbiCbi extends CI_Model
                 12 => 'XXXXX',
                 //        [12] = descrizione del debito lunghezza 40 alfanumerico
             ];
+            debug($ricevute, true);
         }
         //debug($ricevute,true);
         return $this->creaFile($intestazione, $ricevute);

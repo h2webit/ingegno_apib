@@ -95,6 +95,7 @@ var app = new Vue({
             listContainer: null,
             //show / hide done todos in list mode
             doneTodosVisible: true,
+            disabledInput: false,
         };
     },
     component: {
@@ -798,7 +799,7 @@ var app = new Vue({
                             } else {
                                 console.log(self.error);
                                 self.error = true;
-                                self.errorMessage = response.data.txt;
+                                self.errorMessage = data.txt;
                             }
                         });
                 } catch (error) {
@@ -838,9 +839,10 @@ var app = new Vue({
          * ! Add new todo
          */
         addTodo(list) {
-            //console.log(`selectedList: ${list}`);
             var self = this;
             if (this.newTodo.length != 0) {
+                this.disabledInput = true;
+
                 var data = {
                     userId: this.loggedUser,
                     listId: this.selectedList,
@@ -869,14 +871,17 @@ var app = new Vue({
                                     todos: new Array(response.data.data),
                                 });
                             }
+                            self.disabledInput = false;
                         } else {
                             console.log(self.error);
+                            self.disabledInput = false;
                             self.error = true;
                             self.errorMessage = response.data.txt;
                         }
                     });
                 } catch (error) {
                     console.error(error);
+                    self.disabledInput = false;
                 }
             }
         },
@@ -885,6 +890,8 @@ var app = new Vue({
          */
         createList() {
             if (this.newList.length != 0) {
+                this.disabledInput = true;
+
                 var self = this;
 
                 var data = {
@@ -906,8 +913,10 @@ var app = new Vue({
                             self.error = false;
                             self.errorMessage = null;
                         }
+                        self.disabledInput = false;
                     });
                 } catch (error) {
+                    self.disabledInput = false;
                     console.error(error);
                 }
             }
@@ -1241,6 +1250,8 @@ var app = new Vue({
         createNewCategory() {
             var self = this;
             if (this.newCategoryName.length != 0) {
+                this.disabledInput = true;
+
                 var data = {
                     list_id: this.selectedList,
                     category_name: this.newCategoryName,
@@ -1269,11 +1280,14 @@ var app = new Vue({
                             //Reset category fields
                             self.newCategoryName = "";
                             self.showNewCategoryName = false;
+                            self.disabledInput = false;
                         } else {
+                            self.disabledInput = false;
                             console.log(self.error);
                         }
                     });
                 } catch (error) {
+                    self.disabledInput = false;
                     console.error(error);
                 }
             }

@@ -356,7 +356,7 @@ progress {
                 </div>
                 <!-- New list -->
                 <div class="flex items-center p-5 bg-white rounded-sm mb-5 shadow-sm overflow-hidden cursor-pointer">
-                    <input type="text" v-model="newList" placeholder="<?php e('Create new list'); ?>" class="font-sans tracking-wide placeholder-gray-400 text-gray-900 w-full rounded-sm focus:outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300" @keyup.enter="createList" />
+                    <input type="text" v-model="newList" placeholder="<?php e('Create new list'); ?>" class="font-sans tracking-wide placeholder-gray-400 text-gray-900 w-full rounded-sm focus:outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300" @keyup.enter="createList" :disabled="disabledInput" />
                 </div>
 
                 <div class="mt-8" v-if="sharedLists.length != 0">
@@ -553,7 +553,7 @@ progress {
                         <div class="new_todo p-5 bg-gray-100 rounded-sm mb-5 shadow-sm overflow-hidden cursor-pointer" v-if="selectedList">
                             <div class="flex items-center">
                                 <div class="flex items-center w-full">
-                                    <input type="text" v-model="newTodo" placeholder="<?php e('Write new todo'); ?>" class="font-sans tracking-wide placeholder-gray-400 text-gray-900 w-full rounded-sm focus:outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300 w-full bg-gray-100" @keyup.enter="addTodo(selectedList)" />
+                                    <input type="text" v-model="newTodo" placeholder="<?php e('Write new todo'); ?>" class="font-sans tracking-wide placeholder-gray-400 text-gray-900 w-full rounded-sm focus:outline-none focus:border-blue-300 focus:ring-1 focus:ring-blue-300 w-full bg-gray-100" @keyup.enter="addTodo(selectedList)" :disabled="disabledInput" />
                                 </div>
                             </div>
                         </div>
@@ -645,7 +645,7 @@ progress {
                                     <div class="category_header bg-blue-400 text-white px-4 py-3 kanban-column-width rounded-md mr-4 mb-4 cursor-pointer" @click="addNewCategory">
                                         <p class="font-semibold font-sans tracking-wide text-2xl text-white"><?php e('Add new column'); ?></p>
                                     </div>
-                                    <input v-if="showNewCategoryName" type="text" v-model="newCategoryName" class="w-full p-4 mt-4 pr-12 text-md bg-gray-100 rounded-lg shadow-sm" placeholder="<?php e('Enter column name'); ?>" @keyup.enter="createNewCategory">
+                                    <input v-if="showNewCategoryName" type="text" v-model="newCategoryName" class="w-full p-4 mt-4 pr-12 text-md bg-gray-100 rounded-lg shadow-sm" placeholder="<?php e('Enter column name'); ?>" @keyup.enter="createNewCategory" :disabled="disabledInput">
                                 </div>
                             </div>
                         </div>
@@ -859,8 +859,9 @@ progress {
                                     <input ref="fileInput" type="file" title=" " id="inputItem" class="btn_upload_file hidden" @change="handleFileUploads($event)" />
                                 </label>
                                 <!-- <vue-dropzone ref="myvDropzone" id="customdropzone" :options="dropzoneOptions" :include-styling="false" v-on:vdropzone-thumbnail="thumbnail" v-on:vdropzone-sending="sendingEvent" @vdropzone-mounted="vmounted"></vue-dropzone> -->
-                                <div v-if="selectedTodo.fi_todo_file" class="mt-4">
+                                <div v-if="selectedTodo.fi_todo_file" class="mt-4 flex justify-between items-center">
                                     <a :href="`${baseUrl}uploads/${selectedTodo.fi_todo_file}`" class="bg-white text-blue-600 rounded p-2 text-base font-medium" :class="canModifyTodo ? '' : 'opacity-40'" target="_blank">Scarica allegato</a>
+                                    <p class="text-black text-base font-medium">{{selectedTodo.fi_todo_file}}</p>
                                 </div>
                             </div>
                             <div class="mb-6">

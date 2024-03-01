@@ -176,7 +176,12 @@ extract($data['vendite']);
                         <tr class="js_tr_prima_nota <?php echo (is_odd($i)) ? 'prima_nota_odd' : 'prima_nota_even'; ?>"
                             data-id="<?php echo $prime_note_id; ?>">
                             <td>
+
                                 <?php echo dateFormat($prima_nota['prime_note_data_registrazione']); ?>
+                                <?php if (empty($prima_nota['prime_note_data_registrazione'])) {
+                                // debug($prima_nota);
+                                // debug($registrazione, true);
+                            } ?>
                             </td>
                             <td class="text-center">
                                 <?php echo ($registrazione['prime_note_protocollo']); ?>
@@ -206,12 +211,12 @@ extract($data['vendite']);
                             <td>
                                 <?php
                                 if (!$destinatario) { //Se per qualche motivo il documento non è associato, stampo la ragione sociale direttamente dal sottoconto
-                                    $prima_nota = $this->apilib->searchFirst('prime_note_registrazioni', [
+                                    $prima_nota_dati = $this->apilib->searchFirst('prime_note_registrazioni', [
                                         'prime_note_registrazioni_prima_nota' => $registrazione['prime_note_righe_iva_prima_nota'],
                                         'prime_note_registrazioni_conto_dare IN (SELECT documenti_contabilita_conti_id FROM documenti_contabilita_conti WHERE (documenti_contabilita_conti_clienti = 1 OR documenti_contabilita_conti_fornitori = 1))',
                                     ]);
-                                    if ($prima_nota) {
-                                        $destinatario['ragione_sociale'] = $prima_nota['prime_note_registrazioni_sottoconto_dare_documenti_contabilita_sottoconti_descrizione'];
+                                    if ($prima_nota_dati) {
+                                        $destinatario['ragione_sociale'] = $prima_nota_dati['prime_note_registrazioni_sottoconto_dare_documenti_contabilita_sottoconti_descrizione'];
                                         $customer = $this->apilib->searchFirst('customers', ['customers_full_name' => $destinatario['ragione_sociale']]);
                                         if ($customer) {
                                             $destinatario['partita_iva'] = $customer['customers_vat_number'];
@@ -246,7 +251,7 @@ extract($data['vendite']);
                             <td
                                 class="<?php if ($registrazione['prime_note_righe_iva_imponibile'] > 0): ?>text-success<?php else: ?>text-danger<?php endif; ?> text-right">
 
-                                <?php //e_money($registrazione['documenti_contabilita_totale'], '€ {number}'); ?>
+                                <?php //e_money($registrazione['documenti_contabilita_totale'], '€ {number}');  ?>
                                 <?php e_money($registrazione['prime_note_righe_iva_imponibile'] + $registrazione['prime_note_righe_iva_importo_iva'], '€ {number}'); ?>
                             </td>
                         </tr>

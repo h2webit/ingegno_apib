@@ -14,9 +14,10 @@ class Main extends MX_Controller
     function import_native_mail_template($override = 0)
     {
         $emails = $this->db->query("SELECT * FROM emails")->result_array();
-
+        
         foreach ($emails as $email) {
-
+            $mailer_template = [];
+            
             $mailer_template['mailer_template_native_id'] = $email['emails_id'];
             $mailer_template['mailer_template_language'] = $email['emails_language'];
             $mailer_template['mailer_template_key'] = $email['emails_key'];
@@ -26,7 +27,13 @@ class Main extends MX_Controller
             $mailer_template['mailer_template_module'] = $email['emails_module'];
 
             // Check if exist and override option 
-            $check = $this->db->query("SELECT * FROM mailer_template WHERE mailer_template_native_id = '{$email['emails_id']}'")->num_rows();
+            $check = $this->db
+                ->where('mailer_template_native_id', $email['emails_id'])
+                ->or_group_start()
+                    ->where('mailer_template_key', $email['emails_key'])
+                    ->where('mailer_template_language', $email['emails_language'])
+                ->group_end()
+                ->get('mailer_template')->num_rows();
 
             if ($check > 0) {
                 if ($override == 1) {

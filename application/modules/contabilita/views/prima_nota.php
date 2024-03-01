@@ -193,6 +193,8 @@ if ($documento_id = $this->input->get('documento_id')) {
     }
 }
 
+
+
 if ($spesa_id = $this->input->get('spesa_id')) {
 
     $spesa = $this->apilib->view('spese', $spesa_id);
@@ -246,6 +248,50 @@ if ($spesa_id = $this->input->get('spesa_id')) {
     }
 }
 
+
+if ($documento_scadenza_id = $this->input->get('documento_scadenza_id')) {
+    $modello_documento = [];
+
+    $documento_scadenza = $this->apilib->view('documenti_contabilita_scadenze', $documento_scadenza_id);
+    $documento_id = $documento_scadenza['documenti_contabilita_scadenze_documento'];
+    $documento = $this->apilib->view('documenti_contabilita', $documento_id);
+    
+    if ($documento['documenti_contabilita_tipo'] == 1) { //Fattura
+        //Verfico se il cliente è italiano o intra e in base a quello seleziono il modello corretto
+        $prime_note_mappature_tipo_identifier = 'FOO';
+        if (empty($documento['customers_country_id_countries_name']) || $documento['customers_country_id_countries_name'] == 'Italy') {
+            $prime_note_mappature_tipo_identifier = 'modello_pagamento_fattura_vendita_italia';
+        } else {
+            $prime_note_mappature_tipo_identifier = 'modello_pagamento_fattura_vendita_intra';
+        }
+        
+        $modello_documento = $this->apilib->searchFirst('prime_note_modelli', [
+            "prime_note_modelli_tipo IN (SELECT prime_note_mappature_id FROM prime_note_mappature WHERE prime_note_mappature_tipo_identifier = '$prime_note_mappature_tipo_identifier')",
+        ]);
+        
+    } 
+
+    
+
+    if (!$modello_documento) {
+        $fields_to_set = [
+
+            'function_js_to_run' => [
+                "alert('Nessun modello impostato per questo tipo di documenti... creare o modificare un modello per attivare gli automatismi oppure procedere alla registrazione manuale.');",
+            ],
+        ];
+    } else {
+        //debug($documento, true);
+        //$serie = $documento['documenti_contabilita_serie'];
+        $fields_to_set = [
+            '.js_modello_select' => $modello_documento['prime_note_modelli_id'],
+            //'#prime_note_data_registrazione' => dateFormat($documento['documenti_contabilita_data_emissione']),
+            'function_js_to_run' => [
+                'documento_selezionato(\'' . base64_encode(json_encode(['id' => $documento_id, 'documento' => $documento])) . '\');',
+            ],
+        ];
+    }
+}
 ?>
 
 <style>

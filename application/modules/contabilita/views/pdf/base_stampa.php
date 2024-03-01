@@ -191,11 +191,11 @@ $azienda = $this->apilib->searchFirst('documenti_contabilita_settings');
 
                     </td>-->
                                 <td class="text-danger">
-                                    <?php echo ($registrazione['prime_note_registrazioni_importo_dare'] > 0) ? number_format($registrazione['prime_note_registrazioni_importo_dare'], 2, ',', '.') : ''; ?>
+                                    <?php echo ($registrazione['prime_note_registrazioni_importo_dare'] <> 0) ? number_format($registrazione['prime_note_registrazioni_importo_dare'], 2, ',', '.') : ''; ?>
                                 </td>
 
                                 <td class="text-success">
-                                    <?php echo ($registrazione['prime_note_registrazioni_importo_avere'] > 0) ? number_format($registrazione['prime_note_registrazioni_importo_avere'], 2, ',', '.') : ''; ?>
+                                    <?php echo ($registrazione['prime_note_registrazioni_importo_avere'] <> 0) ? number_format($registrazione['prime_note_registrazioni_importo_avere'], 2, ',', '.') : ''; ?>
                                 </td>
                                 <td>
                                     <?php e_money($progressivo); ?>

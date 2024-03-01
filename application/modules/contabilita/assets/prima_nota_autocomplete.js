@@ -406,6 +406,8 @@ var documento_selezionato = function (item) {
     $('.js_prima_nota_numero_documento').val(label).trigger('change');
 }
 
+
+
 var inizializzaAutocompleteSpesa = function () {
     $('.js_prima_nota_numero_documento').add('[name="prime_note_scadenza"]').add('[name="prime_note_documento"]').val('').trigger('change');
 

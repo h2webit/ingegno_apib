@@ -258,7 +258,8 @@ class Docs extends CI_Model
         extract($mappature);
         if (array_key_exists('documenti_contabilita_destinatario', $data)) {
             $destinario = $data['documenti_contabilita_destinatario'];
-
+            
+            $cliente = $this->apilib->view($entita_clienti, $cliente_id ?? $fornitore_id);
         } elseif (!empty($cliente_id) || !empty($fornitore_id)) {
             $cliente = $this->apilib->view($entita_clienti, $cliente_id ?? $fornitore_id);
             $customer['ragione_sociale'] = (!empty($cliente[$clienti_ragione_sociale])) ? $cliente[$clienti_ragione_sociale] : $cliente[$clienti_nome] . ' ' . $cliente[$clienti_cognome];

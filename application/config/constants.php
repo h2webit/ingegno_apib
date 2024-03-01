@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 defined('SHOW_DEBUG_BACKTRACE') or define('SHOW_DEBUG_BACKTRACE', true);
 
 // Client Version
-defined('VERSION') OR define('VERSION', '3.6.8');
+defined('VERSION') OR define('VERSION', '3.7.1');
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes
@@ -107,6 +107,7 @@ define(
         'Grey medium' => '#808e9b',
         'Grey steel' => '#4b4b4b',
         'Grey strong' => '#dcdde1',
+        'light gray beige' => '#aca89f',
         'Violet' => '#575fcf',
         'Violet light' => '#8c7ae6',
         'Violet lavender' => '#82589F',

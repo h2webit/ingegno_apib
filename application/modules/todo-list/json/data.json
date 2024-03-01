@@ -9,12 +9,15 @@
     "modules_base64_zip": null,
     "modules_raw_data_install": null,
     "modules_raw_data_update": null,
-    "modules_raw_data": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "10",
+    "modules_version_code": "11",
     "modules_thumbnail": "a36ec5741e71e32919b5358f68d3b231.png",
     "modules_min_client_version": "2.3.0",
     "modules_version_date": "2022-08-24 17:01:41",
+    "modules_auto_update": "0",
+    "modules_last_update": "2023-01-24 12:29:03",
+    "modules_core": "0",
+    "modules_notification_message": null,
     "module_identifier": "todo-list",
     "entities": {
         "432": {
@@ -26,6 +29,8 @@
             "entity_type": "1",
             "entity_action_fields": "{\"create_time\":\"fi_todo_lists_creation_date\",\"update_time\":\"fi_todo_lists_modified_date\"}",
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "3169",
@@ -44,6 +49,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -63,6 +72,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -82,6 +95,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -101,6 +118,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -120,6 +141,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "multiselect"
                 },
                 {
@@ -139,6 +164,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "color"
                 },
                 {
@@ -158,6 +187,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -267,6 +300,8 @@
             "entity_type": "1",
             "entity_action_fields": "{\"create_time\":\"fi_todo_creation_date\",\"update_time\":\"fi_todo_modified_date\",\"add_foreign_key\":\"fi_todo_list\",\"soft_delete_flag\":\"fi_todo_deleted\"}",
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "3175",
@@ -285,6 +320,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -304,6 +343,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -323,6 +366,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -342,6 +389,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -351,7 +402,7 @@
                     "fields_name": "fi_todo_starred",
                     "fields_type": "BOOLEAN",
                     "fields_size": null,
-                    "fields_required": "1",
+                    "fields_required": "0",
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": null,
@@ -361,6 +412,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -380,6 +435,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "multiselect"
                 },
                 {
@@ -399,6 +458,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "textarea"
                 },
                 {
@@ -418,6 +481,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -427,7 +494,7 @@
                     "fields_name": "fi_todo_done",
                     "fields_type": "BOOLEAN",
                     "fields_size": null,
-                    "fields_required": "1",
+                    "fields_required": "0",
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": null,
@@ -437,6 +504,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 },
                 {
@@ -456,6 +527,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date"
                 },
                 {
@@ -475,6 +550,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -494,6 +573,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -513,6 +596,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_hidden"
                 },
                 {
@@ -532,6 +619,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -551,6 +642,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -570,6 +665,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "upload"
                 }
             ],
@@ -796,6 +895,8 @@
             "entity_type": "3",
             "entity_action_fields": null,
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "relation": {
                 "relations_id": "17",
                 "relations_name": "rel_fi_todo_users",
@@ -821,6 +922,8 @@
             "entity_type": "3",
             "entity_action_fields": null,
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "relation": {
                 "relations_id": "18",
                 "relations_name": "rel_fi_todo_lists_users",
@@ -846,6 +949,8 @@
             "entity_type": "2",
             "entity_action_fields": null,
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "3225",
@@ -864,6 +969,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -883,6 +992,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -927,6 +1040,8 @@
             "entity_type": "1",
             "entity_action_fields": "{\"create_time\":\"fi_todo_list_categories_creation_date\",\"update_time\":\"fi_todo_list_categories_modified_date\"}",
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "3228",
@@ -945,6 +1060,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -964,6 +1083,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -983,6 +1106,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -1002,6 +1129,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select"
                 }
             ],
@@ -1072,6 +1203,8 @@
             "entity_type": "1",
             "entity_action_fields": "{\"create_time\":\"fi_todo_lists_users_mail_creation_date\",\"update_time\":\"fi_todo_lists_users_mail_modified_date\"}",
             "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "3438",
@@ -1090,6 +1223,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1109,6 +1246,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -1128,6 +1269,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -1147,6 +1292,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "radio"
                 }
             ],
@@ -1211,6 +1360,28 @@
     },
     "layouts_boxes": [
         {
+            "layouts_boxes_id": "4226",
+            "layouts_boxes_layout": "597",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Dashboard ToDo",
+            "layouts_boxes_content_type": "view",
+            "layouts_boxes_content_ref": "{module todo-list}\/dashboard_todo",
+            "layouts_boxes_content": "",
+            "layouts_boxes_position": "0",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "3",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
             "layouts_boxes_id": "4221",
             "layouts_boxes_layout": "599",
             "layouts_boxes_css": "box",
@@ -1229,6 +1400,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1250,6 +1422,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1271,27 +1444,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
-            "conditions": []
-        },
-        {
-            "layouts_boxes_id": "4226",
-            "layouts_boxes_layout": "597",
-            "layouts_boxes_css": "",
-            "layouts_boxes_title": "Dashboard ToDo",
-            "layouts_boxes_content_type": "view",
-            "layouts_boxes_content_ref": "{module todo-list}\/dashboard_todo",
-            "layouts_boxes_content": "",
-            "layouts_boxes_position": "0",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "0",
-            "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "3",
-            "layouts_boxes_cols": "12",
-            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1313,6 +1466,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": null,
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1334,6 +1488,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-primary",
+            "layouts_boxes_module_key": null,
             "conditions": []
         }
     ],
@@ -1373,6 +1528,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "432",
+            "entity_name": "fi_todo_lists",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fi_todo_lists_creation_date\",\"update_time\":\"fi_todo_lists_modified_date\"}",
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "15120",
@@ -1389,6 +1554,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15120",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3171",
                     "fields_entity_id": "432",
                     "fields_default": null,
@@ -1405,6 +1571,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1422,6 +1592,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15121",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3172",
                     "fields_entity_id": "432",
                     "fields_default": null,
@@ -1438,6 +1609,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1455,6 +1630,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15122",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3173",
                     "fields_entity_id": "432",
                     "fields_default": null,
@@ -1471,6 +1647,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1488,6 +1668,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15123",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3174",
                     "fields_entity_id": "432",
                     "fields_default": null,
@@ -1504,6 +1685,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1521,6 +1706,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15214",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3247",
                     "fields_entity_id": "432",
                     "fields_default": "0",
@@ -1537,6 +1723,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -1610,6 +1800,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "433",
+            "entity_name": "fi_todo",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fi_todo_creation_date\",\"update_time\":\"fi_todo_modified_date\",\"add_foreign_key\":\"fi_todo_list\",\"soft_delete_flag\":\"fi_todo_deleted\"}",
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "15125",
@@ -1626,6 +1826,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15125",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3177",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1642,6 +1843,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1659,6 +1864,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15126",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3178",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1675,6 +1881,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1692,13 +1902,14 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15127",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3179",
                     "fields_entity_id": "433",
                     "fields_default": "0",
                     "fields_name": "fi_todo_starred",
                     "fields_type": "BOOLEAN",
                     "fields_size": null,
-                    "fields_required": "1",
+                    "fields_required": "0",
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": null,
@@ -1708,6 +1919,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1725,6 +1940,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15128",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3180",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1741,6 +1957,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1758,6 +1978,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15129",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3181",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1774,6 +1995,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1791,6 +2016,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15130",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3182",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1807,6 +2033,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1824,13 +2054,14 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15131",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3183",
                     "fields_entity_id": "433",
                     "fields_default": "0",
                     "fields_name": "fi_todo_done",
                     "fields_type": "BOOLEAN",
                     "fields_size": null,
-                    "fields_required": "1",
+                    "fields_required": "0",
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": null,
@@ -1840,6 +2071,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1857,6 +2092,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15132",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3184",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1873,6 +2109,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1890,6 +2130,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15133",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3185",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -1906,6 +2147,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1923,6 +2168,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15140",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3193",
                     "fields_entity_id": "433",
                     "fields_default": "0",
@@ -1939,6 +2185,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1956,6 +2206,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15151",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3199",
                     "fields_entity_id": "433",
                     "fields_default": "0",
@@ -1972,6 +2223,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -1989,6 +2244,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15184",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3227",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -2005,6 +2261,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2022,6 +2282,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15348",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3296",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -2038,6 +2299,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2055,6 +2320,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15475",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3380",
                     "fields_entity_id": "433",
                     "fields_default": null,
@@ -2071,6 +2337,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2144,6 +2414,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "445",
+            "entity_name": "fi_todo_list_categories",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fi_todo_list_categories_creation_date\",\"update_time\":\"fi_todo_list_categories_modified_date\"}",
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "15185",
@@ -2160,6 +2440,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15185",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3228",
                     "fields_entity_id": "445",
                     "fields_default": null,
@@ -2176,6 +2457,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2193,6 +2478,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15186",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3230",
                     "fields_entity_id": "445",
                     "fields_default": null,
@@ -2209,6 +2495,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2226,6 +2516,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15187",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3231",
                     "fields_entity_id": "445",
                     "fields_default": null,
@@ -2242,6 +2533,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2299,6 +2594,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "474",
+            "entity_name": "fi_todo_lists_users_mail",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fi_todo_lists_users_mail_creation_date\",\"update_time\":\"fi_todo_lists_users_mail_modified_date\"}",
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "15629",
@@ -2315,6 +2620,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15629",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3441",
                     "fields_entity_id": "474",
                     "fields_default": "1",
@@ -2331,6 +2637,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2348,6 +2658,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15635",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3440",
                     "fields_entity_id": "474",
                     "fields_default": null,
@@ -2364,6 +2675,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2437,6 +2752,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "434",
+            "entity_name": "rel_fi_todo_users",
+            "entity_visible": "1",
+            "entity_searchable": "0",
+            "entity_login_entity": "0",
+            "entity_type": "3",
+            "entity_action_fields": null,
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [],
             "actions": []
         },
@@ -2475,6 +2800,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "435",
+            "entity_name": "rel_fi_todo_lists_users",
+            "entity_visible": "1",
+            "entity_searchable": "0",
+            "entity_login_entity": "0",
+            "entity_type": "3",
+            "entity_action_fields": null,
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [],
             "actions": []
         },
@@ -2513,6 +2848,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "443",
+            "entity_name": "fi_todo_lists_categories",
+            "entity_visible": "1",
+            "entity_searchable": "0",
+            "entity_login_entity": "0",
+            "entity_type": "2",
+            "entity_action_fields": null,
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "15182",
@@ -2529,6 +2874,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15182",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3225",
                     "fields_entity_id": "443",
                     "fields_default": "",
@@ -2545,6 +2891,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2562,6 +2912,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15183",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3226",
                     "fields_entity_id": "443",
                     "fields_default": "",
@@ -2578,6 +2929,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2618,6 +2973,16 @@
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
+            "entity_id": "474",
+            "entity_name": "fi_todo_lists_users_mail",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fi_todo_lists_users_mail_creation_date\",\"update_time\":\"fi_todo_lists_users_mail_modified_date\"}",
+            "entity_module": "todo-list",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "15630",
@@ -2634,6 +2999,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15630",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3438",
                     "fields_entity_id": "474",
                     "fields_default": null,
@@ -2650,6 +3016,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2667,6 +3037,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15631",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3439",
                     "fields_entity_id": "474",
                     "fields_default": null,
@@ -2683,6 +3054,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2700,6 +3075,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15632",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3440",
                     "fields_entity_id": "474",
                     "fields_default": null,
@@ -2716,6 +3092,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 },
                 {
@@ -2733,6 +3113,7 @@
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "todo-list-grids_fields-15633",
                     "grids_fields_module": "todo-list",
+                    "grids_fields_width": null,
                     "fields_id": "3441",
                     "fields_entity_id": "474",
                     "fields_default": "1",
@@ -2749,6 +3130,10 @@
                     "fields_select_where": null,
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "conditions": []
                 }
             ],
@@ -2809,6 +3194,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2210",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2210",
@@ -2830,7 +3216,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2210_3171",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2210",
@@ -2852,7 +3239,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2210_3172",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2210",
@@ -2874,7 +3262,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2210_3173",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2210",
@@ -2896,7 +3285,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2210_3174",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -2920,6 +3310,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2211",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2211",
@@ -2941,7 +3332,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3177",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -2963,7 +3355,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3178",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -2985,7 +3378,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3179",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3007,7 +3401,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3180",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3029,7 +3424,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3181",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3051,7 +3447,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3182",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3073,7 +3470,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3183",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3095,7 +3493,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3184",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3117,7 +3516,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3185",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3139,7 +3539,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3193",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3161,7 +3562,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3199",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3183,7 +3585,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3227",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3205,7 +3608,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3296",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2211",
@@ -3227,7 +3631,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2211_3380",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3251,6 +3656,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2212",
+            "forms_public": "0",
             "fields": []
         },
         {
@@ -3273,6 +3679,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2213",
+            "forms_public": "0",
             "fields": []
         },
         {
@@ -3295,6 +3702,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2221",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2221",
@@ -3316,7 +3724,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2221_3226",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3340,6 +3749,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2223",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2223",
@@ -3361,7 +3771,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2223_3230",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2223",
@@ -3383,7 +3794,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2223_3231",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -3407,6 +3819,7 @@
             "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "todo-list-form-2271",
+            "forms_public": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2271",
@@ -3428,7 +3841,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2271_3440",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2271",
@@ -3450,7 +3864,8 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "todo-list-forms_fields-2271_3441",
-                    "forms_fields_module": "todo-list"
+                    "forms_fields_module": "todo-list",
+                    "forms_field_full_data": "0"
                 }
             ]
         }
@@ -3580,7 +3995,8 @@
             "fi_events_post_process_id": "345",
             "fi_events_hook_id": null,
             "fi_events_creation_date": "2022-05-31 17:42:37",
-            "fi_events_ref": null
+            "fi_events_ref": null,
+            "fi_events_cli": "0"
         },
         {
             "fi_events_id": "580",
@@ -3604,7 +4020,8 @@
             "fi_events_post_process_id": "348",
             "fi_events_hook_id": null,
             "fi_events_creation_date": "2022-06-01 16:44:06",
-            "fi_events_ref": null
+            "fi_events_ref": null,
+            "fi_events_cli": "0"
         },
         {
             "fi_events_id": "584",
@@ -3628,7 +4045,8 @@
             "fi_events_post_process_id": "350",
             "fi_events_hook_id": null,
             "fi_events_creation_date": "2022-06-13 09:47:19",
-            "fi_events_ref": null
+            "fi_events_ref": null,
+            "fi_events_cli": "0"
         },
         {
             "fi_events_id": "597",
@@ -3652,7 +4070,8 @@
             "fi_events_post_process_id": null,
             "fi_events_hook_id": null,
             "fi_events_creation_date": "2022-07-18 09:19:34",
-            "fi_events_ref": null
+            "fi_events_ref": null,
+            "fi_events_cli": "0"
         },
         {
             "fi_events_id": "605",
@@ -3676,7 +4095,8 @@
             "fi_events_post_process_id": "359",
             "fi_events_hook_id": null,
             "fi_events_creation_date": "2022-08-01 10:26:51",
-            "fi_events_ref": null
+            "fi_events_ref": null,
+            "fi_events_cli": "0"
         }
     ],
     "emails": [
@@ -3685,25 +4105,25 @@
             "emails_key": "added_todo_list",
             "emails_language": "it",
             "emails_subject": "Sei stato aggiunta ad una lista",
-            "emails_template": "<p>Ciao {users},<br \/>{created_by} ti ha aggiunto alla lista \"<strong>{list_name}<\/strong>\".<\/p>\r\n<p>Accedi per visulizzare la tua nuova lista collaborativa.<\/p>",
+            "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<!-- START CENTERED WHITE CONTAINER -->\r\n<table class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/div>\r\n<h2 style=\"text-align: center;\">Sei stato aggiunta ad una lista<\/h2>\r\n<p>Ciao <strong><span class=\"oblique\">{users}<\/span><\/strong>,<\/p>\r\n<p><strong><span class=\"oblique\">{created_by}<\/span><\/strong> ti ha aggiunto alla lista <span class=\"bold\">\"<strong>{list_name}<\/strong>\"<\/span>.<\/p>\r\n<p>&nbsp;<\/p>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/p>\r\n<span style=\"font-size: 8pt;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER -->\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/www.futurogestionebusiness.com\/wp-content\/uploads\/2019\/07\/linkedin-logo.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<!-- END FOOTER --><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
             "emails_headers": "a:6:{s:4:\"From\";s:0:\"\";s:2:\"Cc\";s:0:\"\";s:3:\"Bcc\";s:0:\"\";s:11:\"Return-Path\";s:0:\"\";s:12:\"Organization\";s:0:\"\";s:8:\"Reply-To\";s:0:\"\";}",
             "emails_module": "todo-list"
         },
         {
-            "emails_id": "68",
-            "emails_key": "new_todo",
-            "emails_language": "it",
-            "emails_subject": "Nuova To do",
-            "emails_template": "<p>Ciao {users},<br \/>{created_by} ha aggiunto una nuova voce \"{testo}\".<\/p>\r\n<p>Prova!<\/p>\r\n<p>Voci Totali: {conteggio_lista}<\/p>\r\n<p>Voci Completate: {conteggio_effettuati}<\/p>\r\n<p>Accedi per visulizzare la tua lista collaborativa.<\/p>",
-            "emails_headers": "a:6:{s:4:\"From\";s:0:\"\";s:2:\"Cc\";s:0:\"\";s:3:\"Bcc\";s:0:\"\";s:11:\"Return-Path\";s:0:\"\";s:12:\"Organization\";s:0:\"\";s:8:\"Reply-To\";s:0:\"\";}",
-            "emails_module": "todo-list"
-        },
-        {
-            "emails_id": "71",
+            "emails_id": "126",
             "emails_key": "new_assegnata",
             "emails_language": "it",
             "emails_subject": "Nuova To do assegnata",
-            "emails_template": "<p>Ciao {users},<br \/>{created_by} ti ha assegnato la todo: \"{testo}\".<\/p>\r\n<p>Accedi per visulizzare la tua lista collaborativa.<\/p>",
+            "emails_template": "<p>&nbsp;<\/p>\r\n<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<!-- START CENTERED WHITE CONTAINER -->\r\n<table class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/div>\r\n<h2 style=\"text-align: center;\">ToDo assegnata<\/h2>\r\n<p>Ciao <strong><span class=\"oblique\">{users}<\/span><\/strong>,<\/p>\r\n<p><strong><span class=\"oblique\">{created_by}<\/span><\/strong> ti ha assegnato la todo: <span class=\"bold\">\"<strong>{testo}<\/strong>\"<\/span>.<\/p>\r\n<p>&nbsp;<\/p>\r\n<p>&nbsp;<\/p>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/p>\r\n<span style=\"font-size: 8pt;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER -->\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/www.futurogestionebusiness.com\/wp-content\/uploads\/2019\/07\/linkedin-logo.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<!-- END FOOTER --><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
+            "emails_headers": "a:6:{s:4:\"From\";s:0:\"\";s:2:\"Cc\";s:0:\"\";s:3:\"Bcc\";s:0:\"\";s:11:\"Return-Path\";s:0:\"\";s:12:\"Organization\";s:0:\"\";s:8:\"Reply-To\";s:0:\"\";}",
+            "emails_module": "todo-list"
+        },
+        {
+            "emails_id": "127",
+            "emails_key": "new_todo",
+            "emails_language": "it",
+            "emails_subject": "Nuovo to do nella lista {list_name}",
+            "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<!-- START CENTERED WHITE CONTAINER -->\r\n<table class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/div>\r\n<h2 style=\"text-align: center;\">Nuova voce aggiunta alla lista {list_name}<\/h2>\r\n<p>Ciao <strong><span class=\"oblique\">{users}<\/span><\/strong>,<\/p>\r\n<p><strong><span class=\"oblique\">{created_by}<\/span><\/strong> ha aggiunto una nuova voce \"<strong>{testo}<\/strong>\".<\/p>\r\n<p><strong>Voci Totali<\/strong>: {conteggio_lista}<\/p>\r\n<p><strong>Voci Completate<\/strong>: {conteggio_effettuati}<\/p>\r\n<p>&nbsp;<\/p>\r\n<p>&nbsp;<\/p>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/p>\r\n<span style=\"font-size: 8pt;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER -->\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/www.futurogestionebusiness.com\/wp-content\/uploads\/2019\/07\/linkedin-logo.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<!-- END FOOTER --><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
             "emails_headers": "a:6:{s:4:\"From\";s:0:\"\";s:2:\"Cc\";s:0:\"\";s:3:\"Bcc\";s:0:\"\";s:11:\"Return-Path\";s:0:\"\";s:12:\"Organization\";s:0:\"\";s:8:\"Reply-To\";s:0:\"\";}",
             "emails_module": "todo-list"
         }

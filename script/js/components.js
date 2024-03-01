@@ -490,14 +490,14 @@ function initComponents(container, reset = false) {
           'Oggi': [moment(), moment()],
           'Ieri': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
           'Domani': [moment().add(1, 'days'), moment().add(1, 'days')],
-          
+
           'Ultimi 7 Giorni': [moment().subtract(6, 'days'), moment()],
           'Ultimi 30 Giorni': [moment().subtract(29, 'days'), moment()],
-          
+
           'Mese corrente': [moment().startOf('month'), moment().endOf('month')],
           'Mese precedente': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
           'Mese successivo': [moment().add(1, 'month').startOf('month'), moment().add(1, 'month').endOf('month')],
-          
+
           'Anno corrente': [moment().startOf('year'), moment().endOf('year')],
           'Anno precedente': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
           'Anno successivo': [moment().add(1, 'year').startOf('year'), moment().add(1, 'year').endOf('year')]
@@ -526,8 +526,8 @@ function initComponents(container, reset = false) {
         var value_of_dependent_field = changed_input.val();
       }
 
-      console.log($(this).attr('name'));
-      console.log(value_of_dependent_field);
+      // console.log($(this).attr('name'));
+      // console.log(value_of_dependent_field);
 
       if ($(this).data("dependent_on").includes(":")) {
         var expl = $(this).data("dependent_on").split(":");
@@ -554,7 +554,7 @@ function initComponents(container, reset = false) {
   });
 
   $(".js_form_fieldset legend").off("click").on("click", function () {
-    $(".row, legend span, i", $(this).closest(".js_form_fieldset")).toggle();
+    $(".row, legend span", $(this).closest(".js_form_fieldset")).toggle();
     $(this).closest(".js_form_fieldset").toggleClass("fieldset_visible");
   });
 
@@ -615,6 +615,30 @@ function initComponents(container, reset = false) {
   } catch (e) { }
 
   $(".select2_standard", container).select2();
+
+  /*
+  * Select Big Buttons
+  */
+
+  $("body").on("click", ".js_badge_form_field", function (e) {
+    var hidden_field = $(this).data('hidden_field');
+    var value_id = $(this).data('value_id');
+
+    if ($(this).hasClass('js_badge_form_field_year') || $(this).hasClass('js_badge_form_field_month')) {
+      // Il selettore $(this) ha la classe js_badge_form_field_year
+      // Aggiungi qui la logica aggiuntiva che desideri eseguire
+    } else {
+      // Set value
+      $('.' + hidden_field).val(value_id);
+    }
+
+
+    // Add class active
+    $(this).addClass('badge_form_field_active');
+    // Remove class active to other
+
+    $(this).siblings().removeClass('badge_form_field_active');
+  });
 
   /*
    * Select ajax
@@ -746,7 +770,8 @@ function initComponents(container, reset = false) {
           });
 
           if (previousValueFound) {
-            if (isNormalSelect) {
+            // 2024-02-15 - michael - I made this fix as the "isNormalSelect" variable was calculated incorrectly.
+            if (typeof jsMultiselect.attr('name') == 'undefined' || jsMultiselect.attr('name') == false) {
               jsMultiselect.val(previousValue[0]); // Solo UN valore
               jsMultiselect.select2("val", previousValue);
             } else {
@@ -1095,7 +1120,8 @@ function loadModal(url, data, callbackSuccess, method) {
             !$(event.target).closest(".modal").length &&
             !$(event.target).closest(".fancybox-skin").length &&
             !$(event.target).closest(".fancybox-item").length &&
-            !$(event.target).closest(".select2-selection__choice").length
+            !$(event.target).closest(".select2-selection__choice").length &&
+            !$(event.target).closest(".btn-grid-action-s").length
           ) {
             // Close the modal or perform other actions
             console.log($(event.target));

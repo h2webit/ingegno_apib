@@ -1883,18 +1883,18 @@ class Prima_nota extends CI_Model
                     $mastri_tipi[$key]['mastri'][$mastro_key]['totale'] = $somme->totale;
                     $mastri_tipi[$key]['mastri'][$mastro_key]['dare'] = $somme->dare;
                     $mastri_tipi[$key]['mastri'][$mastro_key]['avere'] = $somme->avere;
-                    
+
                 }
 
                 foreach ($mastri_tipi[$key]['mastri'][$mastro_key]['conti'] as $conto_key => $conto) {
                     if ($conteggi) {
                         $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['totale'] = $this->db->query("SELECT SUM(prime_note_registrazioni_importo_dare - prime_note_registrazioni_importo_avere) as s FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota) WHERE $where AND (prime_note_registrazioni_conto_dare = '{$conto['documenti_contabilita_conti_id']}' OR prime_note_registrazioni_conto_avere = '{$conto['documenti_contabilita_conti_id']}')")->row()->s;
-                        
+
                     }
                     if ($full || (!$conto['documenti_contabilita_conti_clienti'] && !$conto['documenti_contabilita_conti_fornitori'])) {
                         $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'] = $this->apilib->search('documenti_contabilita_sottoconti', [
                             'documenti_contabilita_sottoconti_conto' => $conto['documenti_contabilita_conti_id'],
-                            ($nascondi_orfani) ? "documenti_contabilita_sottoconti_id IN (SELECT COALESCE(prime_note_registrazioni_sottoconto_dare, prime_note_registrazioni_sottoconto_avere) FROM prime_note_registrazioni WHERE prime_note_registrazioni_sottoconto_dare IS NOT NULL OR prime_note_registrazioni_sottoconto_avere IS NOT NULL)" : '1=1',
+                            ($nascondi_orfani) ? "documenti_contabilita_sottoconti_id IN (SELECT COALESCE(prime_note_registrazioni_sottoconto_dare, prime_note_registrazioni_sottoconto_avere) FROM prime_note_registrazioni WHERE (prime_note_registrazioni_sottoconto_dare IS NOT NULL OR prime_note_registrazioni_sottoconto_avere IS NOT NULL) and prime_note_registrazioni_prima_nota not in (Select prime_note_id from prime_note WHERE prime_note_modello = 1))" : '1=1',
                         ]);
 
                         foreach ($mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'] as $sottoconto_key => $sottoconto) {
@@ -1906,7 +1906,7 @@ class Prima_nota extends CI_Model
                                 $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['totale'] = $somme->totale;
                                 $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['dare'] = $somme->dare;
                                 $mastri_tipi[$key]['mastri'][$mastro_key]['conti'][$conto_key]['sottoconti'][$sottoconto_key]['avere'] = $somme->avere;
-                                
+
                             }
                         }
                     } else {

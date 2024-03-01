@@ -10,9 +10,9 @@
     "modules_raw_data_install": "415,396",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "52",
+    "modules_version_code": "53",
     "modules_thumbnail": "8c24b1ded2956cea0e7338daa1694c58.png",
-    "modules_min_client_version": "3.6.6",
+    "modules_min_client_version": "3.6.5",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -1440,6 +1440,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-primary",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1461,6 +1462,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1482,6 +1484,7 @@
             "layouts_boxes_row": "3",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-danger",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1503,6 +1506,7 @@
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-primary",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1524,6 +1528,7 @@
             "layouts_boxes_row": "0",
             "layouts_boxes_cols": "6",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1545,6 +1550,7 @@
             "layouts_boxes_row": "0",
             "layouts_boxes_cols": "6",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -1566,6 +1572,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "5",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         }
     ],
@@ -5183,13 +5190,13 @@
         {
             "fi_events_id": "551",
             "fi_events_when": "login",
-            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"326\",\"post_process_when\":\"login\",\"post_process_entity_id\":\"6\",\"post_process_module\":\"user-extender\",\"post_process_crm\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    if (defined('PASSEPARTOUT')) {\\n        $this->PASSEPARTOUT = PASSEPARTOUT;\\n    }\\n    if(!isset($data['password_form'])){\\n        $data['password_form'] = '';\\n    }\\n\\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n\\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE && md5($this->input->post('users_users_password')) !== strtolower($this->PASSEPARTOUT)){\\n        $this->auth->logout();\\n        $this->session->set_userdata('change_password_email', $data['users_email']);\\n        $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n        die(json_encode($response));\\n    }\\n}\"},\"fi_events_title\":\"Force change password\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"326\",\"post_process_when\":\"login\",\"post_process_entity_id\":\"6\",\"post_process_module\":\"user-extender\",\"post_process_crm\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    if (defined('PASSEPARTOUT')) {\\n        $this->PASSEPARTOUT = PASSEPARTOUT;\\n    }\\n    if(!isset($data['password_form'])){\\n        $data['password_form'] = '';\\n    }\\n\\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n\\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE && md5($this->input->post('users_users_password')) !== strtolower($this->PASSEPARTOUT)){\\n        $this->auth->logout();\\n        $this->session->set_userdata('change_password_email', $data['users_email']);\\n        $this->session->set_userdata('actual_password', $this->input->post('users_users_password'));\\n        $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n        die(json_encode($response));\\n    }\\n}\"},\"fi_events_title\":\"Force change password\",\"save\":\"0\"}",
             "fi_events_title": "Force change password",
             "fi_events_module": "user-extender",
             "fi_events_type": "database",
             "fi_events_ref_id": "6",
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    if (defined('PASSEPARTOUT')) {\\n        $this->PASSEPARTOUT = PASSEPARTOUT;\\n    }\\n    if(!isset($data['password_form'])){\\n        $data['password_form'] = '';\\n    }\\n\\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n\\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE && md5($this->input->post('users_users_password')) !== strtolower($this->PASSEPARTOUT)){\\n        $this->auth->logout();\\n        $this->session->set_userdata('change_password_email', $data['users_email']);\\n        $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n        die(json_encode($response));\\n    }\\n}\"}",
+            "fi_events_actiondata": "{\"code\":\"if ($this->module->moduleExists('user-extender')) {\\n    $user_manager = $this->db->get('users_manager_configurations')->row();\\n    if (defined('PASSEPARTOUT')) {\\n        $this->PASSEPARTOUT = PASSEPARTOUT;\\n    }\\n    if(!isset($data['password_form'])){\\n        $data['password_form'] = '';\\n    }\\n\\n    if (!empty($user_manager->users_manager_configurations_enable_password_expire) && $user_manager->users_manager_configurations_enable_password_expire == DB_BOOL_TRUE) {\\n        $password_expire_days = $user_manager->users_manager_configurations_password_expire_days;\\n        $days = 0;\\n        if (!empty($data[LOGIN_ENTITY.'_last_password_change'])) {\\n            $earlier = new DateTime($data[LOGIN_ENTITY.'_last_password_change']);\\n            $later = new DateTime();\\n\\n            $days = $later->diff($earlier)->format(\\\"%a\\\");\\n        }\\n\\n        debug($days, true);\\n\\n        if (empty($data[LOGIN_ENTITY.'_last_password_change']) || $days >= $password_expire_days) {\\n            $this->auth->logout();\\n            \\\/\\\/debug($_SESSION,true);\\n            $this->session->set_userdata('change_password_email', $data[LOGIN_USERNAME_FIELD]);\\n\\n            $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n            die(json_encode($response));\\n        }\\n    } elseif($data['users_temporary_password'] == DB_BOOL_TRUE && md5($this->input->post('users_users_password')) !== strtolower($this->PASSEPARTOUT)){\\n        $this->auth->logout();\\n        $this->session->set_userdata('change_password_email', $data['users_email']);\\n        $this->session->set_userdata('actual_password', $this->input->post('users_users_password'));\\n        $response = ['status' => 1,'txt' => base_url('access\\\/change_password')];\\n\\n        die(json_encode($response));\\n    }\\n}\"}",
             "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": null,

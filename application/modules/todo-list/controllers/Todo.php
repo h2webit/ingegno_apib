@@ -444,10 +444,6 @@ class Todo extends MY_Controller
 
         $columns = $this->apilib->search("fi_todo_list_categories", ['fi_todo_list_categories_list_id' => $list_id], null, 0, 'fi_todo_list_categories_id', 'ASC');
 
-/*         if (empty($columns)) {
-            die(json_encode($return));
-        } */
-
         $uncategorized_todos = $this->apilib->search('fi_todo', ["fi_todo_list" => $list_id, "(fi_todo_category IS NULL OR fi_todo_category = '')", "(fi_todo_deleted <> '1')"], null, 0, 'fi_todo_order', 'ASC');
         if(!empty($uncategorized_todos)) {
             $return[] = [
@@ -539,4 +535,41 @@ class Todo extends MY_Controller
         }
     }
 
+
+
+    /**
+     * 
+     * ! APP
+     * 
+     */
+    public function getTodosListApp($list_id)
+    {
+        $todos = $this->apilib->search('fi_todo', ['fi_todo_list' => $list_id], null, 0, 'fi_todo_order', 'ASC');
+        
+        if(empty($todos)) {
+            die(json_encode([
+                'status' => 0,
+                'data' => []
+            ]));
+        }
+        
+        $todoNotDone = [];
+        $todoDone = [];
+
+        foreach ($todos as $todo) {
+            if ($todo['fi_todo_done'] == DB_BOOL_FALSE) {
+                $todoNotDone[] = $todo;
+            } else {
+                $todoDone[] = $todo;
+            }
+        }
+
+        die(json_encode([
+            'status' => 0,
+            'data' => [
+                'done' => $todoDone,
+                'notDone' => $todoNotDone
+            ]
+        ]));
+    }
 }

@@ -3651,6 +3651,7 @@ function getNumeroAjax(tipo, serie) {
 
 function getNumeroDocumento() {
     var is_modifica = !isNaN($('[name="documento_id"]').val());
+    var is_clone = <?php echo $this->input->get('clone') == 1 ? 'true' : 'false'; ?>;
     var tipo = $('.js_btn_tipo.btn-primary').data('tipo');
     var serie = $('.js_btn_serie.button_selected').data('serie');
     if (is_modifica) {
@@ -3667,7 +3668,7 @@ function getNumeroDocumento() {
     // michael - 2024-01-23 - associazione centro di costo a serie. gestisco quindi il cambio del centro di costo in base alla serie selezionata
     var serie_centro_costo_ricavo = $('.js_btn_serie.button_selected').data('centro_costo_ricavo');
     
-    if (typeof serie_centro_costo_ricavo !== 'undefined' && serie_centro_costo_ricavo !== false && serie_centro_costo_ricavo !== '') {
+    if (typeof serie_centro_costo_ricavo !== 'undefined' && serie_centro_costo_ricavo !== false && serie_centro_costo_ricavo !== '' && !is_clone) {
         $('[name="documenti_contabilita_centro_di_ricavo"]').val(serie_centro_costo_ricavo).trigger('change');
     }
 }
@@ -3741,11 +3742,13 @@ $('.js_btn_serie').click(function(e) {
     getNumeroDocumento();
 });
 $('[name="documenti_contabilita_data_emissione"]').on('change', function() {
-
+    if (!confirm("Stai cambiando la data emissione.\nVuoi ricalcolare il numero progressivo?")) {
+        return false;
+    }
+    
     getNumeroDocumento();
-
-
 });
+
 $('.documenti_contabilita_azienda').on('change', function() {
     const azienda = getAzienda();
     getNumeroDocumento();

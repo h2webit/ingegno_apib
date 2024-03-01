@@ -1646,7 +1646,64 @@ class Spese extends MY_Controller
     {
         $this->apilib->delete('spese_allegati', $id);
     }
+    
+    public function print_all()
+    {
+        if (!command_exists('pdfunite')) {
+            //throw new ApiException('Errore generico durante la generazione del pdf.');
+            //echo json_encode(['status' => 0, 'txt' => 'Errore generico durante la generazione del pdf.']);
+            echo "<alert>Errore generico durante la generazione del pdf (pdfunite non installato).</alert>";
+            exit;
+        }
+        
+        $ids = json_decode($this->input->post('ids'));
+        
+        $spese = $this->apilib->search('spese_allegati', ['spese_allegati_spesa IN (' . implode(',', $ids) . ')']);
+        
+        $dest_folder = FCPATH . "uploads/modules_files/contabilita/spese";
+        
+        $files = [];
+        foreach ($spese as $spesa) {
+            if (
+                !empty($spesa['spese_allegati_file'])
+                && file_exists($dest_folder . '/' . $spesa['spese_allegati_file'])
+            ) {
+                if (stripos($spesa['spese_allegati_file'], '.xml.html') == false) {
+                    ob_start();
+                    
+                    $this->visualizza_formato_compatto($spesa['spese_allegati_spesa'], true);
+                    
+                    $file_pdf = ob_get_clean();
+                    
+                    $full_filepath = FCPATH . 'spesa_' . $spesa['spese_allegati_spesa'] . '.pdf';
+                    file_put_contents($full_filepath, $file_pdf);
+                    
+                    $files[] = $full_filepath;
+                }
+            }
+        }
 
+        $output = '';
+
+        exec("pdfunite " . implode(' ', $files) . " " . FCPATH . "spese.pdf", $output);
+
+        foreach ($spese as $spesa) {
+            @unlink(FCPATH . 'spesa_' . $spesa['spese_allegati_spesa'] . '.pdf');
+        }
+
+        $fp = fopen(FCPATH . "spese.pdf", 'rb');
+
+        header("Content-Type: application/force-download");
+        header("Content-Length: " . filesize(FCPATH . "spese.pdf"));
+        header("Content-Disposition: attachment; filename=spese.pdf");
+
+        fpassthru($fp);
+
+        unlink(FCPATH . "spese.pdf");
+
+        exit;
+    }
+    
     public function downloadZip()
     {
         $ids = json_decode($this->input->post('ids'));
@@ -1673,16 +1730,24 @@ class Spese extends MY_Controller
         }
 
         foreach ($spese as $spesa) {
-            //debug($spesa,true);
             if (
                 !empty($spesa['spese_allegati_file'])
                 && file_exists($dest_folder . '/' . $spesa['spese_allegati_file'])
             ) {
                 $file_content = file_get_contents($dest_folder . '/' . $spesa['spese_allegati_file']);
                 $zip->addFromString($spesa['spese_allegati_file'], $file_content);
+                
+                // salvo il pdf dell'xml
+                if (stripos($spesa['spese_allegati_file'], '.xml.html') == false) {
+                    ob_start();
+                    
+                    $this->visualizza_formato_compatto($spesa['spese_allegati_spesa'], true);
+                    
+                    $file_pdf = ob_get_clean();
+                    
+                    $zip->addFromString("{$spesa['spese_allegati_file']}.pdf", $file_pdf);
+                }
             }
-
-
         }
 
         $zip->close();
@@ -1736,7 +1801,7 @@ class Spese extends MY_Controller
 
 
                 // URL del file XSL
-                $xslUrl = 'http://localhost/firegui_crm/module_bridge/contabilita/fattura-compatta.xsl';
+                $xslUrl = base_url('module_bridge/contabilita/fattura-compatta.xsl');
 
                 // XML da una variabile
                 $xmlString = $view_content;
