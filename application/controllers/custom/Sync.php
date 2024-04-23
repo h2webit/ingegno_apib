@@ -107,6 +107,9 @@ class Sync extends MY_Controller
         foreach ($associati as $associato) {
             
             progress(++$c, $t, 'import associati vs dipendenti');
+            if ($associato['associati_email'] == '') {
+                continue;
+            }
             if ($associato['associati_foto']) {
                 $folder = explode('/', $associato['associati_foto']);
                 $folder = "{$folder[0]}/{$folder[1]}/{$folder[2]}";
