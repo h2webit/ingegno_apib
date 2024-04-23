@@ -1,3 +1,3 @@
 <?php
 $lang['IMPORT DATA'] = 'Importa Dati';
-$lang['EXPORT DATA'] = 'Esporta Dati';
+$lang['EXPORT DATA'] = 'Esporta Dati';$lang['Import   Export'] = 'Import   Export';
