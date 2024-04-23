@@ -60,7 +60,7 @@ class Builder extends MY_Controller
     }
     public function git_push()
     {
-        $output = var_dump(shell_exec("git add . && git commit -m 'Auto commit from builder toolbar' && git push 2>&1"));
+        $output = shell_exec("git add . && git commit -m 'Auto commit from builder toolbar' && git push");
         echo "<p>Executing GIT push: </p><pre>$output</pre>";
     }
     public function check_user_permissions($layout_id)
