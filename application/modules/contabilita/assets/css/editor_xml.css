@@ -1,0 +1,65 @@
+ #modalEditorXml .repeatable {
+    
+    padding: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#modalEditorXml .repeatable button.add {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+/* Aggiungi questo stile nel tuo CSS */
+#modalEditorXml .repeatable button.remove {
+    position: absolute;
+    top: -36px;
+    right: 0px;
+}
+
+#jsEditorContainer {
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#jsEditorContainer  label, 
+#jsEditorContainer  input, 
+#jsEditorContainer  select, 
+#jsEditorContainer .repeatable {
+    flex: 1 0 calc(50% - 10px); /* Ogni elemento occupa il 50% della larghezza meno 10px */
+    margin: 5px;
+}
+
+#jsEditorContainer  fieldset {
+    flex-basis: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    
+    margin: 5px 0;
+}
+
+#jsEditorContainer  fieldset > label, 
+#jsEditorContainer  fieldset > input, 
+#jsEditorContainer  fieldset > select {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+}
+#jsEditorContainer .collapsible.collapsed > *:not(legend) {
+    display: none;
+}
+
+#jsEditorContainer .collapsible legend {
+    cursor: pointer;
+}
+
+/* Opzionale: Stile per indicare che si può cliccare */
+#jsEditorContainer .collapsible legend:before {
+    content: '▼ ';
+    font-size: 0.9em;
+}
+
+#jsEditorContainer .collapsible.collapsed legend:before {
+    content: '► ';
+}

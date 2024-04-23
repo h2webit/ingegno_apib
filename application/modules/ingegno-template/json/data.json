@@ -10,7 +10,7 @@
     "modules_raw_data_install": "558",
     "modules_raw_data_update": "558",
     "modules_created_by_user": "1",
-    "modules_version_code": "26",
+    "modules_version_code": "27",
     "modules_thumbnail": "0d34ba2324a05fb976294ab781889e1f.png",
     "modules_min_client_version": "3.6.9",
     "modules_version_date": "2023-02-03 16:46:58",
@@ -328,26 +328,26 @@
                 {
                     "ingegno_template_id": "1",
                     "ingegno_template_creation_date": "2023-02-03 16:53:27",
-                    "ingegno_template_modified_date": "2024-02-15 11:48:07",
+                    "ingegno_template_modified_date": "2024-04-04 11:22:02",
                     "ingegno_template_created_by": "5",
                     "ingegno_template_edited_by": "22",
                     "ingegno_template_insert_scope": "form",
                     "ingegno_template_edit_scope": "form",
                     "ingegno_template_zip": "",
-                    "ingegno_template_version": "1.0.7"
+                    "ingegno_template_version": "1.0.8"
                 }
             ],
             "raw_data_update": [
                 {
                     "ingegno_template_id": "1",
                     "ingegno_template_creation_date": "2023-02-03 16:53:27",
-                    "ingegno_template_modified_date": "2024-02-15 11:48:07",
+                    "ingegno_template_modified_date": "2024-04-04 11:22:02",
                     "ingegno_template_created_by": "5",
                     "ingegno_template_edited_by": "22",
                     "ingegno_template_insert_scope": "form",
                     "ingegno_template_edit_scope": "form",
                     "ingegno_template_zip": "",
-                    "ingegno_template_version": "1.0.7"
+                    "ingegno_template_version": "1.0.8"
                 }
             ]
         }
@@ -585,6 +585,7 @@
             "forms_json": null,
             "forms_module_key": "ingegno-template-form-2416",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2416",

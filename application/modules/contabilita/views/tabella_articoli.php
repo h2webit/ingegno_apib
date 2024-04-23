@@ -16,6 +16,9 @@
             <?php if ($impostazioni['documenti_contabilita_settings_lotto']): ?>
             <th width="5%">Lotto</th>
             <?php endif; ?>
+            <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
+                <th width="5%">Commessa</th>
+            <?php endif; ?>
             <?php if ($impostazioni['documenti_contabilita_settings_scadenza']): ?>
             <th width="5%">Scad</th>
             <?php endif; ?>
@@ -55,6 +58,9 @@
                             <?php if ($impostazioni['documenti_contabilita_settings_lotto']): ?>
                             <th width="5%">Lotto</th>
                             <?php endif; ?>
+                            <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
+                                <th width="5%">Commessa</th>
+                            <?php endif; ?>
                             <?php if ($impostazioni['documenti_contabilita_settings_scadenza']): ?>
                             <th width="9%">Scadenza</th>
                             <?php endif; ?>
@@ -80,6 +86,7 @@
                                 <input type="hidden" class="js_documenti_contabilita_articoli_codice_asin js_autocomplete_prodotto" data-id="1" data-name="documenti_contabilita_articoli_codice_asin" />
                                 <input type="hidden" class="js_documenti_contabilita_articoli_codice_ean js_autocomplete_prodotto" data-id="1" data-name="documenti_contabilita_articoli_codice_ean" />
                                 <input type="hidden" class="js_documenti_contabilita_articoli_rif_riga_articolo" data-id="1" data-name="documenti_contabilita_articoli_rif_riga_articolo" />
+                                <input type="hidden" class="js_documenti_contabilita_articoli_rif_pagamento" data-id="1" data-name="documenti_contabilita_articoli_rif_pagamento" />
 
                                 <input type="hidden" class="js_documenti_contabilita_articoli_attributi_sdi " data-id="1" data-name="documenti_contabilita_articoli_attributi_sdi" />
                                 <input type="checkbox" class="_form-control js-riga_desc" data-id='1' data-name="documenti_contabilita_articoli_riga_desc" value="<?php echo DB_BOOL_TRUE; ?>" />
@@ -116,6 +123,23 @@
                                 <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_lotto" data-name="documenti_contabilita_articoli_lotto" value="" />
                             </td>
                             <?php endif; ?>
+
+                            <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
+                                <td>
+                                    <select data-name="documenti_contabilita_articoli_commessa" class="form-control input-sm js_documenti_contabilita_articoli_commessa"<?php if ($this->input->get('doc_type') == 'DDT Fornitore' && $this->input->get('lock_type')) : ?> disabled <?php endif; ?>>
+                                        <option value="">---</option>
+                                        <?php foreach ($commesse as $commessa): ?>
+                                            <?php //debug($prodotto,true);  ?>
+                                            <option value="<?php echo $commessa['projects_id']; ?>" <?php if (!empty($prodotto['documenti_contabilita_articoli_commessa']) && $commessa['projects_id'] == $prodotto['documenti_contabilita_articoli_commessa']): ?>
+                                                    selected="selected" <?php endif; ?>>
+                                                <?php echo $commessa['projects_name']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    
+                                </td>
+                            <?php endif; ?>
+
                             <?php if ($impostazioni['documenti_contabilita_settings_scadenza']): ?>
                             <td>
 
@@ -233,6 +257,9 @@
                             <?php if ($impostazioni['documenti_contabilita_settings_lotto']): ?>
                             <th width="5%">Lotto</th>
                             <?php endif; ?>
+                            <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
+                                <th width="5%">Commessa</th>
+                            <?php endif; ?>
                             <?php if ($impostazioni['documenti_contabilita_settings_scadenza']): ?>
                             <th width="8%">Scad</th>
                             <?php endif; ?>
@@ -259,6 +286,7 @@
                                 <input type="hidden" class="js_autocomplete_prodotto " data-id="<?php echo $k + 1; ?>" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_codice_asin]" value="<?php echo $prodotto['documenti_contabilita_articoli_codice_asin']; ?>" />
                                 <input type="hidden" class="js_autocomplete_prodotto" data-id="<?php echo $k + 1; ?>" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_codice_ean]" value="<?php echo $prodotto['documenti_contabilita_articoli_codice_ean']; ?>" />
                                 <input type="hidden" class="js_documenti_contabilita_articoli_rif_riga_articolo" data-id="<?php echo $k + 1; ?>" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_rif_riga_articolo]" value="<?php echo isset($prodotto['documenti_contabilita_articoli_rif_riga_articolo']) ? $prodotto['documenti_contabilita_articoli_rif_riga_articolo'] : ""; ?>" />
+                                <input type="hidden" class="js_documenti_contabilita_articoli_rif_pagamento" data-id="<?php echo $k + 1; ?>" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_rif_pagamento]" value="<?php echo isset($prodotto['documenti_contabilita_articoli_rif_pagamento']) ? $prodotto['documenti_contabilita_articoli_rif_pagamento'] : ""; ?>" />
                                 <input type="hidden" class="js_documenti_contabilita_articoli_attributi_sdi " data-id="<?php echo $k + 1; ?>" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_attributi_sdi]" value="<?php echo isset($prodotto['documenti_contabilita_articoli_attributi_sdi']) ? base64_encode($prodotto['documenti_contabilita_articoli_attributi_sdi']) : ""; ?>" />
                                 <br />
                                 <input type="checkbox" class="_form-control js-riga_desc" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_riga_desc]" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (isset($prodotto['documenti_contabilita_articoli_riga_desc']) && $prodotto['documenti_contabilita_articoli_riga_desc'] == DB_BOOL_TRUE) : ?> checked="checked" <?php endif; ?> />
@@ -314,6 +342,23 @@
                             <td width="50">
                                 <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_lotto" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_lotto]" value="<?php echo $prodotto['documenti_contabilita_articoli_lotto']; ?>" placeholder="0" />
                             </td>
+                            <?php endif; ?>
+
+                            <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
+                                <td width="50">
+                                    <select class="form-control input-sm  js_documenti_contabilita_articoli_commessa" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_commessa]" <?php if ($this->input->get('doc_type') == 'DDT Fornitore' && $this->input->get('lock_type')): ?> disabled <?php endif; ?>>
+                                        <option value="">---</option>
+                                        <?php foreach ($commesse as $commessa): ?>
+                                            <?php //debug($prodotto,true);  ?>
+                                            <option value="<?php echo $commessa['projects_id']; ?>" <?php if (!empty($prodotto['documenti_contabilita_articoli_commessa']) && $commessa['projects_id'] == $prodotto['documenti_contabilita_articoli_commessa']): ?>
+                                                    selected="selected" <?php endif; ?>>
+                                                <?php echo $commessa['projects_name']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                    
+                                </td>
                             <?php endif; ?>
 
                             <?php if ($impostazioni['documenti_contabilita_settings_scadenza']): ?>
@@ -612,6 +657,7 @@ $(function() {
                             <?php if ($impostazioni['documenti_contabilita_settings_lotto'] == 1): ?>
                             append_tr += "<td>" + (item.movimenti_articoli_lotto == null ? '' : item.movimenti_articoli_lotto) + "</td>";
                             <?php endif; ?>
+
                             <?php if ($impostazioni['documenti_contabilita_settings_scadenza'] == 1): ?>
                             append_tr += "<td>" + data_scadenza + "</td>";
                             <?php endif; ?>

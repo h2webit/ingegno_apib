@@ -36,3 +36,5 @@ $(document).on('click', '.js_xml_attributes', function (event) {
 
     openXmlAttributesPopup(JSON.parse(atob($(this).data('attributes'))), values_json, tr);
 });
+
+

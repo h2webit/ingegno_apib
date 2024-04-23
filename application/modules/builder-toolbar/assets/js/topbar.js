@@ -541,7 +541,7 @@ function initBuilderTools() {
     $('.js_sidebar_menu_item a, .menu_item').css('cursor', 'move');
 
 
-   
+
     // // Sidebar edit button
     // document.querySelectorAll('.js_sidebar_menu_item > a, .js_submenu_item > a').forEach(item => {
 
@@ -556,13 +556,13 @@ function initBuilderTools() {
     //         button.style.top = '50%';
     //         button.style.transform = 'translateY(-50%)';
     //         button.dataset.layoutId = this.dataset.layoutId;
-            
+
     //         button.addEventListener('click', function (e) {
     //             e.preventDefault();
     //             e.stopPropagation();
     //             showLayoutPermissions(this.dataset.layoutId);
-                
-                
+
+
     //         });
 
     //         this.appendChild(button);
@@ -647,7 +647,7 @@ function initBuilderTools() {
                 data: myArguments,
                 cache: false
             });
-            
+
         },
     });
 
@@ -657,7 +657,7 @@ function initBuilderTools() {
 
 
     //Foreach sublayout get permissions
-    
+
     $('.js_layout').each(function () {
         var layout_id = $(this).first().data('layout_id');
         checkPermissions(layout_id);
@@ -667,7 +667,7 @@ function initBuilderTools() {
         if (layout_id > 0) {
             checkPermissions(layout_id, $(this).closest('li'));
         }
-            
+
     });
 }
 
@@ -720,8 +720,8 @@ function checkPermissions(layout_id, container) {
     } else {
         //Dovrei aver passato tutto
     }
-    
-    
+
+
 
 
     if (layout_id) {
@@ -758,19 +758,14 @@ function checkPermissions(layout_id, container) {
                             var inputElement = ' +';
                             p.permissions_group = nullGroupCount + ' users without group';
                         } else {
-                            var inputElement = '<input class="js_checkbox_group" data-group-layout-id="' + layout_id + '" type="checkbox" name="" value="'+p.permissions_group+'" ' + (isChecked ? 'checked="checked"' : '') + ' />';
+                            var inputElement = '<input class="js_checkbox_group" data-group-layout-id="' + layout_id + '" type="checkbox" name="" value="' + p.permissions_group + '" ' + (isChecked ? 'checked="checked"' : '') + ' />';
                         }
                         $('.js_users_can_view', container).first().prepend('<li>' + inputElement + ' <strong> ' + p.permissions_group + '</strong> </li>');
                     });
 
-                    //Se la pagina è di un modulo, mostro nuovametne tutti i gruppi per permettere di dare accesso a tutto il modulo e non solo a questo layout!
-                    
                     //alert(1);
-                    if (data.layout.layouts_module) {
-                        
-
-                        
-                        
+                    // DEPRECATO
+                    /*if (data.layout.layouts_module) {
                         $('.js_users_can_view', container).first().append('<li class="divider"></li>');
                         $('.js_users_can_view', container).first().append('<li class=""><strong>Grant full access to module ' + data.layout.layouts_module + '</strong></li>');
                         $.each(data.all_groups.slice().reverse(), function (i, p) {
@@ -788,63 +783,63 @@ function checkPermissions(layout_id, container) {
                             }
                             $('.js_users_can_view', container).first().append('<li>' + inputElement + ' <strong> ' + p.permissions_group + '</strong> </li>');
                         });
-                    }
+                    }*/
 
                     // Add group permission
-                    container.on('click', '.js_checkbox_group[data-group-layout-id="' + layout_id +'"]', function () {
+                    container.on('click', '.js_checkbox_group[data-group-layout-id="' + layout_id + '"]', function () {
                         var checked = $(this).is(':checked');
-                        
-                            var token = JSON.parse(atob($('body').data('csrf')));
-                            var token_name = token.name;
-                            var token_hash = token.hash;
+
+                        var token = JSON.parse(atob($('body').data('csrf')));
+                        var token_name = token.name;
+                        var token_hash = token.hash;
                         var group = $(this).val();
                         var module = $(this).data('module_name');
-                            // Esegui la chiamata fetch quando la checkbox viene selezionata
-                            // fetch(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, { // Sostituisci con il tuo URL
-                            //     method: 'POST', // o 'GET', a seconda delle tue necessità
-                            //     headers: {
-                            //         'Content-Type': 'application/json'
-                            //         // Aggiungi altri headers se necessario
-                            //     },
-                            //     body: JSON.stringify({
-                            //         [token_name]: token_hash
-                            //     })
-                            // })
-                            //     .then(response => response.json()) // or .text() or another parsing method if you're not receiving JSON
-                            //     .then(data => {
-                            //         // Gestisci la risposta del server qui
-                            //         console.log(data);
-                            //     })
-                            //     .catch(error => {
-                            //         // Gestisci eventuali errori qui
-                            //         console.error(error);
-                            //     });
-                            
-                            
-                            $.ajax(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, {
-                                type: 'POST',
-                                data: {
-                                    [token_name]: token_hash,
-                                    'group': group,
-                                    'checked': checked,
-                                    'module': module,
-                                },
-                                dataType: 'json',
-
-                                success: function (data) {
+                        // Esegui la chiamata fetch quando la checkbox viene selezionata
+                        // fetch(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, { // Sostituisci con il tuo URL
+                        //     method: 'POST', // o 'GET', a seconda delle tue necessità
+                        //     headers: {
+                        //         'Content-Type': 'application/json'
+                        //         // Aggiungi altri headers se necessario
+                        //     },
+                        //     body: JSON.stringify({
+                        //         [token_name]: token_hash
+                        //     })
+                        // })
+                        //     .then(response => response.json()) // or .text() or another parsing method if you're not receiving JSON
+                        //     .then(data => {
+                        //         // Gestisci la risposta del server qui
+                        //         console.log(data);
+                        //     })
+                        //     .catch(error => {
+                        //         // Gestisci eventuali errori qui
+                        //         console.error(error);
+                        //     });
 
 
-                                    $('#builder_toolbar').show();
-                                    var toolBarEnabled = true;
-                                    localStorage.setItem('toolBarEnabled', 'true');
-                                    localStorage.setItem('toolBarToken', data);
+                        $.ajax(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, {
+                            type: 'POST',
+                            data: {
+                                [token_name]: token_hash,
+                                'group': group,
+                                'checked': checked,
+                                'module': module,
+                            },
+                            dataType: 'json',
+
+                            success: function (data) {
+
+
+                                $('#builder_toolbar').show();
+                                var toolBarEnabled = true;
+                                localStorage.setItem('toolBarEnabled', 'true');
+                                localStorage.setItem('toolBarToken', data);
 
 
 
-                                },
-                            });
+                            },
+                        });
 
-                        
+
                         // Aggiungi eventualmente un else per gestire il caso in cui la checkbox viene deselezionata
                     });
 

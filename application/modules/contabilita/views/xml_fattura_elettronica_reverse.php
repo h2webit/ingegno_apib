@@ -62,7 +62,7 @@ $company_stato_liquidazione = (!empty($contabilita_settings['documenti_contabili
 $dest_nazione = (strlen($destinatario['nazione']) > 2) ? strtoupper($nazioniReversed[ucfirst($destinatario['nazione'])]) : $destinatario['nazione'];
 $dest_codicefiscale = ($destinatario['codice_fiscale']);
 
-$dest_ragionesociale = ($destinatario['ragione_sociale']);
+$dest_ragionesociale = str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $destinatario['ragione_sociale']);
 
 if ($dest_nazione == 'IT') {
     $dest_partitaiva = ($destinatario['partita_iva']);
@@ -150,6 +150,81 @@ if (isset($_GET['debug']) && $_GET['debug'] == 1) {
     debug($articoli, true);
 }
 
+if (function_exists('extractJsonEditorData') == false) {
+    function extractJsonEditorData($path, $data)
+    {
+        $pathParts = explode('/', $path); // Dividi il percorso in parti basate su '/'
+        $currentData = $data; // Inizia con i dati JSON completi
+        // debug($pathParts);
+        // debug($data,true);
+        foreach ($pathParts as $part) {
+            // Se la parte corrente esiste nei dati correnti, vai più in profondità
+            if (isset($currentData[$part])) {
+                $currentData = $currentData[$part];
+            } else {
+                // Se una parte del percorso non esiste, termina (nodo non trovato)
+
+                return null;
+            }
+        }
+
+        // A questo punto, $currentData contiene i dati del nodo desiderato
+        // Costruisci il frammento XML
+
+        // Assicurati che l'array non sia vuoto e che l'ultimo elemento sia un nome valido
+        $lastPart = end($pathParts); // Prende l'ultimo elemento dell'array senza usare indici negativi
+
+        if (!$lastPart || preg_match('/[^a-zA-Z0-9_\-]/', $lastPart)) {
+            // Se l'ultimo elemento è vuoto o contiene caratteri non validi, usa un placeholder
+            $lastPart = 'InvalidNodeName';
+        }
+
+        $xml = new SimpleXMLElement("<$lastPart></$lastPart>");
+
+        // Aggiungi i figli al nodo XML
+        foreach ($currentData as $key => $value) {
+            if (is_array($value)) {
+                // Se il valore è un array, considera il caso di più nodi con lo stesso nome
+                foreach ($value as $subValue) {
+                    if (is_array($subValue)) {
+                        $child = $xml->addChild($key);
+                        arrayToXml($subValue, $child); // Funzione ausiliaria per gestire array nidificati
+                    } else {
+                        if ($subValue) {
+                            $xml->addChild($key, htmlspecialchars($subValue));
+                        }
+
+                    }
+                }
+            } else {
+                $xml->addChild($key, htmlspecialchars($value));
+            }
+        }
+        //debug($xml->asXML(),true);
+        return str_replace('<?xml version="1.0"?>', '', $xml->asXML());
+    }
+}
+
+if (function_exists('arrayToXml') == false) {
+    function arrayToXml($data, &$xml)
+    {
+        foreach ($data as $key => $value) {
+
+            if (is_array($value)) {
+                $subnode = $xml->addChild($key);
+                arrayToXml($value, $subnode);
+            } else {
+                $xml->addChild($key, htmlspecialchars($value));
+            }
+        }
+    }
+}
+
+if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
+    $json_editor_xml = json_decode($dati['fattura']['documenti_contabilita_json_editor_xml'], true);
+} else {
+    $json_editor_xml = [];
+}
 ?><?php echo '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
 <p:FatturaElettronica versione="<?php if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3): ?>FPA12<?php else: ?>FPR12<?php endif;?>" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
     <FatturaElettronicaHeader>
@@ -387,59 +462,11 @@ if (isset($_GET['debug']) && $_GET['debug'] == 1) {
 <CodiceCUP></CodiceCUP>
 <CodiceCIG></CodiceCIG>
 </DatiRicezione>
-<DatiFattureCollegate>
-<RiferimentoNumeroLinea></RiferimentoNumeroLinea>
-<IdDocumento></IdDocumento>
-<Data></Data>
-<NumItem></NumItem>
-<CodiceCommessaConvenzione></CodiceCommessaConvenzione>
-<CodiceCUP></CodiceCUP>
-<CodiceCIG></CodiceCIG>
-</DatiFattureCollegate>
-<DatiSAL>
-<RiferimentoFase></RiferimentoFase>
-</DatiSAL>
-<DatiDDT>
-<NumeroDDT></NumeroDDT>
-<DataDDT></DataDDT>
-<RiferimentoNumeroLinea></RiferimentoNumeroLinea>
-</DatiDDT>
-<DatiTrasporto>
-<DatiAnagraficiVettore>
-<IdFiscaleIVA>
-<IdPaese></IdPaese>
-<IdCodice></IdCodice>
-</IdFiscaleIVA>
-<CodiceFiscale></CodiceFiscale>
-<Anagrafica>
-<Denominazione></Denominazione>
-<Nome></Nome>
-<Cognome></Cognome>
-<Titolo></Titolo>
-<CodEORI></CodEORI>
-</Anagrafica>
-<NumeroLicenzaGuida></NumeroLicenzaGuida>
-</DatiAnagraficiVettore>
-<MezzoTrasporto></MezzoTrasporto>
-<CausaleTrasporto></CausaleTrasporto>
-<NumeroColli></NumeroColli>
-<Descrizione></Descrizione>
-<UnitaMisuraPeso></UnitaMisuraPeso>
-<PesoLordo></PesoLordo>
-<PesoNetto></PesoNetto>
-<DataOraRitiro></DataOraRitiro>
-<DataInizioTrasporto></DataInizioTrasporto>
-<TipoResa></TipoResa>
-<IndirizzoResa>
-<Indirizzo></Indirizzo>
-<NumeroCivico></NumeroCivico>
-<CAP></CAP>
-<Comune></Comune>
-<Provincia></Provincia>
-<Nazione></Nazione>
-</IndirizzoResa>
-<DataOraConsegna></DataOraConsegna>
-</DatiTrasporto>
+*/ ?>
+<?php 
+$path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiFattureCollegate";
+echo extractJsonEditorData($path, $json_editor_xml); ?>
+<?php /*
 <NormaDiRiferimento></NormaDiRiferimento>
 <FatturaPrincipale>
 <NumeroFatturaPrincipale></NumeroFatturaPrincipale>

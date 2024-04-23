@@ -60,19 +60,21 @@ function fill_holes($array)
     font-weight: bold;
   }
 </style>
-<div class="col-md-12">
+<div class="col-md-12" style="background-color:#ffffff">
 
 
   <?php
 
   $fatturatoMensile = $this->conteggi->getFatturatoAnnoMensile($anno);
   $fatturatoMensilePrec = $this->conteggi->getFatturatoAnnoMensile($anno - 1);
+  
+  // debug($fatturatoMensilePrec,true);
   $speseMensile = $this->conteggi->getSpeseAnnoMensile($anno);
   $speseCategorie = $this->db->query("SELECT * FROM spese LEFT JOIN spese_categorie ON spese_categorie_id = spese_categoria WHERE DATE_FORMAT(spese_data_emissione, '%Y') = '$anno' GROUP BY spese_categoria")->result_array();
 
   ?>
 
-  <table class="table text-center table-striped table_budget_targets">
+  <table class=" table text-center table-striped table_budget_targets">
     <thead>
       <tr>
         <td></td>
@@ -93,9 +95,19 @@ function fill_holes($array)
       <tr>
         <td class="first-col">Fatturato</td>
         <?php $sum = 0;
-        $sum_prec = 0; ?>
-        <?php foreach ($fatturatoMensile as $key => $fatturato): ?>
-          <?php //$y_invoices[$year][$invoice['idMonth']] = $invoice['total']; ?>
+        $sum_prec = 0;
+        ?>
+        <?php
+
+        // Fix riempie i mesi mancanti
+        while (count($fatturatoMensile) < 12) {
+          $fatturatoMensile[] = [
+            'imponibile' => 0
+          ];
+        }
+
+        foreach ($fatturatoMensile as $key => $fatturato): ?>
+          <?php //$y_invoices[$year][$invoice['idMonth']] = $invoice['total'];         ?>
           <td>
             €
             <?php echo number_format($fatturato['imponibile'], 0, ',', '.'); ?>
@@ -128,11 +140,11 @@ function fill_holes($array)
         <td class="first-col">Spese</td>
         <?php $sum = 0; ?>
         <?php foreach ($speseMensile as $spese): ?>
-          <?php //$y_invoices[$year][$invoice['idMonth']] = $invoice['total']; ?>
+          <?php //$y_invoices[$year][$invoice['idMonth']] = $invoice['total'];         ?>
           <td>
             €
             <?php echo number_format($spese['imponibile'], 0, ',', '.'); ?>
-            <?php //echo @calcola_variazione($y_invoices, $anno, $fatturato['imponibile'], $invoice['idMonth']); ?>
+            <?php //echo @calcola_variazione($y_invoices, $anno, $fatturato['imponibile'], $invoice['idMonth']);         ?>
           </td>
           <?php $sum += $spese['imponibile']; ?>
         <?php endforeach; ?>
@@ -140,7 +152,7 @@ function fill_holes($array)
         <td class="text-right"><b>€
             <?php echo number_format($sum, 0, ',', '.'); ?>
           </b>
-          <?php //echo calcola_variazione($invoices_sum, $year, $sum); ?>
+          <?php //echo calcola_variazione($invoices_sum, $year, $sum);         ?>
         </td>
         <td class="text-right">
           €
@@ -162,11 +174,11 @@ function fill_holes($array)
           <?php $sum = 0; ?>
           <?php $speseCategoriaMensile = $this->conteggi->getSpeseAnnoMensile($anno, $categoria['spese_categoria']); ?>
           <?php foreach ($speseCategoriaMensile as $spese): ?>
-            <?php //$y_invoices[$year][$invoice['idMonth']] = $invoice['total']; ?>
+            <?php //$y_invoices[$year][$invoice['idMonth']] = $invoice['total'];         ?>
             <td>
               €
               <?php echo number_format($spese['imponibile'], 0, ',', '.'); ?>
-              <?php //echo @calcola_variazione($y_invoices, $anno, $fatturato['imponibile'], $invoice['idMonth']); ?>
+              <?php //echo @calcola_variazione($y_invoices, $anno, $fatturato['imponibile'], $invoice['idMonth']);         ?>
             </td>
             <?php $sum += $spese['imponibile']; ?>
           <?php endforeach; ?>
@@ -174,7 +186,7 @@ function fill_holes($array)
           <td class="text-right"><b>€
               <?php echo number_format($sum, 0, ',', '.'); ?>
             </b>
-            <?php //echo calcola_variazione($invoices_sum, $year, $sum); ?>
+            <?php //echo calcola_variazione($invoices_sum, $year, $sum);         ?>
           </td>
 
           <td class="text-right">

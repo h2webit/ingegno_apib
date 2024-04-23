@@ -33,7 +33,7 @@ if (!empty($filtro_fatture)) {
 
                     break;
                 case 'documenti_contabilita_serie':
-                    
+
                     $where_documenti[] = "$not(documenti_contabilita_serie IN ('" . implode("','", $value) . "'))";
                     break;
                 case 'documenti_contabilita_centro_di_ricavo':
@@ -140,21 +140,21 @@ foreach ($spese as $spesa) {
                     <?php echo mese_testuale($mese_num); ?>
                 </td>
                 <td>&euro;
-                    <?php echo @number_format($totali['fatturato'], 2, ',', '.'); ?><br />&euro;
-                    <?php echo @number_format($totali['iva_esclusa'], 2, ',', '.'); ?>
+                    <?php echo @number_format($totali['iva_esclusa'], 0, ',', '.'); ?><br />&euro;
+                    <?php echo @number_format($totali['fatturato'], 0, ',', '.'); ?>
                 </td>
                 <td>&euro;
-                    <?php echo @number_format($totali['iva'], 2, ',', '.'); ?>
+                    <?php echo @number_format($totali['iva'], 0, ',', '.'); ?>
                 </td>
                 <td>&euro;
-                    <?php echo @number_format($totali['spese_fatturato'], 2, ',', '.'); ?><br />&euro;
-                    <?php echo @number_format($totali['spese_iva_esclusa'], 2, ',', '.'); ?>
+                    <?php echo @number_format($totali['spese_iva_esclusa'], 0, ',', '.'); ?><br />&euro;
+                    <?php echo @number_format($totali['spese_fatturato'], 0, ',', '.'); ?>
                 </td>
                 <td>&euro;
-                    <?php echo @number_format($totali['spese_iva_deducibile'], 2, ',', '.'); ?>
+                    <?php echo @number_format($totali['spese_iva_deducibile'], 0, ',', '.'); ?>
                 </td>
                 <td>&euro;
-                    <?php echo @number_format($totali['iva'] - $totali['spese_iva_deducibile'], 2, ',', '.'); ?>
+                    <?php echo @number_format($totali['iva'] - $totali['spese_iva_deducibile'], 0, ',', '.'); ?>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -162,21 +162,21 @@ foreach ($spese as $spesa) {
         <tr style="font-weight:bold">
             <td>Totali: </td>
             <td>&euro;
-                <?php echo @number_format($fatturati_totali['fatturato'], 2, ',', '.'); ?><br />&euro;
-                <?php echo @number_format($fatturati_totali['iva_esclusa'], 2, ',', '.'); ?>
+                <?php echo @number_format($fatturati_totali['iva_esclusa'], 0, ',', '.'); ?><br />&euro;
+                <?php echo @number_format($fatturati_totali['fatturato'], 0, ',', '.'); ?>
             </td>
             <td>&euro;
-                <?php echo @number_format($fatturati_totali['iva'], 2, ',', '.'); ?>
+                <?php echo @number_format($fatturati_totali['iva'], 0, ',', '.'); ?>
             </td>
             <td>&euro;
-                <?php echo @number_format($spese_totali['spese_fatturato'], 2, ',', '.'); ?><br />&euro;
-                <?php echo @number_format($spese_totali['spese_iva_esclusa'], 2, ',', '.'); ?>
+                <?php echo @number_format($spese_totali['spese_iva_esclusa'], 0, ',', '.'); ?><br />&euro;
+                <?php echo @number_format($spese_totali['spese_fatturato'], 0, ',', '.'); ?>
             </td>
             <td>&euro;
-                <?php echo @number_format($spese_totali['spese_iva_deducibile'], 2, ',', '.'); ?>
+                <?php echo @number_format($spese_totali['spese_iva_deducibile'], 0, ',', '.'); ?>
             </td>
             <td>&euro;
-                <?php echo @number_format($fatturati_totali['iva'] - $spese_totali['spese_iva_deducibile'], 2, ',', '.'); ?>
+                <?php echo @number_format($fatturati_totali['iva'] - $spese_totali['spese_iva_deducibile'], 0, ',', '.'); ?>
             </td>
         </tr>
     </tbody>
@@ -216,4 +216,4 @@ $spese_iva_deduc_trim = $this->db->query("SELECT (spese_iva/100)*spese_deduc_iva
 <li><strong><?php echo $iva['trimestre']; ?>ÃÂÃÂ° trimestre</strong>: &euro;
 <?php echo number_format($iva['totale'],2,'.',''); ?></li>
 <?php endforeach; ?>
-<?php endif; */?>
+<?php endif; */ ?>

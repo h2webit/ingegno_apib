@@ -9,25 +9,25 @@ $getSpeseAnnoMensile = $this->conteggi->getSpeseAnnoMensile($anno);
 
 
 // Trimestri
-$fatturato[1] = @$getFatturatoAnnoMensile[0]['imponibile']+ @$getFatturatoAnnoMensile[1]['imponibile']+ @$getFatturatoAnnoMensile[2]['imponibile'];
-$fatturato[2] = @$getFatturatoAnnoMensile[3]['imponibile']+ @$getFatturatoAnnoMensile[4]['imponibile']+ @$getFatturatoAnnoMensile[5]['imponibile'];
-$fatturato[3] = @$getFatturatoAnnoMensile[6]['imponibile']+ @$getFatturatoAnnoMensile[7]['imponibile']+ @$getFatturatoAnnoMensile[8]['imponibile'];
-$fatturato[4] = @$getFatturatoAnnoMensile[9]['imponibile']+ @$getFatturatoAnnoMensile[10]['imponibile']+ @$getFatturatoAnnoMensile[11]['imponibile'];
+$fatturato[1] = @$getFatturatoAnnoMensile[1]['imponibile']+ @$getFatturatoAnnoMensile[2]['imponibile']+ @$getFatturatoAnnoMensile[3]['imponibile'];
+$fatturato[2] = @$getFatturatoAnnoMensile[4]['imponibile']+ @$getFatturatoAnnoMensile[5]['imponibile']+ @$getFatturatoAnnoMensile[6]['imponibile'];
+$fatturato[3] = @$getFatturatoAnnoMensile[7]['imponibile']+ @$getFatturatoAnnoMensile[8]['imponibile']+ @$getFatturatoAnnoMensile[9]['imponibile'];
+$fatturato[4] = @$getFatturatoAnnoMensile[10]['imponibile']+ @$getFatturatoAnnoMensile[11]['imponibile']+ @$getFatturatoAnnoMensile[12]['imponibile'];
 
-$fatturato_iva[1] = @$getFatturatoAnnoMensile[0]['iva']+ @$getFatturatoAnnoMensile[1]['iva']+ @$getFatturatoAnnoMensile[2]['iva'];
-$fatturato_iva[2] = @$getFatturatoAnnoMensile[3]['iva']+ @$getFatturatoAnnoMensile[4]['iva']+ @$getFatturatoAnnoMensile[5]['iva'];
-$fatturato_iva[3] = @$getFatturatoAnnoMensile[6]['iva']+ @$getFatturatoAnnoMensile[7]['iva']+ @$getFatturatoAnnoMensile[8]['iva'];
-$fatturato_iva[4] = @$getFatturatoAnnoMensile[9]['iva']+ @$getFatturatoAnnoMensile[10]['iva']+ @$getFatturatoAnnoMensile[11]['iva'];
+$fatturato_iva[1] = @$getFatturatoAnnoMensile[1]['iva']+ @$getFatturatoAnnoMensile[2]['iva']+ @$getFatturatoAnnoMensile[3]['iva'];
+$fatturato_iva[2] = @$getFatturatoAnnoMensile[4]['iva']+ @$getFatturatoAnnoMensile[5]['iva']+ @$getFatturatoAnnoMensile[6]['iva'];
+$fatturato_iva[3] = @$getFatturatoAnnoMensile[7]['iva']+ @$getFatturatoAnnoMensile[8]['iva']+ @$getFatturatoAnnoMensile[9]['iva'];
+$fatturato_iva[4] = @$getFatturatoAnnoMensile[10]['iva']+ @$getFatturatoAnnoMensile[11]['iva']+ @$getFatturatoAnnoMensile[12]['iva'];
 
-$spese[1] = $getSpeseAnnoMensile[0]['imponibile']+$getSpeseAnnoMensile[1]['imponibile']+$getSpeseAnnoMensile[2]['imponibile'];
-$spese[2] = $getSpeseAnnoMensile[3]['imponibile']+$getSpeseAnnoMensile[4]['imponibile']+$getSpeseAnnoMensile[5]['imponibile'];
-$spese[3] = $getSpeseAnnoMensile[6]['imponibile']+$getSpeseAnnoMensile[7]['imponibile']+$getSpeseAnnoMensile[8]['imponibile'];
-$spese[4] = $getSpeseAnnoMensile[9]['imponibile']+$getSpeseAnnoMensile[10]['imponibile']+$getSpeseAnnoMensile[11]['imponibile'];
+$spese[1] = $getSpeseAnnoMensile[1]['imponibile']+$getSpeseAnnoMensile[2]['imponibile']+$getSpeseAnnoMensile[3]['imponibile'];
+$spese[2] = $getSpeseAnnoMensile[4]['imponibile']+$getSpeseAnnoMensile[5]['imponibile']+$getSpeseAnnoMensile[6]['imponibile'];
+$spese[3] = $getSpeseAnnoMensile[7]['imponibile']+$getSpeseAnnoMensile[8]['imponibile']+$getSpeseAnnoMensile[9]['imponibile'];
+$spese[4] = $getSpeseAnnoMensile[10]['imponibile']+$getSpeseAnnoMensile[11]['imponibile']+$getSpeseAnnoMensile[12]['imponibile'];
 
-$spese_iva[1] = $getSpeseAnnoMensile[0]['iva']+$getSpeseAnnoMensile[1]['iva']+$getSpeseAnnoMensile[2]['iva'];
-$spese_iva[2] = $getSpeseAnnoMensile[3]['iva']+$getSpeseAnnoMensile[4]['iva']+$getSpeseAnnoMensile[5]['iva'];
-$spese_iva[3] = $getSpeseAnnoMensile[6]['iva']+$getSpeseAnnoMensile[7]['iva']+$getSpeseAnnoMensile[8]['iva'];
-$spese_iva[4] = $getSpeseAnnoMensile[9]['iva']+$getSpeseAnnoMensile[10]['iva']+$getSpeseAnnoMensile[11]['iva'];
+$spese_iva[1] = $getSpeseAnnoMensile[1]['iva']+$getSpeseAnnoMensile[2]['iva']+$getSpeseAnnoMensile[3]['iva'];
+$spese_iva[2] = $getSpeseAnnoMensile[4]['iva']+$getSpeseAnnoMensile[5]['iva']+$getSpeseAnnoMensile[6]['iva'];
+$spese_iva[3] = $getSpeseAnnoMensile[7]['iva']+$getSpeseAnnoMensile[8]['iva']+$getSpeseAnnoMensile[9]['iva'];
+$spese_iva[4] = $getSpeseAnnoMensile[10]['iva']+$getSpeseAnnoMensile[11]['iva']+$getSpeseAnnoMensile[12]['iva'];
 
 ?>
 

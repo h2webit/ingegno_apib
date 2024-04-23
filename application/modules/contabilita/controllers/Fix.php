@@ -189,4 +189,44 @@ class Fix extends MX_Controller
 
         echo $this->fix_model->rif_docs();
     }
+
+    public function previsionale_flussi_cassa($year = null) {
+        
+        //Genero i flussi cassa per tutte le scadenze non saldate, sia fatture che spese
+        $spese_scadenze = $this->apilib->search('spese_scadenze', [
+            //'spese_scadenze_saldata' => DB_BOOL_FALSE,
+            ($year==null)?'1=1':'YEAR(spese_scadenze_scadenza) = '.$year,
+            // 'MONTH(spese_scadenze_scadenza) = 3'
+            "spese_scadenze_id NOT IN (SELECT spese_scadenze_id FROM flussi_cassa_spese_scadenze_collegate)"
+        ]);
+        $documenti_contabilita_scadenze = $this->apilib->search('documenti_contabilita_scadenze', [
+            //'documenti_contabilita_scadenze_saldata' => DB_BOOL_FALSE,
+            ($year==null)?'1=1':'YEAR(documenti_contabilita_data_emissione) = '.$year,
+            // 'MONTH(documenti_contabilita_data_emissione) = 3',
+            'documenti_contabilita_tipo' => [1,4,11,12],
+            "documenti_contabilita_scadenze_id NOT IN (SELECT documenti_contabilita_scadenze_id FROM flussi_cassa_scadenze_collegate)"
+        ]);
+        
+        $s = $f = 0;
+        
+        foreach ($spese_scadenze as $spesa_scadenza) {
+            progress(++$s, count($spese_scadenze), 'spese_scadenze');
+            log_message('debug', "Elaboro spesa: {$spesa_scadenza['spese_numero']}");
+            //Triggero banalmente il save così da scatenare il post-process che genera il flusso cassa automaticamente
+            $this->apilib->edit('spese_scadenze', $spesa_scadenza['spese_scadenze_id'], [
+                'spese_scadenze_note' => $spesa_scadenza['spese_scadenze_note'],
+            ]);
+        }
+
+        //Faccio lo stesso per le fatture di vendita   
+        
+        foreach ($documenti_contabilita_scadenze as $documenti_contabilita_scadenza) {
+            progress(++$f, count($documenti_contabilita_scadenze), 'documenti_contabilita_scadenze');
+            log_message('debug', "Elaboro fattura: {$documenti_contabilita_scadenza['documenti_contabilita_numero']}");
+            //Triggero banalmente il save così da scatenare il post-process che genera il flusso cassa automaticamente
+            $this->apilib->edit('documenti_contabilita_scadenze', $documenti_contabilita_scadenza['documenti_contabilita_scadenze_id'], [
+                'documenti_contabilita_scadenze_note' => $documenti_contabilita_scadenza['documenti_contabilita_scadenze_note'],
+            ]);
+        }
+    }
 }

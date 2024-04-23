@@ -833,7 +833,8 @@ class Spese extends MY_Controller
 
                         // Inserisco le scadenze di pagamento
                         if (!empty($xml->FatturaElettronicaBody->DatiPagamento)) {
-                            foreach ($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento as $scadenza) {
+                            foreach ($xml->FatturaElettronicaBody->DatiPagamento as $dati_pagamento) {
+                                $scadenza = $dati_pagamento->DettaglioPagamento;
                                 $spesa_scadenza = [
                                     'spese_scadenze_ammontare' => $scadenza->ImportoPagamento,
                                     'spese_scadenze_scadenza' => ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data,
@@ -1796,51 +1797,50 @@ class Spese extends MY_Controller
             //$pagina = mb_convert_encoding($pagina, 'UTF-8', 'UTF-8');
             //
             $view_content = $this->load->view('contabilita/pdf/visualizzazione_compatta', ['xml' => $pagina], true);
-
+            
             if ($pdf) { //TODO
-
-
+                
+                
                 // URL del file XSL
                 $xslUrl = base_url('module_bridge/contabilita/fattura-compatta.xsl');
-
+                
                 // XML da una variabile
                 $xmlString = $view_content;
-
+                
                 // Carica il file XSL
                 $xsl = new DOMDocument();
                 $xsl->load($xslUrl);
-
+                
                 // Carica il file XML dalla variabile
                 $xml = new DOMDocument();
                 $xml->loadXML($xmlString);
-
+                
                 // Crea il trasformatore XSLT
                 $processor = new XSLTProcessor();
                 $processor->importStylesheet($xsl);
-
+                
                 // Esegui la trasformazione XSLT in HTML
                 $html = $processor->transformToXML($xml);
-
+                
                 // Stampa l'HTML risultante
                 //echo $html;
                 //die();
-
-
-
-
-
+                
+                
+                
+                
+                
                 $orientation = $this->input->get('orientation') ? $this->input->get('orientation') : 'portrait';
-                $pdfFile = $this->layout->generate_pdf($html, $orientation, "", [], false, true);
-
+                $pdfFile = $this->layout->generate_pdf($html, $orientation, "", [], false, true, ['--disable-external-links']);
+                
                 $contents = file_get_contents($pdfFile, true);
-                $pdf_b64 = base64_encode($contents);
-
+                
                 $file_name = 'spesa_' . $spesa_id . '_formato_compatto';
-
+                
                 header('Content-Type: application/pdf');
                 header('Content-disposition: inline; filename="' . $file_name . time() . '.pdf"');
-
-                echo base64_decode($pdf_b64);
+                
+                echo $contents;
             } else {
                 header("Content-Type:text/xml");
                 echo $view_content;

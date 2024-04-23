@@ -4,16 +4,20 @@
     "modules_description": "Profile module",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.2",
+    "modules_version": "1.0.3",
     "modules_identifier": "profile",
     "modules_base64_zip": null,
     "modules_raw_data_install": null,
     "modules_raw_data_update": null,
-    "modules_raw_data": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "3",
+    "modules_version_code": "4",
     "modules_thumbnail": "",
-    "modules_min_client_version": null,
+    "modules_min_client_version": "2.3.0",
+    "modules_version_date": "2022-08-24 17:01:41",
+    "modules_auto_update": "0",
+    "modules_last_update": "2023-01-24 12:29:03",
+    "modules_core": "0",
+    "modules_notification_message": null,
     "module_identifier": "profile",
     "layouts_boxes": [
         {
@@ -34,7 +38,9 @@
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "0",
             "layouts_boxes_cols": "3",
-            "layouts_boxes_color": ""
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
         },
         {
             "layouts_boxes_id": "3831",
@@ -54,7 +60,9 @@
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "0",
             "layouts_boxes_cols": "9",
-            "layouts_boxes_color": ""
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
         },
         {
             "layouts_boxes_id": "3832",
@@ -63,7 +71,7 @@
             "layouts_boxes_title": "HTML\/PHP code",
             "layouts_boxes_content_type": "",
             "layouts_boxes_content_ref": "",
-            "layouts_boxes_content": "<?php\n$user_id = $this->auth->get('users_id');\n$user = $this->apilib->view('users', $user_id);\n$avatar = (!empty($user['users_avatar'])) ? \"uploads\/\".$user['users_avatar'] : 'images\/user.png';\n?>\n\n    <div class=\"box\">\n    \t<div class=\"box-body\">\n        \t<img class=\"profile-user-img img-responsive img-circle\" src=\"<?php echo base_url($avatar); ?>\" alt=\"User profile picture\">\n\n        \t<h3 class=\"profile-username text-center\"><?php echo $user['users_first_name'], \" \", $user['users_last_name']; ?><\/h3>\n\n        \t<div class=\"text-center\">\n            \t<?php if(!empty($user['users_email'])): ?>\n            \t\t<a href=\"mailto:<?php echo $user['users_email'] ?>\" class=\"label bg-primary\"><i class=\"fas fa-envelope\"><\/i> <?php echo $user['users_email']; ?><\/a>\n            \t<?php endif; ?>\n        \t<\/div>\n        \n        \t<div class=\"text-center\" style=\"margin-top: 15px;\">\n        \t\t<a href=\"<?php echo base_url(); ?>get_ajax\/modal_form\/edit-user-profile\/<?php echo $user['users_id']; ?>\" class=\"js_open_modal label\" style=\"font-size: 12px;background-color:rgb(156, 39, 176)\">\n                \t<i class=\"fas fa-edit\"><\/i> Modifica Profilo\n            \t<\/a>\n        \t<\/div>\n    \t<\/div>   \n    \n    <ul class=\"list-group\">\n    \t<li class=\"list-group-item\">\n            <b>Tipologia<\/b> <span class=\"pull-right\" style=\"color:#000000!important;\"><?php echo $user['users_type'] ? $user['users_type_value'] : ' - '; ?><\/span>\n        <\/li>\n        <li class=\"list-group-item\">\n            <b>Costo orario<\/b> <span class=\"pull-right\" style=\"color:#000000!important;\"><?php echo $user['users_cost_per_hour']; ?><\/span>\n        <\/li>\n        <li class=\"list-group-item\">\n            <b>Costo Km<\/b> <span class=\"pull-right\" style=\"color:#000000!important;\"><?php echo $user['users_km_cost']; ?><\/span>\n        <\/li>\n    <\/ul>\n<\/div>",
+            "layouts_boxes_content": "<?php\n$user_id = $this->auth->get('users_id');\n$user = $this->apilib->view('users', $user_id);\n$avatar = (!empty($user['users_avatar'])) ? \"uploads\/\".$user['users_avatar'] : 'images\/user.png';\n?>\n\n    <div class=\"box\">\n    \t<div class=\"box-body\">\n        \n        <a href=\"<?php echo base_url(); ?>get_ajax\/modal_form\/edit-user-profile\/<?php echo $user['users_id']; ?>\" class=\"js_open_modal label\">\n        \t<img class=\"profile-user-img img-responsive img-circle\" style=\"width:200px;margin-bottom:20px\" src=\"<?php echo base_url($avatar); ?>\" alt=\"User profile picture\">\n\t\t<\/a>\n        \n        \t<h3 class=\"profile-username text-center\"><?php echo $user['users_first_name'], \" \", $user['users_last_name']; ?><\/h3>\n\t\t\t\n        \t<div class=\"text-center\">\n            <?php echo $user['users_type'] ? $user['users_type_value'] : ' - '; ?><br \/><br \/>\n            \n            \t<?php if(!empty($user['users_email'])): ?>\n            \t\t<a href=\"mailto:<?php echo $user['users_email'] ?>\" class=\"label bg-primary\"><i class=\"fas fa-envelope\"><\/i> <?php echo $user['users_email']; ?><\/a>\n            \t<?php endif; ?>\n        \t<\/div>\n        \n        \t<div class=\"text-center\" style=\"margin-top: 15px;\">\n        \t\t<a href=\"<?php echo base_url(); ?>get_ajax\/modal_form\/edit-user-profile\/<?php echo $user['users_id']; ?>\" class=\"js_open_modal label\" style=\"font-size: 12px;background-color:rgb(156, 39, 176)\">\n                \t<i class=\"fas fa-edit\"><\/i> Modifica Profilo\n            \t<\/a>\n        \t<\/div>\n    \t<\/div>   \n    \n  \n<\/div>",
             "layouts_boxes_position": null,
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
@@ -74,7 +82,31 @@
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
-            "layouts_boxes_color": ""
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "3853",
+            "layouts_boxes_layout": "504",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "menu_group",
+            "layouts_boxes_content_type": "menu_group",
+            "layouts_boxes_content_ref": "My Calendar",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": "0",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "10",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
         },
         {
             "layouts_boxes_id": "3833",
@@ -94,7 +126,9 @@
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "0",
             "layouts_boxes_cols": "12",
-            "layouts_boxes_color": ""
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
         },
         {
             "layouts_boxes_id": "3851",
@@ -114,7 +148,31 @@
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
-            "layouts_boxes_color": ""
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6513",
+            "layouts_boxes_layout": "505",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "TABS",
+            "layouts_boxes_content_type": "tabs",
+            "layouts_boxes_content_ref": "3851,3833",
+            "layouts_boxes_content": "",
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
         }
     ],
     "layouts": [
@@ -133,7 +191,9 @@
             "layouts_module_key": "profile-layout-503",
             "layouts_show_header": "0",
             "layouts_ajax_allowed": "0",
-            "layouts_settings": "0"
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         },
         {
             "layouts_id": "504",
@@ -150,7 +210,9 @@
             "layouts_module_key": "profile-layout-504",
             "layouts_show_header": "1",
             "layouts_ajax_allowed": "1",
-            "layouts_settings": "0"
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         },
         {
             "layouts_id": "505",
@@ -167,7 +229,9 @@
             "layouts_module_key": "profile-layout-505",
             "layouts_show_header": "0",
             "layouts_ajax_allowed": "0",
-            "layouts_settings": "0"
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         },
         {
             "layouts_id": "506",
@@ -181,10 +245,12 @@
             "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "google_client_people",
-            "layouts_module_key": null,
+            "layouts_module_key": "google_client_people-layout-506",
             "layouts_show_header": "1",
             "layouts_ajax_allowed": "1",
-            "layouts_settings": "0"
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         },
         {
             "layouts_id": "510",
@@ -201,7 +267,9 @@
             "layouts_module_key": "google_calendar-layout-510",
             "layouts_show_header": "0",
             "layouts_ajax_allowed": "0",
-            "layouts_settings": "0"
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         }
     ],
     "menu": [],

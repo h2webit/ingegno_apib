@@ -791,7 +791,7 @@ th.w15 {
 
 /*Removed border from sidebar search*/
 .skin-blue .sidebar-form {
-  border-radius: none;
+  border-radius: unset;
   border: none;
   margin: 10px 10px;
 }
@@ -809,6 +809,13 @@ table.dataTable.nowrap td {
 .navbar-left {
   height: 40px;
 
+}
+
+/* To add quick search widget in navbar left */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 
 /*Hide topbar with logo, timetracker and widget on mobile*/
@@ -1135,14 +1142,17 @@ fieldset.fieldset_visible {
 }
 
 
-/* Hide SALDO SMS on mobile */
-@media (max-width: 768) {
-  .sidebar-mini.sidebar-collapse section.sidebar .saldo_sms_link {
+/* Hide SALDO SMS / SALDO OPENAPI on mobile */
+@media (max-width: 768px) {
+
+  .sidebar-mini.sidebar-collapse section.sidebar .saldo_sms_link,
+  .sidebar-mini.sidebar-collapse section.sidebar .saldo_openapi {
     display: none;
   }
 }
 
-.sidebar-mini.sidebar-collapse section.sidebar .saldo_sms_link {
+.sidebar-mini.sidebar-collapse section.sidebar .saldo_sms_link,
+.sidebar-mini.sidebar-collapse section.sidebar .saldo_openapi {
   display: none;
 }
 
@@ -1484,7 +1494,7 @@ body.dark .navbar-custom-menu>.navbar-nav>.messages-menu>.dropdown-menu>li .menu
 }
 
 body.dark .navbar-custom-menu>.navbar-nav>li#header_notification_bar .dropdown-menu>li.header>.read_all_notification_icon {
-  background-color:
+  background-color: #2F2828;
 }
 
 body.dark .messages-menu .dropdown-toggle .js_notification_number_label {
@@ -1862,4 +1872,28 @@ body.dark .daterangepicker .ranges ul li.active {
   top: auto;
   bottom: 100%;
   padding: 8px;
+}
+
+/*
+1) Fix index header e sidebar in mobile
+2) Fix avatar alignment
+*/
+@media (max-width: 767px) {
+  body.sidebar-open .main-header {
+    position: relative;
+    z-index: 99999;
+  }
+
+  .sidebar-open .main-sidebar {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+    width: 100%;
+    z-index: 9999;
+  }
+
+  .navbar-nav>.user-menu .user-image {
+    margin-top: 0px;
+  }
 }

@@ -23,13 +23,20 @@ class Main extends MX_Controller
             set_status_header(401); // Unauthorized
             die('Non sei loggato nel sistema');
         }
-        $this->settings = $this->apilib->searchFirst('modules_manager_settings');
-        if ([] == $this->settings) {
+
+        // Check because Module manager can work without modules_manager_settings! (like when che project is new)
+        $check_settings = $this->crmentity->entityExists('modules_manager_settings');
+
+        if ($check_settings) {
+            $this->settings = $this->apilib->searchFirst('modules_manager_settings');
+            $this->token = $this->settings['modules_manager_settings_license_token'];
+        } else {
             $this->settings['modules_manager_settings_modules_repository'] = null;
             $this->token = null;
-        } else {
-            $this->token = $this->settings['modules_manager_settings_license_token'];
         }
+
+        $this->settings = $this->apilib->searchFirst('modules_manager_settings');
+
         $this->load->model('core');
         //$this->load->model('module-manager/modules_model');
 

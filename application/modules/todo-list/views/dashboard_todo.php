@@ -288,29 +288,43 @@ progress {
 }
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.4/tailwind.min.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.4/tailwind.min.css" /> -->
+<?php $this->layout->addModuleStylesheet('todo-list', 'css/tailwind.min.css'); ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"></script>
+
+<!-- Vue -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/vue@2.6.12.js'); ?>
+
 <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
-<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.min.js"></script>
-<!-- AXIOS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<!-- MOMENT -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<!-- Vue2-datepicker -->
-<script src="https://cdn.jsdelivr.net/npm/vue2-datepicker@3.10.4/index.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue2-datepicker@3.10.4/index.css">
-<!-- Vue Select -->
-<script src="https://unpkg.com/vue-select@latest"></script>
-<link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
-<!-- Vue2Dropzone -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue2-dropzone@3.6.0/dist/vue2Dropzone.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue2-dropzone@3.6.0/dist/vue2Dropzone.min.css"> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/Sortable.min.js'); ?>
 
-<!-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> -->
+<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.24.3/vuedraggable.umd.min.js"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/vuedraggable.umd.min.js'); ?>
+
+<!-- AXIOS -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/axios.min.js'); ?>
+
+<!-- MOMENT -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/moment.min.js'); ?>
+
+<!-- Vue2-datepicker -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue2-datepicker@3.10.4/index.min.js"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/vue2-datepicker.min.js'); ?>
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue2-datepicker@3.10.4/index.css"> -->
+<?php $this->layout->addModuleStylesheet('todo-list', 'css/vue2-datepicker.css'); ?>
+
+<!-- Vue Select -->
+<!-- <script src="https://unpkg.com/vue-select@latest"></script> -->
+<?php $this->layout->addModuleJavascript('todo-list', 'js/vue-select.js'); ?>
+<!-- <link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css"> -->
+<?php $this->layout->addModuleStylesheet('todo-list', 'css/vue-select.css'); ?>
+
+
 
 
 <div id="app">

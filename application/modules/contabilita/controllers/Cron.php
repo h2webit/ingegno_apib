@@ -22,6 +22,7 @@ class Cron extends MX_Controller
          * - data scadenza - X giorno = oggi
          * - promemoria inviato 0, null, ''
          * - tipo documento = 1 (fatture)
+         *  - metodi pagamento non automatici  / 2024-03-20
          */
         
         set_log_scope('cron-reminder-scadenze-fatture');
@@ -39,8 +40,6 @@ class Cron extends MX_Controller
         $mappature = $this->docs->getMappature();
         extract($mappature);
         
-//        debug($aziende, true);
-        
         foreach ($aziende as $azienda) {
             if (empty($azienda['documenti_contabilita_settings_cron_solleciti_giorni_prima']) || !is_numeric($azienda['documenti_contabilita_settings_cron_solleciti_giorni_prima'])) {
                 my_log('error', "L'azienda {$azienda['documenti_contabilita_settings_company_name']} non ha i giorni configurati correttamente");
@@ -52,17 +51,25 @@ class Cron extends MX_Controller
                 continue;
             }
             
+            if (empty($azienda['documenti_contabilita_settings_cron_solleciti_metodi_pagamento'])) {
+                my_log('error', "L'azienda {$azienda['documenti_contabilita_settings_company_name']} non ha i metodi pagamento configurati");
+                continue;
+            }
+            
+            $metodi_pagamento_ids = implode(',', array_keys($azienda['documenti_contabilita_settings_cron_solleciti_metodi_pagamento']));
+            
             $giorni_prima = $azienda['documenti_contabilita_settings_cron_solleciti_giorni_prima'];
             
             $scadenze = $this->apilib->search('documenti_contabilita_scadenze', [
-                "(DATE(documenti_contabilita_scadenze_scadenza) <= (CURRENT_DATE + INTERVAL $giorni_prima DAY))",
+                "(DATE(documenti_contabilita_scadenze_scadenza) = (CURRENT_DATE + INTERVAL $giorni_prima DAY))",
+                "(documenti_contabilita_scadenze_saldato_con IN ({$metodi_pagamento_ids}))",
                 "(documenti_contabilita_scadenze_data_saldo IS NULL OR documenti_contabilita_scadenze_data_saldo = '')",
                 "(documenti_contabilita_scadenze_saldata = '0' OR documenti_contabilita_scadenze_saldata = '' OR documenti_contabilita_scadenze_saldata IS NULL)",
                 "(documenti_contabilita_scadenze_promemoria_inviato = '0' OR documenti_contabilita_scadenze_promemoria_inviato = '' OR documenti_contabilita_scadenze_promemoria_inviato IS NULL)",
                 'documenti_contabilita_azienda' => $azienda['documenti_contabilita_settings_id'],
                 'documenti_contabilita_tipo' => 1, //Solo fatture
             ], null, 0, null, 'ASC', 3);
-
+            
             if (empty($scadenze)) {
                 my_log('debug', "Nessuna scadenza oggi (".date('d/m/Y').") con intervallo $giorni_prima giorni per l'azienda {$azienda['documenti_contabilita_settings_company_name']}");
                 continue;
@@ -78,6 +85,7 @@ class Cron extends MX_Controller
                         SELECT documenti_contabilita_id FROM documenti_contabilita WHERE documenti_contabilita_customer_id = '{$scadenza['documenti_contabilita_customer_id']}'
                     )
                 ) ORDER BY documenti_contabilita_mail_id DESC");
+                
                 if ($last_used->num_rows() >= 1) {
                     $destinatario_email = $last_used->row()->email;
                 } else {
@@ -93,11 +101,17 @@ class Cron extends MX_Controller
                     continue;
                 }
                 
+                $testo_mail = str_replace_placeholders($azienda['documenti_contabilita_mail_template_testo'], [
+                    'numero_fattura' => $scadenza['documenti_contabilita_numero'] . (!empty($scadenza['documenti_contabilita_serie']) ? "/{$scadenza['documenti_contabilita_serie']}" : ''),
+                    'data_emissione' => dateFormat($scadenza['documenti_contabilita_data_emissione']),
+                    'numero_giorni_scadenza' => $giorni_prima,
+                ]);
+                
                 $this->apilib->create('documenti_contabilita_mail', [
                     'documenti_contabilita_mail_mittente_nome' => $azienda['documenti_contabilita_mail_template_mittente_nome'],
                     'documenti_contabilita_mail_mittente' => $azienda['documenti_contabilita_mail_template_mittente'],
                     'documenti_contabilita_mail_oggetto' => $azienda['documenti_contabilita_mail_template_oggetto'],
-                    'documenti_contabilita_mail_testo' => $azienda['documenti_contabilita_mail_template_testo'],
+                    'documenti_contabilita_mail_testo' => $testo_mail,
                     'documenti_contabilita_mail_documento_id' => $scadenza['documenti_contabilita_scadenze_documento'],
                     'documenti_contabilita_mail_template' => $azienda['documenti_contabilita_settings_cron_solleciti_template'],
                     'documenti_contabilita_mail_destinatario' => $destinatario_email

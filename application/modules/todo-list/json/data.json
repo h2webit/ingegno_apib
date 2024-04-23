@@ -4,20 +4,20 @@
     "modules_description": "ToDo list manager",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.8",
+    "modules_version": "1.0.9",
     "modules_identifier": "todo-list",
     "modules_base64_zip": null,
     "modules_raw_data_install": null,
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "11",
+    "modules_version_code": "12",
     "modules_thumbnail": "a36ec5741e71e32919b5358f68d3b231.png",
-    "modules_min_client_version": "2.3.0",
+    "modules_min_client_version": "3.7.0",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
     "modules_core": "0",
-    "modules_notification_message": null,
+    "modules_notification_message": "",
     "module_identifier": "todo-list",
     "entities": {
         "432": {
@@ -3195,6 +3195,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2210",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2210",
@@ -3311,6 +3312,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2211",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2211",
@@ -3657,6 +3659,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2212",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": []
         },
         {
@@ -3680,6 +3683,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2213",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": []
         },
         {
@@ -3703,6 +3707,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2221",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2221",
@@ -3750,6 +3755,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2223",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2223",
@@ -3820,6 +3826,7 @@
             "forms_json": null,
             "forms_module_key": "todo-list-form-2271",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2271",
@@ -4106,6 +4113,15 @@
             "emails_language": "it",
             "emails_subject": "Sei stato aggiunta ad una lista",
             "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<!-- START CENTERED WHITE CONTAINER -->\r\n<table class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/div>\r\n<h2 style=\"text-align: center;\">Sei stato aggiunta ad una lista<\/h2>\r\n<p>Ciao <strong><span class=\"oblique\">{users}<\/span><\/strong>,<\/p>\r\n<p><strong><span class=\"oblique\">{created_by}<\/span><\/strong> ti ha aggiunto alla lista <span class=\"bold\">\"<strong>{list_name}<\/strong>\"<\/span>.<\/p>\r\n<p>&nbsp;<\/p>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/p>\r\n<span style=\"font-size: 8pt;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER -->\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/www.futurogestionebusiness.com\/wp-content\/uploads\/2019\/07\/linkedin-logo.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<!-- END FOOTER --><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
+            "emails_headers": "a:6:{s:4:\"From\";s:0:\"\";s:2:\"Cc\";s:0:\"\";s:3:\"Bcc\";s:0:\"\";s:11:\"Return-Path\";s:0:\"\";s:12:\"Organization\";s:0:\"\";s:8:\"Reply-To\";s:0:\"\";}",
+            "emails_module": "todo-list"
+        },
+        {
+            "emails_id": "70",
+            "emails_key": "scadenza_todo",
+            "emails_language": "it",
+            "emails_subject": "Scadenza To Do",
+            "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<!-- START CENTERED WHITE CONTAINER -->\r\n<table class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/div>\r\n<h2 style=\"text-align: center;\">To do in scadenza oggi<\/h2>\r\n<p>{lista_to_do}<\/p>\r\n<p>&nbsp;<\/p>\r\n<p>Accedi alla piattaforma per visulizzare la tua lista collaborativa.<\/p>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/p>\r\n<span style=\"font-size: 8pt;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER -->\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/www.futurogestionebusiness.com\/wp-content\/uploads\/2019\/07\/linkedin-logo.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<!-- END FOOTER --><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
             "emails_headers": "a:6:{s:4:\"From\";s:0:\"\";s:2:\"Cc\";s:0:\"\";s:3:\"Bcc\";s:0:\"\";s:11:\"Return-Path\";s:0:\"\";s:12:\"Organization\";s:0:\"\";s:8:\"Reply-To\";s:0:\"\";}",
             "emails_module": "todo-list"
         },

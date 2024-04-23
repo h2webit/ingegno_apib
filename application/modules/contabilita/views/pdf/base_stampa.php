@@ -2,7 +2,29 @@
 $settings = $this->apilib->searchFirst('settings');
 $azienda = $this->apilib->searchFirst('documenti_contabilita_settings');
 //dump($azienda);
+$filters = $this->session->userdata(SESS_WHERE_DATA);
 
+// Costruisco uno specchietto di filtri autogenerati leggibile
+$filtri = array();
+
+if (!empty($filters["filter_stampe_contabili"])) {
+    foreach ($filters["filter_stampe_contabili"] as $field) {
+        if ($field['value'] == '-1') {
+            continue;
+        }
+        $filter_field = $this->datab->get_field($field["field_id"], true);
+        // debug($filter_field);
+
+        // Se ha una entità/support collegata
+        if ($filter_field['fields_ref']) {
+
+            $entity_data = $this->crmentity->getEntityPreview($filter_field['fields_ref']);
+            $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $entity_data[$field['value']]);
+        } else {
+            $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $field['value']);
+        }
+    }
+}
 ?>
 
 <style>
@@ -65,6 +87,8 @@ $azienda = $this->apilib->searchFirst('documenti_contabilita_settings');
 
 <div>
 
+
+
     <div class="page">
 
         <div class="container-fluid">
@@ -87,6 +111,20 @@ $azienda = $this->apilib->searchFirst('documenti_contabilita_settings');
                     <?php echo t('P.IVA'), ': ', $azienda['documenti_contabilita_settings_company_vat_number'] ? $azienda['documenti_contabilita_settings_company_vat_number'] : '/'; ?>
                 </div>
             </div>
+
+
+            <div style="margin-bottom:30px;padding-top:30px;">
+
+                <?php foreach ($filtri as $filtro): ?>
+                    <p><strong>
+                            <?php echo $filtro['label']; ?>
+                        </strong>:
+                        <?php echo $filtro['value']; ?>
+                    </p>
+                <?php endforeach; ?>
+
+            </div>
+
             <?php if (!empty($titolo)): ?>
                 <div class="row">
                     <div class="col-sm-12">
@@ -111,8 +149,14 @@ $azienda = $this->apilib->searchFirst('documenti_contabilita_settings');
                             <h3 class="text-center">
                                 <?php echo $conto; ?>
                             </h3>
+
                         </div>
+                        <h4 class="text-right " style="color: blue;">
+                            <?php echo t('Saldo precedente'), ': '; ?>&euro;
+                            <?php e_money($this->prima_nota->saldoPrecedente($dati['registrazioni'][0])['totale'], '{number}'); ?>
+                        </h4>
                     </div>
+
                 </div>
                 <table class="table table-bordered table-condensed js_prime_note">
                     <thead>

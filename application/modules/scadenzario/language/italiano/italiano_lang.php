@@ -59,3 +59,7 @@ La ricorrenza non può essere modificata o creata a posteriori: questa va sempre
 <br />
 Se si vuole creare una scadenza ricorrente partendo da una scadenza già presente nel gestionale, eliminare quella scadenza e crearne una nuova.';
 $lang['Promemoria'] = 'Promemoria';
+$lang['Altro'] = 'Altro';
+$lang['Category not declared'] = 'Categoria non dichiarata';
+$lang['Category not found'] = 'Categoria non trovata';
+$lang['Filter applied'] = 'Filtro applicato';

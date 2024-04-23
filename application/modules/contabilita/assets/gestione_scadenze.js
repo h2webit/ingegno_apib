@@ -48,9 +48,13 @@ $(() => {
                             //Se è l'ultima scadenza, ignoro tutto e la rimanenza la assegno a questa scadenza (devo pagare tutto prima o poi, a prescindere dalle percentuali configurate e soprattutto evito eventuali problemi di arrotondamenti o perdite di decimali, errori o simili...)
                             var ammontare_scadenza = residuo;
                         } else {
-
-                            //console.log(tpl_riga_scadenza);
                             var percentuale = tpl_riga_scadenza.documenti_contabilita_tpl_pag_scadenze_percentuale;
+                            //Se imposto 100 su tutte le scadenze il significato è che lascio fare al sistema la divisione in parti uguali (questo risolve ad esempio il problema che 100 non è divisibile per 3 e quindi non si può indicare 33% su una scadenza, pena un arrotondamento eccessivo sull'ultima scadenza che si porterebbe dietro 1% in più... il campo è int quindi non posso nemmeno mettere 33.333333 per fare un calcolo più preciso)
+                            if (percentuale == 100 && template_scadenza.documenti_contabilita_tpl_pag_scadenze.length > 1) {
+                                percentuale = 100 / template_scadenza.documenti_contabilita_tpl_pag_scadenze.length;
+
+                            }
+                            
                             var prima_iva = tpl_riga_scadenza.documenti_contabilita_tpl_pag_scadenze_prima_iva;
                             var solo_iva = tpl_riga_scadenza.documenti_contabilita_tpl_pag_scadenze_solo_iva;
 

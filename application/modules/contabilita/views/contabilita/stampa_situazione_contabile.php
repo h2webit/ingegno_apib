@@ -179,82 +179,91 @@ if (!empty($filters["filter_stampe_contabili"])) {
         }
     }
 }
+
+//debug($alberatura_passivita,true);
+
 ?>
 
 <style>
-.title {
-    font-weight: bold;
-    text-align: center;
-    text-transform: uppercase;
-}
+    .title {
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+    }
 
-h3.title {
-    font-size: 20px
-}
+    h3.title {
+        font-size: 20px
+    }
 
-.text-bold {
-    font-weight: bold;
-}
+    .text-bold {
+        font-weight: bold;
+    }
 
-.container {
-    margin: 0 auto;
-    width: 100%;
-    font-size: 1em;
-}
+    .container {
+        margin: 0 auto;
+        width: 100%;
+        font-size: 1em;
+    }
 
-div.page:nth-child(0) {
-    page-break-before: always !important;
-}
+    div.page:nth-child(0) {
+        page-break-before: always !important;
+    }
 
-div.page:nth-child(1) {
-    page-break-before: always !important;
-}
+    div.page:nth-child(1) {
+        page-break-before: always !important;
+    }
 
-/* tr.pt>td {
+    /* tr.pt>td {
         padding-top: 1em;
     } */
 
-tr>td {
-    white-space: nowrap;
-}
+    tr>td {
+        white-space: nowrap;
+    }
 
-table {
-    border-collapse: separate;
-    border-spacing: 5px 0;
-}
+    table {
+        border-collapse: separate;
+        border-spacing: 5px 0;
+    }
 
-/* * {
+    /* * {
         float: none !important
     } */
 
-.square {
-    border: 1px solid black;
-    margin: 5px;
-    padding: 5px;
-}
+    .square {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 5px;
+    }
 
-.yellow {
-    background-color: lightyellow;
-}
+    .yellow {
+        background-color: lightyellow;
+    }
 
-.blue {
-    background-color: lightblue;
-}
+    .blue {
+        background-color: lightblue;
+    }
 
-.green {
-    background-color: lightgreen;
-}
+    .green {
+        background-color: lightgreen;
+    }
 </style>
 <div style="margin-bottom:px">
     <?php foreach ($filtri as $filtro): ?>
-    <p style="margin-bottom: 5px;"><strong><?php echo $filtro['label']; ?></strong>: <?php echo $filtro['value']; ?></p>
-    <?php endforeach;?>
+        <p style="margin-bottom: 5px;"><strong>
+                <?php echo $filtro['label']; ?>
+            </strong>:
+            <?php echo $filtro['value']; ?>
+        </p>
+    <?php endforeach; ?>
 </div>
 
-<h2 class="text-center"><?php echo $azienda['documenti_contabilita_settings_company_name'] ?></h2>
+<h2 class="text-center">
+    <?php echo $azienda['documenti_contabilita_settings_company_name'] ?>
+</h2>
 
 <div>
-    <?php if ($alberatura_attivita || $alberatura_passivita): ?>
+
     <div class="page">
         <div>
             <table>
@@ -281,28 +290,45 @@ table {
                             <tbody>
                                 <?php foreach ($alberatura_attivita as $mastro_id => $mastro): ?>
 
-                                <tr style="font-weight:bold;">
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_codice']; ?></td>
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?></td>
-                                    <td>
-                                        <?php echo number_format(($mastro['tot']), 2, '.', ','); ?>
-                                    </td>
-                                </tr>
-                                <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
-                                <tr>
-                                    <td><?php echo $conto['documenti_contabilita_conti_codice']; ?></td>
-                                    <td><?php echo $conto['documenti_contabilita_conti_descrizione']; ?></td>
-                                    <td><?php echo number_format(($conto['tot']), 2, '.', ','); ?></td>
-                                </tr>
-                                <?php foreach ($conto['sottoconti'] as $sottoconto_id => $sottoconto): ?>
-                                <tr>
-                                    <td><?php echo $conto['documenti_contabilita_conti_codice']; ?>.<?php echo $sottoconto['documenti_contabilita_sottoconti_codice']; ?></td>
-                                    <td><?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?></td>
-                                    <td><?php echo number_format(($sottoconto['tot']), 2, '.', ','); ?></td>
-                                </tr>
-                                <?php endforeach;?>
-                                <?php endforeach;?>
-                                <?php endforeach;?>
+                                    <tr style="font-weight:bold;">
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_codice']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo number_format(($mastro['tot']), 2, '.', ','); ?>
+                                        </td>
+                                    </tr>
+                                    <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_codice']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo number_format(($conto['tot']), 2, '.', ','); ?>
+                                            </td>
+                                        </tr>
+                                        <?php foreach ($conto['sottoconti'] as $sottoconto_id => $sottoconto): ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $conto['documenti_contabilita_conti_codice']; ?>.
+                                                    <?php echo $sottoconto['documenti_contabilita_sottoconti_codice']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo number_format(($sottoconto['tot']), 2, '.', ','); ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
                                 <tr>
                                     <td colspan="3">&nbsp;</td>
                                 </tr>
@@ -310,20 +336,26 @@ table {
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale Attivo</h5>
                                     </td>
-                                    <td><?php e_money($totale_attivo);?></td>
+                                    <td>
+                                        <?php e_money($totale_attivo); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square yellow">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Perdita del periodo</h5>
                                     </td>
 
-                                    <td><?php e_money($perdita_del_periodo);?></td>
+                                    <td>
+                                        <?php e_money($perdita_del_periodo); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square yellow">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale a pareggio</h5>
                                     </td>
-                                    <td><?php e_money($totale_a_pareggio_attivita);?></td>
+                                    <td>
+                                        <?php e_money($totale_a_pareggio_attivita); ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -343,28 +375,45 @@ table {
                             </thead>
                             <tbody>
                                 <?php foreach ($alberatura_passivita as $mastro_id => $mastro): ?>
-                                <tr style="font-weight:bold;">
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_codice']; ?></td>
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?></td>
-                                    <td>
-                                        <?php echo number_format(($mastro['tot']), 2, '.', ','); ?>
-                                    </td>
-                                </tr>
-                                <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
-                                <tr>
-                                    <td><?php echo $conto['documenti_contabilita_conti_codice']; ?></td>
-                                    <td><?php echo $conto['documenti_contabilita_conti_descrizione']; ?></td>
-                                    <td><?php echo number_format(($conto['tot']), 2, '.', ','); ?></td>
-                                </tr>
-                                <?php foreach ($conto['sottoconti'] as $sottoconto_id => $sottoconto): ?>
-                                <tr>
-                                    <td><?php echo $conto['documenti_contabilita_conti_codice']; ?>.<?php echo $sottoconto['documenti_contabilita_sottoconti_codice']; ?></td>
-                                    <td><?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?></td>
-                                    <td><?php echo number_format(($sottoconto['tot']), 2, '.', ','); ?></td>
-                                </tr>
-                                <?php endforeach;?>
-                                <?php endforeach;?>
-                                <?php endforeach;?>
+                                    <tr style="font-weight:bold;">
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_codice']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo number_format(($mastro['tot']), 2, '.', ','); ?>
+                                        </td>
+                                    </tr>
+                                    <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_codice']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo number_format(($conto['tot']), 2, '.', ','); ?>
+                                            </td>
+                                        </tr>
+                                        <?php foreach ($conto['sottoconti'] as $sottoconto_id => $sottoconto): ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $conto['documenti_contabilita_conti_codice']; ?>.
+                                                    <?php echo $sottoconto['documenti_contabilita_sottoconti_codice']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo number_format(($sottoconto['tot']), 2, '.', ','); ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
 
                                 <tr>
                                     <td colspan="3">&nbsp;</td>
@@ -373,20 +422,26 @@ table {
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale Passivo</h5>
                                     </td>
-                                    <td><?php e_money($totale_passivo);?></td>
+                                    <td>
+                                        <?php e_money($totale_passivo); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square yellow">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Utile del periodo</h5>
                                     </td>
 
-                                    <td><?php e_money($utile_del_periodo);?></td>
+                                    <td>
+                                        <?php e_money($utile_del_periodo); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square yellow">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale a pareggio</h5>
                                     </td>
-                                    <td><?php e_money($totale_a_pareggio_passivita);?></td>
+                                    <td>
+                                        <?php e_money($totale_a_pareggio_passivita); ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -395,8 +450,7 @@ table {
             </table>
         </div>
     </div>
-    <?php endif;?>
-    <?php if ($alberatura_costi || $alberatura_ricavi): ?>
+
     <div class="page">
         <div>
             <table>
@@ -422,21 +476,31 @@ table {
                             </thead>
                             <tbody>
                                 <?php foreach ($alberatura_costi as $mastro_id => $mastro): ?>
-                                <tr style="font-weight:bold;">
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_codice']; ?></td>
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?></td>
-                                    <td>
-                                        <?php echo number_format($mastro['tot'], 2, '.', ','); ?>
-                                    </td>
-                                </tr>
-                                <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
-                                <tr>
-                                    <td><?php echo $conto['documenti_contabilita_conti_codice']; ?></td>
-                                    <td><?php echo $conto['documenti_contabilita_conti_descrizione']; ?></td>
-                                    <td><?php echo number_format($conto['tot'], 2, '.', ','); ?></td>
-                                </tr>
-                                <?php endforeach;?>
-                                <?php endforeach;?>
+                                    <tr style="font-weight:bold;">
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_codice']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo number_format($mastro['tot'], 2, '.', ','); ?>
+                                        </td>
+                                    </tr>
+                                    <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_codice']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo number_format($conto['tot'], 2, '.', ','); ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
                                 <tr>
                                     <td colspan="3">&nbsp;</td>
                                 </tr>
@@ -444,20 +508,26 @@ table {
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale Costi</h5>
                                     </td>
-                                    <td><?php e_money($totale_costi);?></td>
+                                    <td>
+                                        <?php e_money($totale_costi); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square green">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Utile del periodo</h5>
                                     </td>
 
-                                    <td><?php e_money($utile_del_periodo_costi);?></td>
+                                    <td>
+                                        <?php e_money($utile_del_periodo_costi); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square green">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale a pareggio</h5>
                                     </td>
-                                    <td><?php e_money($totale_a_pareggio_costi);?></td>
+                                    <td>
+                                        <?php e_money($totale_a_pareggio_costi); ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -477,21 +547,31 @@ table {
                             </thead>
                             <tbody>
                                 <?php foreach ($alberatura_ricavi as $mastro_id => $mastro): ?>
-                                <tr style="font-weight:bold;">
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_codice']; ?></td>
-                                    <td><?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?></td>
-                                    <td>
-                                        <?php echo number_format($mastro['tot'], 2, '.', ','); ?>
-                                    </td>
-                                </tr>
-                                <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
-                                <tr>
-                                    <td><?php echo $conto['documenti_contabilita_conti_codice']; ?></td>
-                                    <td><?php echo $conto['documenti_contabilita_conti_descrizione']; ?></td>
-                                    <td><?php echo number_format($conto['tot'], 2, '.', ','); ?></td>
-                                </tr>
-                                <?php endforeach;?>
-                                <?php endforeach;?>
+                                    <tr style="font-weight:bold;">
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_codice']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo number_format($mastro['tot'], 2, '.', ','); ?>
+                                        </td>
+                                    </tr>
+                                    <?php foreach ($mastro['conti'] as $conto_id => $conto): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_codice']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo number_format($conto['tot'], 2, '.', ','); ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
 
                                 <tr>
                                     <td colspan="3">&nbsp;</td>
@@ -500,20 +580,26 @@ table {
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale Ricavi</h5>
                                     </td>
-                                    <td><?php e_money($totale_ricavi);?></td>
+                                    <td>
+                                        <?php e_money($totale_ricavi); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square green">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Perdita del periodo</h5>
                                     </td>
 
-                                    <td><?php e_money($perdita_del_periodo_ricavi);?></td>
+                                    <td>
+                                        <?php e_money($perdita_del_periodo_ricavi); ?>
+                                    </td>
                                 </tr>
                                 <tr class="square green">
                                     <td colspan="2">
                                         <h5 class="text-center text-uppercase text-bold">Totale a pareggio</h5>
                                     </td>
-                                    <td><?php e_money($totale_a_pareggio_ricavi);?></td>
+                                    <td>
+                                        <?php e_money($totale_a_pareggio_ricavi); ?>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -522,5 +608,5 @@ table {
             </table>
         </div>
     </div>
-    <?php endif;?>
+
 </div>

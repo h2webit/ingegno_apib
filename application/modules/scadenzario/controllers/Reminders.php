@@ -40,6 +40,35 @@ class Reminders extends MY_Controller
             'data' => []
         ));
     }
+    
+    public function filtra_categoria($categoria_id = null) {
+        if (empty($categoria_id)) {
+            e_json(['status' => 3, 'txt' => t('Category not declared')]);
+            return;
+        }
+        
+        $categoria = $this->apilib->view('reminder_categories', $categoria_id);
+        
+        if (empty($categoria)) {
+            e_json(['status' => 3, 'txt' => t('Category not found')]);
+            return;
+        }
+        
+        $field_id = $this->db->where('fields_name', 'reminders_category')->get('fields')->row()->fields_id;
+
+        $sessione = $this->session->userdata(SESS_WHERE_DATA);
+        
+        $sessione['filter_reminders'][$field_id] = [
+            'field_id' => $field_id,
+            'operator' => 'eq',
+            'value' => $categoria_id,
+        ];
+        
+        $this->session->set_userdata(SESS_WHERE_DATA, $sessione);
+        
+        e_json(['status' => 2, 'txt' => t('Filter applied')]);
+    }
+    
     private function jsonResponse($status = 0, $data = null, $die = false)
     {
         echo json_encode([

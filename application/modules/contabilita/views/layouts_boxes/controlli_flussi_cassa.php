@@ -1,6 +1,14 @@
 <div class="row">
 <?php
-$campi_filtro = $this->db->where_in('fields_name', ['flussi_cassa_confermato', 'flussi_cassa_risorsa', 'flussi_cassa_data', 'flussi_cassa_metodo', 'flussi_cassa_tipo', 'flussi_cassa_saldato'])->get('fields')->result_array();
+$campi_filtro = $this->db->where_in('fields_name', [
+    'flussi_cassa_confermato', 
+    'flussi_cassa_risorsa', 
+    'flussi_cassa_data', 
+    'flussi_cassa_metodo', 
+    'flussi_cassa_tipo', 
+    'flussi_cassa_saldato',
+    'flussi_cassa_creation_date'
+    ])->get('fields')->result_array();
 
 foreach ($campi_filtro as $campo) {
     //Trick (pay attention to the double $$ sign...)
@@ -50,6 +58,10 @@ if (!empty($filtro_movimenti)) {
             case $flussi_cassa_confermato: //Contatto
 
                 $where[] = "flussi_cassa_confermato = '$value'";
+
+                break;
+            case $flussi_cassa_creation_date: //Tipo
+
 
                 break;
             default:

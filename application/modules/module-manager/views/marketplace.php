@@ -193,15 +193,18 @@ foreach ($installed_modules as $module) {
                                                     Install
                                                 </a>
                                             <?php else: ?>
-                                                <a href="javascript:void(0);" class="btn btn-success pull-right"><i
-                                                        class="fa fa-cloud-download"></i>
-                                                    Installed
-                                                </a>
                                                 <a target="_blank"
                                                     href="<?php echo base_url("module-manager/main/install_module/{$module['modules_repository_identifier']}"); ?>"
                                                     class="btn btn-primary pull-right"><i class="fa fa-cloud-download"></i>
                                                     Force re-install
                                                 </a>
+
+                                                <a href="javascript:void(0);" class="btn btn-success pull-right"><i
+                                                        class="fa fa-cloud-download"></i>
+                                                    Installed
+                                                </a>
+
+
                                             <?php endif; ?>
 
                                             <button class="btn btn-info pull-right" disabled="disabled"

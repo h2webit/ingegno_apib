@@ -272,7 +272,7 @@ class RibaAbiCbi extends CI_Model
                 12 => 'XXXXX',
                 //        [12] = descrizione del debito lunghezza 40 alfanumerico
             ];
-            debug($ricevute, true);
+            //debug($ricevute, true);
         }
         //debug($ricevute,true);
         return $this->creaFile($intestazione, $ricevute);

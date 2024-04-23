@@ -66,10 +66,15 @@
             <p>
                 <?php if ($tickets_estimated_type_confirm == 2): ?>
                     ✅ Accettato
+                <?php elseif ($tickets_estimated_type_confirm == 4): ?>
+                    ❌ Rifiutato
                 <?php elseif ($tickets_estimated_type_confirm == 3): ?>
                 <?php elseif ($tickets_estimated_billable > 0): ?>
                     <a href="" class="js_accept" data-estimated-type-confirm="2"
                         style="color:#72f303; font-weight:bold">Accetta</a>
+                    |
+                    <a href="" class="js_accept" data-estimated-type-confirm="4"
+                        style="color:#f60000; font-weight:bold">Rifiuta</a>
                 <?php endif; ?>
             </p>
         </div>
@@ -87,10 +92,15 @@
             <p>
                 <?php if ($tickets_estimated_type_confirm == 3): ?>
                     ✅ Accettato
+                <?php elseif ($tickets_estimated_type_confirm == 4): ?>
+                    ❌ Rifiutato
                 <?php elseif ($tickets_estimated_type_confirm == 2): ?>
                 <?php elseif ($tickets_estimated_price > 0): ?>
                     <a href="" class="js_accept" data-estimated-type-confirm="3"
                         style="color:#72f303; font-weight:bold">Accetta</a>
+                    |
+                    <a href="" class="js_accept" data-estimated-type-confirm="4"
+                        style="color:#f60000; font-weight:bold">Rifiuta</a>
                 <?php endif; ?>
             </p>
         </div>
@@ -135,12 +145,12 @@
                             <?php e('Chiudi ticket'); ?>
                         </a>
                     <?php /* else: ?>
-                        <a href="<?php echo base_url("ticket-planner/db_ajax/change_value/tickets/{$tickets_id}/tickets_status/1"); ?>"
-                            class="btn btn-sm btn-info js_link_ajax">
-                            <i class="fas fa-pen-alt"></i>
-                            <?php e('Riapri ticket'); ?>
-                        </a>
-                    <?php */ endif; ?>
+              <a href="<?php echo base_url("ticket-planner/db_ajax/change_value/tickets/{$tickets_id}/tickets_status/1"); ?>"
+                  class="btn btn-sm btn-info js_link_ajax">
+                  <i class="fas fa-pen-alt"></i>
+                  <?php e('Riapri ticket'); ?>
+              </a>
+          <?php */endif; ?>
 
                     <button type="submit" class="pull-right btn btn-sm btn-info">Invia messaggio</button>
                 </div>
@@ -209,34 +219,34 @@
 
             // Se il ticket era già stato chiuso e viene commentato, chiedo se si vuole riaprire il ticket....
             // questo perchè molte volte i clienti commentano i ticket senza però riaprirli (nel caso serva riaprirli)
-            
+
             // 2023-09-29 - michael - cambio di rotta. avviso solo l'utente che sta commentando un ticket chiuso e che quindi le risposte potrebbero non essere monitorate.
-            
+
             if (ticket_status == '5') {
                 alert("ATTENZIONE: Stai commentando un ticket già chiuso. Nel caso di anomalie/bug/richieste inerenti a questo ticket, ad aprire un nuovo ticket specifico.");
             }
-            
-            <?php if(false): ?>
-            if (ticket_status == '5' && confirm('Stai per commentare un ticket già chiuso. Vuoi riaprirlo?')) {
-                $.ajax({
-                    url: base_url + 'ticket-planner/db_ajax/change_value/tickets/<?php echo $tickets_id; ?>/tickets_status/1',
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {},
-                    async: false,
-                    success: function (response) {
-                        if (response.status == '0') {
-                            alert(response.txt);
-                            return false;
+
+            <?php if (false): ?>
+                if (ticket_status == '5' && confirm('Stai per commentare un ticket già chiuso. Vuoi riaprirlo?')) {
+                    $.ajax({
+                        url: base_url + 'ticket-planner/db_ajax/change_value/tickets/<?php echo $tickets_id; ?>/tickets_status/1',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {},
+                        async: false,
+                        success: function (response) {
+                            if (response.status == '0') {
+                                alert(response.txt);
+                                return false;
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
                         }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR);
-                        console.log(textStatus);
-                        console.log(errorThrown);
-                    }
-                })
-            }
+                    })
+                }
             <?php endif; ?>
 
             $.ajax({

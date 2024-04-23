@@ -40,6 +40,12 @@ $anomali = $this->db->query("SELECT COUNT(*) AS c FROM documenti_contabilita WHE
 
 // > 3 giorni in In attesa da SDI, Accettata da sdi, In attesa di consegna
 $attesa = $this->db->query("SELECT COUNT(*) AS c FROM documenti_contabilita WHERE $where_base AND documenti_contabilita_stato_invio_sdi IN (5,7,9) AND $filtro_data_3g")->row()->c;
+//debug($this->db->last_query());
+
+//H2: SELECT COUNT(*) AS c FROM documenti_contabilita WHERE (documenti_contabilita_formato_elettronico = 1 AND (documenti_contabilita_importata_da_xml <> 1 OR documenti_contabilita_importata_da_xml IS NULL)) AND documenti_contabilita_tipo IN (1,4,11,12) AND documenti_contabilita_stato_invio_sdi IN (5,7,9) AND documenti_contabilita_id NOT IN (SELECT documenti_contabilita_cambi_stato_documento_id FROM documenti_contabilita_cambi_stato WHERE DATEDIFF(NOW(), documenti_contabilita_cambi_stato_creation_date) < 3)
+//LMV SELECT COUNT(*) AS c FROM documenti_contabilita WHERE (documenti_contabilita_formato_elettronico = 1 AND (documenti_contabilita_importata_da_xml <> 1 OR documenti_contabilita_importata_da_xml IS NULL)) AND documenti_contabilita_tipo IN (1,4,11,12) AND documenti_contabilita_stato_invio_sdi IN (5,7,9) AND documenti_contabilita_id NOT IN (SELECT documenti_contabilita_cambi_stato_documento_id FROM documenti_contabilita_cambi_stato WHERE DATEDIFF(NOW(), documenti_contabilita_cambi_stato_creation_date) < 3)
+
+
 
 // Elaborazione con errore
 $errore = $this->db->query("SELECT COUNT(*) AS c FROM documenti_contabilita WHERE $where_base AND documenti_contabilita_stato_invio_sdi IN (4)")->row()->c;

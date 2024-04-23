@@ -12,8 +12,8 @@
         
 
         $js_bulk_action.on('change', function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
+            //e.preventDefault();
+            //e.stopImmediatePropagation();
 
             var chkbx_ids = $("input:checkbox.js_bulk_check:checked", grid_container).map(function() {
                 return $(this).val();
@@ -23,7 +23,7 @@
                 if ($(this).val() === 'genera_spesa') {
                     
                     window.location = '<?php echo base_url("main/layout/nuova_spesa/?flussi_cassa_ids="); ?>'+chkbx_ids.join(',');
-                }
+                } 
 
                 
             }

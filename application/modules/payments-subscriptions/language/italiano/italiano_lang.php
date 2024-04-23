@@ -61,3 +61,4 @@ $lang['Customer Sublayout - Subscriptions'] = 'Customer Sublayout - Subscription
 $lang['Customer Sublayout   Subscriptions'] = 'Customer Sublayout   Subscriptions';
 $lang['Customer Sublayout - Payments'] = 'Customer Sublayout - Payments';
 $lang['Customer Sublayout   Payments'] = 'Customer Sublayout   Payments';
+$lang['Subscriptions'] = 'Subscriptions';

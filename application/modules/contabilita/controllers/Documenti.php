@@ -339,7 +339,7 @@ class Documenti extends MX_Controller
             //debug($customer, true);
 
             // **************** DOCUMENTO ****************** //
-            // debug($input, true);
+
 
             $documents['documenti_contabilita_agente'] = $input['documenti_contabilita_agente'];
             $documents['documenti_contabilita_note_interne'] = $input['documenti_contabilita_note'];
@@ -350,7 +350,7 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_valuta'] = $input['documenti_contabilita_valuta'];
             $documents['documenti_contabilita_tasso_di_cambio'] = $input['documenti_contabilita_tasso_di_cambio'];
             //$documents['documenti_contabilita_metodo_pagamento'] = $input['documenti_contabilita_metodo_pagamento'];
-            $documents['documenti_contabilita_template_pagamento'] = $input['documenti_contabilita_template_pagamento'];
+            $documents['documenti_contabilita_template_pagamento'] = ($input['documenti_contabilita_template_pagamento'] ?? null);
             $documents['documenti_contabilita_conto_corrente'] = ($input['documenti_contabilita_conto_corrente']) ?: null;
             $documents['documenti_contabilita_data_emissione'] = $data_emissione;
             $documents['documenti_contabilita_formato_elettronico'] = (!empty($input['documenti_contabilita_formato_elettronico']) ? $input['documenti_contabilita_formato_elettronico'] : DB_BOOL_FALSE);
@@ -360,8 +360,8 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_da_sollecitare'] = (!empty($input['documenti_contabilita_da_sollecitare']) ? $input['documenti_contabilita_da_sollecitare'] : DB_BOOL_FALSE);
             $documents['documenti_contabilita_tipologia_fatturazione'] = (!empty($input['documenti_contabilita_tipologia_fatturazione'])) ? $input['documenti_contabilita_tipologia_fatturazione'] : null;
             $documents['documenti_contabilita_oggetto'] = (!empty($input['documenti_contabilita_oggetto'])) ? $input['documenti_contabilita_oggetto'] : null;
-
-
+            $documents['documenti_contabilita_rif_uso_interno'] = (!empty($input['documenti_contabilita_rif_uso_interno'])) ? $input['documenti_contabilita_rif_uso_interno'] : null;
+            $documents['documenti_contabilita_rif_data'] = (!empty($input['documenti_contabilita_rif_data'])) ? DateTime::createFromFormat("d/m/Y", $input['documenti_contabilita_rif_data'])->format('Y-m-d') : null;
             //debug($input['documenti_contabilita_competenze'],true);
 
             $documents['documenti_contabilita_rivalsa_inps_perc'] = $input['documenti_contabilita_rivalsa_inps_perc'];
@@ -395,6 +395,9 @@ class Documenti extends MX_Controller
             // Attributi avanzati Fattura Elettronica
             $documents['documenti_contabilita_fe_attributi_avanzati'] = (!empty($input['documenti_contabilita_fe_attributi_avanzati']) ? $input['documenti_contabilita_fe_attributi_avanzati'] : DB_BOOL_FALSE);
 
+            //Magazzino
+            $documents['documenti_contabilita_magazzino'] = (!empty($input['documenti_contabilita_magazzino']) ? $input['documenti_contabilita_magazzino'] : null);
+
             $documents['documenti_contabilita_sconto_su_imponibile'] = (!empty($input['documenti_contabilita_sconto_su_imponibile']) ? $input['documenti_contabilita_sconto_su_imponibile'] : DB_BOOL_FALSE);
 
             $json = [];
@@ -419,7 +422,10 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_max_num_articoli'] = (!empty($input['documenti_contabilita_max_num_articoli']) ? $input['documenti_contabilita_max_num_articoli'] : 24);
             $documents['documenti_contabilita_font'] = (!empty($input['documenti_contabilita_font']) ? $input['documenti_contabilita_font'] : "'Inter', sans-serif");
             $documents['documenti_contabilita_font_size'] = (!empty($input['documenti_contabilita_font_size']) ? $input['documenti_contabilita_font_size'] : 14);
-
+            $documents['documenti_contabilita_lingua'] = (!empty($input['documenti_contabilita_lingua']) ? $input['documenti_contabilita_lingua'] : 2); //Default italiano
+            $documents['documenti_contabilita_mostra_foto'] = (!empty($input['documenti_contabilita_mostra_foto']) ? $input['documenti_contabilita_mostra_foto'] : DB_BOOL_FALSE);
+            $documents['documenti_contabilita_impostazioni_stampa_json'] = (!empty($input['json_stampa']) ? json_encode($input['json_stampa']) : null);
+            
             //Importi
             $documents['documenti_contabilita_totale'] = $input['documenti_contabilita_totale'];
             $documents['documenti_contabilita_iva'] = $input['documenti_contabilita_iva'];
@@ -437,10 +443,18 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_applica_bollo'] = (!empty($input['documenti_contabilita_applica_bollo'])) ? $input['documenti_contabilita_applica_bollo'] : DB_BOOL_FALSE;
             $documents['documenti_contabilita_bollo_virtuale'] = (!empty($input['documenti_contabilita_bollo_virtuale'])) ? $input['documenti_contabilita_bollo_virtuale'] : DB_BOOL_FALSE;
 
+            $documents['documenti_contabilita_json_editor_xml'] = (!empty($input['FatturaElettronica']) ? json_encode(['FatturaElettronica' => $input['FatturaElettronica']]) : null);
+
+
             // Michael - 14/02/2023 - Va fatto un json_decode e poi json_encode, in quanto in questo punto si stava ciclando un json (per cui ovvimaente dava errore sul foreach stesso)
             $input['documenti_contabilita_iva_json'] = json_decode($input['documenti_contabilita_iva_json'], true);
             foreach ($input['documenti_contabilita_iva_json'] as $iva_id => $iva) {
                 if ($iva_id == 0) {
+                    unset($input['documenti_contabilita_iva_json'][$iva_id]);
+                }
+                //Se $iva_id non è presente in nessuna riga articolo, lo tolgo
+                if (!in_array($iva_id, array_column($input['products'], 'documenti_contabilita_articoli_iva_id'))) {
+
                     unset($input['documenti_contabilita_iva_json'][$iva_id]);
                 }
             }
@@ -777,11 +791,19 @@ class Documenti extends MX_Controller
                     }
 
                     if (!$movimentato) {
+                        $autosave = '';
+                        if (
+                            !empty($documento['documenti_contabilita_magazzino'])
+                            && !empty($magazzino_settings['magazzino_settings_movimento_automatico_da_documento_vendita'])
+                            && $magazzino_settings['magazzino_settings_movimento_automatico_da_documento_vendita'] == DB_BOOL_TRUE
+                        ) {
+                            $autosave = "&autosave=1";
+                        }
                         //Se è un documento che può essere movimentato, chiedo se si vuole procedere a movimentare la merce   
                         $return = [
                             'status' => 9,
                             'txt' => "if (confirm('Vuoi creare un movimento di magazzino per questo ordine?') == true) {
-                                location.href='" . base_url("main/layout/nuovo_movimento?documenti_id={$documento_id}") . "';
+                                location.href='" . base_url("main/layout/nuovo_movimento?documenti_id={$documento_id}{$autosave}") . "';
                             } else {
                                 location.href='" . base_url('main/layout/contabilita_dettaglio_documento/' . $documento_id . '?first_save=1') . "';
                             }"
@@ -910,6 +932,18 @@ class Documenti extends MX_Controller
                     }
                 }
             }
+
+            if (!empty($res) && !empty($this->db->table_exists('projects'))) {
+
+                foreach ($res as $index => $row) {
+                    if (!empty($row['customers_id'])) {
+                        $projects = $this->apilib->search('projects', ['projects_customer_id' => $row['customers_id'], 'projects_status' => ['1', '2']]);
+
+                        $res[$index]['commesse'] = $projects;
+                    }
+                }
+            }
+
         } elseif ($entity == $entita_fornitori) {
             $res = $this->apilib->search($entita_clienti, ["(LOWER({$clienti_codice}) LIKE '%{$input}%' OR LOWER({$clienti_ragione_sociale}) LIKE '%{$input}%' OR LOWER({$clienti_nome}) LIKE '%{$input}%' OR LOWER({$clienti_cognome}) LIKE '%{$input}%') AND ({$clienti_tipo} = '2' OR  {$clienti_tipo} = '3' )"], 10, 0, "{$clienti_codice},{$clienti_ragione_sociale},{$clienti_cognome},{$clienti_nome}");
         } elseif ($entity == $entita_vettori) {
@@ -1213,7 +1247,7 @@ class Documenti extends MX_Controller
         $sdd = [];
 
         $tot_docs = array_reduce($documenti, function ($sum, $doc) {
-            if (empty($doc['documenti_contabilita_scadenze_ammontare'])) {
+            if (empty ($doc['documenti_contabilita_scadenze_ammontare'])) {
                 $doc['documenti_contabilita_scadenze_ammontare'] = 0;
             }
 
@@ -1369,6 +1403,8 @@ class Documenti extends MX_Controller
             //Cambio la data emissione
             $documento_new['documenti_contabilita_data_emissione'] = date("Y-m-d H:i:s");
 
+            $documento_new['documenti_contabilita_tipologia_fatturazione'] = 1;
+
             //Creo il nuovo documento
             //$new_documento_id = $this->apilib->create('documenti_contabilita', $documento_new, false);
             $this->db->insert('documenti_contabilita', $documento_new);
@@ -1485,6 +1521,7 @@ class Documenti extends MX_Controller
         $mappature = $this->docs->getMappature();
         extract($mappature);
         if (!$this->input->post('ddt_ids')) {
+            $ddt_ids = [];
             $righe_articoli_ids = $this->input->post('articoli_ids');
             $articoli = $this->db
                 ->where_in('documenti_contabilita_articoli_id', $righe_articoli_ids)
@@ -1514,7 +1551,7 @@ class Documenti extends MX_Controller
                     $ordini_fornitori[$articolo['fw_products_supplier']] = [];
                     if ($general_settings['documenti_contabilita_general_settings_auto_rif_doc']) {
                         //Inserisco riferimento all'ordine se sto generando un ordine fornitore da un solo ordine cliente (di fatto è come se avessi fatto "clona")
-                        if (count($this->input->post('ddt_ids')) == 1) {
+                        if (count($ddt_ids) == 1) {
                             $documento = $this->apilib->view('documenti_contabilita', $articolo['documenti_contabilita_articoli_documento']);
                             $riga_desc_rif_doc = [
                                 'documenti_contabilita_articoli_id' => null,
@@ -1596,6 +1633,10 @@ class Documenti extends MX_Controller
             //debug($articoli);
             $articoli_qty = [];
             foreach ($articoli as $articolo) {
+                if (!empty($articolo['documenti_contabilita_articoli_riga_desc']) && $articolo['documenti_contabilita_articoli_riga_desc'] == DB_BOOL_TRUE) {
+                    continue;
+                }
+
                 if (empty($articoli_qty[$articolo['documenti_contabilita_articoli_prodotto_id']])) {
                     $articoli_qty[$articolo['documenti_contabilita_articoli_prodotto_id']] = [
                         'qty' => 0,
@@ -1606,13 +1647,19 @@ class Documenti extends MX_Controller
                 //
             }
             //Creo ordine per questo fornitore
-            $documento_id = $this->docs->doc_express_save([
+            $dati_documento = [
                 'tipo_documento' => 6,
                 'tipo_destinatario' => 1,
                 'fornitore_id' => $supplier_id,
                 'articoli' => $articoli_qty,
                 //TODO: aggiungere qui il riferimento all'ordine da cui provengono gli articoli
-            ]);
+            ];
+
+            if (!empty($ddt_ids)) {
+                $dati_documento['rif_documenti'] = $ddt_ids;
+            }
+
+            $documento_id = $this->docs->doc_express_save($dati_documento);
             if ($commessa_id) {
                 //se ho la commessa, imposto per ogni articolo il collegamento
                 $articoli_ordine = $this->apilib->search('documenti_contabilita_articoli', ['documenti_contabilita_articoli_documento' => $documento_id]);
@@ -1794,7 +1841,8 @@ class Documenti extends MX_Controller
     {
         $fatture = $this->apilib->search('documenti_contabilita', [
             'documenti_contabilita_tipo' => 1,
-            "documenti_contabilita_data_emissione > '2040-11-30'"
+            //'documenti_contabilita_stato_invio_sdi' => [6,13],
+            "documenti_contabilita_data_emissione > '2024-02-28'"
         ]);
 
         $c = count($fatture);
@@ -1843,7 +1891,8 @@ class Documenti extends MX_Controller
     {
         $fatture = $this->apilib->search('documenti_contabilita', [
             'documenti_contabilita_tipo' => 1,
-            "documenti_contabilita_data_emissione > '2023-08-27'"
+            //'documenti_contabilita_stato_invio_sdi' => [6, 13],
+            "documenti_contabilita_data_emissione > '2024-02-28'"
         ]);
 
         $c = count($fatture);
@@ -1901,8 +1950,12 @@ class Documenti extends MX_Controller
         $filtro = $this->session->userdata(SESS_WHERE_DATA);
         $filtro['filtro_elenchi_documenti_contabilita'] = $filtro_fatture;
         $this->session->set_userdata(SESS_WHERE_DATA, $filtro);
+        if (!empty($_SERVER['HTTP_REFERER'])) {
+            redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            redirect('main/layout/elenco_documenti');
+        }
 
-        redirect('main/layout/elenco_documenti');
 
         //debug($anno, true);
     }
@@ -2107,10 +2160,15 @@ class Documenti extends MX_Controller
         if ($options_html) {
             foreach ($documenti as $documento) {
                 ?>
-                                            <option data-tipo_documento="<?php echo $documento['documenti_contabilita_tipo']; ?>" data-data_documento="<?php echo dateFormat($documento['documenti_contabilita_data_emissione'], 'd/m/Y'); ?>" data-rif="<?php echo $documento['documenti_contabilita_numero']; ?><?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?>" value="<?php echo $documento['documenti_contabilita_id']; ?>" <?php if (!empty($movimento['movimenti_documento_id']) && $movimento['movimenti_documento_id'] == $documento['documenti_contabilita_id']): ?> selected="selected" <?php endif; ?>>
-                                                <?php echo $documento['documenti_contabilita_numero']; ?>                 <?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?> - <?php echo json_decode($documento['documenti_contabilita_destinatario'], true)['ragione_sociale']; ?>
-                                            </option>
-                                            <?php
+                <option data-tipo_documento="<?php echo $documento['documenti_contabilita_tipo']; ?>"
+                    data-data_documento="<?php echo dateFormat($documento['documenti_contabilita_data_emissione'], 'd/m/Y'); ?>"
+                    data-rif="<?php echo $documento['documenti_contabilita_numero']; ?><?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?>"
+                    value="<?php echo $documento['documenti_contabilita_id']; ?>" <?php if (!empty($movimento['movimenti_documento_id']) && $movimento['movimenti_documento_id'] == $documento['documenti_contabilita_id']): ?> selected="selected" <?php endif; ?>>
+                    <?php echo $documento['documenti_contabilita_numero']; ?>
+                    <?php if ($documento['documenti_contabilita_serie']): ?>/<?php echo $documento['documenti_contabilita_serie']; ?><?php endif; ?>
+                    - <?php echo json_decode($documento['documenti_contabilita_destinatario'], true)['ragione_sociale']; ?>
+                </option>
+                <?php
             }
         } else {
             e_json($documenti);
@@ -2208,133 +2266,35 @@ class Documenti extends MX_Controller
     {
         $post = $this->input->post();
 
-        $ids = explode(',', $post['documenti_contabilita_mail_documento_id']);
-
-        $this->load->model('contabilita/docs');
-        $this->load->library('email');
-
-        // invio email
-        $config['charset'] = 'utf-8';
-        $config['wordwrap'] = TRUE;
-        $config['mailtype'] = 'html';
-        $config['smtp_auto_tls'] = true;
-        $config['newline'] = "\r\n";
-
-        $settings = $this->apilib->searchFirst('documenti_contabilita_settings');
-        // Michael E. - 2022
-        $smtp_host = (!empty($settings['documenti_contabilita_settings_smtp_host'])) ? trim($settings['documenti_contabilita_settings_smtp_host']) : null;
-        $smtp_user = (!empty($settings['documenti_contabilita_settings_smtp_login'])) ? trim($settings['documenti_contabilita_settings_smtp_login']) : null;
-        $smtp_pass = (!empty($settings['documenti_contabilita_settings_smtp_password'])) ? trim($settings['documenti_contabilita_settings_smtp_password']) : null;
-        $smtp_port = (!empty($settings['documenti_contabilita_settings_smtp_port'])) ? trim($settings['documenti_contabilita_settings_smtp_port']) : null;
-
-        if ($smtp_host && $smtp_user && $smtp_pass) {
-
-            switch ($smtp_port) {
-                case '587':
-                    $smtp_crypt = 'TLS';
-                    break;
-                case '465':
-                    $smtp_crypt = 'SSL';
-                    break;
-                case '25':
-                default:
-                    $smtp_crypt = '';
-                    break;
-            }
-
-            $config['smtp_host'] = $smtp_host;
-            $config['smtp_user'] = $smtp_user;
-            $config['smtp_pass'] = $smtp_pass;
-            $config['smtp_crypto'] = $smtp_crypt;
-            $config['smtp_port'] = $smtp_port;
-            $config['protocol'] = 'smtp';
-            $config['smtp_debug'] = 0;
+        $tipo_invio = '';
+        if (!empty($post['documenti_contabilita_mail_documento_id'])) {
+            $tipo_invio = 'documento';
+            $ids = explode(',', $post['documenti_contabilita_mail_documento_id']);
+        } elseif (!empty($post['documenti_contabilita_mail_spesa_id'])) {
+            $tipo_invio = 'spesa';
+            $ids = explode(',', $post['documenti_contabilita_mail_spesa_id']);
+        } elseif (!empty($post['documenti_contabilita_mail_scadenza_spesa_id'])) {
+            $tipo_invio = 'scadenza_spesa';
+            $ids = explode(',', $post['documenti_contabilita_mail_scadenza_spesa_id']);
         }
 
-        $this->email->initialize($config);
-
-        foreach ($ids as $documento_id) {
-            $this->email->clear(true);
-
-            $mail_data = $post;
-
-            $documento = $this->apilib->view('documenti_contabilita', $documento_id);
-
-            $this->email->from($mail_data['documenti_contabilita_mail_mittente'], $mail_data['documenti_contabilita_mail_mittente_nome']);
-
-            $documento_numero = $documento['documenti_contabilita_numero'];
-
-            // SE fattura elettronica allego anche la preview xml
-            // if ($documento['documenti_contabilita_formato_elettronico'] == DB_BOOL_TRUE) {
-            // if ($mail_data['documenti_contabilita_mail_template']) {
-            //     $allegato = base64_decode($documento['documenti_contabilita_file_preview_xml']);
-            //     $this->email->attach($allegato, 'attachment', 'Fattura_elettronica_' . $documento_numero . '.pdf', 'application/pdf');
-            // }
-
-            // Allegato il pdf standard
-            $allegato = file_get_contents(FCPATH . "uploads/" . $documento['documenti_contabilita_file_pdf']);
-            $this->email->attach($allegato, 'attachment', 'Documento_' . $documento_numero . '.pdf', 'application/pdf');
-
-            // Allego l'xml
-            /*$allegato = base64_decode($documento['documenti_contabilita_file']);
-            $nomefile = "IT" . $settings['documenti_contabilita_settings_company_vat_number'] . "_00001.xml";
-            $this->email->attach($allegato, 'attachment', $nomefile, 'application/xml');*/
-            // } else {
-            //     // Allegato il pdf standard
-            //     $allegato = file_get_contents(FCPATH."uploads/".$documento['documenti_contabilita_file_pdf']);
-            //     $this->email->attach($allegato, 'attachment', 'Documento_' . $documento_numero . '.pdf', 'application/pdf');
-            // }
-
-            if ($documento['documenti_contabilita_serie']) {
-                $documento_numero = $documento_numero . '/' . $documento['documenti_contabilita_serie'];
+        foreach ($ids as $id) {
+            // rimpiazzo il dato $post in base al tipo di id che mi sono arrivati
+            if ($tipo_invio == 'documento') {
+                $post['documenti_contabilita_mail_documento_id'] = $id;
+            } elseif ($tipo_invio == 'spesa') {
+                $post['documenti_contabilita_mail_spesa_id'] = $id;
+            } elseif ($tipo_invio == 'scadenza_spesa') {
+                $post['documenti_contabilita_mail_scadenza_spesa_id'] = $id;
             }
 
-            // Replace
-            $mail_data['documenti_contabilita_mail_oggetto'] = str_replace('{numero_fattura}', $documento_numero, $mail_data['documenti_contabilita_mail_oggetto']);
-            $mail_data['documenti_contabilita_mail_oggetto'] = str_replace('{data_emissione}', date('d-m-Y', strtotime($documento['documenti_contabilita_data_emissione'])), $mail_data['documenti_contabilita_mail_oggetto']);
-
-            $mail_data['documenti_contabilita_mail_testo'] = str_replace('{numero_fattura}', $documento_numero, $mail_data['documenti_contabilita_mail_testo']);
-            $mail_data['documenti_contabilita_mail_testo'] = str_replace('{data_emissione}', date('d-m-Y', strtotime($documento['documenti_contabilita_data_emissione'])), $mail_data['documenti_contabilita_mail_testo']);
-
-            $mail_data['documenti_contabilita_mail_documento_id'] = $documento_id;
-
-            if (empty($mail_data['documenti_contabilita_mail_destinatario'])) {
-                if ($documento['documenti_contabilita_customer_id']) {
-                    $mappature = $this->docs->getMappature();
-                    extract($mappature);
-
-                    $destinatario = $this->apilib->view($entita_clienti, $documento['documenti_contabilita_customer_id']);
-
-                    if (!empty($destinatario[$clienti_email])) {
-                        $mail_data['documenti_contabilita_mail_destinatario'] = $destinatario[$clienti_email];
-                    }
-                }
-            }
-
-            if (!empty($mail_data['documenti_contabilita_mail_destinatario'])) {
-                $this->email->to($mail_data['documenti_contabilita_mail_destinatario']);
-
-                $this->email->subject($mail_data['documenti_contabilita_mail_oggetto']);
-
-                $this->email->message($mail_data['documenti_contabilita_mail_testo'] ?: ' ');
-
-                $mail_data['documenti_contabilita_mail_allegati'] = json_encode(array(base64_encode($allegato)));
-
-                $mail_data['documenti_contabilita_mail_creation_date'] = date('Y-m-d H:i:s');
-
-                // ho usato $this->db perchè sennò con apilib entrava nel post-process pre-insert documenti_contabilita_mail "Invio email contabilita" e avrebbe fatto casini
-                $this->db->insert('documenti_contabilita_mail', $mail_data);
-
-                // Send and return the result
-                $return = $this->email->send();
-                if (empty($return)) {
-                    throw new ApiException("Invio mail fallito: " . $this->email->print_debugger());
-                    //    exit();
-                }
-
-                //die('esito: ' . $return);
+            try {
+                $this->apilib->create('documenti_contabilita_mail', $post);
+            } catch (Exception $e) {
+                die(e_json(['status' => 0, 'txt' => $e->getMessage()]));
             }
         }
+
         echo json_encode(['status' => 2, 'txt' => 'ok']);
     }
 
@@ -2559,7 +2519,7 @@ class Documenti extends MX_Controller
             die('ANOMALIA: Dati non passati');
         }
 
-        if (empty($post['data_emissione']) || /*empty($post['data_scadenza']) ||*/empty($post['tipo_documento'])) {
+        if (empty($post['data_emissione']) || /*empty($post['data_scadenza']) ||*/ empty($post['tipo_documento'])) {
             die('ANOMALIA: Data emissione e/o scadenza e/o tipo documento non definiti');
         }
 
@@ -2712,6 +2672,7 @@ class Documenti extends MX_Controller
                         'documenti_contabilita_articoli_iva_id' => 1,
                         'documenti_contabilita_articoli_iva_perc' => 22,
                         'documenti_contabilita_articoli_descrizione' => (!empty($post['periodo_competenza']) ? 'periodo di competenza: ' . $post['periodo_competenza'] : ''),
+                        'documenti_contabilita_articoli_rif_pagamento' => $pagamento['payments_id'],
                     ]
                 ],
             ];
@@ -2807,6 +2768,7 @@ class Documenti extends MX_Controller
             $post['serie'] = '';
         }
         foreach ($pagamenti_clienti as $cliente_id => $pagamenti) {
+            $cliente = $this->apilib->searchFirst('customers', ['customers_id' => $cliente_id]);
             $fattura = [
                 'cliente_id' => $cliente_id,
                 'azienda' => $azienda['documenti_contabilita_settings_id'],
@@ -2826,10 +2788,11 @@ class Documenti extends MX_Controller
                     'documenti_contabilita_articoli_descrizione' => (!empty($post['periodo_competenza']) ? 'periodo di competenza: ' . $post['periodo_competenza'] : ''),
                     'documenti_contabilita_articoli_prezzo' => number_format($pagamento['payments_amount'], 2, '.', ''),
                     'documenti_contabilita_articoli_quantita' => 1,
-                    'documenti_contabilita_articoli_iva_id' => 1,
-                    'documenti_contabilita_articoli_iva_perc' => 22,
+                    'documenti_contabilita_articoli_iva_id' => (!empty($cliente['customers_iva_default']) ? $cliente['customers_iva_default'] : 1),
+                    'documenti_contabilita_articoli_iva_perc' => (!empty($cliente['iva_valore']) ? $cliente['iva_valore'] : 22),
                     'documenti_contabilita_articoli_sconto' => 0,
                     'documenti_contabilita_articoli_applica_sconto' => 1,
+                    'documenti_contabilita_articoli_rif_pagamento' => $pagamento['payments_id'],
                 ];
             }
 
@@ -2872,14 +2835,75 @@ class Documenti extends MX_Controller
 
         $this->output->set_content_type('text/xml')->set_output($xml);
     }
-    public function get_tpl_pagamento_banca($tpl_pagamento = null) {
+    public function get_tpl_pagamento_banca($tpl_pagamento = null)
+    {
         if (!$tpl_pagamento) {
             e_json(['status' => 0, 'txt' => 'Template pagamento fornito']);
             return false;
         }
-        
-        $tpl_pag_scadenza = $this->apilib->searchFirst('documenti_contabilita_tpl_pag_scadenze', [ 'documenti_contabilita_tpl_pag_scadenze_tpl_id' => $tpl_pagamento ]);
-        
+
+        $tpl_pag_scadenza = $this->apilib->searchFirst('documenti_contabilita_tpl_pag_scadenze', ['documenti_contabilita_tpl_pag_scadenze_tpl_id' => $tpl_pagamento]);
+
         e_json(['status' => 1, 'txt' => $tpl_pag_scadenza]);
     }
+
+    public function valida_xml_fattura($id)
+    {
+        $fattura = $this->apilib->view('documenti_contabilita', $id);
+        $xmlPath = FCPATH . 'uploads/' . $fattura['documenti_contabilita_file_xml'];
+        $xsdPath = $this->layout->moduleAssets('contabilita', 'uploads/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd.xml');
+
+        libxml_use_internal_errors(true);
+        $xml = new DOMDocument();
+        $xml->load($xmlPath);
+        if (!$xml->schemaValidate($xsdPath)) {
+            $error = libxml_get_last_error();
+            if ($error) {
+                $errorMsg = $this->formatXmlError($error, $xmlPath);
+                e_json(['status' => 0, 'txt' => $errorMsg]);
+            } else {
+                e_json(['status' => 0, 'txt' => 'Errore di validazione: Errore sconosciuto']);
+            }
+        } else {
+            e_json(['status' => 1, 'txt' => 'Validazione riuscita']);
+        }
+        libxml_clear_errors();
+    }
+
+    private function formatXmlError($error, $xmlPath)
+    {
+        //debug($error,true);
+        $returnMessage = "Errore fatale {$error->code}: {$error->message}";
+        
+        $returnMessage .= " alla linea {$error->line}.";
+        
+        // Aggiungiamo l'estratto del codice XML
+        $lines = file($xmlPath);
+        
+        $extract = array_slice($lines, max($error->line - 6, 0), 11);
+
+        $highlightedError = '<pre class="text-left">';
+
+        foreach ($extract as $i => $line) {
+            if ($i === 5) {
+                $highlightedError .= '<span style="color: red;font-weight:bold;">' . htmlspecialchars($line) . '</span>';
+                
+
+            } else {
+                $highlightedError .= htmlspecialchars($line);
+            }
+            
+        }
+
+        $highlightedError .= '</pre>';
+       
+
+        // $highlightedExtract = implode("", $extract);
+        // $highlightedExtract = htmlspecialchars($highlightedExtract);
+        // $highlightedExtract = preg_replace('/^.*$/m', '<span class="xml-line">$0</span>', $highlightedExtract);
+        // $highlightedExtract = str_replace("<span class=\"xml-line\">{$lines[$error->line - 1]}</span>", "<span class=\"xml-error-line\">{$lines[$error->line - 1]}</span>", $highlightedExtract);
+        
+        return $returnMessage . "<br/>Estratto del codice:<br/>{$highlightedError}";
+    }
+
 }

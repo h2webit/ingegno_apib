@@ -161,7 +161,90 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
 }
 // debug($importo_sconto);
 // debug($dati['fattura'],true);
+//verifico se è privato o azienda
+if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 2 AND (!empty($dati['fattura']['documenti_contabilita_customer_id']))){
+    if(!empty($dati['fattura']['customers_name'])){
+        $customers_name = $dati['fattura']['customers_name'];
+    }
+    if(!empty($dati['fattura']['customers_last_name'])){
+        $customers_last_name = $dati['fattura']['customers_last_name'];
+    }
+}
+if (function_exists('extractJsonEditorData') == false) {
+    function extractJsonEditorData($path, $data)
+    {
+        $pathParts = explode('/', $path); // Dividi il percorso in parti basate su '/'
+        $currentData = $data; // Inizia con i dati JSON completi
+        // debug($pathParts);
+        // debug($data,true);
+        foreach ($pathParts as $part) {
+            // Se la parte corrente esiste nei dati correnti, vai più in profondità
+            if (isset($currentData[$part])) {
+                $currentData = $currentData[$part];
+            } else {
+                // Se una parte del percorso non esiste, termina (nodo non trovato)
 
+                return null;
+            }
+        }
+
+        // A questo punto, $currentData contiene i dati del nodo desiderato
+        // Costruisci il frammento XML
+
+        // Assicurati che l'array non sia vuoto e che l'ultimo elemento sia un nome valido
+        $lastPart = end($pathParts); // Prende l'ultimo elemento dell'array senza usare indici negativi
+
+        if (!$lastPart || preg_match('/[^a-zA-Z0-9_\-]/', $lastPart)) {
+            // Se l'ultimo elemento è vuoto o contiene caratteri non validi, usa un placeholder
+            $lastPart = 'InvalidNodeName';
+        }
+
+        $xml = new SimpleXMLElement("<$lastPart></$lastPart>");
+
+        // Aggiungi i figli al nodo XML
+        foreach ($currentData as $key => $value) {
+            if (is_array($value)) {
+                // Se il valore è un array, considera il caso di più nodi con lo stesso nome
+                foreach ($value as $subValue) {
+                    if (is_array($subValue)) {
+                        $child = $xml->addChild($key);
+                        arrayToXml($subValue, $child); // Funzione ausiliaria per gestire array nidificati
+                    } else {
+                        if ($subValue) {
+                            $xml->addChild($key, htmlspecialchars($subValue));
+                        }
+
+                    }
+                }
+            } else {
+                $xml->addChild($key, htmlspecialchars($value));
+            }
+        }
+
+        return str_replace('<?xml version="1.0"?>', '', $xml->asXML());
+    }
+}
+
+if (function_exists('arrayToXml') == false) {
+    function arrayToXml($data, &$xml)
+    {
+        foreach ($data as $key => $value) {
+
+            if (is_array($value)) {
+                $subnode = $xml->addChild($key);
+                arrayToXml($value, $subnode);
+            } else {
+                $xml->addChild($key, htmlspecialchars($value));
+            }
+        }
+    }
+}
+
+if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
+    $json_editor_xml = json_decode($dati['fattura']['documenti_contabilita_json_editor_xml'],true);
+} else {
+    $json_editor_xml = [];
+}
 ?>
 <?php echo '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
 <p:FatturaElettronica
@@ -296,11 +379,14 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
                     </CodiceFiscale>
                 <?php endif; ?>
                 <Anagrafica>
-                    <Denominazione>
-                        <?php echo htmlspecialchars($dest_ragionesociale); ?>
-                    </Denominazione>
-                    <?php /* <!--<Nome></Nome>--> */?>
-                    <?php /* <!--<Cognome></Cognome>--> */?>
+                    <?php if(!isset($customers_name) AND !isset($customers_last_name)): ?>
+                        <Denominazione>
+                            <?php echo htmlspecialchars($dest_ragionesociale); ?>
+                        </Denominazione>
+                        <?php else: ?>
+                            <Nome><?php echo htmlspecialchars($customers_name); ?></Nome>
+                            <Cognome><?php echo htmlspecialchars($customers_last_name); ?></Cognome>
+                    <?php endif; ?>
                     <?php /* <!--<Titolo></Titolo>
 <CodEORI></CodEORI>--> */?>
                 </Anagrafica>
@@ -592,59 +678,26 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
 <CodiceCUP></CodiceCUP>
 <CodiceCIG></CodiceCIG>
 </DatiRicezione>
-<DatiFattureCollegate>
-<RiferimentoNumeroLinea></RiferimentoNumeroLinea>
-<IdDocumento></IdDocumento>
-<Data></Data>
-<NumItem></NumItem>
-<CodiceCommessaConvenzione></CodiceCommessaConvenzione>
-<CodiceCUP></CodiceCUP>
-<CodiceCIG></CodiceCIG>
-</DatiFattureCollegate>
-<DatiSAL>
-<RiferimentoFase></RiferimentoFase>
-</DatiSAL>
-<DatiDDT>
-<NumeroDDT></NumeroDDT>
-<DataDDT></DataDDT>
-<RiferimentoNumeroLinea></RiferimentoNumeroLinea>
-</DatiDDT>
-<DatiTrasporto>
-<DatiAnagraficiVettore>
-<IdFiscaleIVA>
-<IdPaese></IdPaese>
-<IdCodice></IdCodice>
-</IdFiscaleIVA>
-<CodiceFiscale></CodiceFiscale>
-<Anagrafica>
-<Denominazione></Denominazione>
-<Nome></Nome>
-<Cognome></Cognome>
-<Titolo></Titolo>
-<CodEORI></CodEORI>
-</Anagrafica>
-<NumeroLicenzaGuida></NumeroLicenzaGuida>
-</DatiAnagraficiVettore>
-<MezzoTrasporto></MezzoTrasporto>
-<CausaleTrasporto></CausaleTrasporto>
-<NumeroColli></NumeroColli>
-<Descrizione></Descrizione>
-<UnitaMisuraPeso></UnitaMisuraPeso>
-<PesoLordo></PesoLordo>
-<PesoNetto></PesoNetto>
-<DataOraRitiro></DataOraRitiro>
-<DataInizioTrasporto></DataInizioTrasporto>
-<TipoResa></TipoResa>
-<IndirizzoResa>
-<Indirizzo></Indirizzo>
-<NumeroCivico></NumeroCivico>
-<CAP></CAP>
-<Comune></Comune>
-<Provincia></Provincia>
-<Nazione></Nazione>
-</IndirizzoResa>
-<DataOraConsegna></DataOraConsegna>
-</DatiTrasporto>
+*/ ?>
+<?php 
+$path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiFattureCollegate";
+echo extractJsonEditorData($path, $json_editor_xml); ?>
+<?php /*
+*/ ?>
+<?php
+// $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiSAL";
+// echo extractJsonEditorData($path, $json_editor_xml); ?>
+<?php /*
+*/ ?>
+<?php 
+// $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiDDT";
+// echo extractJsonEditorData($path, $json_editor_xml); ?>
+<?php /*
+*/ ?>
+<?php
+// $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiTrasporto";
+// echo extractJsonEditorData($path, $json_editor_xml); ?>
+<?php /*
 <NormaDiRiferimento></NormaDiRiferimento>
 <FatturaPrincipale>
 <NumeroFatturaPrincipale></NumeroFatturaPrincipale>

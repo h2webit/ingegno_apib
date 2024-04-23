@@ -4,15 +4,15 @@
     "modules_description": "Module Manager to install, update and uninstall OpenBuilder modules.",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.4.1",
+    "modules_version": "1.4.2",
     "modules_identifier": "module-manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "554",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "39",
+    "modules_version_code": "40",
     "modules_thumbnail": "0988e03e605658fe472bdbfbb6b7dda4.png",
-    "modules_min_client_version": "3.1.0",
+    "modules_min_client_version": "3.5.0",
     "modules_version_date": "2023-01-13 14:24:14",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -360,6 +360,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -381,6 +382,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -402,6 +404,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -423,6 +426,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -444,6 +448,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -465,6 +470,7 @@
             "layouts_boxes_row": "0",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -486,6 +492,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "4",
             "layouts_boxes_color": "box-success",
+            "layouts_boxes_module_key": null,
             "conditions": []
         }
     ],
@@ -1072,6 +1079,8 @@
             "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "module-manager-form-2402",
+            "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2402",

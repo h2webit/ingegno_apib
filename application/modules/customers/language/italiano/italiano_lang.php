@@ -807,3 +807,6 @@ $lang['Customize customers sotto tipo'] = 'Customize customers sotto tipo';
 $lang['Customize customers status'] = 'Customize customers status';
 $lang['/ TEST TECNICO MATTEO - Customer'] = '/ TEST TECNICO MATTEO - Customer';
 $lang['/ SA.VE GROUP S.R.L. - Customer'] = '/ SA.VE GROUP S.R.L. - Customer';
+$lang['Customers Contact Detail'] = 'Customers Contact Detail';
+$lang['By activating this flag, an automatic mechanism is activated on the personal data form (new only, not modified) which, if subtype = private and country is Italy, sets the SDI code with 7 zeros, otherwise if it is foreign it sets 7 x'] = 'By activating this flag, an automatic mechanism is activated on the personal data form (new only, not modified) which, if subtype = private and country is Italy, sets the SDI code with 7 zeros, otherwise if it is foreign it sets 7 x';
+$lang['Autocompile sdi field'] = 'Autocompile sdi field';

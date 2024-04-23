@@ -29,6 +29,7 @@
                     'nome' => $payment['payments_note'],
                     'descrizione' => '',
                     'prezzo' => $payment['payments_amount'],
+                    'rif_pagamento' => $payment['payments_id'],
                 ];
         
                 $articoli[] = $articolo;

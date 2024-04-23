@@ -45,3 +45,8 @@ $updates['3.2.5'] = [
         '3.2.4_notification_for_sort_articoli.php',
     ],
 ];
+$updates['4.2.2'] = [
+    'include' => [
+        '4.2.2_null_flussi_cassa_risorsa.php',
+    ],
+];

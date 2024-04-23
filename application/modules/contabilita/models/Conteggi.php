@@ -327,15 +327,41 @@ class Conteggi extends CI_Model
         $options = [
             'custom_from' => $month_join,
             'select' => "
-            idMonth, MONTHNAME(STR_TO_DATE(idMonth, '%m')) as m, 
-            coalesce(SUM(CASE WHEN documenti_contabilita_tipo = 1 THEN documenti_contabilita_imponibile ELSE -documenti_contabilita_imponibile END), 0) as imponibile, 
-            coalesce(SUM(CASE WHEN documenti_contabilita_tipo = 1 THEN documenti_contabilita_iva ELSE -documenti_contabilita_iva END), 0) as iva
-        ",
+                idMonth, MONTHNAME(STR_TO_DATE(idMonth, '%m')) as m, 
+                coalesce(SUM(CASE WHEN documenti_contabilita_tipo = 1 THEN documenti_contabilita_imponibile ELSE -documenti_contabilita_imponibile END), 0) as imponibile, 
+                coalesce(SUM(CASE WHEN documenti_contabilita_tipo = 1 THEN documenti_contabilita_iva ELSE -documenti_contabilita_iva END), 0) as iva
+            ",
             'group_by' => 'Month.idMonth',
             'multi_rows' => true
         ];
 
-        return $this->baseQueryDocumentiContabilita($options);
+        $results = $this->baseQueryDocumentiContabilita($options);
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[$result['idMonth']] = $result;
+        }
+        //debug($formattedResults);
+        for ($mese = 1; $mese <= 12; $mese++) {
+            if (!array_key_exists($mese, $formattedResults)) {
+                //debug($mese);
+
+                $formattedResults[$mese] = [
+                    'idMonth' => $mese,
+                    'm' => mese_testuale($mese),
+                    'imponibile' => 0,
+                    'iva' => 0
+                ];
+                //debug($formattedResults);
+            }
+
+        }
+        
+        //Riordino per mese
+        ksort($formattedResults);
+
+        return $formattedResults;
+        
+        
     }
 
 
@@ -369,8 +395,31 @@ class Conteggi extends CI_Model
             'group_by' => 'Month.idMonth',
             'multi_rows' => true
         ];
+        $results = $this->baseQuerySpese($options);
+        //debug($results,true);
+        $formattedResults = [];
 
-        return $this->baseQuerySpese($options);
+        foreach ($results as $result) {
+            $formattedResults[$result['idMonth']] = $result;
+        }
+
+        for ($mese = 1; $mese <= 12; $mese++) {
+            if (!array_key_exists($mese, $formattedResults)) {
+             
+            
+                $formattedResults[$mese] = [
+                    'idMonth' => $mese,
+                    'm' => mese_testuale($mese),
+                    'imponibile' => 0,
+                    'iva' => 0
+                ];
+            }
+
+        }
+        //Riordino per mese
+        ksort($formattedResults);
+        return $formattedResults;
+        
     }
 
 }

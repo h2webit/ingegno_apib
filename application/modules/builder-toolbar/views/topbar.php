@@ -2,8 +2,14 @@
 $dev_mode = $this->session->userdata('dev_mode');
 
 $users = $this->apilib->search("users", ["users_active = " . DB_BOOL_TRUE], 'users_type_value');
-$configurations = $this->apilib->searchFirst('users_manager_configurations');
-$salt = $configurations['users_manager_configurations_salt'];
+$this->load->model('entities');
+if ($this->entities->entity_exists('users_manager_configurations')) {
+    $configurations = $this->apilib->searchFirst('users_manager_configurations');
+    $salt = $configurations['users_manager_configurations_salt'];
+} else {
+    $salt = 'Salt configuration missing!';
+}
+
 // debug($users);
 ?>
 

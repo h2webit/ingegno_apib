@@ -3,9 +3,41 @@ $this->load->model('contabilita/prima_nota');
 $conteggi = $this->input->get('nascondi_conteggi') != 1;
 $completo = 1;
 $nascondi_orfani = 1;
+$nascondi_zero = $this->input->get('nascondi_zero') == 1;
+
+
+
 $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('completo') == 1, $this->input->get('nascondi_orfani') == 1, $conteggi);
 
+$filters = $this->session->userdata(SESS_WHERE_DATA);
 
+// Costruisco uno specchietto di filtri autogenerati leggibile
+$filtri = array();
+
+if (!empty($filters["filter_stampe_contabili"])) {
+    foreach ($filters["filter_stampe_contabili"] as $field) {
+        if ($field['value'] == '-1') {
+            continue;
+        }
+        $filter_field = $this->datab->get_field($field["field_id"], true);
+        // debug($filter_field);
+
+        // Se ha una entità/support collegata
+        if ($filter_field['fields_ref']) {
+
+            $entity_data = $this->crmentity->getEntityPreview($filter_field['fields_ref']);
+            $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $entity_data[$field['value']]);
+        } else {
+            $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $field['value']);
+        }
+    }
+}
+foreach ($piano_dei_conti as $key => $dati_piano_conti) {
+    if (empty($dati_piano_conti['mastri'])) {
+        unset($piano_dei_conti[$key]);
+
+    }
+}
 ?>
 <style>
     .piano_dei_conti .btn {}
@@ -63,15 +95,38 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
     .euro_red {
         color:#F00;
     }
+    .new_page {
+            page-break-after: always;
+            page-break-inside: always;
+            page-break-before: always;
+        }
 </style>
+
+
+<div style="margin-bottom:30px;padding-top:30px;">
+    <p><strong>
+            Documento generato il
+        </strong>:
+        <?php echo dateFormat(date('Y-m-d H:i:s'),'d/m/Y H:i:s'); ?>
+    </p>
+    <?php foreach ($filtri as $filtro): ?>
+        <p><strong>
+                <?php echo $filtro['label']; ?>
+            </strong>:
+            <?php echo $filtro['value']; ?>
+        </p>
+    <?php endforeach; ?>
+
+</div>
 
 
 <div class="container-fluid box box-danger">
 
-    <div class="row">
-        <?php foreach ($piano_dei_conti as $mastro_tipo) : ?>
-
-            <div class="piano_dei_conti col-md-12">
+    
+        <?php foreach ($piano_dei_conti as $key => $mastro_tipo) : ?>
+            <div class="row">
+            <?php $piano_dei_conti[$key]['totale'] = 0; ?>
+            <div class="new_page piano_dei_conti col-md-12" style="">
                 <div class="box-header">
                     <h3 class="box-title">
                         <?php echo $mastro_tipo['documenti_contabilita_mastri_tipo_value']; ?>
@@ -90,7 +145,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover table-condensed">
-                                    <thead>
+                                    <thead style="position:relative;">
                                         <tr>
                                             <th>Descrizione</th>
                                             <?php if ($conteggi) : ?>
@@ -109,7 +164,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                             } ?>
                                             <tr style="opacity: 1; color:#14518d;">
                                                 <td>
-                                                    <span class="clickable" id="movimenti-55">
+                                                    <span class="clickable">
                                                         &nbsp;<b><?php echo $conto['documenti_contabilita_conti_codice_completo']; ?></b> <?php echo $conto['documenti_contabilita_conti_descrizione']; ?>
                                                     </span>
                                                     
@@ -117,15 +172,15 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                                 <?php if ($conteggi) : ?>
                                                     <td class="text-right">
                                                         <?php //debug($conto,true); ?>
-                                                        <?php e_money($conto['dare']); ?> €
+                                                        <?php //e_money($conto['dare']); ?> 
                                                     </td>
                                                     <td class="text-right">
                                                         
-                                                                        <?php e_money($conto['avere']); ?> €
+                                                                        <?php //e_money($conto['avere']); ?> 
                                                                     </td>
                                                                     <td class="text-right<?php if ($conto['totale'] < 0): ?> euro_red<?php endif; ?>">
                                                         
-                                                                                        <?php e_money($conto['totale']); ?> €
+                                                                                        <?php //e_money($conto['totale']); ?> 
                                                                                     </td>
                                                 <?php endif; ?>
                                                 
@@ -138,7 +193,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                                 } ?>
 
                                                 <tr>
-                                                    <td style="padding-left: 30px;opacity: 0.75;">
+                                                    <td style="padding-left: 30px;opacity: 1;">
                                                         <span class="clickable">
                                                             &nbsp;<b><?php echo $sottoconto['documenti_contabilita_sottoconti_codice_completo']; ?></b> <?php echo $sottoconto['documenti_contabilita_sottoconti_descrizione']; ?>
                                                         </span>
@@ -161,6 +216,34 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 
                                                 </tr>
                                             <?php endforeach; ?>
+                                            <?php if ($conteggi) : ?>
+                                            <tr>
+                                                <td style="padding-left: 30px;opacity: 1;font-weight:bold;color:#14518d;">
+                                                    <span class="clickable">
+                                                        &nbsp;<b>Totale <?php echo $conto['documenti_contabilita_conti_descrizione']; ?></b>
+                                                    </span>
+                                                </td>
+                                                <td class="text-right"  style="font-weight:bold;">
+                                                    <?php //debug($conto,true);  ?>
+                                                    <?php e_money($conto['dare']); ?> €
+                                                </td>
+                                                <td class="text-right"  style="font-weight:bold;">
+                                                
+                                                    <?php e_money($conto['avere']); ?> €
+                                                </td>
+                                                <td class="text-right<?php if ($conto['totale'] < 0): ?> euro_red<?php endif; ?>" style="font-weight:bold;">
+                                                
+                                                    <?php e_money($conto['totale']); ?> €
+                                                </td>
+                                                </tr>
+                                            <?php endif; ?>
+                                            <tr>
+                                                <td colspan="4" style="padding-left: 0px;opacity: 1;">
+                                                    <span class="clickable">
+                                                        &nbsp;<b>&nbsp;</b>
+                                                    </span>
+                                                </td>
+                                                </tr>
                                         <?php endforeach; ?>
 
                                     </tbody>
@@ -168,7 +251,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                     <tfoot>
                                         <tr>
                                             
-                                            <th class="text-right text-uppercase">Totali:</th>
+                                            <th class="text-right text-uppercase">Totali (<?php echo $mastro['documenti_contabilita_mastri_descrizione']; ?>):</th>
                                             <?php if ($conteggi) : ?>
                                                 <th class="text-right"><?php e_money($mastro['dare']); ?> €</th>
                                                 <th class="text-right"><?php e_money($mastro['avere']); ?> €
@@ -177,6 +260,11 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
                                                                         </th>
                                             <?php endif; ?>
                                         </tr>
+
+                                                                <?php
+                                                                $piano_dei_conti[$key]['totale'] += $mastro['totale'];
+                                                                ?>
+
                                     </tfoot>
                                 </table>
 
@@ -189,39 +277,32 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 
                
             </div>
-        <?php endforeach; ?>
-    </div>
+
+            <div>
+                <span class="text-right text-uppercase" style="font-size: 2em;  text-align: right;  display: block;  margin-right: 20px;  margin-top: 10px;">
+                TOTALE (<?php echo $mastro_tipo['documenti_contabilita_mastri_tipo_value']; ?>): <?php e_money(abs($piano_dei_conti[$key]['totale'])); ?> €
+                                                            </span>
+            </div>
+                                                                
+        </div>
+        <div class="new_page"></div>
+                                                                <?php endforeach; ?>
+
+
+                                                                <div style="margin-top:50px;">
+                <span class="text-right text-uppercase" style="font-size: 1em;  text-align: right;  display: block;  margin-right: 20px;  margin-top: 10px;">
+                TOTALE PATRIMONIALE(<?php echo $piano_dei_conti[0]['documenti_contabilita_mastri_tipo_value']; ?>):
+                                                                        <?php e_money(abs($piano_dei_conti[0]['totale'])); ?> €
+                                                                    </span>
+                                                                    <span class="text-right text-uppercase" style="font-size: 1em;  text-align: right;  display: block;  margin-right: 20px;  margin-top: 10px;">
+                TOTALE PATRIMONIALE(<?php echo $piano_dei_conti[1]['documenti_contabilita_mastri_tipo_value']; ?>):
+                                                                        <?php e_money(abs($piano_dei_conti[1]['totale'])); ?> €
+                                                                    </span>
+                                                                    <hr />
+                                                                    <span class="text-right text-uppercase" style="font-size: 2em;  text-align: right;  display: block;  margin-right: 20px;  margin-top: 10px;">
+                DIFFERENZA:
+                                                                        <?php e_money(abs($piano_dei_conti[0]['totale']) - abs($piano_dei_conti[1]['totale'])); ?> €
+                                                                    </span>
+                                                                </div>
+    
 </div>
-
-<script>
-    function PrintElem(elem) {
-        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-        mywindow.document.write('<html><head><title>' + document.title + '</title>');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write('<h1>' + document.title + '</h1>');
-        mywindow.document.write(document.getElementById(elem).innerHTML);
-        mywindow.document.write('</body></html>');
-
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-
-        mywindow.print();
-        mywindow.close();
-
-        return true;
-    }
-
-    $(() => {
-        $('.js_checkbox_conteggi,.js_checkbox_clienti_fornitori,.js_checkbox_nasconti_conti_senza_registrazioni,.js_checkbox_nascondi_importi_a_zero').on('click', function() {
-            var nascondi_conteggi = (!$('.js_checkbox_conteggi').is(':checked') ? '0' : '1');
-            var completo = (!$('.js_checkbox_clienti_fornitori').is(':checked') ? '0' : '1');
-            var nascondi_orfani = (!$('.js_checkbox_nasconti_conti_senza_registrazioni').is(':checked') ? '0' : '1');
-            var nascondi_zero = (!$('.js_checkbox_nascondi_importi_a_zero').is(':checked') ? '0' : '1');
-            var redirect = base_url + 'main/layout/piano-dei-conti?completo=' + completo + '&nascondi_conteggi=' + nascondi_conteggi + '&nascondi_orfani=' + nascondi_orfani + '&nascondi_zero=' + nascondi_zero;
-            location.href = redirect;
-        });
-
-
-    });
-</script>

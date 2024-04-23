@@ -2,30 +2,49 @@
 <?php $this->layout->addModuleJavascript('ticket-planner', 'js/customer_tickets.js'); ?>
 
 <style>
-
     .icona_chat {
-            position: absolute;
+        position: absolute;
         right: 15px;
         top: 15px;
-        font-size: 20px!important;
+        font-size: 20px !important;
     }
 
-   @keyframes shake {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  10% { transform: translate(-10px, 0) rotate(-20deg); }
-  20% { transform: translate(10px, 0) rotate(20deg); }
-  30% { transform: translate(-10px, 0) rotate(-20deg); }
-  40% { transform: translate(10px, 0) rotate(20deg); }
-  50% { transform: translate(0, 0) rotate(0); }
-  100% { transform: translate(0, 0) rotate(0); }
-}
+    @keyframes shake {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
 
-.shake-icon {
-  animation: shake 2s;
-  animation-iteration-count: infinite;
-  animation-delay: 2s;
-  display: inline-block;
-}
+        10% {
+            transform: translate(-10px, 0) rotate(-20deg);
+        }
+
+        20% {
+            transform: translate(10px, 0) rotate(20deg);
+        }
+
+        30% {
+            transform: translate(-10px, 0) rotate(-20deg);
+        }
+
+        40% {
+            transform: translate(10px, 0) rotate(20deg);
+        }
+
+        50% {
+            transform: translate(0, 0) rotate(0);
+        }
+
+        100% {
+            transform: translate(0, 0) rotate(0);
+        }
+    }
+
+    .shake-icon {
+        animation: shake 2s;
+        animation-iteration-count: infinite;
+        animation-delay: 2s;
+        display: inline-block;
+    }
 
 
     .bg-aqua {
@@ -76,7 +95,7 @@
     .bg-black-active {
         color: #fff !important;
     }
-   
+
     .info-box {
         display: block;
         min-height: 90px;
@@ -264,7 +283,7 @@
 
     $response = $this->ticket->apiRequest('custom/h2/ticket_planner', '', [], $value_id, false);
 
-    if ($response['status'] == '0' && !empty($response['message']) && empty($response['data'])) {
+    if ($response['status'] == '0' && !empty ($response['message']) && empty ($response['data'])) {
         echo '<div class="col-sm-6 col-sm-offset-3"><div class="alert alert-danger">' . $response['message'] . '</div></div>';
         return;
     }
@@ -292,7 +311,7 @@
     $perc_progress = ($closed_tickets > 0 || $total_tickets > 0) ? (100 * $closed_tickets) / $total_tickets : 0;
 
     $ore_assistenza = 0;
-    if (!empty($billing_hours)) {
+    if (!empty ($billing_hours)) {
         $ore_assistenza = array_reduce($billing_hours, function ($sum, $item) {
             return number_format($sum + $item['billable_hours_hours'], 2, '.', '');
         }, 0);
@@ -319,18 +338,20 @@
                                     </h1>
                                 </div>
 
-                         <div class="col-sm-3 text-right">
-                        <h4>Saldo ore assistenza</h4>
-                        <span style="font-size:22px;color:#f7ee67"><strong><?php echo $ore_assistenza;?></strong></span>
-                    </div>
+                                <div class="col-sm-3 text-right">
+                                    <h4>Saldo ore assistenza</h4>
+                                    <span style="font-size:22px;color:#f7ee67"><strong>
+                                            <?php echo $ore_assistenza; ?>
+                                        </strong></span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-           
+
                 </div>
 
-                
+
             </div>
         </header>
 
@@ -378,12 +399,13 @@
 
         <div id="main">
 
-            <?php if (!empty($this->session->flashdata('alert'))): ?>
+            <?php if (!empty ($this->session->flashdata('alert'))): ?>
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">
                         <div
                             class="alert <?php echo ($this->session->flashdata('alert')['type'] == 'error') ? 'alert-danger' : 'alert-success'; ?>">
-                            <?php echo $this->session->flashdata('alert')['message'] ?></div>
+                            <?php echo $this->session->flashdata('alert')['message'] ?>
+                        </div>
                     </div>
                 </div>
             <?php endif; ?>
@@ -410,23 +432,30 @@
                                     </h2>
                                 </div>
                                 <div class="col-xs-6">
-                                    <div class="progress js_progress" style="display:none" >
-                                       <div style="width: 100%; background-color: #f3f3f3; border-radius: 5px;">
-                                        <div style="height: 20px; width: 0; background-color: #4CAF50; animation: progress 2s linear infinite; border-radius: 5px;"></div>
+                                    <div class="progress js_progress" style="display:none">
+                                        <div style="width: 100%; background-color: #f3f3f3; border-radius: 5px;">
+                                            <div
+                                                style="height: 20px; width: 0; background-color: #4CAF50; animation: progress 2s linear infinite; border-radius: 5px;">
+                                            </div>
                                         </div>
 
                                         <style>
-                                        @keyframes progress {
-                                        0% { width: 0; }
-                                        100% { width: 100%; }
-                                        }
+                                            @keyframes progress {
+                                                0% {
+                                                    width: 0;
+                                                }
+
+                                                100% {
+                                                    width: 100%;
+                                                }
+                                            }
                                         </style>
 
                                     </div>
                                 </div>
                                 <div class="col-xs-1 text-right">
                                     <!-- <span class="step_percentage ">
-                                        <?php //echo number_format($perc_progress, 2, '.', '') ?>%
+                                        <?php //echo number_format($perc_progress, 2, '.', '')           ?>%
                                     </span>
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse-tickets"
                                         aria-expanded="true" aria-controls="collapse-tickets">
@@ -444,8 +473,15 @@
                                         <div class="col-xs-12 col-sm-6 col-md-4" style="max-height: 560px;overflow-y: auto">
 
                                             <ul class="nav nav-pills nav-stacked" role="tablist">
-                                                <?php foreach ($tickets as $ticket): ?>
-                                                    <?php
+                                                <?php
+
+                                                $saldo_previsionale = 0;
+
+                                                foreach ($tickets as $ticket):
+
+                                                    if ($ticket['tickets_estimated_type_confirm'] == 2 && ($ticket['tickets_status'] == 1 || $ticket['tickets_status'] == 2)) {
+                                                        $saldo_previsionale += $ticket['tickets_estimated_billable'];
+                                                    }
                                                     switch ($ticket['tickets_status']) {
                                                         case 5:
                                                             $class = 'green';
@@ -497,9 +533,9 @@
 
                                                             </small>
                                                         </a>
-                                                            <?php if ($ticket['tickets_status'] == 3):?>
-                                                                <i class="shake-icon icona_chat fas fa-envelope"></i>
-                                                                <?php endif;?>
+                                                        <?php if ($ticket['tickets_status'] == 3): ?>
+                                                            <i class="shake-icon icona_chat fas fa-envelope"></i>
+                                                        <?php endif; ?>
                                                     </li>
                                                 <?php endforeach; ?>
 
@@ -529,7 +565,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#billing_tickets_closed" data-toggle="tab">Ticket chiusi</a></li>
                         <li><a href="#billing_tickets" data-toggle="tab">Ticket a preventivo</a></li>
-                        <li ><a href="#billing_hours" data-toggle="tab">Carico/Scarico ore</a></li>
+                        <li><a href="#billing_hours" data-toggle="tab">Carico/Scarico ore</a></li>
                     </ul>
                     <div class="tab-content">
 
@@ -547,9 +583,11 @@
 
                                 <tbody>
                                     <?php
-                                    if (!empty($tickets)):
+
+                                    if (!empty ($tickets)):
                                         foreach ($tickets as $ticket):
-                                            if ($ticket['tickets_status'] != 5) continue;
+                                            if ($ticket['tickets_status'] != 5)
+                                                continue;
                                             ?>
                                             <tr>
                                                 <td>
@@ -559,7 +597,8 @@
                                                     <?php echo dateFormat($ticket['tickets_close_date']); ?>
                                                 </td>
                                                 <td>
-                                                    <a href="#" class="js_ticket_link" data-ticket_id="<?php echo $ticket['tickets_id']; ?>">
+                                                    <a href="#" class="js_ticket_link"
+                                                        data-ticket_id="<?php echo $ticket['tickets_id']; ?>">
                                                         <?php echo "#" . $ticket['tickets_id'] . " " . $ticket['tickets_subject']; ?>
                                                     </a>
                                                 </td>
@@ -567,9 +606,9 @@
                                                     <?php echo ($ticket['tickets_estimated_billable'] > 0) ? $ticket['tickets_estimated_billable'] : ''; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo (!empty($ticket['tasks'][0]['tasks_billable_hours']) && $ticket['tasks'][0]['tasks_billable_hours'] > 0) ? "-" . $ticket['tasks'][0]['tasks_billable_hours'] : ''; ?>
+                                                    <?php echo (!empty ($ticket['tasks'][0]['tasks_billable_hours']) && $ticket['tasks'][0]['tasks_billable_hours'] > 0) ? "-" . $ticket['tasks'][0]['tasks_billable_hours'] : ''; ?>
                                                 </td>
-                                                
+
                                             </tr>
                                         <?php endforeach;
                                     endif; ?>
@@ -577,7 +616,7 @@
                             </table>
                         </div>
 
-                
+
 
                         <div class="tab-pane " id="billing_hours">
                             <table class="table table-sm table-striped js_datatable billing_hours">
@@ -593,12 +632,12 @@
 
                                 <tbody>
                                     <?php $saldo = 0;
-                                    if (!empty($billing_hours)):
+                                    if (!empty ($billing_hours)):
                                         foreach ($billing_hours as $billing_hour):
                                             $saldo += $billing_hour['billable_hours_hours']; ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo (!empty($billing_hour['tasks_creation_date'])) ? dateFormat($billing_hour['tasks_creation_date']) : ''; ?>
+                                                    <?php echo (!empty ($billing_hour['tasks_creation_date'])) ? dateFormat($billing_hour['tasks_creation_date']) : ''; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $billing_hour['tasks_title']; ?>
@@ -614,7 +653,9 @@
                                                     <?php echo $billing_hour['billable_hours_type_value'] ?>
                                                 </th>
                                                 <td class="js_billing_hours_amount"
-                                                    data-raw-value="<?php echo $billing_hour['billable_hours_hours']; ?>"><?php echo $billing_hour['billable_hours_hours']; ?></td>
+                                                    data-raw-value="<?php echo $billing_hour['billable_hours_hours']; ?>">
+                                                    <?php echo $billing_hour['billable_hours_hours']; ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach;
                                     endif; ?>
@@ -634,14 +675,14 @@
 
                                 <tbody>
                                     <?php
-                                    if (!empty($billing_tasks)):
+                                    if (!empty ($billing_tasks)):
                                         foreach ($billing_tasks as $billing_task):
                                             if ($billing_task['tasks_bill_amount'] <= 0) {
                                                 continue;
                                             } ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo (!empty($billing_task['tasks_due_date'])) ? dateFormat($billing_task['tasks_due_date']) : ''; ?>
+                                                    <?php echo (!empty ($billing_task['tasks_due_date'])) ? dateFormat($billing_task['tasks_due_date']) : ''; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $billing_task['tasks_title']; ?>
@@ -651,7 +692,9 @@
                                                     <?php endif; ?>
                                                 </td>
                                                 <td class="js_billing_task_amount"
-                                                    data-raw-value="<?php echo $billing_task['tasks_bill_amount']; ?>">€ <?php echo $billing_task['tasks_bill_amount']; ?></td>
+                                                    data-raw-value="<?php echo $billing_task['tasks_bill_amount']; ?>">€
+                                                    <?php echo $billing_task['tasks_bill_amount']; ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach;
                                     endif; ?>
@@ -663,28 +706,51 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="small-box bg-aqua">
+                <div class="small-box <?php echo ($saldo > 0 && $saldo_previsionale < $saldo) ? 'bg-green' : 'bg-red'; ?>">
                     <div class="inner">
                         <h3>
                             <?php echo number_format($saldo, 2, '.', '') ?>
                         </h3>
 
-                        <p>Saldo Ore</p>
+                        <p>Saldo ore attuale
+                        </p>
+
+                        <?php if ($saldo_previsionale > $saldo): ?>
+                            <p class="blink_me">Ricarica necessaria</p>
+                        <?php endif; ?>
                     </div>
                     <div class="icon">
                         <i class="fas fa-hourglass-half"></i>
                     </div>
                 </div>
+
+                <?php if ($saldo_previsionale > 0): ?>
+                    <div class="small-box <?php echo ($saldo_previsionale > $saldo) ? 'bg-red' : 'bg-aqua'; ?>">
+                        <div class="inner">
+                            <h3>
+                                <?php echo number_format($saldo_previsionale, 2, '.', '') ?>
+                            </h3>
+
+                            <p>Ore confermate in progress
+                            </p>
+
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                    </div>
+
+                <?php endif; ?>
             </div>
         </div>
 
         <?php echo $this->load->module_view('ticket-planner', 'views/new_ticket_modal', ['project' => $project, 'saldo' => $saldo], true); ?>
     </div>
 
-            <script>
-            $(document).ready(function() {
+    <script>
+        $(document).ready(function () {
 
             initTables();
-            });
-            </script>
+        });
+    </script>
 <?php endif; ?>

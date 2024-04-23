@@ -1,5 +1,10 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date as SharedDateHelper;
+
 class Primanota extends MX_Controller
 {
 
@@ -10,7 +15,7 @@ class Primanota extends MX_Controller
         $this->load->model('contabilita/prima_nota');
 
         $this->settings = $this->db->get('settings')->row_array();
-        
+
     }
 
     public function salva()
@@ -636,15 +641,16 @@ class Primanota extends MX_Controller
         $conto_fornitori_codice_completo = $conto_fornitori['documenti_contabilita_conti_codice_completo'];
 
         //Verifico se tra i conti già selezionati in questa prima nota ho già scelto un cliente o un fornitore, in tal caso li escludo dalla ricerca (non si sceglie mai due volte un fornitore in una registrazione)
-        foreach ($conti_selezionati as $codice) {
-            if (stripos($codice, $conto_clienti_codice_completo) === 0) {
-                $includi_clienti = false;
-            }
-            if (stripos($codice, $conto_fornitori_codice_completo) === 0) {
-                $includi_fornitori = false;
-            }
+        //Ticket  10703: non va bene perchè ci sono registrazioni che devono fare con più fornitori o clienti per riga
+        // foreach ($conti_selezionati as $codice) {
+        //     if (stripos($codice, $conto_clienti_codice_completo) === 0) {
+        //         $includi_clienti = false;
+        //     }
+        //     if (stripos($codice, $conto_fornitori_codice_completo) === 0) {
+        //         $includi_fornitori = false;
+        //     }
 
-        }
+        // }
 
         $query = strtolower($query);
 
@@ -1663,5 +1669,25 @@ class Primanota extends MX_Controller
         echo ("<script>location.href='" . base_url("main/layout/piano-dei-conti?completo=0&nascondi_conteggi=1&nascondi_orfani=1&nascondi_zero=1") . "';</script>");
         //redirect();
 
+    }
+
+    public function downloadBilancioCompattoXls()
+    {
+        $bilancio_compatto_html = $this->load->view('contabilita/contabilita/stampa_bilancio_compatto', [], true);
+
+        $reader = IOFactory::createReader('Html');
+        $spreadsheet = $reader->loadFromString($bilancio_compatto_html);
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        // Imposta gli header per il download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="bilancio_compatto.xlsx"');
+        header('Cache-Control: max-age=0');
+        // Per HTTPS
+        header('Cache-Control: max-age=1');
+
+        // Invia il file al browser
+        $writer->save('php://output');
+        exit;
     }
 }
