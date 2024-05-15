@@ -225,4 +225,4 @@ $lang['\"Mai\" -> Non sincronizza la quantità su WC<br/>
 $lang['Se flag \"Si\", nel momento in cui gli ordini da Woocommerce saranno importati, verrà creato un movimento associato.'] = 'Se flag \"Si\", nel momento in cui gli ordini da Woocommerce saranno importati, verrà creato un movimento associato.';
 $lang['Se flag \"Si\", ogni ordine importato da Woocommerce, gli verrà automaticamente impostato lo stato \"Chiuso\"; altrimenti sarà impostato di default \"Aperto\"'] = 'Se flag \"Si\", ogni ordine importato da Woocommerce, gli verrà automaticamente impostato lo stato \"Chiuso\"; altrimenti sarà impostato di default \"Aperto\"';
 $lang['Se flag \"Si\", durante l\'importazione prodotti, verrà automaticamente creato un barcode (EAN13) se non passato da Woocommerce'] = 'Se flag \"Si\", durante l\'importazione prodotti, verrà automaticamente creato un barcode (EAN13) se non passato da Woocommerce';
-$lang['WooCommerce Sync Settings'] = 'Impostazioni Sync Woocommerce';
+$lang['WooCommerce Sync Settings'] = 'Impostazioni Sync Woocommerce';$lang['Storico variazioni'] = 'Storico variazioni';

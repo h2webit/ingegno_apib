@@ -118,7 +118,7 @@ class Sync extends MY_Controller
             }
             $dipendente = [
                 'dipendenti_id' => $associato['associati_id'],
-                'dipendenti_user_id' => $associato['associati_utente'],
+                //'dipendenti_user_id' => $associato['associati_utente'],
                 'dipendenti_tipologia' => 3, //Empolyee
                 
                 'dipendenti_posizione' => 2, //P.iva
@@ -187,7 +187,7 @@ class Sync extends MY_Controller
 
                 // debug($associato);
                 // debug($dipendente_creato, true);
-                
+                //Il pp avrà creato anche l'utente... correggo la password così da migrare anche quella
                 $this->db->where('users_id', $dipendente_creato['dipendenti_user_id'])->update('users', ['users_password' => $associato['utenti_password']]);
                 $this->db->where('dipendenti_id', $dipendente_creato['dipendenti_id'])->update('dipendenti', ['dipendenti_password' => $associato['utenti_password']]);
                 $_POST = [];
