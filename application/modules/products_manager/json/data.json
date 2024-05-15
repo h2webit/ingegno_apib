@@ -4,20 +4,20 @@
     "modules_description": "Products manager with configurable attributes and products fields.",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.4.1",
+    "modules_version": "1.4.3",
     "modules_identifier": "products_manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "262,448,610,502,612,150,615",
     "modules_raw_data_update": "448,610,612,615",
     "modules_created_by_user": "1",
-    "modules_version_code": "130",
+    "modules_version_code": "132",
     "modules_thumbnail": "cb56170efd5abe329210e2c54ddfac70.png",
-    "modules_min_client_version": "3.7.2",
+    "modules_min_client_version": "3.8.0",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
     "modules_core": "0",
-    "modules_notification_message": "",
+    "modules_notification_message": "Modulo Product Manager aggiornato! Nel rispetto della vigente normativa \"Omnibus\", \u00e8 stato caricato un aggiornamento che permette di storicizzare l'ultimo prezzo di vendita pi\u00f9 basso negli ultimi 30 giorni. Sono stati caricati anche numerosi aggiornamenti di sicurezza e miglioramento delle prestazioni.",
     "module_identifier": "products_manager",
     "entities": {
         "113": {
@@ -2670,6 +2670,52 @@
                     "fields_searchable": "1",
                     "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "5633",
+                    "fields_entity_id": "131",
+                    "fields_default": null,
+                    "fields_name": "fw_products_last_lowest_price",
+                    "fields_type": "double",
+                    "fields_size": "18,9",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "input_money"
+                },
+                {
+                    "fields_id": "5634",
+                    "fields_entity_id": "131",
+                    "fields_default": null,
+                    "fields_name": "fw_products_last_lowest_date",
+                    "fields_type": "DATETIME",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "date_time"
                 }
             ],
             "fields_draw": [
@@ -3486,6 +3532,32 @@
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": null,
                     "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5635",
+                    "fields_draw_fields_id": "5633",
+                    "fields_draw_label": "Last lowest price",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_money",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5636",
+                    "fields_draw_fields_id": "5634",
+                    "fields_draw_label": "Last lowest date",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "date_time",
                     "fields_draw_placeholder": null,
                     "fields_draw_css_extra": null,
                     "fields_draw_display_none": "0",
@@ -6107,6 +6179,29 @@
                     "fields_searchable": "1",
                     "fields_additional_data": null,
                     "fields_draw_html_type": "select"
+                },
+                {
+                    "fields_id": "5635",
+                    "fields_entity_id": "502",
+                    "fields_default": null,
+                    "fields_name": "fw_products_settings_direttiva_omnibus",
+                    "fields_type": "BOOLEAN",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "radio"
                 }
             ],
             "fields_draw": [
@@ -6226,6 +6321,19 @@
                     "fields_draw_display_none": "0",
                     "fields_draw_enabled": "1",
                     "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5637",
+                    "fields_draw_fields_id": "5635",
+                    "fields_draw_label": "Direttiva omnibus",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "radio",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
                 }
             ],
             "fields_validation": [],
@@ -6233,14 +6341,15 @@
                 {
                     "fw_products_settings_id": "1",
                     "fw_products_settings_creation_date": "2022-10-07 15:29:06",
-                    "fw_products_settings_modified_date": "2023-06-16 09:47:36",
+                    "fw_products_settings_modified_date": "2024-04-30 14:36:13",
                     "fw_products_settings_label_default_height": "16",
                     "fw_products_settings_label_default_left_margin": "5",
                     "fw_products_settings_label_default_top_margin": "2",
                     "fw_products_settings_label_default_width": "79",
                     "fw_products_settings_enable_duplicated_sku_check": "0",
                     "fw_products_settings_show_woocommerce_button": "0",
-                    "fw_products_settings_ricalcola_prezzi_bundle": "2"
+                    "fw_products_settings_ricalcola_prezzi_bundle": "2",
+                    "fw_products_settings_direttiva_omnibus": "1"
                 }
             ],
             "raw_data_update": []
@@ -6693,7 +6802,7 @@
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": "{login_entity}",
-                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
@@ -6702,7 +6811,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -6785,7 +6894,7 @@
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": "fw_products",
-                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
@@ -6794,7 +6903,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -9994,6 +10103,28 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6537",
+            "layouts_boxes_layout": "1111",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Storico variazioni",
+            "layouts_boxes_content_type": "grid",
+            "layouts_boxes_content_ref": "1666",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": null,
+            "layouts_boxes_collapsed": null,
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": null,
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": null,
             "layouts_boxes_module_key": null,
             "conditions": []
         }
@@ -16657,6 +16788,363 @@
             ]
         },
         "26": {
+            "grids_id": "1666",
+            "grids_entity_id": "598",
+            "grids_sub_grid_id": null,
+            "grids_name": "Storico variazioni",
+            "grids_view_link": null,
+            "grids_edit_link": null,
+            "grids_view_layout": null,
+            "grids_edit_layout": null,
+            "grids_delete_link": "#",
+            "grids_where": null,
+            "grids_default": "0",
+            "grids_layout": "table",
+            "grids_order_by": "fw_products_history_creation_date DESC",
+            "grids_group_by": null,
+            "grids_filter_session_key": null,
+            "grids_bulk_mode": "1",
+            "grids_bulk_edit_form": null,
+            "grids_exportable": "0",
+            "grids_append_class": null,
+            "grids_inline_form": null,
+            "grids_module_key": "products_manager-grid-1666",
+            "grids_depth": "2",
+            "grids_actions_column": "1",
+            "grids_builder_where": null,
+            "grids_identifier": null,
+            "grids_datatable": "1",
+            "grids_ajax": "1",
+            "grids_searchable": "1",
+            "grids_pagination": "50",
+            "grids_inline_edit": "0",
+            "grids_design": "1",
+            "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "598",
+            "entity_name": "fw_products_history",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fw_products_history_creation_date\",\"update_time\":\"fw_products_history_modified_date\",\"created_by\":\"fw_products_history_created_by\",\"edited_by\":\"fw_products_history_edited_by\",\"insert_scope\":\"fw_products_history_insert_scope\",\"edit_scope\":\"fw_products_history_edit_scope\"}",
+            "entity_module": "products_manager",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "grids_fields_id": "22029",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": "4481",
+                    "grids_fields_order": "0",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Data",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22029",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "4481",
+                    "fields_entity_id": "598",
+                    "fields_default": null,
+                    "fields_name": "fw_products_history_creation_date",
+                    "fields_type": "DATETIME",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22034",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": "4487",
+                    "grids_fields_order": "2",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Prodotto",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22034",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "4487",
+                    "fields_entity_id": "598",
+                    "fields_default": null,
+                    "fields_name": "fw_products_history_product_id",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "2",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "fw_products",
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22035",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": "4490",
+                    "grids_fields_order": "5",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Old disc. price",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22035",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "4490",
+                    "fields_entity_id": "598",
+                    "fields_default": null,
+                    "fields_name": "fw_products_history_discounted_price",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22037",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": "4488",
+                    "grids_fields_order": "3",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Old sell price",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22037",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "4488",
+                    "fields_entity_id": "598",
+                    "fields_default": null,
+                    "fields_name": "fw_products_history_sell_price",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22038",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": "1103",
+                    "grids_fields_order": "4",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Current sell price",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22038",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "1103",
+                    "fields_entity_id": "131",
+                    "fields_default": null,
+                    "fields_name": "fw_products_sell_price",
+                    "fields_type": "double",
+                    "fields_size": "18,9",
+                    "fields_required": "1",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22040",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": "1131",
+                    "grids_fields_order": "6",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Current disc. price",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22040",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "1131",
+                    "fields_entity_id": "131",
+                    "fields_default": null,
+                    "fields_name": "fw_products_discounted_price",
+                    "fields_type": "double",
+                    "fields_size": "18,9",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22041",
+                    "grids_fields_grids_id": "1666",
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "9",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php\n$this->load->model('products_manager\/prod_model', 'prod');\n$min_price = $this->prod->getLastLowestPrice($data['fw_products_history_product_id'], $data['fw_products_history_creation_date']);\nif ($min_price['min_price']) {\n\te_money($min_price['min_price'], \"<strong>\u20ac {number}<\/strong>\");\n\techo \"<br \/><small>{$min_price['date']}<\/small>\";\n} else {\n\techo 'n\/d';\n}\n?>",
+                    "grids_fields_column_name": "Min price (last 30 days)",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22041",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": null,
+                    "fields_entity_id": null,
+                    "fields_default": null,
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
+                    "conditions": {
+                        "conditions_id": "195",
+                        "conditions_what": "grids_fields",
+                        "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_query\",\"field\":\"_query\",\"type\":\"string\",\"input\":\"textarea\",\"operator\":\"num rows >= 1\",\"value\":\"SELECT * FROM fw_products_settings WHERE fw_products_settings_direttiva_omnibus = 1\"}],\"valid\":true}",
+                        "conditions_ref": "22041",
+                        "conditions_module": null,
+                        "conditions_module_key": "products_manager-grids_fields-22041",
+                        "conditions_creation_date": "2024-04-30 12:48:18",
+                        "conditions_action": "1"
+                    }
+                }
+            ],
+            "actions": [
+                {
+                    "grids_actions_id": "6165",
+                    "grids_actions_grids_id": "1666",
+                    "grids_actions_order": "1",
+                    "grids_actions_name": "Edit",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": "2488",
+                    "grids_actions_icon": "fas fa-edit",
+                    "grids_actions_mode": "modal",
+                    "grids_actions_type": "edit_form",
+                    "grids_actions_color": "rgb(156, 39, 176)",
+                    "grids_actions_show": "table_and_bulk",
+                    "conditions": []
+                },
+                {
+                    "grids_actions_id": "6166",
+                    "grids_actions_grids_id": "1666",
+                    "grids_actions_order": "999",
+                    "grids_actions_name": "Delete",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": null,
+                    "grids_actions_icon": "fas fa-trash",
+                    "grids_actions_mode": "default",
+                    "grids_actions_type": "delete",
+                    "grids_actions_color": "rgb(233, 30, 99)",
+                    "grids_actions_show": "table_and_bulk",
+                    "conditions": []
+                }
+            ]
+        },
+        "27": {
             "grids_id": "225",
             "grids_entity_id": "113",
             "grids_sub_grid_id": null,
@@ -16716,7 +17204,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8050",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "851",
                     "fields_entity_id": "113",
@@ -16754,7 +17242,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8051",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "855",
                     "fields_entity_id": "113",
@@ -16792,7 +17280,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8054",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "856",
                     "fields_entity_id": "113",
@@ -16830,7 +17318,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12296",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2048",
                     "fields_entity_id": "113",
@@ -16868,7 +17356,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12791",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2167",
                     "fields_entity_id": "113",
@@ -16906,7 +17394,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13531",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "852",
                     "fields_entity_id": "113",
@@ -16944,7 +17432,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13731",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2509",
                     "fields_entity_id": "113",
@@ -16982,7 +17470,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-15198",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "853",
                     "fields_entity_id": "113",
@@ -17020,7 +17508,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-20497",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "5055",
                     "fields_entity_id": "113",
@@ -17080,7 +17568,7 @@
                 }
             ]
         },
-        "27": {
+        "28": {
             "grids_id": "430",
             "grids_entity_id": "139",
             "grids_sub_grid_id": null,
@@ -17128,7 +17616,7 @@
             "fields": [],
             "actions": []
         },
-        "28": {
+        "29": {
             "grids_id": "432",
             "grids_entity_id": "139",
             "grids_sub_grid_id": null,
@@ -17176,7 +17664,7 @@
             "fields": [],
             "actions": []
         },
-        "29": {
+        "30": {
             "grids_id": "433",
             "grids_entity_id": "130",
             "grids_sub_grid_id": null,
@@ -17448,7 +17936,7 @@
                 }
             ]
         },
-        "30": {
+        "31": {
             "grids_id": "434",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -19126,7 +19614,7 @@
                 }
             ]
         },
-        "31": {
+        "32": {
             "grids_id": "435",
             "grids_entity_id": "139",
             "grids_sub_grid_id": null,
@@ -19191,7 +19679,7 @@
                 }
             ]
         },
-        "32": {
+        "33": {
             "grids_id": "436",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -19447,7 +19935,7 @@
                 }
             ]
         },
-        "33": {
+        "34": {
             "grids_id": "438",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -19572,7 +20060,7 @@
             ],
             "actions": []
         },
-        "34": {
+        "35": {
             "grids_id": "439",
             "grids_entity_id": "133",
             "grids_sub_grid_id": null,
@@ -19828,7 +20316,7 @@
                 }
             ]
         },
-        "35": {
+        "36": {
             "grids_id": "440",
             "grids_entity_id": "134",
             "grids_sub_grid_id": null,
@@ -20008,7 +20496,7 @@
                 }
             ]
         },
-        "37": {
+        "38": {
             "grids_id": "442",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -20432,7 +20920,7 @@
                 }
             ]
         },
-        "38": {
+        "39": {
             "grids_id": "443",
             "grids_entity_id": "134",
             "grids_sub_grid_id": null,
@@ -20536,7 +21024,7 @@
                 }
             ]
         },
-        "41": {
+        "42": {
             "grids_id": "446",
             "grids_entity_id": "135",
             "grids_sub_grid_id": null,
@@ -20786,7 +21274,7 @@
                 }
             ]
         },
-        "42": {
+        "43": {
             "grids_id": "447",
             "grids_entity_id": "136",
             "grids_sub_grid_id": null,
@@ -20911,7 +21399,7 @@
             ],
             "actions": []
         },
-        "43": {
+        "44": {
             "grids_id": "448",
             "grids_entity_id": "137",
             "grids_sub_grid_id": null,
@@ -21069,7 +21557,7 @@
                 }
             ]
         },
-        "47": {
+        "48": {
             "grids_id": "454",
             "grids_entity_id": "138",
             "grids_sub_grid_id": null,
@@ -21498,7 +21986,7 @@
             ],
             "actions": []
         },
-        "50": {
+        "51": {
             "grids_id": "458",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -21716,7 +22204,7 @@
                 }
             ]
         },
-        "51": {
+        "52": {
             "grids_id": "481",
             "grids_entity_id": "148",
             "grids_sub_grid_id": null,
@@ -21858,7 +22346,7 @@
                 }
             ]
         },
-        "53": {
+        "54": {
             "grids_id": "484",
             "grids_entity_id": "150",
             "grids_sub_grid_id": null,
@@ -21983,7 +22471,7 @@
             ],
             "actions": []
         },
-        "59": {
+        "60": {
             "grids_id": "647",
             "grids_entity_id": "235",
             "grids_sub_grid_id": null,
@@ -22108,7 +22596,7 @@
             ],
             "actions": []
         },
-        "60": {
+        "61": {
             "grids_id": "648",
             "grids_entity_id": "236",
             "grids_sub_grid_id": null,
@@ -22233,7 +22721,7 @@
             ],
             "actions": []
         },
-        "62": {
+        "63": {
             "grids_id": "697",
             "grids_entity_id": "262",
             "grids_sub_grid_id": null,
@@ -22358,7 +22846,7 @@
             ],
             "actions": []
         },
-        "63": {
+        "64": {
             "grids_id": "698",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -22597,7 +23085,7 @@
             ],
             "actions": []
         },
-        "64": {
+        "65": {
             "grids_id": "699",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -22831,7 +23319,7 @@
                 }
             ]
         },
-        "66": {
+        "67": {
             "grids_id": "862",
             "grids_entity_id": "333",
             "grids_sub_grid_id": null,
@@ -22891,7 +23379,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13797",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2545",
                     "fields_entity_id": "333",
@@ -22935,7 +23423,7 @@
                 }
             ]
         },
-        "67": {
+        "68": {
             "grids_id": "1049",
             "grids_entity_id": "448",
             "grids_sub_grid_id": null,
@@ -23060,7 +23548,7 @@
             ],
             "actions": []
         },
-        "69": {
+        "70": {
             "grids_id": "1053",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23141,7 +23629,7 @@
                 }
             ]
         },
-        "71": {
+        "72": {
             "grids_id": "1145",
             "grids_entity_id": "502",
             "grids_sub_grid_id": null,
@@ -23456,7 +23944,7 @@
             ],
             "actions": []
         },
-        "72": {
+        "73": {
             "grids_id": "1188",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23690,7 +24178,7 @@
                 }
             ]
         },
-        "74": {
+        "75": {
             "grids_id": "1249",
             "grids_entity_id": "113",
             "grids_sub_grid_id": null,
@@ -23750,7 +24238,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8050",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "851",
                     "fields_entity_id": "113",
@@ -23788,7 +24276,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8051",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "855",
                     "fields_entity_id": "113",
@@ -23826,7 +24314,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8054",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "856",
                     "fields_entity_id": "113",
@@ -23864,7 +24352,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12296",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2048",
                     "fields_entity_id": "113",
@@ -23902,7 +24390,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12791",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2167",
                     "fields_entity_id": "113",
@@ -23940,7 +24428,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13531",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "852",
                     "fields_entity_id": "113",
@@ -23978,7 +24466,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13731",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "2509",
                     "fields_entity_id": "113",
@@ -24016,7 +24504,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-15198",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "products_manager",
                     "grids_fields_width": null,
                     "fields_id": "853",
                     "fields_entity_id": "113",
@@ -24076,7 +24564,7 @@
                 }
             ]
         },
-        "76": {
+        "77": {
             "grids_id": "1368",
             "grids_entity_id": "598",
             "grids_sub_grid_id": null,
@@ -24186,7 +24674,7 @@
                     "fields_preview": "0",
                     "fields_visible": "1",
                     "fields_ref": "fw_products",
-                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
@@ -24195,7 +24683,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -24315,7 +24803,7 @@
             ],
             "actions": []
         },
-        "79": {
+        "80": {
             "grids_id": "1400",
             "grids_entity_id": "608",
             "grids_sub_grid_id": null,
@@ -24516,7 +25004,7 @@
             ],
             "actions": []
         },
-        "81": {
+        "82": {
             "grids_id": "1403",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -24902,7 +25390,7 @@
                 }
             ]
         },
-        "82": {
+        "83": {
             "grids_id": "1404",
             "grids_entity_id": "610",
             "grids_sub_grid_id": null,
@@ -25044,7 +25532,7 @@
                 }
             ]
         },
-        "83": {
+        "84": {
             "grids_id": "1406",
             "grids_entity_id": "612",
             "grids_sub_grid_id": null,
@@ -25186,7 +25674,7 @@
                 }
             ]
         },
-        "84": {
+        "85": {
             "grids_id": "1414",
             "grids_entity_id": "615",
             "grids_sub_grid_id": null,
@@ -25328,7 +25816,7 @@
                 }
             ]
         },
-        "87": {
+        "88": {
             "grids_id": "1642",
             "grids_entity_id": "707",
             "grids_sub_grid_id": null,
@@ -25650,7 +26138,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_855",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25673,7 +26161,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_851",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25696,7 +26184,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_852",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25719,7 +26207,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_853",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25742,7 +26230,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_856",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25765,7 +26253,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_857",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25788,7 +26276,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2048",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25811,7 +26299,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2167",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25834,7 +26322,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2509",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25857,7 +26345,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2519",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25880,7 +26368,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2521",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25903,7 +26391,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2523",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25926,7 +26414,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2525",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25949,7 +26437,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2527",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25972,7 +26460,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2529",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -25995,7 +26483,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_5055",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29284,7 +29772,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2061_2545",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29938,6 +30426,29 @@
                     "forms_fields_module_key": "products_manager-forms_fields-2316_4592",
                     "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2316",
+                    "forms_fields_fields_id": "5635",
+                    "forms_fields_order": "0",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "products_manager-forms_fields-2316_5635",
+                    "forms_fields_module": "products_manager",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -30138,7 +30649,7 @@
                     "forms_fields_override_type": null,
                     "forms_fields_override_label": null,
                     "forms_fields_override_placeholder": null,
-                    "forms_fields_override_colsize": "6",
+                    "forms_fields_override_colsize": "12",
                     "forms_fields_show_required": null,
                     "forms_fields_show_label": "1",
                     "forms_fields_subform_id": null,
@@ -30155,7 +30666,7 @@
                 {
                     "forms_fields_forms_id": "2488",
                     "forms_fields_fields_id": "4488",
-                    "forms_fields_order": "0",
+                    "forms_fields_order": "2",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30178,7 +30689,7 @@
                 {
                     "forms_fields_forms_id": "2488",
                     "forms_fields_fields_id": "4489",
-                    "forms_fields_order": "0",
+                    "forms_fields_order": "3",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30201,7 +30712,7 @@
                 {
                     "forms_fields_forms_id": "2488",
                     "forms_fields_fields_id": "4490",
-                    "forms_fields_order": "0",
+                    "forms_fields_order": "4",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30218,6 +30729,29 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2488_4490",
+                    "forms_fields_module": "products_manager",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2488",
+                    "forms_fields_fields_id": "4481",
+                    "forms_fields_order": "1",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "products_manager-forms_fields-2488_4481",
                     "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 }
@@ -31580,7 +32114,26 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "68": {
+        "34": {
+            "layouts_id": "1111",
+            "layouts_title": "Storico variazioni",
+            "layouts_subtitle": null,
+            "layouts_is_entity_detail": null,
+            "layouts_entity_id": null,
+            "layouts_fullscreen": null,
+            "layouts_pdf": null,
+            "layouts_dashboardable": "0",
+            "layouts_cachable": "1",
+            "layouts_identifier": null,
+            "layouts_module": "products_manager",
+            "layouts_module_key": "products_manager-layout-1111",
+            "layouts_show_header": "1",
+            "layouts_ajax_allowed": "1",
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
+        },
+        "70": {
             "layouts_id": "201",
             "layouts_title": "Sublayout distinte base prodotto",
             "layouts_subtitle": "",
@@ -31599,7 +32152,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "69": {
+        "71": {
             "layouts_id": "343",
             "layouts_title": "Dettaglio Prodotto - Lotti",
             "layouts_subtitle": "",
@@ -31618,7 +32171,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "70": {
+        "72": {
             "layouts_id": "342",
             "layouts_title": "Dettaglio Prodotto - Movimenti",
             "layouts_subtitle": "",
@@ -31637,7 +32190,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "71": {
+        "73": {
             "layouts_id": "913",
             "layouts_title": "Dettaglio Prodotto - Statistiche Contabilita",
             "layouts_subtitle": "",
@@ -31718,7 +32271,7 @@
             "menu_link": "",
             "menu_parent": "921",
             "menu_icon_class": "fas fa-leaf",
-            "menu_order": "58",
+            "menu_order": "40",
             "menu_position": "sidebar",
             "menu_layout": "122",
             "menu_css_class": "",
@@ -32071,6 +32624,24 @@
             "menu_form": "2695",
             "menu_html_attr": "",
             "conditions": []
+        },
+        {
+            "menu_id": "1852",
+            "menu_label": "Storico variazioni",
+            "menu_link": "",
+            "menu_parent": "921",
+            "menu_icon_class": "fas fa-tags",
+            "menu_order": "51",
+            "menu_position": "sidebar",
+            "menu_layout": "1111",
+            "menu_css_class": "",
+            "menu_modal": "0",
+            "menu_module": "products_manager",
+            "menu_module_key": "products_manager-menu-1852",
+            "menu_type": "layout",
+            "menu_form": null,
+            "menu_html_attr": "",
+            "conditions": []
         }
     ],
     "relations": [
@@ -32328,13 +32899,13 @@
         {
             "fi_events_id": "781",
             "fi_events_when": "update",
-            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"449\",\"post_process_when\":\"update\",\"post_process_entity_id\":\"131\",\"post_process_module\":\"products_manager\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"$sell_price = null;\\nif($data['new']['fw_products_sell_price'] != $data['old']['fw_products_sell_price']) {\\n    $sell_price = $data['old']['fw_products_sell_price'];\\n}\\n\\n$provider_price = null;\\nif($data['new']['fw_products_provider_price'] != $data['old']['fw_products_provider_price']) {\\n    $provider_price = $data['old']['fw_products_provider_price'];\\n}\\n\\n$discounted_price = null;\\nif($data['new']['fw_products_discounted_price'] != $data['old']['fw_products_discounted_price']) {\\n    $discounted_price = $data['old']['fw_products_discounted_price'];\\n}\\n\\nif (is_numeric($sell_price) || is_numeric($provider_price) || is_numeric($discounted_price)) {\\n    $this->apilib->create('fw_products_history', [\\n        'fw_products_history_product_id' => $data['value_id'],\\n        'fw_products_history_sell_price' => $sell_price,\\n        'fw_products_history_provider_price' => $provider_price,\\n        'fw_products_history_discounted_price' => $discounted_price,\\n    ]);\\n}\"},\"fi_events_title\":\"Popola storico variazione campi fw_products\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"449\",\"post_process_when\":\"update\",\"post_process_entity_id\":\"131\",\"post_process_module\":\"products_manager\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"$sell_price = null;\\nif($data['new']['fw_products_sell_price'] != $data['old']['fw_products_sell_price']) {\\n    $sell_price = $data['old']['fw_products_sell_price'];\\n}\\n\\n$provider_price = null;\\nif($data['new']['fw_products_provider_price'] != $data['old']['fw_products_provider_price']) {\\n    $provider_price = $data['old']['fw_products_provider_price'];\\n}\\n\\n$discounted_price = null;\\nif($data['new']['fw_products_discounted_price'] != $data['old']['fw_products_discounted_price']) {\\n    $discounted_price = $data['old']['fw_products_discounted_price'];\\n}\\n\\nif (is_numeric($sell_price) || is_numeric($provider_price) || is_numeric($discounted_price)) {\\n    \\\/\\\/debug($data);\\n    $this->apilib->create('fw_products_history', [\\n        'fw_products_history_product_id' => $data['value_id'],\\n        'fw_products_history_sell_price' => $sell_price,\\n        'fw_products_history_provider_price' => $provider_price,\\n        'fw_products_history_discounted_price' => $discounted_price,\\n    ]);\\n}\"},\"fi_events_title\":\"Popola storico variazione campi fw_products\",\"save\":\"1\"}",
             "fi_events_title": "Popola storico variazione campi fw_products",
             "fi_events_module": "products_manager",
             "fi_events_type": "database",
             "fi_events_ref_id": "131",
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"$sell_price = null;\\nif($data['new']['fw_products_sell_price'] != $data['old']['fw_products_sell_price']) {\\n    $sell_price = $data['old']['fw_products_sell_price'];\\n}\\n\\n$provider_price = null;\\nif($data['new']['fw_products_provider_price'] != $data['old']['fw_products_provider_price']) {\\n    $provider_price = $data['old']['fw_products_provider_price'];\\n}\\n\\n$discounted_price = null;\\nif($data['new']['fw_products_discounted_price'] != $data['old']['fw_products_discounted_price']) {\\n    $discounted_price = $data['old']['fw_products_discounted_price'];\\n}\\n\\nif (is_numeric($sell_price) || is_numeric($provider_price) || is_numeric($discounted_price)) {\\n    $this->apilib->create('fw_products_history', [\\n        'fw_products_history_product_id' => $data['value_id'],\\n        'fw_products_history_sell_price' => $sell_price,\\n        'fw_products_history_provider_price' => $provider_price,\\n        'fw_products_history_discounted_price' => $discounted_price,\\n    ]);\\n}\"}",
+            "fi_events_actiondata": "{\"code\":\"$sell_price = null;\\nif($data['new']['fw_products_sell_price'] != $data['old']['fw_products_sell_price']) {\\n    $sell_price = $data['old']['fw_products_sell_price'];\\n}\\n\\n$provider_price = null;\\nif($data['new']['fw_products_provider_price'] != $data['old']['fw_products_provider_price']) {\\n    $provider_price = $data['old']['fw_products_provider_price'];\\n}\\n\\n$discounted_price = null;\\nif($data['new']['fw_products_discounted_price'] != $data['old']['fw_products_discounted_price']) {\\n    $discounted_price = $data['old']['fw_products_discounted_price'];\\n}\\n\\nif (is_numeric($sell_price) || is_numeric($provider_price) || is_numeric($discounted_price)) {\\n    \\\/\\\/debug($data);\\n    $this->apilib->create('fw_products_history', [\\n        'fw_products_history_product_id' => $data['value_id'],\\n        'fw_products_history_sell_price' => $sell_price,\\n        'fw_products_history_provider_price' => $provider_price,\\n        'fw_products_history_discounted_price' => $discounted_price,\\n    ]);\\n}\"}",
             "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": "1",

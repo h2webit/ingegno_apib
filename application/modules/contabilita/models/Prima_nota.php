@@ -1516,7 +1516,7 @@ class Prima_nota extends CI_Model
 
         if (!empty($filters["filter_stampe_contabili"])) {
             foreach ($filters["filter_stampe_contabili"] as $field) {
-                if ($field['value'] == '-1') {
+                if ($field['value'] == '-1' ) {
                     continue;
                 }
                 $filter_field = $this->datab->get_field($field["field_id"], true);
@@ -1525,11 +1525,14 @@ class Prima_nota extends CI_Model
                 // Se ha una entità/support collegata
                 if ($filter_field['fields_ref']) {
                     $entity_data = $this->crmentity->getEntityPreview($filter_field['fields_ref']);
-                    $filtri[] = array(
-                        "label" => $filter_field["fields_draw_label"],
-                        "value" => $entity_data[$field['value']],
-                        'raw_data_value' => $field['value'],
-                    );
+                    if (!empty($entity_data[$field['value']])) {
+                        $filtri[] = array(
+                            "label" => $filter_field["fields_draw_label"],
+                            "value" => $entity_data[$field['value']],
+                            'raw_data_value' => $field['value'],
+                        );
+                    }
+                    
                 } else {
                     $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $field['value']);
                 }

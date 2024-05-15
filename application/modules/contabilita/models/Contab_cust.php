@@ -26,6 +26,7 @@ class Contab_cust extends CI_Model
         if ($codice) {
             $last_sottoconto_codice = $codice;
         } else {
+            return;
             $last_sottoconto_codice = false;
             if ($customer['customers_codice_sottoconto'] && count(explode('.', $customer['customers_codice_sottoconto'])) == 3) {
                 //debug($customer['customers_code'], true);

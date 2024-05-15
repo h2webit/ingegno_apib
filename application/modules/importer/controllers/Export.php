@@ -1,6 +1,7 @@
 <?php
     class Export extends MY_Controller
     {
+        private $module_settings;
         public function __construct()
         {
             parent::__construct();
@@ -9,6 +10,18 @@
             }
             
             $this->load->model('importer/export_utils_model', 'export_utils');
+            
+            $module_settings = $this->apilib->searchFirst('importer_settings');
+            
+            $this->module_settings = $module_settings;
+            
+            $exporter_allowed_user_types = array_keys($module_settings['importer_settings_exporter_allowed_user_types'] ?? []);
+            
+            $current_user_type = $this->auth->get('users_type') ?? null;
+            
+            if ($module_settings['importer_settings_enable_exporter'] != DB_BOOL_TRUE || (!empty($exporter_allowed_user_types) && !in_array($current_user_type, $exporter_allowed_user_types))) {
+                show_404();
+            }
         }
 
         public function preview($tpl_id = null) {
@@ -20,6 +33,8 @@
             $view_data = [];
             
             $template = $this->apilib->view('exporter_templates', $tpl_id);
+            
+            // debug($this->session->userdata());
             
             $grid = $this->datab->get_grid($template['exporter_templates_grid_id']);
             $grid['grids_data'] = $this->datab->get_grid_data($grid, null, [], 100);
@@ -51,9 +66,19 @@
             $grid = $this->datab->get_grid($template['exporter_templates_grid_id']);
             
             $all_fields = $this->crmentity->getVisibleFields($grid['grids']['entity_name'], 2);
+            $selected_fields = $grid['grids_fields'];
+            
+            // remove fields from "all_fields" that are already in "selected_fields"
+            foreach ($all_fields as $key => $field) {
+                foreach ($selected_fields as $selected_field) {
+                    if ($field['fields_id'] == $selected_field['fields_id']) {
+                        unset($all_fields[$key]);
+                    }
+                }
+            }
             
             $view_data['all_fields'] = $all_fields;
-            $view_data['selected_fields'] = $grid['grids_fields'];
+            $view_data['selected_fields'] = $selected_fields;
             
             $this->stampa('export/edit', $view_data);
         }
@@ -67,7 +92,11 @@
             $view_data['current_page'] = 'module_' . MODULE_NAME;
             
             // Retrieve all entities using the crmentity->getAllEntities() method.
-            $view_data['entities'] = $this->crmentity->getAllEntities();
+            if (!empty($this->module_settings['importer_settings_allowed_entities'])) {
+                $view_data['entities'] = json_decode($this->module_settings['importer_settings_allowed_entities']);
+            } else {
+                $view_data['entities'] = array_key_map($this->crmentity->getAllEntities(), 'entity_name');
+            }
             
             // Retrieve modules from the database and order them by modules_name in ascending order.
             $view_data['modules'] = $this->db->order_by('modules_name', 'ASC')->get('modules')->result_array();
@@ -108,6 +137,12 @@
                 unset($post['_clone']);
             }
             
+            $stay = false;
+            if (!empty($post['_stay']) && $post['_stay'] == '1') {
+                $stay = true;
+                unset($post['_stay']);
+            }
+            
             // Check if POST data is empty.
             if (empty($post)) {
                 e_json(['status' => 0, 'txt' => 'No data']);
@@ -145,7 +180,7 @@
             
             // If a template with the same key exists, return an error.
             if (!empty($template_with_key)) {
-                e_json(['status' => 0, 'txt' => "Another template with the same key already exists"]);
+                e_json(['status' => 0, 'txt' => t("Another export with the same key already exists")]);
                 return false;
             }
             
@@ -248,9 +283,10 @@
                     'grids_entity_id' => $entity['entity_id'],
                     'grids_name' => "[EXPORT MODULE] {$post['exporter_templates_name']}",
                     'grids_where' => $post['exporter_templates_additional_where'] ?? null,
-                    'grids_builder_where' => $post['exporter_templates_where'] ?: null,
+                    'grids_builder_where' => !empty($post['exporter_templates_where']) ? $post['exporter_templates_where'] : null,
                     'grids_limit' => $post['exporter_templates_limit'] ?: null,
                     'grids_order_by' => !empty($post['exporter_templates_order_by']) ? $post['exporter_templates_order_by'] . ' ' . $post['exporter_templates_order_dir'] : null,
+                    'grids_group_by' => !empty($post['exporter_templates_group_by']) ? $post['exporter_templates_group_by'] : null,
                     'grids_custom_query' => $post['exporter_templates_full_query'] == DB_BOOL_TRUE ? $post['exporter_templates_query'] : null,
                     'grids_filter_session_key' => "export_tpl_filter_{$post['exporter_templates_key']}",
                     'grids_identifier' => "grid_{$post['exporter_templates_key']}",
@@ -354,11 +390,16 @@
                 
                 // Clear the cache and return success response.
                 $this->mycache->clearCache();
-                e_json(['status' => 10, 'txt' => 'Template saved', 'url' => base_url('importer/export/edit/' . $exporter_template_id)]);
+                
+                if ($stay) {
+                    e_json(['status' => 11, 'txt' => t('Export saved')]);
+                } else {
+                    e_json(['status' => 10, 'txt' => 'Export saved', 'url' => base_url('importer/export/edit/' . $exporter_template_id)]);
+                }
             } catch (Exception $e) {
                 // Log error and return an error response.
                 my_log('error', $e->getMessage());
-                e_json(['status' => 0, 'txt' => 'Error creating template: ' . $e->getMessage()]);
+                e_json(['status' => 0, 'txt' => t('Error saving template: ') . $e->getMessage()]);
             }
         }
         
@@ -623,7 +664,7 @@
             if (empty($post) || empty($post['conditions'])) {
                 $this->clear_filters($template_id, false);
 
-                e_json(['status' => 5, 'txt' => t('Filters removed or not applied')]);
+                e_json(['status' => 5, 'txt' => t('No filter applied')]);
 
                 return false;
             }
@@ -655,6 +696,11 @@
             }
             
             $template = $this->apilib->view('exporter_templates', $template_id);
+            
+            if (empty($template)) {
+                e_json(['status' => 0, 'txt' => t('Template not found')]);
+                return false;
+            }
             
             $grid = $this->datab->get_grid($template['exporter_templates_grid_id'])['grids'];
             
@@ -713,6 +759,16 @@
                 }
             }
             
+            try {
+                // salvo il json dei filtri sul campo exporter_templates_filters
+                $this->apilib->edit('exporter_templates', $template_id, ['exporter_templates_filters' => json_encode($conditions)]);
+            } catch (Exception $e) {
+                log_message('error', 'Error occurred while saving filters for template #' . $template_id . ': ' . $e->getMessage());
+                
+                e_json(['status' => 0, 'txt' => t('Error occurred while saving filters')]);
+                return false;
+            }
+            
 //            debug($conditions, true);
             
             // Aggiorno i dati da sessione mettendo alla chiave corretta le
@@ -734,6 +790,8 @@
             }
             
             $template = $this->apilib->view('exporter_templates', $template_id);
+            
+            $this->apilib->edit('exporter_templates', $template_id, ['exporter_templates_filters' => null]);
             
             $grid = $this->datab->get_grid($template['exporter_templates_grid_id'])['grids'];
             
@@ -779,6 +837,39 @@
                 e_json(['status' => 1, 'txt' => "Campo salvato"]);
             } catch (Exception $e) {
                 e_json(['status' => 0, 'txt' => "Errore salvataggio campo: " . $e->getMessage()]);
+            }
+        }
+        
+        public function get_support_values($entity) {
+            $data = $this->crmentity->getEntityPreview($entity);
+            
+            e_json(['status' => 1, 'txt' => '', 'data' => $data]);
+            return;
+        }
+        
+        public function save_allowed_entities() {
+            $post = $this->input->post();
+            
+            $post_allowed_entities = $post['allowed_entities'] ?? [];
+            
+            $module_settings = $this->apilib->searchFirst('importer_settings');
+            
+            try {
+                if (empty($module_settings)) {
+                    $this->apilib->create('importer_settings', [
+                        'importer_settings_enable_importer' => DB_BOOL_TRUE,
+                        'importer_settings_enable_exporter' => DB_BOOL_TRUE,
+                        'importer_settings_allowed_entities' => $post_allowed_entities ? json_encode($post_allowed_entities) : null
+                    ]);
+                } else {
+                    $this->apilib->edit('importer_settings', $module_settings['importer_settings_id'], [
+                        'importer_settings_allowed_entities' => $post_allowed_entities ? json_encode($post_allowed_entities) : null
+                    ]);
+                }
+                
+                e_json(['status' => 7, 'txt' => t('Allowed entities saved')]);
+            } catch (Exception $e) {
+                e_json(['status' => 0, 'txt' => t('Error occurred while saving allowed entities:') . ' ' . $e->getMessage()]);
             }
         }
 

@@ -12,7 +12,7 @@ class Main extends MY_Controller
 
 
     // ------------------- CHIAMATA SERVIZIO ----------------------------
-
+    // Chiamata di servizio generica - Usare questa il piu possibile
 
     public function chiamata_servizio_openapi($servizio_id)
     {
@@ -25,10 +25,6 @@ class Main extends MY_Controller
         $get_data = $this->input->post("getData");
         $post_data = $this->input->post("postData");
         $endpoint = $this->input->post("endpoint");
-
-        if (empty($endpoint)) {
-            die('Console error: Endpoint missing');
-        }
 
         $output = $this->openapi->chiamata_servizio_generico($servizio_id, $endpoint, $post_data, $get_data);
 
@@ -108,24 +104,31 @@ class Main extends MY_Controller
     {
         $data = $this->input->post('data');
 
+        if (empty($data[0])) {
+            echo json_encode(array('success' => false, 'message' => "Dati mancanti"));
+        }
+
+        $data = $data[0];
+
         $cliente = [
-            'customers_zip_code' => $data['cap'],
-            'customers_city' => $data['comune'],
-            'customers_sdi' => $data['codice_destinatario'],
+            'customers_zip_code' => $data['address']['registeredOffice']['zipCode'],
+            'customers_city' => $data['address']['registeredOffice']['town'],
+            'customers_sdi' => $data['sdiCode'],
             'customers_last_name' => '',
             'customers_description' => 'Anagrafica creata da ricerca',
-            'customers_address' => $data['indirizzo'],
-            'customers_province' => $data['provincia'],
-            'customers_company' => $data['denominazione'],
+            'customers_address' => $data['address']['registeredOffice']['street'],
+            'customers_province' => $data['address']['registeredOffice']['province'],
+            'customers_company' => $data['companyName'],
             'customers_type' => '1', // Customer
-            'customers_vat_number' => $data['piva'],
-            'customers_cf' => $data['cf'],
+            'customers_vat_number' => $data['vatCode'],
+            'customers_cf' => $data['taxCode'],
             'customers_group' => 2,
             'customers_country_id' => 105, // italia
+            'customers_openapi_id' => $data['id'],
         ];
 
         //verifico se esiste già qualche cliente:
-        $esistente = $this->apilib->searchFirst('customers', ['customers_vat_number' => $data['piva'], 'customers_type' => '1']);
+        $esistente = $this->apilib->searchFirst('customers', ['customers_vat_number' => $data['vatCode'], 'customers_type' => '1']);
         if (!empty($esistente)) {
             echo json_encode(array('success' => false, 'message' => "cliente già esistente"));
             exit;
@@ -494,7 +497,7 @@ class Main extends MY_Controller
     }
 
 
-    
+
     // ------------------------ AUTOMEZZI -------------------------
 
     // Cerca automezzo data la targa
@@ -577,7 +580,7 @@ class Main extends MY_Controller
 
             $this->apilib->edit('automezzi', $automezzo_id, $automezzo);
         } catch (Exception $e) {
-            log_message('error', 'Errore in aggiornamento dati automezzo con openapi, error: '.$e->getMessage());
+            log_message('error', 'Errore in aggiornamento dati automezzo con openapi, error: ' . $e->getMessage());
             echo json_encode(array('success' => false, 'message' => "Impossibile modificare l'automezzo richiesto"));
             exit;
         }

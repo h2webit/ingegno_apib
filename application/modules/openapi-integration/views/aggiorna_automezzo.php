@@ -99,13 +99,13 @@ $automezzo = $this->apilib->view('automezzi', $automezzo_id);
 
         <div class="row">
             <div class="col-md-12">
-                <div id="msg_update_automezzo" class=""></div>
+                <div id="msg_update_automezzo" class="text-center"></div>
             </div>
         </div>
     </div>
 
     <div class="form-actions" style="text-align: center">
-        <button type="button" id="js_ricerca_dati" class="btn btn-primary js_pulsanti_action" style="display: none;">Aggiorna dati € 0,80</button>
+        <button type="button" id="js_ricerca_dati" class="btn btn-success js_pulsanti_action" style="display: none;">Salva dati aggiornati</button>
     </div>
 
 
@@ -115,6 +115,9 @@ $automezzo = $this->apilib->view('automezzi', $automezzo_id);
     $('body').on('click', '#js_acquista_dati', function(e) {
         e.stopImmediatePropagation();
 
+        $('#js_acquista_dati').prop('disabled', true);
+        $('#msg_update_automezzo').append('<br /><br />Attendere ...');
+
         request(base_url + 'openapi-integration/main/cerca_automezzo', {
             cerca_targa: '<?php echo $automezzo['automezzi_targa'];?>',
             [token_name]: token_hash
@@ -122,15 +125,14 @@ $automezzo = $this->apilib->view('automezzi', $automezzo_id);
 
             if (!data.success) {
                 toast('Errore', 'error', data.message, 'toastr', false);
-                $('#msg_form_cerca_automezzo_form').html("Errore: " + data.message);
+                $('#msg_update_automezzo').html("Errore: " + data.message);
                 $('#js_crea_automezzo').hide();
+                $('#js_acquista_dati').prop('disabled', false);
                 return;
             }
 
             if (data.success) {
                 ricerca_data = data.data;
-
-                console.log(ricerca_data);
 
                 $('.js_acquista_box').hide();
                 $('#js_risultati_ricerca').fadeIn();
@@ -148,7 +150,7 @@ $automezzo = $this->apilib->view('automezzi', $automezzo_id);
                 $('#js_aggiorna_anagrafica').show();
                 $('.js_pulsanti_action').show();
 
-                $('#msg_form_cerca_automezzo_form').html("");
+                $('#msg_update_automezzo').html("");
             }
         }).catch(error => {
             console.log(error);
@@ -174,7 +176,7 @@ $automezzo = $this->apilib->view('automezzi', $automezzo_id);
                 $('.js_pulsanti_action').hide();
                 return;
             } else {
-                $('#msg_update_automezzo').html("I dati sono stati correttamente salvati!");
+                $('#msg_update_automezzo').html("<strong>I dati sono stati correttamente salvati!</strong>");
                 /* setTimeout(() => {
                     window.location.reload();
                 }, 3000); */

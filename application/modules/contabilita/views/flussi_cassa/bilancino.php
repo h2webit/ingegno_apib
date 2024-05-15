@@ -13,7 +13,7 @@ foreach ($campi_filtro as $campo) {
 
 $filtro_movimenti = @$this->session->userdata(SESS_WHERE_DATA)['filtro_flussi_movimenti'];
 //debug($filtro_movimenti);
-$where = $where_not_saldo = ["(flussi_cassa_risorsa IN (SELECT conti_correnti_id FROM conti_correnti WHERE conti_correnti_azienda = '$value_id') OR flussi_cassa_risorsa IS NULL)"];
+$where = $where_not_saldo = ["(flussi_cassa_azienda = '$value_id')"];
 
 if (!empty($filtro_movimenti)) {
     foreach ($filtro_movimenti as $field => $filtro) {

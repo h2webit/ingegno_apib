@@ -28,6 +28,7 @@ class Configuratore extends CI_Model
         'ore_giornaliere_previste' => '_ore_giornaliere_previste',
         'turni_giornalieri_previsti' => '_turni_giornalieri_previsti',
         'ore_straordinarie' => '_ore_straordinarie',
+        'ore_previste' => '_ore_previste'
 
     ];
 
@@ -135,6 +136,8 @@ class Configuratore extends CI_Model
 
         $this->calcoloOreStraordinarie($presenza);
 
+        $this->calcoloOrePreviste($presenza);
+
         $this->datiDipendente($presenza);
 
 
@@ -156,6 +159,17 @@ class Configuratore extends CI_Model
         $presenza['_ore_straordinarie'] = $ore_straordinarie;
 
         
+    }
+
+    private function calcoloOrePreviste(&$presenza)
+    {
+        $dipendente_id = $presenza['presenze_dipendente'];
+        $Ymd = substr($presenza['presenze_data_inizio'], 0, 10);
+        $ore_previste = $this->timbrature->calcolaOreGiornalierePreviste($Ymd, $dipendente_id);
+
+        debug($ore_previste);
+
+        $presenza['_ore_previste'] = $ore_previste;
     }
 
     private function calcoloTurniGiornalieriPrevisti(&$presenza)

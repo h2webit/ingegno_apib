@@ -155,12 +155,6 @@ class Cron extends MX_Controller
         
         $this->load->library('table');
         
-        $this->table->set_template([
-            'table_open' => '<table style="width: 100%; text-align: left">',
-        ]);
-        
-        $this->table->set_heading(['Fornitore', 'N°', 'Importo', 'Data Scadenza']);
-        
         foreach ($aziende as $azienda) {
             if (empty($azienda['documenti_contabilita_settings_cron_solleciti_spese_giorni_prima']) || !is_numeric($azienda['documenti_contabilita_settings_cron_solleciti_spese_giorni_prima'])) {
                 my_log('error', "L'azienda {$azienda['documenti_contabilita_settings_company_name']} non ha i giorni configurati correttamente");
@@ -193,6 +187,14 @@ class Cron extends MX_Controller
             $t = count($scadenze);
 
             if (!empty($scadenze)) {
+                $this->table->clear();
+                
+                $this->table->set_template([
+                    'table_open' => '<table style="width: 100%; text-align: left">',
+                ]);
+                
+                $this->table->set_heading(['Fornitore', 'N°', 'Importo', 'Data Scadenza']);
+                
                 foreach ($scadenze as $scadenza) {
                     $fornitore = json_decode($scadenza['spese_fornitore'], true);
                     

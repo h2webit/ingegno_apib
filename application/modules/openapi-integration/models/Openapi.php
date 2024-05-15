@@ -31,7 +31,7 @@ class Openapi extends CI_Model
     // ATTENZIONE: Non è ancora usato ovunque, alcuni metodi vecchi (cerca impresa e impresa advanced) sarebbero da migrare su questo
 
 
-    public function chiamata_servizio_generico($servizio_id, $endpoint = "openapi_servizi_endpoint_production", $post_data = null, $get_data = null)
+    public function chiamata_servizio_generico($servizio_id, $endpoint = null, $post_data = null, $get_data = null)
     {
         $servizio = $this->db->query("SELECT * FROM openapi_servizi WHERE openapi_servizi_id = '$servizio_id'")->row_array();
 
@@ -46,7 +46,13 @@ class Openapi extends CI_Model
         }
 
         // Url endpoint
-        $url = $servizio[$endpoint];
+        if (empty($endpoint)) {
+            $url = $this->getServizioUrl($servizio);
+        } else {
+            $url = $servizio[$endpoint];
+        }
+
+        // Add get data
         $url = $url . $get_data;
 
         // Get from CACHE se ho già fatto una chiamata uguale
@@ -665,6 +671,12 @@ class Openapi extends CI_Model
 
 
     // ************************************ PRIVATE FUNCTIONS **********************************
+
+    public function getEndpointEnvironment()
+    {
+        return $this->openapi_settings['openapi_settings_mode'];
+
+    }
 
     public function getServizioUrl($servizio)
     {

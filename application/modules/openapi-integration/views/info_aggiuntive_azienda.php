@@ -166,13 +166,15 @@ $customer_extra = $this->db->get_where('customers_dati_extra', "customers_dati_e
                             <td class="js_db_soci">
                                 <?php if (!empty($customer_extra['customers_dati_extra_soci'])) {
                                     $soci = json_decode($customer_extra['customers_dati_extra_soci'], true);
-                                    foreach ($soci as $socio) {
-                                        foreach ($socio as $key => $value) {
-                                            $_key = str_replace("_", " ", $key);
-                                            echo "<strong>" . ucfirst($_key) . "</strong>: " . $value . "<br />";
+                                    if (!empty($soci)):
+                                        foreach ($soci as $socio) {
+                                            foreach ($socio as $key => $value) {
+                                                $_key = str_replace("_", " ", $key);
+                                                echo "<strong>" . ucfirst($_key) . "</strong>: " . $value . "<br />";
+                                            }
+                                            echo "<br />";
                                         }
-                                        echo "<br />";
-                                    }
+                                    endif;
                                 } ?>
                             </td>
                         </tr>

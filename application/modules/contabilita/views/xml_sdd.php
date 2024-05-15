@@ -36,7 +36,7 @@
             <PstlAdr>
                 <StrtNm><?php echo $azienda['documenti_contabilita_settings_company_address'] ?></StrtNm>
                 <PstCd><?php echo $azienda['documenti_contabilita_settings_company_zipcode'] ?></PstCd>
-                <TwnNm><?php echo $azienda['documenti_contabilita_settings_company_city'] ?></TwnNm>
+                <TwnNm><?php echo substr($azienda['documenti_contabilita_settings_company_city'],0,35) ?></TwnNm>
                 <CtrySubDvsn><?php echo $azienda['documenti_contabilita_settings_company_province'] ?></CtrySubDvsn>
                 <Ctry><?php echo strtoupper(substr($azienda['documenti_contabilita_settings_company_country'], 0, 2)); ?></Ctry>
             </PstlAdr>

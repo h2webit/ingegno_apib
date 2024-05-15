@@ -33,7 +33,7 @@
         <li>Home</li>
         <li>Importer</li>
         <li>Export</li>
-        <li class="active"><?php e('New Template'); ?></li>
+        <li class="active"><?php e( (!empty($dati['exporter_tpl']) ? (!empty($this->input->get('clone')) ? 'Clone' : 'Edit') : 'Create') . ' template'); ?></li>
     </ol>
 </section>
 
@@ -41,7 +41,7 @@
     <div class="row">
         <div class="col-sm-12 clearfix">
             <div class="pull-left">
-                <a href="<?php echo base_url('main/layout/exporter-templates-admin'); ?>" class="btn bg-maroon"><i class="fas fa-chevron-left fa-fw"></i> <?php e('Back to templates list'); ?></a>
+                <a href="<?php echo base_url('main/layout/exporter-templates'); ?>" class="btn bg-maroon"><i class="fas fa-chevron-left fa-fw"></i> <?php e('Back to templates list'); ?></a>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                     <i class="fa fa-download"></i>
                     
                     <h4 class="box-title">
-                        <?php e( (!empty($dati['exporter_tpl']) ? (!empty($this->input->get('clone')) ? 'Clone' : 'Edit') : 'Create') . ' your template'); ?>
+                        <?php e( (!empty($dati['exporter_tpl']) ? (!empty($this->input->get('clone')) ? 'Clone' : 'Edit') : 'Create') . ' template'); ?>
                     </h4>
                 </div>
                 
@@ -69,6 +69,8 @@
                             <?php if(!empty($dati['template']['exporter_templates_grid_id'])): ?>
                                 <input type="hidden" name="grid_id" value="<?php echo $dati['template']['exporter_templates_grid_id']; ?>">
                             <?php endif; ?>
+                        <?php elseif(empty($this->input->get('clone')) && !empty($dati['template']['exporter_templates_grid_id'])): ?>
+                            <input type="hidden" name="exporter_templates_grid_id" value="<?php echo $dati['template']['exporter_templates_grid_id']; ?>">
                         <?php endif; ?>
                         
                         <div class="form-group row">
@@ -126,66 +128,81 @@
                             </div>
                         <?php endif; ?>
                         
-                        <div class="form-group row js_new_template" style="<?php echo empty($dati['template']) ? 'display:none;' : '' ?>">
-                            <div class="col-sm-12">
-                                <hr style="margin: 0 0 15px 0; padding: 0">
-                            </div>
-                            
-                            <div class="col-sm-2">
-                                <label for="tpl_full_query">Full query</label>
-                                <div id="tpl_full_query">
-                                    <label for="tpl_full_query_yes">
-                                        <input type="radio" name="exporter_templates_full_query" id="tpl_full_query_yes" value="1">
-                                        <?php e('Yes'); ?>
-                                    </label>
-                                    &nbsp;&nbsp;
-                                    <label for="tpl_full_query_no">
-                                        <input type="radio" name="exporter_templates_full_query" id="tpl_full_query_no" value="0" checked>
-                                        <?php e('No'); ?>
-                                    </label>
+                        <div class="js_new_template" style="<?php echo empty($dati['template']) ? 'display:none;' : '' ?>">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <hr style="margin: 0 0 15px 0; padding: 0">
                                 </div>
                             </div>
                             
-                            <div class="col-sm-5">
-                                <label for="tpl_entity"><?php e('Entity') ?></label>
-                                <select name="exporter_templates_entity" id="tpl_entity" class="select2_standard">
-                                    <option value="">---</option>
-                                    <?php foreach($dati['entities'] as $entity): ?>
-                                        <option value="<?php echo $entity['entity_name'] ?>"><?php e($entity['entity_name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            
-                            <div class="col-sm-12 js_show_full_query" style="display:none" data-full_query="0">
-                                <label for="tpl_where" class="where_condition_label" style="display:none"><?php e('Where conditions') ?></label>
-                                <div class="where_builder"></div>
-                                <textarea name="exporter_templates_where" id="tpl_where" style="display:none"></textarea>
-                            </div>
-                            
-                            <div class="js_show_full_query" style="display:none" data-full_query="0">
-                                <div class="col-sm-4">
-                                    <label for="tpl_limit"><?php e('Limit'); ?></label>
-                                    <input type="number" class="form-control" name="exporter_templates_limit" id="tpl_limit">
+                            <div class="form-group row">
+                                <div class="col-sm-2">
+                                    <label for="tpl_full_query">Full query</label>
+                                    <div id="tpl_full_query">
+                                        <label for="tpl_full_query_yes">
+                                            <input type="radio" name="exporter_templates_full_query" id="tpl_full_query_yes" value="1">
+                                            <?php e('Yes'); ?>
+                                        </label>
+                                        &nbsp;&nbsp;
+                                        <label for="tpl_full_query_no">
+                                            <input type="radio" name="exporter_templates_full_query" id="tpl_full_query_no" value="0" checked>
+                                            <?php e('No'); ?>
+                                        </label>
+                                    </div>
                                 </div>
                                 
-                                <div class="col-sm-4">
-                                    <label for="tpl_order_by">Order By</label>
-                                    <input type="text" class="form-control" name="exporter_templates_order_by" id="tpl_order_by">
-                                </div>
-                                
-                                <div class="col-sm-4">
-                                    <label for="tpl_order_dir">Order Dir</label>
-                                    <select class="select2_standard" name="exporter_templates_order_dir" id="tpl_order_dir">
-                                        <option value="ASC">ASC</option>
-                                        <option value="DESC">DESC</option>
+                                <div class="col-sm-5">
+                                    <label for="tpl_entity"><?php e('Entity') ?></label>
+                                    <select name="exporter_templates_entity" id="tpl_entity" class="select2_standard">
+                                        <option value="">---</option>
+                                        <?php foreach($dati['entities'] as $entity): ?>
+                                            <option value="<?php echo $entity ?>"><?php echo $entity ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
                             
-                            <div class="col-sm-12 js_show_full_query" style="display:none" data-full_query="1">
-                                <label for="tpl_query">Query</label>
-                                <textarea class="form-control" name="exporter_templates_query" id="tpl_query"></textarea>
-                                <span class="help-block">You can use also placeholders like {where}, {limit}, {orderby}</span>
+                            <div class="form-group row">
+                                <div class="col-sm-12 js_show_full_query" style="display:none" data-full_query="0">
+                                    <label for="tpl_where" class="where_condition_label" style="display:none"><?php e('Where conditions') ?></label>
+                                    <div class="where_builder"></div>
+                                    <textarea name="exporter_templates_where" id="tpl_where" style="display:none"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="js_show_full_query" style="display:none" data-full_query="0">
+                                <div class="form-group row">
+                                    <div class="col-sm-3">
+                                        <label for="tpl_limit"><?php e('Limit'); ?></label>
+                                        <input type="number" class="form-control" name="exporter_templates_limit" id="tpl_limit">
+                                    </div>
+                                    
+                                    <div class="col-sm-3">
+                                        <label for="tpl_order_by">Order By</label>
+                                        <input type="text" class="form-control" name="exporter_templates_order_by" id="tpl_order_by">
+                                    </div>
+                                    
+                                    <div class="col-sm-3">
+                                        <label for="tpl_order_dir">Order Dir</label>
+                                        <select class="select2_standard" name="exporter_templates_order_dir" id="tpl_order_dir">
+                                            <option value="ASC">ASC</option>
+                                            <option value="DESC">DESC</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-sm-3">
+                                        <label for="tpl_group_by">Group By</label>
+                                        <input type="text" class="form-control" name="exporter_templates_group_by" id="tpl_group_by">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-12 js_show_full_query" style="display:none" data-full_query="1">
+                                    <label for="tpl_query">Query</label>
+                                    <textarea class="form-control" name="exporter_templates_query" id="tpl_query"></textarea>
+                                    <span class="help-block">You can use also placeholders like {where}, {limit}, {orderby}</span>
+                                </div>
                             </div>
                         </div>
                         
@@ -198,23 +215,37 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
-                            <div class="alert alert-danger hide" id="msg_new_template"></div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="alert alert-danger hide" id="msg_new_template"></div>
+                            </div>
                         </div>
                         
-                        <button type="submit" class="btn btn-success btn-lg pull-right"><i class="fas fa-save fa-fw"></i> <?php e('Save') ?></button>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-success" onclick="saveAndStay()"><i class="fas fa-save fa-fw"></i> <?php e('Save & stay') ?></button>
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save fa-fw"></i> <?php e('Save') ?></button>
+                        </div>
                     </form>
                 </div>
             </div>
-        </div>
-        
-        <div class="col-sm-6">
-        
         </div>
     </div>
 </section>
 
 <script>
+    function saveAndStay() {
+        var form = $('#new_template');
+        
+        // aggiungi un hidden con nome _stay e valore 1
+        $('<input>').attr({
+            type: 'hidden',
+            name: '_stay',
+            value: 1
+        }).appendTo(form);
+        
+        form.submit();
+    }
+    
     const slugify = (string, separator = "_") => {
         /**
          * @param {string} "fÃ²o bAr -3"

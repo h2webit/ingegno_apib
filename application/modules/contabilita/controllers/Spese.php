@@ -653,7 +653,7 @@ class Spese extends MY_Controller
                     // IMPORTI
                     //$spesa['spese_imponibile'] = $xml->FatturaElettronicaBody->DatiBeniServizi->DatiRiepilogo->ImponibileImporto;
                     $spesa['spese_valuta'] = $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Divisa;
-                    $spesa['spese_totale'] = $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ImportoTotaleDocumento;
+                    
 
                     // Tipologia di documento
                     $tipologia = (string) $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->TipoDocumento;
@@ -692,6 +692,13 @@ class Spese extends MY_Controller
                     }
                     $spesa['spese_iva'] = $totale_imposta;
                     $spesa['spese_imponibile'] = $totale_imponibile;
+
+                    if ($xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ImportoTotaleDocumento > 0) {
+                        $spesa['spese_totale'] = $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ImportoTotaleDocumento;
+                    } else {
+                        $spesa['spese_totale'] = $spesa['spese_iva'] + $spesa['spese_imponibile'];
+                    }
+                    
 
                     $spesa['spese_extra'] = ''; //$filename;
                     $spesa['spese_file_da_sdi'] = $file['documenti_contabilita_ricezione_sdi_id'];
@@ -856,7 +863,7 @@ class Spese extends MY_Controller
                             // Se non ci sono mi baso su importo del documento e inserisco una sola scadenza
 
                             $spesa_scadenza = [
-                                'spese_scadenze_ammontare' => $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ImportoTotaleDocumento,
+                                'spese_scadenze_ammontare' => $spesa['spese_totale'],
                                 'spese_scadenze_scadenza' => $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data,
                                 'spese_scadenze_saldato_con' => $metodi_pagamento["MP08"],
                                 // Da capire come gestire

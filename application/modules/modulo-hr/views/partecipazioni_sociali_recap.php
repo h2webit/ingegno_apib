@@ -204,11 +204,13 @@ $this->db->where("DATE_FORMAT(partecipazioni_sociali_data, '%Y-%m-%d') <= '{$dat
 $rivalutazione_sociale = $this->db->get("partecipazioni_sociali")->row();
 $rivalutazione_sociale_valore = $rivalutazione_sociale->partecipazioni_sociali_valore_nominale;
 
-
+// TK #11000 - rivalutazione quote sociali
 //Capitale sottoscritto
-$capitale_sottoscritto = $sottoscrizione_valore - $recesso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+//$capitale_sottoscritto = $sottoscrizione_valore - $recesso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+$capitale_sottoscritto = $sottoscrizione_valore + $rivalutazione_sociale_valore + $aumento_storno_utile_valore;
 //Capitale versato
-$capitale_versato = $versamento_valore - $rimborso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+//$capitale_versato = $versamento_valore - $rimborso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+$capitale_versato = $versamento_valore  + $rivalutazione_sociale_valore + $aumento_storno_utile_valore;
 
 //Partecipazioni
 if($dipendente_non_impostato == DB_BOOL_FALSE) {

@@ -78,9 +78,9 @@ if ($dest_nazione == 'IT') {
 
 $dest_indirizzo = substr($destinatario['indirizzo'], 0, 50);
 $dest_cap = !empty($destinatario['cap']) ? $destinatario['cap'] : '00000';
-$dest_citta = ($destinatario['citta']);
+$dest_citta = str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], ($destinatario['citta']));
 $dest_provincia = ($destinatario['provincia']);
-if (empty($dest_provincia) && $dest_nazione != 'IT') {
+if ($dest_nazione != 'IT') {
     $dest_provincia = 'EE';
 }
 
@@ -252,7 +252,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
     xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
+    xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">
     <FatturaElettronicaHeader>
         <DatiTrasmissione>
             <IdTrasmittente>
@@ -526,6 +526,51 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                             </Natura>
                         <?php endif; ?>
                         <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/?>
+                    </DatiCassaPrevidenziale>
+                <?php } ?>
+                <?php
+                $importoCassa = 0;
+                if ($dati['fattura']['documenti_contabilita_rivalsa_inps_perc'] > 0) {
+                    $cassa_tipo = $this->apilib->view('documenti_contabilita_cassa_professionisti_tipo', $dati['fattura']['documenti_contabilita_cassa_professionisti_tipo']);
+                    if ($cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'] && $iva_cassa = $this->apilib->view('iva', $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'])) {
+                        //debug($iva_cassa,true);                
+                        $aliquota_iva_cassa = $iva_cassa['iva_valore'];
+                        $natura_cassa = $iva_cassa['iva_codice'];
+                    } else {
+                        $aliquota_iva_cassa = 0;
+                        $natura_cassa = '';
+                    }
+
+                    //debug($dati['fattura'], true);
+                    $percentuale_contributo = $dati['fattura']['documenti_contabilita_rivalsa_inps_perc'];
+                    $imponibile_fattura = $dati['fattura']['documenti_contabilita_competenze'];
+                    $imponibile_calcolo = $imponibile_fattura;
+                    $importoCassa = $imponibile_fattura / 100 * $percentuale_contributo;
+                    //debug($imponibile_fattura,true); 
+                    ?>
+                    <DatiCassaPrevidenziale>
+                        <TipoCassa>
+                            <?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_codice']; ?>
+                        </TipoCassa>
+                        <AlCassa>
+                            <?php echo $percentuale_contributo; ?>
+                        </AlCassa>
+                        <ImportoContributoCassa>
+                            <?php echo number_format(round($importoCassa, 2), 2, '.', ''); ?>
+                        </ImportoContributoCassa>
+                        <ImponibileCassa>
+                            <?php echo $imponibile_calcolo; ?>
+                        </ImponibileCassa>
+                        <AliquotaIVA>
+                            <?php echo $aliquota_iva_cassa; ?>
+                        </AliquotaIVA>
+                        <?php /*<Ritenuta></Ritenuta>*/ ?>
+                        <?php if ($aliquota_iva_cassa == 0): ?>
+                            <Natura>
+                                <?php echo $natura_cassa; ?>
+                            </Natura>
+                        <?php endif; ?>
+                        <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/ ?>
                     </DatiCassaPrevidenziale>
                 <?php } ?>
                 <?php
@@ -871,38 +916,49 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
 <Arrotondamento></Arrotondamento>--> */?>
 
                     <?php
-                    //devo fare così per capire quant'è la base imponibile di questa classe iva sulla quale è stata calcolata l'imposta totale)
-                    $imponibile = 0;
-                    //debug($articoli, true);
-                    foreach ($articoli as $articolo) {
-                        if ($articolo['documenti_contabilita_articoli_iva_id'] == $iva_id) {
-                            if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) {
-                                $sconto_da_applicare = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) ? ($articolo['documenti_contabilita_articoli_sconto'] + ($dati['fattura']['documenti_contabilita_sconto_percentuale'] / 100 * (100 - $articolo['documenti_contabilita_articoli_sconto']))) : 0;
-                                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto2'] > 0) {
-                                    $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto2'];
+                    ini_set('precision', 17);
+                    if (array_key_exists($iva_id, json_decode($dati['fattura']['documenti_contabilita_imponibile_iva_json'], true))) {
+
+                        $imponibile = json_decode($dati['fattura']['documenti_contabilita_imponibile_iva_json'], true)[$iva_id][1];
+
+
+
+                    } else {
+                        //devo fare così per capire quant'è la base imponibile di questa classe iva sulla quale è stata calcolata l'imposta totale)
+                        $imponibile = 0;
+                        //debug($articoli, true);
+                        foreach ($articoli as $articolo) {
+                            if ($articolo['documenti_contabilita_articoli_iva_id'] == $iva_id) {
+                                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) {
+                                    $sconto_da_applicare = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE) ? ($articolo['documenti_contabilita_articoli_sconto'] + ($dati['fattura']['documenti_contabilita_sconto_percentuale'] / 100 * (100 - $articolo['documenti_contabilita_articoli_sconto']))) : 0;
+                                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto2'] > 0) {
+                                        $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto2'];
+                                    }
+                                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto3'] > 0) {
+                                        $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto3'];
+                                    }
+
+
+
+
+                                    $imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $sconto_da_applicare);
+                                } else {
+                                    //$imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $dati['fattura']['documenti_contabilita_sconto_percentuale']);
+                                    $imponibile += ($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']);
                                 }
-                                if ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_TRUE && $articolo['documenti_contabilita_articoli_sconto3'] > 0) {
-                                    $sconto_da_applicare += (100 - $sconto_da_applicare) / 100 * $articolo['documenti_contabilita_articoli_sconto3'];
-                                }
-
-
-
-
-                                $imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $sconto_da_applicare);
                             } else {
-                                //$imponibile += (($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100) * (100 - $dati['fattura']['documenti_contabilita_sconto_percentuale']);
-                                $imponibile += ($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']);
+                                // debug($iva_id);
+                                // debug($articolo,true);
                             }
-                        } else {
-                            // debug($iva_id);
-                            // debug($articolo,true);
                         }
                     }
 
+                    $imponibile_rounded = round($imponibile, 2, PHP_ROUND_HALF_DOWN);
+                    //debug(number_format($imponibile_rounded , 2, '.', ''), true);
                     ?>
 
                     <ImponibileImporto>
-                        <?php echo number_format($imponibile + $importoCassa, 2, '.', ''); ?>
+                        <?php echo number_format($imponibile_rounded + $importoCassa, 2, '.', ''); ?>
                     </ImponibileImporto>
                     <Imposta>
                         <?php echo number_format($iva, 2, '.', ''); ?>

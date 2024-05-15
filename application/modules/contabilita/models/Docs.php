@@ -1553,18 +1553,21 @@ class Docs extends CI_Model
     }
     public function formatDateFromGregorianFileName($filename, $format = 'd/m/Y')
     {
+        // Estrai l'anno e il giorno giuliano usando regex
         $pattern = "/^.*\.(\d{4})(\d{3})\..*$/";
         preg_match($pattern, $filename, $matches);
+
         $anno = $matches[1];
-        
-        $giorno = $matches[2];
-        $data = DateTime::createFromFormat('z/Y', ($giorno - 1) . '/' . $anno);
-        // debug($giorno);
-        // debug($anno);
-        // debug($data);
-        return $data->format($format); // stampa "17/03/2023"
+        $giorno_giuliano = $matches[2];
+
+        // Usa "Y z" con giorno giuliano 0-based
+        $data = DateTime::createFromFormat('Y z', $anno . ' ' . ($giorno_giuliano - 1));
+
+        return $data->format($format);
     }
-    
+
+
+
     public function getArticoliFromDocumento($documento_id)
     {
         return $this->apilib->search('documenti_contabilita_articoli', ['documenti_contabilita_articoli_documento' => $documento_id], null, 0, 'documenti_contabilita_articoli_position');
@@ -1683,7 +1686,8 @@ class Docs extends CI_Model
     
     public function aggiornaStatoDocumento($documento_id, $old_documento_tipo = false)
     {
-        $documento = $this->apilib->view('documenti_contabilita', $documento_id);
+        //$documento = $this->apilib->view('documenti_contabilita', $documento_id);
+        $documento = $this->db->get_where('documenti_contabilita', ['documenti_contabilita_id' => $documento_id])->row_array();
         $documento_tipo = $documento['documenti_contabilita_tipo'];
         
         

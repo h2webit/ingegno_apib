@@ -54,7 +54,7 @@ $(() => {
                                 percentuale = 100 / template_scadenza.documenti_contabilita_tpl_pag_scadenze.length;
 
                             }
-                            
+
                             var prima_iva = tpl_riga_scadenza.documenti_contabilita_tpl_pag_scadenze_prima_iva;
                             var solo_iva = tpl_riga_scadenza.documenti_contabilita_tpl_pag_scadenze_solo_iva;
 
@@ -115,18 +115,18 @@ $(() => {
         //alert(1);
         var $momentDate = moment(data, 'DD/MM/YYYY');
         var $dataScadenzaBase = $momentDate.clone();
-        
-        
+
+
         if (giorni == 30) {
-            $dataScadenzaBase =  $dataScadenzaBase.add(1, 'month');
+            $dataScadenzaBase = $dataScadenzaBase.add(1, 'month');
         } else if (giorni == 60) {
-            $dataScadenzaBase =  $dataScadenzaBase.add(2, 'month');
+            $dataScadenzaBase = $dataScadenzaBase.add(2, 'month');
         } else if (giorni == 90) {
-            $dataScadenzaBase =  $dataScadenzaBase.add(3, 'month');
+            $dataScadenzaBase = $dataScadenzaBase.add(3, 'month');
         } else if (giorni == 120) {
-            $dataScadenzaBase =  $dataScadenzaBase.add(4, 'month');
+            $dataScadenzaBase = $dataScadenzaBase.add(4, 'month');
         } else {
-            $dataScadenzaBase =  $dataScadenzaBase.add(giorni, 'days');
+            $dataScadenzaBase = $dataScadenzaBase.add(giorni, 'days');
         }
 
         if (tipo == 'Fine mese') { //Fine mese
@@ -138,18 +138,27 @@ $(() => {
             alert('Tipo scadenza (Fine Mese o Data Fattura) non specificato o errato. Controllare la configurazione scadenze.');
         }
         if (typeof cliente_raw_data !== 'undefined') {
-            var giorni_spostamento = cliente_raw_data.customers_pag_gg_spostamento;
-            var giorno_fisso = cliente_raw_data.customers_pag_giorno_fisso;
-            if (giorni_spostamento > 0) {
-                $dataScadenzaBase.add(giorni_spostamento, 'days');
-            } else if (giorno_fisso > 0) {
-                $dataScadenzaBase.date(giorno_fisso);
+            //Questa regola deve applicarsi solo nei mesi "esclusi", ovvero se il mese calcolato coincide con customers_pag_escluso_mese_1 o customers_pag_escluso_mese_2
+            var mese_escluso_1 = cliente_raw_data.customers_pag_escluso_mese_1;
+            // console.log($dataScadenzaBase);
+            // alert($dataScadenzaBase.month());
+            var mese_escluso_2 = cliente_raw_data.customers_pag_escluso_mese_2;
+            if ((mese_escluso_1 > 0 && $dataScadenzaBase.format('M') == mese_escluso_1) || (mese_escluso_2 > 0 && $dataScadenzaBase.format('M') == mese_escluso_2)) {
+
+                var giorni_spostamento = cliente_raw_data.customers_pag_gg_spostamento;
+                var giorno_fisso = cliente_raw_data.customers_pag_giorno_fisso;
+                if (giorni_spostamento > 0) {
+                    $dataScadenzaBase.add(giorni_spostamento, 'days');
+                } else if (giorno_fisso > 0) {
+                    $dataScadenzaBase.date(giorno_fisso);
+                }
             }
+
         }
-        
+
 
         return $dataScadenzaBase.format('DD/MM/YYYY');
-        
+
 
     }
 });

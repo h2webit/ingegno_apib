@@ -302,6 +302,11 @@ foreach ($_campi_personalizzati as $key => $campo) {
     $field = $this->datab->get_field_by_name($campo['campi_righe_articoli_campo'], true);
     if ($field['fields_ref']) {
         $field['support_data'] = $this->crmentity->getEntityPreview($field['fields_ref'], $field['fields_select_where'], null);
+    } else {
+        if (!empty($field['fields_additional_data'])) {
+            $support_data = explode(',', $field['fields_additional_data']);
+            $field['support_data'] = array_combine($support_data, $support_data);
+        }
     }
     $campi_personalizzati[$campo['campi_righe_articoli_riga']][$campo['campi_righe_articoli_pos']] = array_merge($campo, $field);
     $field['data_name'] = $field['fields_name'];
@@ -991,7 +996,15 @@ if (!empty($documento['articoli'])) {
 }
 
 
-$agenti_vendita = $this->apilib->search('users');
+if (empty($general_settings['documenti_contabilita_general_settings_agenti'])) {
+    $agenti_vendita = $this->apilib->search('users', ['users_type' => [1, 5]]); //Admin or Agent
+
+} else {
+    
+    $agenti_vendita = $this->apilib->search('users', ['users_type' => array_keys($general_settings['documenti_contabilita_general_settings_agenti'])]); //Admin or Agent
+}
+
+
 
 $agente_vendita_corrente = ($documento_id && $documento['documenti_contabilita_agente']) ? $documento['documenti_contabilita_agente'] : $this->session->userdata('session_login')[LOGIN_ENTITY . '_id'];
 
@@ -1684,127 +1697,121 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
 
                         <div class="panel_acc" style="background-color: #edb92b;">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label style="min-width:80px">Template Documento: </label>
-                                        <select name="documenti_contabilita_template_pdf" class="select2 form-control js_template_pdf">
-                                            <?php foreach ($templates as $template): ?>
-                                            <?php
-                                                $categoria_template = '';
-                                                if (!empty($template['documenti_contabilita_template_pdf_tipo'])) {
-                                                    $categoria_template = $this->apilib->searchFirst('documenti_contabilita_tipo', ['documenti_contabilita_tipo_id' => $template['documenti_contabilita_template_pdf_tipo']]);
-                                                    $categoria_template = $categoria_template['documenti_contabilita_tipo_value'] . ' - ';
-                                                }
-                                                
-                                                $tpl_selezionato = '';
-                                                if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_template_pdf']) && $documento['documenti_contabilita_template_pdf'] == $template['documenti_contabilita_template_pdf_id'])) {
-                                                    $tpl_selezionato = 'selected="selected"';
-                                                } else {
-                                                    if (!empty($this->input->get('template_contabilita')) && $this->input->get('template_contabilita') == $template['documenti_contabilita_template_pdf_id']) {
-                                                        $tpl_selezionato = 'selected="selected"';
+                                <div class="col-md-6">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Template Documento: </label>
+                                            <select name="documenti_contabilita_template_pdf" class="select2 form-control js_template_pdf">
+                                                <?php foreach ($templates as $template): ?>
+                                                <?php
+                                                    $categoria_template = '';
+                                                    if (!empty($template['documenti_contabilita_template_pdf_tipo'])) {
+                                                        $categoria_template = $this->apilib->searchFirst('documenti_contabilita_tipo', ['documenti_contabilita_tipo_id' => $template['documenti_contabilita_template_pdf_tipo']]);
+                                                        $categoria_template = $categoria_template['documenti_contabilita_tipo_value'] . ' - ';
                                                     }
-                                                }
-//
-//                                                if (empty($tpl_selezionato) && $template['']) {
-//
-//                                                }
-                                                ?>
-                                            <option data-tipo="<?php echo $template['documenti_contabilita_template_pdf_tipo']; ?>" value='<?php echo $template['documenti_contabilita_template_pdf_id']; ?>' <?php echo $tpl_selezionato; ?>><?php echo $categoria_template . $template['documenti_contabilita_template_pdf_nome']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                                    
+                                                    $tpl_selezionato = '';
+                                                    if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_template_pdf']) && $documento['documenti_contabilita_template_pdf'] == $template['documenti_contabilita_template_pdf_id'])) {
+                                                        $tpl_selezionato = 'selected="selected"';
+                                                    } else {
+                                                        if (!empty($this->input->get('template_contabilita')) && $this->input->get('template_contabilita') == $template['documenti_contabilita_template_pdf_id']) {
+                                                            $tpl_selezionato = 'selected="selected"';
+                                                        }
+                                                    }
+                                                    ?>
+                                                <option data-tipo="<?php echo $template['documenti_contabilita_template_pdf_tipo']; ?>" value='<?php echo $template['documenti_contabilita_template_pdf_id']; ?>' <?php echo $tpl_selezionato; ?>><?php echo $categoria_template . $template['documenti_contabilita_template_pdf_nome']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Max n° articoli per pagina: </label>
-                                        <div class="input-group">
-                                            <!-- <input type="text" class="form-control" name="documenti_contabilita_max_num_articoli" value="<?php if (!empty($documento['documenti_contabilita_max_num_articoli'])): ?><?php echo $documento['documenti_contabilita_max_num_articoli']; ?><?php else: ?>10<?php endif; ?>" /> -->
-                                            <input type="text" class="form-control" name="json_stampa[max_articoli_pagina]" value="<?php if (!empty($json_stampa['max_articoli_pagina'])): ?><?php echo $json_stampa['max_articoli_pagina']; ?><?php else: ?>10<?php endif; ?>" />
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Max n° articoli per pagina: </label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="json_stampa[max_articoli_pagina]" value="<?php if (!empty($json_stampa['max_articoli_pagina'])): ?><?php echo $json_stampa['max_articoli_pagina']; ?><?php else: ?>10<?php endif; ?>" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Font: </label> <select name="documenti_contabilita_font" class="select2 form-control js_template_pdf">
+                                                <?php foreach ($fonts as $font): ?>
+                                                <option data-tipo="<?php echo $font['documenti_contabilita_font_value']; ?>" value='<?php echo $font['documenti_contabilita_font_id']; ?>' <?php if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_font']) && $documento['documenti_contabilita_font'] == $font['documenti_contabilita_font_id'])): ?> selected="selected" <?php endif; ?>><?php echo $font['documenti_contabilita_font_value']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Font Size:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="json_stampa[font-size]" value="<?php if (!empty($json_stampa['font-size'])): ?><?php echo $json_stampa['font-size']; ?><?php else: ?>14<?php endif; ?>" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Lingua template:</label>
+                                            <?php $lingue = $this->apilib->search('languages'); ?>
+                                            <select name="documenti_contabilita_lingua" class="select2 form-control js_template_pdf">
+                                                <?php foreach ($lingue as $lingua) : ?>
+                                                <option value='<?php echo $lingua['languages_id']; ?>' <?php echo ((($lingua['languages_id'] == 2) && empty($documento_id) && empty($spesa_id) && (empty($documento['documenti_contabilita_lingua']) || $documento['documenti_contabilita_lingua'] != $lingua['languages_id'])) ? "selected='selected'" : (((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_lingua']) && $documento['documenti_contabilita_lingua'] == $lingua['languages_id'])) ? "selected='selected'" : "")); ?>><?php echo $lingua['languages_name']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label style="min-width:80px">Font: </label> <select name="documenti_contabilita_font" class="select2 form-control js_template_pdf">
-                                            <?php foreach ($fonts as $font): ?>
-                                            <option data-tipo="<?php echo $font['documenti_contabilita_font_value']; ?>" value='<?php echo $font['documenti_contabilita_font_id']; ?>' <?php if ((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_font']) && $documento['documenti_contabilita_font'] == $font['documenti_contabilita_font_id'])): ?> selected="selected" <?php endif; ?>><?php echo $font['documenti_contabilita_font_value']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                <div class="col-md-6">
+                                    <h4 style="font-size: 16px;">Mostra in stampa</h4>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Foto prodotti:</label>
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_foto]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_foto'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_foto']) && $json_stampa['mostra_foto'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Font Size:</label>
-                                        <?php /*
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="documenti_contabilita_font_size" value="<?php if (!empty($documento['documenti_contabilita_font_size'])): ?><?php echo $documento['documenti_contabilita_font_size']; ?><?php else: ?>14<?php endif; ?>" />
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Totali documento: </label>
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_totali]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_totali'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_totali']) && $json_stampa['mostra_totali'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
                                     </div>
-                                    */ ?>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="json_stampa[font-size]" value="<?php if (!empty($json_stampa['font-size'])): ?><?php echo $json_stampa['font-size']; ?><?php else: ?>14<?php endif; ?>" />
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Totali senza IVA: </label>
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_totali_senza_iva]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_totali_senza_iva'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_totali_senza_iva']) && $json_stampa['mostra_totali_senza_iva'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label style="min-width:80px">Lingua template:</label>
-                                    <?php $lingue = $this->apilib->search('languages'); ?>
-                                    <select name="documenti_contabilita_lingua" class="select2 form-control js_template_pdf">
-                                        <?php foreach ($lingue as $lingua) : ?>
-                                        <option value='<?php echo $lingua['languages_id']; ?>' <?php echo ((($lingua['languages_id'] == 2) && empty($documento_id) && empty($spesa_id) && (empty($documento['documenti_contabilita_lingua']) || $documento['documenti_contabilita_lingua'] != $lingua['languages_id'])) ? "selected='selected'" : (((!empty($documento_id) || !empty($spesa_id)) && (!empty($documento['documenti_contabilita_lingua']) && $documento['documenti_contabilita_lingua'] == $lingua['languages_id'])) ? "selected='selected'" : "")); ?>><?php echo $lingua['languages_name']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label style="min-width:80px">Mostra foto prodotto: </label>
-                                    <!-- <input type="checkbox" class="minimal" name="documenti_contabilita_mostra_foto" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($documento['documenti_contabilita_mostra_foto']) && $documento['documenti_contabilita_mostra_foto'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> /> -->
-                                    <input type="checkbox" class="minimal" name="json_stampa[mostra_foto]" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($json_stampa['mostra_foto']) && $json_stampa['mostra_foto'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label style="min-width:80px">Mostra totali: </label>
-                                    <input type="checkbox" class="minimal" name="json_stampa[mostra_totali]" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($json_stampa['mostra_totali']) && $json_stampa['mostra_totali'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label style="min-width:80px">Mostra totali senza IVA: </label>
-                                    <input type="checkbox" class="minimal" name="json_stampa[mostra_totali_senza_iva]" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($json_stampa['mostra_totali_senza_iva']) && $json_stampa['mostra_totali_senza_iva'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label style="min-width:80px">Mostra scadenze pagamento: </label>
-                                    <input type="checkbox" class="minimal" name="json_stampa[mostra_scadenze_pagamento]" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($json_stampa['mostra_scadenze_pagamento']) && $json_stampa['mostra_scadenze_pagamento'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label style="min-width:80px">Mostra prodotti senza importi: </label>
-                                    <input type="checkbox" class="minimal" name="json_stampa[mostra_prodotti_senza_importi]" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($json_stampa['mostra_prodotti_senza_importi']) && $json_stampa['mostra_prodotti_senza_importi'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Scadenze pagamento: </label>
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_scadenze_pagamento]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_scadenze_pagamento'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_scadenze_pagamento']) && $json_stampa['mostra_scadenze_pagamento'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Prodotti senza importi: </label>
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_prodotti_senza_importi]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_prodotti_senza_importi'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_prodotti_senza_importi']) && $json_stampa['mostra_prodotti_senza_importi'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row js_rivalsa_container real_rivalsa" style="background-color:#b7d7ea;">
-                <div class="col-sm-12">
-                    <button type="button" class="accordion" style="padding: 0px">
-                        <h4>Rivalsa e altri dettagli <i class="fas fa-plus container-plus-button" style="font-size: 15px;"></i></h4>
-                    </button>
+                <div class="row js_rivalsa_container real_rivalsa" style="background-color:#b7d7ea;">
+                    <div class="col-sm-12">
+                        <button type="button" class="accordion" style="padding: 0px">
+                            <h4>Rivalsa e altri dettagli <i class="fas fa-plus container-plus-button" style="font-size: 15px;"></i></h4>
+                        </button>
 
-                    <div class="panel_acc">
-                        <div class="row rcr_label">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label>Rivalsa INPS: </label>
-                                    <div class="input-group">
-                                        <?php
+                        <div class="panel_acc">
+                            <div class="row rcr_label">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Rivalsa INPS: </label>
+                                        <div class="input-group">
+                                            <?php
                                         $rivalsa_inps_perc = 0;
                                         if (!empty($documento['documenti_contabilita_rivalsa_inps_perc'])) {
                                             $rivalsa_inps_perc = number_format((float) $documento['documenti_contabilita_rivalsa_inps_perc'], 2, '.', '');
@@ -1818,16 +1825,16 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             }
                                         }
                                         ?>
-                                        <input type="text" class="form-control" name="documenti_contabilita_rivalsa_inps_perc" value="<?php echo $rivalsa_inps_perc ?>" />
-                                        <span class="input-group-addon" id="basic-addon2">%</span>
+                                            <input type="text" class="form-control" name="documenti_contabilita_rivalsa_inps_perc" value="<?php echo $rivalsa_inps_perc ?>" />
+                                            <span class="input-group-addon" id="basic-addon2">%</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label>Ritenuta d'acconto: </label>
-                                    <div class="input-group">
-                                        <?php
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Ritenuta d'acconto: </label>
+                                        <div class="input-group">
+                                            <?php
                                         $ritenuta_acconto_perc = 0;
                                         if (!empty($documento['documenti_contabilita_ritenuta_acconto_perc'])) {
                                             $ritenuta_acconto_perc = number_format((float) $documento['documenti_contabilita_ritenuta_acconto_perc'], 2, '.', '');
@@ -1841,27 +1848,27 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             }
                                         }
                                         ?>
-                                        <input type="text" class="form-control" name="documenti_contabilita_ritenuta_acconto_perc" value="<?php echo $ritenuta_acconto_perc ?>" />
-                                        <span class="input-group-addon" id="basic-addon2">%</span>
+                                            <input type="text" class="form-control" name="documenti_contabilita_ritenuta_acconto_perc" value="<?php echo $ritenuta_acconto_perc ?>" />
+                                            <span class="input-group-addon" id="basic-addon2">%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label>% sull'imponibile: </label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="documenti_contabilita_ritenuta_acconto_perc_imponibile" value="<?php if (!empty($documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'])): ?><?php echo number_format((float) $documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'], 2, '.', ''); ?><?php else: ?>100<?php endif; ?>" />
+                                            <span class="input-group-addon" id="basic-addon2">%</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label>% sull'imponibile: </label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" name="documenti_contabilita_ritenuta_acconto_perc_imponibile" value="<?php if (!empty($documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'])): ?><?php echo number_format((float) $documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'], 2, '.', ''); ?><?php else: ?>100<?php endif; ?>" />
-                                        <span class="input-group-addon" id="basic-addon2">%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row rcr_label">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="form-group">
-                                    <label>Cassa professionisti: </label>
-                                    <div class="input-group">
-                                        <?php
+                            <div class="row rcr_label">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Cassa professionisti: </label>
+                                        <div class="input-group">
+                                            <?php
                                             $cassa_professionisti_perc = 0;
                                             if (!empty($documento['documenti_contabilita_cassa_professionisti_perc'])) {
                                                 $cassa_professionisti_perc = number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, '.', '');
@@ -1875,18 +1882,18 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                                 }
                                             }
                                             ?>
-                                        <input type="text" class="form-control" name="documenti_contabilita_cassa_professionisti_perc" value="<?php echo $cassa_professionisti_perc ?>" />
-                                        <span class="input-group-addon" id="basic-addon2">%</span>
+                                            <input type="text" class="form-control" name="documenti_contabilita_cassa_professionisti_perc" value="<?php echo $cassa_professionisti_perc ?>" />
+                                            <span class="input-group-addon" id="basic-addon2">%</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8 col-sm-6">
-                                <div class="form-group">
-                                    <label>Tipo: </label>
-                                    <select name="documenti_contabilita_cassa_professionisti_tipo" class="form-control select2_standard" style="width: 100%;">
-                                        <option value="">---</option>
-                                        <?php foreach($tipi_cassa_pro as $tipo): ?>
-                                        <?php
+                                <div class="col-md-8 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Tipo: </label>
+                                        <select name="documenti_contabilita_cassa_professionisti_tipo" class="form-control select2_standard" style="width: 100%;">
+                                            <option value="">---</option>
+                                            <?php foreach($tipi_cassa_pro as $tipo): ?>
+                                            <?php
                                         $selected = '';
                                         
                                         if (!empty($documento['documenti_contabilita_cassa_professionisti_tipo']) && $documento['documenti_contabilita_cassa_professionisti_tipo'] == $tipo['documenti_contabilita_cassa_professionisti_tipo_id']) {
@@ -1901,18 +1908,18 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             }
                                         }
                                         ?>
-                                        <option value="<?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_id'] ?>" <?php echo $selected; ?>><?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_codice'] . ' - ' . $tipo['documenti_contabilita_cassa_professionisti_tipo_value'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                            <option value="<?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_id'] ?>" <?php echo $selected; ?>><?php echo $tipo['documenti_contabilita_cassa_professionisti_tipo_codice'] . ' - ' . $tipo['documenti_contabilita_cassa_professionisti_tipo_value'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row rcr_label">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="form-group">
-                                    <label>2.1.1.6.2 - Importo bollo: </label>
-                                    <div class="input-group">
-                                        <?php
+                            <div class="row rcr_label">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>2.1.1.6.2 - Importo bollo: </label>
+                                        <div class="input-group">
+                                            <?php
                                         $importo_bollo = 0;
                                         if (!empty($documento['documenti_contabilita_importo_bollo'])) {
                                             $importo_bollo = number_format((float) $documento['documenti_contabilita_importo_bollo'], 2, '.', '');
@@ -1926,10 +1933,10 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             }
                                         }
                                         ?>
-                                        <input type="text" class="form-control" name="documenti_contabilita_importo_bollo" value="<?php echo $importo_bollo; ?>" />
-                                        <span class="input-group-addon" id="basic-addon2">€</span>
-                                    </div>
-                                    <!--<span>
+                                            <input type="text" class="form-control" name="documenti_contabilita_importo_bollo" value="<?php echo $importo_bollo; ?>" />
+                                            <span class="input-group-addon" id="basic-addon2">€</span>
+                                        </div>
+                                        <!--<span>
                                         <label><strong>Applica Bollo</strong>
                                             <input type="checkbox" class="minimal" name="documenti_contabilita_applica_bollo" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($documento['documenti_contabilita_applica_bollo']) && $documento['documenti_contabilita_applica_bollo'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </label>
@@ -1937,61 +1944,61 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             <input type="checkbox" class="minimal" name="documenti_contabilita_bollo_virtuale" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php if (empty($documento_id) || !empty($documento['documenti_contabilita_bollo_virtuale']) && $documento['documenti_contabilita_bollo_virtuale'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </label>
                                     </span>-->
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="form-group">
-                                    <div class="causale-container">
-                                        <label>Causale Pag. Rit.: </label>
-                                        <button type="button" class="btn btn-xs btn-info btn-causale" data-toggle="modal" data-target="#modal-default">
-                                            Legenda
-                                        </button>
                                     </div>
-                                    <select name="documenti_contabilita_causale_pagamento_ritenuta" class="select2 form-control">
-                                        <option value="" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == ''): ?>selected="selected" <?php endif; ?>></option>
-                                        <option value="A" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'A'): ?>selected="selected" <?php endif; ?>>A</option>
-                                        <option value="B" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'B'): ?>selected="selected" <?php endif; ?>>B</option>
-                                        <option value="C" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'C'): ?>selected="selected" <?php endif; ?>>C</option>
-                                        <option value="D" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'D'): ?>selected="selected" <?php endif; ?>>D</option>
-                                        <option value="E" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'E'): ?>selected="selected" <?php endif; ?>>E</option>
-                                        <option value="F" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'F'): ?>selected="selected" <?php endif; ?>>F</option>
-                                        <option value="G" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'G'): ?>selected="selected" <?php endif; ?>>G</option>
-                                        <option value="H" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'H'): ?>selected="selected" <?php endif; ?>>H</option>
-                                        <option value="I" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'I'): ?>selected="selected" <?php endif; ?>>I</option>
-                                        <option value="J" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'J'): ?>selected="selected" <?php endif; ?>>J</option>
-                                        <option value="K" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'K'): ?>selected="selected" <?php endif; ?>>K</option>
-                                        <option value="L" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'L'): ?>selected="selected" <?php endif; ?>>L</option>
-                                        <option value="L1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'L1'): ?>selected="selected" <?php endif; ?>>L1</option>
-                                        <option value="M" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'M'): ?>selected="selected" <?php endif; ?>>M</option>
-                                        <option value="M1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'M1'): ?>selected="selected" <?php endif; ?>>M1</option>
-                                        <option value="M2" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'M2'): ?>selected="selected" <?php endif; ?>>M2</option>
-                                        <option value="N" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'N'): ?>selected="selected" <?php endif; ?>>N</option>
-                                        <option value="O" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'O'): ?>selected="selected" <?php endif; ?>>O</option>
-                                        <option value="O1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'O1'): ?>selected="selected" <?php endif; ?>>O1</option>
-                                        <option value="P" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'P'): ?>selected="selected" <?php endif; ?>>P</option>
-                                        <option value="Q" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'Q'): ?>selected="selected" <?php endif; ?>>Q</option>
-                                        <option value="R" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'R'): ?>selected="selected" <?php endif; ?>>R</option>
-                                        <option value="S" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'S'): ?>selected="selected" <?php endif; ?>>S</option>
-                                        <option value="T" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'T'): ?>selected="selected" <?php endif; ?>>T</option>
-                                        <option value="U" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'U'): ?>selected="selected" <?php endif; ?>>U</option>
-                                        <option value="V" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'V'): ?>selected="selected" <?php endif; ?>>V</option>
-                                        <option value="V1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'V1'): ?>selected="selected" <?php endif; ?>>V1</option>
-                                        <option value="V2" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'V2'): ?>selected="selected" <?php endif; ?>>V2</option>
-                                        <option value="W" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'W'): ?>selected="selected" <?php endif; ?>>W</option>
-                                        <option value="X" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'X'): ?>selected="selected" <?php endif; ?>>X</option>
-                                        <option value="Y" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'Y'): ?>selected="selected" <?php endif; ?>>Y</option>
-                                        <option value="Z" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'Z'): ?>selected="selected" <?php endif; ?>>Z</option>
-                                        <option value="ZO" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'ZO'): ?>selected="selected" <?php endif; ?>>ZO</option>
-                                    </select>
-                                    <!-- todo da completare in base alle richieste -->
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="form-group">
-                                    <label>Tipo ritenuta: </label>
-                                    <select name="documenti_contabilita_tipo_ritenuta" class="select2 form-control">
-                                        <?php foreach ($tipi_ritenuta as $key => $tipo_ritenuta): ?>
-                                        <?php
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <div class="causale-container">
+                                            <label>Causale Pag. Rit.: </label>
+                                            <button type="button" class="btn btn-xs btn-info btn-causale" data-toggle="modal" data-target="#modal-default">
+                                                Legenda
+                                            </button>
+                                        </div>
+                                        <select name="documenti_contabilita_causale_pagamento_ritenuta" class="select2 form-control">
+                                            <option value="" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == ''): ?>selected="selected" <?php endif; ?>></option>
+                                            <option value="A" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'A'): ?>selected="selected" <?php endif; ?>>A</option>
+                                            <option value="B" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'B'): ?>selected="selected" <?php endif; ?>>B</option>
+                                            <option value="C" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'C'): ?>selected="selected" <?php endif; ?>>C</option>
+                                            <option value="D" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'D'): ?>selected="selected" <?php endif; ?>>D</option>
+                                            <option value="E" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'E'): ?>selected="selected" <?php endif; ?>>E</option>
+                                            <option value="F" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'F'): ?>selected="selected" <?php endif; ?>>F</option>
+                                            <option value="G" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'G'): ?>selected="selected" <?php endif; ?>>G</option>
+                                            <option value="H" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'H'): ?>selected="selected" <?php endif; ?>>H</option>
+                                            <option value="I" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'I'): ?>selected="selected" <?php endif; ?>>I</option>
+                                            <option value="J" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'J'): ?>selected="selected" <?php endif; ?>>J</option>
+                                            <option value="K" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'K'): ?>selected="selected" <?php endif; ?>>K</option>
+                                            <option value="L" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'L'): ?>selected="selected" <?php endif; ?>>L</option>
+                                            <option value="L1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'L1'): ?>selected="selected" <?php endif; ?>>L1</option>
+                                            <option value="M" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'M'): ?>selected="selected" <?php endif; ?>>M</option>
+                                            <option value="M1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'M1'): ?>selected="selected" <?php endif; ?>>M1</option>
+                                            <option value="M2" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'M2'): ?>selected="selected" <?php endif; ?>>M2</option>
+                                            <option value="N" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'N'): ?>selected="selected" <?php endif; ?>>N</option>
+                                            <option value="O" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'O'): ?>selected="selected" <?php endif; ?>>O</option>
+                                            <option value="O1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'O1'): ?>selected="selected" <?php endif; ?>>O1</option>
+                                            <option value="P" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'P'): ?>selected="selected" <?php endif; ?>>P</option>
+                                            <option value="Q" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'Q'): ?>selected="selected" <?php endif; ?>>Q</option>
+                                            <option value="R" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'R'): ?>selected="selected" <?php endif; ?>>R</option>
+                                            <option value="S" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'S'): ?>selected="selected" <?php endif; ?>>S</option>
+                                            <option value="T" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'T'): ?>selected="selected" <?php endif; ?>>T</option>
+                                            <option value="U" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'U'): ?>selected="selected" <?php endif; ?>>U</option>
+                                            <option value="V" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'V'): ?>selected="selected" <?php endif; ?>>V</option>
+                                            <option value="V1" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'V1'): ?>selected="selected" <?php endif; ?>>V1</option>
+                                            <option value="V2" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'V2'): ?>selected="selected" <?php endif; ?>>V2</option>
+                                            <option value="W" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'W'): ?>selected="selected" <?php endif; ?>>W</option>
+                                            <option value="X" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'X'): ?>selected="selected" <?php endif; ?>>X</option>
+                                            <option value="Y" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'Y'): ?>selected="selected" <?php endif; ?>>Y</option>
+                                            <option value="Z" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'Z'): ?>selected="selected" <?php endif; ?>>Z</option>
+                                            <option value="ZO" <?php if (!empty($documento['documenti_contabilita_causale_pagamento_ritenuta']) && $documento['documenti_contabilita_causale_pagamento_ritenuta'] == 'ZO'): ?>selected="selected" <?php endif; ?>>ZO</option>
+                                        </select>
+                                        <!-- todo da completare in base alle richieste -->
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <label>Tipo ritenuta: </label>
+                                        <select name="documenti_contabilita_tipo_ritenuta" class="select2 form-control">
+                                            <?php foreach ($tipi_ritenuta as $key => $tipo_ritenuta): ?>
+                                            <?php
                                         $tipo_ritenuta_selected = '';
                                         
                                         if (!empty($documento['documenti_contabilita_tipo_ritenuta']) && $documento['documenti_contabilita_tipo_ritenuta'] == $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']) {
@@ -2006,20 +2013,20 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             }
                                         }
                                         ?>
-                                        <option value="<?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']; ?>" <?php echo $tipo_ritenuta_selected ?>><?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_descrizione']; ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <!-- todo da completare in base alle richieste -->
+                                            <option value="<?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_id']; ?>" <?php echo $tipo_ritenuta_selected ?>><?php echo $tipo_ritenuta['documenti_contabilita_tipo_ritenuta_descrizione']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <!-- todo da completare in base alle richieste -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="form-group">
-                                    <span>
-                                        <label>
-                                            <strong>Applica Bollo</strong>
-                                            <?php
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <span>
+                                            <label>
+                                                <strong>Applica Bollo</strong>
+                                                <?php
                                             $applica_bollo = 'checked="checked"';
                                             if (
                                                 (!empty($documento) && $documento['documenti_contabilita_applica_bollo'] == DB_BOOL_FALSE)
@@ -2028,16 +2035,16 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                                 $applica_bollo = '';
                                             }
                                             ?>
-                                            <input type="checkbox" class="minimal" name="documenti_contabilita_applica_bollo" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php echo $applica_bollo ?> />
-                                        </label>
-                                    </span>
+                                                <input type="checkbox" class="minimal" name="documenti_contabilita_applica_bollo" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php echo $applica_bollo ?> />
+                                            </label>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="form-group">
-                                    <span>
-                                        <label><strong>2.1.1.6.1 - Bollo virtuale</strong>
-                                            <?php
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <span>
+                                            <label><strong>2.1.1.6.1 - Bollo virtuale</strong>
+                                                <?php
                                             $bollo_virtuale = 'checked="checked"';
                                             if (
                                                 (!empty($documento) && $documento['documenti_contabilita_bollo_virtuale'] == DB_BOOL_FALSE)
@@ -2046,16 +2053,16 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                                 $bollo_virtuale = '';
                                             }
                                             ?>
-                                            <input type="checkbox" class="minimal" name="documenti_contabilita_bollo_virtuale" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php echo $bollo_virtuale ?> />
-                                        </label>
-                                    </span>
+                                                <input type="checkbox" class="minimal" name="documenti_contabilita_bollo_virtuale" class="rcr-adjust" value="<?php echo DB_BOOL_TRUE; ?>" <?php echo $bollo_virtuale ?> />
+                                            </label>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="form-group">
-                                    <span>
-                                        <label>Applica Split Payment</label>
-                                        <?php
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
+                                        <span>
+                                            <label>Applica Split Payment</label>
+                                            <?php
                                         $split_payment = '';
                                         if (
                                             (!empty($documento['documenti_contabilita_split_payment']) && $documento['documenti_contabilita_split_payment'] == DB_BOOL_TRUE)
@@ -2064,18 +2071,18 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             $split_payment = 'checked="checked"';
                                         }
                                         ?>
-                                        <input type="checkbox" class="minimal" name="documenti_contabilita_split_payment" value="<?php echo DB_BOOL_TRUE; ?>" <?php echo $split_payment ?> />
-                                    </span>
+                                            <input type="checkbox" class="minimal" name="documenti_contabilita_split_payment" value="<?php echo DB_BOOL_TRUE; ?>" <?php echo $split_payment ?> />
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
-
-    </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -2355,7 +2362,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                     <div class="form-group">
                         <label>Editor attributi avanzato</label><br />
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditorXml">Editor parametri avanzati</button>
-                        <div class="modal fade" id="modalEditorXml" tabindex="-1" role="dialog" aria-labelledby="modalEditorXmlLabel" aria-hidden="true" data-elements="FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiFattureCollegate">
+                        <div class="modal fade" id="modalEditorXml" tabindex="-1" role="dialog" aria-labelledby="modalEditorXmlLabel" aria-hidden="true" __data-elements="FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiFattureCollegate">
                             <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -2365,7 +2372,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div id="jsEditorContainer" data-json_data="<?php echo base64_encode($json_editor_xml); ?>" data-fetchurl="<?php echo $this->layout->moduleAssets('contabilita', 'uploads/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd.xml'); ?>"></div>
+                                        <div id="jsEditorContainer" data-json_data="<?php echo base64_encode($json_editor_xml); ?>" data-fetchurl="<?php echo $this->layout->moduleAssets('contabilita', 'uploads/Schema_del_file_xml_FatturaPA_v1.2.2.xsd.xml'); ?>"></div>
                                     </div>
                                     <div class="modal-footer">
 
@@ -4004,7 +4011,7 @@ function getNumeroAjax(tipo, serie) {
     });
 }
 
-function getNumeroDocumento() {
+function getNumeroDocumento(ignore_change_ricavo = false) {
     var is_modifica = !isNaN($('[name="documento_id"]').val());
     var is_clone = <?php echo $this->input->get('clone') == 1 ? 'true' : 'false'; ?>;
     var tipo = $('.js_btn_tipo.btn-primary').data('tipo');
@@ -4019,13 +4026,15 @@ function getNumeroDocumento() {
         getNumeroAjax(tipo, serie);
     }
 
+    if (typeof ignore_change_ricavo != 'undefined' && ignore_change_ricavo === false) {
+        // michael - 2024-01-23 - associazione centro di costo a serie. gestisco quindi il cambio del centro di costo in base alla serie selezionata
+        var serie_centro_costo_ricavo = $('.js_btn_serie.button_selected').data('centro_costo_ricavo');
 
-    // michael - 2024-01-23 - associazione centro di costo a serie. gestisco quindi il cambio del centro di costo in base alla serie selezionata
-    var serie_centro_costo_ricavo = $('.js_btn_serie.button_selected').data('centro_costo_ricavo');
-
-    if (typeof serie_centro_costo_ricavo !== 'undefined' && serie_centro_costo_ricavo !== false && serie_centro_costo_ricavo !== '' && !is_clone) {
-        $('[name="documenti_contabilita_centro_di_ricavo"]').val(serie_centro_costo_ricavo).trigger('change');
+        if (typeof serie_centro_costo_ricavo !== 'undefined' && serie_centro_costo_ricavo !== false && serie_centro_costo_ricavo !== '' && !is_clone) {
+            $('[name="documenti_contabilita_centro_di_ricavo"]').val(serie_centro_costo_ricavo).trigger('change');
+        }
     }
+    
 }
 
 function reloadTemplatePdf() {
@@ -4101,7 +4110,7 @@ $('[name="documenti_contabilita_data_emissione"]').on('change', function() {
         return false;
     }
 
-    getNumeroDocumento();
+    getNumeroDocumento(true);
 });
 
 $('.documenti_contabilita_azienda').on('change', function() {

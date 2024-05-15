@@ -21,6 +21,10 @@
         border-right: 1px solid #f4f4f4;
     }
 
+    table.table thead tr th {
+        white-space: nowrap
+    }
+    
     .custom-header {
         text-align: center;
         padding: 3px;
@@ -51,12 +55,11 @@
     <div class="row">
         <div class="col-sm-12 clearfix">
             <div class="pull-left">
-                <a href="<?php echo base_url('main/layout/exporter-templates-admin'); ?>" class="btn bg-maroon"><i class="fas fa-chevron-left fa-fw"></i> <?php echo t('Back to templates list'); ?></a>
-                <a href="<?php echo base_url('importer/export/preview/' . $dati['template']['exporter_templates_id']); ?>" class="btn btn-info"><i class="fas fa-eye fa-fw"></i> <?php e('Detail') ?></a>
-                <a href="<?php echo base_url('importer/export/new_template/' . $dati['template']['exporter_templates_id']); ?>" class="btn btn-warning"><i class="fas fa-pencil-ruler fa-fw"></i> <?php echo t('Edit template'); ?></a>
+                <a href="<?php echo base_url('main/layout/exporter-templates'); ?>" class="btn bg-maroon"><i class="fas fa-chevron-left fa-fw"></i> <?php echo t('Back to exports list'); ?></a>
             </div>
             
             <div class="pull-right">
+                <?php if(false): ?>
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-file-export fa-fw"></i>
                     <?php e('Export as'); ?> <span class="caret"></span>
@@ -66,9 +69,12 @@
                     <li><a href="<?php echo base_url("export/download_excel/{$dati['template']['exporter_templates_grid_id']}?filename=" . urlencode($dati['template']['exporter_templates_name'])) ?>"><i class="fas fa-file-excel fa-fw"></i> Excel (.xls)</a></li>
                     <li><a href="<?php echo base_url("export/download_csv/{$dati['template']['exporter_templates_grid_id']}?filename=" . urlencode($dati['template']['exporter_templates_name'])) ?>"><i class="fas fa-file-csv fa-fw"></i> CSV</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="<?php echo base_url("export/download_pdf/{$dati['template']['exporter_templates_grid_id']}?orientation=landscape&filename=" . urlencode($dati['template']['exporter_templates_name'])) ?>"><i class="fas fa-file-pdf fa-fw fa-rotate-270"></i> PDF Horizontal</a></li>
-                    <li><a href="<?php echo base_url("export/download_pdf/{$dati['template']['exporter_templates_grid_id']}?filename=" . urlencode($dati['template']['exporter_templates_name'])) ?>"><i class="far fa-file-pdf fa-fw"></i> PDF Vertical</a></li>
+                    <li><a href="<?php echo base_url("export/download_pdf/{$dati['template']['exporter_templates_grid_id']}?show_line_number=1&orientation=landscape&filename=" . urlencode($dati['template']['exporter_templates_name'])) ?>"><i class="fas fa-file-pdf fa-fw fa-rotate-270"></i> PDF Horizontal</a></li>
+                    <li><a href="<?php echo base_url("export/download_pdf/{$dati['template']['exporter_templates_grid_id']}?show_line_number=1&filename=" . urlencode($dati['template']['exporter_templates_name'])) ?>"><i class="far fa-file-pdf fa-fw"></i> PDF Vertical</a></li>
                 </ul>
+                <?php endif; ?>
+                
+                <a href="<?php echo base_url('importer/export/preview/' . $dati['template']['exporter_templates_id']); ?>" class="btn btn-info"><?php e('Save and proceed') ?> <i class="fas fa-chevron-right fa-fw"></i></a>
             </div>
         </div>
     </div>
@@ -76,7 +82,8 @@
     <div class="row" style="margin-top: 20px;">
         <div class="col-sm-12">
             <div class="callout callout-info"><h4><i class="fas fa-info fa-fw"></i> Infobox</h4>
-                <p><?php e('To select the columns you want to export, just choose the ones you are interested in in the <b>"AVAILABLE COLUMNS"</b> section on the right and click on <b>"Add selected"</b>.<br/>If you prefer export them all together, use the <b>"Add all"</b> button. To remove columns from the export list, follow the same procedure in the <b>"COLUMNS CHOSEN FOR EXPORT" section</b>'); ?></p>
+                <p><?php e('To select the columns you want to export, just choose the ones you are interested in in the <b>AVAILABLE COLUMNS</b> section on the right and click on <b>Add selected</b>.<br/>To remove columns from the export list, follow the same procedure in the <b>COLUMNS CHOSEN FOR EXPORT section</b>'); ?></p>
+                <p><?php e('It is also possible to reorder the columns in the <b>COLUMNS SELECTED FOR EXPORT</b> section by selecting one or more items in the section and clicking one of the two arrow keys below the section'); ?></p>
             </div>
         </div>
         
@@ -121,7 +128,7 @@
                         $label = $field['grids_fields_column_name'];
                     }
                     
-                    echo "<option value='{$field['grids_fields_id']}'>" . $label . "</option>";
+                    echo "<option value='{$field['grids_fields_id']}' data-fields_id='".$field['fields_id']. "'>" . $label . "</option>";
                 }
                 ?>
             </select>
@@ -142,7 +149,7 @@
             <div class="box box-info width-border">
                 <div class="box-header with-border clearfix">
                     <h3 class="box-title pull-left">Preview</h3>
-                    <button type="button" class="btn btn-sm bg-navy pull-right" id="refresh_preview"><i class="fas fa-sync-alt fa-fw"></i> <?php e('Refresh'); ?></button>
+                    <button type="button" class="btn btn-sm bg-navy pull-right" id="refresh_preview"><i class="fas fa-sync-alt fa-fw"></i> <?php e('Refresh data'); ?></button>
                 </div>
                 
                 <div class="box-body">
@@ -151,6 +158,8 @@
                     <div id="table_preview_loader" class="text-center" style="display: block;font-size: 5rem;text-transform: uppercase;font-weight: 600;"><?php e('Loading table...') ?> <i class="fas fa-solid fa-sync-alt fa-spin fa-fw"></i></div>
                     
                     <div class="table-responsive" id="preview"></div>
+                    
+                    <p class="text-danger" style="font-size: 16px;"><i class="fas fa-info fa-fw"></i> <?php e('The table shows a maximum preview of %s records to avoid overloading the system. <b>Final exports</b> will have <b>all</b> complete data', true, ['10']); ?></p>
                 </div>
             </div>
         </div>
@@ -288,6 +297,19 @@
                             return false;
                         }
                         
+                        // prendo i fields spostati e gli cambio il "value" con il data attribute "field_id"
+                        var left_column = $('select#export_fields');
+                        $.each(selected_fields, function(i, field_id) {
+                            var field = $('option[value="' + field_id + '"]', left_column);
+                            
+                            if (!field.data('fields_id')) {
+                                field.remove();
+                            } else {
+                                field.val(field.data('fields_id'));
+                                field.removeAttr('data-fields_id');
+                            }
+                        });
+                        
                         refresh_preview();
                     }
                 })
@@ -317,6 +339,7 @@
                             var right_column = $('select#export_fields_to');
                             $.each(res.data.grid_field_map, function(field_id, grid_field_id) {
                                 $('option[value="' + field_id + '"]', right_column).val(grid_field_id).appendTo('#export_fields_to');
+                                $('option[value="' + grid_field_id + '"]', right_column).attr('data-fields_id', field_id).prop('data-fields_id', field_id);
                             });
                         }
 

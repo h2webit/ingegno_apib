@@ -25,6 +25,9 @@ if (!empty($filters["filter_stampe_contabili"])) {
         }
     }
 }
+$primo_elemento = reset($primeNoteData);
+
+$saldo_precedente = $this->prima_nota->saldoPrecedente($primo_elemento['registrazioni'][0]);
 ?>
 
 <style>
@@ -151,9 +154,10 @@ if (!empty($filters["filter_stampe_contabili"])) {
                             </h3>
 
                         </div>
-                        <h4 class="text-right " style="color: blue;">
+                        <h4 class="text-right "
+                            style="color: <?php if ($saldo_precedente['totale'] >= 0): ?>blue<?php else: ?>red<?php endif; ?>;">
                             <?php echo t('Saldo precedente'), ': '; ?>&euro;
-                            <?php e_money($this->prima_nota->saldoPrecedente($dati['registrazioni'][0])['totale'], '{number}'); ?>
+                            <?php e_money($saldo_precedente['totale'], '{number}'); ?>
                         </h4>
                     </div>
 
@@ -253,8 +257,8 @@ if (!empty($filters["filter_stampe_contabili"])) {
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="5"></th>
-                            <th class="text-left text-uppercase">Totali:</th>
+                            <th colspan="6"></th>
+                            <th class="text-left text-uppercase">Totale periodo:</th>
                             <th class="text-left">
                                 <?php e_money($totale_dare); ?>
                             </th>
@@ -263,6 +267,34 @@ if (!empty($filters["filter_stampe_contabili"])) {
                             </th>
                             <th class="text-left">
                                 <?php e_money($progressivo); ?>
+                            </th>
+                            <!-- <th class="text-left"></th> -->
+                        </tr>
+                        <tr>
+                            <th colspan="6"></th>
+                            <th class="text-left text-uppercase">Saldo precedente:</th>
+                            <th class="text-left">
+                                <?php e_money($saldo_precedente['dare']); ?>
+                            </th>
+                            <th class="text-left">
+                                <?php e_money($saldo_precedente['avere']); ?>
+                            </th>
+                            <th class="text-left">
+                                <?php e_money($saldo_precedente['totale']); ?>
+                            </th>
+                            <!-- <th class="text-left"></th> -->
+                        </tr>
+                        <tr>
+                            <th colspan="6"></th>
+                            <th class="text-left text-uppercase">Totale:</th>
+                            <th class="text-left">
+                                <?php e_money($totale_dare + $saldo_precedente['dare']); ?>
+                            </th>
+                            <th class="text-left">
+                                <?php e_money($totale_avere + $saldo_precedente['avere']); ?>
+                            </th>
+                            <th class="text-left">
+                                <?php e_money($progressivo + $saldo_precedente['totale']); ?>
                             </th>
                             <!-- <th class="text-left"></th> -->
                         </tr>

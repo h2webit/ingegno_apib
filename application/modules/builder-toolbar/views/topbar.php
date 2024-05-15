@@ -10,6 +10,13 @@ if ($this->entities->entity_exists('users_manager_configurations')) {
     $salt = 'Salt configuration missing!';
 }
 
+// Value id
+if (!empty($value_id)) {
+    $get_value_id = $value_id;
+} else {
+    $get_value_id = '';
+
+}
 // debug($users);
 ?>
 
@@ -25,12 +32,12 @@ if ($this->entities->entity_exists('users_manager_configurations')) {
         </div>
 
 
-        <div class="material-switch">
+        <!-- <div class="material-switch">
             <input id="js_toolbar_devtheme" type="checkbox" <?php if (!empty($dev_mode) && $dev_mode == true): ?>checked="checked" <?php
             endif; ?> value="1">
             <label for="js_toolbar_devtheme" class="label-success" data-toggle="tooltip" data-placement="bottom"
                 data-container="body" title="Dev Template switch"></label>
-        </div>
+        </div> -->
 
         <div class="btn-toolbar">
             <div class="btn-group-horizontal" role="group" aria-label="...">
@@ -43,7 +50,7 @@ if ($this->entities->entity_exists('users_manager_configurations')) {
                     data-container="body" title="Highlight elements"><span class="fas fa-highlighter"></span></button>
 
                 <!-- Dev Console -->
-                <a href="<?php echo base_url("get_ajax/layout_modal/builder-toolbar-console?_size=extra"); ?>"
+                <a href="<?php echo base_url("get_ajax/layout_modal/builder-toolbar-console?_mode=side_view&get_value_id=" . $get_value_id); ?>"
                     class="btn btn-default btn-spaced dropdown-toggle js_open_modal" data-toggle="tooltip"
                     data-placement="bottom" data-container="body" title="Dev Console"><i class="fas fa-terminal"></i></a>
                 <!-- Profiler -->
@@ -61,14 +68,14 @@ if ($this->entities->entity_exists('users_manager_configurations')) {
                 <!-- Live/Debug -->
 
 
-                <!-- Users -->
+                <!-- Users Login -->
 
                 <div class="btn-group btn-spaced" style=" width:auto" data-toggle="tooltip" data-placement="bottom"
                     data-container="body" title="All users">
 
                     <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown"
                         aria-expanded="true">
-                        <span class="fas fa-user"></span>
+                        <span class="fas fa-key"></span>
                     </button>
 
                     <ul class="dropdown-menu " role="menu" style="z-index: 9999;">
@@ -116,11 +123,31 @@ if ($this->entities->entity_exists('users_manager_configurations')) {
                         class="fas fa-paper-plane"></i></a>
 
 
-                <button id="js_toolbar_download_dump" class="btn btn-default btn-spaced" data-toggle="tooltip"
-                    data-placement="bottom" data-container="body" title="Download Dump"><span
-                        class="fas fa-download"></span></button>
-                <button id="js_toolbar_download_zip" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
-                    data-container="body" title="Download Full Zip"><span class="fas fa-cloud-download-alt"></span></button>
+                <!-- TOOLS -->
+
+                <div class="btn-group btn-spaced" style=" width:auto" data-toggle="tooltip" data-placement="bottom"
+                    data-container="body" title="Extra tools">
+
+                    <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown"
+                        aria-expanded="true">
+                        <span class="fas fa-download"></span>
+                    </button>
+
+                    <ul class="dropdown-menu " role="menu" style="z-index: 9999;">
+
+                        <li><button id="js_toolbar_download_dump" class="btn btn-default btn-spaced" data-toggle="tooltip"
+                                data-placement="bottom" data-container="body" title="Download Dump"><span
+                                    class="fas fa-download"></span> Download Dump</button>
+
+                        </li>
+                        <li>
+                            <button id="js_toolbar_download_zip" class="btn btn-default" data-toggle="tooltip"
+                                data-placement="bottom" data-container="body" title="Download Full Zip"><span
+                                    class="fas fa-cloud-download-alt"></span> Download Full Zip </button>
+                        </li>
+                    </ul>
+                </div>
+
 
                 <!--
                         <button id="js_toolbar_backup" class="btn btn-default" data-toggle="tooltip" data-placement="left" data-container="body" title="Backup & Restore"><span class="fas fa-download"></span></button>

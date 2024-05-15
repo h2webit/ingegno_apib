@@ -37,6 +37,11 @@ class Zucchetti extends MY_Controller
         }
         
         $dipendenti = $this->apilib->search('dipendenti', $where_dipendenti);
+        
+        if (empty($dipendenti)) {
+            throw new ApiException("ATTENZIONE: Nessun dipendente trovato. Verifica di aver impostato correttamente i filtri e riprova");
+            return;
+        }
 
         //$where_presenze = ['presenze_dipendente' => $dipendente['dipendenti_id']];
         $where_presenze = ['presenze_dipendente IN (' . implode(',', array_column($dipendenti, 'dipendenti_id')) . ')'];
@@ -65,10 +70,8 @@ class Zucchetti extends MY_Controller
         foreach ($_presenze_dipendenti as $presenza) {
             $presenze_dipendenti[$presenza['presenze_dipendente']][] = $presenza;
         }
-        //debug($presenze_dipendenti,true);
-        if (empty($dipendenti)) {
-            throw new ApiException("Nessun dipendente trovato. Verifica di aver impostato correttamente i filtri e riprova");
-        }
+        
+        // debug($presenze_dipendenti,true);
         
         $array = ['Dipendente' => []];
         
@@ -115,7 +118,8 @@ class Zucchetti extends MY_Controller
                     if ($presenza['richieste_tipologia'] === '5' && empty($presenza['richieste_sottotipologia_codice'])) { // tipologia = Trasferta
                         $presenza['richieste_sottotipologia_codice'] = '_TRASFERTA';
                     }
-                    if ($presenza['richieste_tipologia'] === '1' && $presenza['richieste_utilizzo_banca_ore'] == DB_BOOL_TRUE) { // tipologia = banca ore
+                    
+                    if (in_array($presenza['richieste_tipologia'], [1,2]) && $presenza['richieste_utilizzo_banca_ore'] == DB_BOOL_TRUE) { // tipologia = banca ore
                         $presenza['richieste_sottotipologia_codice'] = '_BANCA_ORE';
                     }
 
@@ -142,6 +146,7 @@ class Zucchetti extends MY_Controller
                 // debug('giorno settimanale: ' . $giorno_settimanale);
                 
                 $ore_giornaliere = 0;
+                $cod_turno = null;
                 foreach ($tipi_presenze as $tipo => $presenze) {
                     if (!empty($presenze)) {
                         if ($tipo === 'richieste_fp') {
@@ -238,6 +243,13 @@ class Zucchetti extends MY_Controller
                         //
                         //     $array_dipendente_movimenti['Movimento'][] = $array_dipendente_movimento;
                         // }
+                        
+                        foreach ($presenze as $presenza) {
+                            // verifico se il campo presenze_codice_turno_zucchetti è popolato e se il valore è un numero da 1 a 9, se si allora lo assegno alla variabile $cod_turno
+                            if (!empty($presenza['presenze_codice_turno_zucchetti']) && is_numeric($presenza['presenze_codice_turno_zucchetti']) && $presenza['presenze_codice_turno_zucchetti'] >= 1 && $presenza['presenze_codice_turno_zucchetti'] <= 9) {
+                                $cod_turno = $presenza['presenze_codice_turno_zucchetti'];
+                            }
+                        }
                     }
                 }
                 
@@ -260,6 +272,10 @@ class Zucchetti extends MY_Controller
                     'NumOre' => $ore,
                     'NumMinuti' => $minuti,
                 ];
+                
+                if (!empty($cod_turno)) {
+                    $array_dipendente_movimento['CodTurno'] = (string) $cod_turno;
+                }
                 
                 $array_dipendente_movimenti['Movimento'][] = $array_dipendente_movimento;
                 
@@ -337,8 +353,8 @@ class Zucchetti extends MY_Controller
             
             $attributi = [
                 '@attributes' => [
-                    'CodAziendaUfficiale' => $dipendente['aziende_codice'],
-                    'CodDipendenteUfficiale' => $dipendente['dipendenti_codice_esterno'],
+                    'CodAziendaUfficiale' => (!empty($dipendente['aziende_codice'])) ? str_pad($dipendente['aziende_codice'], 6, '0', STR_PAD_LEFT) : '',
+                    'CodDipendenteUfficiale' => str_pad($dipendente['dipendenti_codice_esterno'], 7, '0', STR_PAD_LEFT),
                 ]
             ];
             

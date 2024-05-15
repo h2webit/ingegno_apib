@@ -4,11 +4,20 @@ class Timbrature extends CI_Model
 {
 
     public $scope = 'CRM';
+    public $turni_dipendenti = [];
+    public $orari_di_lavoro_ore_pausa = [];
+    public $pause_support_table = [];
 
 
     public function __construct() {
         $this->impostazioni_modulo = $this->apilib->searchFirst('impostazioni_hr');
         $this->pause_support_table = array_key_map_data($this->apilib->search('presenze_pausa'), 'presenze_pausa_id');
+
+        $_orari_di_lavoro_ore_pausa = $this->apilib->search('orari_di_lavoro_ore_pausa');
+        foreach ($_orari_di_lavoro_ore_pausa as $turno) {
+            $this->orari_di_lavoro_ore_pausa[$turno['orari_di_lavoro_ore_pausa_id']] = $turno;
+
+        }
         parent::__construct();
     }
 
@@ -945,19 +954,26 @@ class Timbrature extends CI_Model
     {
        
         if ($presenze === null) {
-            $presenze = $this->apilib->search('presenze', [
-                'DATE(presenze_data_inizio)' => $Ymd,
-                //'presenze_data_fine <=' => "$Ymd 23:59:59",
-                'presenze_dipendente' => $dipendente_id
-            ]);
+            // $presenze = $this->apilib->search('presenze', [
+            //     'DATE(presenze_data_inizio)' => $Ymd,
+            //     //'presenze_data_fine <=' => "$Ymd 23:59:59",
+            //     'presenze_dipendente' => $dipendente_id
+            // ]);
+            $presenze = $this->db
+                ->where("DATE(presenze_data_inizio) = '$Ymd'",null, false)
+                ->where('presenze_dipendente', $dipendente_id)
+                ->get('presenze')->result_array();
         }
         if ($Ymd == '20240210') {
             //debug($dipendente_id,true);
 
         }
-        $orePausaTotale = 0;
+        $orePausaTotale = $orePausaTotaleAutomatica = $orePausaDaPresenza = 0;
+        $oreTotali = 0;
 
         foreach ($presenze as $presenza) {
+            
+            $oreTotali += $presenza['presenze_ore_totali'];
             if ($Ymd == '2024-02-09') {
                // debug($presenza,true);
             }
@@ -973,7 +989,7 @@ class Timbrature extends CI_Model
                     $orePausa = 0;
                 }
                 //debug($orePausa);
-                $orePausaTotale += $orePausa;
+                $orePausaDaPresenza += $orePausa;
                 
             } else {
                 // Recupera il turno di lavoro per il dipendente in quella specifica giornata
@@ -989,16 +1005,23 @@ class Timbrature extends CI_Model
                     // Prendi il valore di pausa dal turno suggerito
                     $turno = $turniDiLavoro[$suggerimentoTurno];
                     if ($turno['turni_di_lavoro_pausa']) {
-                        $orePausa = $this->apilib->view('orari_di_lavoro_ore_pausa', $turno['turni_di_lavoro_pausa'])['orari_di_lavoro_ore_pausa_value'];
+                        $orePausa = $this->orari_di_lavoro_ore_pausa[$turno['turni_di_lavoro_pausa']]['orari_di_lavoro_ore_pausa_value'];
+                        //$orePausa = $this->apilib->view('orari_di_lavoro_ore_pausa', $turno['turni_di_lavoro_pausa'])['orari_di_lavoro_ore_pausa_value'];
                     } else {
                         $orePausa = 0;
                     }
                     
 
                     // Converti il valore di pausa in ore, se necessario
-                    $orePausaTotale += $orePausa;
+                    $orePausaTotaleAutomatica = $orePausa;
+                    
                 }
             }
+        }
+        
+        $orePausaTotale -= $orePausaDaPresenza;
+        if ($oreTotali- $orePausaTotale > $this->calcolaOreGiornalierePreviste($Ymd, $dipendente_id)) {
+            $orePausaTotale -= $orePausaTotaleAutomatica;
         }
         
         return round($orePausaTotale,2);
@@ -1042,13 +1065,22 @@ class Timbrature extends CI_Model
     }
 
     public function getTurniDiLavoro($idDipendente, $giornoSettimana) {
-        $this->db->where('turni_di_lavoro_dipendente', $idDipendente);
-        //debug($giornoSettimana);
-        $this->db->where('turni_di_lavoro_giorno', $giornoSettimana);
-        $query = $this->db->get('turni_di_lavoro');
+        if (!array_key_exists($idDipendente, $this->turni_dipendenti) || !array_key_exists($giornoSettimana,  $this->turni_dipendenti[$idDipendente])) {
+            $this->db->where('turni_di_lavoro_dipendente', $idDipendente);
+            //debug($giornoSettimana);
+            $this->db->where('turni_di_lavoro_giorno', $giornoSettimana);
+            $query = $this->db->get('turni_di_lavoro');
+            $this->turni_dipendenti[$idDipendente][$giornoSettimana] = $query->result_array();
+        
+            // if ($idDipendente == '242' && $giornoSettimana == 4) {
+            //     debug($this->turni_dipendenti[$idDipendente][$giornoSettimana]);
 
-        // Restituisce i risultati della query
-        return $query->result_array();
+            // }
+
+        } else {
+            //debug('trovato',true);
+        }
+        return $this->turni_dipendenti[$idDipendente][$giornoSettimana];
     }
 
     public function isStraordinario($presenza, $data_ora = null)

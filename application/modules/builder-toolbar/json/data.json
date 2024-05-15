@@ -4,15 +4,15 @@
     "modules_description": "Builder Toolbar for developers",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.2",
+    "modules_version": "1.1.6",
     "modules_identifier": "builder-toolbar",
     "modules_base64_zip": null,
     "modules_raw_data_install": null,
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "18",
+    "modules_version_code": "23",
     "modules_thumbnail": "0c27709747e6c706baa587a8b2da288e.png",
-    "modules_min_client_version": "3.5.5",
+    "modules_min_client_version": "3.8.2",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -1093,6 +1093,7 @@
             "forms_json": null,
             "forms_module_key": "builder-toolbar-form-2296",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2296",
@@ -1163,6 +1164,7 @@
             "forms_json": null,
             "forms_module_key": "builder-toolbar-form-2297",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2297",

@@ -50,3 +50,8 @@ $updates['4.2.2'] = [
         '4.2.2_null_flussi_cassa_risorsa.php',
     ],
 ];
+$updates['4.3.6'] = [
+    'include' => [
+        '4.3.6_nuovo_template_generico.php',
+    ],
+];

@@ -927,7 +927,7 @@ class Primanota extends MX_Controller
 
             $customers = $this->apilib->search('customers', [], $limit, $offset, 'customers_id ASC');
             foreach ($customers as $customer) {
-                $this->contab_cust->generaSottoconto($customer);
+                $this->contab_cust->generaSottoconto($customer, $customer['customers_code']);
                 echo_flush(' .');
             }
             if ($customers && $limit) {
@@ -1047,12 +1047,13 @@ class Primanota extends MX_Controller
         foreach ($filtri as $filtro) {
             $field_id = $filtro['field_id'];
             $value = $filtro['value'];
-            if ($value == '-1') {
+            if ($value == '-1' || $value == '') {
                 continue;
             }
             $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
             $field_name = $field_data['fields_name'];
             if (!in_array($field_name, $filtri_previsti)) {
+                
                 die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
             } else {
                 if ($field_name == 'prime_note_azienda' && $value > 0) {
@@ -1177,7 +1178,7 @@ class Primanota extends MX_Controller
         foreach ($filtri as $filtro) {
             $field_id = $filtro['field_id'];
             $value = $filtro['value'];
-            if ($value == '-1') {
+            if ($value == '-1' || $value == '') {
                 continue;
             }
             $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
@@ -1307,7 +1308,7 @@ class Primanota extends MX_Controller
         foreach ($filtri as $filtro) {
             $field_id = $filtro['field_id'];
             $value = $filtro['value'];
-            if ($value == '-1') {
+            if ($value == '-1' || $value == '') {
                 continue;
             }
             $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
@@ -1448,7 +1449,7 @@ class Primanota extends MX_Controller
         foreach ($filtri as $filtro) {
             $field_id = $filtro['field_id'];
             $value = $filtro['value'];
-            if ($value == '-1') {
+            if ($value == '-1' || $value == '') {
                 continue;
             }
             $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
@@ -1486,6 +1487,109 @@ class Primanota extends MX_Controller
         $pdfFile = $this->layout->generate_pdf($view_content, "portrait", "", [], false, true);
 
         $contents = file_get_contents($pdfFile, true);
+
+        //die($view_content);
+
+        $pdf_b64 = base64_encode($contents);
+
+        $file_name = "{$anno}-{$mese}{$trimestre}-{$azienda}-liquidazione-iva.";
+
+        if (!is_dir(FCPATH . "registri_contabili/$anno/")) {
+            mkdir(FCPATH . "registri_contabili/$anno/", DIR_WRITE_MODE, true);
+        }
+        $fp = fopen(FCPATH . "registri_contabili/$anno/{$file_name}pdf", 'w+');
+        fwrite($fp, $contents);
+
+        $fpjson = fopen(FCPATH . "registri_contabili/$anno/{$file_name}json", 'w+');
+        fwrite($fpjson, json_encode($data['vendite'], JSON_PRETTY_PRINT));
+
+        //Se esiste un definitivo per questo periodo, aggiorno, altrimenti creo
+        $exists = $this->apilib->searchFirst('contabilita_stampe_definitive', [
+            'contabilita_stampe_definitive_anno' => $anno,
+            'contabilita_stampe_definitive_azienda' => $azienda,
+            'contabilita_stampe_definitive_mese' => $mese,
+            'contabilita_stampe_definitive_trimestre' => $trimestre,
+        ]);
+        if ($exists) {
+            $this->apilib->edit('contabilita_stampe_definitive', $exists['contabilita_stampe_definitive_id'], [
+                'contabilita_stampe_definitive_liquidazione_iva_pdf' => "../registri_contabili/$anno/{$file_name}pdf",
+                'contabilita_stampe_definitive_liquidazione_iva_pdf_b64' => $pdf_b64,
+            ]);
+        } else {
+            $stampa_definitiva_id = $this->apilib->create('contabilita_stampe_definitive', [
+                'contabilita_stampe_definitive_anno' => $anno,
+                'contabilita_stampe_definitive_azienda' => $azienda,
+                'contabilita_stampe_definitive_mese' => $mese,
+                'contabilita_stampe_definitive_trimestre' => $trimestre,
+                //'contabilita_stampe_definitive_raw_data_vendite' => json_encode($data['vendite']),
+                'contabilita_stampe_definitive_liquidazione_iva_pdf' => "../registri_contabili/$anno/{$file_name}pdf",
+                'contabilita_stampe_definitive_liquidazione_iva_pdf_b64' => $pdf_b64,
+            ], false);
+        }
+
+        //$this->apilib->clearCache();
+        fclose($fp);
+        fclose($fpjson);
+        // header('Content-Type: application/pdf');
+        // header('Content-disposition: inline; filename="' . $file_name . time() . '.pdf"');
+        // $this->layout->setLayoutModule();
+        // echo base64_decode($pdf_b64);
+
+        echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita/?anno={$anno}&mese={$mese}&trimestre={$trimestre}';</script>";
+    }
+
+    public function generaLipeDefinitiva($anno, $trimestre, $mese = null)
+    {
+        // $prima_nota_liquidazione_exists = $this->apilib->searchFirst('prime_note', [
+        //     'prime_note_causali_tipo' => '7',
+        //     //'prime_note_stampa_definitiva IS NULL',
+        //     'prime_note_modello <> 1',
+
+        // ], 0, 'prime_note_id DESC');
+        // if (!$prima_nota_liquidazione_exists) {
+        //     die('Non trovo la registrazione in prima nota della liquidazione iva.');
+        // }
+
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+        $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
+        if ($impostazioni['documenti_contabilita_settings_liquidazione_iva'] == 1) { //Liquidazione mensile
+            $mese = $trimestre;
+            $trimestre = null;
+        } else { //trimestrale
+        }
+
+        $value_id = null;
+        $contents = $this->load->module_view("contabilita/views", 'pdf/lipe', ['anno' => $anno, 'mese' => $mese, 'trimestre' => $trimestre, 'azienda' => $azienda], true);
+        debug($contents,true);
 
         //die($view_content);
 
@@ -1689,5 +1793,27 @@ class Primanota extends MX_Controller
         // Invia il file al browser
         $writer->save('php://output');
         exit;
+    }
+    public function bulkRegistraFatture()
+    {
+        $ids = json_decode($this->input->post('ids'), true);
+        // $fatture = $this->apilib->search('documenti_contabilita', [
+        //     'documenti_contabilita_id' => $ids,
+        //     'documenti_contabilita_tipo' => 1,
+        // ]);
+        $c = count($ids);
+        $i = 0;
+        foreach ($ids as $documenti_contabilita_id) {
+            progress(++$i, $c);
+            $prima_nota_exists = $this->apilib->searchFirst('prime_note', ['prime_note_documento' => $documenti_contabilita_id]);
+            if (!$prima_nota_exists) {
+                $this->prima_nota->creaPrimaNotaDaFattura($documenti_contabilita_id);
+            } else {
+                echo_flush('Prima nota già presente per la fattura ' . $documenti_contabilita_id . " con progressivo annuo " . $prima_nota_exists['prime_note_progressivo_annuo'] . "</br>");
+            }
+
+        }
+
+        echo "<a href=\"" . base_url() . "main/layout/elenco_documenti\">Clicca qui per tornare all'elenco documenti</a>";
     }
 }

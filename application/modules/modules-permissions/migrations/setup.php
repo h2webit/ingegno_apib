@@ -1,0 +1,2 @@
+<?php
+$this->db->query("INSERT INTO modules_permissions (modules_permissions_module) SELECT modules_name FROM modules WHERE modules_name NOT IN (SELECT modules_permissions_module FROM modules_permissions)");

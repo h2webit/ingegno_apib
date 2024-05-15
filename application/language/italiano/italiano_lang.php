@@ -2098,5 +2098,4 @@ $lang['Scadenze'] = 'Scadenze';
 $lang['Contabilità attiva'] = 'Contabilità attiva';
 $lang['TEst'] = 'TEst';
 $lang['Custom test'] = 'Custom test';
-$lang['Importazioni da crm'] = 'Importazioni da crm';
-$lang['Fields %s are not accepted in entity \'dipendenti\''] = 'Fields %s are not accepted in entity \'dipendenti\'';
+$lang['FILTERS APPLIED'] = 'FILTRI APPLICATI';

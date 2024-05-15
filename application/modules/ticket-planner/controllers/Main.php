@@ -162,6 +162,12 @@ class Main extends MY_Controller
         if (empty($data['attachments'])) {
             unset($data['attachments']);
         }
+        
+        // Add Extra data to message
+        $extra_data = "<br /><br /><strong>Extra details: </strong><br />";
+        $extra_data .= "User: " . $this->auth->get('users_first_name') . " " . $this->auth->get('users_last_name') . "<br />";
+        $extra_data .= "Client version: " . VERSION;
+        $data['tickets_message'] .= " " . $extra_data;
 
         $response = $this->ticket->apiRequest('tickets', 'create', $data);
 

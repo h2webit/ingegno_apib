@@ -74,7 +74,7 @@ if ($dest_nazione == 'IT') {
 
 $dest_indirizzo = substr($destinatario['indirizzo'], 0, 50);
 $dest_cap = !empty($destinatario['cap']) ? $destinatario['cap'] : '00000';
-$dest_citta = ($destinatario['citta']);
+$dest_citta = str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], ($destinatario['citta']));
 $dest_provincia = ($destinatario['provincia']);
 if (empty($dest_provincia) && $dest_nazione != 'IT') {
     $dest_provincia = 'EE';
@@ -226,7 +226,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
     $json_editor_xml = [];
 }
 ?><?php echo '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
-<p:FatturaElettronica versione="<?php if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3): ?>FPA12<?php else: ?>FPR12<?php endif;?>" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_versione_1.2.1.xsd">
+<p:FatturaElettronica versione="<?php if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 3): ?>FPA12<?php else: ?>FPR12<?php endif;?>" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">
     <FatturaElettronicaHeader>
         <DatiTrasmissione>
             <IdTrasmittente>
@@ -319,7 +319,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
             <Sede>
             <Indirizzo><?php echo htmlspecialchars($company_address); ?></Indirizzo>
                 <CAP><?php echo $company_cap; ?></CAP>
-                <Comune><?php echo $company_city; ?></Comune>
+                <Comune><?php echo htmlspecialchars($company_city); ?></Comune>
                 <Provincia><?php echo strtoupper($company_province); ?></Provincia>
                 <Nazione><?php echo $country; ?></Nazione>
             </Sede>

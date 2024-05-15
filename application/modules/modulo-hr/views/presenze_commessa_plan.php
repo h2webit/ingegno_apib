@@ -103,6 +103,7 @@ $dipendentiUnici = [];
 
 $data = $data_xls = [];
 $row = 0;
+
 foreach ($presenze as $p) {
     $dip = $p['dipendenti_nome'] . ' ' . $p['dipendenti_cognome'];
     if (empty($data[$dip])) {
@@ -133,7 +134,6 @@ foreach ($presenze as $p) {
     $suggerimentoTurno = $this->timbrature->suggerisciTurno($p['presenze_ora_inizio'], $orario_lavoro, 'entrata');
 
     if ($ignora_pausa == DB_BOOL_FALSE) {
-        //if(!empty($orario_lavoro) && !empty($orario_lavoro['turni_di_lavoro_pausa'])) {
         if (!empty($orario_lavoro[$suggerimentoTurno]) && !empty($orario_lavoro[$suggerimentoTurno]['turni_di_lavoro_pausa'])) {
             $pausa = $orario_lavoro[$suggerimentoTurno]['orari_di_lavoro_ore_pausa_value'] ?? 1;
         } else {
@@ -144,7 +144,6 @@ foreach ($presenze as $p) {
     }
 
     $ore_lavorate = ($p['presenze_ore_totali'] - $pausa) > 0 ? ($p['presenze_ore_totali'] - $pausa) : 0;
-    //$ore_lavorate = ($p['presenze_ore_totali'] - $p['presenze_straordinario']) > 0 ? ($p['presenze_ore_totali'] - $p['presenze_straordinario']) : 0;
 
     if (empty($data[$dip][$day])) {
         $data[$dip][$day] = $ore_lavorate;
@@ -153,20 +152,18 @@ foreach ($presenze as $p) {
     }
 }
 
-
 //Riempio i buchi e vedo se ho assenze per le giornate
 for ($i = 1; $i <= $days_in_month; $i++) {
     $i = str_pad($i, 2, '0', STR_PAD_LEFT);
     $current_date = $y . '-' . $m . '-' . $i;
 
     foreach ($data as $dipendente => $giorno) {
+        //dump($i, $giorno);
         if (!array_key_exists($i, $giorno)) {
             $data[$dipendente][$i] = '';
         }
-        /*dump($data);
-        dump($dipendente);*/
 
-        if (!empty($u) || in_array($dipendente, array_column($dipendentiUnici, 0))) {
+/*         if (!empty($u) || in_array($dipendente, array_column($dipendentiUnici, 0))) {
             foreach ($dipendentiUnici as $key => $value) {
                 if ($value[0] === $dipendente) {
                     $u = $key;
@@ -227,16 +224,13 @@ for ($i = 1; $i <= $days_in_month; $i++) {
                     }
                 }
             }
-        }
+        } */
     }
 }
 
 foreach ($data as $dipendente => $giorno) {
     ksort($data[$dipendente]);
 }
-
-
-$tot_mensile = 0;
 
 /*
 03/04/2024 - Chiesto di non mostrare le ore permesso nei calcoli totali delle righe
@@ -259,6 +253,8 @@ foreach ($data as $dipendente => $giorno) {
     $tot_mensile = 0;
     $row++;
 } */
+$tot_mensile = 0;
+
 foreach ($data as $dipendente => $giorno) {
     $data_xls[$row][] = $dipendente;
     foreach ($giorno as $day => $hours) {
@@ -274,12 +270,126 @@ foreach ($data as $dipendente => $giorno) {
 }
 
 
+
+
+$richieste = $richieste_xls = [];
+foreach ($dipendentiUnici as $key => $value) {
+    $u = $key;
+
+    $current_dip = $value[0];
+    for ($j = 1; $j <= $days_in_month; $j++) {
+        $j = str_pad($j, 2, '0', STR_PAD_LEFT);
+        $current_date = $y . '-' . $m . '-' . $j;
+
+        if (!array_key_exists($j, $value)) {
+            $richieste[$current_dip][$j] = '';
+        }
+
+        //Se ho assenza nella giornata inserisco sigla per poter cambiare colore dopo
+        $richiesta = $this->db
+        ->where("DATE_FORMAT(richieste_dal, '%Y-%m-%d') <= '{$current_date}'", null, false)
+        ->where("DATE_FORMAT(richieste_al, '%Y-%m-%d') >= '{$current_date}'", null, false)
+        ->where('richieste_user_id', $u)
+        ->where('richieste_stato', '2')
+        ->get('richieste')->row_array();
+
+        if(!empty($richiesta)) {
+            $day_start = str_replace('"', "", dateFormat($richiesta['richieste_dal'], 'Y-m-d'));
+            $day_end = str_replace('"', "", dateFormat($richiesta['richieste_al'], 'Y-m-d'));
+
+            //dump($current_date.' --- '.$days_hours[$i]);
+            
+            if(!isset($value[$j]) && ($day_start <= $current_date && $current_date <= $day_end)) {
+                if($richiesta['richieste_tipologia'] == '1') { //Permesso
+                    $inizio = new DateTime($richiesta['richieste_data_ora_inizio_calendar']);
+                    $fine = new DateTime($richiesta['richieste_data_ora_fine_calendar']);
+                    $diff_date = $fine->diff($inizio);
+                    $hours = round(($diff_date->s / 3600) + ($diff_date->i / 60) + $diff_date->h, 2);
+
+                    $richieste[$current_dip][$j] = 'Permesso - '.$hours;
+                    //$richieste[$current_dip][$j] = 'P';     
+                } elseif($richiesta['richieste_tipologia'] == '2') { //Ferie
+                    if(!empty($richiesta['richieste_sottotipologia'])) {
+                        if($richiesta['richieste_sottotipologia'] == '1') { //Assenza ingiustificata
+                            $richieste[$current_dip][$j] = 'aing';
+                        }
+                        if($richiesta['richieste_sottotipologia'] == '2' || $richiesta['richieste_sottotipologia'] == '3') {
+                            // Congedo parentale e congedo matrimoniale
+                            $richieste[$current_dip][$j] = 'cong';
+                        }
+                        if($richiesta['richieste_sottotipologia'] == '4') { //Infortunio
+                            $richieste[$current_dip][$j] = 'inf';
+                        }
+                        if($richiesta['richieste_sottotipologia'] == '7') { //L. 104
+                            $richieste[$current_dip][$j] = 'l104';
+                        }
+                    } else {
+                        $richieste[$current_dip][$j] = 'F';
+                    }
+                } else { //Malattia
+                    $richieste[$current_dip][$j] = 'M';
+                    if ($richiesta['richieste_sottotipologia'] == '1') { //Assenza ingiustificata
+                        $richieste[$current_dip][$j] = 'aing';
+                    }
+                    if ($richiesta['richieste_sottotipologia'] == '4') { //Infortunio
+                        $richieste[$current_dip][$j] = 'inf';
+                    }
+                    if ($richiesta['richieste_sottotipologia'] == '7') { //L. 104
+                        $richieste[$current_dip][$j] = 'l104';
+                    }
+                }
+            }
+        }
+    
+    
+    }
+}
+
+//dump($richieste);
+foreach ($richieste as $dipendente => $giorno) {
+    ksort($richieste[$dipendente]);
+}
+//dump($richieste);
+
+$tot_mensile_richieste = $assenze_row = 0;
+foreach ($richieste as $dipendente => $giorno) {
+    $richieste_xls[$assenze_row][] = $dipendente;
+    foreach ($giorno as $day => $hours) {
+        if (!empty($hours) && (is_numeric($hours) || strpos($hours, "Permesso - ") !== false)) { //Aggiunto is_numeric
+            //Se è permesso pulisco la stringa
+            if(strpos($hours, "Permesso - ") !== false) {
+                $calcolo = str_replace("Permesso - ", "", $hours);  
+            } else {
+                $calcolo = $hours;
+            }
+            //dump($day.' --> '.$calcolo);
+            $tot_mensile_richieste += $calcolo;
+            $hours = is_numeric($hours)  ? str_replace(".00", "", (string)number_format($hours, 2, ".", "")) : $hours;
+        }
+        $richieste_xls[$assenze_row][] = $hours;
+    }
+    $richieste_xls[$assenze_row][] = round($tot_mensile_richieste, 2);
+    //dump($richieste_xls[$assenze_row]);
+    $tot_mensile_richieste = 0;
+    $assenze_row++;
+}
+//dump($richieste_xls);
+
+
+$u = $this->input->get('u') ?? 0;
+
 /**
  * EXCEL ADDITIONAL DATA
  */
 $footer = ['Total'];
 for ($i = 0; $i <= $days_in_month; $i++) {
     $footer[] = '=SUMCOL(TABLE(), COLUMN())';
+}
+
+
+$footer_assenze = ['Total'];
+for ($i = 0; $i <= $days_in_month; $i++) {
+    $footer_assenze[] = '=SUMCOL_ASSENZE(TABLE(), COLUMN())';
 }
 
 ?>
@@ -350,12 +460,13 @@ for ($i = 0; $i <= $days_in_month; $i++) {
 
 <div class="container-fluid">
     <div class="form-group row">
-        <?php //debug($this->datab->getPermission($this->auth->get('users_id'))); 
+        <?php
+            //debug($this->datab->getPermission($this->auth->get('users_id'))); 
         ?>
         <div class="col-sm-3">
             <label for="presenze_month">Dipendente</label>
             <select class="form-control select2_standard js_select2 select_dipendente" name="presenze_dipendente" id="presenze_dipendente" data-placeholder="<?php e('Choose template') ?>">
-                <option value="" selected="selected">Seleziona dipendente</option>
+                <option value="0" selected="selected">Seleziona dipendente</option>
                 <?php foreach ($dipendenti_rapportini_commessa as $dipendente) : ?>
                 <option value="<?php echo $dipendente['dipendenti_id']; ?>" <?php if ($dipendente['dipendenti_id'] == $u) : ?>selected="selected" <?php endif; ?>><?php echo $dipendente['dipendenti_nome'] . ' ' . $dipendente['dipendenti_cognome']; ?></option>
                 <?php endforeach; ?>
@@ -410,6 +521,19 @@ for ($i = 0; $i <= $days_in_month; $i++) {
         </div>
     </div>
 
+    <hr />
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h4>Riepilogo richieste ferie e permessi</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="spreadsheet_assenze"></div>
+        </div>
+    </div>
+
 </div>
 
 <style>
@@ -420,7 +544,7 @@ for ($i = 0; $i <= $days_in_month; $i++) {
 
 <script>
 var data = <?php echo json_encode($data_xls); ?>;
-
+var data_assenze = <?php echo json_encode($richieste_xls); ?>;
 // A custom method to SUM all the cells in the current column
 var SUMCOL = function(instance, columnId) {
     var total = 0;
@@ -437,6 +561,23 @@ var SUMCOL = function(instance, columnId) {
     return total.toFixed(2);
 }
 
+// A custom method to SUM all the cells in the current column
+var SUMCOL_ASSENZE = function(instance, columnId) {
+    var total = 0;
+    for (var j = 0; j < instance.options.data.length; j++) {
+        if (!isNaN(parseFloat(instance.records[j][columnId - 1].innerHTML))) {
+            total += Number(instance.records[j][columnId - 1].innerHTML);
+        }
+        return total.toFixed(2);
+    }
+}
+
+
+/***************************************
+ * 
+ * ! XLS PRESENZE DA RAPPORTINI
+ * 
+ **************************************/
 var table2 = jspreadsheet(document.getElementById('spreadsheet_presenze'), {
     onload: function(el, instance) {
         //header background
@@ -545,9 +686,181 @@ var table2 = jspreadsheet(document.getElementById('spreadsheet_presenze'), {
         },
     ],
 });
-
 //hide row number column
 table2.hideIndex();
+
+
+/***************************************
+ * 
+ * ! XLS RICHIESTE FERIE E PERMESSI
+ * 
+ **************************************/
+var table_assenze = jspreadsheet(document.getElementById('spreadsheet_assenze'), {
+    onload: function(el, instance) {
+        //header background
+        $(instance.thead).find("tr td").css({
+            'background-color': '#086fa3',
+            'color': '#ffffff',
+            'font-weight': 'bold',
+            'font-size': '12px'
+        });
+        $(instance.tfoot).find("tr td").css({
+            'color': '#086fa3',
+            'font-weight': 'bold',
+            'font-size': '12px'
+        });
+    },
+    updateTable: function(instance, cell, col, row, val, label, cellName) {
+        //console.log(`cell: ${cell}, col: ${col}, row: ${row}, val: ${val}, label: ${label}, cellName: ${cellName}`);
+        //console.log(cell);
+        //Coloro sfondo e testo per le ore lavorate
+        if (col != '0' && col != '1') {
+            cell.style.color = 'rgb(0 0 0)';
+            cell.style.fontWeight = 'bold';
+        }
+        //Colore sfondo e testo per permesso
+        if (cell.textContent.includes('Permesso - ')) {
+            //console.log(cell.textContent);
+            cell.textContent = cell.textContent.substring(11, 20);
+            cell.style.color = 'rgb(0 0 0)';
+            cell.style.background = 'rgb(253 224 71)';
+            cell.style.fontWeight = 'bold';
+        }
+        /**
+         * 
+         * CONTROLLI PER FERIE
+         * - AI Assenza ingiustificata
+         * - CM Congedo matrimoniale
+         * - CP Congedo parentale
+         * - FE Ferie
+         * 
+         */
+        if (cell.textContent.includes('aing')) {
+            //console.log(cell.textContent);
+            cell.textContent = cell.textContent.substring(11, 20);
+            cell.style.color = 'rgb(124 45 18)';
+            cell.style.background = 'rgb(124 45 18)';
+            cell.style.fontWeight = 'bold';
+        }
+        const keywordsFerie = ['cp', 'cm', 'fe'];
+        if (keywordsFerie.some(keyword => cell.textContent.includes(keyword))) {
+            //console.log(cell.textContent);
+            cell.textContent = cell.textContent.substring(11, 20);
+            cell.style.color = 'rgb(249 115 22)';
+            cell.style.background = 'rgb(249 115 22)';
+            cell.style.fontWeight = 'bold';
+        }
+
+        /**
+         * 
+         * CONTROLLI PER MALATTIA
+         * - IN Infortunio
+         * - MA Malattia
+         * - MB malattia bambino > 3 anni
+         * - MC mancato cert malattia
+         * - MO malattia ospedale
+         * - RM ricaduta malattia
+         * 
+         * Solamente infortunio, le altre tutte rappgruppate sotto "M"
+         */
+        if (cell.textContent.includes('inf - ')) {
+            //console.log(cell.textContent);
+            cell.textContent = cell.textContent.substring(11, 20);
+            cell.style.color = 'rgb(15 23 42)';
+            cell.style.background = 'rgb(15 23 42)';
+            cell.style.fontWeight = 'bold';
+        }
+        if (cell.textContent.includes('l104 - ')) {
+            /* console.log(cell.textContent);
+            console.log(cell.textContent.length); */
+            cell.textContent = cell.textContent.substring(7, 12);
+            cell.style.color = 'rgb(0 0 0)';
+            cell.style.background = 'rgb(8, 181, 234)';
+            cell.style.fontWeight = 'bold';
+        }
+
+        //Colore sfondo e testo per ferie
+        if (val === 'F') {
+            cell.style.color = 'rgb(249 115 22)';
+            cell.style.background = 'rgb(249 115 22)';
+        }
+        //Colore sfondo e testo per assenza ingiustificata (Ferie)
+        if (val === 'aing') {
+            cell.style.color = 'rgb(124 45 18)';
+            cell.style.background = 'rgb(124 45 18)';
+        }
+        //Colore sfondo e testo per infortunio (Ferie)
+        if (val === 'inf') {
+            cell.style.color = 'rgb(15 23 42)';
+            cell.style.background = 'rgb(15 23 42)';
+        }
+        //Colore sfondo e testo per L. 104 (Ferie)
+        if (val === 'l104') {
+            cell.style.color = 'rgb(8, 181, 234)';
+            cell.style.background = 'rgb(8, 181, 234)';
+        }
+        //Colore sfondo e testo maternità (Ferie)
+        if (val === 'mat') {
+            cell.style.color = '#ec4899';
+            cell.style.background = '#ec4899';
+        }
+        //Colore sfondo e testo per malattia
+        if (val === 'M') {
+            cell.style.color = 'rgb(4 120 87)';
+            cell.style.background = 'rgb(4 120 87)';
+        }
+        //Colore sfondo e testo per domenica
+        if (val === 'dom') {
+            cell.style.color = 'rgb(239 68 68)';
+            //cell.style.background = 'rgb(239 68 68)';
+        }
+    },
+    data: data_assenze,
+    contextMenu: false,
+    defaultColAlign: 'left',
+    footers: [
+        <?php echo json_encode($footer_assenze); ?>
+    ],
+    columns: [{
+            type: 'text',
+            title: 'Dipendnete',
+            width: 90,
+        },
+        <?php for ($i = 1; $i <= $days_in_month; $i++) : ?> {
+            <?php
+                    $giorno_completo = sprintf("%s-%02d-%02d", substr($filtro_data, 0, 4), substr($filtro_data, 5), $i);
+                    $giorno_settimana = strftime("%w", strtotime($giorno_completo));
+                    $iniziale_giorno = substr($giorni_settimana[$giorno_settimana], 0, 1);
+                    //Se sono in una festività devo colorare la cella quindi uso lettera diversa
+                    if(!empty($festivita)) {
+                        foreach($festivita as $festivo) {
+                            $data_festivo = dateFormat($festivo['festivita_data'], 'Y-m-d');
+                            if($giorno_completo == $data_festivo) {
+                                $iniziale_giorno = "F";
+                            }
+                        }
+                    }
+
+                    $headers[] = $i . "($iniziale_giorno)";
+                    ?>
+            type: 'text',
+                title: '<?php echo $i . " $iniziale_giorno"; ?>',
+                width: 20,
+                readOnly: true,
+                align: 'center'
+        },
+        <?php endfor; ?> {
+            type: 'numeric',
+            title: 'TOT',
+            width: 20,
+            readOnly: true,
+            align: 'center'
+        },
+    ],
+});
+//hide row number column
+table_assenze.hideIndex();
+table_assenze.getHeaders();
 
 
 
@@ -568,18 +881,16 @@ $(function() {
         if (operator_id) {
             url += "&u=" + operator_id;
         }
-
         if (year_id) {
             url += "&y=" + year_id;
         }
-
-
         if (commessa_id) {
             url += "&c=" + commessa_id;
         }
 
         window.location.replace(url);
     });
+
 
     // Seleziona tutte le <td> principali con la parola 'D' nel titolo
     var mainTds = $('#spreadsheet_presenze td[title*="(D)"]');

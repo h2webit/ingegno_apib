@@ -68,10 +68,15 @@ $rivalutazione_sociale = $this->db
 $rivalutazione_sociale_valore = $rivalutazione_sociale->partecipazioni_sociali_valore_nominale;
 
 
+/*
+* TK #10992 - Partecipazioni sociali
+* $capitale_sottoscritto = $sottoscrizione_valore - $recesso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+* $capitale_versato = $versamento_valore - $rimborso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+*/
 //Capitale sottoscritto
-$capitale_sottoscritto = $sottoscrizione_valore - $recesso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+$capitale_sottoscritto = $sottoscrizione_valore + $rivalutazione_sociale_valore + $aumento_storno_utile_valore;
 //Capitale versato
-$capitale_versato = $versamento_valore - $rimborso_valore + $aumento_storno_utile_valore - $recesso_storno_utile_valore;
+$capitale_versato = $versamento_valore + $rivalutazione_sociale_valore + $aumento_storno_utile_valore;
 ?>
 
 <div>

@@ -117,4 +117,66 @@
                 }
             }
         }
+
+        
+    public function getLastLowestPrice($product_id, $date_max = null,$days = 30)
+    {
+        //debug($date_max);
+        if ($date_max === null) {
+            $date_max = date('Y-m-d');
+        }
+        $product = $this->db->get_where('fw_products', ['fw_products_id' => $product_id])->row_array();
+        // Recupero il prezzo scontato più basso e la data corrispondente
+        $lowest_discounted = $this->db->query("SELECT MIN(CAST(fw_products_history_discounted_price AS DECIMAL)) AS lowest_discounted_price, MAX(fw_products_history_creation_date) AS date
+        FROM fw_products_history
+        WHERE DATE(fw_products_history_creation_date) >= DATE_SUB(CURDATE(), INTERVAL $days DAY)
+        AND DATE(fw_products_history_creation_date) < DATE('{$date_max}')
+        AND CAST(fw_products_history_discounted_price AS DECIMAL) > 0
+        AND fw_products_history_product_id = '{$product_id}'
+        ")->row_array();
+        
+
+        // Recupero il prezzo di vendita più basso e la data corrispondente
+        $lowest_sell = $this->db->query("SELECT MIN(CAST(fw_products_history_sell_price AS DECIMAL)) AS lowest_sell_price, MAX(fw_products_history_creation_date) AS date
+        FROM fw_products_history
+        WHERE DATE(fw_products_history_creation_date) >= DATE_SUB(CURDATE(), INTERVAL $days DAY)
+        AND DATE(fw_products_history_creation_date) < DATE('{$date_max}')
+        AND CAST(fw_products_history_sell_price AS DECIMAL) > 0
+        AND fw_products_history_product_id = '{$product_id}'
+        ")->row_array();
+        
+        $current_discounted = $product['fw_products_discounted_price'];
+        $current_sell = $product['fw_products_sell_price'];
+
+        // Preparazione per determinare il prezzo minimo e la sua data
+        $prices = [
+            ['price' => $lowest_discounted['lowest_discounted_price'], 'date' => $lowest_discounted['date']],
+            ['price' => $lowest_sell['lowest_sell_price'], 'date' => $lowest_sell['date']],
+            ['price' => $current_discounted, 'date' => $product['fw_products_modified_date'] ?: $product['fw_products_creation_date']],
+            ['price' => $current_sell, 'date' => $product['fw_products_modified_date'] ?: $product['fw_products_creation_date']]
+        ];
+
+        // Filtraggio dei prezzi escludendo quelli a zero
+        $filtered_prices = array_filter($prices, function ($entry) {
+            return $entry['price'] > 0;
+        });
+
+        // Calcolo del prezzo minimo e la data corrispondente
+        $min_price = null;
+        $date = null;
+        foreach ($filtered_prices as $entry) {
+            // debug($entry['date']);
+            // debug($date_max);
+            if (($min_price === null || $entry['price'] < $min_price) && $entry['date'] <= $date_max) {
+                $min_price = $entry['price'];
+                $date = $entry['date'];
+            }
+        }
+
+        // Restituzione del prezzo minimo e della data
+        return [
+            'min_price' => $min_price,
+            'date' => $date
+        ];
     }
+}

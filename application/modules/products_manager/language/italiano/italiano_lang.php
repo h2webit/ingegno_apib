@@ -225,4 +225,14 @@ $lang['\"Mai\" -> Non sincronizza la quantità su WC<br/>
 $lang['Se flag \"Si\", nel momento in cui gli ordini da Woocommerce saranno importati, verrà creato un movimento associato.'] = 'Se flag \"Si\", nel momento in cui gli ordini da Woocommerce saranno importati, verrà creato un movimento associato.';
 $lang['Se flag \"Si\", ogni ordine importato da Woocommerce, gli verrà automaticamente impostato lo stato \"Chiuso\"; altrimenti sarà impostato di default \"Aperto\"'] = 'Se flag \"Si\", ogni ordine importato da Woocommerce, gli verrà automaticamente impostato lo stato \"Chiuso\"; altrimenti sarà impostato di default \"Aperto\"';
 $lang['Se flag \"Si\", durante l\'importazione prodotti, verrà automaticamente creato un barcode (EAN13) se non passato da Woocommerce'] = 'Se flag \"Si\", durante l\'importazione prodotti, verrà automaticamente creato un barcode (EAN13) se non passato da Woocommerce';
-$lang['WooCommerce Sync Settings'] = 'Impostazioni Sync Woocommerce';
+$lang['WooCommerce Sync Settings'] = 'Impostazioni Sync Woocommerce';$lang['Label default height'] = 'Label default height';
+$lang['Ricalcola prezzi bundle'] = 'Ricalcola prezzi bundle';
+$lang['Direttiva omnibus'] = 'Direttiva omnibus';
+$lang['Label default width'] = 'Label default width';
+$lang['Label default left margin'] = 'Label default left margin';
+$lang['Label default top margin'] = 'Label default top margin';
+$lang['Enable duplicated sku check'] = 'Enable duplicated sku check';
+$lang['Show woocommerce button'] = 'Show woocommerce button';
+$lang['Storico prezzi'] = 'Storico prezzi';
+$lang['Storico variazioni'] = 'Storico variazioni';
+$lang['Fw Products History'] = 'Fw Products History';

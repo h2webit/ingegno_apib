@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 defined('SHOW_DEBUG_BACKTRACE') or define('SHOW_DEBUG_BACKTRACE', true);
 
 // Client Version
-defined('VERSION') OR define('VERSION', '3.8.0');
+defined('VERSION') OR define('VERSION', '3.8.3');
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes
@@ -55,15 +55,18 @@ define(
     'OPERATORS',
     serialize(
         array(
-            'eq' => array('html' => '=', 'sql' => '='),
-            'lt' => array('html' => '<', 'sql' => '<'),
-            'gt' => array('html' => '>', 'sql' => '>'),
-            'le' => array('html' => '&le;', 'sql' => '<='),
-            'ge' => array('html' => '&ge;', 'sql' => '>='),
-            'in' => array('html' => 'IN', 'sql' => 'IN'),
-            'like' => array('html' => 'LIKE', 'sql' => 'ILIKE'),
+            'eq' => array('html' => '=', 'sql' => '=', 'label' => 'Equal'),
+            'neq' => array('html' => '=', 'sql' => '=', 'label' => 'Not equal'),
+            'lt' => array('html' => '<', 'sql' => '<', 'label' => 'Less than'),
+            'gt' => array('html' => '>', 'sql' => '>', 'label' => 'Greater than'),
+            'le' => array('html' => '&le;', 'sql' => '<=', 'label' => 'Less or equal'),
+            'ge' => array('html' => '&ge;', 'sql' => '>=', 'label' => 'Greater or equal'),
+            'in' => array('html' => 'IN', 'sql' => 'IN', 'label' => 'In'),
+            'notin' => array('html' => 'IN', 'sql' => 'IN', 'label' => 'Not in'),
+            'like' => array('html' => 'LIKE', 'sql' => 'LIKE', 'label' => 'Like'),
+            'notlike' => array('html' => 'LIKE', 'sql' => 'LIKE', 'label' => 'Not like'),
             //'rangein'  => array( 'html' => 'Range in',    'sql' => '<@' ),
-            'rangein' => array('html' => 'Range in', 'sql' => '&&'),
+            'rangein' => array('html' => 'Range in', 'sql' => '&&', 'label' => 'Range in'),
         )
     )
 );

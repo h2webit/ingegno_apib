@@ -197,7 +197,7 @@ class Productsmanager extends MY_Controller
                     if (!empty($input['fw_products_tax'])) {
                         $tax = $this->db->get_where('iva', ['iva_id' => $input['fw_products_tax']])->row_array();
                         // calcolo il campo fw_products_tax_included in in base al campo fw_products_tax e fw_products_sell_price
-                        $sell_price_tax_included = $input['fw_products_sell_price'] + ($input['fw_products_sell_price'] * $tax['iva_valore'] / 100);
+                        $sell_price_tax_included = $input['config_p_vendita'][$key] + ($input['config_p_vendita'][$key] * $tax['iva_valore'] / 100);
                         
                         $configurabile['fw_products_sell_price_tax_included'] = number_format($sell_price_tax_included, 2, '.', '');
                     }
