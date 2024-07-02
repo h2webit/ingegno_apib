@@ -16,7 +16,7 @@ class Sync extends MY_Controller
         
         $this->apib_db_connect();
         
-        set_log_scope('sync-pagamenti');
+        
     }
     
     private function apib_db_connect() {
@@ -43,6 +43,7 @@ class Sync extends MY_Controller
     
     public function import_pagamenti()
     {
+        set_log_scope('sync-pagamenti');
         $associati = $this->db
             ->where("documenti_contabilita_settings_company_codice_fiscale IS NOT NULL AND documenti_contabilita_settings_company_codice_fiscale <> ''")
             ->get('documenti_contabilita_settings')->result_array();
@@ -97,9 +98,12 @@ class Sync extends MY_Controller
 
     public function migrate_dati() {
         $this->import_associati();
+        $this->import_clienti();
+        $this->import_orari();
     }
-
+    
     public function import_associati() {
+        set_log_scope('sync-associati');
         $associati = $this->apib_db->join('utenti', 'utenti_id = associati_utente', 'LEFT')->where('associati_deleted <> ', 't')->get('associati')->result_array();
         //debug($associati,true);
         $t = count($associati);
@@ -200,5 +204,207 @@ class Sync extends MY_Controller
                 debug($e->getMessage(),true);
             }
         }
+    }
+    public function import_clienti()
+    {
+        set_log_scope('sync-clienti');
+        $clienti = $this->apib_db->get('clienti')->result_array();
+        //debug($associati,true);
+        $t = count($clienti);
+        $c = 0;
+        foreach ($clienti as $cliente) {
+
+            progress(++$c, $t, 'import clienti vs customers');
+            
+            
+            $customer = [
+                'customers_id' => $cliente['clienti_id'],
+                'customers_city' => $cliente['clienti_citta'],
+                'customers_address' => $cliente['clienti_indirizzo'],
+                'customers_vat_number' => $cliente['clienti_p_iva'],
+                'customers_cf' => $cliente['clienti_cf'],
+                'customers_zip_code' => $cliente['clienti_cap'],
+                'customers_company' => $cliente['clienti_ragione_sociale'],
+                'customers_full_name'=> $cliente['clienti_ragione_sociale'],
+                //'customers_id' => $cliente['clienti_iban'],
+                'customers_email' => $cliente['clienti_email'],
+                'customers_province' => $cliente['clienti_provincia'],
+                'customers_phone' => $cliente['clienti_telefono'],
+                'customers_mobile' => $cliente['clienti_cellulare'],
+                //'customers_id' => $cliente['clienti_codice_pa'],
+                'customers_fax' => $cliente['clienti_fax'],
+                'customers_description' => $cliente['clienti_note'],
+                'customers_status' => ($cliente['clienti_non_attivo']?3:1),
+                //'clienti_referente' => $cliente['clienti_referente'],
+                //'clienti_referente' => $cliente['clienti_termini_pagamento'],
+                //'clienti_referente' => $cliente['clienti_cp'],
+                //'clienti_referente' => $cliente['clienti_note_cliente'],
+                'customers_deleted' => $cliente['clienti_deleted'],
+                'customers_code' => $cliente['clienti_id'],
+                'customers_status' => 1,
+
+            ];
+            //Tutti i campi che non esistono mappati su $dipendente ma che esistono su $associato, li salvo sul json dipendenti_altri_dati
+            foreach ($cliente as $key => $value) {
+                $key = str_replace('clienti_', 'customers_', $key);
+                if (!array_key_exists($key, $customer)) {
+                    $customer['customers_dati_apib'][$key] = $value;
+                }
+
+            }
+            $customer['customers_dati_apib'] = json_encode($customer['customers_dati_apib']);
+            
+            //debug($dipendente,true);
+            //debug($customer,true);
+            try {
+                $customer_exists = $this->db->get_where('customers', ['customers_id' => $customer['customers_id']])->row_array();
+                $_POST = $customer;
+                if ($customer_exists) {
+                    $customer_creato = $this->apilib->edit('customers', $customer['customers_id'], $customer);
+                } else {
+                    $customer_creato = $this->apilib->create('customers', $customer);
+
+                    //debug($customer_creato,true);
+                }
+
+                $_POST = [];
+
+
+            } catch (Exception $e) {
+
+                my_log('error', "errore inserimento customer: {$e->getMessage()}");
+                debug($customer);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
+    }
+
+    public function import_sedi() {
+        set_log_scope('sync-sedi');
+        $sedi = $this->apib_db->get('sedi_operative')->result_array();
+        //debug($sedi,true);
+        $t = count($sedi);
+        $c = 0;
+        foreach ($sedi as $sede) {
+
+            progress(++$c, $t, 'import sedi_operative vs customers_shipping_address');
+
+            debug($sede,true);
+
+            $shipping_address = [
+
+                //TODO: arrivato fino a qui
+                'customers_shipping_address_id' => $sede['sedi_operative_id'],
+                'customers_shipping_address_customer_id' => $sede['clienti_citta'],
+                'customers_shipping_address_country_id' => $sede['clienti_indirizzo'],
+                'customers_shipping_address_type' => $sede['clienti_p_iva'],
+                'customers_shipping_address_street' => $cliente['clienti_cf'],
+                'customers_shipping_address_city' => $cliente['clienti_cap'],
+                'customers_shipping_address_state' => $cliente['clienti_ragione_sociale'],
+                'customers_shipping_address_zip_code' => $cliente['clienti_ragione_sociale'],
+                
+                'customers_shipping_address_name' => $cliente['clienti_email'],
+                'customers_shipping_address_phone' => $cliente['clienti_provincia'],
+                'customers_shipping_address_mobile' => $cliente['clienti_telefono'],
+                'customers_shipping_address_email' => $cliente['clienti_cellulare'],
+                
+                'customers_shipping_address_position' => $cliente['clienti_fax'],
+                'customers_shipping_address_external_id' => $cliente['clienti_note'],
+                'customers_shipping_address_default' => ($cliente['clienti_non_attivo'] ? 3 : 1),
+                //'clienti_referente' => $cliente['clienti_referente'],
+                //'clienti_referente' => $cliente['clienti_termini_pagamento'],
+                //'clienti_referente' => $cliente['clienti_cp'],
+                //'clienti_referente' => $cliente['clienti_note_cliente'],
+                'customers_deleted' => $cliente['clienti_deleted'],
+                'customers_code' => $cliente['clienti_id'],
+                'customers_status' => 1,
+
+            ];
+           
+
+            //debug($dipendente,true);
+            //debug($customer,true);
+            try {
+                $customer_exists = $this->db->get_where('customers', ['customers_id' => $customer['customers_id']])->row_array();
+                $_POST = $customer;
+                if ($customer_exists) {
+                    $customer_creato = $this->apilib->edit('customers', $customer['customers_id'], $customer);
+                } else {
+                    $customer_creato = $this->apilib->create('customers', $customer);
+
+                    //debug($customer_creato,true);
+                }
+
+                $_POST = [];
+
+
+            } catch (Exception $e) {
+
+                my_log('error', "errore inserimento customer: {$e->getMessage()}");
+                debug($customer);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
+    }
+
+    public function import_orari()
+    {
+        set_log_scope('sync-orari');
+        $orari = $this->apib_db->get('sedi_operative_orari')->result_array();
+        //debug($orari,true);
+        $t = count($orari);
+        $c = 0;
+        $categorie_map = [
+            1 => 1, //Mattina
+            2=> 2, //Pomeriggio
+            3 => 3, //Notte/Festivo
+            6 => 5 //Accesso
+
+        ];
+        foreach ($orari as $orario) {
+
+            progress(++$c, $t, 'import sedi_operative_orari vs projects_orari');
+
+            $project = $this->db->get_where('projects', ['projects_customer_address' => $orario['sedi_operative_orari_sede']])->row_array();
+            if (!$project) {
+                debug($orario,true);
+            }
+            $orario = [
+                'projects_orari_id' => $orario['sedi_operative_orari_id'],
+                'projects_orari_project' => $project['projects_id'],
+                'projects_orari_categoria' => $categorie_map[$orario['sedi_operative_orari_categoria']],
+                'projects_orari_giorni' => [1,2,3,4,5,6,7],
+                'projects_orari_dalle' => $orario['sedi_operative_orari_dalle'],
+                'projects_orari_alle' => $orario['sedi_operative_orari_alle'],
+                'projects_orari_cancellato' => $orario['sedi_operative_orari_cancellato'],
+                'projects_orari_sigla'=> $orario['sedi_operative_orari_nome'],
+                
+
+            ];
+            
+            try {
+                $orario_exists = $this->db->get_where('projects_orari', ['projects_orari_id' => $orario['projects_orari_id']])->row_array();
+                $_POST = $orario;
+                if ($orario_exists) {
+                    $orario_creato = $this->apilib->edit('projects_orari', $orario['projects_orari_id'], $orario);
+                } else {
+                    $orario_creato = $this->apilib->create('projects_orari', $orario);
+
+                    //debug($customer_creato,true);
+                }
+
+                $_POST = [];
+
+
+            } catch (Exception $e) {
+
+                my_log('error', "errore inserimento customer: {$e->getMessage()}");
+                debug($orario);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
     }
 }
