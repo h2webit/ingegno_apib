@@ -108,7 +108,7 @@ $totale_da_versare = $totale_iva_da_versare_parziale + $interessi_trimestrali;
 <div style="margin-bottom:30px">
 
 <?php foreach ($filtri as $filtro): ?>
-    <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo $filtro['value']; ?></p>
+    <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo implode(',', (array)$filtro['value']); ?></p>
 <?php endforeach;?>
 
 </div>

@@ -67,7 +67,7 @@ $current_client_version = VERSION;
             <small><?php echo($module['modules_identifier']); ?></small>
         </td>
 		<td>
-                <?php echo($module['modules_version']); ?><br />
+            <a href="<?php echo base_url('module-manager/main/show_details/'.$module['modules_identifier']); ?>" class="js_open_modal"><?php echo($module['modules_version']); ?></a><br />
             <small><?php echo($module['modules_version_code']); ?></small>
         </td>
         <td><?php echo(dateFormat($module['modules_version_date'])); ?></td>

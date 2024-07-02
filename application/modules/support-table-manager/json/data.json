@@ -4,13 +4,13 @@
     "modules_description": "support table manager",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.2",
+    "modules_version": "1.0.3",
     "modules_identifier": "support-table-manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "685",
     "modules_raw_data_update": "685",
     "modules_created_by_user": "1",
-    "modules_version_code": "3",
+    "modules_version_code": "4",
     "modules_thumbnail": "68bb809f5a90be54606348f4fb3e6da5.png",
     "modules_min_client_version": "3.6.8",
     "modules_version_date": "2023-07-25 12:36:15",
@@ -423,6 +423,17 @@
                     "support_table_manager_tables_edit_scope": null,
                     "support_table_manager_tables_permission_group": "1",
                     "support_table_manager_tables_entity_name": "expenses_category"
+                },
+                {
+                    "support_table_manager_tables_id": "12",
+                    "support_table_manager_tables_creation_date": "2024-02-12 10:54:07",
+                    "support_table_manager_tables_modified_date": null,
+                    "support_table_manager_tables_created_by": "5",
+                    "support_table_manager_tables_edited_by": null,
+                    "support_table_manager_tables_insert_scope": "form",
+                    "support_table_manager_tables_edit_scope": null,
+                    "support_table_manager_tables_permission_group": "1",
+                    "support_table_manager_tables_entity_name": "spese_anni_ammortamento"
                 }
             ],
             "raw_data_update": [
@@ -524,6 +535,17 @@
                     "support_table_manager_tables_edit_scope": null,
                     "support_table_manager_tables_permission_group": "1",
                     "support_table_manager_tables_entity_name": "expenses_category"
+                },
+                {
+                    "support_table_manager_tables_id": "12",
+                    "support_table_manager_tables_creation_date": "2024-02-12 10:54:07",
+                    "support_table_manager_tables_modified_date": null,
+                    "support_table_manager_tables_created_by": "5",
+                    "support_table_manager_tables_edited_by": null,
+                    "support_table_manager_tables_insert_scope": "form",
+                    "support_table_manager_tables_edit_scope": null,
+                    "support_table_manager_tables_permission_group": "1",
+                    "support_table_manager_tables_entity_name": "spese_anni_ammortamento"
                 }
             ]
         }
@@ -548,6 +570,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -569,6 +592,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-primary",
+            "layouts_boxes_module_key": null,
             "conditions": []
         },
         {
@@ -590,7 +614,17 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-danger",
-            "conditions": []
+            "layouts_boxes_module_key": null,
+            "conditions": {
+                "conditions_id": "185",
+                "conditions_what": "layouts_boxes",
+                "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_is_super_admin\",\"field\":\"_is_super_admin\",\"type\":\"string\",\"input\":\"select\",\"operator\":\"equal\",\"value\":\"1\"}],\"valid\":true}",
+                "conditions_ref": "6250",
+                "conditions_module": null,
+                "conditions_module_key": "support-table-manager-layouts_boxes-6250",
+                "conditions_creation_date": "2024-03-11 11:56:39",
+                "conditions_action": "1"
+            }
         },
         {
             "layouts_boxes_id": "6251",
@@ -599,7 +633,7 @@
             "layouts_boxes_title": "HTML\/PHP code",
             "layouts_boxes_content_type": "",
             "layouts_boxes_content_ref": "",
-            "layouts_boxes_content": "<div id=\"js_support_table_html\" style=\"\">\n\n<\/div>                  \n\n\n<script>\n  $(document).ready(function(e) {\n  \n  \n  \tvar grid_id = <?php echo $this->input->get('grid_id');?>;\n  \n \n      \/\/ Esegui la chiamata AJAX all'URL \/support-table-manager\n      $.ajax({\n        url: '<?php echo base_url();?>support-table-manager\/support_table\/getSupportGrid\/'+grid_id,\n        method: 'GET',\n        success: function(data) {\n          \/\/ Inseriamo l'output nel div target\n          $('#js_support_table_html').html(data);\n\t\t\tinitComponents();\n        },\n        error: function() {\n          console.log('Errore durante la chiamata AJAX.');\n        }\n      });\n  \n  });\n<\/script>",
+            "layouts_boxes_content": "<div id=\"js_support_table_html\" style=\"\"><\/div>                  \n\n<script>\n  $(document).ready(function(e) {\n  \tvar grid_id = <?php echo $this->input->get('grid_id');?>;\n      \/\/ Esegui la chiamata AJAX all'URL \/support-table-manager\n      $.ajax({\n        url: '<?php echo base_url();?>support-table-manager\/support_table\/getSupportGrid\/'+grid_id,\n        method: 'GET',\n        success: function(data) {\n          \/\/ Inseriamo l'output nel div target\n          $('#js_support_table_html').html(data);\n\t\t\tinitComponents();\n        },\n        error: function() {\n          console.log('Errore durante la chiamata AJAX.');\n        }\n      });\n  });\n<\/script>",
             "layouts_boxes_position": null,
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
@@ -611,6 +645,7 @@
             "layouts_boxes_row": "1",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
             "conditions": []
         }
     ],
@@ -648,7 +683,7 @@
             "grids_inline_edit": "0",
             "grids_design": null,
             "grids_limit": null,
-            "grids_custom_query": "SELECT *, grids_id AS support_table_manager_tables_id FROM grids \r\nLEFT JOIN entity ON entity_id = grids_entity_id\r\nLEFT JOIN support_table_manager_tables ON entity_name = support_table_manager_tables_entity_name\r\nLEFT JOIN users_type ON users_type_id = support_table_manager_tables_permission_group\r\nWHERE entity_type = 2 AND users_type_value = 'Admin' ORDER BY grids_name ASC",
+            "grids_custom_query": "SELECT *, grids_id AS support_table_manager_tables_id FROM grids \r\nLEFT JOIN entity ON entity_id = grids_entity_id\r\nLEFT JOIN support_table_manager_tables ON entity_name = support_table_manager_tables_entity_name\r\nLEFT JOIN users_type ON users_type_id = support_table_manager_tables_permission_group\r\nWHERE entity_type = 2 AND users_type_value = 'Admin' GROUP BY grids_id ORDER BY grids_name ASC",
             "grids_json": null,
             "entity_id": "685",
             "entity_name": "support_table_manager_tables",
@@ -760,7 +795,7 @@
         {
             "grids_id": "1588",
             "grids_entity_id": "685",
-            "grids_sub_grid_id": null,
+            "grids_sub_grid_id": "605",
             "grids_name": "Support Table Manager Tables - duplicated",
             "grids_view_link": null,
             "grids_edit_link": null,
@@ -790,7 +825,7 @@
             "grids_inline_edit": "0",
             "grids_design": null,
             "grids_limit": null,
-            "grids_custom_query": "SELECT *, grids_id AS support_table_manager_tables_id FROM grids \r\nLEFT JOIN entity ON entity_id = grids_entity_id\r\nLEFT JOIN support_table_manager_tables ON entity_name = support_table_manager_tables_entity_name\r\nLEFT JOIN users_type ON users_type_id = support_table_manager_tables_permission_group\r\nWHERE entity_type = 2 ORDER BY grids_name ASC",
+            "grids_custom_query": "SELECT *, grids_id AS support_table_manager_tables_id FROM grids \r\nLEFT JOIN entity ON entity_id = grids_entity_id\r\nLEFT JOIN support_table_manager_tables ON entity_name = support_table_manager_tables_entity_name\r\nLEFT JOIN users_type ON users_type_id = support_table_manager_tables_permission_group\r\nWHERE entity_type = 2 GROUP BY grids_id ORDER BY grids_name ASC",
             "grids_json": null,
             "entity_id": "685",
             "entity_name": "support_table_manager_tables",
@@ -809,7 +844,7 @@
                     "grids_fields_fields_id": null,
                     "grids_fields_order": "1",
                     "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "<!--<a href=\"#\" class=\"toggle-link\" data-grid_id=\"<?php echo $data['grids_id'];?>\"><?php echo $data['grids_name'];?><\/a>\n<div class=\"js_support_table_html toggle-div\" data-grid_html=\"<?php echo $data['grids_id'];?>\" style=\"display:none\">\n\n<\/div>\n-->\n\n<a class=\"js_open_modal \" href=\"<?php echo base_url();?>get_ajax\/layout_modal\/support-table-modalview?grid_id=<?php echo $data['grids_id'];?>&_mode=side_view\" >\n                       <?php echo $data['grids_name'];?>\n                    <\/a>",
+                    "grids_fields_replace": "<!--<a href=\"#\" class=\"toggle-link\" data-grid_id=\"<?php echo $data['grids_id'];?>\"><?php echo $data['grids_name'];?><\/a>\n<div class=\"js_support_table_html toggle-div\" data-grid_html=\"<?php echo $data['grids_id'];?>\" style=\"display:none\">\n\n<\/div>\n-->\n\n<a class=\"js_open_modal \" href=\"<?php echo base_url();?>get_ajax\/layout_modal\/support-table-modalview?grid_id=<?php echo $data['grids_id'];?>&_mode=side_view\" >\n    <?php echo $data['grids_name'];?>\n<\/a>\n\n<?php\nif ($data['grids_inline_edit'] == '1' && empty($data['grids_inline_form'])) {\n    echo '<i class=\"fas fa-exclamation-triangle fa-fw text-danger blink_me\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"ATTENZIONE: Grid tipo \\'inline\\' senza un form associato\"><\/i>';\n}\n?>",
                     "grids_fields_column_name": "Support table",
                     "grids_fields_eval_cache_type": null,
                     "grids_fields_eval_cache_data": "",
@@ -1052,6 +1087,7 @@
             "forms_json": null,
             "forms_module_key": "support-table-manager-form-2643",
             "forms_public": "0",
+            "forms_show_duplicate": "0",
             "fields": [
                 {
                     "forms_fields_forms_id": "2643",
@@ -1137,7 +1173,7 @@
             "layouts_module": "support-table-manager",
             "layouts_module_key": "support-table-manager-layout-1064",
             "layouts_show_header": "1",
-            "layouts_ajax_allowed": "1",
+            "layouts_ajax_allowed": "0",
             "layouts_settings": "0",
             "layouts_is_public": "0",
             "conditions": []

@@ -30,7 +30,7 @@ class Mod_perm extends CI_Model
             //Se non c'è tra i layout json_permission, lo metto unallowed
             if (empty($json_permission[$layout['layouts_module_key']])) {
                 //Blocco a tutti (layout non più presente sul modulo o a cui nessuno deve avere più accesso)
-                $this->db->query("INSERT INTO unallowed_layouts (unallowed_layouts_layout,unallowed_layouts_user) SELECT {$layout['layouts_id']},users_id FROM users WHERE users_id NOT IN (SELECT permissions_users_id FROM permissions WHERE permissions_admin = 1 AND permissions_users_id IS NOT NULL)");
+                $this->db->query("INSERT INTO unallowed_layouts (unallowed_layouts_layout,unallowed_layouts_user) SELECT {$layout['layouts_id']},users_id FROM users WHERE users_id NOT IN (SELECT permissions_user_id FROM permissions WHERE permissions_admin = 1 AND permissions_user_id IS NOT NULL)");
             } else {
                 $gruppi_where = "'" . implode("','", $json_permission[$layout['layouts_module_key']]) . "'";
                 //Rimuovo prima tutti gli unallowed

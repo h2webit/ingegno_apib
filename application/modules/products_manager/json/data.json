@@ -10,7 +10,7 @@
     "modules_raw_data_install": "262,448,610,502,612,150,615",
     "modules_raw_data_update": "448,610,612,615",
     "modules_created_by_user": "1",
-    "modules_version_code": "132",
+    "modules_version_code": "133",
     "modules_thumbnail": "cb56170efd5abe329210e2c54ddfac70.png",
     "modules_min_client_version": "3.8.0",
     "modules_version_date": "2022-08-24 17:01:41",
@@ -10190,7 +10190,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10228,7 +10228,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10266,7 +10266,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10304,7 +10304,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10342,7 +10342,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10380,7 +10380,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-18917",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -10667,7 +10667,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11467",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -10705,7 +10705,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11468",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1126",
                     "fields_entity_id": "131",
@@ -10743,7 +10743,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11469",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -10781,7 +10781,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11470",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -10819,7 +10819,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11471",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1124",
                     "fields_entity_id": "131",
@@ -11733,7 +11733,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11483",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -12071,7 +12071,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11487",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -12109,7 +12109,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11488",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -12147,7 +12147,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11489",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12185,7 +12185,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11490",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12223,7 +12223,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11491",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -12261,7 +12261,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11492",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1121",
                     "fields_entity_id": "131",
@@ -12299,7 +12299,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11493",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -12337,7 +12337,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11494",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1132",
                     "fields_entity_id": "131",
@@ -12505,7 +12505,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11495",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -12543,7 +12543,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11496",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -12581,7 +12581,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11497",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -12619,7 +12619,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11498",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -12739,7 +12739,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11499",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1114",
                     "fields_entity_id": "131",
@@ -12777,7 +12777,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11500",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -12815,7 +12815,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11501",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12853,7 +12853,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11502",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12891,7 +12891,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11503",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12929,7 +12929,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11504",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12967,7 +12967,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11505",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13005,7 +13005,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11506",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13043,7 +13043,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11507",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13081,7 +13081,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-21659",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1128",
                     "fields_entity_id": "131",
@@ -13217,7 +13217,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11508",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1309",
                     "fields_entity_id": "131",
@@ -13255,7 +13255,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11509",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13293,7 +13293,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11510",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13331,7 +13331,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11511",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13369,7 +13369,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11512",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13407,7 +13407,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11513",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -13636,7 +13636,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12221",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -13674,7 +13674,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12222",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1113",
                     "fields_entity_id": "131",
@@ -13712,7 +13712,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12224",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1128",
                     "fields_entity_id": "131",
@@ -13750,7 +13750,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12225",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1451",
                     "fields_entity_id": "131",
@@ -13788,7 +13788,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12227",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13826,7 +13826,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12228",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1106",
                     "fields_entity_id": "131",
@@ -13864,7 +13864,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12229",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1739",
                     "fields_entity_id": "131",
@@ -13902,7 +13902,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12230",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13940,7 +13940,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-18121",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1131",
                     "fields_entity_id": "131",
@@ -14076,7 +14076,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -14114,7 +14114,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14152,7 +14152,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14190,7 +14190,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14228,7 +14228,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16417",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14266,7 +14266,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16447",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3821",
                     "fields_entity_id": "131",
@@ -14304,7 +14304,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16448",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3822",
                     "fields_entity_id": "131",
@@ -14342,7 +14342,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16685",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -14526,7 +14526,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -14564,7 +14564,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14602,7 +14602,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14640,7 +14640,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14678,7 +14678,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14716,7 +14716,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16418",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15080,7 +15080,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17437",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -15118,7 +15118,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17440",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15156,7 +15156,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17441",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15194,7 +15194,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17449",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15515,7 +15515,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -15553,7 +15553,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15591,7 +15591,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15629,7 +15629,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15667,7 +15667,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15705,7 +15705,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16357,7 +16357,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16395,7 +16395,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16433,7 +16433,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16471,7 +16471,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16509,7 +16509,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-18917",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -17204,7 +17204,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8050",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "851",
                     "fields_entity_id": "113",
@@ -17242,7 +17242,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8051",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "855",
                     "fields_entity_id": "113",
@@ -17280,7 +17280,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8054",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "856",
                     "fields_entity_id": "113",
@@ -17318,7 +17318,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12296",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2048",
                     "fields_entity_id": "113",
@@ -17356,7 +17356,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12791",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2167",
                     "fields_entity_id": "113",
@@ -17394,7 +17394,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13531",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "852",
                     "fields_entity_id": "113",
@@ -17432,7 +17432,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13731",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2509",
                     "fields_entity_id": "113",
@@ -17470,7 +17470,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-15198",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "853",
                     "fields_entity_id": "113",
@@ -17508,7 +17508,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-20497",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "5055",
                     "fields_entity_id": "113",
@@ -17996,7 +17996,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11518",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -18034,7 +18034,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11519",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18072,7 +18072,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11520",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18110,7 +18110,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11521",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -18148,7 +18148,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11522",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -18186,7 +18186,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11523",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1119",
                     "fields_entity_id": "131",
@@ -18224,7 +18224,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11524",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -18262,7 +18262,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11525",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1121",
                     "fields_entity_id": "131",
@@ -18300,7 +18300,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11526",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1122",
                     "fields_entity_id": "131",
@@ -18338,7 +18338,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11527",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1123",
                     "fields_entity_id": "131",
@@ -18376,7 +18376,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11528",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1124",
                     "fields_entity_id": "131",
@@ -18414,7 +18414,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11529",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1125",
                     "fields_entity_id": "131",
@@ -18452,7 +18452,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11530",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1126",
                     "fields_entity_id": "131",
@@ -18490,7 +18490,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11531",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1127",
                     "fields_entity_id": "131",
@@ -18528,7 +18528,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11532",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1128",
                     "fields_entity_id": "131",
@@ -18566,7 +18566,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11533",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1129",
                     "fields_entity_id": "131",
@@ -18604,7 +18604,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11534",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1130",
                     "fields_entity_id": "131",
@@ -18642,7 +18642,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11535",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1131",
                     "fields_entity_id": "131",
@@ -18680,7 +18680,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11536",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1132",
                     "fields_entity_id": "131",
@@ -18718,7 +18718,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11537",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1306",
                     "fields_entity_id": "131",
@@ -18756,7 +18756,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11538",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1309",
                     "fields_entity_id": "131",
@@ -18794,7 +18794,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11539",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1310",
                     "fields_entity_id": "131",
@@ -18832,7 +18832,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11540",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1451",
                     "fields_entity_id": "131",
@@ -18870,7 +18870,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11541",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1478",
                     "fields_entity_id": "131",
@@ -18908,7 +18908,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11679",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1800",
                     "fields_entity_id": "131",
@@ -18946,7 +18946,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11688",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1802",
                     "fields_entity_id": "131",
@@ -18984,7 +18984,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11692",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1806",
                     "fields_entity_id": "131",
@@ -19022,7 +19022,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11699",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1809",
                     "fields_entity_id": "131",
@@ -19060,7 +19060,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-13371",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2311",
                     "fields_entity_id": "131",
@@ -19098,7 +19098,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-13949",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2613",
                     "fields_entity_id": "131",
@@ -19136,7 +19136,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-14178",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2717",
                     "fields_entity_id": "131",
@@ -19174,7 +19174,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-14179",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2718",
                     "fields_entity_id": "131",
@@ -19212,7 +19212,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-15215",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3248",
                     "fields_entity_id": "131",
@@ -19250,7 +19250,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-15594",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3425",
                     "fields_entity_id": "131",
@@ -19288,7 +19288,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-15620",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3433",
                     "fields_entity_id": "131",
@@ -19326,7 +19326,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16446",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3821",
                     "fields_entity_id": "131",
@@ -19364,7 +19364,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16671",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3941",
                     "fields_entity_id": "131",
@@ -19402,7 +19402,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16672",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3942",
                     "fields_entity_id": "131",
@@ -19440,7 +19440,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16673",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "3943",
                     "fields_entity_id": "131",
@@ -19478,7 +19478,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17020",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "4065",
                     "fields_entity_id": "131",
@@ -19516,7 +19516,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-18456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "4579",
                     "fields_entity_id": "131",
@@ -19554,7 +19554,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-19345",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "4697",
                     "fields_entity_id": "131",
@@ -19739,7 +19739,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11542",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -19777,7 +19777,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11543",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -19815,7 +19815,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11544",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -19853,7 +19853,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11545",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -19891,7 +19891,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11546",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -19995,7 +19995,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11547",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -20033,7 +20033,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11548",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -20556,7 +20556,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11458",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1114",
                     "fields_entity_id": "131",
@@ -20594,7 +20594,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11459",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -20632,7 +20632,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11460",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20670,7 +20670,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11461",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20708,7 +20708,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11462",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20746,7 +20746,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11463",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20784,7 +20784,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11464",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20822,7 +20822,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11465",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20860,7 +20860,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11466",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -22046,7 +22046,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11570",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1107",
                     "fields_entity_id": "131",
@@ -22084,7 +22084,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11571",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1108",
                     "fields_entity_id": "131",
@@ -22122,7 +22122,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11572",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1109",
                     "fields_entity_id": "131",
@@ -22160,7 +22160,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11573",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1110",
                     "fields_entity_id": "131",
@@ -22781,7 +22781,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-12166",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2014",
                     "fields_entity_id": "262",
@@ -22819,7 +22819,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-12167",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2015",
                     "fields_entity_id": "262",
@@ -22906,7 +22906,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12171",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -22944,7 +22944,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12172",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -22982,7 +22982,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12174",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -23020,7 +23020,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12175",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -23058,7 +23058,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12176",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -23145,7 +23145,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12181",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -23183,7 +23183,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12182",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1117",
                     "fields_entity_id": "131",
@@ -23221,7 +23221,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12183",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1131",
                     "fields_entity_id": "131",
@@ -23259,7 +23259,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12184",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1106",
                     "fields_entity_id": "131",
@@ -23379,7 +23379,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13797",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2545",
                     "fields_entity_id": "333",
@@ -24004,7 +24004,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16491",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -24042,7 +24042,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16492",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -24080,7 +24080,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16493",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -24118,7 +24118,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16502",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1124",
                     "fields_entity_id": "131",
@@ -24238,7 +24238,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8050",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "851",
                     "fields_entity_id": "113",
@@ -24276,7 +24276,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8051",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "855",
                     "fields_entity_id": "113",
@@ -24314,7 +24314,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8054",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "856",
                     "fields_entity_id": "113",
@@ -24352,7 +24352,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12296",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2048",
                     "fields_entity_id": "113",
@@ -24390,7 +24390,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12791",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2167",
                     "fields_entity_id": "113",
@@ -24428,7 +24428,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13531",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "852",
                     "fields_entity_id": "113",
@@ -24466,7 +24466,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13731",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2509",
                     "fields_entity_id": "113",
@@ -24504,7 +24504,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-15198",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "853",
                     "fields_entity_id": "113",
@@ -25064,7 +25064,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -25102,7 +25102,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -25140,7 +25140,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -25178,7 +25178,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -25216,7 +25216,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -25254,7 +25254,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -25292,7 +25292,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-18455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1451",
                     "fields_entity_id": "131",
@@ -25330,7 +25330,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-18459",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "1125",
                     "fields_entity_id": "131",
@@ -26138,7 +26138,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_855",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26161,7 +26161,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_851",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26184,7 +26184,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_852",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26207,7 +26207,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_853",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26230,7 +26230,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_856",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26253,7 +26253,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1320_857",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26276,7 +26276,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2048",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26299,7 +26299,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2167",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26322,7 +26322,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2509",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26345,7 +26345,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2519",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26368,7 +26368,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2521",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26391,7 +26391,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2523",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26414,7 +26414,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2525",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26437,7 +26437,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2527",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26460,7 +26460,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_2529",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26483,7 +26483,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "Dettagli aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1320_5055",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -26907,7 +26907,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26930,7 +26930,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1112",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26953,7 +26953,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1119",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26976,7 +26976,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1120",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -26999,7 +26999,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1121",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27022,7 +27022,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1122",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27045,7 +27045,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1123",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27068,7 +27068,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1124",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27091,7 +27091,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1125",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27114,7 +27114,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1126",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27137,7 +27137,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1127",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27160,7 +27160,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1128",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27183,7 +27183,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1129",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27206,7 +27206,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1130",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27229,7 +27229,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1131",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27252,7 +27252,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1132",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27275,7 +27275,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1306",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27298,7 +27298,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1309",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27321,7 +27321,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1310",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27344,7 +27344,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1451",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27367,7 +27367,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1478",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27390,7 +27390,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1800",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27413,7 +27413,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1802",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27436,7 +27436,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1806",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27459,7 +27459,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1809",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27482,7 +27482,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2311",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27505,7 +27505,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2613",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27528,7 +27528,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2717",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27551,7 +27551,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2718",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27574,7 +27574,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3248",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27597,7 +27597,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3425",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27620,7 +27620,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3433",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27643,7 +27643,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3821",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27666,7 +27666,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3941",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27689,7 +27689,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3942",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27712,7 +27712,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3943",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27735,7 +27735,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1780_4065",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27758,7 +27758,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1780_4579",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27781,7 +27781,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1780_4697",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -27923,7 +27923,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1782_1121",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -28184,7 +28184,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1101",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28207,7 +28207,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1118",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28230,7 +28230,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1102",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28253,7 +28253,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28276,7 +28276,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1103",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28299,7 +28299,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1106",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28322,7 +28322,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1107",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28345,7 +28345,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1108",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28368,7 +28368,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1109",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28391,7 +28391,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1110",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28414,7 +28414,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28437,7 +28437,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1114",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28460,7 +28460,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1117",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -28861,7 +28861,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28884,7 +28884,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1306",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28907,7 +28907,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1451",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28930,7 +28930,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28953,7 +28953,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1809",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28976,7 +28976,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1792_3425",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29256,7 +29256,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1794_1105",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29304,7 +29304,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1101",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29327,7 +29327,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1102",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29350,7 +29350,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1131",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29373,7 +29373,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1478",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29396,7 +29396,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1103",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29419,7 +29419,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1106",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29442,7 +29442,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1128",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29465,7 +29465,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1129",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29488,7 +29488,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29511,7 +29511,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_3433",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29534,7 +29534,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_3425",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29557,7 +29557,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1125",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29580,7 +29580,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29628,7 +29628,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1818_1800",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29772,7 +29772,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2061_2545",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29820,7 +29820,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2225_1108",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29843,7 +29843,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2225_1109",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29866,7 +29866,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2225_1110",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29962,7 +29962,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "products_manager-forms_fields-2228_3248",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29985,7 +29985,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1101",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30008,7 +30008,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1102",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30031,7 +30031,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1309",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30054,7 +30054,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1103",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30077,7 +30077,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1123",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30100,7 +30100,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1118",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30123,7 +30123,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30146,7 +30146,7 @@
                     "forms_fields_dependent_on": "fw_products_servizio_licenza:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "products_manager-forms_fields-2228_3822",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30169,7 +30169,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_3821",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30192,7 +30192,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1124",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30215,7 +30215,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "projects-forms_fields-2228_1106",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30238,7 +30238,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_2697",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -30612,7 +30612,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-2440_1306",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31036,7 +31036,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-2510_4579",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31251,7 +31251,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31274,7 +31274,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_3248",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31297,7 +31297,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31320,7 +31320,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_1451",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -32271,7 +32271,7 @@
             "menu_link": "",
             "menu_parent": "921",
             "menu_icon_class": "fas fa-leaf",
-            "menu_order": "40",
+            "menu_order": "39",
             "menu_position": "sidebar",
             "menu_layout": "122",
             "menu_css_class": "",
@@ -32631,7 +32631,7 @@
             "menu_link": "",
             "menu_parent": "921",
             "menu_icon_class": "fas fa-tags",
-            "menu_order": "51",
+            "menu_order": "50",
             "menu_position": "sidebar",
             "menu_layout": "1111",
             "menu_css_class": "",

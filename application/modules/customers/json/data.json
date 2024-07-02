@@ -4,15 +4,15 @@
     "modules_description": "Customers list with detail page",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "2.1.1",
+    "modules_version": "2.1.5",
     "modules_identifier": "customers",
     "modules_base64_zip": null,
-    "modules_raw_data_install": "399,592,387,451,520,397,360,331,193,375,374,376",
+    "modules_raw_data_install": "399,592,387,451,295,520,397,360,331,193,375,374,376",
     "modules_raw_data_update": "399,451,568,331",
     "modules_created_by_user": "1",
-    "modules_version_code": "221",
+    "modules_version_code": "229",
     "modules_thumbnail": "b3a767a0811b2b0264a98f67ca429350.png",
-    "modules_min_client_version": "3.8.0",
+    "modules_min_client_version": "3.8.4",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -1396,7 +1396,7 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": "users_type IN (4,1)",
+                    "fields_select_where": "(users_type IN (4,1) OR users_type_value = 'Sales Agent') AND users_active = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
@@ -2324,6 +2324,52 @@
                     "fields_searchable": "0",
                     "fields_additional_data": "",
                     "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "5729",
+                    "fields_entity_id": "7",
+                    "fields_default": null,
+                    "fields_name": "customers_fido_concesso",
+                    "fields_type": "double",
+                    "fields_size": "18,9",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "input_money"
+                },
+                {
+                    "fields_id": "5741",
+                    "fields_entity_id": "7",
+                    "fields_default": null,
+                    "fields_name": "customers_notes",
+                    "fields_type": "LONGTEXT",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "textarea"
                 }
             ],
             "fields_draw": [
@@ -3184,6 +3230,32 @@
                     "fields_draw_display_none": "0",
                     "fields_draw_enabled": "1",
                     "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5731",
+                    "fields_draw_fields_id": "5729",
+                    "fields_draw_label": "Fido concesso",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_money",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5743",
+                    "fields_draw_fields_id": "5741",
+                    "fields_draw_label": "Notes",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "textarea",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
                 }
             ],
             "fields_validation": [],
@@ -3546,6 +3618,29 @@
                     "fields_searchable": "1",
                     "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "5713",
+                    "fields_entity_id": "8",
+                    "fields_default": "0",
+                    "fields_name": "customers_shipping_address_default",
+                    "fields_type": "BOOLEAN",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "radio"
                 }
             ],
             "fields_draw": [
@@ -3738,6 +3833,19 @@
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": null,
                     "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5715",
+                    "fields_draw_fields_id": "5713",
+                    "fields_draw_label": "Default",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "radio",
                     "fields_draw_placeholder": null,
                     "fields_draw_css_extra": null,
                     "fields_draw_display_none": "0",
@@ -6203,15 +6311,15 @@
             "raw_data_install": [
                 {
                     "customers_type_id": "1",
-                    "customers_type_value": "Customer"
+                    "customers_type_value": "Cliente"
                 },
                 {
                     "customers_type_id": "2",
-                    "customers_type_value": "Supplier"
+                    "customers_type_value": "Fornitore"
                 },
                 {
                     "customers_type_id": "3",
-                    "customers_type_value": "Customer\/Supplier"
+                    "customers_type_value": "Cliente \/ Fornitore"
                 },
                 {
                     "customers_type_id": "4",
@@ -6219,7 +6327,7 @@
                 },
                 {
                     "customers_type_id": "5",
-                    "customers_type_value": "Sales agent"
+                    "customers_type_value": "Agente vendita"
                 }
             ],
             "raw_data_update": []
@@ -6312,7 +6420,28 @@
                 }
             ],
             "fields_validation": [],
-            "raw_data_install": [],
+            "raw_data_install": [
+                {
+                    "customers_lead_rating_id": "1",
+                    "customers_lead_rating_value": "1"
+                },
+                {
+                    "customers_lead_rating_id": "3",
+                    "customers_lead_rating_value": "2"
+                },
+                {
+                    "customers_lead_rating_id": "5",
+                    "customers_lead_rating_value": "3"
+                },
+                {
+                    "customers_lead_rating_id": "7",
+                    "customers_lead_rating_value": "4"
+                },
+                {
+                    "customers_lead_rating_id": "9",
+                    "customers_lead_rating_value": "5"
+                }
+            ],
             "raw_data_update": []
         },
         "331": {
@@ -6406,21 +6535,21 @@
             "raw_data_install": [
                 {
                     "customers_status_id": "1",
-                    "customers_status_value": "Enabled"
+                    "customers_status_value": "Attivo"
                 },
                 {
                     "customers_status_id": "3",
-                    "customers_status_value": "Disabled"
+                    "customers_status_value": "Disattivo"
                 }
             ],
             "raw_data_update": [
                 {
                     "customers_status_id": "1",
-                    "customers_status_value": "Enabled"
+                    "customers_status_value": "Attivo"
                 },
                 {
                     "customers_status_id": "3",
-                    "customers_status_value": "Disabled"
+                    "customers_status_value": "Disattivo"
                 }
             ]
         },
@@ -9988,13 +10117,13 @@
             "raw_data_install": [
                 {
                     "customers_contacts_job_position_id": "1",
-                    "customers_contacts_job_position_value": "Technician",
+                    "customers_contacts_job_position_value": "Resp. tecnico",
                     "customers_contacts_job_position_identifier": "ticketing"
                 },
                 {
                     "customers_contacts_job_position_id": "3",
-                    "customers_contacts_job_position_value": "Generic",
-                    "customers_contacts_job_position_identifier": ""
+                    "customers_contacts_job_position_value": "Generico",
+                    "customers_contacts_job_position_identifier": null
                 },
                 {
                     "customers_contacts_job_position_id": "4",
@@ -13261,7 +13390,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "23",
+            "layouts_boxes_row": "24",
             "layouts_boxes_cols": "6",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13283,7 +13412,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "22",
+            "layouts_boxes_row": "23",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13305,7 +13434,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "20",
+            "layouts_boxes_row": "21",
             "layouts_boxes_cols": "6",
             "layouts_boxes_color": null,
             "layouts_boxes_module_key": null,
@@ -13327,7 +13456,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13349,7 +13478,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13371,7 +13500,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13393,7 +13522,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13415,7 +13544,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13437,7 +13566,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "9",
+            "layouts_boxes_row": "10",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13459,7 +13588,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13481,7 +13610,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "19",
+            "layouts_boxes_row": "20",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13503,7 +13632,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "17",
+            "layouts_boxes_row": "18",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13525,7 +13654,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "8",
+            "layouts_boxes_row": "9",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13547,7 +13676,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "16",
+            "layouts_boxes_row": "17",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13569,7 +13698,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "13",
+            "layouts_boxes_row": "14",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13591,7 +13720,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "1",
             "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "6",
+            "layouts_boxes_row": "7",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13613,7 +13742,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "4",
+            "layouts_boxes_row": "5",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -13679,7 +13808,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "10",
+            "layouts_boxes_row": "11",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -14060,6 +14189,28 @@
             "conditions": []
         },
         {
+            "layouts_boxes_id": "6584",
+            "layouts_boxes_layout": "825",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Elenco tags",
+            "layouts_boxes_content_type": "grid",
+            "layouts_boxes_content_ref": "1644",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
             "layouts_boxes_id": "5087",
             "layouts_boxes_layout": "827",
             "layouts_boxes_css": "",
@@ -14197,6 +14348,28 @@
             "layouts_boxes_row": "99",
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": null,
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6578",
+            "layouts_boxes_layout": "1124",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Conteggi",
+            "layouts_boxes_content_type": "view",
+            "layouts_boxes_content_ref": "{module customers}\/todolist_and_counters",
+            "layouts_boxes_content": "",
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
             "conditions": []
         }
@@ -14626,6 +14799,44 @@
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
                     "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22100",
+                    "grids_fields_grids_id": "48",
+                    "grids_fields_fields_id": "5713",
+                    "grids_fields_order": "999",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "customers-grids_fields-22100",
+                    "grids_fields_module": "contabilita",
+                    "grids_fields_width": null,
+                    "fields_id": "5713",
+                    "fields_entity_id": "8",
+                    "fields_default": "0",
+                    "fields_name": "customers_shipping_address_default",
+                    "fields_type": "BOOLEAN",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
                     "conditions": []
                 }
             ],
@@ -15429,7 +15640,7 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": "users_type IN (4,1)",
+                    "fields_select_where": "(users_type IN (4,1) OR users_type_value = 'Sales Agent') AND users_active = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "1",
                     "fields_preview_base": null,
@@ -20494,6 +20705,110 @@
             ]
         },
         "21": {
+            "grids_id": "1644",
+            "grids_entity_id": "708",
+            "grids_sub_grid_id": null,
+            "grids_name": "Customers Tags",
+            "grids_view_link": null,
+            "grids_edit_link": null,
+            "grids_view_layout": null,
+            "grids_edit_layout": null,
+            "grids_delete_link": "#",
+            "grids_where": null,
+            "grids_default": "1",
+            "grids_layout": "table",
+            "grids_order_by": null,
+            "grids_group_by": null,
+            "grids_filter_session_key": null,
+            "grids_bulk_mode": null,
+            "grids_bulk_edit_form": null,
+            "grids_exportable": "0",
+            "grids_append_class": null,
+            "grids_inline_form": "2696",
+            "grids_module_key": "customers-grid-1644",
+            "grids_depth": null,
+            "grids_actions_column": "1",
+            "grids_builder_where": null,
+            "grids_identifier": null,
+            "grids_datatable": "1",
+            "grids_ajax": "1",
+            "grids_searchable": "1",
+            "grids_pagination": "25",
+            "grids_inline_edit": "1",
+            "grids_design": "2",
+            "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "708",
+            "entity_name": "customers_tags",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"customers_tags_creation_date\",\"update_time\":\"customers_tags_modified_date\",\"created_by\":\"customers_tags_created_by\",\"edited_by\":\"customers_tags_edited_by\",\"insert_scope\":\"customers_tags_insert_scope\",\"edit_scope\":\"customers_tags_edit_scope\"}",
+            "entity_module": "contacts-mailup-sync,customers",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "grids_fields_id": "21896",
+                    "grids_fields_grids_id": "1644",
+                    "grids_fields_fields_id": "5527",
+                    "grids_fields_order": "0",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Label",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "customers-grids_fields-21896",
+                    "grids_fields_module": "customers",
+                    "grids_fields_width": null,
+                    "fields_id": "5527",
+                    "fields_entity_id": "708",
+                    "fields_default": null,
+                    "fields_name": "customers_tags_name",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "1",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                }
+            ],
+            "actions": [
+                {
+                    "grids_actions_id": "6200",
+                    "grids_actions_grids_id": "1644",
+                    "grids_actions_order": "2",
+                    "grids_actions_name": "Elimina",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": null,
+                    "grids_actions_icon": "fas fa-trash",
+                    "grids_actions_mode": "default",
+                    "grids_actions_type": "delete",
+                    "grids_actions_color": "rgb(233, 30, 99)",
+                    "grids_actions_show": "table",
+                    "conditions": []
+                }
+            ]
+        },
+        "22": {
             "grids_id": "6",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -20553,7 +20868,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1269",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -20591,7 +20906,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1270",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -20629,7 +20944,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1271",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -20667,7 +20982,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1272",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -20705,7 +21020,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1283",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "63",
                     "fields_entity_id": "6",
@@ -20743,7 +21058,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15750",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3492",
                     "fields_entity_id": "6",
@@ -20781,7 +21096,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-18312",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -20841,7 +21156,7 @@
                 }
             ]
         },
-        "25": {
+        "26": {
             "grids_id": "49",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -21439,7 +21754,7 @@
                 }
             ]
         },
-        "27": {
+        "28": {
             "grids_id": "51",
             "grids_entity_id": "11",
             "grids_sub_grid_id": null,
@@ -21619,7 +21934,7 @@
                 }
             ]
         },
-        "29": {
+        "30": {
             "grids_id": "242",
             "grids_entity_id": "84",
             "grids_sub_grid_id": null,
@@ -21875,7 +22190,7 @@
                 }
             ]
         },
-        "36": {
+        "37": {
             "grids_id": "771",
             "grids_entity_id": "295",
             "grids_sub_grid_id": null,
@@ -22000,7 +22315,7 @@
             ],
             "actions": []
         },
-        "37": {
+        "38": {
             "grids_id": "779",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -22326,7 +22641,7 @@
                 }
             ]
         },
-        "38": {
+        "39": {
             "grids_id": "781",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -22658,7 +22973,7 @@
                 }
             ]
         },
-        "39": {
+        "40": {
             "grids_id": "827",
             "grids_entity_id": "8",
             "grids_sub_grid_id": null,
@@ -22892,7 +23207,7 @@
                 }
             ]
         },
-        "41": {
+        "42": {
             "grids_id": "904",
             "grids_entity_id": "10",
             "grids_sub_grid_id": null,
@@ -23202,7 +23517,7 @@
                 }
             ]
         },
-        "43": {
+        "44": {
             "grids_id": "944",
             "grids_entity_id": "373",
             "grids_sub_grid_id": null,
@@ -23702,7 +24017,7 @@
                 }
             ]
         },
-        "44": {
+        "45": {
             "grids_id": "945",
             "grids_entity_id": "374",
             "grids_sub_grid_id": null,
@@ -23827,7 +24142,7 @@
             ],
             "actions": []
         },
-        "45": {
+        "46": {
             "grids_id": "946",
             "grids_entity_id": "375",
             "grids_sub_grid_id": null,
@@ -23952,7 +24267,7 @@
             ],
             "actions": []
         },
-        "47": {
+        "48": {
             "grids_id": "951",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -24012,7 +24327,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14498",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -24050,7 +24365,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14499",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -24088,7 +24403,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14500",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -24126,7 +24441,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14501",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -24164,7 +24479,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14502",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -24224,7 +24539,7 @@
                 }
             ]
         },
-        "48": {
+        "49": {
             "grids_id": "952",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -24284,7 +24599,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14510",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -24322,7 +24637,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14718",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -24360,7 +24675,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14719",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -24398,7 +24713,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14720",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -24436,7 +24751,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14721",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -24474,7 +24789,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14990",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -24512,7 +24827,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14991",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3047",
                     "fields_entity_id": "6",
@@ -24550,7 +24865,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "user-extender-grids_fields-18313",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -24626,7 +24941,7 @@
                 }
             ]
         },
-        "51": {
+        "52": {
             "grids_id": "979",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -24686,7 +25001,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14701",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -24724,7 +25039,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14723",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -24762,7 +25077,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14724",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -24800,7 +25115,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14725",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -24844,7 +25159,7 @@
                 }
             ]
         },
-        "52": {
+        "53": {
             "grids_id": "982",
             "grids_entity_id": "397",
             "grids_sub_grid_id": null,
@@ -24969,7 +25284,7 @@
             ],
             "actions": []
         },
-        "53": {
+        "54": {
             "grids_id": "984",
             "grids_entity_id": "399",
             "grids_sub_grid_id": null,
@@ -25094,7 +25409,7 @@
             ],
             "actions": []
         },
-        "54": {
+        "55": {
             "grids_id": "985",
             "grids_entity_id": "400",
             "grids_sub_grid_id": null,
@@ -25142,7 +25457,7 @@
             "fields": [],
             "actions": []
         },
-        "55": {
+        "56": {
             "grids_id": "1056",
             "grids_entity_id": "451",
             "grids_sub_grid_id": null,
@@ -25267,7 +25582,7 @@
             ],
             "actions": []
         },
-        "56": {
+        "57": {
             "grids_id": "1106",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -25327,7 +25642,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15740",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -25365,7 +25680,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15741",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -25403,7 +25718,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15742",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -25441,7 +25756,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15744",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -25501,7 +25816,7 @@
                 }
             ]
         },
-        "57": {
+        "58": {
             "grids_id": "1107",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -25561,7 +25876,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15745",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -25599,7 +25914,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15746",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -25637,7 +25952,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15747",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -25675,7 +25990,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15748",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -25713,7 +26028,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15749",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -25773,7 +26088,7 @@
                 }
             ]
         },
-        "59": {
+        "60": {
             "grids_id": "1162",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -26012,7 +26327,7 @@
             ],
             "actions": []
         },
-        "60": {
+        "61": {
             "grids_id": "1187",
             "grids_entity_id": "520",
             "grids_sub_grid_id": null,
@@ -26289,7 +26604,7 @@
             ],
             "actions": []
         },
-        "62": {
+        "63": {
             "grids_id": "1287",
             "grids_entity_id": "561",
             "grids_sub_grid_id": null,
@@ -26337,7 +26652,7 @@
             "fields": [],
             "actions": []
         },
-        "63": {
+        "64": {
             "grids_id": "1292",
             "grids_entity_id": "564",
             "grids_sub_grid_id": null,
@@ -26385,7 +26700,7 @@
             "fields": [],
             "actions": []
         },
-        "64": {
+        "65": {
             "grids_id": "1293",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -26852,7 +27167,7 @@
             ],
             "actions": []
         },
-        "66": {
+        "67": {
             "grids_id": "1295",
             "grids_entity_id": "565",
             "grids_sub_grid_id": null,
@@ -27200,7 +27515,7 @@
                 }
             ]
         },
-        "67": {
+        "68": {
             "grids_id": "1296",
             "grids_entity_id": "566",
             "grids_sub_grid_id": null,
@@ -27248,7 +27563,7 @@
             "fields": [],
             "actions": []
         },
-        "68": {
+        "69": {
             "grids_id": "1300",
             "grids_entity_id": "568",
             "grids_sub_grid_id": null,
@@ -27390,7 +27705,7 @@
                 }
             ]
         },
-        "70": {
+        "71": {
             "grids_id": "1348",
             "grids_entity_id": "565",
             "grids_sub_grid_id": null,
@@ -27494,7 +27809,7 @@
                 }
             ]
         },
-        "71": {
+        "72": {
             "grids_id": "1356",
             "grids_entity_id": "592",
             "grids_sub_grid_id": null,
@@ -27636,7 +27951,7 @@
                 }
             ]
         },
-        "72": {
+        "73": {
             "grids_id": "1362",
             "grids_entity_id": "10",
             "grids_sub_grid_id": null,
@@ -27908,7 +28223,7 @@
                 }
             ]
         },
-        "73": {
+        "74": {
             "grids_id": "1407",
             "grids_entity_id": "6",
             "grids_sub_grid_id": null,
@@ -27989,7 +28304,7 @@
                 }
             ]
         },
-        "74": {
+        "75": {
             "grids_id": "1427",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -28169,7 +28484,7 @@
                 }
             ]
         },
-        "75": {
+        "76": {
             "grids_id": "1444",
             "grids_entity_id": "628",
             "grids_sub_grid_id": null,
@@ -28332,7 +28647,7 @@
             ],
             "actions": []
         },
-        "76": {
+        "77": {
             "grids_id": "1445",
             "grids_entity_id": "628",
             "grids_sub_grid_id": null,
@@ -28457,7 +28772,7 @@
             ],
             "actions": []
         },
-        "77": {
+        "78": {
             "grids_id": "1446",
             "grids_entity_id": "629",
             "grids_sub_grid_id": null,
@@ -28505,7 +28820,7 @@
             "fields": [],
             "actions": []
         },
-        "79": {
+        "80": {
             "grids_id": "1561",
             "grids_entity_id": "7",
             "grids_sub_grid_id": null,
@@ -28896,132 +29211,7 @@
             ],
             "actions": []
         },
-        "80": {
-            "grids_id": "1644",
-            "grids_entity_id": "708",
-            "grids_sub_grid_id": null,
-            "grids_name": "Customers Tags",
-            "grids_view_link": null,
-            "grids_edit_link": null,
-            "grids_view_layout": null,
-            "grids_edit_layout": null,
-            "grids_delete_link": null,
-            "grids_where": null,
-            "grids_default": "1",
-            "grids_layout": "table",
-            "grids_order_by": null,
-            "grids_group_by": null,
-            "grids_filter_session_key": null,
-            "grids_bulk_mode": null,
-            "grids_bulk_edit_form": null,
-            "grids_exportable": "0",
-            "grids_append_class": null,
-            "grids_inline_form": null,
-            "grids_module_key": "customers-grid-1644",
-            "grids_depth": null,
-            "grids_actions_column": "1",
-            "grids_builder_where": null,
-            "grids_identifier": null,
-            "grids_datatable": "0",
-            "grids_ajax": "0",
-            "grids_searchable": "0",
-            "grids_pagination": null,
-            "grids_inline_edit": "0",
-            "grids_design": null,
-            "grids_limit": null,
-            "grids_custom_query": null,
-            "grids_json": null,
-            "entity_id": "708",
-            "entity_name": "customers_tags",
-            "entity_visible": "1",
-            "entity_searchable": "1",
-            "entity_login_entity": "0",
-            "entity_type": "1",
-            "entity_action_fields": "{\"create_time\":\"customers_tags_creation_date\",\"update_time\":\"customers_tags_modified_date\",\"created_by\":\"customers_tags_created_by\",\"edited_by\":\"customers_tags_edited_by\",\"insert_scope\":\"customers_tags_insert_scope\",\"edit_scope\":\"customers_tags_edit_scope\"}",
-            "entity_module": "contacts-mailup-sync,customers",
-            "entity_preview_base": null,
-            "entity_preview_custom": null,
-            "fields": [
-                {
-                    "grids_fields_id": "21895",
-                    "grids_fields_grids_id": "1644",
-                    "grids_fields_fields_id": "5521",
-                    "grids_fields_order": "0",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "customers-grids_fields-21895",
-                    "grids_fields_module": "customers",
-                    "grids_fields_width": null,
-                    "fields_id": "5521",
-                    "fields_entity_id": "708",
-                    "fields_default": null,
-                    "fields_name": "customers_tags_creation_date",
-                    "fields_type": "DATETIME",
-                    "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "0",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "0",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "21896",
-                    "grids_fields_grids_id": "1644",
-                    "grids_fields_fields_id": "5527",
-                    "grids_fields_order": "0",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "customers-grids_fields-21896",
-                    "grids_fields_module": "customers",
-                    "grids_fields_width": null,
-                    "fields_id": "5527",
-                    "fields_entity_id": "708",
-                    "fields_default": null,
-                    "fields_name": "customers_tags_name",
-                    "fields_type": "varchar",
-                    "fields_size": "250",
-                    "fields_required": "0",
-                    "fields_preview": "1",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "0",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "0",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                }
-            ],
-            "actions": []
-        },
-        "81": {
+        "82": {
             "grids_id": "1645",
             "grids_entity_id": "708",
             "grids_sub_grid_id": null,
@@ -29338,7 +29528,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_58",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29361,7 +29551,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_59",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29384,7 +29574,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_60",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29407,7 +29597,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_61",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29430,7 +29620,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_62",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29453,7 +29643,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_63",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29476,7 +29666,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_445",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29499,7 +29689,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_446",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29522,7 +29712,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_459",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29545,7 +29735,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_499",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29992,7 +30182,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "393",
-                    "forms_fields_order": "30",
+                    "forms_fields_order": "31",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30153,7 +30343,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "1386",
-                    "forms_fields_order": "26",
+                    "forms_fields_order": "27",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30314,7 +30504,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "4177",
-                    "forms_fields_order": "29",
+                    "forms_fields_order": "30",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30337,7 +30527,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "4202",
-                    "forms_fields_order": "27",
+                    "forms_fields_order": "28",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30360,7 +30550,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "4211",
-                    "forms_fields_order": "28",
+                    "forms_fields_order": "29",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30429,7 +30619,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "4824",
-                    "forms_fields_order": "32",
+                    "forms_fields_order": "33",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30452,7 +30642,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "4825",
-                    "forms_fields_order": "33",
+                    "forms_fields_order": "34",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30475,7 +30665,7 @@
                 {
                     "forms_fields_forms_id": "1683",
                     "forms_fields_fields_id": "5244",
-                    "forms_fields_order": "31",
+                    "forms_fields_order": "32",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -30515,6 +30705,29 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1892",
+                    "forms_fields_module": "contabilita",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "1683",
+                    "forms_fields_fields_id": "5729",
+                    "forms_fields_order": "26",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "3",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "dati aggiuntivi",
+                    "forms_fields_module_key": "customers-forms_fields-1683_5729",
                     "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
@@ -31033,7 +31246,7 @@
         {
             "forms_id": "1686",
             "forms_entity_id": "10",
-            "forms_name": "Customers Contacts",
+            "forms_name": "Contatto cliente",
             "forms_action": "",
             "forms_default": "1",
             "forms_layout": "horizontal",
@@ -31047,7 +31260,7 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers-contact",
-            "forms_submit_button_label": null,
+            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "customers-form-1686",
             "forms_public": "0",
@@ -34277,7 +34490,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_63",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34300,7 +34513,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_60",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34323,7 +34536,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_61",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -35167,7 +35380,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_58",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35190,7 +35403,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_59",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35213,7 +35426,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_60",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35236,7 +35449,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_61",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35259,7 +35472,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_62",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35282,7 +35495,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_63",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35305,7 +35518,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3047",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35328,7 +35541,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3490",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -35351,7 +35564,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3492",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -35638,7 +35851,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2240_3047",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -38073,7 +38286,7 @@
         {
             "forms_id": "2712",
             "forms_entity_id": "10",
-            "forms_name": "Create contact login",
+            "forms_name": "Gestisci accessi contatto",
             "forms_action": "",
             "forms_default": "0",
             "forms_layout": "horizontal",
@@ -38140,6 +38353,54 @@
                     "forms_field_full_data": "0"
                 }
             ]
+        },
+        {
+            "forms_id": "2738",
+            "forms_entity_id": "7",
+            "forms_name": "Customer - notes",
+            "forms_action": "",
+            "forms_default": "0",
+            "forms_layout": "vertical2col",
+            "forms_one_record": "0",
+            "forms_show_delete": "0",
+            "forms_css_extra": null,
+            "forms_display_none": "0",
+            "forms_filter_session_key": null,
+            "forms_success_status": "2",
+            "forms_success_message": "",
+            "forms_success_status_edit": null,
+            "forms_success_message_edit": "",
+            "forms_identifier": "customers_notes",
+            "forms_submit_button_label": "",
+            "forms_json": null,
+            "forms_module_key": "contabilita-form-2738",
+            "forms_public": "0",
+            "forms_show_duplicate": "0",
+            "fields": [
+                {
+                    "forms_fields_forms_id": "2738",
+                    "forms_fields_fields_id": "5741",
+                    "forms_fields_order": "999",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": "Note",
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": "",
+                    "forms_fields_fieldset": "",
+                    "forms_fields_module_key": "contabilita-forms_fields-2738_5741",
+                    "forms_fields_module": "contabilita",
+                    "forms_field_full_data": "0"
+                }
+            ]
         }
     ],
     "calendars": [],
@@ -38191,7 +38452,7 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "customer-shipping-address",
             "layouts_module": "customers",
             "layouts_module_key": "firecrm-layout-6",
@@ -38210,7 +38471,7 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": null,
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "customers",
             "layouts_module_key": "firecrm-layout-7",
@@ -38286,7 +38547,7 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "customers",
             "layouts_module_key": "customers-layout-135",
@@ -38716,19 +38977,19 @@
         },
         "30": {
             "layouts_id": "825",
-            "layouts_title": "customers tags",
+            "layouts_title": "Tags clienti",
             "layouts_subtitle": "",
             "layouts_is_entity_detail": "0",
-            "layouts_entity_id": "563",
+            "layouts_entity_id": null,
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "customers",
             "layouts_module_key": "customers-layout-825",
             "layouts_show_header": "1",
-            "layouts_ajax_allowed": "1",
+            "layouts_ajax_allowed": "0",
             "layouts_settings": "0",
             "layouts_is_public": "0",
             "conditions": []
@@ -38761,7 +39022,7 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "customers",
             "layouts_module_key": "customers-layout-828",
@@ -38848,6 +39109,25 @@
             "conditions": []
         },
         "37": {
+            "layouts_id": "1124",
+            "layouts_title": "Conteggi",
+            "layouts_subtitle": "",
+            "layouts_is_entity_detail": "0",
+            "layouts_entity_id": "7",
+            "layouts_fullscreen": "0",
+            "layouts_pdf": "0",
+            "layouts_dashboardable": "0",
+            "layouts_cachable": "0",
+            "layouts_identifier": "todolist_and_counters",
+            "layouts_module": "customers",
+            "layouts_module_key": "customers-layout-1124",
+            "layouts_show_header": "1",
+            "layouts_ajax_allowed": "1",
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
+        },
+        "38": {
             "layouts_id": "401",
             "layouts_title": "Prospect - Detail",
             "layouts_subtitle": "",
@@ -38866,7 +39146,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "75": {
+        "77": {
             "layouts_id": "255",
             "layouts_title": "Customer Detail Sublayout- New Project",
             "layouts_subtitle": "",
@@ -38885,7 +39165,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "76": {
+        "78": {
             "layouts_id": "257",
             "layouts_title": "Customer Detail Sublayout- New Payment",
             "layouts_subtitle": "",
@@ -38904,7 +39184,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "77": {
+        "79": {
             "layouts_id": "256",
             "layouts_title": "Customer Detail Sublayout- New Subscription",
             "layouts_subtitle": "",
@@ -38923,7 +39203,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "78": {
+        "80": {
             "layouts_id": "260",
             "layouts_title": "Customer Detail Sublayout- New Ticket Report",
             "layouts_subtitle": "",
@@ -38942,7 +39222,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "79": {
+        "81": {
             "layouts_id": "262",
             "layouts_title": "Customer Detail Sublayout- New Billable Hours",
             "layouts_subtitle": "",
@@ -38961,7 +39241,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "80": {
+        "82": {
             "layouts_id": "264",
             "layouts_title": "Customer Detail Sublayout - New Ticket",
             "layouts_subtitle": "",
@@ -38980,7 +39260,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "81": {
+        "83": {
             "layouts_id": "584",
             "layouts_title": "Customer detail - OpenApi",
             "layouts_subtitle": "",
@@ -38999,7 +39279,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "82": {
+        "84": {
             "layouts_id": "113",
             "layouts_title": "Customer Detail - Emails",
             "layouts_subtitle": "emails",
@@ -39018,7 +39298,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "83": {
+        "85": {
             "layouts_id": "134",
             "layouts_title": "Calls",
             "layouts_subtitle": "",
@@ -39037,7 +39317,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "84": {
+        "86": {
             "layouts_id": "188",
             "layouts_title": "Customer Sublayout - Projects",
             "layouts_subtitle": "",
@@ -39056,7 +39336,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "85": {
+        "87": {
             "layouts_id": "193",
             "layouts_title": "Customer Sublayout - Tickets",
             "layouts_subtitle": "",
@@ -39075,7 +39355,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "86": {
+        "88": {
             "layouts_id": "194",
             "layouts_title": "Customer Sublayout - Tickets Reports",
             "layouts_subtitle": "",
@@ -39094,7 +39374,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "87": {
+        "89": {
             "layouts_id": "191",
             "layouts_title": "Customer Sublayout - Contracts",
             "layouts_subtitle": "",
@@ -39113,7 +39393,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "88": {
+        "90": {
             "layouts_id": "192",
             "layouts_title": "Customer Sublayout - Billing",
             "layouts_subtitle": "",
@@ -39132,7 +39412,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "89": {
+        "91": {
             "layouts_id": "219",
             "layouts_title": "Customer Sublayout - Billable Hours",
             "layouts_subtitle": "",
@@ -39151,7 +39431,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "90": {
+        "92": {
             "layouts_id": "267",
             "layouts_title": "Customer Sublayout - Proposals",
             "layouts_subtitle": "",
@@ -39170,7 +39450,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "91": {
+        "93": {
             "layouts_id": "338",
             "layouts_title": "Customer Sublayout - Passwords",
             "layouts_subtitle": "",
@@ -39189,7 +39469,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "92": {
+        "94": {
             "layouts_id": "449",
             "layouts_title": "Customer Sublayout - Equipments",
             "layouts_subtitle": "",
@@ -39208,7 +39488,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "93": {
+        "95": {
             "layouts_id": "472",
             "layouts_title": "Customer Detail Sublayout - Sold products",
             "layouts_subtitle": "",
@@ -39227,7 +39507,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "94": {
+        "96": {
             "layouts_id": "557",
             "layouts_title": "Customer Sublayout - Pratiche",
             "layouts_subtitle": "",
@@ -39246,7 +39526,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "95": {
+        "97": {
             "layouts_id": "574",
             "layouts_title": "Customer detail - Mailer sent emails",
             "layouts_subtitle": "",
@@ -39265,7 +39545,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "96": {
+        "98": {
             "layouts_id": "696",
             "layouts_title": "Customer Sublayout - Commesse",
             "layouts_subtitle": "",
@@ -39284,7 +39564,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "97": {
+        "99": {
             "layouts_id": "702",
             "layouts_title": "Documents - Customer\/Project",
             "layouts_subtitle": "",
@@ -39301,9 +39581,18 @@
             "layouts_ajax_allowed": "0",
             "layouts_settings": "0",
             "layouts_is_public": "0",
-            "conditions": []
+            "conditions": {
+                "conditions_id": "226",
+                "conditions_what": "layouts",
+                "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_query\",\"field\":\"_query\",\"type\":\"string\",\"input\":\"textarea\",\"operator\":\"num rows >= 1\",\"value\":\"SELECT 1 FROM ingegno_settings WHERE ingegno_settings_key = 'enable_documents' AND ingegno_settings_value = '1' AND ingegno_settings_module = 'projects'\"}],\"valid\":true}",
+                "conditions_ref": "702",
+                "conditions_module": null,
+                "conditions_module_key": "customers-layouts-702",
+                "conditions_creation_date": "2024-06-24 15:36:53",
+                "conditions_action": "1"
+            }
         },
-        "98": {
+        "100": {
             "layouts_id": "754",
             "layouts_title": "Customer Detail - Sublayout Preventivi - Contabilita",
             "layouts_subtitle": "",
@@ -39322,7 +39611,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "99": {
+        "101": {
             "layouts_id": "1075",
             "layouts_title": "Scadenzario cliente",
             "layouts_subtitle": "",
@@ -39341,7 +39630,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "100": {
+        "102": {
             "layouts_id": "539",
             "layouts_title": "Customer Area - Sublayout Reminders",
             "layouts_subtitle": "",
@@ -39360,7 +39649,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "101": {
+        "103": {
             "layouts_id": "540",
             "layouts_title": "Customer Area - Sublayout Fatture",
             "layouts_subtitle": "",
@@ -39379,7 +39668,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "102": {
+        "104": {
             "layouts_id": "51",
             "layouts_title": "Import \/ Export",
             "layouts_subtitle": "",
@@ -39532,7 +39821,7 @@
             "menu_link": "",
             "menu_parent": "139",
             "menu_icon_class": "fas fa-home",
-            "menu_order": "22",
+            "menu_order": "23",
             "menu_position": "sidebar",
             "menu_layout": "538",
             "menu_css_class": "",
@@ -40139,13 +40428,13 @@
         {
             "fi_events_id": "554",
             "fi_events_when": "save",
-            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"328\",\"post_process_when\":\"save\",\"post_process_entity_id\":\"7\",\"post_process_module\":\"customers\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if (empty(trim($data['customers_code']))) {\\n    $max = $this->db->query(\\\"SELECT MAX(CAST(customers_code AS UNSIGNED)) AS c FROM customers WHERE customers_deleted IS NULL OR customers_deleted = '' OR customers_deleted = '0'\\\")->row();\\n    \\n    if (!empty($max->c)) {\\n        $codice_succesivo = $max->c + 1;\\n    } else {\\n        $codice_succesivo = 1;\\n    }\\n    \\n    $this->apilib->edit('customers', $data['customers_id'], [\\n        'customers_code' => $codice_succesivo\\n    ]);\\n    $data['customers_code'] = $codice_succesivo;\\n}\\n\\n$full_enabled = $this->apilib->searchFirst('documenti_contabilita_general_settings', ['documenti_contabilita_general_settings_contabilita_full' => DB_BOOL_TRUE]);\\n\\nif ($full_enabled) {\\n    $this->load->model('contabilita\\\/Contab_cust', 'contab_cust');\\n    $this->contab_cust->generaSottoconto($data, $data['customers_code']);   \\n}\"},\"fi_events_title\":\"Assegno customers_code se non specificato\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"328\",\"post_process_when\":\"save\",\"post_process_entity_id\":\"7\",\"post_process_module\":\"customers\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"if (empty(trim($data['customers_code']))) {\\n    $max = $this->db->query(\\\"SELECT MAX(CAST(customers_code AS UNSIGNED)) AS c FROM customers WHERE customers_deleted IS NULL OR customers_deleted = '' OR customers_deleted = '0'\\\")->row();\\n\\n    if (!empty($max->c)) {\\n        $codice_succesivo = $max->c + 1;\\n    } else {\\n        $codice_succesivo = 1;\\n    }\\n\\n    $this->apilib->edit('customers', $data['customers_id'], [\\n        'customers_code' => $codice_succesivo\\n    ]);\\n    $data['customers_code'] = $codice_succesivo;\\n}\\nif ($this->datab->module_installed('contabilita')) {\\n    $full_enabled = $this->apilib->searchFirst('documenti_contabilita_general_settings', ['documenti_contabilita_general_settings_contabilita_full' => DB_BOOL_TRUE]);\\n\\n    if ($full_enabled) {\\n        $this->load->model('contabilita\\\/Contab_cust', 'contab_cust');\\n        $this->contab_cust->generaSottoconto($data, $data['customers_code']);   \\n    }\\n}\"},\"fi_events_title\":\"Assegno customers_code se non specificato\",\"save\":\"1\"}",
             "fi_events_title": "Assegno customers_code se non specificato",
             "fi_events_module": "customers",
             "fi_events_type": "database",
             "fi_events_ref_id": "7",
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"if (empty(trim($data['customers_code']))) {\\n    $max = $this->db->query(\\\"SELECT MAX(CAST(customers_code AS UNSIGNED)) AS c FROM customers WHERE customers_deleted IS NULL OR customers_deleted = '' OR customers_deleted = '0'\\\")->row();\\n    \\n    if (!empty($max->c)) {\\n        $codice_succesivo = $max->c + 1;\\n    } else {\\n        $codice_succesivo = 1;\\n    }\\n    \\n    $this->apilib->edit('customers', $data['customers_id'], [\\n        'customers_code' => $codice_succesivo\\n    ]);\\n    $data['customers_code'] = $codice_succesivo;\\n}\\n\\n$full_enabled = $this->apilib->searchFirst('documenti_contabilita_general_settings', ['documenti_contabilita_general_settings_contabilita_full' => DB_BOOL_TRUE]);\\n\\nif ($full_enabled) {\\n    $this->load->model('contabilita\\\/Contab_cust', 'contab_cust');\\n    $this->contab_cust->generaSottoconto($data, $data['customers_code']);   \\n}\"}",
+            "fi_events_actiondata": "{\"code\":\"if (empty(trim($data['customers_code']))) {\\n    $max = $this->db->query(\\\"SELECT MAX(CAST(customers_code AS UNSIGNED)) AS c FROM customers WHERE customers_deleted IS NULL OR customers_deleted = '' OR customers_deleted = '0'\\\")->row();\\n\\n    if (!empty($max->c)) {\\n        $codice_succesivo = $max->c + 1;\\n    } else {\\n        $codice_succesivo = 1;\\n    }\\n\\n    $this->apilib->edit('customers', $data['customers_id'], [\\n        'customers_code' => $codice_succesivo\\n    ]);\\n    $data['customers_code'] = $codice_succesivo;\\n}\\nif ($this->datab->module_installed('contabilita')) {\\n    $full_enabled = $this->apilib->searchFirst('documenti_contabilita_general_settings', ['documenti_contabilita_general_settings_contabilita_full' => DB_BOOL_TRUE]);\\n\\n    if ($full_enabled) {\\n        $this->load->model('contabilita\\\/Contab_cust', 'contab_cust');\\n        $this->contab_cust->generaSottoconto($data, $data['customers_code']);   \\n    }\\n}\"}",
             "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": "1",
@@ -40389,13 +40678,13 @@
         {
             "fi_events_id": "814",
             "fi_events_when": "save",
-            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"467\",\"post_process_when\":\"save\",\"post_process_entity_id\":\"7\",\"post_process_module\":\"customers\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"$module_settings = $this->db->get('customers_settings')->row_array();\\n\\nif ($module_settings['customers_settings_create_shipping_address'] == DB_BOOL_TRUE) {\\n    $customers_shipping_address = $this->db->get_where('customers_shipping_address', [\\n        'customers_shipping_address_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_shipping_address->num_rows() <= 0\\n        && !empty($data['customers_address'])\\n        && !empty($data['customers_city'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_shipping_address', [\\n                'customers_shipping_address_type' => ($data['customers_group'] == '1' ? '2' : '1'),\\n                'customers_shipping_address_customer_id' => $data['customers_id'],\\n                'customers_shipping_address_street' => $data['customers_address'],\\n                'customers_shipping_address_city' => $data['customers_city'],\\n                'customers_shipping_address_state' => ($data['customers_province'] ?? ''),\\n                'customers_shipping_address_country_id' => ($data['customers_country_id'] ?? ''),\\n                'customers_shipping_address_zip_code' => ($data['customers_zip_code'] ?? ''),\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING SHIPPING ADDRESS FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\\n\\nif ($module_settings['customers_settings_create_contact'] == DB_BOOL_TRUE) {\\n    $customers_contacts = $this->db->get_where('customers_contacts', [\\n        'customers_contacts_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_contacts->num_rows() <= 0\\n        && ( !empty($data['customers_company']) || !empty($data['customers_name']) )\\n        && !empty($data['customers_email'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_contacts', [\\n                'customers_contacts_customer_id' => $data['customers_id'],\\n                'customers_contacts_name' => ($data['customers_company']) ? $data['customers_company'] : $data['customers_name'],\\n                'customers_contacts_last_name' => ($data['customers_last_name']) ? $data['customers_last_name'] : '',\\n                'customers_contacts_mobile_number' => ($data['customers_mobile']) ? $data['customers_mobile'] : '' ,\\n                'customers_contacts_phone' => ($data['customers_phone']) ? $data['customers_phone'] : '',\\n                'customers_contacts_email' => ($data['customers_email']) ? $data['customers_email'] : '',\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING CONTACT FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\"},\"fi_events_title\":\"Insert edit customer create address and contact based on parameter\",\"save\":\"1\"}",
+            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"467\",\"post_process_when\":\"save\",\"post_process_entity_id\":\"7\",\"post_process_module\":\"customers\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\",\"post_process_background\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"$module_settings = $this->db->get('customers_settings')->row_array();\\n\\nif ($module_settings['customers_settings_create_shipping_address'] == DB_BOOL_TRUE) {\\n    $customers_shipping_address = $this->db->get_where('customers_shipping_address', [\\n        'customers_shipping_address_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_shipping_address->num_rows() <= 0\\n        && !empty($data['customers_address'])\\n        && !empty($data['customers_city'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_shipping_address', [\\n                'customers_shipping_address_type' => ($data['customers_group'] == '1' ? '2' : '1'),\\n                'customers_shipping_address_default' => DB_BOOL_TRUE,\\n                'customers_shipping_address_customer_id' => $data['customers_id'],\\n                'customers_shipping_address_street' => $data['customers_address'],\\n                'customers_shipping_address_city' => $data['customers_city'],\\n                'customers_shipping_address_state' => ($data['customers_province'] ?? ''),\\n                'customers_shipping_address_country_id' => ($data['customers_country_id'] ?? ''),\\n                'customers_shipping_address_zip_code' => ($data['customers_zip_code'] ?? ''),\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING SHIPPING ADDRESS FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\\n\\nif ($module_settings['customers_settings_create_contact'] == DB_BOOL_TRUE) {\\n    $customers_contacts = $this->db->get_where('customers_contacts', [\\n        'customers_contacts_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_contacts->num_rows() <= 0\\n        && ( !empty($data['customers_company']) || !empty($data['customers_name']) )\\n        && !empty($data['customers_email'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_contacts', [\\n                'customers_contacts_customer_id' => $data['customers_id'],\\n                'customers_contacts_name' => ($data['customers_company']) ? $data['customers_company'] : $data['customers_name'],\\n                'customers_contacts_last_name' => ($data['customers_last_name']) ? $data['customers_last_name'] : '',\\n                'customers_contacts_mobile_number' => ($data['customers_mobile']) ? $data['customers_mobile'] : '' ,\\n                'customers_contacts_phone' => ($data['customers_phone']) ? $data['customers_phone'] : '',\\n                'customers_contacts_email' => ($data['customers_email']) ? $data['customers_email'] : '',\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING CONTACT FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\"},\"fi_events_title\":\"Insert edit customer create address and contact based on parameter\",\"save\":\"1\"}",
             "fi_events_title": "Insert edit customer create address and contact based on parameter",
             "fi_events_module": "customers",
             "fi_events_type": "database",
             "fi_events_ref_id": "7",
             "fi_events_action": "custom_code",
-            "fi_events_actiondata": "{\"code\":\"$module_settings = $this->db->get('customers_settings')->row_array();\\n\\nif ($module_settings['customers_settings_create_shipping_address'] == DB_BOOL_TRUE) {\\n    $customers_shipping_address = $this->db->get_where('customers_shipping_address', [\\n        'customers_shipping_address_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_shipping_address->num_rows() <= 0\\n        && !empty($data['customers_address'])\\n        && !empty($data['customers_city'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_shipping_address', [\\n                'customers_shipping_address_type' => ($data['customers_group'] == '1' ? '2' : '1'),\\n                'customers_shipping_address_customer_id' => $data['customers_id'],\\n                'customers_shipping_address_street' => $data['customers_address'],\\n                'customers_shipping_address_city' => $data['customers_city'],\\n                'customers_shipping_address_state' => ($data['customers_province'] ?? ''),\\n                'customers_shipping_address_country_id' => ($data['customers_country_id'] ?? ''),\\n                'customers_shipping_address_zip_code' => ($data['customers_zip_code'] ?? ''),\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING SHIPPING ADDRESS FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\\n\\nif ($module_settings['customers_settings_create_contact'] == DB_BOOL_TRUE) {\\n    $customers_contacts = $this->db->get_where('customers_contacts', [\\n        'customers_contacts_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_contacts->num_rows() <= 0\\n        && ( !empty($data['customers_company']) || !empty($data['customers_name']) )\\n        && !empty($data['customers_email'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_contacts', [\\n                'customers_contacts_customer_id' => $data['customers_id'],\\n                'customers_contacts_name' => ($data['customers_company']) ? $data['customers_company'] : $data['customers_name'],\\n                'customers_contacts_last_name' => ($data['customers_last_name']) ? $data['customers_last_name'] : '',\\n                'customers_contacts_mobile_number' => ($data['customers_mobile']) ? $data['customers_mobile'] : '' ,\\n                'customers_contacts_phone' => ($data['customers_phone']) ? $data['customers_phone'] : '',\\n                'customers_contacts_email' => ($data['customers_email']) ? $data['customers_email'] : '',\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING CONTACT FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\"}",
+            "fi_events_actiondata": "{\"code\":\"$module_settings = $this->db->get('customers_settings')->row_array();\\n\\nif ($module_settings['customers_settings_create_shipping_address'] == DB_BOOL_TRUE) {\\n    $customers_shipping_address = $this->db->get_where('customers_shipping_address', [\\n        'customers_shipping_address_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_shipping_address->num_rows() <= 0\\n        && !empty($data['customers_address'])\\n        && !empty($data['customers_city'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_shipping_address', [\\n                'customers_shipping_address_type' => ($data['customers_group'] == '1' ? '2' : '1'),\\n                'customers_shipping_address_default' => DB_BOOL_TRUE,\\n                'customers_shipping_address_customer_id' => $data['customers_id'],\\n                'customers_shipping_address_street' => $data['customers_address'],\\n                'customers_shipping_address_city' => $data['customers_city'],\\n                'customers_shipping_address_state' => ($data['customers_province'] ?? ''),\\n                'customers_shipping_address_country_id' => ($data['customers_country_id'] ?? ''),\\n                'customers_shipping_address_zip_code' => ($data['customers_zip_code'] ?? ''),\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING SHIPPING ADDRESS FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\\n\\nif ($module_settings['customers_settings_create_contact'] == DB_BOOL_TRUE) {\\n    $customers_contacts = $this->db->get_where('customers_contacts', [\\n        'customers_contacts_customer_id' => $data['customers_id']\\n    ]);\\n\\n    if (\\n        $customers_contacts->num_rows() <= 0\\n        && ( !empty($data['customers_company']) || !empty($data['customers_name']) )\\n        && !empty($data['customers_email'])\\n    ) {\\n        try {\\n            $this->apilib->create('customers_contacts', [\\n                'customers_contacts_customer_id' => $data['customers_id'],\\n                'customers_contacts_name' => ($data['customers_company']) ? $data['customers_company'] : $data['customers_name'],\\n                'customers_contacts_last_name' => ($data['customers_last_name']) ? $data['customers_last_name'] : '',\\n                'customers_contacts_mobile_number' => ($data['customers_mobile']) ? $data['customers_mobile'] : '' ,\\n                'customers_contacts_phone' => ($data['customers_phone']) ? $data['customers_phone'] : '',\\n                'customers_contacts_email' => ($data['customers_email']) ? $data['customers_email'] : '',\\n            ]);\\n        } catch (Exception $e) {\\n            log_message('error', \\\"ERROR CREATING CONTACT FOR {$data['customers_full_name']} -> {$e->getMessage()}\\\");\\n        }\\n    }\\n}\"}",
             "fi_events_active": "0",
             "fi_events_apilib": "1",
             "fi_events_api": "1",
@@ -40483,6 +40772,31 @@
             "fi_events_post_process_id": "587",
             "fi_events_hook_id": null,
             "fi_events_creation_date": "2024-03-04 14:52:29",
+            "fi_events_ref": null,
+            "fi_events_cli": "0"
+        },
+        {
+            "fi_events_id": "1072",
+            "fi_events_when": "update",
+            "fi_events_json_data": "{\"_when\":\"\",\"fi_events_type\":\"database\",\"pp\":{\"post_process_id\":\"616\",\"post_process_when\":\"update\",\"post_process_entity_id\":\"7\",\"post_process_module\":\"customers\",\"post_process_crm\":\"1\",\"post_process_api\":\"1\",\"post_process_apilib\":\"1\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"\\\/\\\/ Ricerca il primo indirizzo di spedizione predefinito per il cliente specificato\\n$sede_legale = $this->apilib->searchFirst('customers_shipping_address', [\\n    'customers_shipping_address_customer_id' => $data['value_id'],\\n    'customers_shipping_address_default' => DB_BOOL_TRUE\\n]);\\n\\n\\\/\\\/ Se \\u00e8 stato trovato un indirizzo di spedizione predefinito\\nif (!empty($sede_legale)) {\\n    \\\/\\\/ Ottieni i nuovi dati dal payload, rimuovendo l'elemento 'old'\\n    $new = $data['new'];\\n    unset($new['old']);\\n    $old = $data['old'];\\n\\n    \\\/\\\/ Calcola la differenza tra i nuovi dati e i dati vecchi\\n    $diff = array_diff($new, $old);\\n\\n    \\\/\\\/ Se ci sono differenze tra i dati nuovi e quelli vecchi\\n    if (!empty($diff)) {\\n        \\\/\\\/ Mappa per la corrispondenza dei campi tra i dati del cliente e i campi dell'indirizzo di spedizione\\n        $map_campi_anagrafica_sede = [\\n            'customers_address' => 'customers_shipping_address_street',\\n            'customers_city' => 'customers_shipping_address_city',\\n            'customers_zip_code' => 'customers_shipping_address_zip_code',\\n            'customers_province' => 'customers_shipping_address_state',\\n            'customers_country_id' => 'customers_shipping_address_country_id',\\n        ];\\n\\n        \\\/\\\/ Array per contenere i dati dell'indirizzo di spedizione da aggiornare\\n        $dati_sede = [];\\n\\n        \\\/\\\/ Itera attraverso le differenze e crea l'array dei dati aggiornati dell'indirizzo di spedizione\\n        foreach ($diff as $field => $value) {\\n            \\\/\\\/ Controlla se il campo \\u00e8 nella mappa di corrispondenza\\n            if (isset($map_campi_anagrafica_sede[$field])) {\\n                if (!is_numeric($value) && trim(empty($value))) {\\n                    $value = null;\\n                }\\n                \\\/\\\/ Aggiungi il campo mappato ai dati dell'indirizzo di spedizione\\n                $dati_sede[$map_campi_anagrafica_sede[$field]] = $value;\\n            }\\n        }\\n\\n        \\\/\\\/ Se ci sono dati dell'indirizzo di spedizione da aggiornare\\n        if (!empty($dati_sede)) {\\n            \\\/\\\/ Esegui l'aggiornamento dell'indirizzo di spedizione nel database\\n            $this->apilib->edit('customers_shipping_address', $sede_legale['customers_shipping_address_id'], $dati_sede);\\n        }\\n    }\\n}\"},\"fi_events_title\":\"[modulo customers] aggiorno sede default in caso di modifica anagrafica\",\"save\":\"0\"}",
+            "fi_events_title": "[modulo customers] aggiorno sede default in caso di modifica anagrafica",
+            "fi_events_module": "customers",
+            "fi_events_type": "database",
+            "fi_events_ref_id": "7",
+            "fi_events_action": "custom_code",
+            "fi_events_actiondata": "{\"code\":\"\\\/\\\/ Ricerca il primo indirizzo di spedizione predefinito per il cliente specificato\\n$sede_legale = $this->apilib->searchFirst('customers_shipping_address', [\\n    'customers_shipping_address_customer_id' => $data['value_id'],\\n    'customers_shipping_address_default' => DB_BOOL_TRUE\\n]);\\n\\n\\\/\\\/ Se \\u00e8 stato trovato un indirizzo di spedizione predefinito\\nif (!empty($sede_legale)) {\\n    \\\/\\\/ Ottieni i nuovi dati dal payload, rimuovendo l'elemento 'old'\\n    $new = $data['new'];\\n    unset($new['old']);\\n    $old = $data['old'];\\n\\n    \\\/\\\/ Calcola la differenza tra i nuovi dati e i dati vecchi\\n    $diff = array_diff($new, $old);\\n\\n    \\\/\\\/ Se ci sono differenze tra i dati nuovi e quelli vecchi\\n    if (!empty($diff)) {\\n        \\\/\\\/ Mappa per la corrispondenza dei campi tra i dati del cliente e i campi dell'indirizzo di spedizione\\n        $map_campi_anagrafica_sede = [\\n            'customers_address' => 'customers_shipping_address_street',\\n            'customers_city' => 'customers_shipping_address_city',\\n            'customers_zip_code' => 'customers_shipping_address_zip_code',\\n            'customers_province' => 'customers_shipping_address_state',\\n            'customers_country_id' => 'customers_shipping_address_country_id',\\n        ];\\n\\n        \\\/\\\/ Array per contenere i dati dell'indirizzo di spedizione da aggiornare\\n        $dati_sede = [];\\n\\n        \\\/\\\/ Itera attraverso le differenze e crea l'array dei dati aggiornati dell'indirizzo di spedizione\\n        foreach ($diff as $field => $value) {\\n            \\\/\\\/ Controlla se il campo \\u00e8 nella mappa di corrispondenza\\n            if (isset($map_campi_anagrafica_sede[$field])) {\\n                if (!is_numeric($value) && trim(empty($value))) {\\n                    $value = null;\\n                }\\n                \\\/\\\/ Aggiungi il campo mappato ai dati dell'indirizzo di spedizione\\n                $dati_sede[$map_campi_anagrafica_sede[$field]] = $value;\\n            }\\n        }\\n\\n        \\\/\\\/ Se ci sono dati dell'indirizzo di spedizione da aggiornare\\n        if (!empty($dati_sede)) {\\n            \\\/\\\/ Esegui l'aggiornamento dell'indirizzo di spedizione nel database\\n            $this->apilib->edit('customers_shipping_address', $sede_legale['customers_shipping_address_id'], $dati_sede);\\n        }\\n    }\\n}\"}",
+            "fi_events_active": "0",
+            "fi_events_apilib": "1",
+            "fi_events_api": "1",
+            "fi_events_crm": "1",
+            "fi_events_order": "55",
+            "fi_events_cron_frequency": "1",
+            "fi_events_cron_last_execution": null,
+            "fi_events_hook_order": null,
+            "fi_events_cron_id": null,
+            "fi_events_post_process_id": "616",
+            "fi_events_hook_id": null,
+            "fi_events_creation_date": "2024-06-06 10:02:25",
             "fi_events_ref": null,
             "fi_events_cli": "0"
         }

@@ -16,7 +16,7 @@ $filtri = array();
 
 if (!empty($filters["filter_stampe_contabili"])) {
     foreach ($filters["filter_stampe_contabili"] as $field) {
-        if ($field['value'] == '-1') {
+        if ($field['value'] == '-1' || $field['value'] == '') {
             continue;
         }
         $filter_field = $this->datab->get_field($field["field_id"], true);
@@ -154,7 +154,7 @@ window.onload = function() {
 <div style="margin-bottom:30px">
 
     <?php foreach ($filtri as $filtro) : ?>
-    <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo $filtro['value']; ?></p>
+    <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo implode(',', (array) $filtro['value']); ?></p>
     <?php endforeach; ?>
 
 </div>

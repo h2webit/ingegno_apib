@@ -1,0 +1,23 @@
+.item_description {
+  min-height: 34px !important;
+  height: 34px !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  resize: vertical;
+  max-height: 170px !important;
+}
+
+#billing_doc_notes {
+  min-height: 80px !important;
+  height: 80px !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  resize: vertical;
+  max-height: 170px !important;
+}
+.w100 {
+  width: 100% !important;
+}
+.mt-20 {
+  margin-top: 20px;
+}

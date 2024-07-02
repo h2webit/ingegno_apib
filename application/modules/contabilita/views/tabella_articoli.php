@@ -16,6 +16,9 @@
             <?php if ($impostazioni['documenti_contabilita_settings_lotto']): ?>
             <th width="5%">Lotto</th>
             <?php endif; ?>
+            <?php if ($impostazioni['documenti_contabilita_settings_periodo_comp']): ?>
+                <th width="16%">Periodo comp.</th>
+            <?php endif; ?>
             <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
                 <th width="5%">Commessa</th>
             <?php endif; ?>
@@ -57,6 +60,9 @@
                             <th width="7%">Prezzo</th>
                             <?php if ($impostazioni['documenti_contabilita_settings_lotto']): ?>
                             <th width="5%">Lotto</th>
+                            <?php endif; ?>
+                            <?php if ($impostazioni['documenti_contabilita_settings_periodo_comp']): ?>
+                                <th width="16%">Periodo comp.</th>
                             <?php endif; ?>
                             <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
                                 <th width="5%">Commessa</th>
@@ -122,6 +128,21 @@
                             <td>
                                 <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_lotto" data-name="documenti_contabilita_articoli_lotto" value="" />
                             </td>
+                            <?php endif; ?>
+
+                            <?php if ($impostazioni['documenti_contabilita_settings_periodo_comp']): ?>
+                                <td>
+                                    <div class="input-group input-group js_form_daterangepicker input-sm">
+                                        <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_periodo_comp"
+                                        data-name="documenti_contabilita_articoli_periodo_comp" value="" placeholder="es: 01/01/2024 - 31/03/2024"
+                                        pattern="^(\d{2}/\d{2}/\d{4}) - (\d{2}/\d{2}/\d{4})$"
+                                        />
+                                        <span class="input-group-btn" tabindex="-1" >
+                                            <button class="btn btn-default" type="button" tabindex="-1" style="display:none;"><i class="fas fa-calendar-alt"></i></button>
+                                        </span>
+                                    </div>
+                                    
+                                </td>
                             <?php endif; ?>
 
                             <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
@@ -257,6 +278,11 @@
                             <?php if ($impostazioni['documenti_contabilita_settings_lotto']): ?>
                             <th width="5%">Lotto</th>
                             <?php endif; ?>
+
+                            <?php if ($impostazioni['documenti_contabilita_settings_periodo_comp']): ?>
+                                <th width="16%">Periodo comp.</th>
+                            <?php endif; ?>
+
                             <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
                                 <th width="5%">Commessa</th>
                             <?php endif; ?>
@@ -343,6 +369,21 @@
                                 <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_lotto" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_lotto]" value="<?php echo $prodotto['documenti_contabilita_articoli_lotto']; ?>" placeholder="0" />
                             </td>
                             <?php endif; ?>
+
+                                <?php if ($impostazioni['documenti_contabilita_settings_periodo_comp']): ?>
+                                    <td width="50">
+                                        <div class="input-group input-group js_form_daterangepicker input-sm">
+                                        <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_periodo_comp"
+                                            name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_periodo_comp]"
+                                            value="<?php echo ($prodotto['documenti_contabilita_articoli_periodo_comp']??''); ?>"
+                                            placeholder="es.:01/01/2024 - 31/03/2024" pattern="^(\d{2}/\d{2}/\d{4}) - (\d{2}/\d{2}/\d{4})$" />
+                                        <span class="input-group-btn" tabindex="-1" >
+                                            <button class="btn btn-default" type="button" tabindex="-1" style="display:none;"><i class="fas fa-calendar-alt"></i></button>
+                                        </span>
+                                    </div>
+                                        
+                                    </td>
+                                <?php endif; ?>
 
                             <?php if ($impostazioni['documenti_contabilita_settings_commessa']): ?>
                                 <td width="50">
@@ -657,6 +698,8 @@ $(function() {
                             <?php if ($impostazioni['documenti_contabilita_settings_lotto'] == 1): ?>
                             append_tr += "<td>" + (item.movimenti_articoli_lotto == null ? '' : item.movimenti_articoli_lotto) + "</td>";
                             <?php endif; ?>
+
+                            
 
                             <?php if ($impostazioni['documenti_contabilita_settings_scadenza'] == 1): ?>
                             append_tr += "<td>" + data_scadenza + "</td>";

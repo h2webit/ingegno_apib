@@ -79,7 +79,7 @@ $query_fatturato = $query_all_days . " SELECT
     FROM
         all_dates d
         left join documenti_contabilita t on CAST(t.documenti_contabilita_data_emissione as DATE) = d.dt
-    WHERE $where_fatture_str
+    WHERE documenti_contabilita_tipologia_fatturazione NOT IN (7,8,9) AND $where_fatture_str
     GROUP BY extract(month FROM dt),extract(year FROM dt)
     ORDER BY extract(year FROM dt), extract(month from dt)";
 $fatturato_mensile = $this->db->query($query_fatturato)->result_array();

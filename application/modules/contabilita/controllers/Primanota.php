@@ -1816,4 +1816,667 @@ class Primanota extends MX_Controller
 
         echo "<a href=\"" . base_url() . "main/layout/elenco_documenti\">Clicca qui per tornare all'elenco documenti</a>";
     }
+    public function chiusuraEsercizioStep1($causale_bilancio_chiusura_gpp_id = null)
+    {
+        if (!$causale_bilancio_chiusura_gpp_id) {
+            $causale_bilancio_chiusura_gpp = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'GPP']);
+            $causale_bilancio_chiusura_gpp_id = $causale_bilancio_chiusura_gpp['prime_note_causali_id'];
+        }
+        //debug($causale_bilancio_chiusura_gpp_id,true);
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+
+
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+        if (!$causale_bilancio_chiusura_gpp_id) {
+            die('Non trovo la causale GPP di chiusura bilancio');
+
+        }
+        $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
+
+        $anno_esercizio = $impostazioni['documenti_contabilita_settings_esercizio'];
+        $conto_patrimoniale_riepilogo_costi_codice = $impostazioni['documenti_contabilita_settings_conto_riep_cos'];
+        $conto_patrimoniale_riepilogo_costi = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $conto_patrimoniale_riepilogo_costi_codice]);
+
+        $conto_patrimoniale_riepilogo_ricavi_codice = $impostazioni['documenti_contabilita_settings_conto_riep_ric'];
+        $conto_patrimoniale_riepilogo_ricavi = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $conto_patrimoniale_riepilogo_ricavi_codice]);
+
+        $piano_dei_conti = $this->prima_nota->getPianoDeiConti(true, true, true);
+
+
+        foreach ($piano_dei_conti as $mastro_tipo) {
+            $total_mastri = count($mastro_tipo['mastri']);
+            $m = 0;
+
+            foreach ($mastro_tipo['mastri'] as $mastro) {
+
+                progress(++$m, $total_mastri, "GPP - Mastri");
+                $c = 0;
+                if ($mastro['documenti_contabilita_mastri_tipo_value'] != 'ECONOMICO') {
+                    continue;
+
+                }
+                if ($mastro['documenti_contabilita_mastri_natura_value'] == 'Costi') {
+                    $conto_riepilogo = $conto_patrimoniale_riepilogo_costi;
+                } else {
+                    $conto_riepilogo = $conto_patrimoniale_riepilogo_ricavi;
+                }
+                $conto_riepilogo_codice = $conto_riepilogo['documenti_contabilita_sottoconti_codice_completo'];
+
+                $total_conti = count($mastro['conti']);
+                foreach ($mastro['conti'] as $conto) {
+                    $s = 0;
+                    progress(++$c, $total_conti, "GPP - Conti");
+                    $total_sottoconti = count($conto['sottoconti']);
+                    foreach ($conto['sottoconti'] as $sottoconto) {
+                        progress(++$s, $total_sottoconti, "GPP - Sottoconti");
+                        if ($sottoconto['totale'] != 0) {
+
+                            if ($mastro['documenti_contabilita_mastri_natura_value'] == 'Ricavi') {
+                                //Inverto i ricavi
+                                //$sottoconto['totale'] = -$sottoconto['totale'];
+                            }
+
+                            //Questo sottoconto va chiuso, ovvero va spostato nel patrimoniale (costi o ricavi a seconda)
+                            $prima_nota = [
+                                'prime_note_azienda' => $azienda,
+                                'prime_note_protocollo' => null,
+                                'prime_note_documento' => null,
+                                'prime_note_spesa' => null,
+                                'prime_note_sezionale' => null,
+                                'prime_note_scadenza' => ($anno_esercizio) . '-12-31',
+                                'prime_note_causale' => $causale_bilancio_chiusura_gpp_id,
+                                'prime_note_numero_documento' => null,
+                                'prime_note_progressivo_giornaliero' => $this->prima_nota->getProgressivoGiorno(($anno_esercizio) . '-12-31', $azienda),
+                                'prime_note_progressivo_annuo' => $this->prima_nota->getProgressivoAnno(($anno_esercizio) . '-12-31', $azienda),
+                                'prime_note_tipo' => null,
+                                'prime_note_ref_prima_nota' => null,
+                                'prime_note_modello' => 0,
+                                'prime_note_json_data' => null,
+                                'prime_note_data_registrazione' => ($anno_esercizio) . '-12-31',
+                            ];
+                            $codice_completo = $sottoconto['documenti_contabilita_sottoconti_codice_completo'];
+                            $expl = explode('.', $codice_completo);
+                            $mastro_codice = $expl[0];
+                            $conto_codice = $expl[1];
+                            $sottoconto_codice = $expl[2];
+
+                            $righe = [
+                                //Riga uno
+                                [
+                                    'prime_note_registrazioni_importo_dare' => $sottoconto['totale'] < 0 ? abs($sottoconto['totale']) : 0,
+                                    'prime_note_registrazioni_importo_avere' => $sottoconto['totale'] > 0 ? abs($sottoconto['totale']) : 0,
+
+                                    'prime_note_registrazioni_numero_riga' => 1,
+
+                                    'prime_note_registrazioni_mastro_dare' => $sottoconto['totale'] < 0 ? $sottoconto['documenti_contabilita_sottoconti_mastro'] : null,
+                                    'prime_note_registrazioni_mastro_avere' => $sottoconto['totale'] > 0 ? $sottoconto['documenti_contabilita_sottoconti_mastro'] : null,
+
+                                    'prime_note_registrazioni_conto_dare' => $sottoconto['totale'] < 0 ? $sottoconto['documenti_contabilita_sottoconti_conto'] : null,
+                                    'prime_note_registrazioni_conto_avere' => $sottoconto['totale'] > 0 ? $sottoconto['documenti_contabilita_sottoconti_conto'] : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare' => $sottoconto['totale'] < 0 ? $sottoconto['documenti_contabilita_sottoconti_id'] : null,
+                                    'prime_note_registrazioni_sottoconto_avere' => $sottoconto['totale'] > 0 ? $sottoconto['documenti_contabilita_sottoconti_id'] : null,
+
+                                    'prime_note_registrazioni_mastro_dare_codice' => $sottoconto['totale'] < 0 ? $mastro_codice : null,
+                                    'prime_note_registrazioni_mastro_avere_codice' => $sottoconto['totale'] > 0 ? $mastro_codice : null,
+
+                                    'prime_note_registrazioni_conto_dare_codice' => $sottoconto['totale'] < 0 ? $conto_codice : null,
+                                    'prime_note_registrazioni_conto_avere_codice' => $sottoconto['totale'] > 0 ? $conto_codice : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare_codice' => $sottoconto['totale'] < 0 ? $sottoconto_codice : null,
+                                    'prime_note_registrazioni_sottoconto_avere_codice' => $sottoconto['totale'] > 0 ? $sottoconto_codice : null,
+
+                                    'prime_note_registrazioni_codice_dare_testuale' => $sottoconto['totale'] < 0 ? $codice_completo : null,
+                                    'prime_note_registrazioni_codice_avere_testuale' => $sottoconto['totale'] > 0 ? $codice_completo : null,
+                                ],
+                                //Riga due
+                                [
+                                    'prime_note_registrazioni_importo_dare' => $sottoconto['totale'] > 0 ? abs($sottoconto['totale']) : 0,
+                                    'prime_note_registrazioni_importo_avere' => $sottoconto['totale'] < 0 ? abs($sottoconto['totale']) : 0,
+
+                                    'prime_note_registrazioni_numero_riga' => 2,
+
+                                    'prime_note_registrazioni_mastro_dare' => $sottoconto['totale'] > 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_mastro'] : null,
+                                    'prime_note_registrazioni_mastro_avere' => $sottoconto['totale'] < 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_mastro'] : null,
+
+                                    'prime_note_registrazioni_conto_dare' => $sottoconto['totale'] > 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_conto'] : null,
+                                    'prime_note_registrazioni_conto_avere' => $sottoconto['totale'] < 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_conto'] : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare' => $sottoconto['totale'] > 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_id'] : null,
+                                    'prime_note_registrazioni_sottoconto_avere' => $sottoconto['totale'] < 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_id'] : null,
+
+                                    'prime_note_registrazioni_mastro_dare_codice' => $sottoconto['totale'] > 0 ? $conto_riepilogo['documenti_contabilita_mastri_codice'] : null,
+                                    'prime_note_registrazioni_mastro_avere_codice' => $sottoconto['totale'] < 0 ? $conto_riepilogo['documenti_contabilita_mastri_codice'] : null,
+
+                                    'prime_note_registrazioni_conto_dare_codice' => $sottoconto['totale'] > 0 ? $conto_riepilogo['documenti_contabilita_conti_codice'] : null,
+                                    'prime_note_registrazioni_conto_avere_codice' => $sottoconto['totale'] < 0 ? $conto_riepilogo['documenti_contabilita_conti_codice'] : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare_codice' => $sottoconto['totale'] > 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_codice'] : null,
+                                    'prime_note_registrazioni_sottoconto_avere_codice' => $sottoconto['totale'] < 0 ? $conto_riepilogo['documenti_contabilita_sottoconti_codice'] : null,
+
+                                    'prime_note_registrazioni_codice_dare_testuale' => $sottoconto['totale'] > 0 ? $conto_riepilogo_codice : null,
+                                    'prime_note_registrazioni_codice_avere_testuale' => $sottoconto['totale'] < 0 ? $conto_riepilogo_codice : null,
+                                ]
+                            ];
+                            //debug($conto_patrimoniale_chiusura,true);
+
+                            $prima_nota_db = $this->apilib->create('prime_note', $prima_nota);
+                            //debug($righe, true);
+                            foreach ($righe as $registrazione) {
+                                $registrazione['prime_note_registrazioni_prima_nota'] = $prima_nota_db['prime_note_id'];
+
+                                $this->apilib->create('prime_note_registrazioni', $registrazione);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+        //Reindirizzo al referer
+        echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        exit;
+    }
+    public function chiusuraEsercizioStep2($causale_bilancio_chiusura_blc_id = null)
+    {
+        if (!$causale_bilancio_chiusura_blc_id) {
+            $causale_bilancio_chiusura_blc = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLC']);
+            $causale_bilancio_chiusura_blc_id = $causale_bilancio_chiusura_blc['prime_note_causali_id'];
+        }
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+
+
+        //$causale_bilancio_apertura = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLA']);
+
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+        if (!$causale_bilancio_chiusura_blc_id) {
+            die('Non trovo la causale BLC di chiusura bilancio');
+
+        }
+        $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
+
+        $anno_esercizio = $impostazioni['documenti_contabilita_settings_esercizio'];
+        $conto_patrimoniale_chiusura_codice = $impostazioni['documenti_contabilita_settings_conto_patr_fin'];
+        $conto_patrimoniale_chiusura = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $conto_patrimoniale_chiusura_codice]);
+        //Prendo tutti i conti patrimoniali
+        // $conti_patrimoniali = $this->apilib->search('documenti_contabilita_sottoconti', [
+        //     'documenti_contabilita_mastri_tipo_value' => 'PATRIMONIALE',
+        //     '(documenti_contabilita_sottoconti_id IN (
+        //             SELECT prime_note_registrazioni_sottoconto_dare 
+        //             FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota)
+        //             WHERE 
+        //                 YEAR(prime_note_data_registrazione) = ' . $anno_esercizio . ')
+        //        OR 
+        //        documenti_contabilita_sottoconti_id IN (
+        //             SELECT prime_note_registrazioni_sottoconto_avere 
+        //             FROM prime_note_registrazioni LEFT JOIN prime_note ON (prime_note_id = prime_note_registrazioni_prima_nota)
+        //             WHERE 
+        //                 YEAR(prime_note_data_registrazione) = ' . $anno_esercizio . ')
+        //        )
+        //                 ',
+        // ]);
+        $piano_dei_conti = $this->prima_nota->getPianoDeiConti(true, true, true);
+        $m = 0;
+
+        foreach ($piano_dei_conti as $mastro_tipo) {
+            $total_mastri = count($mastro_tipo['mastri']);
+
+
+            foreach ($mastro_tipo['mastri'] as $mastro) {
+                progress(++$m, $total_mastri, "BLC - Mastri");
+                $c = 0;
+                if ($mastro['documenti_contabilita_mastri_tipo_value'] != 'PATRIMONIALE') {
+                    continue;
+
+                }
+                $total_conti = count($mastro['conti']);
+                foreach ($mastro['conti'] as $conto) {
+                    $s = 0;
+                    progress(++$c, $total_conti, "BLC - Conti");
+                    $total_sottoconti = count($conto['sottoconti']);
+                    foreach ($conto['sottoconti'] as $sottoconto) {
+                        progress(++$s, $total_sottoconti, "BLC - Sottoconti");
+                        if ($sottoconto['totale'] != 0) {
+                            //Questo sottoconto va chiuso, ovvero va spostato nell'economico
+                            $prima_nota = [
+                                'prime_note_azienda' => $azienda,
+                                'prime_note_protocollo' => null,
+                                'prime_note_documento' => null,
+                                'prime_note_spesa' => null,
+                                'prime_note_sezionale' => null,
+                                'prime_note_scadenza' => ($anno_esercizio) . '-12-31',
+                                'prime_note_causale' => $causale_bilancio_chiusura_blc_id,
+                                'prime_note_numero_documento' => null,
+                                'prime_note_progressivo_giornaliero' => $this->prima_nota->getProgressivoGiorno(($anno_esercizio) . '-12-31', $azienda),
+                                'prime_note_progressivo_annuo' => $this->prima_nota->getProgressivoAnno(($anno_esercizio) . '-12-31', $azienda),
+                                'prime_note_tipo' => null,
+                                'prime_note_ref_prima_nota' => null,
+                                'prime_note_modello' => 0,
+                                'prime_note_json_data' => null,
+                                'prime_note_data_registrazione' => ($anno_esercizio) . '-12-31',
+                            ];
+                            $codice_completo = $sottoconto['documenti_contabilita_sottoconti_codice_completo'];
+                            $expl = explode('.', $codice_completo);
+                            $mastro_codice = $expl[0];
+                            $conto_codice = $expl[1];
+                            $sottoconto_codice = $expl[2];
+
+                            $righe = [
+                                //Riga uno
+                                [
+                                    'prime_note_registrazioni_importo_dare' => $sottoconto['totale'] < 0 ? abs($sottoconto['totale']) : 0,
+                                    'prime_note_registrazioni_importo_avere' => $sottoconto['totale'] > 0 ? abs($sottoconto['totale']) : 0,
+
+                                    'prime_note_registrazioni_numero_riga' => 1,
+
+                                    'prime_note_registrazioni_mastro_dare' => $sottoconto['totale'] < 0 ? $sottoconto['documenti_contabilita_sottoconti_mastro'] : null,
+                                    'prime_note_registrazioni_mastro_avere' => $sottoconto['totale'] > 0 ? $sottoconto['documenti_contabilita_sottoconti_mastro'] : null,
+
+                                    'prime_note_registrazioni_conto_dare' => $sottoconto['totale'] < 0 ? $sottoconto['documenti_contabilita_sottoconti_conto'] : null,
+                                    'prime_note_registrazioni_conto_avere' => $sottoconto['totale'] > 0 ? $sottoconto['documenti_contabilita_sottoconti_conto'] : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare' => $sottoconto['totale'] < 0 ? $sottoconto['documenti_contabilita_sottoconti_id'] : null,
+                                    'prime_note_registrazioni_sottoconto_avere' => $sottoconto['totale'] > 0 ? $sottoconto['documenti_contabilita_sottoconti_id'] : null,
+
+                                    'prime_note_registrazioni_mastro_dare_codice' => $sottoconto['totale'] < 0 ? $mastro_codice : null,
+                                    'prime_note_registrazioni_mastro_avere_codice' => $sottoconto['totale'] > 0 ? $mastro_codice : null,
+
+                                    'prime_note_registrazioni_conto_dare_codice' => $sottoconto['totale'] < 0 ? $conto_codice : null,
+                                    'prime_note_registrazioni_conto_avere_codice' => $sottoconto['totale'] > 0 ? $conto_codice : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare_codice' => $sottoconto['totale'] < 0 ? $sottoconto_codice : null,
+                                    'prime_note_registrazioni_sottoconto_avere_codice' => $sottoconto['totale'] > 0 ? $sottoconto_codice : null,
+
+                                    'prime_note_registrazioni_codice_dare_testuale' => $sottoconto['totale'] < 0 ? $codice_completo : null,
+                                    'prime_note_registrazioni_codice_avere_testuale' => $sottoconto['totale'] > 0 ? $codice_completo : null,
+                                ],
+                                //Riga due
+                                [
+                                    'prime_note_registrazioni_importo_dare' => $sottoconto['totale'] > 0 ? abs($sottoconto['totale']) : 0,
+                                    'prime_note_registrazioni_importo_avere' => $sottoconto['totale'] < 0 ? abs($sottoconto['totale']) : 0,
+
+                                    'prime_note_registrazioni_numero_riga' => 2,
+
+                                    'prime_note_registrazioni_mastro_dare' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_mastro'] : null,
+                                    'prime_note_registrazioni_mastro_avere' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_mastro'] : null,
+
+                                    'prime_note_registrazioni_conto_dare' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_conto'] : null,
+                                    'prime_note_registrazioni_conto_avere' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_conto'] : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_id'] : null,
+                                    'prime_note_registrazioni_sottoconto_avere' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_id'] : null,
+
+                                    'prime_note_registrazioni_mastro_dare_codice' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_mastri_codice'] : null,
+                                    'prime_note_registrazioni_mastro_avere_codice' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_mastri_codice'] : null,
+
+                                    'prime_note_registrazioni_conto_dare_codice' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_conti_codice'] : null,
+                                    'prime_note_registrazioni_conto_avere_codice' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_conti_codice'] : null,
+
+                                    'prime_note_registrazioni_sottoconto_dare_codice' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_codice'] : null,
+                                    'prime_note_registrazioni_sottoconto_avere_codice' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_codice'] : null,
+
+                                    'prime_note_registrazioni_codice_dare_testuale' => $sottoconto['totale'] > 0 ? $conto_patrimoniale_chiusura_codice : null,
+                                    'prime_note_registrazioni_codice_avere_testuale' => $sottoconto['totale'] < 0 ? $conto_patrimoniale_chiusura_codice : null,
+                                ]
+                            ];
+                            //debug($conto_patrimoniale_chiusura,true);
+
+                            $prima_nota_db = $this->apilib->create('prime_note', $prima_nota);
+                            foreach ($righe as $registrazione) {
+                                $registrazione['prime_note_registrazioni_prima_nota'] = $prima_nota_db['prime_note_id'];
+                                $this->apilib->create('prime_note_registrazioni', $registrazione);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+        echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        exit;
+    }
+
+    public function annullaChiusuraEsercizioStep2()
+    {
+        $causale_bilancio_chiusura_blc = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLC']);
+        $causale_bilancio_chiusura_blc_id = $causale_bilancio_chiusura_blc['prime_note_causali_id'];
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+
+
+        //$causale_bilancio_apertura = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLA']);
+
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+        if (!$causale_bilancio_chiusura_blc_id) {
+            die('Non trovo la causale BLC di chiusura bilancio');
+
+        }
+        $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
+
+        $anno_esercizio = $impostazioni['documenti_contabilita_settings_esercizio'];
+
+        $this->db->query("DELETE FROM prime_note_registrazioni WHERE prime_note_registrazioni_prima_nota IN (SELECT prime_note_id FROM prime_note WHERE DATE(prime_note_data_registrazione) = '$anno_esercizio-12-31' AND prime_note_causale = '$causale_bilancio_chiusura_blc_id')");
+        $this->db->query("DELETE FROM prime_note_righe_iva WHERE prime_note_righe_iva_prima_nota IN (SELECT prime_note_id FROM prime_note WHERE DATE(prime_note_data_registrazione) = '$anno_esercizio-12-31' AND prime_note_causale = '$causale_bilancio_chiusura_blc_id')");
+        $this->db->query("DELETE FROM prime_note WHERE DATE(prime_note_data_registrazione) = '$anno_esercizio-12-31' AND prime_note_causale = '$causale_bilancio_chiusura_blc_id'");
+
+        $this->mycache->clearCache();
+
+        echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        exit;
+    }
+
+    public function annullaAperturaEsercizio()
+    {
+        $causale_bilancio_chiusura_bla = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLA']);
+        $causale_bilancio_chiusura_bla_id = $causale_bilancio_chiusura_bla['prime_note_causali_id'];
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+
+        //$causale_bilancio_apertura = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLA']);
+
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+        if (!$causale_bilancio_chiusura_bla_id) {
+            die('Non trovo la causale BLC di chiusura bilancio');
+
+        }
+        $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
+
+        $anno_esercizio = $impostazioni['documenti_contabilita_settings_esercizio'];
+        $nuovo_anno = $anno_esercizio + 1;
+
+        $this->db->query("DELETE FROM prime_note_registrazioni WHERE prime_note_registrazioni_prima_nota IN (SELECT prime_note_id FROM prime_note WHERE DATE(prime_note_data_registrazione) = '$anno_esercizio-01-01' AND prime_note_causale = '$causale_bilancio_chiusura_bla_id')");
+        $this->db->query("DELETE FROM prime_note_righe_iva WHERE prime_note_righe_iva_prima_nota IN (SELECT prime_note_id FROM prime_note WHERE DATE(prime_note_data_registrazione) = '$nuovo_anno-01-01' AND prime_note_causale = '$causale_bilancio_chiusura_bla_id')");
+        $this->db->query("DELETE FROM prime_note WHERE DATE(prime_note_data_registrazione) = '$nuovo_anno-01-01' AND prime_note_causale = '$causale_bilancio_chiusura_bla_id'");
+
+        $this->mycache->clearCache();
+
+        echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        exit;
+    }
+    public function chiusuraEsercizio()
+    {
+        die('Dismesso...');
+        //Controlli preliminari...
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+
+
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+        $causale_bilancio_chiusura_gpp = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'GPP']);
+        $causale_bilancio_chiusura_blc = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLC']);
+
+        if (!$causale_bilancio_chiusura_blc) {
+            die('Non trovo la causale BLC di chiusura bilancio');
+
+        }
+        if (!$causale_bilancio_chiusura_gpp) {
+            die('Non trovo la causale GPP di chiusura bilancio');
+
+        }
+
+        $this->chiusuraEsercizioStep1($causale_bilancio_chiusura_gpp['prime_note_causali_id']);
+        $this->chiusuraEsercizioStep2($causale_bilancio_chiusura_blc['prime_note_causali_id']);
+
+        echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        exit;
+    }
+
+    public function aperturaEsercizio()
+    {
+        $filtri = @$this->session->userdata(SESS_WHERE_DATA)['filter_stampe_contabili'];
+        $azienda = false;
+        $filtri_previsti = [
+            'prime_note_data_registrazione',
+            'prime_note_azienda',
+            'prime_note_scadenza', //Sarebbe la data documento
+            'prime_note_periodo_di_competenza',
+
+        ];
+
+        foreach ($filtri as $filtro) {
+            $field_id = $filtro['field_id'];
+            $value = $filtro['value'];
+            if ($value == '-1' || $value == '') {
+                continue;
+            }
+            $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
+            $field_name = $field_data['fields_name'];
+            if (!in_array($field_name, $filtri_previsti)) {
+
+                die("Svuotare il filtro '{$field_data['fields_draw_label']}' in quanto non previsto per le stampe definitive!");
+            } else {
+                if ($field_name == 'prime_note_azienda' && $value > 0) {
+                    $azienda = $value;
+                }
+
+            }
+        }
+
+
+        if (!$azienda) {
+            die('Impostare correttamente il filtro azienda!');
+        }
+
+        $causale_bilancio_chiusura_bla = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLA']);
+        $causale_bilancio_chiusura_blc = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLC']);
+
+
+        if (!$causale_bilancio_chiusura_blc) {
+            die('Non trovo la causale BLA di apertura bilancio');
+
+        }
+        if (!$causale_bilancio_chiusura_blc) {
+            die('Non trovo la causale BLC di chiusura bilancio');
+
+        }
+        //Prendo le recenti registrazioni BLC per poi invertire dare avere e registrarle come bilancio di apertura
+        $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
+        $conto_patrimoniale_chiusura_codice = $impostazioni['documenti_contabilita_settings_conto_patr_fin'];
+        $conto_patrimoniale_chiusura = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $conto_patrimoniale_chiusura_codice]);
+
+        $conto_patrimoniale_apertura_codice = $impostazioni['documenti_contabilita_settings_conto_patr_ini'];
+        $conto_patrimoniale_apertura = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $conto_patrimoniale_apertura_codice]);
+
+        $anno_esercizio = $impostazioni['documenti_contabilita_settings_esercizio'];
+
+        $prime_note_BLC = $this->db
+            ->where("DATE(prime_note_data_registrazione) = '$anno_esercizio-12-31'", null, false)
+            ->where('prime_note_causale', $causale_bilancio_chiusura_blc['prime_note_causali_id'])
+            ->get('prime_note')->result_array();
+        $nuovo_anno = $anno_esercizio + 1;
+
+        $c = count($prime_note_BLC);
+        $i = 0;
+
+        foreach ($prime_note_BLC as $testata) {
+            progress(++$i, $c, "Apertura Esercizio");
+            $nuova_testata = $testata;
+            $nuova_testata['prime_note_causale'] = $causale_bilancio_chiusura_bla['prime_note_causali_id'];
+            $nuova_testata['prime_note_data_registrazione'] = $nuovo_anno . '-01-01';
+            $nuova_testata['prime_note_scadenza'] = $nuovo_anno . '-01-01';
+            $nuova_testata['prime_note_progressivo_giornaliero'] = $this->prima_nota->getProgressivoGiorno($nuovo_anno . '-01-01', $azienda);
+            $nuova_testata['prime_note_progressivo_annuo'] = $this->prima_nota->getProgressivoAnno($nuovo_anno . '-01-01', $azienda);
+            unset($nuova_testata['prime_note_id']);
+            $testata_db = $this->apilib->create('prime_note', $nuova_testata);
+
+            $righe = $this->apilib->search('prime_note_registrazioni', ['prime_note_registrazioni_prima_nota' => $testata['prime_note_id']]);
+            //debug($righe);
+            foreach ($righe as $riga) {
+
+                $nuova_riga['prime_note_registrazioni_codice_dare_testuale'] = ($riga['prime_note_registrazioni_codice_avere_testuale'] == $conto_patrimoniale_chiusura_codice) ? $conto_patrimoniale_apertura_codice : $riga['prime_note_registrazioni_codice_avere_testuale'];
+                $nuova_riga['prime_note_registrazioni_codice_avere_testuale'] = ($riga['prime_note_registrazioni_codice_dare_testuale'] == $conto_patrimoniale_chiusura_codice) ? $conto_patrimoniale_apertura_codice : $riga['prime_note_registrazioni_codice_dare_testuale'];
+
+
+                $nuova_riga['prime_note_registrazioni_prima_nota'] = $testata_db['prime_note_id'];
+                $nuova_riga['prime_note_registrazioni_importo_dare'] = $riga['prime_note_registrazioni_importo_avere'];
+                $nuova_riga['prime_note_registrazioni_importo_avere'] = $riga['prime_note_registrazioni_importo_dare'];
+
+                $nuova_riga['prime_note_registrazioni_mastro_dare'] = ($riga['prime_note_registrazioni_mastro_avere'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_mastro']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_mastro'] : $riga['prime_note_registrazioni_mastro_avere'];
+                $nuova_riga['prime_note_registrazioni_mastro_avere'] = ($riga['prime_note_registrazioni_mastro_dare'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_mastro']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_mastro'] : $riga['prime_note_registrazioni_mastro_dare'];
+                $nuova_riga['prime_note_registrazioni_conto_dare'] = ($riga['prime_note_registrazioni_conto_avere'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_conto']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_conto'] : $riga['prime_note_registrazioni_conto_avere'];
+                $nuova_riga['prime_note_registrazioni_conto_avere'] = ($riga['prime_note_registrazioni_conto_dare'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_conto']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_conto'] : $riga['prime_note_registrazioni_conto_dare'];
+                $nuova_riga['prime_note_registrazioni_sottoconto_dare'] = ($riga['prime_note_registrazioni_sottoconto_avere'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_id']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_id'] : $riga['prime_note_registrazioni_sottoconto_avere'];
+                $nuova_riga['prime_note_registrazioni_sottoconto_avere'] = ($riga['prime_note_registrazioni_sottoconto_dare'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_id']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_id'] : $riga['prime_note_registrazioni_sottoconto_dare'];
+
+                $nuova_riga['prime_note_registrazioni_mastro_dare_codice'] = ($riga['prime_note_registrazioni_mastro_avere_codice'] == $conto_patrimoniale_chiusura['documenti_contabilita_mastri_codice']) ? $conto_patrimoniale_apertura['documenti_contabilita_mastri_codice'] : $riga['prime_note_registrazioni_mastro_avere_codice'];
+                $nuova_riga['prime_note_registrazioni_mastro_avere_codice'] = ($riga['prime_note_registrazioni_mastro_dare_codice'] == $conto_patrimoniale_chiusura['documenti_contabilita_mastri_codice']) ? $conto_patrimoniale_apertura['documenti_contabilita_mastri_codice'] : $riga['prime_note_registrazioni_mastro_dare_codice'];
+                $nuova_riga['prime_note_registrazioni_conto_dare_codice'] = ($riga['prime_note_registrazioni_conto_avere_codice'] == $conto_patrimoniale_chiusura['documenti_contabilita_conti_codice']) ? $conto_patrimoniale_apertura['documenti_contabilita_conti_codice'] : $riga['prime_note_registrazioni_conto_avere_codice'];
+                $nuova_riga['prime_note_registrazioni_conto_avere_codice'] = ($riga['prime_note_registrazioni_conto_dare_codice'] == $conto_patrimoniale_chiusura['documenti_contabilita_conti_codice']) ? $conto_patrimoniale_apertura['documenti_contabilita_conti_codice'] : $riga['prime_note_registrazioni_conto_dare_codice'];
+                $nuova_riga['prime_note_registrazioni_sottoconto_dare_codice'] = ($riga['prime_note_registrazioni_sottoconto_avere_codice'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_codice']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_codice'] : $riga['prime_note_registrazioni_sottoconto_avere_codice'];
+                $nuova_riga['prime_note_registrazioni_sottoconto_avere_codice'] = ($riga['prime_note_registrazioni_sottoconto_dare_codice'] == $conto_patrimoniale_chiusura['documenti_contabilita_sottoconti_codice']) ? $conto_patrimoniale_apertura['documenti_contabilita_sottoconti_codice'] : $riga['prime_note_registrazioni_sottoconto_dare_codice'];
+
+                $this->apilib->create('prime_note_registrazioni', $nuova_riga);
+            }
+        }
+
+        //Finita la procedura imposto l'anno esercizio nuovo
+        $this->apilib->edit('documenti_contabilita_settings', $azienda, ['documenti_contabilita_settings_esercizio' => $nuovo_anno]);
+
+        echo "<script>alert('Ricordarsi di impostare l\'anno $nuovo_anno come anno di esercizio nelle configurazione dell'azienda');location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        exit;
+    }
 }

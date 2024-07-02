@@ -31,8 +31,9 @@ class Openapi extends CI_Model
     // ATTENZIONE: Non è ancora usato ovunque, alcuni metodi vecchi (cerca impresa e impresa advanced) sarebbero da migrare su questo
 
 
-    public function chiamata_servizio_generico($servizio_id, $endpoint = null, $post_data = null, $get_data = null)
+    public function chiamata_servizio_generico($servizio_id, $endpoint = null, $post_data = null, $get_data = null, $skip_cache = false)
     {
+
         $servizio = $this->db->query("SELECT * FROM openapi_servizi WHERE openapi_servizi_id = '$servizio_id'")->row_array();
 
         // Check balance
@@ -56,37 +57,38 @@ class Openapi extends CI_Model
         $url = $url . $get_data;
 
         // Get from CACHE se ho già fatto una chiamata uguale
-        $cache = $this->get_from_cache($servizio_id, $url, $post_data);
+        if ($skip_cache == false) {
 
-        if ($cache) {
-            return $cache;
+            $cache = $this->get_from_cache($servizio_id, $url, $post_data);
 
-        } else {
-            if (!empty($post_data)) {
-                $output = $this->sendPostCurl($url, $post_data);
-            } else {
-                $output = $this->sendGetCurl($url);
+            if ($cache) {
+                return $cache;
             }
-
-
-            // test se output è json
-            if (is_string($output) && !empty($output)) {
-                $json = json_decode($output, true);
-
-                if ($json['success'] !== false) {
-                    $this->addebito($servizio['openapi_servizi_costo_chiamata'], $servizio['openapi_servizi_nome'], $servizio['openapi_servizi_id']);
-
-                    // Salvo il dato grezzo anche in caso di esito negativo
-                    $this->openapi->save_to_cache($servizio_id, $url, $post_data, $output);
-                }
-                return $output;
-            } else {
-                echo json_encode(['status' => 0, 'txt' => 'Output invalido. Verificare.']);
-            }
-
-
 
         }
+
+        if (!empty($post_data)) {
+            $output = $this->sendPostCurl($url, $post_data);
+        } else {
+            $output = $this->sendGetCurl($url);
+        }
+
+        // test se output è json
+        if (is_string($output) && !empty($output)) {
+            $json = json_decode($output, true);
+
+            if ($json['success'] !== false) {
+                $this->addebito($servizio['openapi_servizi_costo_chiamata'], $servizio['openapi_servizi_nome'], $servizio['openapi_servizi_id']);
+
+                // Salvo il dato grezzo anche in caso di esito negativo
+                $this->openapi->save_to_cache($servizio_id, $url, $post_data, $output);
+            }
+            return $output;
+        } else {
+            echo json_encode(['status' => 0, 'txt' => 'Output invalido. Verificare.']);
+        }
+
+
     }
 
 
@@ -676,6 +678,12 @@ class Openapi extends CI_Model
     {
         return $this->openapi_settings['openapi_settings_mode'];
 
+    }
+
+    public function getServiceCost($servizio_id)
+    {
+        $servizio = $this->db->query("SELECT * FROM openapi_servizi WHERE openapi_servizi_id = '$servizio_id'")->row_array();
+        return $servizio['openapi_servizi_costo_chiamata'];
     }
 
     public function getServizioUrl($servizio)

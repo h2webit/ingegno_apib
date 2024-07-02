@@ -1194,10 +1194,13 @@ class Prima_nota extends CI_Model
         $righe = $this->getPrimaNotaRighe($prima_nota['prime_note_causale'], 2, $documenti_contabilita_scadenze_id, false, $modello_selezionato_id);
 
         foreach ($righe as $key => $riga) {
+            if ($righe[$key]['prime_note_registrazioni_importo_dare'] > 0) {
+                $righe[$key]['prime_note_registrazioni_importo_dare'] = $documenti_contabilita_scadenza['documenti_contabilita_scadenze_ammontare'];
+            } else {
+                $righe[$key]['prime_note_registrazioni_importo_avere'] = $documenti_contabilita_scadenza['documenti_contabilita_scadenze_ammontare'];
+            }
             $righe[$key]['prime_note_registrazioni_prima_nota'] = $prima_nota_id;
         }
-
-        //debug($righe,true);
 
         $registrazioni = $this->salvaRegistrazioniPrimaNota($righe, $prima_nota_id);
 
@@ -1479,7 +1482,7 @@ class Prima_nota extends CI_Model
         $grid = $this->db->where('grids_append_class', 'grid_stampe_contabili')->get('grids')->row_array();
         $where = [$this->datab->generate_where("grids", $grid['grids_id'], null)];
         $where['prime_note_modello'] = 0;
-
+        
         if ($where_arr) {
 
             $where = array_merge($where, $where_arr);
@@ -1496,6 +1499,8 @@ class Prima_nota extends CI_Model
         //TODO: correggere qui! Se ci sono due righe iva (di cui una reverse e una no) le prende comunque entrambe e non va bene!
         //debug('INTERVENIRE QUI!!!', true);
         $where_acquisti_reverse[] = "sezionali_iva_tipo = 2 AND prime_note_id IN (SELECT prime_note_righe_iva_prima_nota FROM prime_note_righe_iva LEFT JOIN iva ON (iva_id = prime_note_righe_iva_iva) WHERE iva_reverse = 1)";
+
+        //debug($where_acquisti,true);
 
         $primeNoteData_acquisti = $this->getPrimeNoteData($where_acquisti, null, 'prime_note_protocollo', 0, false, true, '', $progress);
 

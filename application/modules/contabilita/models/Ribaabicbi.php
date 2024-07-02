@@ -137,7 +137,7 @@ class RibaAbiCbi extends CI_Model
         return $accumulatore;
     }
 
-    private function extractIbanData($iban)
+    public function extractIbanData($iban)
     {
         // IT 94 P 02008 12310 000101714112
         $iban = str_ireplace(' ', '', $iban);

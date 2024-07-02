@@ -228,7 +228,7 @@ $user_id = $user['users_id'];
                 <ul class="media-list">
                     <li class="media media_custom">
                         <div class="media-left">
-                            <img class="img-circle custom_avatar" src="<?php echo base_url((!empty($created_by['users_avatar']) ? 'imgn/1/40/40/uploads/' . $created_by['users_avatar'] : 'images/user.png')); ?>">
+                            <img class="img-circle custom_avatar" src="<?php echo base_url((!empty($created_by['users_avatar']) ? 'thumb/40/40/1/uploads/' . $created_by['users_avatar'] : 'images/user.png')); ?>">
                         </div>
                         <div class="media-body">
                             <h5 class="media-heading">
@@ -270,7 +270,7 @@ $user_id = $user['users_id'];
                 <ul class="media-list">
                     <li class="media media_custom">
                         <div class="media-left">
-                            <img class="img-circle custom_avatar" src="<?php echo base_url((!empty($created_by['users_avatar']) ? 'imgn/1/40/40/uploads/' . $created_by['users_avatar'] : 'images/user.png')); ?>">
+                            <img class="img-circle custom_avatar" src="<?php echo base_url((!empty($created_by['users_avatar']) ? 'thumb/40/40/1/uploads/' . $created_by['users_avatar'] : 'images/user.png')); ?>">
                         </div>
                         <div class="media-body">
                             <h5 class="media-heading">
@@ -305,7 +305,7 @@ $user_id = $user['users_id'];
                 <ul class="media-list">
                     <li class="media media_custom_system">
                         <div class="media-left">
-                            <img class="img-circle custom_avatar" src="<?php echo base_url((!empty($created_by['users_avatar']) ? 'imgn/1/40/40/uploads/' . $created_by['users_avatar'] : 'images/user.png')); ?>">
+                            <img class="img-circle custom_avatar" src="<?php echo base_url((!empty($created_by['users_avatar']) ? 'thumb/40/40/1/uploads/' . $created_by['users_avatar'] : 'images/user.png')); ?>">
                         </div>
                         <div class="media-body">
                             <div class="media_container">

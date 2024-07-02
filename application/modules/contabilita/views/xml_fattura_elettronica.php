@@ -529,7 +529,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                     </DatiCassaPrevidenziale>
                 <?php } ?>
                 <?php
-                $importoCassa = 0;
+                $importoCassa2 = 0;
                 if ($dati['fattura']['documenti_contabilita_rivalsa_inps_perc'] > 0) {
                     $cassa_tipo = $this->apilib->view('documenti_contabilita_cassa_professionisti_tipo', $dati['fattura']['documenti_contabilita_cassa_professionisti_tipo']);
                     if ($cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'] && $iva_cassa = $this->apilib->view('iva', $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_iva'])) {
@@ -545,7 +545,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                     $percentuale_contributo = $dati['fattura']['documenti_contabilita_rivalsa_inps_perc'];
                     $imponibile_fattura = $dati['fattura']['documenti_contabilita_competenze'];
                     $imponibile_calcolo = $imponibile_fattura;
-                    $importoCassa = $imponibile_fattura / 100 * $percentuale_contributo;
+                    $importoCassa2 = $imponibile_fattura / 100 * $percentuale_contributo;
                     //debug($imponibile_fattura,true); 
                     ?>
                     <DatiCassaPrevidenziale>
@@ -556,7 +556,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                             <?php echo $percentuale_contributo; ?>
                         </AlCassa>
                         <ImportoContributoCassa>
-                            <?php echo number_format(round($importoCassa, 2), 2, '.', ''); ?>
+                            <?php echo number_format(round($importoCassa2, 2), 2, '.', ''); ?>
                         </ImportoContributoCassa>
                         <ImponibileCassa>
                             <?php echo $imponibile_calcolo; ?>
@@ -828,7 +828,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                     }
                     ?>
 
-                    <?php if ($sconto_da_applicare > 0 && ($articolo['documenti_contabilita_articoli_sconto'] > 0 || ($dati['fattura']['documenti_contabilita_sconto_percentuale'] > 0 && $dati['fattura']['documenti_contabilita_sconto_su_imponibile']))): ?>
+                    <?php if ($sconto_da_applicare > 0 && ($articolo['documenti_contabilita_articoli_sconto'] > 0 || $articolo['documenti_contabilita_articoli_applica_sconto'] || ($dati['fattura']['documenti_contabilita_sconto_percentuale'] > 0 && $dati['fattura']['documenti_contabilita_sconto_su_imponibile']))): ?>
                         <ScontoMaggiorazione>
 
                             <Tipo>SC</Tipo>
@@ -838,6 +838,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                             <!--<Percentuale><?php echo number_format($articolo['documenti_contabilita_articoli_sconto'], 2, '.', ''); ?></Percentuale>-->
                         </ScontoMaggiorazione>
                     <?php endif; ?>
+
                     <PrezzoTotale>
                         <?php echo $segno . number_format((($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100 * (100 - $sconto_da_applicare)), 2, '.', ''); ?>
                     </PrezzoTotale>
@@ -958,7 +959,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                     ?>
 
                     <ImponibileImporto>
-                        <?php echo number_format($imponibile_rounded + $importoCassa, 2, '.', ''); ?>
+                        <?php echo number_format($imponibile_rounded + $importoCassa + $importoCassa2, 2, '.', ''); ?>
                     </ImponibileImporto>
                     <Imposta>
                         <?php echo number_format($iva, 2, '.', ''); ?>

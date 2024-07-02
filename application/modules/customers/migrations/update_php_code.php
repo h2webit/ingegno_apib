@@ -15,3 +15,9 @@ $updates['1.8.5'] = [
         '1.8.5_migrate_field_customers_shipping_address_country.php',
     ],
 ];
+
+$updates['2.1.3'] = [
+    'include' => [
+        '2.1.3_migrate_shipping_address_default.php',
+    ],
+];

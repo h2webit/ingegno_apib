@@ -77,7 +77,7 @@ $fatturati = $this->db->query("SELECT
     END) as iva, 
     EXTRACT(MONTH FROM documenti_contabilita_data_emissione) as mese 
 FROM documenti_contabilita 
-WHERE (documenti_contabilita_tipo IN (1,4)) AND $where_documenti_str 
+WHERE (documenti_contabilita_tipo IN (1,4)) AND documenti_contabilita_tipologia_fatturazione NOT IN (7,8,9) AND $where_documenti_str 
 GROUP BY EXTRACT(MONTH FROM documenti_contabilita_data_emissione)")->result_array();
 
 //debug($this->db->last_query(),true);
@@ -98,7 +98,7 @@ $fatturati_totali = $this->db->query("SELECT
         ELSE -documenti_contabilita_iva 
     END) as iva 
 FROM documenti_contabilita 
-WHERE (documenti_contabilita_tipo IN (1,4)) AND $where_documenti_str")->row_array();
+WHERE (documenti_contabilita_tipo IN (1,4)) AND documenti_contabilita_tipologia_fatturazione NOT IN (7,8,9) AND $where_documenti_str")->row_array();
 
 $spese_totali = $this->db->query("SELECT SUM(CASE WHEN COALESCE(spese_totale,0) > 0 THEN spese_totale ELSE COALESCE(spese_imponibile+spese_iva,0) END) as spese_fatturato, SUM(spese_iva) as iva, SUM((spese_iva/100)*spese_deduc_iva) as spese_iva_deducibile FROM spese WHERE $where_spese_str")->row_array();
 

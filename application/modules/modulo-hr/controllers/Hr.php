@@ -319,7 +319,7 @@ class Hr extends MY_Controller
             }
             //}
         }
-        die('FINITO.');
+        //die('FINITO.');
     }
 
     public function getOrari()
@@ -387,7 +387,7 @@ class Hr extends MY_Controller
                     $this->timbrature->creaPresenzaDaRichiesta($richiesta);
                 }
             }
-            die('FINITO.');
+            //die('FINITO.');
         } else {
             echo ('Creazione presenze da richiesta non abilitata');
         }
@@ -698,6 +698,8 @@ class Hr extends MY_Controller
             if ($use_long_operations_system) {
                
                 $this->long_operations->longOperation('riprocessa_presenza', $presenza, 'modulo-hr/timbrature');
+                
+
             } else {
                 $presenza = $this->timbrature->riprocessa_presenza($presenza);
             }

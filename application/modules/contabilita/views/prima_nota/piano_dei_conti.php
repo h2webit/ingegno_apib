@@ -63,6 +63,10 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 </style>
 
 <div class="row">
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-info btn-stampa-piano-dei-conti"><i class="fas fa-print fa-fw"></i> Stampa Piano dei Conti</button>
+        <hr>
+    </div>
     <div class="col-md-12">
         <div class="wk_header_filter">
             <ul>
@@ -97,7 +101,7 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
 
 <div class="container-fluid box box-danger">
 
-    <div class="row">
+    <div class="row ct_piano_dei_conti">
         <?php foreach ($piano_dei_conti as $mastro_tipo) : ?>
 
 
@@ -275,25 +279,27 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script>
     function PrintElem(elem) {
         var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
+        
         mywindow.document.write('<html><head><title>' + document.title + '</title>');
         mywindow.document.write('</head><body >');
         mywindow.document.write('<h1>' + document.title + '</h1>');
         mywindow.document.write(document.getElementById(elem).innerHTML);
         mywindow.document.write('</body></html>');
-
+        
         mywindow.document.close(); // necessary for IE >= 10
         mywindow.focus(); // necessary for IE >= 10*/
-
+        
         mywindow.print();
         mywindow.close();
-
+        
         return true;
     }
-
+    
     $(() => {
         $('.js_checkbox_conteggi,.js_checkbox_clienti_fornitori,.js_checkbox_nasconti_conti_senza_registrazioni,.js_checkbox_nascondi_importi_a_zero').on('click', function() {
             var nascondi_conteggi = (!$('.js_checkbox_conteggi').is(':checked') ? '0' : '1');
@@ -303,7 +309,132 @@ $piano_dei_conti = $this->prima_nota->getPianoDeiConti($this->input->get('comple
             var redirect = base_url + 'main/layout/piano-dei-conti?completo=' + completo + '&nascondi_conteggi=' + nascondi_conteggi + '&nascondi_orfani=' + nascondi_orfani + '&nascondi_zero=' + nascondi_zero;
             location.href = redirect;
         });
+        
+        $('.btn-stampa-piano-dei-conti').on('click', function() {
+            /////////////////////////////////
+            // Hide specific elements at the start of the process
+            const hideElements = () => {
+                console.log('Hiding elements');
+                $('.btn').hide();
+                $('.tools').hide();
+                $('.th:contains("Azioni")').hide();
+            };
 
+// Show specific elements at the end of the process or in case of an error
+            const showElements = () => {
+                console.log('Showing elements');
+                $('.btn').show();
+                $('.tools').show();
+                $('.th:contains("Azioni")').show();
+            };
 
+// Select the main container with class "ct_piano_dei_conti"
+            const mainContainer = document.querySelector('.ct_piano_dei_conti');
+
+// Function to generate a screenshot of the given element
+            const generateScreenshot = async (element) => {
+                console.log('Generating screenshot for an element');
+                return await html2canvas(element);
+            };
+
+// Function to split the canvas into multiple pages if it exceeds the page height
+            const splitCanvas = (canvas, pageHeight) => {
+                console.log('Splitting canvas into multiple pages');
+                const pages = [];
+                let currentHeight = 0;
+                
+                while (currentHeight < canvas.height) {
+                    const newCanvas = document.createElement('canvas');
+                    newCanvas.width = canvas.width;
+                    newCanvas.height = Math.min(pageHeight, canvas.height - currentHeight);
+                    const context = newCanvas.getContext('2d');
+                    
+                    context.drawImage(canvas, 0, currentHeight, canvas.width, newCanvas.height, 0, 0, canvas.width, newCanvas.height);
+                    pages.push(newCanvas);
+                    currentHeight += newCanvas.height;
+                }
+                
+                return pages;
+            };
+
+// Function to print the images
+            const printImages = (images) => {
+                console.log('Printing images');
+                const printWindow = window.open('', '_blank');
+                const styles = `
+                    @page {
+                        size: portrait;
+                    }
+                    body {
+                        margin: 0;
+                    }
+                    img {
+                        width: 100%;
+                        display: block;
+                        page-break-after: always;
+                    }
+                `;
+                
+                printWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Stampa piano dei conti</title>
+                            <style>${styles}</style>
+                        </head>
+                        <body>
+                            ${images.map(src => `<img src="${src}" alt="Piano dei conti">`).join('')}
+                        </body>
+                        \x3Cscript>
+                            window.matchMedia('print').addEventListener('change', function(event) {
+                                if (!event.matches) {
+                                    window.close();
+                                }
+                            });
+            
+                            window.onload = function() {
+                                window.print();
+                            };
+            
+                            window.onafterprint = window.close;
+                        \x3C/script>
+                    </html>
+                `);
+                printWindow.document.close();
+            };
+
+// Main function to process the elements
+            const processElements = async () => {
+                const pageHeight = 1122; // Assuming A4 page height in pixels at 96 DPI
+                const images = [];
+                
+                try {
+                    hideElements();
+                    console.log('Processing the main container element');
+                    
+                    if (mainContainer) {
+                        const canvas = await generateScreenshot(mainContainer);
+                        
+                        if (canvas.height > pageHeight) {
+                            const splitPages = splitCanvas(canvas, pageHeight);
+                            for (const page of splitPages) {
+                                images.push(page.toDataURL());
+                            }
+                        } else {
+                            images.push(canvas.toDataURL());
+                        }
+                    }
+                    
+                    printImages(images);
+                } catch (error) {
+                    console.error('Error processing elements:', error);
+                } finally {
+                    showElements();
+                }
+            };
+            
+            processElements();
+            
+            /////////////////////////////////
+        });
     });
 </script>

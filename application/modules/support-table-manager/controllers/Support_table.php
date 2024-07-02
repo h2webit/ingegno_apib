@@ -23,6 +23,7 @@ class Support_table extends MY_Controller
             ->row_array();
 
         $fooBox = [
+            'layouts_boxes_layout' => null,
             'layouts_boxes_content_type' => 'grid',
             'layouts_boxes_content_ref' => $grid['grids_id'],
         ];

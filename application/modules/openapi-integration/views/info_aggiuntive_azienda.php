@@ -1,7 +1,10 @@
 <?php
 $customer_id = $this->input->get('customer_id');
+$this->mycache->clearCache();
 $customer = $this->db->get_where('customers', "customers_id = {$customer_id}")->row_array();
+$this->mycache->clearCache();
 $customer_extra = $this->db->get_where('customers_dati_extra', "customers_dati_extra_customer_id = {$customer_id}")->row_array();
+$this->mycache->clearCache();
 
 ?>
 

@@ -1233,9 +1233,18 @@ class Documenti extends MX_Controller
     public function generaSdd($override_data = [])
     {
         $ids = json_decode($this->input->post('ids') ?? $this->input->post('ids_b2b'));
+        
         $conto_id = $this->input->post('conto_sdd') ?? $this->input->post('conto_sdd_b2b');
         $conto = $this->apilib->view('conti_correnti', $conto_id);
-        //debug($conto, true);
+        
+        $data_incasso = $this->input->post('data_incasso');
+        
+        if (empty($data_incasso)) {
+            $data_incasso = $this->input->post('sdd_data_incasso');
+        }
+
+        //debug($ids,true);
+        
         $documenti = $this->apilib->search('documenti_contabilita_scadenze', "documenti_contabilita_scadenze_id IN (" . implode(',', $ids) . ")");
 
         if ($documenti) {
@@ -1265,6 +1274,8 @@ class Documenti extends MX_Controller
         $sdd['azienda'] = $settings;
         $sdd['documenti'] = $documenti;
 
+        $sdd['data_incasso']    = $data_incasso;
+
         $sdd['conto'] = $conto;
 
         // dd($sdd);
@@ -1272,6 +1283,7 @@ class Documenti extends MX_Controller
         $file_content = $this->load->view('contabilita/xml_sdd', ['sdd' => $sdd, 'override_data' => $override_data], true);
 
         if (!empty($this->input->get('valida_xml')) && $this->input->get('valida_xml') == 1) {
+            //debug($ids, true);
             header("Content-type: application/json");
             
             $xsdPath = $this->layout->moduleAssets('contabilita', 'uploads/CBISDDReqLogMsg.00.01.00.xsd.xml');
@@ -2182,7 +2194,7 @@ class Documenti extends MX_Controller
     public function listDocumenti($options_html = false)
     {
         $mail_data = $this->input->post();
-        $where = [];
+        $where = ['documenti_contabilita_id NOT IN (SELECT movimenti_documento_id FROM movimenti WHERE movimenti_documento_id IS NOT NULL)'];
         if ($tipo = $mail_data['tipo']) {
             $where['documenti_contabilita_tipo'] = $tipo;
         }
@@ -2869,9 +2881,11 @@ class Documenti extends MX_Controller
         foreach ($filtri as $filtro) {
             $field_id = $filtro['field_id'];
             $value = $filtro['value'];
+            
             if ($value == '-1' || $value == '') {
                 continue;
             }
+            
             $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
             $field_name = $field_data['fields_name'];
             if (!in_array($field_name, $filtri_previsti)) {
@@ -2880,24 +2894,50 @@ class Documenti extends MX_Controller
                 if ($field_name == 'prime_note_azienda' && $value > 0) {
                     $azienda = $value;
                 }
-                if ($field_name == 'prime_note_data_registrazione' && $value > 0) {
-                    $anno = date('Y', strtotime($value));
-                    $mese = date('m', strtotime($value));
-                    $trimestre = ceil($mese / 3);
+                if ($field_name == 'prime_note_periodo_di_competenza' && $value) {
+                    
+                    $mesi = $value;
+                }
+                if ($field_name == 'prime_note_data_registrazione') {
+                    //Prendo i mesi in base al filtro data registrazione (mi arriva nel formato: 01/01/2024 - 31/03/2024)
+                    $date = explode(' - ', $value);
+                    $mesi = [];
+                    $mese_start = explode('/', $date[0])[1];
+                    $mese_end = explode('/', $date[1])[1];
+                    
+                    for ($i = $mese_start; $i <= $mese_end; $i++) {
+                        $mesi[] = (int)$i;
+                    }
+                    //debug($mesi,true);
                 }
             }
         }
         if (!$azienda) {
-            die('Impostare correttamente il filtro azienda!');
+            //debug($mesi);
+            die('Impostare correttamente il filtro azienda e il periodo di competenza!');
         }
         $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
-        if ($impostazioni['documenti_contabilita_settings_liquidazione_iva'] == 1) { //Liquidazione mensile
-            $mese = $trimestre;
-            $trimestre = null;
-        } else { //trimestrale
+        if (in_array(12,$mesi)) {//Se c'è il mese dicembre, allora l'anno di riferimento è il precedente
+            $anno = date('Y', strtotime('-1 year'));
+            $trimestre = 4;
+        } else {
+            $anno = date('Y');
+            if ( in_array(1,$mesi) && in_array(2,$mesi) && in_array(3,$mesi) ) {
+                $trimestre = 1;
+            } elseif ( in_array(4,$mesi) && in_array(5,$mesi) && in_array(6,$mesi) ) {
+                $trimestre = 2;
+            } elseif ( in_array(7,$mesi) && in_array(8,$mesi) && in_array(9,$mesi) ) {
+                $trimestre = 3;
+            } elseif ( in_array(10,$mesi) && in_array(11,$mesi) && in_array(12,$mesi) ) {
+                $trimestre = 4;
+
+            } else {
+                die('Impossibile identificare il trimestre di riferimento');
+            }
+
         }
 
-        $xml = $this->load->module_view("contabilita/views", 'pdf/lipe', ['anno' => $anno, 'mese' => $mese, 'trimestre' => $trimestre, 'azienda' => $azienda], true);
+        $xml = $this->load->module_view("contabilita/views", 'pdf/lipe', ['anno' => $anno, 'mesi' => $mesi, 'trimestre' => $trimestre, 'azienda' => $azienda], true);
 
         $this->output->set_content_type('text/xml')->set_output($xml);
     }
@@ -2973,5 +3013,55 @@ class Documenti extends MX_Controller
         
         return $returnMessage . "<br/>Estratto del codice:<br/>{$highlightedError}";
     }
-
+    
+    public function stampa_riba()
+    {
+        $post = $this->security->xss_clean($this->input->post());
+        
+        if (empty($post) || empty($post['ids'])) {
+            die(show_404());
+        }
+        
+        error_reporting(0);  // Disable error reporting
+        ini_set('display_errors', false);
+        ini_set('display_startup_errors', false);
+        
+        $ids = implode(',', json_decode($post['ids'], true));
+        
+        $rows = $this->apilib->search('documenti_contabilita_scadenze', ['documenti_contabilita_scadenze_id IN ('.$ids.')']);
+        
+        if (empty($rows)) {
+            die('ANOMALIA: Nessun documento trovato. contattare assistenza!');
+        }
+        
+        $this->load->model('contabilita/ribaabicbi');
+        
+        $_aziende = $this->apilib->search('documenti_contabilita_settings');
+        
+        $aziende = [];
+        foreach ($_aziende as $_azienda) {
+            $aziende[$_azienda['documenti_contabilita_settings_id']] = $_azienda;
+        }
+        
+        foreach ($rows as $index => $row) {
+            $customer = $this->apilib->searchFirst('customers', ['customers_id' => $row['documenti_contabilita_customer_id']]);
+            $bank_account = $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_customer_id' => $row['documenti_contabilita_customer_id'], 'customers_bank_accounts_default' => DB_BOOL_TRUE]);
+            
+            $rows[$index]['_customer'] = $customer ?? [];
+            $rows[$index]['_bank_account'] = $bank_account ?? [];
+            $rows[$index]['_azienda'] = $aziende[$row['documenti_contabilita_azienda']];
+        }
+        
+        $html = $this->load->view('contabilita/pdf/stampa_riba', ['rows' => $rows], true);
+        
+        $pdf = $this->layout->generate_pdf($html, 'portrait', '', [], false, true);  // Generate the PDF using the specified orientation
+        
+        $fp = fopen($pdf, 'rb');  // Open the PDF file in binary mode
+        
+        header('Content-Type: application/pdf');  // Set the content type header to indicate PDF
+        header('Content-Length: ' . filesize($pdf));  // Set the content length header
+        header("Content-disposition: inline; filename=\"stampa_riba.pdf\"");  // Set the content disposition header to specify inline or attachment
+        
+        fpassthru($fp);  // Output the PDF file
+    }
 }

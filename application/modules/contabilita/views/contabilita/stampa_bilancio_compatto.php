@@ -16,7 +16,7 @@ $filtri = array();
 
 if (!empty($filters["filter_stampe_contabili"])) {
     foreach ($filters["filter_stampe_contabili"] as $field) {
-        if ($field['value'] == '-1') {
+        if ($field['value'] == '-1' || $field['value'] == '') {
             continue;
         }
         $filter_field = $this->datab->get_field($field["field_id"], true);
@@ -26,6 +26,7 @@ if (!empty($filters["filter_stampe_contabili"])) {
         if ($filter_field['fields_ref']) {
 
             $entity_data = $this->crmentity->getEntityPreview($filter_field['fields_ref']);
+            
             $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $entity_data[$field['value']]);
         } else {
             $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $field['value']);
@@ -110,11 +111,7 @@ foreach ($piano_dei_conti as $key => $dati_piano_conti) {
         <?php echo dateFormat(date('Y-m-d H:i:s'),'d/m/Y H:i:s'); ?>
     </p>
     <?php foreach ($filtri as $filtro): ?>
-        <p><strong>
-                <?php echo $filtro['label']; ?>
-            </strong>:
-            <?php echo $filtro['value']; ?>
-        </p>
+        <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo implode(',', (array) $filtro['value']); ?></p>
     <?php endforeach; ?>
 
 </div>

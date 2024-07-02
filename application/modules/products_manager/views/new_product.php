@@ -1336,28 +1336,78 @@ function aggiorna() {
     //console.log($('.js_variant_rows:visible').length);
     $("#js_product_variants").removeClass("hide"); //Temporary fix
     $.variantsCheck($('.js_variant_rows:visible').length);
-
-
+    
+    
+    // DEPRECATO / michael 20/05/2024
+    // $('.nome_prodotto:visible').each(function() {
+    //     nomeProdotto = $(this).val();
+    //     nomeProdotto = nomeProdotto.substring(nomeProdotto.indexOf("/") - 1);
+    //     nomeConfigurato = $('input[name="fw_products_name"]').val() + nomeProdotto;
+    //     //console.log(nomeConfigurato);
+    //     skuMadre = $('input[name="fw_products_sku"]').val();
+    //     nomeFixed1 = nomeConfigurato.replace(' / ', '-');
+    //     //console.log(nomeFixed1);
+    //     nomeFixed2 = nomeFixed1.replace(' / ', '-');
+    //     //console.log(nomeFixed2);
+    //     if (!skuMadre) {
+    //         skuMadre = "SKU" + nomeFixed2;
+    //     }
+    //     //console.log(skuMadre);
+    //     skuConfigurato = skuMadre.toUpperCase();
+    //     //console.log($('input[name="fw_products_sku"]').val());
+    //     console.log("SKU" + nomeConfigurato);
+    //     //console.log(skuConfigurato);
+    //     //$(this).parent().parent().find('.sku_code1').val(skuConfigurato);
+    //
+    //     $(this).val(nomeConfigurato);
+    // });
+    
     $('.nome_prodotto').each(function() {
-        nomeProdotto = $(this).val();
-        nomeProdotto = nomeProdotto.substring(nomeProdotto.indexOf("/") - 1);
-        nomeConfigurato = $('input[name="fw_products_name"]').val() + nomeProdotto;
-        //console.log(nomeConfigurato);
-        skuMadre = $('input[name="fw_products_sku"]').val();
-        nomeFixed1 = nomeConfigurato.replace(' / ', '-');
-        //console.log(nomeFixed1);
-        nomeFixed2 = nomeFixed1.replace(' / ', '-');
-        //console.log(nomeFixed2);
-        if (!skuMadre) {
-            skuMadre = "SKU" + nomeFixed2;
+        var nomeProdotto = $(this).val();
+        var nomeBase = $('input[name="fw_products_name"]').val();
+        
+        // Controlla se il carattere '/' esiste nella stringa - MICHAEL, 20/05/2024 - aggiunto questo controllo perchè altrimenti in modifica va a prendere il nome del prodotto base e lo appende creando un doppione del nome
+        var indexSlash = nomeProdotto.indexOf("/");
+        if (indexSlash !== -1) {
+            nomeProdotto = nomeProdotto.substring(indexSlash - 1);
         }
+        
+        // Verifica se nomeProdotto contiene già nomeBase per evitare duplicazioni
+        var nomeConfigurato;
+        if (nomeProdotto.indexOf(nomeBase) === -1) {
+            nomeConfigurato = nomeBase + nomeProdotto;
+        } else {
+            nomeConfigurato = nomeProdotto;
+        }
+        
+        //console.log(nomeConfigurato);
+        
+        var skuMadre = $('input[name="fw_products_sku"]').val();
+        var nomeFixed1 = nomeConfigurato.replace(' / ', '-');
+        
+        //console.log(nomeFixed1);
+        
+        var nomeFixed2 = nomeFixed1.replace(' / ', '-');
+        
+        //console.log(nomeFixed2);
+        
+        if (!skuMadre) {
+            skuMadre = "SKU" + nomeFixed2.toUpperCase();
+        }
+        
         //console.log(skuMadre);
-        skuConfigurato = skuMadre.toUpperCase();
+        
+        var skuConfigurato = skuMadre.toUpperCase();
+        
         //console.log($('input[name="fw_products_sku"]').val());
-        //console.log("SKU" + nomeConfigurato);
+        
+        console.log("SKU" + nomeConfigurato);
+        
         //console.log(skuConfigurato);
+        
         //$(this).parent().parent().find('.sku_code1').val(skuConfigurato);
-
+        
+        // Aggiorna il valore dell'input corrente solo se necessario
         $(this).val(nomeConfigurato);
     });
 

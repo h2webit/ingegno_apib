@@ -729,7 +729,9 @@ class Timbrature extends CI_Model
             'presenze_id <=' => $presenza['presenze_id']
         ]));
         
-        $oreStraordinarie = floor($oreStraordinarie / $range_calcolo) * $range_calcolo;
+        if($range_calcolo) {
+            $oreStraordinarie = floor($oreStraordinarie / $range_calcolo) * $range_calcolo;
+        }
         
         return $oreStraordinarie;
     }
@@ -853,7 +855,9 @@ class Timbrature extends CI_Model
         //Arrotondo in base al parametro $range_calcolo
         $range_calcolo = ($this->impostazioni_modulo['impostazioni_hr_range_calcolo'] ?? 0)/60;
         //debug($oreStraordinarie);
-        $oreStraordinarie = floor($oreStraordinarie / $range_calcolo) * $range_calcolo;
+        if($range_calcolo) {
+            $oreStraordinarie = floor($oreStraordinarie / $range_calcolo) * $range_calcolo;
+        }
 
         //debug(round($oreStraordinarie, 2));
         
@@ -888,7 +892,10 @@ class Timbrature extends CI_Model
        
 
         foreach ($presenze as $_presenza) {
-            
+            if (empty($_presenza['presenze_data_fine']) || empty($_presenza['presenze_ora_fine'])) {
+                
+                continue;
+            }
             $day_number = date('w', strtotime($_presenza['presenze_data_inizio']));
 
             $this->db->where("turni_di_lavoro_data_inizio <= '{$_presenza['presenze_data_inizio']}'", null, false);
@@ -920,6 +927,9 @@ class Timbrature extends CI_Model
 
                 $ora_inizio = new DateTime("{$data_inizio} {$_presenza['presenze_ora_inizio']}");
                 $ora_fine = new DateTime("{$data_fine} " . $_presenza['presenze_ora_fine']);
+                if ($ora_fine < $ora_inizio) {
+                    $ora_fine->modify('+1 day');
+                }
                 $differenza = $ora_inizio->diff($ora_fine);
                 $minuti = $differenza->i;
                 $ore = $differenza->h;
@@ -933,6 +943,9 @@ class Timbrature extends CI_Model
                 
                 $ora_inizio = new DateTime("{$data_inizio} {$_presenza['presenze_ora_inizio']}");
                 $ora_fine = new DateTime("{$Ymd} ". date('H:i'));
+                if ($ora_fine < $ora_inizio) {
+                    $ora_fine->modify('+1 day');
+                }
                 $differenza = $ora_inizio->diff($ora_fine);
                 $minuti = $differenza->i;
                 $ore = $differenza->h;
@@ -972,8 +985,10 @@ class Timbrature extends CI_Model
         $oreTotali = 0;
 
         foreach ($presenze as $presenza) {
-            
-            $oreTotali += $presenza['presenze_ore_totali'];
+            if ($presenza['presenze_ore_totali'] <= 0) {
+                continue;
+            }
+            $oreTotali += str_replace(',', '.', $presenza['presenze_ore_totali']);
             if ($Ymd == '2024-02-09') {
                // debug($presenza,true);
             }
@@ -988,7 +1003,7 @@ class Timbrature extends CI_Model
                 } else {
                     $orePausa = 0;
                 }
-                //debug($orePausa);
+                
                 $orePausaDaPresenza += $orePausa;
                 
             } else {
@@ -1018,11 +1033,11 @@ class Timbrature extends CI_Model
                 }
             }
         }
-        
-        $orePausaTotale -= $orePausaDaPresenza;
-        if ($oreTotali- $orePausaTotale > $this->calcolaOreGiornalierePreviste($Ymd, $dipendente_id)) {
-            $orePausaTotale -= $orePausaTotaleAutomatica;
-        }
+        //debug($orePausaDaPresenza);
+        $orePausaTotale = $orePausaDaPresenza+ $orePausaTotaleAutomatica;
+        // if ($oreTotali - $orePausaTotale > $this->calcolaOreGiornalierePreviste($Ymd, $dipendente_id)) {
+        //     $orePausaTotale -= $orePausaTotaleAutomatica;
+        // }
         
         return round($orePausaTotale,2);
     }
@@ -1069,6 +1084,7 @@ class Timbrature extends CI_Model
             $this->db->where('turni_di_lavoro_dipendente', $idDipendente);
             //debug($giornoSettimana);
             $this->db->where('turni_di_lavoro_giorno', $giornoSettimana);
+            $this->db->join('orari_di_lavoro_ore_pausa', 'turni_di_lavoro_pausa = orari_di_lavoro_ore_pausa_id', "left");
             $query = $this->db->get('turni_di_lavoro');
             $this->turni_dipendenti[$idDipendente][$giornoSettimana] = $query->result_array();
         
@@ -1313,13 +1329,15 @@ class Timbrature extends CI_Model
 
     /******************************************************************************************************************************************
      * 
-     * ! Se il dipendente ne ha diritto, in base alle ore minime da effettuare, imposta il flag del buono pasto sulle presenze della giornata
+     * ! Se il dipendente ne ha diritto, in base alle ore minime da effettuare ed alle ore previste da contratto per la giornata,
+     * ! imposta il flag del buono pasto sulle presenze della giornata
      *  
      ******************************************************************************************************************************************/
     public function gestisciBuonoPasto($Ymd, $dipendente_id, $presenze = null)
     {
         $dipendente = $this->apilib->view('dipendenti', $dipendente_id);
-        
+        // debug($dipendente['dipendenti_ore_min_buono_pasto']);
+        // debug($dipendente['dipendenti_buoni_pasto'],true);
         if(empty($dipendente)) {
             return DB_BOOL_FALSE;
         }
@@ -1346,19 +1364,22 @@ class Timbrature extends CI_Model
         if ($presenze === null) {
             $presenze = $this->apilib->search('presenze', [
                 'DATE(presenze_data_inizio)' => $Ymd,
-                'presenze_dipendente' => $dipendente_id
+                'presenze_dipendente' => $dipendente_id,
+                "(presenze_richiesta IS NULL OR presenze_richiesta NOT IN (SELECT richieste_id FROM richieste WHERE richieste_user_id = $dipendente_id AND richieste_tipologia IN (1,2,3) AND DATE(richieste_dal) <= '$Ymd' AND DATE(richieste_al) >= '$Ymd'))"
             ]);
         }
 
-        //Se l'unica presenza di oggi, oppure la somma delle presenze di oggi è maggiore o uguale alle ore minime, torno true
-        $ore_totali = $this->calcolaOreTotali($Ymd, $dipendente_id, $this->apilib->search('presenze', [
-            'presenze_dipendente' => $dipendente_id,
-            'DATE(presenze_data_inizio)' => $Ymd
-        ]));
-
         
-
-        if($ore_totali > $dipendente['dipendenti_ore_min_buono_pasto']) {
+        
+        $ore_totali = $this->calcolaOreTotali($Ymd, $dipendente_id, $presenze);
+        $pause = $this->calcolaOrePausaPranzo($Ymd, $dipendente_id, $presenze);
+        $oreLavoroPreviste = $this->calcolaOreGiornalierePreviste($Ymd, $dipendente_id);
+        $ore_totali -= $pause;
+        // debug($ore_totali);
+        // debug($oreLavoroPreviste);
+        // debug($dipendente['dipendenti_ore_min_buono_pasto'],true);
+        
+        if($ore_totali > $dipendente['dipendenti_ore_min_buono_pasto'] && $oreLavoroPreviste > $dipendente['dipendenti_ore_min_buono_pasto']) {
             return DB_BOOL_TRUE;
         } else {
             return DB_BOOL_FALSE;
@@ -1611,13 +1632,15 @@ class Timbrature extends CI_Model
         if (!empty($reparti)) {
             $reparto = $reparti[0]['reparti_id'];
         }
-
+        //debug($richiesta,true);
         // Se è permesso oppure trasferta devo crearla SOLO per gli orari del permesso
         if (
             ($richiesta['richieste_tipologia'] == 1 || $richiesta['richieste_tipologia'] == 5) || 
             ($richiesta['richieste_ora_inizio'] && $richiesta['richieste_ora_fine'])
         ) {
             
+            //TODO: creare una presenza per ogni turno di lavoro, fino all'ora fine, in modo da considerare eventuali salti per pause pranzo
+
             // Calcolo ore totali
             $dataOraInizio = new DateTime(substr($richiesta['richieste_dal'], 0, 10) . ' ' . $richiesta['richieste_ora_inizio']);
             $dataOraFine = new DateTime(substr($richiesta['richieste_al'], 0, 10) . ' ' . $richiesta['richieste_ora_fine']);
@@ -1632,44 +1655,77 @@ class Timbrature extends CI_Model
                 $fine_calendario = substr($richiesta['richieste_al'], 0, 10) . ' ' . '00:00:00';
             }
 
-            try {
-                $this->db->insert('presenze', [
-                    'presenze_creation_date' => date('Y-m-d H:i:s'),
-                    'presenze_dipendente' => $richiesta['richieste_user_id'],
-                    'presenze_data_inizio' => dateFormat($richiesta['richieste_dal'], 'Y-m-d'),
-                    'presenze_data_fine' => dateFormat($richiesta['richieste_al'], 'Y-m-d'),
-                    'presenze_ora_inizio' => $richiesta['richieste_ora_inizio'],
-                    'presenze_ora_fine' => $richiesta['richieste_ora_fine'],
-                    // 'presenze_ora_inizio_effettivo' => $richiesta['richieste_ora_inizio'],
-                    // 'presenze_ora_fine_effettiva' => $richiesta['richieste_ora_fine'],
-                    'presenze_data_inizio_calendar' => $inizio_calenadario,
-                    'presenze_data_fine_calendar' => $fine_calendario,
-                    'presenze_ore_totali' => $ore_tot,
-                    'presenze_straordinario' => 0,
-                    'presenze_reparto' => $reparto,
-                    'presenze_richiesta' => $richiesta['richieste_id'],
-                    'presenze_note' => $richiesta['richieste_note'],
-                    'presenze_scope_create' => 'CRON PRESENZE RICHIESTE'
-                ]);
+            $inizio = new DateTime($richiesta['richieste_dal']);
+            $fine = new DateTime($richiesta['richieste_al']);
+            $fine->modify('+1 day'); // Includo il giorno finale nella generazione delle presenze
 
-                //Se è trasferta assegno il buono pasto sulla presenza appena creata, sempre se supera le ore minime impostate sul dipendente
-                if($richiesta['richieste_tipologia'] == 5) {
-                    $presenza_inserita_id = $this->db->insert_id();
-                    $presenza_inserita = $this->db->where('presenze_id', $presenza_inserita_id)->get('presenze')->row_array();
+            $intervallo = new DateInterval('P1D');
+            $periodo = new DatePeriod($inizio, $intervallo, $fine);
+
+            foreach ($periodo as $data) {
+                $giorno_richiesta = $data->format('Y-m-d');
+                $turniDiLavoro = $this->getTurniDiLavoro($richiesta['richieste_user_id'], date('N', strtotime($giorno_richiesta)));
+                
+                foreach ($turniDiLavoro as $turno) {
+                    //debug($giorno_richiesta);
+                    $inizio_turno = new DateTime($giorno_richiesta . ' ' . $turno['turni_di_lavoro_ora_inizio']);
+                    $fine_turno = new DateTime($giorno_richiesta . ' ' . $turno['turni_di_lavoro_ora_fine']);
+
+                    // Determina l'inizio effettivo considerando il massimo tra l'inizio del turno e l'inizio della richiesta
+                    $inizio_effettivo = max(new DateTime($richiesta['richieste_dal']), $inizio_turno);
+
+                    if ($data->format('Y-m-d') == (new DateTime($richiesta['richieste_al']))->format('Y-m-d')) {
+                        $fine_richiesta_con_ora = new DateTime($giorno_richiesta.' '.$richiesta['richieste_ora_fine']);
+                        $fine_effettiva = min($fine_richiesta_con_ora, $fine_turno);
+                    } else {
+                        $fine_effettiva = min(new DateTime($giorno_richiesta . ' 23:59:59'), $fine_turno);
+                    }
                     
-                    if(!empty($presenza_inserita_id)) {
-                        $Ymd = dateFormat($richiesta['richieste_dal'], 'Y-m-d');
-    
-                        $buono = $this->timbrature->gestisciBuonoPasto($Ymd, $richiesta['richieste_user_id'], $presenza_inserita);
-    
-                        $this->db->where('presenze_id', $presenza_inserita_id)->update('presenze', [
-                            'presenze_buono_pasto' => $buono
-                        ]);
+//                    debug($fine_effettiva->format('Y-m-d H:i:s'));
+                    // Assicurati che l'inizio effettivo sia prima della fine effettiva
+                    if ($inizio_effettivo < $fine_effettiva) {
+                        //debug($giorno_richiesta);
+                        // Calcola le ore totali tra l'inizio e la fine effettivi
+                        $diff = $inizio_effettivo->diff($fine_effettiva);
+                        $ore_totali = $diff->h + ($diff->i / 60);
+
+                        try {
+                            $presenze_pausa = $this->db->get_where('presenze_pausa' , ['presenze_pausa_value' => $turno['orari_di_lavoro_ore_pausa_value']]);
+                            if ($presenze_pausa->num_rows() == 1) {
+                                $presenze_pausa = $presenze_pausa->row()->presenze_pausa_id;
+                            } else {
+                                $presenze_pausa = null;
+
+                            }
+                            $this->db->insert('presenze', [
+                                'presenze_creation_date' => date('Y-m-d H:i:s'),
+                                'presenze_dipendente' => $richiesta['richieste_user_id'],
+                                'presenze_data_inizio' => $giorno_richiesta,
+                                'presenze_ora_inizio' => $inizio_effettivo->format('H:i'),
+                                'presenze_data_fine' => $giorno_richiesta,
+                                'presenze_ora_fine' => $fine_effettiva->format('H:i'),
+                                'presenze_ore_totali' => $ore_totali- $turno['orari_di_lavoro_ore_pausa_value'],
+                                'presenze_reparto' => $reparto,
+                                'presenze_richiesta' => $richiesta['richieste_id'],
+                                'presenze_scope_create' => 'Funzione creaPresenzaDaRichiesta',
+                                'presenze_pausa' => $presenze_pausa,
+                            ]);
+
+                            if ($richiesta['richieste_tipologia'] == 5) {
+                                $presenza_inserita_id = $this->db->insert_id();
+                                if ($presenza_inserita_id) {
+                                    $buono = $this->gestisciBuonoPasto($giorno_richiesta, $richiesta['richieste_user_id']);
+                                    $this->db->where('presenze_id', $presenza_inserita_id)->update('presenze', ['presenze_buono_pasto' => $buono]);
+                                }
+                            }
+                        } catch (Exception $e) {
+                            log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
+                        }
                     }
                 }
-            } catch (Exception $e) {
-                log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
             }
+
+
         }
 
         // Se è malattia/ferie/smart working o missione devo crearla in base all'orario del profilo
@@ -1696,8 +1752,9 @@ class Timbrature extends CI_Model
                     $this->db->where("(turni_di_lavoro_data_fine >= '{$giorno_richiesta}' OR turni_di_lavoro_data_fine IS NULL)", null, false); //aggiungo anche il vuoto, se uno non imposta la data di fine.
                     $this->db->where('turni_di_lavoro_dipendente', $richiesta['richieste_user_id']);
                     $this->db->where('turni_di_lavoro_giorno', $richiesta_inizio_giorno); //Prendo il giorno della richiesta
+                    $this->db->join('orari_di_lavoro_ore_pausa', 'turni_di_lavoro_pausa = orari_di_lavoro_ore_pausa_id', 'LEFT');
                     $turni_lavoro = $this->db->get('turni_di_lavoro')->result_array();
-
+                    
                     if (!empty($turni_lavoro)) {
                         // Creo una presenza per ogni turno che trovo
                         foreach ($turni_lavoro as $turno) {
@@ -1710,6 +1767,14 @@ class Timbrature extends CI_Model
                             $ore_tot = round(($diff_orari->s / 3600) + ($diff_orari->i / 60) + $diff_orari->h + ($diff_orari->days * 24), 2);
 
                             try {
+                                //debug($turno);
+                                $presenze_pausa = $this->db->get_where('presenze_pausa', ['presenze_pausa_value' => $turno['orari_di_lavoro_ore_pausa_value']]);
+                                if ($presenze_pausa->num_rows() == 1) {
+                                    $presenze_pausa = $presenze_pausa->row()->presenze_pausa_id;
+                                } else {
+                                    $presenze_pausa = null;
+
+                                }
                                 $this->db->insert('presenze', [
                                     'presenze_creation_date' => date('Y-m-d H:i:s'),
                                     'presenze_dipendente' => $richiesta['richieste_user_id'],
@@ -1725,7 +1790,8 @@ class Timbrature extends CI_Model
                                     'presenze_richiesta' => $richiesta['richieste_id'],
                                     'presenze_note' => $richiesta['richieste_note'],
                                     'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
-                                    'presenze_scope_create' => 'CRON PRESENZE RICHIESTE'
+                                    'presenze_scope_create' => 'CRON PRESENZE RICHIESTE',
+                                    'presenze_pausa' => $presenze_pausa,
                                 ]);
                             } catch (Exception $e) {
                                 log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
@@ -1765,5 +1831,6 @@ class Timbrature extends CI_Model
                 log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: richiesta senza data di fine");
             }
         }
+        $this->mycache->deleteByTags(['richieste', 'presenze', 'buoni_pasto']);
     }
 }

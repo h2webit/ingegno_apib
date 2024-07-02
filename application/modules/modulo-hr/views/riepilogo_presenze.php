@@ -32,7 +32,7 @@ if (!function_exists('formatHoursXls')) {
 function calculateOreGiornaliere($presenza_giornaliera, $current_date, $giorno)
 {
     $CI = &get_instance();
-    $ore_giornaliere = 0;
+    /*$ore_giornaliere = 0;
     $inizio_calendar = new DateTime($presenza_giornaliera['presenze_data_inizio_calendar']);
     $fine_calendar = new DateTime($presenza_giornaliera['presenze_data_fine_calendar']);
 
@@ -70,8 +70,10 @@ function calculateOreGiornaliere($presenza_giornaliera, $current_date, $giorno)
     }
 
     $pausa = $CI->timbrature->calcolaOrePausaPranzo($inizio_calendar->format('Ymd'), $presenza_giornaliera['presenze_dipendente']);
-    //debug($pausa);
-    return $ore_giornaliere - $pausa;
+    return $ore_giornaliere - $pausa;*/
+    
+    return $CI->timbrature->calcolaOreTotali($presenza_giornaliera['presenze_data_inizio_calendar'], $presenza_giornaliera['presenze_dipendente']);
+    
 }
 
 function checkAnomaliaOStraordinari($turni, $ore_giornaliere, $assenza, $giorno)
@@ -357,17 +359,38 @@ foreach ($turniQuery as $turno) {
     $turniOrganizzati[$turno['turni_di_lavoro_dipendente']][$turno['turni_di_lavoro_giorno']][] = $turno;
 }
 
-
+$this->load->model('entities');
 foreach ($dipendenti as $dipendente) {
     $totale_ore_dipendente = $totale_ore_previste_dipendente = 0;
 
     $data[$autoincrementalKey] = [
         '1' => "<a target='_blank' style='width:100%; color: #3c8dbc; text-decoration: none; display: block;' href='" . base_url("main/layout/dettaglio-dipendente/" . $dipendente['dipendenti_id']) . "'>" . $dipendente['dipendenti_cognome'] . ' ' . substr($dipendente['dipendenti_nome'], 0, 1) . "</a>",
     ];
-
+    $totale_ore_dipendente_da_rapportini = 0;
     for ($giorno = 1; $giorno <= $giorni_mese; $giorno++) {
         $day = $giorno < 10 ? '0' . $giorno : $giorno;
         $current_date = $anno . '-' . $mese . '-' . $day;
+        //Verifico se esiste l'entità rapportini
+        if ($this->entities->entity_exists('rapportini')) {
+            $ore_giorno = $this->db->query("SELECT
+                SUM(
+                    TIMESTAMPDIFF(MINUTE, 
+                            STR_TO_DATE(CONCAT(rapportini_data, ' ', rapportini_ora_inizio), '%Y-%m-%d %H:%i'),
+                            STR_TO_DATE(CONCAT(rapportini_data, ' ', rapportini_ora_fine), '%Y-%m-%d %H:%i')
+                        ) / 60 
+                    
+                ) AS totale_ore_lavoro
+            FROM
+                rapportini
+            WHERE
+                rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users WHERE users_id = '{$dipendente['dipendenti_user_id']}')  -- Sostituisci con l'ID del dipendente
+                AND rapportini_data = '$current_date'
+                
+
+
+    ")->row()->totale_ore_lavoro;
+            $totale_ore_dipendente_da_rapportini += $ore_giorno;
+        }
         $giorno_della_settimana = date('N', strtotime($current_date));
         $giorno_lavorativo = !empty($turniOrganizzati[$dipendente['dipendenti_id']][$giorno_della_settimana]);
         $totale_ore_previste_dipendente += $this->timbrature->calcolaOreGiornalierePreviste($current_date, $dipendente['dipendenti_id']);
@@ -386,8 +409,8 @@ foreach ($dipendenti as $dipendente) {
         //     ->get('richieste')->row_array();
 
         $assenza = $assenzeOrganizzate[$dipendente['dipendenti_id']][$current_date] ?? null;
-
-
+            
+        
         if (!empty($presenze[$dipendente['dipendenti_id']][$current_date])) {
             // $pres = $presenze[$dipendente['dipendenti_id']];
 
@@ -436,8 +459,12 @@ foreach ($dipendenti as $dipendente) {
 
                 foreach ($filteredPresenze as $presenza_giornaliera) {
                     //$ore_giornaliere += calculateOreGiornaliere($presenza_giornaliera, $current_date, $giorno);  
-                    $ore_giornaliere += $presenza_giornaliera['presenze_ore_totali'];
-
+                    // if ($Ymd == '20240527') {
+                    //     debug($presenza_giornaliera);
+                    // }
+                    
+                    $ore_giornaliere += str_replace(',','.', $presenza_giornaliera['presenze_ore_totali']);
+                    
                     $anomalia = $presenza_giornaliera['presenze_anomalia'];
 
                     //vedo se il totale combacia
@@ -506,11 +533,12 @@ foreach ($dipendenti as $dipendente) {
                 }
 
 
-                //$ore_giornaliere -= $pause;
+                
                 $pause = $this->timbrature->calcolaOrePausaPranzo($Ymd, $dipendente['dipendenti_id']);
-                //debug($pause,true);
-                $ore_giornaliere -= $pause;
+                
 
+                $ore_giornaliere -= $pause;
+                
 
                 if ($anomalia_rilevata == true && !($ferie_rilevate || $permesso_rilevato || $malattia_rilevata)) {
                     //$data[$autoincrementalKey][$giorno+1] = "Anomalia - ".formatHoursXls($ore_giornaliere);
@@ -642,6 +670,9 @@ foreach ($dipendenti as $dipendente) {
     }
     $data[$autoincrementalKey][] = number_format($totale_ore_previste_dipendente, 2);
     $data[$autoincrementalKey][] = number_format($totale_ore_dipendente, 2);
+    if ($this->entities->entity_exists('rapportini')) {
+        $data[$autoincrementalKey][] = number_format($totale_ore_dipendente_da_rapportini, 2);
+    }
 
     $autoincrementalKey++;
 }
@@ -739,6 +770,8 @@ td.js_last_clicked {
 <div class="container-fluid riepilogo_presenze">
     <div class="row">
         <div class="col-sm-12">
+            <button type="button" id="stampa_riepilogo" class="btn bg-teal btn-sm"><i class="fas fa-print fa-fw"></i> Stampa riepilogo</button>
+            
             <div class="legenda_container">
                 <div class="text-uppercase legenda_item">
                     <strong>Anomalia</strong> <span class="legenda_square anomalia"></span>
@@ -966,7 +999,13 @@ var table3 = jspreadsheet(document.getElementById('spreadsheet_presenze_riepilog
             width: 20,
             readOnly: true,
             align: 'center'
-        },
+        }, <?php if ($this->entities->entity_exists('rapportini')): ?>{
+                type: 'numeric',
+                title: 'Rapportini',
+                width: 20,
+                readOnly: true,
+                align: 'center'
+            },<?php endif; ?>
 
     ],
 });
@@ -1008,6 +1047,56 @@ $(document).ready(function() {
         $('.jexcel_overflow td').removeClass('js_last_clicked');
 
         $(this).parent().addClass('js_last_clicked');
+    });
+    
+    $('#stampa_riepilogo').on('click', function() {
+        html2canvas(document.querySelector("#spreadsheet_presenze_riepilogo")).then(canvas => {
+            var base64Image = canvas.toDataURL();
+            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Stampa Immagine</title>
+                        <style>
+                            @page {
+                                size: landscape
+                            }
+                            body {
+                                margin: 0;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                            }
+                            img {
+                                max-width: 100%;
+                                max-height: 100%;
+                            }
+                        </style>
+                    </head>
+
+                    <body>
+                        <img src="${base64Image}" alt="Riepilogo presenze">
+                    </body>
+
+                    \x3Cscript>
+                        window.matchMedia('print').addEventListener('change', function(event) {
+                            if (!event.matches) {
+                                window.close();
+                            }
+                        });
+    
+                        window.onload = function() {
+                            window.print();
+                        };
+                        
+                        window.onafterprint = window.close;
+                    \x3C/script>
+                </html>
+            `);
+            printWindow.document.close();
+        });
     });
 });
 </script>

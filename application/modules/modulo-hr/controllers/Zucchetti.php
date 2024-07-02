@@ -130,10 +130,10 @@ class Zucchetti extends MY_Controller
                     if ($presenza['presenze_straordinario'] > 0) {
                         $presenze_giornaliere_dipendente[$data_presenza]['straordinari'][] = $presenza;
                     }
-                    
-                    if ($presenza['presenze_buono_pasto'] == DB_BOOL_TRUE) {
-                        $buoni_pasto_dipendente[$data_presenza] = 1;
-                    }
+                }
+                
+                if ($presenza['presenze_buono_pasto'] == DB_BOOL_TRUE) {
+                    $buoni_pasto_dipendente[$data_presenza] = 1;
                 }
             }
             

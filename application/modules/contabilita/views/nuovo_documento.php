@@ -364,6 +364,8 @@ if ($documento_id) {
             'documenti_contabilita_articoli_applica_sconto' => '',
             'documenti_contabilita_articoli_importo_totale' => '',
             'documenti_contabilita_articoli_iva_id' => 1,
+            'documenti_contabilita_articoli_periodo_comp' => '',
+
         ];
         
         array_unshift($documento['articoli'] , $riga_desc_rif_doc);
@@ -481,6 +483,7 @@ window.open('<?php echo base_url(); ?>main/layout/nuovo_documento/?ddt_id=<?php 
         } else {
             // non faccio nulla
         }
+        $tipo = 'Fattura';
     }
 
     $clone = true;
@@ -493,10 +496,13 @@ window.open('<?php echo base_url(); ?>main/layout/nuovo_documento/?ddt_id=<?php 
     $tipi_doc_map = array_column($tipi_doc, 'documenti_contabilita_tipo_id', 'documenti_contabilita_tipo_value');
 
     //Per retrocompatibilità
-    if ($tipo == 'DDT') {
+    if ($tipo == 'DDT' && empty($tipi_doc_map[$tipo])) {
         $tipo = 'DDT Cliente';
     }
+    
     $documento['documenti_contabilita_tipo'] = $tipi_doc_map[$tipo];
+
+
     if ($this->input->post('bulk_action') == 'Genera fattura accorpata') {
         $documento['documenti_contabilita_formato_elettronico'] = DB_BOOL_TRUE;
         $documento['documenti_contabilita_tipologia_fatturazione'] = 1;
@@ -903,7 +909,7 @@ foreach ($template_scadenze as $key => $tpl_scad) {
 $listini = $this->apilib->search('listini');
 //debug($campi_personalizzati,true);
 //La prima riga detta legge... tutti gli altri campi vengono mostrati nella riga 2 e devono essere <= ai campi di riga 1
-$colonne_count = 9 + count($campi_personalizzati[1]) + ($impostazioni['documenti_contabilita_settings_commessa'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_lotto'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_scadenza'] ? 1 : 0)+ ($impostazioni['documenti_contabilita_settings_sconto2'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_sconto3'] ? 1 : 0) + ($campo_centro_costo ? 1 : 0);
+$colonne_count = 9 + count($campi_personalizzati[1]) + ($impostazioni['documenti_contabilita_settings_commessa'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_lotto'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_periodo_comp'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_scadenza'] ? 1 : 0)+ ($impostazioni['documenti_contabilita_settings_sconto2'] ? 1 : 0) + ($impostazioni['documenti_contabilita_settings_sconto3'] ? 1 : 0) + ($campo_centro_costo ? 1 : 0);
 
 for ($i = 1; $i <= $colonne_count; $i++) {
     if (!array_key_exists($i, $campi_personalizzati[2])) {
@@ -4676,7 +4682,12 @@ $(document).ready(function() {
         /* Line manipulation end */
 
         counter++;
+
+
+
         newRow.appendTo(body);
+
+        initComponents(newRow);
 
         $('#js_product_table > tbody').trigger('sortupdate');
     });

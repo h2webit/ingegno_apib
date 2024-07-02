@@ -30,7 +30,7 @@
             </LclInstrm>
             <SeqTp>RCUR</SeqTp>
         </PmtTpInf>
-        <ReqdColltnDt><?php echo (new DateTime($doc['documenti_contabilita_scadenze_scadenza']))->format('Y-m-d') ?></ReqdColltnDt>
+        <ReqdColltnDt><?php echo (new DateTime($data_incasso))->format('Y-m-d') ?></ReqdColltnDt>
         <Cdtr>
             <Nm><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $azienda['documenti_contabilita_settings_company_name']), 0, 65); ?></Nm>
             <PstlAdr>
@@ -120,9 +120,9 @@
                 <Dbtr>
                     <Nm><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $dest['ragione_sociale']), 0,65); ?></Nm>
                     <PstlAdr>
-                        <StrtNm><?php echo $dest['indirizzo'] ?></StrtNm>
+                        <StrtNm><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $dest['indirizzo']), 0,65); ?></StrtNm>
                         <PstCd><?php echo $dest['cap'] ?></PstCd>
-                        <TwnNm><?php echo $dest['citta'] ?></TwnNm>
+                        <TwnNm><?php echo substr($dest['citta'], 0, 30); ?> ?></TwnNm>
                         <CtrySubDvsn><?php echo $dest['provincia'] ?></CtrySubDvsn>
                         <Ctry><?php echo strtoupper(substr($dest['nazione'], 0, 2)); ?></Ctry>
                     </PstlAdr>

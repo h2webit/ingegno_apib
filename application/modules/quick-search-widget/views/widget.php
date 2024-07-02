@@ -66,7 +66,7 @@
 </style>
 
 <li class="search-wrapper navbar-circle custom_search_wrapper">
-    <input type="text" id="search-input" class="search-input" placeholder="Cerca...">
+    <input type="text" id="search-input-topbar" class="search-input" placeholder="Cerca...">
     <button id="search-btn" class="search-btn">
         <i id="icon-search-btn" class="fas fa-search"></i>
     </button>
@@ -77,7 +77,7 @@
     // Funzione per verificare se l'elemento di destinazione o uno dei suoi genitori è l'elemento specificato
     document.addEventListener('click', function (event) {
         const searchWrapper = document.querySelector('.search-wrapper');
-        const searchInput = document.getElementById('search-input');
+        const searchInput = document.getElementById('search-input-topbar');
         const searchBtn = document.getElementById('search-btn');
         const iconSearchBtn = document.getElementById('icon-search-btn');
         const modalSideView = document.getElementById('modal-side-view');
@@ -125,7 +125,7 @@
             debounceTimeout = setTimeout(() => func.apply(context, args), delay);
         }
     }
-    document.getElementById('search-input').addEventListener('input', debounce(function () {
+    document.getElementById('search-input-topbar').addEventListener('input', debounce(function () {
 
         var inputValue = this.value;
 

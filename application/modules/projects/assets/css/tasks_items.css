@@ -1,0 +1,52 @@
+.js_keep_container {
+  color: black;
+  padding: 5px 10px 10px 10px;
+  
+  background: #eaeaea;
+}
+.js_keep_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px;
+  border-bottom: 1px solid #9b9b9b;
+}
+
+.js_task_item_text {
+  border: none;
+  width: 95%;
+}
+
+.js_task_item_text_done {
+  text-decoration: line-through;
+}
+
+.js_task_item_text {
+  box-sizing: border-box;
+  direction: ltr;
+  
+  max-width: 90%;
+  line-height: 1.5;
+  padding: 1px 15px 1px 0px;
+  
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid #f7e98d;
+  font: 14px Tahoma, cursive;
+  transition: box-shadow 0.5s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-smoothing: subpixel-antialiased;
+  background: linear-gradient(#f9efaf, #f7e98d);
+  background: -o-linear-gradient(#f9efaf, #f7e98d);
+  background: -ms-linear-gradient(#f9efaf, #f7e98d);
+  background: -moz-linear-gradient(#f9efaf, #f7e98d);
+  background: -webkit-linear-gradient(#f9efaf, #f7e98d);
+
+  border: none;
+  background: transparent;
+  resize: none;
+  box-shadow: none;
+}
+.dnone {
+  display:none;
+}

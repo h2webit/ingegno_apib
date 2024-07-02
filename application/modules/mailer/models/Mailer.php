@@ -125,7 +125,7 @@ class Mailer extends CI_Model
                 )
             );
             $email_config['mailtype'] = 'html';
-            $email_config['smtp_debug'] = 0;
+            $email_config['smtp_debug'] = $smtp['mailer_smtp_debug_level'] ?? 0;
 
             $this->email->initialize($email_config);
         }
@@ -232,7 +232,7 @@ class Mailer extends CI_Model
                     'mailer_queue_logs' => $debug
                 ]
             );
-            return $queue;
+            return true;
         }
     }
     

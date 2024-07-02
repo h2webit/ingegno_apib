@@ -167,7 +167,7 @@ class Configuratore extends CI_Model
         $Ymd = substr($presenza['presenze_data_inizio'], 0, 10);
         $ore_previste = $this->timbrature->calcolaOreGiornalierePreviste($Ymd, $dipendente_id);
 
-        debug($ore_previste);
+        //debug($ore_previste);
 
         $presenza['_ore_previste'] = $ore_previste;
     }

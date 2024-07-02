@@ -37,4 +37,30 @@
     
             e_json(['status' => 1, 'txt' => 'ok', 'cliente' => $cliente_id, 'data' => $articoli]);
         }
+
+        public function save_payments() {
+            $payments = $this->input->post('payments');
+            $customer = $this->input->post('customer');
+            //debug($payments,true);
+            foreach ($payments as $payment) {
+                if (empty($payment['payments_paid'])) {
+                    $payment['payments_paid'] = 0;
+                }
+                if (empty($payment['payments_invoice_sent'])) {
+                    $payment['payments_invoice_sent'] = 0;
+                }
+                if (empty($payment['payments_approved'])) {
+                    $payment['payments_approved'] = 0;
+                }
+                if (!empty($payment['payments_id'])) {
+                    $dati = $payment;
+                    unset($dati['payments_id']);
+                    $this->apilib->edit('payments', $payment['payments_id'], $payment);
+                } else {
+                    $payment['payments_customer'] = $customer;
+                    $this->apilib->create('payments', $payment);
+                }
+            }
+            e_json(['status' => 7, 'close_modals'=>1, 'txt' => 'ok']);
+        }
     }

@@ -135,6 +135,99 @@ class Conteggi extends CI_Model
         return $this->baseQueryDocumentiContabilita($options);
     }
 
+    public function getTempoMedioSaldoCustomer($customer_id, $human_readable = true)
+    {
+        $this->db->select("AVG(DATEDIFF(documenti_contabilita_scadenze.documenti_contabilita_scadenze_data_saldo, documenti_contabilita.documenti_contabilita_data_emissione)) as tempo_medio_saldo_giorni");
+        $this->db->from("documenti_contabilita_scadenze");
+        $this->db->join("documenti_contabilita", "documenti_contabilita.documenti_contabilita_id = documenti_contabilita_scadenze.documenti_contabilita_scadenze_documento");
+        $this->db->where("documenti_contabilita.documenti_contabilita_customer_id", $customer_id);
+        $this->db->where("documenti_contabilita_scadenze.documenti_contabilita_scadenze_data_saldo IS NOT NULL", null, false);
+
+        $query = $this->db->get();
+        $result = $query->row_array();
+
+        if (!isset($result['tempo_medio_saldo_giorni'])) {
+            if ($human_readable) {
+                return 'N/A';
+            } else {
+                return false;
+            }
+            
+        }
+
+        if ($human_readable) {
+            return $this->convertDaysToYearsMonthsDays($result['tempo_medio_saldo_giorni']);
+        } else {
+            return $result['tempo_medio_saldo_giorni'];
+        }
+
+        
+    }
+
+    public function getTotaleOrdiniVenditaCustomer($customer_id)
+    {
+        $options = [
+            'select' => "COUNT(*) as totale_ordini",
+            'where' => [
+                "documenti_contabilita_tipo = 5", // Assumendo che il tipo 5 sia per gli ordini di vendita
+                "documenti_contabilita_customer_id = '$customer_id'"
+            ],
+            'multi_rows' => false
+        ];
+
+        return $this->baseQueryDocumentiContabilita($options);
+    }
+
+    public function getTotaleOrdiniAcquistoCustomer($customer_id) {
+        $options = [
+            'select' => "COUNT(*) as totale_ordini",
+            'where' => [
+                "documenti_contabilita_tipo = 6", // Assumendo che il tipo 6 sia per gli ordini di acquisto
+                "documenti_contabilita_customer_id = '$customer_id'"
+            ],
+            'multi_rows' => false
+        ];
+
+        return $this->baseQueryDocumentiContabilita($options);
+    }
+
+
+    private function convertDaysToYearsMonthsDays($days)
+    {
+        $years = floor($days / 365);
+        $remainingDays = $days % 365;
+        $months = floor($remainingDays / 30);
+        $days = $remainingDays % 30;
+
+        $result = [];
+        if ($years > 0) {
+            if ($years == 1) {
+                $result[] = $years . ' anno';
+            } else {
+                $result[] = $years . ' anni';
+            }
+            
+        }
+        if ($months > 0) {
+            if ($months == 1) {
+                $result[] = $months . ' mese';
+            } else {
+                $result[] = $months . ' mesi';
+            }
+            
+        }
+        if ($days > 0) {
+            if ($days == 1) {
+                $result[] = $days . ' giorno';
+            } else {
+                $result[] = $days . ' giorni';
+            }
+            
+        }
+
+        return implode(', ', $result);
+    }
+
 
     /************************** CONTEGGI GLOBALI ***********************************/
 

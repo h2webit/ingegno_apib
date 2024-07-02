@@ -1,0 +1,11 @@
+.ticket-category-value {
+  color: #189aca;
+}
+.ticket-message {
+  white-space: pre-line;
+  margin-bottom: 10px;
+}
+
+.ticket-actions {
+  margin-bottom: 10px;
+}

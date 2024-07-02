@@ -117,99 +117,166 @@
             </div>
         </div>
 
-        <div class="builder_console">
-            <div class=fakeMenu>
-                <div class="fakeButtons fakeClose"></div>
-                <div class="fakeButtons fakeMinimize"></div>
-                <div class="fakeButtons fakeZoom"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
             </div>
-            <div class="fakeScreen">
 
-                <!-- Hooks -->
-                <p class="line1 js_console_command">$ get executed hooks</p>
-                <p class="line2 hide">
-                    <?php foreach ($this->datab->executed_hooks as $hook): ?>
-                        - Type:
-                        <?php echo $hook['type']; ?> Ref:
-                        <?php echo $hook['ref']; ?> Value id:
-                        <?php echo $hook['value_id']; ?> <br />
+            <div class="col-md-12">
+                <h3>Last 20 attempts unallowed layouts</h3>
 
-                        <?php foreach ($hook['hooks'] as $single_hook): ?>
-                            |- [
-                            <?php echo $single_hook['hooks_id']; ?>] Title: <a
-                                href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/events_builder/<?php echo $single_hook['hooks_id']; ?>"
-                                target="_blank">
-                                <?php echo $single_hook['hooks_title']; ?>
-                            </a> Module:
-                            <?php echo $single_hook['hooks_module']; ?> <span class="js_show_code">Show Code</span><br />
-                            <span class="line4 hide"><br />
-                                <?php echo htmlentities($single_hook['hooks_content']); ?><br /><br />
-                            </span>
+                <table class="table table-striped table-bordered table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Layout</th>
+                            <th>Timestamp</th>
+                            <th>Permission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->db->join('users', 'users.users_id = log_crm.log_crm_user_id')->join('users_type', 'users.users_type = users_type_id')->where('log_crm_type', Apilib::LOG_UNALLOWED_LAYOUT)->order_by('log_crm_id', 'DESC')->get('log_crm', 20)->result_array() as $attempt): ?>
+                            <?php $layout_id = @json_decode($attempt['log_crm_extra'], true)['layout']; ?>
+                            <tr>
+                                <td>
+                                    <?php echo "(" . $attempt['log_crm_user_id'] . ") [" . $attempt['users_type_value'] . "] " . $attempt['log_crm_user_name']; ?><br />
+                                    <small><?php echo @$attempt['users_email']; ?></small>
+                                </td>
+                                <td><?php echo $layout_id; ?></td>
+                                <td><?php echo dateFormat($attempt['log_crm_time'], 'd-m-y H:i'); ?></td>
+                                <td><a title="Allow this layout to this group" href="#"
+                                        onclick="givePermission('<?php echo $layout_id; ?>', '<?php echo $attempt['users_type_value']; ?>', true)"><i
+                                            class="fas fa-check"></i></a>
+                                    |
+                                    <a href="#" title="Deny this layout to this group"
+                                        onclick="givePermission('<?php echo $layout_id; ?>', '<?php echo $attempt['users_type_value']; ?>', false)"><i
+                                            class="fas fa-ban"></i></a>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
-                        <br />
-                    <?php endforeach; ?>
-                </p>
-
-                <!-- Queries -->
-                <p class="line1 js_console_command">$ get slowest queries</p>
-                <p class="line2 hide">
-                    <?php foreach ($this->session->userdata('slow_queries') as $query => $execution_time): ?>
-                        - (
-                        <?php echo $execution_time; ?>s)
-                        <?php echo $query; ?> <br />
-                    <?php endforeach; ?>
-                </p>
-
-                <!-- Queries -->
-                <p class="line1 js_console_command">$ get executed queries</p>
-                <p class="line2 hide">
-                    <?php foreach ($this->db->queries as $query): ?>
-                        -
-                        <?php echo $query; ?> <br />
-                    <?php endforeach; ?>
-                </p>
-
-                <!-- Crons -->
-                <p class="line1 js_console_command">$ get crons</p>
-                <p class="line2 hide">
-                    <?php foreach ($this->fi_events->getCrons() as $cron): ?>
-                        - [
-                        <?php echo $cron['fi_events_id']; ?>] <a
-                            href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/events_builder/<?php echo $cron['fi_events_id']; ?>"
-                            target="_blank">
-                            <?php echo $cron['fi_events_title']; ?>
-                        </a> Type:
-                        <?php echo $cron['crons_type']; ?> Freq:
-                        <?php echo $cron['crons_frequency']; ?> min Active: <span class="line4">
-                            <?php echo $cron['crons_active']; ?>
-                        </span> Last Exec:
-                        <?php echo $cron['crons_last_execution']; ?> Module:
-                        <?php echo $cron['crons_module']; ?> <span class="js_show_code">Show code/url</span><br />
-                        <span
-                            class="line4 hide"><br /><code><?php echo ($cron['crons_text']) ? htmlentities($cron['crons_text']) : $cron['crons_file']; ?></code><br /><br /></span>
-                    <?php endforeach; ?>
-                </p>
-
-                <p class="line1 js_console_command">$ count table records</p>
-                <p class="line2 hide">
-                    ci_sessions (
-                    <?php echo $this->db->query("SELECT COUNT(*) AS c FROM ci_sessions")->row()->c; ?>) <a target="_blank"
-                        href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/query/REVMRVRFIEZST00gY2lfc2Vzc2lvbnM=">Truncate</a>
-                    <br />log_crm (
-                    <?php echo $this->db->query("SELECT COUNT(*) AS c FROM log_crm")->row()->c; ?>) <a target="_blank"
-                        href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/query/REVMRVRFIEZST00gbG9nX2NybQ==">Truncate</a>
-                    <br />log_api (
-                    <?php echo $this->db->query("SELECT COUNT(*) AS c FROM log_api")->row()->c; ?>) <a target="_blank"
-                        href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/query/REVMRVRFIEZST00gbG9nX2FwaQ==">Truncate</a>
-                </p>
-
-                <p class="line3">[?] What are you looking for? (Click command to execute)<span class="cursor3">_</span></p>
-                <p class="line4">><span class="cursor4">_</span></p>
+                    </tbody>
             </div>
         </div>
 
+        <?php /*
+<div class="builder_console">
+<div class=fakeMenu>
+<div class="fakeButtons fakeClose"></div>
+<div class="fakeButtons fakeMinimize"></div>
+<div class="fakeButtons fakeZoom"></div>
+</div>
+<div class="fakeScreen">
+
+<!-- Hooks -->
+<p class="line1 js_console_command">$ get executed hooks</p>
+<p class="line2 hide">
+<?php foreach ($this->datab->executed_hooks as $hook): ?>
+- Type:
+<?php echo $hook['type']; ?> Ref:
+<?php echo $hook['ref']; ?> Value id:
+<?php echo $hook['value_id']; ?> <br />
+
+<?php foreach ($hook['hooks'] as $single_hook): ?>
+ |- [
+ <?php echo $single_hook['hooks_id']; ?>] Title: <a
+     href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/events_builder/<?php echo $single_hook['hooks_id']; ?>"
+     target="_blank">
+     <?php echo $single_hook['hooks_title']; ?>
+ </a> Module:
+ <?php echo $single_hook['hooks_module']; ?> <span class="js_show_code">Show Code</span><br />
+ <span class="line4 hide"><br />
+     <?php echo htmlentities($single_hook['hooks_content']); ?><br /><br />
+ </span>
+<?php endforeach; ?>
+<br />
+<?php endforeach; ?>
+</p>
+
+<!-- Queries -->
+<p class="line1 js_console_command">$ get slowest queries</p>
+<p class="line2 hide">
+<?php foreach ($this->session->userdata('slow_queries') as $query => $execution_time): ?>
+- (
+<?php echo $execution_time; ?>s)
+<?php echo $query; ?> <br />
+<?php endforeach; ?>
+</p>
+
+<!-- Queries -->
+<p class="line1 js_console_command">$ get executed queries</p>
+<p class="line2 hide">
+<?php foreach ($this->db->queries as $query): ?>
+-
+<?php echo $query; ?> <br />
+<?php endforeach; ?>
+</p>
+
+<!-- Crons -->
+<p class="line1 js_console_command">$ get crons</p>
+<p class="line2 hide">
+<?php foreach ($this->fi_events->getCrons() as $cron): ?>
+- [
+<?php echo $cron['fi_events_id']; ?>] <a
+ href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/events_builder/<?php echo $cron['fi_events_id']; ?>"
+ target="_blank">
+ <?php echo $cron['fi_events_title']; ?>
+</a> Type:
+<?php echo $cron['crons_type']; ?> Freq:
+<?php echo $cron['crons_frequency']; ?> min Active: <span class="line4">
+ <?php echo $cron['crons_active']; ?>
+</span> Last Exec:
+<?php echo $cron['crons_last_execution']; ?> Module:
+<?php echo $cron['crons_module']; ?> <span class="js_show_code">Show code/url</span><br />
+<span
+ class="line4 hide"><br /><code><?php echo ($cron['crons_text']) ? htmlentities($cron['crons_text']) : $cron['crons_file']; ?></code><br /><br /></span>
+<?php endforeach; ?>
+</p>
+
+<p class="line1 js_console_command">$ count table records</p>
+<p class="line2 hide">
+ci_sessions (
+<?php echo $this->db->query("SELECT COUNT(*) AS c FROM ci_sessions")->row()->c; ?>) <a target="_blank"
+href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/query/REVMRVRFIEZST00gY2lfc2Vzc2lvbnM=">Truncate</a>
+<br />log_crm (
+<?php echo $this->db->query("SELECT COUNT(*) AS c FROM log_crm")->row()->c; ?>) <a target="_blank"
+href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/query/REVMRVRFIEZST00gbG9nX2NybQ==">Truncate</a>
+<br />log_api (
+<?php echo $this->db->query("SELECT COUNT(*) AS c FROM log_api")->row()->c; ?>) <a target="_blank"
+href="<?php echo OPENBUILDER_BUILDER_BASEURL; ?>main/query/REVMRVRFIEZST00gbG9nX2FwaQ==">Truncate</a>
+</p>
+
+<p class="line3">[?] What are you looking for? (Click command to execute)<span class="cursor3">_</span></p>
+<p class="line4">><span class="cursor4">_</span></p>
+</div>
+</div>
+*/ ?>
+
         <script>
 
+            function givePermission(layout_id, group, checked = true) {
+                $.ajax(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, {
+                    type: 'POST',
+                    data: {
+                        [token_name]: token_hash,
+                        'group': group,
+                        'checked': checked,
+                        // 'module': module,
+                    },
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                        alert('Permission confirmed');
+                        // $('#builder_toolbar').show();
+                        // var toolBarEnabled = true;
+                        // localStorage.setItem('toolBarEnabled', 'true');
+                        // localStorage.setItem('toolBarToken', data);
+
+
+
+                    },
+                });
+            }
             // AJAX EVAL CODE
             $(document).ready(function () {
 

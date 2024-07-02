@@ -1,8 +1,18 @@
+<?php
+    $mostra_tutti = $this->input->get('all');
+    if ($mostra_tutti) {
+        $cols = 6;
+    } else {
+        $cols = 12;
+    }
+$customer = $this->apilib->view('customers', $value_id);
+?>
+
 
 <?php if ($this->datab->module_installed('payments-subscriptions')) : ?>
 
     <?php $subscriptions = $this->apilib->search('subscriptions', ['subscriptions_customer_id' => $value_id, "(subscriptions_end_date IS NULL OR subscriptions_end_date = '' OR DATE(subscriptions_end_date) > DATE(NOW()))"]);?>
-    <div class="col-md-12">
+    <div class="col-md-<?php echo $cols; ?>">
         <div class="info-box bg-green">
             <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
 
@@ -32,9 +42,17 @@
         $fatturato_globale = $this->conteggi->getFatturatoCustomer($value_id);
         $fatturato_anno = $this->conteggi->getFatturatoAnnoCustomer($value_id);
         $insolvenze = $this->conteggi->getInsolvenzeCustomer($value_id);
+        if ($mostra_tutti) {
+            $fido_concesso = $customer['customers_fido_concesso'];
+            $tempo_medio_saldo_giorni = $this->conteggi->getTempoMedioSaldoCustomer($value_id, false);
+            $tempo_medio_saldo_giorni_human_readable = $this->conteggi->getTempoMedioSaldoCustomer($value_id, true);
+            
+            $totale_ordini_vendita = $this->conteggi->getTotaleOrdiniVenditaCustomer($value_id);
+            $totale_ordini_acquisto = $this->conteggi->getTotaleOrdiniAcquistoCustomer($value_id);
+        }
     ?>
 
-        <div class="col-md-12">
+        <div class="col-md-<?php echo $cols; ?>">
             <div class="info-box bg-green">
                 <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
 
@@ -54,7 +72,7 @@
             <!-- /.info-box -->
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-<?php echo $cols; ?>">
             <div class="info-box <?php echo (($fatturato_globale['imponibile'] ?? 0) > 0) ? 'bg-green' : 'bg-red'; ?>">
                 <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
 
@@ -74,7 +92,7 @@
             <!-- /.info-box -->
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-<?php echo $cols; ?>">
             <div class="info-box <?php echo ( ($insolvenze['imponibile'] ?? 0) > 0) ? 'bg-red' : 'bg-green'; ?>">
                 <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
 
@@ -93,6 +111,79 @@
             </div>
             <!-- /.info-box -->
         </div>
+        <?php if ($mostra_tutti) : ?>
+        <div class="col-md-<?php echo $cols; ?>">
+            <div class="info-box <?php echo ($fido_concesso > 0) ? 'bg-green' : 'bg-red'; ?>">
+                <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
+        
+                <div class="info-box-content">
+                    <span class="info-box-text">FIDO CONCESSO</span>
+                    <span class="info-box-number">€
+                        <?php echo number_format($fido_concesso, 0, ',', '.'); ?>
+                    </span>
+        
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-md-<?php echo $cols; ?>">
+            <div class="info-box <?php if ($tempo_medio_saldo_giorni < 30) {
+                echo 'bg-green';
+            } elseif ($tempo_medio_saldo_giorni < 60) {
+                echo 'bg-orange';
+            } else {
+                echo 'bg-red';
+            }; ?>">
+            <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
+            
+            <div class="info-box-content">
+                <span class="info-box-text">TEMPO MEDIO SALDO</span>
+                <span class="info-box-number">
+                    <?php echo $tempo_medio_saldo_giorni_human_readable; ?>
+                </span>
+            
+            </div>
+            <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-md-<?php echo $cols; ?>">
+            <div class="info-box <?php echo ($totale_ordini_vendita['totale_ordini'] > 0) ? 'bg-green' : 'bg-red'; ?>">
+            <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
+            
+            <div class="info-box-content">
+                <span class="info-box-text">ORDINI DI VENDITA</span>
+                <span class="info-box-number">
+                    <?php echo $totale_ordini_vendita['totale_ordini'] ?>
+                </span>
+            
+            </div>
+            <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-md-<?php echo $cols; ?>">
+            <div class="info-box <?php echo ($totale_ordini_acquisto['totale_ordini'] > 0) ? 'bg-green' : 'bg-red'; ?>">
+            <span class="info-box-icon"><i class="fas fa-euro-sign"></i></span>
+            
+            <div class="info-box-content">
+                <span class="info-box-text">ORDINI D'ACQUISTO</span>
+                <span class="info-box-number">
+                    <?php echo $totale_ordini_acquisto['totale_ordini']; ?>
+                </span>
+            
+            </div>
+            <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <?php endif; ?>
+        <?php if (!$mostra_tutti) : ?>
+        <div class="col-md-12 text-right">
+            <button class="btn btn-grey btn-sm"><a href="<?php echo base_url("get_ajax/modal_layout/todolist_and_counters/{$value_id}"); ?>?_size=large&all=1" class="js_open_modal">Vedi tutto...</a></button>
+        </div>
+        <?php endif; ?>
     <?php endif; ?>
 
 <?php else : ?>

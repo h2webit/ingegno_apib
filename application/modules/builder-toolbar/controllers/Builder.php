@@ -73,7 +73,7 @@ class Builder extends MY_Controller
         // Normal user can see this layout
         $users_can_view = $this->db->query("SELECT permissions_group, permissions_admin FROM users 
                                             LEFT JOIN permissions ON users_id = permissions_user_id 
-                                            WHERE users_deleted = '" . DB_BOOL_FALSE . "' AND users_active = '" . DB_BOOL_TRUE . "' 
+                                            WHERE (users_deleted = '" . DB_BOOL_FALSE . "' OR users_deleted IS NULL OR users_deleted = '') AND users_active = '" . DB_BOOL_TRUE . "'
                                             AND users_id NOT IN (SELECT unallowed_layouts_user FROM unallowed_layouts WHERE unallowed_layouts_layout = '{$layout_id}') 
                                             GROUP BY permissions_group ORDER BY permissions_group ASC 
                                              ")->result_array();

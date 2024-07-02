@@ -62,3 +62,7 @@ $lang['Customer Sublayout   Subscriptions'] = 'Customer Sublayout   Subscription
 $lang['Customer Sublayout - Payments'] = 'Customer Sublayout - Payments';
 $lang['Customer Sublayout   Payments'] = 'Customer Sublayout   Payments';
 $lang['Subscriptions'] = 'Subscriptions';
+$lang['Agente vendita'] = 'Agente vendita';
+$lang['Modale payments'] = 'Modale payments';
+$lang['Riepilogo globale'] = 'Riepilogo globale';
+$lang['Approvato'] = 'Approvato';

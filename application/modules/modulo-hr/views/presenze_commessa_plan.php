@@ -150,7 +150,71 @@ foreach ($presenze as $p) {
     } else {
         $data[$dip][$day] += $ore_lavorate;
     }
+} 
+
+
+
+/**
+ * 
+ * ! 17/05/2024 - Modificato per prendere le ore anche dai rapportini
+ * 
+ */
+// Recupero dipendente singolo, se impostato
+$additional_where = '';
+$second_additional_where = '';
+if(!empty($u)) {
+    $dipendente = $this->db->get_where('dipendenti', ['dipendenti_id' => $u])->row_array();
+    $additional_where = "AND rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users WHERE users_id = '{$dipendente['dipendenti_user_id']}')";
+    $second_additional_where = "AND presenze_dipendente = '{$dipendente['dipendenti_id']}'";
 }
+
+
+$rapportini = $this->db->query("
+    SELECT * FROM rapportini
+    LEFT JOIN projects ON projects_id = rapportini_commessa
+    LEFT JOIN customers ON customers_id = projects_customer_id
+    LEFT JOIN dipendenti ON dipendenti_user_id IN (SELECT users_id FROM rel_rapportini_users WHERE rapportini_id = rapportini.rapportini_id)
+    WHERE
+        rapportini_commessa = '{$c}'
+        AND rapportini_da_validare = '0'
+        {$additional_where}
+        AND DATE_FORMAT(rapportini_data, '%Y-%m') = '{$filtro_data}'
+        AND rapportini_id NOT IN (SELECT presenze_rapportino_id FROM presenze WHERE presenze_rapportino_id IS NOT NULL {$second_additional_where})
+")->result_array();
+
+foreach ($rapportini as $r) {
+    $dip = $r['dipendenti_nome'] . ' ' . $r['dipendenti_cognome'];
+    if (empty($data[$dip])) {
+        $data[$dip] = [];
+    }
+
+    //Aggiungo i dipendenti con chiave l'id per poterli usare nelle richieste anche quando non è selezionato alcun dipendente nella select
+    if (!array_key_exists($r['dipendenti_id'], $dipendentiUnici)) {
+        // Se l'id del dipendente non esiste nell'array, lo aggiungi
+        $dipendentiUnici[$r['dipendenti_id']] = [$dip];
+    }
+
+    $day = date("d", strtotime($r['rapportini_data']));
+
+    $ora_inizio = DateTime::createFromFormat('H:i', $r['rapportini_ora_inizio']);
+    $ora_fine = DateTime::createFromFormat('H:i', $r['rapportini_ora_fine']);
+
+    if ($ora_inizio && $ora_fine) {
+        $diff = $ora_inizio->diff($ora_fine);
+        $ore_lavorate = $diff->h + ($diff->i / 60); // Converti minuti in ore
+    } else {
+        $ore_lavorate = 0; // Se l'ora di inizio o di fine non sono valide, setta a 0
+    }
+
+    if (empty($data[$dip][$day])) {
+        $data[$dip][$day] = $ore_lavorate;
+    } else {
+        $data[$dip][$day] += $ore_lavorate;
+    }
+
+}
+
+
 
 //Riempio i buchi e vedo se ho assenze per le giornate
 for ($i = 1; $i <= $days_in_month; $i++) {
@@ -163,7 +227,7 @@ for ($i = 1; $i <= $days_in_month; $i++) {
             $data[$dipendente][$i] = '';
         }
 
-/*         if (!empty($u) || in_array($dipendente, array_column($dipendentiUnici, 0))) {
+        /* if (!empty($u) || in_array($dipendente, array_column($dipendentiUnici, 0))) {
             foreach ($dipendentiUnici as $key => $value) {
                 if ($value[0] === $dipendente) {
                     $u = $key;
@@ -231,7 +295,6 @@ for ($i = 1; $i <= $days_in_month; $i++) {
 foreach ($data as $dipendente => $giorno) {
     ksort($data[$dipendente]);
 }
-
 /*
 03/04/2024 - Chiesto di non mostrare le ore permesso nei calcoli totali delle righe
 foreach ($data as $dipendente => $giorno) {
@@ -273,6 +336,13 @@ foreach ($data as $dipendente => $giorno) {
 
 
 $richieste = $richieste_xls = [];
+
+if(empty($dipendentiUnici)) {
+    for ($z = 1; $z <= $days_in_month; $z++) {
+        $richieste['-'][$z] = '';
+    }
+}
+
 foreach ($dipendentiUnici as $key => $value) {
     $u = $key;
 
@@ -292,6 +362,7 @@ foreach ($dipendentiUnici as $key => $value) {
         ->where('richieste_user_id', $u)
         ->where('richieste_stato', '2')
         ->get('richieste')->row_array();
+        //dump($richiesta);
 
         if(!empty($richiesta)) {
             $day_start = str_replace('"', "", dateFormat($richiesta['richieste_dal'], 'Y-m-d'));
@@ -309,6 +380,8 @@ foreach ($dipendentiUnici as $key => $value) {
                     $richieste[$current_dip][$j] = 'Permesso - '.$hours;
                     //$richieste[$current_dip][$j] = 'P';     
                 } elseif($richiesta['richieste_tipologia'] == '2') { //Ferie
+                    $richieste[$current_dip][$j] = 'F';
+
                     if(!empty($richiesta['richieste_sottotipologia'])) {
                         if($richiesta['richieste_sottotipologia'] == '1') { //Assenza ingiustificata
                             $richieste[$current_dip][$j] = 'aing';
@@ -323,8 +396,6 @@ foreach ($dipendentiUnici as $key => $value) {
                         if($richiesta['richieste_sottotipologia'] == '7') { //L. 104
                             $richieste[$current_dip][$j] = 'l104';
                         }
-                    } else {
-                        $richieste[$current_dip][$j] = 'F';
                     }
                 } else { //Malattia
                     $richieste[$current_dip][$j] = 'M';
@@ -373,7 +444,6 @@ foreach ($richieste as $dipendente => $giorno) {
     $tot_mensile_richieste = 0;
     $assenze_row++;
 }
-//dump($richieste_xls);
 
 
 $u = $this->input->get('u') ?? 0;

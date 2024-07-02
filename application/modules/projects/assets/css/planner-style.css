@@ -1,0 +1,414 @@
+/*
+* ========================================================
+* Planner 1
+* ========================================================
+*/
+
+#planner-container {
+  overflow-x: auto;
+  position: relative;
+}
+
+#planner-container .nav-tabs,
+#planner-container .nav-pills  {
+  margin-bottom: 0;
+}
+
+#planner-container .column {
+  width: 310px;
+  display: table-cell;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#planner-container .column .user-avatar {
+  border-radius: 50%;
+  width: 40px;
+}
+
+#planner-container .planner-header {
+  display: table;
+  table-layout: fixed;
+  border-spacing: 10px 0px;
+  width: 100%;
+}
+
+#planner-container .planner-body {
+  display: table;
+  table-layout: fixed;
+  border-spacing: 10px 0px;
+  width: 100%;
+}
+
+#planner-container .planner-header .column {
+  color: #ffffff;
+  text-align: center;
+  background: #1f1f1f;
+  padding: 10px;
+}
+.column h4 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+#planner-container .column .add_new_task {
+  width: 100%;
+  border: dotted 4px #cccc;
+  text-align: center;
+  height: 45px;
+  line-height: 37px;
+  vertical-align: middle;
+  background-color: #f4f4f4;
+}
+#planner-container .planner-header .column .add_new_task:hover {
+  background-color: #eeeeee;
+}
+#planner-container .planner-header .column.blue {
+  background: #4b8df8;
+  color: #fff;
+}
+#planner-container .planner-header .column.purple {
+  background: #852b99;
+}
+#planner-container .planner-header .column.yellow {
+  background: #ffb848;
+  color: #fff;
+}
+#planner-container .planner-header .column.green {
+  background: #35aa47;
+  color: #fff;
+}
+#planner-container .planner-header .column * {
+  margin: 5px 0;
+  color: #ffffff;
+}
+#planner-container .planner-body .column {
+  
+  background-color: #dbdbdb;
+  padding-top: 10px;
+  padding-bottom: 150px;
+  vertical-align: top;
+}
+
+#planner-container .sortable-box-placeholder.round-all {
+  border-color: #000;
+}
+#planner-container .sortable .task-box {
+  cursor: move;
+}
+
+/*
+* ========================================================
+* Task
+* ========================================================
+*/
+.task-box {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.4);
+  margin-bottom: 30px;
+}
+.task-box-lead {
+  width: 80%;
+}
+.task {
+  border-radius: 5px;
+  padding-bottom: 10px;
+}
+.task-color {
+  width: 100%;
+  height: 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.task-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 8px 7px 1px 7px;
+}
+
+.task-text {
+  width: 85%;
+}
+
+.task-header {
+  margin-bottom: 10px;
+}
+.task-title {
+  font-size: 16px;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+}
+.lead-title {
+  font-size: 16px;
+  color: #388DC0;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+}
+.project-name {
+  color: #717171;
+}
+
+.title-text-blue {
+  color: #4b8df8;
+}
+.title-text-purple {
+  color: #852b99;
+}
+.title-text-green {
+  color: #008b4c;
+}
+.title-text-grey {
+  color: #999999;
+}
+.title-text-orange {
+  color: #ff7701;
+}
+.title-text-red {
+  color: #ff0000;
+}
+
+.task-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+.body-info {
+  cursor: pointer;
+  font-size: 12px;
+}
+.task-description {
+  font-size: 11px;
+}
+
+.deadline {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.deadline-leads {
+  font-weight: 700;
+}
+.warning-icon {
+  width: 15px;
+  margin-left: 10px;
+}
+
+.avatar_content {
+  display: flex;
+  justify-content: flex-start;
+}
+.avatar {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.interactions {
+  width: 15%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.interactions .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+.interactions .checklist .checklist-counter {
+  font-size: 12px;
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 15px;
+}
+
+.button-container {
+  width: 30px;
+}
+.button {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.button a {
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.play {
+  background-color: #33b224;
+}
+.pause {
+  background-color: #ffa41c;
+}
+
+.new-task-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.new-lead-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.new-task {
+  width: 120px;
+  padding: 10px 15px;
+  background-color: #2b3643;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+}
+.new-lead {
+  width: 160px;
+  padding: 10px 15px;
+  background-color: #2b3643;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.3);
+}
+.new-task:hover,
+.new-lead:hover {
+  background-color: #517094;
+  transition: ease-in 0.25s;
+}
+.new-task a,
+.new-lead a {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/*STYLE ONLY FOR LEADS DASHBOARD*/
+.lead-text {
+  width: 95%;
+}
+.lead-header {
+  margin-bottom: 5px;
+}
+
+.lead-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 0;
+  color: #000;
+}
+.lead-info .deadline {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.contacts {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.contacts-lead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.contacts .icon, .contacts-lead .icon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  height: 20px;
+}
+.contacts .icon i,  .contacts-lead .icon i{
+  margin-right: 5px;
+}
+.task-box {
+  background-color:#ffffff;
+}
+.maxheight30 {
+  max-height: 30px;;
+}
+.color-white {
+  color:#FFFFFF;
+}
+.bgred {
+  background-color:red;
+}
+.bggreen {
+  background-color: green;
+}
+.fontweightnormal {
+font-weight:normal;
+}
+
+.fontweightbold {
+font-weight:bold;
+}
+  
+
+.task-footer > .avatar_content > a.avatar {
+  max-height: 30px;
+}
+.button-container > .red {
+  background-color: red;
+  color: #ffffff;
+}
+.button-container > .green {
+  background-color: green;
+  color: #ffffff;
+}
+
+
+.task_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.comment_counter {
+  background-color: #388dc0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.comment_counter span {
+  color: #fff;
+  font-weight: 600;
+}

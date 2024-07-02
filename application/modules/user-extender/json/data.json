@@ -4,15 +4,15 @@
     "modules_description": "User Manager",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.16",
+    "modules_version": "1.1.17",
     "modules_identifier": "user-extender",
     "modules_base64_zip": null,
     "modules_raw_data_install": "415,396",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "54",
+    "modules_version_code": "55",
     "modules_thumbnail": "8c24b1ded2956cea0e7338daa1694c58.png",
-    "modules_min_client_version": "3.7.0",
+    "modules_min_client_version": "3.8.0",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -28,7 +28,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -1233,7 +1233,7 @@
             "entity_login_entity": "0",
             "entity_type": "2",
             "entity_action_fields": null,
-            "entity_module": "firecrm,user-extender",
+            "entity_module": "firecrm,contabilita,sales,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -1625,7 +1625,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -1643,7 +1643,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14510",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -1681,7 +1681,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14718",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -1719,7 +1719,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14719",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -1757,7 +1757,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14720",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -1795,7 +1795,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14721",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -1833,7 +1833,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14990",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -1871,7 +1871,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14991",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3047",
                     "fields_entity_id": "6",
@@ -1909,7 +1909,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "user-extender-grids_fields-18313",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -2027,7 +2027,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -2045,7 +2045,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14701",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -2083,7 +2083,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14723",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2121,7 +2121,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14724",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2159,7 +2159,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14725",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2245,7 +2245,7 @@
             "entity_login_entity": "0",
             "entity_type": "2",
             "entity_action_fields": null,
-            "entity_module": "firecrm,user-extender",
+            "entity_module": "firecrm,contabilita,sales,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -2263,7 +2263,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "firecrm-grids_fields-14964",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "sales",
                     "grids_fields_width": null,
                     "fields_id": "3049",
                     "fields_entity_id": "415",
@@ -2301,7 +2301,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-17690",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "sales",
                     "grids_fields_width": null,
                     "fields_id": "4373",
                     "fields_entity_id": "415",
@@ -2339,7 +2339,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "user-extender-grids_fields-17977",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "sales",
                     "grids_fields_width": null,
                     "fields_id": "4439",
                     "fields_entity_id": "415",
@@ -2425,7 +2425,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -2443,7 +2443,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1269",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2481,7 +2481,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1270",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2519,7 +2519,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1271",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2557,7 +2557,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1272",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -2595,7 +2595,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1283",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "63",
                     "fields_entity_id": "6",
@@ -2633,7 +2633,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15750",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3492",
                     "fields_entity_id": "6",
@@ -2671,7 +2671,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-18312",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -2773,7 +2773,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -2791,7 +2791,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14498",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2829,7 +2829,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14499",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2867,7 +2867,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14500",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2905,7 +2905,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14501",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -2943,7 +2943,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14502",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3436,7 +3436,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -3454,7 +3454,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15740",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -3492,7 +3492,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15741",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -3530,7 +3530,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15742",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -3568,7 +3568,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15744",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3670,7 +3670,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [
@@ -3688,7 +3688,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15745",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -3726,7 +3726,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15746",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -3764,7 +3764,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15747",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -3802,7 +3802,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15748",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -3840,7 +3840,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15749",
-                    "grids_fields_module": "timesheet",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3942,7 +3942,7 @@
             "entity_login_entity": "1",
             "entity_type": "1",
             "entity_action_fields": "{\"soft_delete_flag\":\"users_deleted\"}",
-            "entity_module": "firecrm,modulo-hr,timesheet,user-extender",
+            "entity_module": "customers,firecrm,modulo-hr,timesheet,user-extender",
             "entity_preview_base": null,
             "entity_preview_custom": null,
             "fields": [],
@@ -4026,7 +4026,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_58",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4049,7 +4049,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_59",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4072,7 +4072,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_60",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4095,7 +4095,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_61",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4118,7 +4118,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_62",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4141,7 +4141,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_63",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4164,7 +4164,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_445",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4187,7 +4187,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_446",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4210,7 +4210,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_459",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4233,7 +4233,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_499",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4281,7 +4281,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_63",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4304,7 +4304,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_60",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4327,7 +4327,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_61",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4375,7 +4375,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_58",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4398,7 +4398,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_59",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4421,7 +4421,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_60",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4444,7 +4444,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_61",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4467,7 +4467,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_62",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4490,7 +4490,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_63",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4513,7 +4513,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3047",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4536,7 +4536,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3490",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4559,7 +4559,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3492",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4839,7 +4839,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "firecrm-forms_fields-2193_3049",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "sales",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4862,7 +4862,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2193_4373",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "sales",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4910,7 +4910,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2240_3047",
-                    "forms_fields_module": "timesheet",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]

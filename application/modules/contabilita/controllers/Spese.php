@@ -599,7 +599,7 @@ class Spese extends MY_Controller
             } else { //E' una spesa da registrare
                 echo "Il documento è una <strong>spesa</strong><br />";
 
-
+                
 
                 if (isset($xml->FatturaElettronicaHeader)) {
                     $tmpXmlFile = "{$physicalDir}/spese/{$filename}";
@@ -728,7 +728,7 @@ class Spese extends MY_Controller
 
                     $fornitore = $this->apilib->searchFirst($entita_clienti, [
                         "
-                        customers_type = 2 AND (
+                        customers_type IN (2,3) AND (
                                 $clienti_partita_iva = '{$mittente['partita_iva']}' 
                                 OR ($clienti_codice_fiscale = '{$customer[$clienti_codice_fiscale]}' AND '{$customer[$clienti_codice_fiscale]}' <> '')
                         ) 
@@ -745,7 +745,7 @@ class Spese extends MY_Controller
                     //     $this->apilib->edit('customers', $customer_exists['customers_id'], $customer_cliente);
                     // }
 
-
+                        //debug($fornitore, true);
 
                     if (empty($fornitore)) {
                         //Lo creo
@@ -817,6 +817,7 @@ class Spese extends MY_Controller
                                 $articolo['spese_articoli_codici_json'] = json_encode($codici_articolo);
                             }
 
+                            
                             $this->apilib->create('spese_articoli', $articolo);
                         }
 

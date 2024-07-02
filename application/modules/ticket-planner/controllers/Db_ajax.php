@@ -48,7 +48,10 @@ class Db_ajax extends MY_Controller
             'tickets_messages_member' => 99999,
             // 20230707 - michael - faccio questo per avere poi la possibilità di capire che i messaggi dei ticket arrivano dal planner.. quindi riconoscere che a rispondere è il cliente
             'tickets_messages_ticket' => $ticket_id,
-            'tickets_messages_text' => $message
+            'tickets_messages_text' => $message,
+            
+            // 20240618 - michael - aggiungo il nome dell'utente che ha inviato il messaggio
+            'tickets_messages_original_user' => "{$this->auth->get('users_first_name')} {$this->auth->get('users_last_name')}"
         ]);
 
         if ($response['status'] == '1' && !empty($response['message']) && empty($response['data'])) {

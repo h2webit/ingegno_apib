@@ -180,8 +180,8 @@ if(!empty($prodotto['fw_products_fw_categories'])) {
             <div class="counter_qty_container">
                 <?php foreach ($magazzini as $key => $magazzino) : ?>
                 <?php
-                    $quantity_carico = $this->db->query("SELECT SUM(movimenti_articoli_quantita) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'")->row()->qty;
-                    $quantity_scarico = $this->db->query("SELECT SUM(movimenti_articoli_quantita) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'")->row()->qty;
+                    $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'")->row()->qty;
+                    $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'")->row()->qty;
                     $quantity = $quantity_carico - $quantity_scarico;
                 ?>
                 <div class="small-box" style="color:<?php echo (in_array($magazzino['magazzini_colore'], $light_colors)) ? 'black' : 'white'; ?>;background-color:<?php echo $magazzino['magazzini_colore']; ?>">

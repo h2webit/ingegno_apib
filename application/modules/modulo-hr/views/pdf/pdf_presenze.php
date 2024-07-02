@@ -156,6 +156,22 @@
     foreach ($dipendenti as $dipendente) {
         $ignora_pausa = $dipendente['dipendenti_ignora_pausa'] ?? DB_BOOL_FALSE;
 
+        //Buoni pasto del mese
+        $buoni_pasto = $this->db
+            ->where('presenze_dipendente', $dipendente['dipendenti_id'])
+            ->where("DATE_FORMAT(presenze_data_inizio, '%Y-%m') = '{$anno}-{$mese}'", null, false)
+            ->where('presenze_buono_pasto', DB_BOOL_TRUE)
+            ->get('presenze')->result_array();
+        $buoni_pasto_mese_key = [];
+        
+        if(!empty($buoni_pasto)) {
+            foreach ($buoni_pasto as $buono) {
+                //$buoni_pasto_mese_key[dateFormat($buono['presenze_data_inizio'], 'd')] = $buono['presenze_buono_pasto'];
+                $buoni_pasto_mese_key[] = dateFormat($buono['presenze_data_inizio'], 'd');
+            }
+        }
+
+        $buoni_pasto_mese_key = array_filter(array_unique($buoni_pasto_mese_key));
         $ordinarie = $straordinarie = 0;
 
         $dati_dip = [];
@@ -277,6 +293,9 @@
                     $dati_dip[$giorno]['trasferta'] = 'X';
                 }
                 
+                if(!empty($buoni_pasto_mese_key) && in_array($day, $buoni_pasto_mese_key)) {
+                    $dati_dip[$giorno]['mensa'] = 'X';
+                }
                 $dati_dip[$giorno]['tipo_assenza'] = $tipologia_assenza;
                 $dati_dip[$giorno]['permesso'] += number_format($hours, $arrotondamento);
                 $conteggi['permesso'] += number_format($hours, $arrotondamento);
@@ -324,38 +343,21 @@
                                 $conteggi['giorni_ordinari'] += 1;
                             }
                             
-                            $dati_dip[$giorno]['ordinarie'] += number_format($p['presenze_ore_totali'] - $pausa, $arrotondamento);
-                            $conteggi['ore_ordinarie'] += number_format($p['presenze_ore_totali'] - $pausa, $arrotondamento);
+                            $dati_dip[$giorno]['ordinarie'] += number_format($p['presenze_ore_totali'] - ($p['presenze_straordinario'] + $pausa), $arrotondamento);
+                            if ($giorno == 19) {
+                            //debug($p,true);
+                            }
+                            $conteggi['ore_ordinarie'] += number_format($p['presenze_ore_totali'] - ($p['presenze_straordinario'] + $pausa), $arrotondamento);
                         }
-
 
 
                         //CONTROLLO DIRITTO ALL'INDENNITA MENSA
-                        // 22/01/2024 Non si controlla più se ho lavorato almeno le ore che dovevo fare ma se 
-                        // almeno una mia presenza di oggi ha storicizzato ill buon pasto (maturato se ho fatto almeno N ore)
-                        //dump($p);
-                        if(!empty($p['presenze_buono_pasto']) && $p['presenze_buono_pasto'] == DB_BOOL_TRUE) {
+                        if(!empty($buoni_pasto_mese_key) && in_array($day, $buoni_pasto_mese_key)) {
                             $dati_dip[$giorno]['mensa'] = 'X';
                         }
-                        /*$ore_tot_orari = 0;
-                        if(!empty($orario_lavoro)) {
-                            //Calcolo le ore di tutti i turni che ho per la giornata corrente come differenza ORA FINE - ORA INIZIO
-                              foreach ($orario_lavoro as $orario) {
-                                $inizio_turno = new DateTime($orario['turni_di_lavoro_ora_inizio']);
-                                $fine_turno = new DateTime($orario['turni_di_lavoro_ora_fine']);
-                                $ore_lavorate = $fine_turno->diff($inizio_turno)->h;
-
-                                // Se è presente una pausa, sottraggila dalle ore lavorate
-                                if (!empty($orario['turni_di_lavoro_pausa'])) {
-                                    $ore_tot_orari -= $orario['orari_di_lavoro_ore_pausa_value'];
-                                }
-                                $ore_tot_orari += $ore_lavorate;
-                            }
-                        }
-                        //Se le ore lavorate sono >= delle ore di tutti i turni per la giornata corrente ho diritto all'indennità mensa
-                        if($dati_dip[$giorno]['ordinarie'] >= $ore_tot_orari) {
+                        /* if(!empty($p['presenze_buono_pasto']) && $p['presenze_buono_pasto'] == DB_BOOL_TRUE) {
                             $dati_dip[$giorno]['mensa'] = 'X';
-                        }*/
+                        } */
 
                         //CONTROLLO SMARTWORKING PRESENZA
                         $smartworking = $p['presenze_smartworking'] ?? DB_BOOL_FALSE;

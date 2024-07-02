@@ -818,31 +818,6 @@ table.dataTable.nowrap td {
   justify-content: center
 }
 
-/*Hide topbar with logo, timetracker and widget on mobile*/
-@media (max-width: 768px) {
-  .wrapper .main-header .logo {
-    display: none;
-  }
-
-  .main-sidebar {
-    /*padding-top: 50px;*/
-    padding-top: 90px;
-  }
-
-  .navbar-left {
-    display: none;
-  }
-
-  .js_topbar_timetracker {
-    display: none;
-  }
-}
-
-@media (min-width: 768px) {
-  .sidebar-mini.sidebar-collapse .main-footer {
-    margin-left: 0px !important;
-  }
-}
 
 .main-footer {
   height: 43px;
@@ -1365,6 +1340,7 @@ body.dark header.main-header nav .nav_container_custom .left ul.quick_create_men
 }
 
 body.dark nav .nav_container_custom .right .navbar-custom-menu ul.nav li.theme_toggler button,
+body.dark nav .nav_container_custom .left .navbar-left li.custom_search_wrapper button,
 body.dark header.main-header nav.navbar .navbar-custom-menu ul li#header_notification_bar>a.dropdown-toggle,
 body.dark header.main-header nav.navbar .navbar-custom-menu ul li#languages>a {
   color: #ffffff;
@@ -1893,7 +1869,70 @@ body.dark .daterangepicker .ranges ul li.active {
     z-index: 9999;
   }
 
+
+  /*Hide topbar with logo, timetracker and widget on mobile*/
   .navbar-nav>.user-menu .user-image {
     margin-top: 0px;
   }
+
+  .wrapper .main-header .logo {
+    display: none;
+  }
+
+  .main-sidebar {
+    /*padding-top: 50px;*/
+    padding-top: 90px;
+  }
+
+  nav.navbar .nav_container_custom .left {
+    /*display: none;*/
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  nav.navbar .nav_container_custom .left .navbar-left {
+    height: 70px;
+  }
+
+  ul.navbar-nav li.pending_processes,
+  ul.navbar-nav li.languages {
+    display: none;
+  }
+
+  .js_topbar_timetracker {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {}
+
+@media (min-width: 768px) {
+  .sidebar-mini.sidebar-collapse .main-footer {
+    margin-left: 0px !important;
+  }
+}
+
+@-webkit-keyframes pulseLoading {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+@keyframes pulseLoading {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+.pulsing-background {
+  -webkit-animation: 1.5s pulseLoading linear infinite;
+  animation: 1.5s pulseLoading linear infinite;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+}
+
+.pulsing-background>* {
+  opacity: 0.2;
+  filter: blur(1px);
 }

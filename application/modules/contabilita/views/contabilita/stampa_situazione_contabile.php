@@ -163,7 +163,7 @@ $filtri = array();
 
 if (!empty($filters["filter_stampe_contabili"])) {
     foreach ($filters["filter_stampe_contabili"] as $field) {
-        if ($field['value'] == '-1') {
+        if ($field['value'] == '-1' || $field['value'] == '') {
             continue;
         }
         $filter_field = $this->datab->get_field($field["field_id"], true);
@@ -171,7 +171,11 @@ if (!empty($filters["filter_stampe_contabili"])) {
 
         // Se ha una entità/support collegata
         if ($filter_field['fields_ref']) {
-
+            // if (!$field['value']) {
+            //     debug($field['value'], true);
+            // } elseif (is_array($field['value'])) {
+            //     debug($field['value'], true);
+            // }
             $entity_data = $this->crmentity->getEntityPreview($filter_field['fields_ref']);
             $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $entity_data[$field['value']]);
         } else {
@@ -250,11 +254,7 @@ if (!empty($filters["filter_stampe_contabili"])) {
 </style>
 <div style="margin-bottom:px">
     <?php foreach ($filtri as $filtro): ?>
-        <p style="margin-bottom: 5px;"><strong>
-                <?php echo $filtro['label']; ?>
-            </strong>:
-            <?php echo $filtro['value']; ?>
-        </p>
+       <p><strong><?php echo $filtro['label']; ?></strong>: <?php echo implode(',', (array) $filtro['value']); ?></p>
     <?php endforeach; ?>
 </div>
 

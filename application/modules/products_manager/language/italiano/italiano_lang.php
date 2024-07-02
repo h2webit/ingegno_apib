@@ -236,4 +236,3 @@ $lang['Show woocommerce button'] = 'Show woocommerce button';
 $lang['Storico prezzi'] = 'Storico prezzi';
 $lang['Storico variazioni'] = 'Storico variazioni';
 $lang['Fw Products History'] = 'Fw Products History';
-$lang['WooCommerce Sync Settings'] = 'Impostazioni Sync Woocommerce';$lang['Storico variazioni'] = 'Storico variazioni';

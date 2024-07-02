@@ -1,0 +1,247 @@
+.a4_paper {
+  width: 100%;
+  height: 29.7cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+}
+
+.t_rows {
+  color: #000;
+  border-bottom: 1px solid #000;
+  border-color: #000;
+  height: 50px;
+}
+
+tr.t_rows1 {
+  color: #000;
+  border-bottom: 0;
+  border-color: #000;
+  height: 50px;
+}
+
+div.big_table {
+  align-content: center;
+  margin: 50px;
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 16px;
+}
+
+.blu1 {
+  color: #fff;
+  text-align: center;
+}
+
+.blu {
+  background-color: #4b8ffc;
+  color: #fff;
+  height: 50px;
+}
+
+div.card-body {
+  margin-top: 50px;
+}
+
+tr.table_title {
+  color: #000;
+  border-bottom: 5px solid #4b8ffc;
+}
+
+div.payment_method {
+  float: left;
+}
+
+div.Thanks {
+  float: left;
+  color: #4b8ffc;
+  font-size: 20px;
+}
+
+div.services {
+  float: left;
+  margin-bottom: 10px;
+}
+
+.mittente {
+  font-size: 16px;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  width: 140px;
+  text-align: right;
+}
+
+.right1 {
+  width: 190px;
+  text-align: left;
+  margin: 5px;
+  padding: 10px;
+}
+
+.h1 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.small_margin {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 0px;
+}
+
+.fattura {
+  text-align: center;
+  background-color: #4b8ffc;
+  padding: 2px;
+  width: 300px;
+  float: right;
+  margin-top: 5px;
+  margin-right: 1.5%;
+}
+
+.mittente1 {
+  text-align: left;
+}
+
+.destinatario {
+  text-align: left;
+  align-content: center;
+}
+
+.document {
+  margin-left: 25px;
+}
+
+.payments {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.bank {
+  text-align: left;
+  background-color: #4b8ffc;
+  padding: 15px;
+  border-right: 5px solid #fff;
+  border-color: #fff;
+  color: #fff;
+}
+
+.payments2 {
+  text-align: left;
+  background-color: #4b8ffc;
+  padding: 15px;
+  border-left: 5px solid #fff;
+  border-right: 5px solid #fff;
+  border-color: #fff;
+  color: #fff;
+}
+
+.PayPal {
+  text-align: left;
+  background-color: #fff;
+  padding: 15px;
+  border-left: 5px solid #fff;
+  border-color: #fff;
+}
+
+​.paypal_img {
+  width: 312px;
+  margin-top: 10px;
+}
+
+.footer_left {
+  text-align: left;
+}
+
+.footer_center {
+  text-align: center;
+}
+
+.footer_right {
+  text-align: right;
+}
+
+.m_logo {
+  max-width: 400px;
+  height: auto;
+  align-content: center;
+  text-align: center;
+  vertical-align: middle;
+  float: left;
+}
+
+th {
+  border-top: none !important;
+}
+
+.table_articoli {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.row {
+  margin-top: -20px !important;
+}
+
+.container {
+  width: 97%;
+}
+
+.paginator {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.services {
+  width: 100%;
+}
+
+.informativa {
+  width: 100% !important;
+}
+
+.banktext {
+  width: 100%;
+}
+
+.alt_logo {
+  font-weight: 200;
+  font-size: xx-large;
+}
+
+.new_page {
+  display: block;
+  page-break-after: always !important;
+}
+.fattura {
+  background-color: #4b8ffc;
+}
+.fattura > .blu1 > h1 {
+  margin-top: 10px;
+}
+.company-details {
+  float: left;
+}
+.company-details > .company-name > strong {
+  color: #4b8ffc;
+}
+.blue {
+  color: #4b8ffc"
+}
+.document-type {
+  padding: 10px;
+}
+.document-type > strong {
+  margin-bottom: 1px;
+}
+.document-total {
+  font-size:1.4em;
+}
+.ptp-50 {
+  padding-top: 50%
+}

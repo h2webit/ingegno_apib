@@ -30,12 +30,3 @@
 </footer>
 
 <div id="js_modal_container"></div>
-
-<!-- Side view modal -->
-<div id="modal-side-view" class="modal-side-hidden mobile-full-width">
-    <button id="close-modal-side-view" class="modal-side-close-button">×</button>
-    <div id="modal-side-content-view">
-        <div id="modal-side-content-form-view">
-        </div>
-    </div>
-</div>
