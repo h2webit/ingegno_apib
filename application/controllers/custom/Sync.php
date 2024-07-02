@@ -282,70 +282,85 @@ class Sync extends MY_Controller
 
     public function import_sedi() {
         set_log_scope('sync-sedi');
-        $sedi = $this->apib_db->get('sedi_operative')->result_array();
-        //debug($sedi,true);
-        $t = count($sedi);
-        $c = 0;
-        foreach ($sedi as $sede) {
-
-            progress(++$c, $t, 'import sedi_operative vs customers_shipping_address');
-
-            debug($sede,true);
-
-            $shipping_address = [
-
-                //TODO: arrivato fino a qui
-                'customers_shipping_address_id' => $sede['sedi_operative_id'],
-                'customers_shipping_address_customer_id' => $sede['clienti_citta'],
-                'customers_shipping_address_country_id' => $sede['clienti_indirizzo'],
-                'customers_shipping_address_type' => $sede['clienti_p_iva'],
-                'customers_shipping_address_street' => $cliente['clienti_cf'],
-                'customers_shipping_address_city' => $cliente['clienti_cap'],
-                'customers_shipping_address_state' => $cliente['clienti_ragione_sociale'],
-                'customers_shipping_address_zip_code' => $cliente['clienti_ragione_sociale'],
-                
-                'customers_shipping_address_name' => $cliente['clienti_email'],
-                'customers_shipping_address_phone' => $cliente['clienti_provincia'],
-                'customers_shipping_address_mobile' => $cliente['clienti_telefono'],
-                'customers_shipping_address_email' => $cliente['clienti_cellulare'],
-                
-                'customers_shipping_address_position' => $cliente['clienti_fax'],
-                'customers_shipping_address_external_id' => $cliente['clienti_note'],
-                'customers_shipping_address_default' => ($cliente['clienti_non_attivo'] ? 3 : 1),
-                //'clienti_referente' => $cliente['clienti_referente'],
-                //'clienti_referente' => $cliente['clienti_termini_pagamento'],
-                //'clienti_referente' => $cliente['clienti_cp'],
-                //'clienti_referente' => $cliente['clienti_note_cliente'],
-                'customers_deleted' => $cliente['clienti_deleted'],
-                'customers_code' => $cliente['clienti_id'],
-                'customers_status' => 1,
-
-            ];
-           
-
-            //debug($dipendente,true);
-            //debug($customer,true);
-            try {
-                $customer_exists = $this->db->get_where('customers', ['customers_id' => $customer['customers_id']])->row_array();
-                $_POST = $customer;
-                if ($customer_exists) {
-                    $customer_creato = $this->apilib->edit('customers', $customer['customers_id'], $customer);
-                } else {
-                    $customer_creato = $this->apilib->create('customers', $customer);
-
-                    //debug($customer_creato,true);
-                }
-
-                $_POST = [];
-
-
-            } catch (Exception $e) {
-
-                my_log('error', "errore inserimento customer: {$e->getMessage()}");
-                debug($customer);
-                debug($e->getMessage(), true);
-            }
+        
+        // $sedi_orfane = $this->apib_db->where("(sedi_operative_cliente IS NULL OR sedi_operative_cliente NOT IN (SELECT clienti_id FROM clienti))", null, false)->get('sedi_operative')->result_array();
+        
+        // debug($sedi_orfane,true);
+        
+        $all_sedi = $this->apib_db
+            // ->where("(sedi_operative_cliente IS NOT NULL AND sedi_operative_cliente IN (SELECT clienti_id FROM clienti))", null, false)
+            ->get('sedi_operative')->result_array();
+        
+        // debug($all_sedi,true);
+        
+        $sedi_cliente = [];
+        foreach ($all_sedi as $sede_cliente) {
+            $sedi_cliente[$sede_cliente['sedi_operative_cliente']][] = $sede_cliente;
         }
+        
+        // debug($sedi_cliente[689],true);
+        
+        $t_all = count($sedi_cliente);
+        $c_all = 0;
+        foreach ($sedi_cliente as $cliente_id => $sedi) {
+            // elimino tutte le sedi di questo cliente
+            
+            if (!empty($cliente_id)) {
+                $this->db->where('customers_shipping_address_customer_id', $cliente_id)->delete('customers_shipping_address');
+            }
+            
+            $t = count($sedi);
+            $c = 0;
+            foreach ($sedi as $sede) {
+                $shipping_address = [
+                    'customers_shipping_address_id' => $sede['sedi_operative_id'],
+                    'customers_shipping_address_customer_id' => $cliente_id ?: null,
+                    'customers_shipping_address_country_id' => 105, // Italia
+                    'customers_shipping_address_type' => 1,
+                    'customers_shipping_address_street' => $sede['sedi_operative_indirizzo'] ?: '-',
+                    'customers_shipping_address_city' => $sede['sedi_operative_citta'] ?: '-',
+                    'customers_shipping_address_state' => $sede['sedi_operative_provincia'],
+                    'customers_shipping_address_zip_code' => null,
+                    
+                    'customers_shipping_address_name' => $sede['sedi_operative_reparto'],
+                    'customers_shipping_address_note' => $sede['sedi_operative_note'],
+                    
+                    // 'customers_shipping_address_phone' => ,
+                    // 'customers_shipping_address_mobile' => ,
+                    // 'customers_shipping_address_email' => ,
+                
+                    // 'customers_shipping_address_position' => $cliente['clienti_fax'],
+                    // 'customers_shipping_address_external_id' => $cliente['clienti_note'],
+                    // 'customers_shipping_address_default' => ($cliente['clienti_non_attivo'] ? 3 : 1),
+                ];
+                
+                // dump($shipping_address);
+                
+                try {
+                    $sede_db = $this->db->get_where('customers_shipping_address', ['customers_shipping_address_id' => $sede['sedi_operative_id']])->row_array();
+                    $_POST = $shipping_address;
+                    if ($sede_db) {
+                        $sede_creata = $this->apilib->edit('customers_shipping_address', $sede['sedi_operative_id'], $shipping_address);
+                    } else {
+                        $sede_creata = $this->apilib->create('customers_shipping_address', $shipping_address);
+                    
+                        //debug($customer_creato,true);
+                    }
+                
+                    $_POST = [];
+                } catch (Exception $e) {
+                    echo_log('error', "errore inserimento customer: {$e->getMessage()}");
+                    
+                    // debug($customer);
+                    // debug($e->getMessage(), true);
+                }
+                
+                progress(++$c, $t, "import sedi {$cliente_id}");
+            }
+            
+            progress(++$c_all, $t_all, 'import sedi operative');
+        }
+        
         $this->mycache->clearCache();
     }
 
