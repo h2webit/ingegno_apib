@@ -99,7 +99,9 @@ class Sync extends MY_Controller
     public function migrate_dati() {
         $this->import_associati();
         $this->import_clienti();
+        $this->import_sedi()();
         $this->import_orari();
+        $this->import_pagamenti();
     }
     
     public function import_associati() {
@@ -302,12 +304,16 @@ class Sync extends MY_Controller
         
         $t_all = count($sedi_cliente);
         $c_all = 0;
+
+        $this->db->query("DELETE FROM customers_shipping_address");
+        $this->db->query("DELETE FROM projects");
+
         foreach ($sedi_cliente as $cliente_id => $sedi) {
             // elimino tutte le sedi di questo cliente
-            
-            if (!empty($cliente_id)) {
-                $this->db->where('customers_shipping_address_customer_id', $cliente_id)->delete('customers_shipping_address');
-            }
+            progress(++$c_all, $t_all, 'import sedi operative');
+            // if (!empty($cliente_id)) {
+            //     $this->db->where('customers_shipping_address_customer_id', $cliente_id)->delete('customers_shipping_address');
+            // }
             
             $t = count($sedi);
             $c = 0;
@@ -355,10 +361,10 @@ class Sync extends MY_Controller
                     // debug($e->getMessage(), true);
                 }
                 
-                progress(++$c, $t, "import sedi {$cliente_id}");
+                //progress(++$c, $t, "import sedi {$cliente_id}");
             }
             
-            progress(++$c_all, $t_all, 'import sedi operative');
+            
         }
         
         $this->mycache->clearCache();
@@ -367,7 +373,7 @@ class Sync extends MY_Controller
     public function import_orari()
     {
         set_log_scope('sync-orari');
-        $orari = $this->apib_db->get('sedi_operative_orari')->result_array();
+        $orari = $this->apib_db->where('sedi_operative_orari_sede IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente IN (SELECT clienti_id FROM clienti))',null, false)->get('sedi_operative_orari')->result_array();
         //debug($orari,true);
         $t = count($orari);
         $c = 0;
@@ -393,7 +399,7 @@ class Sync extends MY_Controller
                 'projects_orari_giorni' => [1,2,3,4,5,6,7],
                 'projects_orari_dalle' => $orario['sedi_operative_orari_dalle'],
                 'projects_orari_alle' => $orario['sedi_operative_orari_alle'],
-                'projects_orari_cancellato' => $orario['sedi_operative_orari_cancellato'],
+                'projects_orari_cancellato' => $orario['sedi_operative_orari_cancellato']=='t'?1:0,
                 'projects_orari_sigla'=> $orario['sedi_operative_orari_nome'],
                 
 
