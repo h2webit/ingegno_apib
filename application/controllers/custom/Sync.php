@@ -11,7 +11,7 @@ class Sync extends MY_Controller
         parent::__construct();
         
         if (!$this->auth->check()) {
-            die("Unauthorized");
+            //die("Unauthorized");
         }
         
         $this->apib_db_connect();
