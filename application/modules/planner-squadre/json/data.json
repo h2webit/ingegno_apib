@@ -4,18 +4,18 @@
     "modules_description": "Calendario squadre (Richiede modulo Automezzi)",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.5",
+    "modules_version": "1.5.1",
     "modules_identifier": "planner-squadre",
     "modules_base64_zip": null,
     "modules_raw_data_install": "174,175",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "30",
+    "modules_version_code": "34",
     "modules_thumbnail": "ad5da5819fd78ea22f09ba6544cbc724.png",
-    "modules_min_client_version": "3.8.4",
+    "modules_min_client_version": "3.8.6",
     "modules_version_date": "2024-02-27 09:37:35",
     "modules_auto_update": "1",
-    "modules_last_update": "2024-06-12 04:59:23",
+    "modules_last_update": "2024-07-08 04:50:40",
     "modules_core": "0",
     "modules_notification_message": "",
     "module_identifier": "planner-squadre",
@@ -1607,14 +1607,14 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "fields_draw_html_type": "select"
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "select_ajax"
                 },
                 {
                     "fields_id": "1178",
@@ -1636,7 +1636,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "fields_draw_html_type": "select"
                 },
                 {
@@ -2052,6 +2052,29 @@
                     "fields_searchable": "1",
                     "fields_additional_data": "",
                     "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "3967",
+                    "fields_entity_id": "171",
+                    "fields_default": null,
+                    "fields_name": "appuntamenti_fascia_oraria",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "projects_orari",
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": "appuntamenti_impianto",
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "select"
                 }
             ],
             "fields_draw": [
@@ -2139,7 +2162,7 @@
                     "fields_draw_label": "Cliente",
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": null,
-                    "fields_draw_html_type": "select",
+                    "fields_draw_html_type": "select_ajax",
                     "fields_draw_placeholder": null,
                     "fields_draw_css_extra": null,
                     "fields_draw_display_none": "0",
@@ -2387,6 +2410,19 @@
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": null,
                     "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "3968",
+                    "fields_draw_fields_id": "3967",
+                    "fields_draw_label": "Fascia oraria",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "select",
                     "fields_draw_placeholder": null,
                     "fields_draw_css_extra": null,
                     "fields_draw_display_none": "0",
@@ -5164,13 +5200,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -5208,7 +5244,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -5550,13 +5586,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -5594,7 +5630,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -5860,13 +5896,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -5904,7 +5940,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -7201,7 +7237,7 @@
                     "grids_actions_grids_id": "414",
                     "grids_actions_order": "0",
                     "grids_actions_name": "Crea rapportino",
-                    "grids_actions_html": "<?php\n\t$get_params = http_build_query([\n        'rapportini_appuntamento_id' => $row_data['appuntamenti_id'],\n        'rapportini_cliente' => $row_data['appuntamenti_cliente'],\n        'rapportini_commessa' => $row_data['appuntamenti_impianto'],\n        'rapportini_data' => $row_data['appuntamenti_giorno'],\n        'rapportini_ora_inizio' => $row_data['appuntamenti_ora_inizio'],\n        'rapportini_ora_fine' => $row_data['appuntamenti_ora_fine'],\n    ]);\n?>\n<a href=\"{base_url}get_ajax\/modal_form\/rapportino-appuntamento-commessa?<?php echo $get_params; ?>&_size=large\" class=\"text-green js-action_button btn-grid-action-s js_open_modal\">\n    <i class=\"fas fa-plus\"><\/i>\n<\/a>",
+                    "grids_actions_html": "<?php\n\t\/\/ Button rapportino solo se non \u00e8 gi\u00e0 associato ad uno\n\t$rapportino_esistente = $this->apilib->search('rapportini', [\n        'rapportini_appuntamento_id' => $row_data['appuntamenti_id']\n    ]);\n\n\tif(empty($rapportino_esistente)) : \n        \n\t$get_params = http_build_query([\n        'rapportini_appuntamento_id' => $row_data['appuntamenti_id'],\n        'rapportini_cliente' => $row_data['appuntamenti_cliente'],\n        'rapportini_commessa' => $row_data['appuntamenti_impianto'],\n        'rapportini_data' => $row_data['appuntamenti_giorno'],\n        'rapportini_ora_inizio' => $row_data['appuntamenti_ora_inizio'],\n        'rapportini_ora_fine' => $row_data['appuntamenti_ora_fine'],\n    ]);\n?>\n<a href=\"{base_url}get_ajax\/layout_modal\/rapportino-appuntamento-passato?<?php echo $get_params; ?>&_size=large\" class=\"btn btn-success js-action_button btn-grid-action-s js_open_modal\">\n    <i class=\"fas fa-plus\"><\/i>\n<\/a>\n<?php endif; ?>",
                     "grids_actions_link": "",
                     "grids_actions_layout": null,
                     "grids_actions_form": null,
@@ -7327,13 +7363,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -7371,7 +7407,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -8305,13 +8341,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -8349,7 +8385,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -8587,7 +8623,7 @@
             "entity_preview_custom": null,
             "fields": [
                 {
-                    "grids_fields_id": "71146",
+                    "grids_fields_id": "88782",
                     "grids_fields_grids_id": "400",
                     "grids_fields_fields_id": "1146",
                     "grids_fields_order": "0",
@@ -8884,13 +8920,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -8928,7 +8964,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -9128,7 +9164,7 @@
             "entity_preview_custom": null,
             "fields": [
                 {
-                    "grids_fields_id": "70927",
+                    "grids_fields_id": "88563",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "1172",
                     "grids_fields_order": "1",
@@ -9166,7 +9202,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70928",
+                    "grids_fields_id": "88564",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "1173",
                     "grids_fields_order": "2",
@@ -9204,7 +9240,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70929",
+                    "grids_fields_id": "88565",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "1174",
                     "grids_fields_order": "4",
@@ -9242,7 +9278,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70930",
+                    "grids_fields_id": "88566",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "1175",
                     "grids_fields_order": "5",
@@ -9280,7 +9316,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70931",
+                    "grids_fields_id": "88567",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "3479",
                     "grids_fields_order": "0",
@@ -9318,7 +9354,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70932",
+                    "grids_fields_id": "88568",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "3595",
                     "grids_fields_order": "6",
@@ -9356,7 +9392,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70933",
+                    "grids_fields_id": "88569",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "3606",
                     "grids_fields_order": "8",
@@ -9394,7 +9430,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70934",
+                    "grids_fields_id": "88570",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "3596",
                     "grids_fields_order": "11",
@@ -9432,7 +9468,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70935",
+                    "grids_fields_id": "88571",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "3601",
                     "grids_fields_order": "9",
@@ -9470,7 +9506,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70936",
+                    "grids_fields_id": "88572",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": null,
                     "grids_fields_order": "12",
@@ -9508,7 +9544,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70937",
+                    "grids_fields_id": "88573",
                     "grids_fields_grids_id": "419",
                     "grids_fields_fields_id": "3742",
                     "grids_fields_order": "3",
@@ -9548,7 +9584,7 @@
             ],
             "actions": [
                 {
-                    "grids_actions_id": "20409",
+                    "grids_actions_id": "25767",
                     "grids_actions_grids_id": "419",
                     "grids_actions_order": "50",
                     "grids_actions_name": "Edit",
@@ -9564,7 +9600,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_actions_id": "20410",
+                    "grids_actions_id": "25768",
                     "grids_actions_grids_id": "419",
                     "grids_actions_order": "99",
                     "grids_actions_name": "Delete",
@@ -9580,7 +9616,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_actions_id": "20411",
+                    "grids_actions_id": "25769",
                     "grids_actions_grids_id": "419",
                     "grids_actions_order": "1",
                     "grids_actions_name": "Detail",
@@ -9644,7 +9680,7 @@
             "entity_preview_custom": null,
             "fields": [
                 {
-                    "grids_fields_id": "70938",
+                    "grids_fields_id": "88574",
                     "grids_fields_grids_id": "420",
                     "grids_fields_fields_id": "1172",
                     "grids_fields_order": "0",
@@ -9682,7 +9718,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70939",
+                    "grids_fields_id": "88575",
                     "grids_fields_grids_id": "420",
                     "grids_fields_fields_id": "1173",
                     "grids_fields_order": "1",
@@ -9720,7 +9756,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70940",
+                    "grids_fields_id": "88576",
                     "grids_fields_grids_id": "420",
                     "grids_fields_fields_id": "1174",
                     "grids_fields_order": "2",
@@ -9758,7 +9794,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "70941",
+                    "grids_fields_id": "88577",
                     "grids_fields_grids_id": "420",
                     "grids_fields_fields_id": "1176",
                     "grids_fields_order": "999",
@@ -9798,7 +9834,7 @@
             ],
             "actions": [
                 {
-                    "grids_actions_id": "20412",
+                    "grids_actions_id": "25770",
                     "grids_actions_grids_id": "420",
                     "grids_actions_order": "50",
                     "grids_actions_name": "Edit",
@@ -9814,7 +9850,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_actions_id": "20413",
+                    "grids_actions_id": "25771",
                     "grids_actions_grids_id": "420",
                     "grids_actions_order": "99",
                     "grids_actions_name": "Delete",
@@ -9944,13 +9980,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -9988,7 +10024,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -11203,13 +11239,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -11247,7 +11283,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -11498,7 +11534,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19038",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1183",
                     "fields_entity_id": "171",
@@ -11536,7 +11572,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19039",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1185",
                     "fields_entity_id": "171",
@@ -11574,7 +11610,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19040",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1186",
                     "fields_entity_id": "171",
@@ -11612,7 +11648,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19041",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1177",
                     "fields_entity_id": "171",
@@ -11627,13 +11663,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -11650,7 +11686,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19042",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1178",
                     "fields_entity_id": "171",
@@ -11671,7 +11707,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -11688,7 +11724,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27516",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -11726,7 +11762,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-29449",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -11846,7 +11882,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27470",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1183",
                     "fields_entity_id": "171",
@@ -11884,7 +11920,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27471",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1178",
                     "fields_entity_id": "171",
@@ -11905,7 +11941,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -11922,7 +11958,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27472",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1185",
                     "fields_entity_id": "171",
@@ -11960,7 +11996,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27473",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1186",
                     "fields_entity_id": "171",
@@ -11998,7 +12034,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27474",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12085,7 +12121,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19038",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1183",
                     "fields_entity_id": "171",
@@ -12123,7 +12159,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19039",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1185",
                     "fields_entity_id": "171",
@@ -12161,7 +12197,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19040",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1186",
                     "fields_entity_id": "171",
@@ -12199,7 +12235,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19041",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1177",
                     "fields_entity_id": "171",
@@ -12214,13 +12250,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -12237,7 +12273,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19042",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1178",
                     "fields_entity_id": "171",
@@ -12258,7 +12294,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -12275,7 +12311,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19043",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1179",
                     "fields_entity_id": "171",
@@ -12313,7 +12349,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-19044",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1180",
                     "fields_entity_id": "171",
@@ -12351,7 +12387,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-27499",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "3295",
                     "fields_entity_id": "171",
@@ -12438,7 +12474,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-29924",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1183",
                     "fields_entity_id": "171",
@@ -12476,7 +12512,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-29925",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1185",
                     "fields_entity_id": "171",
@@ -12514,7 +12550,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-29926",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1186",
                     "fields_entity_id": "171",
@@ -12552,7 +12588,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-29927",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1179",
                     "fields_entity_id": "171",
@@ -12590,7 +12626,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-30620",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1177",
                     "fields_entity_id": "171",
@@ -12605,13 +12641,13 @@
                     "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
-                    "fields_select_where": null,
+                    "fields_select_where": "customers_type = '1'",
                     "fields_multilingual": "0",
                     "fields_xssclean": "0",
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -12628,7 +12664,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-30621",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1178",
                     "fields_entity_id": "171",
@@ -12649,7 +12685,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 }
             ],
@@ -12673,7 +12709,7 @@
                 {
                     "grids_actions_id": "8657",
                     "grids_actions_grids_id": "1272",
-                    "grids_actions_order": "999",
+                    "grids_actions_order": "2",
                     "grids_actions_name": "Delete",
                     "grids_actions_html": "",
                     "grids_actions_link": "",
@@ -12683,6 +12719,22 @@
                     "grids_actions_mode": "default",
                     "grids_actions_type": "delete",
                     "grids_actions_color": "rgb(233, 30, 99)",
+                    "grids_actions_show": "table",
+                    "conditions": []
+                },
+                {
+                    "grids_actions_id": "22794",
+                    "grids_actions_grids_id": "1272",
+                    "grids_actions_order": "0",
+                    "grids_actions_name": "Crea rapportino",
+                    "grids_actions_html": "<?php\n\t\/\/ Button rapportino solo se non \u00e8 gi\u00e0 associato ad uno\n\t$rapportino_esistente = $this->apilib->search('rapportini', [\n        'rapportini_appuntamento_id' => $row_data['appuntamenti_id']\n    ]);\n\n\tif(empty($rapportino_esistente)) : \n        \n\t$get_params = http_build_query([\n        'rapportini_appuntamento_id' => $row_data['appuntamenti_id'],\n        'rapportini_cliente' => $row_data['appuntamenti_cliente'],\n        'rapportini_commessa' => $row_data['appuntamenti_impianto'],\n        'rapportini_data' => $row_data['appuntamenti_giorno'],\n        'rapportini_ora_inizio' => $row_data['appuntamenti_ora_inizio'],\n        'rapportini_ora_fine' => $row_data['appuntamenti_ora_fine'],\n    ]);\n?>\n<a href=\"{base_url}get_ajax\/layout_modal\/rapportino-appuntamento-passato?<?php echo $get_params; ?>&_size=large\" class=\"btn btn-success js-action_button btn-grid-action-s js_open_modal\">\n    <i class=\"fas fa-plus\"><\/i>\n<\/a>\n<?php endif; ?>",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": null,
+                    "grids_actions_icon": "",
+                    "grids_actions_mode": null,
+                    "grids_actions_type": "custom",
+                    "grids_actions_color": "hsv(0, 0%, 0%)",
                     "grids_actions_show": "table",
                     "conditions": []
                 }
@@ -12748,7 +12800,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-40032",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1178",
                     "fields_entity_id": "171",
@@ -12769,7 +12821,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 },
                 {
@@ -12786,7 +12838,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-40033",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1183",
                     "fields_entity_id": "171",
@@ -12824,7 +12876,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-40034",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1185",
                     "fields_entity_id": "171",
@@ -12862,7 +12914,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "plan-grids_fields-40035",
-                    "grids_fields_module": "plan",
+                    "grids_fields_module": "planner-squadre",
                     "grids_fields_width": null,
                     "fields_id": "1186",
                     "fields_entity_id": "171",
@@ -12969,7 +13021,7 @@
             "entity_preview_custom": null,
             "fields": [
                 {
-                    "grids_fields_id": "71226",
+                    "grids_fields_id": "88862",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "1172",
                     "grids_fields_order": "1",
@@ -13007,7 +13059,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71227",
+                    "grids_fields_id": "88863",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "1173",
                     "grids_fields_order": "2",
@@ -13045,7 +13097,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71228",
+                    "grids_fields_id": "88864",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "1174",
                     "grids_fields_order": "3",
@@ -13083,7 +13135,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71229",
+                    "grids_fields_id": "88865",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "1175",
                     "grids_fields_order": "4",
@@ -13121,7 +13173,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71230",
+                    "grids_fields_id": "88866",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3479",
                     "grids_fields_order": "0",
@@ -13159,7 +13211,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71231",
+                    "grids_fields_id": "88867",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3595",
                     "grids_fields_order": "5",
@@ -13197,7 +13249,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71232",
+                    "grids_fields_id": "88868",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3599",
                     "grids_fields_order": "6",
@@ -13235,7 +13287,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71233",
+                    "grids_fields_id": "88869",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3606",
                     "grids_fields_order": "7",
@@ -13273,7 +13325,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71234",
+                    "grids_fields_id": "88870",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3596",
                     "grids_fields_order": "10",
@@ -13311,7 +13363,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71235",
+                    "grids_fields_id": "88871",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3601",
                     "grids_fields_order": "8",
@@ -13349,7 +13401,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71236",
+                    "grids_fields_id": "88872",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3602",
                     "grids_fields_order": "9",
@@ -13387,7 +13439,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71237",
+                    "grids_fields_id": "88873",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": null,
                     "grids_fields_order": "12",
@@ -13425,7 +13477,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "71238",
+                    "grids_fields_id": "88874",
                     "grids_fields_grids_id": "1346",
                     "grids_fields_fields_id": "3611",
                     "grids_fields_order": "11",
@@ -13465,7 +13517,7 @@
             ],
             "actions": [
                 {
-                    "grids_actions_id": "20474",
+                    "grids_actions_id": "25832",
                     "grids_actions_grids_id": "1346",
                     "grids_actions_order": "50",
                     "grids_actions_name": "Edit",
@@ -13481,7 +13533,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_actions_id": "20475",
+                    "grids_actions_id": "25833",
                     "grids_actions_grids_id": "1346",
                     "grids_actions_order": "99",
                     "grids_actions_name": "Delete",
@@ -13497,7 +13549,7 @@
                     "conditions": []
                 },
                 {
-                    "grids_actions_id": "20476",
+                    "grids_actions_id": "25834",
                     "grids_actions_grids_id": "1346",
                     "grids_actions_order": "1",
                     "grids_actions_name": "Detail",
@@ -14888,7 +14940,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "3405",
-                    "forms_fields_order": "12",
+                    "forms_fields_order": "13",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -14911,7 +14963,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "3418",
-                    "forms_fields_order": "11",
+                    "forms_fields_order": "12",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15026,7 +15078,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "1180",
-                    "forms_fields_order": "9",
+                    "forms_fields_order": "10",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15049,7 +15101,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "1179",
-                    "forms_fields_order": "8",
+                    "forms_fields_order": "9",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15072,7 +15124,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "1182",
-                    "forms_fields_order": "10",
+                    "forms_fields_order": "11",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15095,7 +15147,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "1185",
-                    "forms_fields_order": "4",
+                    "forms_fields_order": "5",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15118,7 +15170,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "1186",
-                    "forms_fields_order": "5",
+                    "forms_fields_order": "6",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15141,7 +15193,7 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "1189",
-                    "forms_fields_order": "13",
+                    "forms_fields_order": "14",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15164,14 +15216,14 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "3875",
-                    "forms_fields_order": "6",
+                    "forms_fields_order": "7",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
                     "forms_fields_override_type": null,
                     "forms_fields_override_label": null,
                     "forms_fields_override_placeholder": null,
-                    "forms_fields_override_colsize": "6",
+                    "forms_fields_override_colsize": "3",
                     "forms_fields_show_required": null,
                     "forms_fields_show_label": "1",
                     "forms_fields_allow_reverse": "0",
@@ -15187,7 +15239,30 @@
                 {
                     "forms_fields_forms_id": "863",
                     "forms_fields_fields_id": "3876",
-                    "forms_fields_order": "7",
+                    "forms_fields_order": "8",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_extra_class": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "3",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "planner-squadre-forms_fields-863_3876",
+                    "forms_fields_module": "planner-squadre",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "863",
+                    "forms_fields_fields_id": "3967",
+                    "forms_fields_order": "4",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_extra_class": null,
@@ -15203,7 +15278,7 @@
                     "forms_fields_max": "0",
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
-                    "forms_fields_module_key": "planner-squadre-forms_fields-863_3876",
+                    "forms_fields_module_key": "planner-squadre-forms_fields-863_3967",
                     "forms_fields_module": "planner-squadre",
                     "forms_field_full_data": "0"
                 }
@@ -18540,7 +18615,7 @@
             "calendars_default_sidebar_toggle_all_filters": "0",
             "calendars_default_view": "timeGridWeek",
             "calendars_custom_query": "",
-            "calendars_module_key": "plan",
+            "calendars_module_key": "planner-squadre",
             "calendars_layout_modal": "1",
             "calendars_layout_id": null,
             "calendars_link": "?appuntamenti_cliente={projects_customer_id}&appuntamenti_impianto={value_id}",
@@ -18561,6 +18636,11 @@
                     "calendars_fields_calendars_id": "13",
                     "calendars_fields_fields_id": "1183",
                     "calendars_fields_type": "date_start"
+                },
+                {
+                    "calendars_fields_calendars_id": "13",
+                    "calendars_fields_fields_id": "1183",
+                    "calendars_fields_type": "date_end"
                 },
                 {
                     "calendars_fields_calendars_id": "13",
@@ -19000,7 +19080,16 @@
             "layouts_module": "planner-squadre",
             "layouts_module_key": "planner-squadre-layout-733",
             "layouts_is_public": "0",
-            "conditions": []
+            "conditions": {
+                "conditions_id": "90",
+                "conditions_what": "layouts",
+                "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_query\",\"field\":\"_query\",\"type\":\"string\",\"input\":\"textarea\",\"operator\":\"num rows >= 1\",\"value\":\"SELECT 1 FROM ingegno_settings WHERE ingegno_settings_key = 'enable_appuntamenti_squadre' AND ingegno_settings_value = '1' AND ingegno_settings_module = 'projects'\"}],\"valid\":true}",
+                "conditions_ref": "279",
+                "conditions_action": "1",
+                "conditions_module": null,
+                "conditions_module_key": "projects-layouts-733",
+                "conditions_creation_date": "2024-06-21 11:27:17"
+            }
         },
         {
             "layouts_id": "280",
@@ -19239,7 +19328,7 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_settings": "0",
             "layouts_show_header": "1",
             "layouts_ajax_allowed": "1",
@@ -19532,6 +19621,31 @@
             "fi_events_post_process_id": null,
             "fi_events_hook_id": "1271",
             "fi_events_creation_date": "2024-02-28 10:34:51",
+            "fi_events_cli": "0"
+        },
+        {
+            "fi_events_id": "5435",
+            "fi_events_when": "post-form",
+            "fi_events_json_data": "{\"_when\":\"post\",\"fi_events_type\":\"hook\",\"hook\":{\"hooks_id\":\"2036\",\"hooks_type\":\"form\",\"hooks_ref\":\"863\",\"hooks_module\":\"planner-squadre\",\"hooks_order\":\"61\"},\"fi_events_action\":\"custom_code\",\"fi_events_actiondata\":{\"code\":\"<script>\\n    $(function() {\\n        \\\/**********************************************************\\n        *\\n        * 08\\\/07\\\/2024\\n        * Disabilito orari, ore tot e stanze se viene scelta\\n        * una fascia oraria compatibile con la data selezionata\\n        *\\n        ***********************************************************\\\/\\n        \\\/\\\/ Al cambio commessa svuoto gli input degli orari ed ore\\n        $('[name=\\\"appuntamenti_impianto\\\"]').change(function() {\\n            $('[name=\\\"appuntamenti_ora_inizio\\\"]').val('');\\n            $('[name=\\\"appuntamenti_ora_fine\\\"]').val('');\\n            $('[name=\\\"appuntamenti_n_ore\\\"]').val('');\\n            $('[name=\\\"appuntamenti_n_camere\\\"]').val('');\\n\\n            enableInput();\\n        });\\n\\n        \\\/\\\/\\n        $('[name=\\\"appuntamenti_fascia_oraria\\\"], [name=\\\"appuntamenti_giorno\\\"]').change(function() {\\n            const selectedFascia = $('[name=\\\"appuntamenti_fascia_oraria\\\"]').val();\\n            const selectedGiorno = $('[name=\\\"appuntamenti_giorno\\\"]').val();\\n\\n            if (selectedFascia && selectedGiorno) {\\n                const selectedDate = moment(selectedGiorno, 'DD\\\/MM\\\/YYYY');\\n                const dayOfWeek = selectedDate.isoWeekday(); \\\/\\\/ 1 LUN - 7 DOM\\n                \\\/\\\/ Prendo orari della fascia e li inserisco in ora inizio e fine, se sono in uno dei giorni che combaciano con la data scelta\\n                getOrariFascia(selectedFascia, selectedDate, dayOfWeek);\\n            } else {\\n                \\\/\\\/ Abilito input\\n                enableInput();\\n            }\\n        });\\n\\n        function disableInput() {\\n            $('[name=\\\"appuntamenti_ora_inizio\\\"]').prop('readonly', true);\\n            $('[name=\\\"appuntamenti_ora_fine\\\"]').prop('readonly', true);\\n            $('[name=\\\"appuntamenti_n_ore\\\"]').prop('readonly', true);\\n            $('[name=\\\"appuntamenti_n_camere\\\"]').prop('readonly', true);\\n        }\\n        function enableInput() {\\n            $('[name=\\\"appuntamenti_ora_inizio\\\"]').prop('readonly', false);\\n            $('[name=\\\"appuntamenti_ora_fine\\\"]').prop('readonly', false);\\n            $('[name=\\\"appuntamenti_n_ore\\\"]').prop('readonly', false);\\n            $('[name=\\\"appuntamenti_n_camere\\\"]').prop('readonly', false);\\n        }\\n\\n        function getOrariFascia(fasciaId, dataSelezionata, nGiornoSettimana) {\\n            if(fasciaId) {\\n                $.ajax({\\n                    url: base_url + 'get_ajax\\\/getJsonRecord\\\/projects_orari\\\/'+fasciaId,\\n                    dataType: 'json',\\n                    data: {\\n                        [token_name]: token_hash\\n                    },\\n                    async: false,\\n                    success: function (data) {\\n                        if(data.status === 0 && data.data.length != 0) {\\n                            \\\/\\\/ Se sono in uno dei giorni applicabili disabilito input e inserisco orari\\n                            const isAllowed = data.data.projects_orari_giorni[nGiornoSettimana];\\n                            if(isAllowed) {\\n                                disableInput();\\n\\n                                \\\/*$(\\\"[name='appuntamenti_ora_inizio']\\\").val(data.data.projects_orari_dalle);\\n                                $(\\\"[name='appuntamenti_ora_fine']\\\").val(data.data.projects_orari_alle);*\\\/\\n                                \\\/\\\/ Formattazione orari a due cifre per le ore\\n                                const [startHours, startMinutes] = data.data.projects_orari_dalle.split(':');\\n                                const formattedStartHours = startHours.padStart(2, '0');\\n                                const formattedStartMinutes = startMinutes.padStart(2, '0');\\n                                const oraInizio = `${formattedStartHours}:${formattedStartMinutes}`;\\n\\n                                const [endHours, endMinutes] = data.data.projects_orari_alle.split(':');\\n                                const formattedEndHours = endHours.padStart(2, '0');\\n                                const formattedEndMinutes = endMinutes.padStart(2, '0');\\n                                const oraFine = `${formattedEndHours}:${formattedEndMinutes}`;\\n                                \\n                                $(\\\"[name='appuntamenti_ora_inizio']\\\").val(oraInizio);\\n                                $(\\\"[name='appuntamenti_ora_fine']\\\").val(oraFine);\\n                                $(\\\"[name='appuntamenti_ora_inizio'], [name='appuntamenti_ora_fine']\\\").trigger('change');\\n                            } else {\\n                                \\\/\\\/ Abilito input\\n                                enableInput();\\n                            }\\n                        }\\n                    }\\n                });  \\n            }\\n        }\\n\\n\\n\\n    });\\n<\\\/script>\"},\"fi_events_title\":\"[MODULO PLANNER SQUADRE - Appuntamenti] Compilazione orari in base alla fascia scelta\",\"save\":\"1\"}",
+            "fi_events_title": "[MODULO PLANNER SQUADRE - Appuntamenti] Compilazione orari in base alla fascia scelta",
+            "fi_events_module": "planner-squadre",
+            "fi_events_type": "hook",
+            "fi_events_ref_id": "863",
+            "fi_events_ref": null,
+            "fi_events_action": "custom_code",
+            "fi_events_actiondata": "{\"code\":\"<script>\\n    $(function() {\\n        \\\/**********************************************************\\n        *\\n        * 08\\\/07\\\/2024\\n        * Disabilito orari, ore tot e stanze se viene scelta\\n        * una fascia oraria compatibile con la data selezionata\\n        *\\n        ***********************************************************\\\/\\n        \\\/\\\/ Al cambio commessa svuoto gli input degli orari ed ore\\n        $('[name=\\\"appuntamenti_impianto\\\"]').change(function() {\\n            $('[name=\\\"appuntamenti_ora_inizio\\\"]').val('');\\n            $('[name=\\\"appuntamenti_ora_fine\\\"]').val('');\\n            $('[name=\\\"appuntamenti_n_ore\\\"]').val('');\\n            $('[name=\\\"appuntamenti_n_camere\\\"]').val('');\\n\\n            enableInput();\\n        });\\n\\n        \\\/\\\/\\n        $('[name=\\\"appuntamenti_fascia_oraria\\\"], [name=\\\"appuntamenti_giorno\\\"]').change(function() {\\n            const selectedFascia = $('[name=\\\"appuntamenti_fascia_oraria\\\"]').val();\\n            const selectedGiorno = $('[name=\\\"appuntamenti_giorno\\\"]').val();\\n\\n            if (selectedFascia && selectedGiorno) {\\n                const selectedDate = moment(selectedGiorno, 'DD\\\/MM\\\/YYYY');\\n                const dayOfWeek = selectedDate.isoWeekday(); \\\/\\\/ 1 LUN - 7 DOM\\n                \\\/\\\/ Prendo orari della fascia e li inserisco in ora inizio e fine, se sono in uno dei giorni che combaciano con la data scelta\\n                getOrariFascia(selectedFascia, selectedDate, dayOfWeek);\\n            } else {\\n                \\\/\\\/ Abilito input\\n                enableInput();\\n            }\\n        });\\n\\n        function disableInput() {\\n            $('[name=\\\"appuntamenti_ora_inizio\\\"]').prop('readonly', true);\\n            $('[name=\\\"appuntamenti_ora_fine\\\"]').prop('readonly', true);\\n            $('[name=\\\"appuntamenti_n_ore\\\"]').prop('readonly', true);\\n            $('[name=\\\"appuntamenti_n_camere\\\"]').prop('readonly', true);\\n        }\\n        function enableInput() {\\n            $('[name=\\\"appuntamenti_ora_inizio\\\"]').prop('readonly', false);\\n            $('[name=\\\"appuntamenti_ora_fine\\\"]').prop('readonly', false);\\n            $('[name=\\\"appuntamenti_n_ore\\\"]').prop('readonly', false);\\n            $('[name=\\\"appuntamenti_n_camere\\\"]').prop('readonly', false);\\n        }\\n\\n        function getOrariFascia(fasciaId, dataSelezionata, nGiornoSettimana) {\\n            if(fasciaId) {\\n                $.ajax({\\n                    url: base_url + 'get_ajax\\\/getJsonRecord\\\/projects_orari\\\/'+fasciaId,\\n                    dataType: 'json',\\n                    data: {\\n                        [token_name]: token_hash\\n                    },\\n                    async: false,\\n                    success: function (data) {\\n                        if(data.status === 0 && data.data.length != 0) {\\n                            \\\/\\\/ Se sono in uno dei giorni applicabili disabilito input e inserisco orari\\n                            const isAllowed = data.data.projects_orari_giorni[nGiornoSettimana];\\n                            if(isAllowed) {\\n                                disableInput();\\n\\n                                \\\/*$(\\\"[name='appuntamenti_ora_inizio']\\\").val(data.data.projects_orari_dalle);\\n                                $(\\\"[name='appuntamenti_ora_fine']\\\").val(data.data.projects_orari_alle);*\\\/\\n                                \\\/\\\/ Formattazione orari a due cifre per le ore\\n                                const [startHours, startMinutes] = data.data.projects_orari_dalle.split(':');\\n                                const formattedStartHours = startHours.padStart(2, '0');\\n                                const formattedStartMinutes = startMinutes.padStart(2, '0');\\n                                const oraInizio = `${formattedStartHours}:${formattedStartMinutes}`;\\n\\n                                const [endHours, endMinutes] = data.data.projects_orari_alle.split(':');\\n                                const formattedEndHours = endHours.padStart(2, '0');\\n                                const formattedEndMinutes = endMinutes.padStart(2, '0');\\n                                const oraFine = `${formattedEndHours}:${formattedEndMinutes}`;\\n                                \\n                                $(\\\"[name='appuntamenti_ora_inizio']\\\").val(oraInizio);\\n                                $(\\\"[name='appuntamenti_ora_fine']\\\").val(oraFine);\\n                                $(\\\"[name='appuntamenti_ora_inizio'], [name='appuntamenti_ora_fine']\\\").trigger('change');\\n                            } else {\\n                                \\\/\\\/ Abilito input\\n                                enableInput();\\n                            }\\n                        }\\n                    }\\n                });  \\n            }\\n        }\\n\\n\\n\\n    });\\n<\\\/script>\"}",
+            "fi_events_active": "0",
+            "fi_events_apilib": "1",
+            "fi_events_api": "1",
+            "fi_events_crm": "1",
+            "fi_events_order": "61",
+            "fi_events_cron_frequency": "1",
+            "fi_events_cron_last_execution": null,
+            "fi_events_hook_order": "61",
+            "fi_events_cron_id": null,
+            "fi_events_post_process_id": null,
+            "fi_events_hook_id": "2036",
+            "fi_events_creation_date": "2024-07-08 16:27:26",
             "fi_events_cli": "0"
         }
     ],

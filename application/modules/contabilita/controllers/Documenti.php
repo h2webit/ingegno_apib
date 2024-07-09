@@ -596,8 +596,11 @@ class Documenti extends MX_Controller
                     }
                 }
                 foreach ($campi_personalizzati as $campo) {
-                    $prodotto[$campo['campi_righe_articoli_map_to']] = $prodotto[$campo['campi_righe_articoli_campo']];
-                    unset($prodotto[$campo['campi_righe_articoli_campo']]);
+                    // gestisco l'unset solo se i due campi sono diversi
+                    if ($campo['campi_righe_articoli_campo'] != $campo['campi_righe_articoli_map_to']) {
+                        $prodotto[$campo['campi_righe_articoli_map_to']] = $prodotto[$campo['campi_righe_articoli_campo']];
+                        unset($prodotto[$campo['campi_righe_articoli_campo']]);
+                    }
                 }
                 //unset($prodotto['documenti_contabilita_articoli_id']);
                 $prodotto['documenti_contabilita_articoli_documento'] = $documento_id;

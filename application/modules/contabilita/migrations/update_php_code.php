@@ -10,6 +10,12 @@ $updates['0'] = [
     ],
 ];
 
+$updates['*'] = [
+    'include' => [
+        'aggiorna_tpl_pdf.php',
+    ],
+];
+
 $updates['1.7.2'] = [
     'include' => [
         '1.7.2_update_scadenze_saldata.php',

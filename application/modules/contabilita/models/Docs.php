@@ -342,6 +342,7 @@ class Docs extends CI_Model
             'documenti_contabilita_utente_id' => array_get($data, 'utente', $this->auth->get('users_id')),
             'documenti_contabilita_template_pdf' => $tpl_pdf,
             'documenti_contabilita_stato' => array_get($data, 'stato', 1),
+            'documenti_contabilita_agente' => array_get($data, 'agente', null),
         ];
 
         if (!empty($cliente['customers_template_pagamento'])) {

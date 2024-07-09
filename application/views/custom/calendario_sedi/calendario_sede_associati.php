@@ -81,7 +81,7 @@ $_fascie_orarie = $this->db->where(
             projects_orari_project = '$value_id' AND (projects_orari_cancellato = '0' OR projects_orari_cancellato IS NULL) 
         ) 
         OR projects_orari_id IN (
-            SELECT appuntamenti_fascia 
+            SELECT appuntamenti_fascia_oraria 
             FROM appuntamenti 
             WHERE
                 appuntamenti_impianto = '$value_id' 
@@ -102,7 +102,7 @@ $_appuntamenti = $this->db
     
     ->join('appuntamenti', 'rel_appuntamenti_persone.appuntamenti_id = appuntamenti.appuntamenti_id')
     ->join('dipendenti', 'dipendenti_user_id = rel_appuntamenti_persone.users_id')
-    ->join('projects_orari', 'projects_orari_id = appuntamenti_fascia')
+    ->join('projects_orari', 'projects_orari_id = appuntamenti_fascia_oraria')
     ->join('projects', 'projects_id = appuntamenti_impianto')
     ->where('appuntamenti_impianto', $value_id)
     //->where("projects_orari_cancellato <> '1'")
@@ -110,12 +110,13 @@ $_appuntamenti = $this->db
     ->get('rel_appuntamenti_persone')->result_array();
 //debug($_appuntamenti,true);
 
-$_richieste = $this->apilib->search('richieste_disponibilita', [
-    'richieste_disponibilita_sede_operativa' => $value_id,
-    'richieste_disponibilita_turno_assegnato IS NULL',
-    "date_part('year', richieste_disponibilita_giorno) = '{$year}'",
-    "date_part('month', richieste_disponibilita_giorno) = '{$month}'",
-]);
+// $_richieste = $this->apilib->search('richieste_disponibilita', [
+//     'richieste_disponibilita_sede_operativa' => $value_id,
+//     'richieste_disponibilita_turno_assegnato IS NULL',
+//     "date_part('year', richieste_disponibilita_giorno) = '{$year}'",
+//     "date_part('month', richieste_disponibilita_giorno) = '{$month}'",
+// ]);
+$_richieste = [];
 
 $richieste = [];
 foreach ($_richieste as $richiesta) {
@@ -388,7 +389,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     SELECT 
                                         * 
                                     FROM 
-                                        appuntamenti LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia
+                                        appuntamenti LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
                                     WHERE 
                                         appuntamenti_associato = '{$associato['associati_id']}'
                                         AND appuntamenti_impianto <> '{$value_id}'
@@ -606,14 +607,14 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         $fascie_cancellate = $this->db->query("SELECT * FROM projects_orari WHERE 
             projects_orari_cancellato = '1'
             AND projects_orari_id IN (
-                SELECT appuntamenti_fascia 
+                SELECT appuntamenti_fascia_oraria 
                 FROM appuntamenti 
                 WHERE 
-                    DATE_PART('month', appuntamenti_giorno) = '0{$this->input->get('m')}' 
-                    AND DATE_PART('year', appuntamenti_giorno) = '0{$this->input->get('Y')}' 
+                    MONTH(appuntamenti_giorno) = '0{$this->input->get('m')}' 
+                    AND YEAR(appuntamenti_giorno) = '0{$this->input->get('Y')}' 
                     AND (
-                        projects_orari_sede = '0{$this->input->get('projects_orari_sede')}' OR 
-                        projects_orari_sede = '0{$value_id}' 
+                        projects_orari_project = '0{$this->input->get('projects_orari_sede')}' OR 
+                        projects_orari_project = '0{$value_id}' 
                     )
             )")->result_array();
         ?>

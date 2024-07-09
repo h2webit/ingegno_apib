@@ -3584,7 +3584,12 @@ $(document).ready(function() {
         }
         <?php endif; ?>
 
-
+        // gestisco il flag del campo $('[name="documenti_contabilita_split_payment"]') in base al campo customers_split se è 1
+        if (cliente_raw_data.customers_split && cliente_raw_data.customers_split == 1) {
+            $('[name="documenti_contabilita_split_payment"]').prop('checked', true);
+        } else {
+            $('[name="documenti_contabilita_split_payment"]').prop('checked', false);
+        }
 
         //Cambio iva default sulle righe prodotto
         if (typeof cliente_raw_data !== 'undefined' &&

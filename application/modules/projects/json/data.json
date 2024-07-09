@@ -4,13 +4,13 @@
     "modules_description": "projects and commesse\r\nMODULO CURRENCIES E PRODUCTS MANAGER DA INSTALLARE PRIMA",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.2",
+    "modules_version": "1.1.6",
     "modules_identifier": "projects",
     "modules_base64_zip": null,
     "modules_raw_data_install": "30,29,28,13,15,738,739,487,365,14,503,403,402",
     "modules_raw_data_update": "29,28,739",
     "modules_created_by_user": "1",
-    "modules_version_code": "138",
+    "modules_version_code": "142",
     "modules_thumbnail": "",
     "modules_min_client_version": "3.8.6",
     "modules_version_date": "2022-10-10 14:37:06",
@@ -12659,94 +12659,6 @@
             "conditions": []
         },
         {
-            "layouts_boxes_id": "4146",
-            "layouts_boxes_layout": "851",
-            "layouts_boxes_css": "",
-            "layouts_boxes_title": "Analisi ore assistenza evolutiva commesse",
-            "layouts_boxes_content_type": "grid",
-            "layouts_boxes_content_ref": "990",
-            "layouts_boxes_content": null,
-            "layouts_boxes_position": "0",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "1",
-            "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "4",
-            "layouts_boxes_cols": "12",
-            "layouts_boxes_color": "box-primary",
-            "layouts_boxes_module_key": null,
-            "conditions": []
-        },
-        {
-            "layouts_boxes_id": "4232",
-            "layouts_boxes_layout": "851",
-            "layouts_boxes_css": "box",
-            "layouts_boxes_title": "Billable Hours",
-            "layouts_boxes_content_type": "chart",
-            "layouts_boxes_content_ref": "23",
-            "layouts_boxes_content": null,
-            "layouts_boxes_position": "1",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "1",
-            "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "6",
-            "layouts_boxes_cols": "6",
-            "layouts_boxes_color": "",
-            "layouts_boxes_module_key": null,
-            "conditions": []
-        },
-        {
-            "layouts_boxes_id": "4233",
-            "layouts_boxes_layout": "851",
-            "layouts_boxes_css": "",
-            "layouts_boxes_title": "All Billable Hours",
-            "layouts_boxes_content_type": "grid",
-            "layouts_boxes_content_ref": "1036",
-            "layouts_boxes_content": null,
-            "layouts_boxes_position": "2",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "1",
-            "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "6",
-            "layouts_boxes_cols": "6",
-            "layouts_boxes_color": "",
-            "layouts_boxes_module_key": null,
-            "conditions": []
-        },
-        {
-            "layouts_boxes_id": "4390",
-            "layouts_boxes_layout": "851",
-            "layouts_boxes_css": "box",
-            "layouts_boxes_title": "(#2268) Billable hours Filter",
-            "layouts_boxes_content_type": "form",
-            "layouts_boxes_content_ref": "2268",
-            "layouts_boxes_content": null,
-            "layouts_boxes_position": "1",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "0",
-            "layouts_boxes_show_container": "0",
-            "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "12",
-            "layouts_boxes_color": null,
-            "layouts_boxes_module_key": null,
-            "conditions": []
-        },
-        {
             "layouts_boxes_id": "5171",
             "layouts_boxes_layout": "852",
             "layouts_boxes_css": "",
@@ -12854,16 +12766,7 @@
             "layouts_boxes_cols": "12",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
-            "conditions": {
-                "conditions_id": "79",
-                "conditions_what": "layouts_boxes",
-                "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_module_installed\",\"field\":\"_module_installed\",\"type\":\"string\",\"input\":\"select\",\"operator\":\"equal\",\"value\":\"billable-hours\"}],\"valid\":true}",
-                "conditions_ref": "300",
-                "conditions_module": null,
-                "conditions_module_key": "projects-layouts_boxes-300",
-                "conditions_creation_date": "2023-03-23 13:01:30",
-                "conditions_action": "1"
-            }
+            "conditions": []
         },
         {
             "layouts_boxes_id": "334",
@@ -13494,7 +13397,7 @@
                     "grids_fields_replace": "<a href=\"<?php echo base_url('main\/layout\/project-detail\/'.$data['projects_id']); ?>\">{projects_name}<\/a><br \/>\n<small><a href=\"<?php echo base_url('main\/layout\/customer-detail\/'.$data['projects_customer_id']); ?>\">{customers_full_name}<\/a><\/small>",
                     "grids_fields_column_name": "Nome",
                     "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_eval_cache_data": "CONCAT(projects_name, ' ',customers_full_name)",
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
@@ -16480,550 +16383,6 @@
             ]
         },
         "10": {
-            "grids_id": "990",
-            "grids_entity_id": "41",
-            "grids_sub_grid_id": null,
-            "grids_name": "Projects Billable Hours",
-            "grids_view_link": null,
-            "grids_edit_link": null,
-            "grids_view_layout": null,
-            "grids_edit_layout": null,
-            "grids_delete_link": "#",
-            "grids_where": null,
-            "grids_default": "0",
-            "grids_layout": "table",
-            "grids_order_by": "totale_acquistate DESC",
-            "grids_group_by": null,
-            "grids_filter_session_key": "bill_hours_filter_projects",
-            "grids_bulk_mode": null,
-            "grids_bulk_edit_form": null,
-            "grids_exportable": "0",
-            "grids_append_class": null,
-            "grids_inline_form": null,
-            "grids_module_key": "firecrm-grid-990",
-            "grids_depth": null,
-            "grids_actions_column": "0",
-            "grids_builder_where": null,
-            "grids_identifier": null,
-            "grids_datatable": "1",
-            "grids_ajax": "0",
-            "grids_searchable": "0",
-            "grids_pagination": "25",
-            "grids_inline_edit": "0",
-            "grids_design": "2",
-            "grids_limit": null,
-            "grids_custom_query": "SELECT *,(totale_acquistate - totale_consumate) AS delta FROM (\r\nSELECT \r\n*,SUM(CASE WHEN billable_hours_type = 1 THEN billable_hours_hours ELSE 0 END) as totale_acquistate, \r\nABS(SUM(CASE WHEN billable_hours_type = 2 THEN billable_hours_hours ELSE 0 END)) as totale_consumate \r\nFROM billable_hours LEFT JOIN projects ON projects.projects_id = billable_hours_project_id \r\n{where}\r\nGROUP BY billable_hours_project_id \r\nORDER BY billable_hours_project_id\r\n    ) AS billable_hours {order_by} LIMIT {offset},{limit}",
-            "grids_json": null,
-            "entity_id": "41",
-            "entity_name": "billable_hours",
-            "entity_visible": "1",
-            "entity_searchable": "1",
-            "entity_login_entity": "0",
-            "entity_type": "1",
-            "entity_action_fields": "{\"create_time\":\"billable_hours_creation_date\",\"update_time\":\"billable_hours_modified_date\"}",
-            "entity_module": "billable-hours",
-            "entity_preview_base": null,
-            "entity_preview_custom": null,
-            "fields": [
-                {
-                    "grids_fields_id": "14849",
-                    "grids_fields_grids_id": "990",
-                    "grids_fields_fields_id": null,
-                    "grids_fields_order": "1",
-                    "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "<?php echo number_format($data['totale_acquistate'], 2, '.','.');?>",
-                    "grids_fields_column_name": "Ore Acquistate",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "totale_acquistate",
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-14849",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": null,
-                    "fields_entity_id": null,
-                    "fields_default": null,
-                    "fields_name": null,
-                    "fields_type": null,
-                    "fields_size": null,
-                    "fields_required": null,
-                    "fields_preview": null,
-                    "fields_visible": null,
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": null,
-                    "fields_ref_auto_right_join": null,
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": null,
-                    "fields_xssclean": null,
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": null,
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "14852",
-                    "grids_fields_grids_id": "990",
-                    "grids_fields_fields_id": null,
-                    "grids_fields_order": "2",
-                    "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "<?php echo number_format($data['totale_consumate'],1,\".\",\".\");?>",
-                    "grids_fields_column_name": "Ore consumate",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "totale_consumate",
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-14852",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": null,
-                    "fields_entity_id": null,
-                    "fields_default": null,
-                    "fields_name": null,
-                    "fields_type": null,
-                    "fields_size": null,
-                    "fields_required": null,
-                    "fields_preview": null,
-                    "fields_visible": null,
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": null,
-                    "fields_ref_auto_right_join": null,
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": null,
-                    "fields_xssclean": null,
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": null,
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "14853",
-                    "grids_fields_grids_id": "990",
-                    "grids_fields_fields_id": null,
-                    "grids_fields_order": "3",
-                    "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "<?php \nif ($data['delta'] > 0):?>\n<span class=\"text-green\"><?php echo number_format($data['delta'],1,\".\",\".\");?><\/span>\n<?php else:?>\n<span class=\"text-red\"><?php echo number_format($data['delta'],1,\".\",\".\");?><\/span>\n<?php endif;?>",
-                    "grids_fields_column_name": "Delta",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "delta",
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-14853",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": null,
-                    "fields_entity_id": null,
-                    "fields_default": null,
-                    "fields_name": null,
-                    "fields_type": null,
-                    "fields_size": null,
-                    "fields_required": null,
-                    "fields_preview": null,
-                    "fields_visible": null,
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": null,
-                    "fields_ref_auto_right_join": null,
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": null,
-                    "fields_xssclean": null,
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": null,
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "14854",
-                    "grids_fields_grids_id": "990",
-                    "grids_fields_fields_id": "152",
-                    "grids_fields_order": "0",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-14854",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": "152",
-                    "fields_entity_id": "12",
-                    "fields_default": null,
-                    "fields_name": "projects_name",
-                    "fields_type": "varchar",
-                    "fields_size": "250",
-                    "fields_required": "1",
-                    "fields_preview": "1",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "0",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "15619",
-                    "grids_fields_grids_id": "990",
-                    "grids_fields_fields_id": null,
-                    "grids_fields_order": "4",
-                    "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "<?php echo number_format($data['projects_worked_hours'],0,'','');?>",
-                    "grids_fields_column_name": "Timesheet hours",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "projects_worked_hours",
-                    "grids_fields_totalable": "1",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-15619",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": null,
-                    "fields_entity_id": null,
-                    "fields_default": null,
-                    "fields_name": null,
-                    "fields_type": null,
-                    "fields_size": null,
-                    "fields_required": null,
-                    "fields_preview": null,
-                    "fields_visible": null,
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": null,
-                    "fields_ref_auto_right_join": null,
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": null,
-                    "fields_xssclean": null,
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": null,
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "17504",
-                    "grids_fields_grids_id": "990",
-                    "grids_fields_fields_id": null,
-                    "grids_fields_order": "1000",
-                    "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "<?php echo \"\u20ac \".$data['totale_acquistate']*55;?>",
-                    "grids_fields_column_name": "Sell Price (55 euro)",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "",
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "projects-grids_fields-17504",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": null,
-                    "fields_entity_id": null,
-                    "fields_default": null,
-                    "fields_name": null,
-                    "fields_type": null,
-                    "fields_size": null,
-                    "fields_required": null,
-                    "fields_preview": null,
-                    "fields_visible": null,
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": null,
-                    "fields_ref_auto_right_join": null,
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": null,
-                    "fields_xssclean": null,
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": null,
-                    "fields_additional_data": null,
-                    "conditions": []
-                }
-            ],
-            "actions": [
-                {
-                    "grids_actions_id": "4343",
-                    "grids_actions_grids_id": "990",
-                    "grids_actions_order": "1",
-                    "grids_actions_name": "Edit",
-                    "grids_actions_html": "",
-                    "grids_actions_link": "",
-                    "grids_actions_layout": null,
-                    "grids_actions_form": "216",
-                    "grids_actions_icon": "fas fa-edit",
-                    "grids_actions_mode": "modal",
-                    "grids_actions_type": "edit_form",
-                    "grids_actions_color": "rgb(156, 39, 176)",
-                    "grids_actions_show": null,
-                    "conditions": []
-                },
-                {
-                    "grids_actions_id": "4344",
-                    "grids_actions_grids_id": "990",
-                    "grids_actions_order": "999",
-                    "grids_actions_name": "Delete",
-                    "grids_actions_html": "",
-                    "grids_actions_link": "",
-                    "grids_actions_layout": null,
-                    "grids_actions_form": null,
-                    "grids_actions_icon": "fas fa-trash",
-                    "grids_actions_mode": "default",
-                    "grids_actions_type": "delete",
-                    "grids_actions_color": "#E91E63",
-                    "grids_actions_show": null,
-                    "conditions": []
-                }
-            ]
-        },
-        "11": {
-            "grids_id": "1036",
-            "grids_entity_id": "41",
-            "grids_sub_grid_id": null,
-            "grids_name": "All Billable Hours",
-            "grids_view_link": null,
-            "grids_edit_link": null,
-            "grids_view_layout": null,
-            "grids_edit_layout": null,
-            "grids_delete_link": "#",
-            "grids_where": null,
-            "grids_default": "0",
-            "grids_layout": "table",
-            "grids_order_by": "billable_hours_creation_date DESC",
-            "grids_group_by": null,
-            "grids_filter_session_key": "bill_hours_filter_projects",
-            "grids_bulk_mode": null,
-            "grids_bulk_edit_form": null,
-            "grids_exportable": "0",
-            "grids_append_class": null,
-            "grids_inline_form": null,
-            "grids_module_key": "firecrm-grid-1036",
-            "grids_depth": null,
-            "grids_actions_column": "1",
-            "grids_builder_where": null,
-            "grids_identifier": null,
-            "grids_datatable": "1",
-            "grids_ajax": "1",
-            "grids_searchable": "0",
-            "grids_pagination": "5",
-            "grids_inline_edit": "0",
-            "grids_design": "1",
-            "grids_limit": null,
-            "grids_custom_query": null,
-            "grids_json": null,
-            "entity_id": "41",
-            "entity_name": "billable_hours",
-            "entity_visible": "1",
-            "entity_searchable": "1",
-            "entity_login_entity": "0",
-            "entity_type": "1",
-            "entity_action_fields": "{\"create_time\":\"billable_hours_creation_date\",\"update_time\":\"billable_hours_modified_date\"}",
-            "entity_module": "billable-hours",
-            "entity_preview_base": null,
-            "entity_preview_custom": null,
-            "fields": [
-                {
-                    "grids_fields_id": "15144",
-                    "grids_fields_grids_id": "1036",
-                    "grids_fields_fields_id": "108",
-                    "grids_fields_order": "999",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": "Creation date",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-15144",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": "108",
-                    "fields_entity_id": "41",
-                    "fields_default": null,
-                    "fields_name": "billable_hours_creation_date",
-                    "fields_type": "DATETIME",
-                    "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "0",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "15146",
-                    "grids_fields_grids_id": "1036",
-                    "grids_fields_fields_id": "307",
-                    "grids_fields_order": "999",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": "Task",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-15146",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": "307",
-                    "fields_entity_id": "41",
-                    "fields_default": null,
-                    "fields_name": "billable_hours_task_id",
-                    "fields_type": "integer",
-                    "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": "tasks",
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "15147",
-                    "grids_fields_grids_id": "1036",
-                    "grids_fields_fields_id": "308",
-                    "grids_fields_order": "999",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": "Type",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-15147",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": "308",
-                    "fields_entity_id": "41",
-                    "fields_default": null,
-                    "fields_name": "billable_hours_type",
-                    "fields_type": "integer",
-                    "fields_size": null,
-                    "fields_required": "1",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": "billable_hours_type",
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
-                    "grids_fields_id": "15148",
-                    "grids_fields_grids_id": "1036",
-                    "grids_fields_fields_id": "309",
-                    "grids_fields_order": "999",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": "Hours",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "firecrm-grids_fields-15148",
-                    "grids_fields_module": "projects",
-                    "grids_fields_width": null,
-                    "fields_id": "309",
-                    "fields_entity_id": "41",
-                    "fields_default": null,
-                    "fields_name": "billable_hours_hours",
-                    "fields_type": "double",
-                    "fields_size": "18,9",
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "0",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                }
-            ],
-            "actions": [
-                {
-                    "grids_actions_id": "4399",
-                    "grids_actions_grids_id": "1036",
-                    "grids_actions_order": "1",
-                    "grids_actions_name": "Edit",
-                    "grids_actions_html": "",
-                    "grids_actions_link": "",
-                    "grids_actions_layout": null,
-                    "grids_actions_form": "216",
-                    "grids_actions_icon": "fas fa-edit",
-                    "grids_actions_mode": "modal",
-                    "grids_actions_type": "edit_form",
-                    "grids_actions_color": "rgb(156, 39, 176)",
-                    "grids_actions_show": null,
-                    "conditions": []
-                },
-                {
-                    "grids_actions_id": "4400",
-                    "grids_actions_grids_id": "1036",
-                    "grids_actions_order": "999",
-                    "grids_actions_name": "Delete",
-                    "grids_actions_html": "",
-                    "grids_actions_link": "",
-                    "grids_actions_layout": null,
-                    "grids_actions_form": null,
-                    "grids_actions_icon": "fas fa-trash",
-                    "grids_actions_mode": "default",
-                    "grids_actions_type": "delete",
-                    "grids_actions_color": "#E91E63",
-                    "grids_actions_show": null,
-                    "conditions": []
-                }
-            ]
-        },
-        "12": {
             "grids_id": "1122",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -17295,7 +16654,7 @@
                 }
             ]
         },
-        "13": {
+        "11": {
             "grids_id": "1124",
             "grids_entity_id": "488",
             "grids_sub_grid_id": null,
@@ -17605,7 +16964,7 @@
                 }
             ]
         },
-        "14": {
+        "12": {
             "grids_id": "1148",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -17931,7 +17290,7 @@
                 }
             ]
         },
-        "15": {
+        "13": {
             "grids_id": "1150",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -17991,7 +17350,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16172",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "917",
                     "fields_entity_id": "121",
@@ -18029,7 +17388,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16414",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18067,7 +17426,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16987",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18105,7 +17464,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16994",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18143,7 +17502,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16995",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18170,7 +17529,7 @@
             ],
             "actions": []
         },
-        "16": {
+        "14": {
             "grids_id": "1152",
             "grids_entity_id": "63",
             "grids_sub_grid_id": null,
@@ -18404,7 +17763,7 @@
                 }
             ]
         },
-        "17": {
+        "15": {
             "grids_id": "1157",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -18464,7 +17823,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16216",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -18502,7 +17861,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16217",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "925",
                     "fields_entity_id": "121",
@@ -18540,7 +17899,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16218",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18578,7 +17937,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16219",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18638,7 +17997,7 @@
                 }
             ]
         },
-        "18": {
+        "16": {
             "grids_id": "1158",
             "grids_entity_id": "505",
             "grids_sub_grid_id": null,
@@ -18698,7 +18057,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16227",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3712",
                     "fields_entity_id": "505",
@@ -18736,7 +18095,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16228",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "921",
                     "fields_entity_id": "121",
@@ -18774,7 +18133,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16240",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -18812,7 +18171,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16241",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "925",
                     "fields_entity_id": "121",
@@ -18856,7 +18215,7 @@
                 }
             ]
         },
-        "19": {
+        "17": {
             "grids_id": "1169",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -19052,7 +18411,7 @@
                 }
             ]
         },
-        "20": {
+        "18": {
             "grids_id": "1171",
             "grids_entity_id": "15",
             "grids_sub_grid_id": null,
@@ -19194,7 +18553,7 @@
                 }
             ]
         },
-        "21": {
+        "19": {
             "grids_id": "1121",
             "grids_entity_id": "487",
             "grids_sub_grid_id": null,
@@ -19374,7 +18733,7 @@
                 }
             ]
         },
-        "22": {
+        "20": {
             "grids_id": "1317",
             "grids_entity_id": "16",
             "grids_sub_grid_id": null,
@@ -19646,7 +19005,7 @@
                 }
             ]
         },
-        "23": {
+        "21": {
             "grids_id": "1355",
             "grids_entity_id": "513",
             "grids_sub_grid_id": null,
@@ -19706,7 +19065,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "documents-grids_fields-16336",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "documents",
                     "grids_fields_width": null,
                     "fields_id": "3765",
                     "fields_entity_id": "513",
@@ -19744,7 +19103,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "documents-grids_fields-16338",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "documents",
                     "grids_fields_width": null,
                     "fields_id": "3767",
                     "fields_entity_id": "513",
@@ -19782,7 +19141,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "documents-grids_fields-17947",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "documents",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -19820,7 +19179,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "documents-grids_fields-17948",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "documents",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -19858,7 +19217,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "documents-grids_fields-17951",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "documents",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -19896,7 +19255,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "documents-grids_fields-17954",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "documents",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -19956,7 +19315,7 @@
                 }
             ]
         },
-        "24": {
+        "22": {
             "grids_id": "1511",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -20364,10 +19723,10 @@
                 }
             ]
         },
-        "25": {
+        "23": {
             "grids_id": "1698",
             "grids_entity_id": "737",
-            "grids_sub_grid_id": "605",
+            "grids_sub_grid_id": null,
             "grids_name": "Projects Orari",
             "grids_view_link": null,
             "grids_edit_link": null,
@@ -20636,7 +19995,7 @@
                 }
             ]
         },
-        "26": {
+        "24": {
             "grids_id": "58",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -21069,10 +20428,10 @@
                 }
             ]
         },
-        "28": {
+        "26": {
             "grids_id": "54",
             "grids_entity_id": "13",
-            "grids_sub_grid_id": "605",
+            "grids_sub_grid_id": null,
             "grids_name": "Customize projects_billing_type",
             "grids_view_link": null,
             "grids_edit_link": null,
@@ -21211,7 +20570,7 @@
                 }
             ]
         },
-        "30": {
+        "28": {
             "grids_id": "57",
             "grids_entity_id": "44",
             "grids_sub_grid_id": null,
@@ -21259,10 +20618,10 @@
             "fields": [],
             "actions": []
         },
-        "34": {
+        "32": {
             "grids_id": "75",
             "grids_entity_id": "28",
-            "grids_sub_grid_id": "605",
+            "grids_sub_grid_id": null,
             "grids_name": "Customize expenses_type",
             "grids_view_link": null,
             "grids_edit_link": null,
@@ -21401,10 +20760,10 @@
                 }
             ]
         },
-        "35": {
+        "33": {
             "grids_id": "76",
             "grids_entity_id": "29",
-            "grids_sub_grid_id": "605",
+            "grids_sub_grid_id": null,
             "grids_name": "Customize expenses_status",
             "grids_view_link": null,
             "grids_edit_link": null,
@@ -21543,10 +20902,10 @@
                 }
             ]
         },
-        "36": {
+        "34": {
             "grids_id": "77",
             "grids_entity_id": "30",
-            "grids_sub_grid_id": "605",
+            "grids_sub_grid_id": null,
             "grids_name": "Customize expenses_category",
             "grids_view_link": null,
             "grids_edit_link": null,
@@ -21685,7 +21044,7 @@
                 }
             ]
         },
-        "41": {
+        "39": {
             "grids_id": "416",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -21919,7 +21278,7 @@
                 }
             ]
         },
-        "42": {
+        "40": {
             "grids_id": "434",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23597,7 +22956,7 @@
                 }
             ]
         },
-        "43": {
+        "41": {
             "grids_id": "436",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23853,7 +23212,7 @@
                 }
             ]
         },
-        "44": {
+        "42": {
             "grids_id": "438",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23978,7 +23337,7 @@
             ],
             "actions": []
         },
-        "45": {
+        "43": {
             "grids_id": "441",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -24368,7 +23727,7 @@
                 }
             ]
         },
-        "46": {
+        "44": {
             "grids_id": "442",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -24792,7 +24151,7 @@
                 }
             ]
         },
-        "47": {
+        "45": {
             "grids_id": "445",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -25096,7 +24455,7 @@
                 }
             ]
         },
-        "48": {
+        "46": {
             "grids_id": "453",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -25216,7 +24575,7 @@
                 }
             ]
         },
-        "49": {
+        "47": {
             "grids_id": "457",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -25650,7 +25009,7 @@
                 }
             ]
         },
-        "50": {
+        "48": {
             "grids_id": "458",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -25868,7 +25227,7 @@
                 }
             ]
         },
-        "51": {
+        "49": {
             "grids_id": "459",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -25928,7 +25287,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8856",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -25966,7 +25325,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-9961",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26004,7 +25363,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21933",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26042,7 +25401,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21934",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26080,7 +25439,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21935",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26140,7 +25499,7 @@
                 }
             ]
         },
-        "52": {
+        "50": {
             "grids_id": "512",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -26374,7 +25733,7 @@
                 }
             ]
         },
-        "53": {
+        "51": {
             "grids_id": "514",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -26852,7 +26211,7 @@
                 }
             ]
         },
-        "54": {
+        "52": {
             "grids_id": "565",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -26912,7 +26271,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10617",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26950,7 +26309,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10618",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26988,7 +26347,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10619",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27026,7 +26385,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10681",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27064,7 +26423,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12192",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "967",
                     "fields_entity_id": "123",
@@ -27102,7 +26461,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-18438",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27140,7 +26499,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-18439",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27178,7 +26537,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18447",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27216,7 +26575,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18448",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27254,7 +26613,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18940",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27292,7 +26651,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-19301",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27330,7 +26689,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-20489",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27374,7 +26733,7 @@
                 }
             ]
         },
-        "55": {
+        "53": {
             "grids_id": "628",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -27651,7 +27010,7 @@
             ],
             "actions": []
         },
-        "56": {
+        "54": {
             "grids_id": "678",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -27711,7 +27070,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12000",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27749,7 +27108,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12103",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27787,7 +27146,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12104",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27825,7 +27184,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13559",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "918",
                     "fields_entity_id": "121",
@@ -27852,7 +27211,7 @@
             ],
             "actions": []
         },
-        "57": {
+        "55": {
             "grids_id": "698",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -28091,7 +27450,7 @@
             ],
             "actions": []
         },
-        "58": {
+        "56": {
             "grids_id": "699",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -28325,7 +27684,7 @@
                 }
             ]
         },
-        "59": {
+        "57": {
             "grids_id": "701",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -28765,7 +28124,7 @@
                 }
             ]
         },
-        "62": {
+        "60": {
             "grids_id": "926",
             "grids_entity_id": "365",
             "grids_sub_grid_id": null,
@@ -28890,7 +28249,7 @@
             ],
             "actions": []
         },
-        "63": {
+        "61": {
             "grids_id": "986",
             "grids_entity_id": "401",
             "grids_sub_grid_id": null,
@@ -29357,7 +28716,7 @@
             ],
             "actions": []
         },
-        "64": {
+        "62": {
             "grids_id": "987",
             "grids_entity_id": "402",
             "grids_sub_grid_id": null,
@@ -29482,7 +28841,7 @@
             ],
             "actions": []
         },
-        "65": {
+        "63": {
             "grids_id": "988",
             "grids_entity_id": "403",
             "grids_sub_grid_id": null,
@@ -29607,7 +28966,7 @@
             ],
             "actions": []
         },
-        "66": {
+        "64": {
             "grids_id": "1050",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -30057,7 +29416,7 @@
                 }
             ]
         },
-        "67": {
+        "65": {
             "grids_id": "1053",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -30138,7 +29497,7 @@
                 }
             ]
         },
-        "68": {
+        "66": {
             "grids_id": "1054",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -30496,7 +29855,7 @@
                 }
             ]
         },
-        "69": {
+        "67": {
             "grids_id": "1110",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -30654,7 +30013,7 @@
                 }
             ]
         },
-        "72": {
+        "70": {
             "grids_id": "1123",
             "grids_entity_id": "488",
             "grids_sub_grid_id": null,
@@ -30855,7 +30214,7 @@
             ],
             "actions": []
         },
-        "74": {
+        "72": {
             "grids_id": "1142",
             "grids_entity_id": "500",
             "grids_sub_grid_id": null,
@@ -31051,7 +30410,7 @@
                 }
             ]
         },
-        "75": {
+        "73": {
             "grids_id": "1143",
             "grids_entity_id": "500",
             "grids_sub_grid_id": null,
@@ -31437,7 +30796,7 @@
                 }
             ]
         },
-        "76": {
+        "74": {
             "grids_id": "1144",
             "grids_entity_id": "501",
             "grids_sub_grid_id": null,
@@ -31485,7 +30844,7 @@
             "fields": [],
             "actions": []
         },
-        "77": {
+        "75": {
             "grids_id": "1146",
             "grids_entity_id": "501",
             "grids_sub_grid_id": null,
@@ -31589,7 +30948,7 @@
                 }
             ]
         },
-        "78": {
+        "76": {
             "grids_id": "1147",
             "grids_entity_id": "503",
             "grids_sub_grid_id": null,
@@ -31731,7 +31090,7 @@
                 }
             ]
         },
-        "80": {
+        "78": {
             "grids_id": "1149",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -32019,7 +31378,7 @@
                 }
             ]
         },
-        "83": {
+        "81": {
             "grids_id": "1155",
             "grids_entity_id": "505",
             "grids_sub_grid_id": null,
@@ -32079,7 +31438,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16199",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3706",
                     "fields_entity_id": "505",
@@ -32117,7 +31476,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16200",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3712",
                     "fields_entity_id": "505",
@@ -32155,7 +31514,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16201",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3713",
                     "fields_entity_id": "505",
@@ -32193,7 +31552,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16718",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3978",
                     "fields_entity_id": "505",
@@ -32231,7 +31590,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17055",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4098",
                     "fields_entity_id": "505",
@@ -32307,7 +31666,7 @@
                 }
             ]
         },
-        "84": {
+        "82": {
             "grids_id": "1156",
             "grids_entity_id": "505",
             "grids_sub_grid_id": null,
@@ -32367,7 +31726,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16202",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3706",
                     "fields_entity_id": "505",
@@ -32405,7 +31764,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16203",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3707",
                     "fields_entity_id": "505",
@@ -32443,7 +31802,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16204",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3708",
                     "fields_entity_id": "505",
@@ -32481,7 +31840,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16205",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3709",
                     "fields_entity_id": "505",
@@ -32519,7 +31878,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16206",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3710",
                     "fields_entity_id": "505",
@@ -32557,7 +31916,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16207",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3711",
                     "fields_entity_id": "505",
@@ -32595,7 +31954,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16208",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3712",
                     "fields_entity_id": "505",
@@ -32633,7 +31992,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16209",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3713",
                     "fields_entity_id": "505",
@@ -32693,7 +32052,7 @@
                 }
             ]
         },
-        "87": {
+        "85": {
             "grids_id": "1159",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -32753,7 +32112,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16235",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -32791,7 +32150,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16236",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -32829,7 +32188,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16237",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -32867,7 +32226,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16238",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -32927,7 +32286,7 @@
                 }
             ]
         },
-        "90": {
+        "88": {
             "grids_id": "1181",
             "grids_entity_id": "505",
             "grids_sub_grid_id": null,
@@ -32987,7 +32346,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16227",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3712",
                     "fields_entity_id": "505",
@@ -33025,7 +32384,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16228",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "921",
                     "fields_entity_id": "121",
@@ -33063,7 +32422,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16240",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -33101,7 +32460,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16241",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "925",
                     "fields_entity_id": "121",
@@ -33145,7 +32504,7 @@
                 }
             ]
         },
-        "91": {
+        "89": {
             "grids_id": "1188",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -33379,7 +32738,7 @@
                 }
             ]
         },
-        "92": {
+        "90": {
             "grids_id": "1254",
             "grids_entity_id": "548",
             "grids_sub_grid_id": null,
@@ -33439,7 +32798,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16984",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4050",
                     "fields_entity_id": "548",
@@ -33477,7 +32836,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16985",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4056",
                     "fields_entity_id": "548",
@@ -33515,7 +32874,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16986",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4057",
                     "fields_entity_id": "548",
@@ -33542,7 +32901,7 @@
             ],
             "actions": []
         },
-        "93": {
+        "91": {
             "grids_id": "1255",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -33602,7 +32961,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-16179",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -33640,7 +32999,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16414",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -33678,7 +33037,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-16993",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -33716,7 +33075,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17334",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -33754,7 +33113,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17335",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -33871,7 +33230,7 @@
                 }
             ]
         },
-        "94": {
+        "92": {
             "grids_id": "1257",
             "grids_entity_id": "550",
             "grids_sub_grid_id": null,
@@ -33919,7 +33278,7 @@
             "fields": [],
             "actions": []
         },
-        "95": {
+        "93": {
             "grids_id": "1262",
             "grids_entity_id": "505",
             "grids_sub_grid_id": null,
@@ -33979,7 +33338,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17067",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "917",
                     "fields_entity_id": "121",
@@ -34017,7 +33376,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17069",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -34055,7 +33414,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17070",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "918",
                     "fields_entity_id": "121",
@@ -34093,7 +33452,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17072",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "921",
                     "fields_entity_id": "121",
@@ -34131,7 +33490,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17075",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -34169,7 +33528,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17076",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -34229,7 +33588,7 @@
                 }
             ]
         },
-        "96": {
+        "94": {
             "grids_id": "1263",
             "grids_entity_id": "505",
             "grids_sub_grid_id": null,
@@ -34289,7 +33648,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17083",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "917",
                     "fields_entity_id": "121",
@@ -34327,7 +33686,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17084",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -34365,7 +33724,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17087",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -34403,7 +33762,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17158",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -34463,7 +33822,7 @@
                 }
             ]
         },
-        "97": {
+        "95": {
             "grids_id": "1264",
             "grids_entity_id": "553",
             "grids_sub_grid_id": null,
@@ -34511,7 +33870,7 @@
             "fields": [],
             "actions": []
         },
-        "98": {
+        "96": {
             "grids_id": "1311",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -34712,7 +34071,7 @@
             ],
             "actions": []
         },
-        "99": {
+        "97": {
             "grids_id": "1339",
             "grids_entity_id": "12",
             "grids_sub_grid_id": null,
@@ -34892,7 +34251,7 @@
                 }
             ]
         },
-        "100": {
+        "98": {
             "grids_id": "1347",
             "grids_entity_id": "589",
             "grids_sub_grid_id": null,
@@ -35093,7 +34452,7 @@
             ],
             "actions": []
         },
-        "101": {
+        "99": {
             "grids_id": "1389",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -35153,7 +34512,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10614",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -35191,7 +34550,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10617",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35229,7 +34588,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10618",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35267,7 +34626,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10619",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35305,7 +34664,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10681",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35343,7 +34702,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12192",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "967",
                     "fields_entity_id": "123",
@@ -35381,7 +34740,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-17978",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "922",
                     "fields_entity_id": "121",
@@ -35419,7 +34778,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18060",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1309",
                     "fields_entity_id": "131",
@@ -35463,7 +34822,7 @@
                 }
             ]
         },
-        "102": {
+        "100": {
             "grids_id": "1391",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -35523,7 +34882,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18320",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "917",
                     "fields_entity_id": "121",
@@ -35561,7 +34920,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18321",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "947",
                     "fields_entity_id": "123",
@@ -35599,7 +34958,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18322",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "949",
                     "fields_entity_id": "123",
@@ -35637,7 +34996,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18323",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35675,7 +35034,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18324",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "967",
                     "fields_entity_id": "123",
@@ -35713,7 +35072,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18326",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -35751,7 +35110,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18329",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "922",
                     "fields_entity_id": "121",
@@ -35789,7 +35148,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18332",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35827,7 +35186,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18339",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35865,7 +35224,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18341",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -35892,7 +35251,7 @@
             ],
             "actions": []
         },
-        "103": {
+        "101": {
             "grids_id": "1393",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -35952,7 +35311,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18345",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "917",
                     "fields_entity_id": "121",
@@ -35990,7 +35349,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18346",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "947",
                     "fields_entity_id": "123",
@@ -36028,7 +35387,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18347",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "949",
                     "fields_entity_id": "123",
@@ -36066,7 +35425,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18348",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36104,7 +35463,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18349",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "967",
                     "fields_entity_id": "123",
@@ -36142,7 +35501,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18350",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "930",
                     "fields_entity_id": "121",
@@ -36180,7 +35539,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18351",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "922",
                     "fields_entity_id": "121",
@@ -36218,7 +35577,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18352",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36256,7 +35615,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18353",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36294,7 +35653,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18354",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36321,7 +35680,7 @@
             ],
             "actions": []
         },
-        "104": {
+        "102": {
             "grids_id": "1395",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -36381,7 +35740,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18365",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "917",
                     "fields_entity_id": "121",
@@ -36419,7 +35778,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18371",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "922",
                     "fields_entity_id": "121",
@@ -36457,7 +35816,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18372",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36495,7 +35854,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18373",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36533,7 +35892,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18374",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36571,7 +35930,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18376",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -36598,7 +35957,7 @@
             ],
             "actions": []
         },
-        "105": {
+        "103": {
             "grids_id": "1399",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -36972,7 +36331,7 @@
                 }
             ]
         },
-        "107": {
+        "105": {
             "grids_id": "1556",
             "grids_entity_id": "131",
             "grids_sub_grid_id": "445",
@@ -37228,7 +36587,7 @@
                 }
             ]
         },
-        "108": {
+        "106": {
             "grids_id": "1634",
             "grids_entity_id": "548",
             "grids_sub_grid_id": null,
@@ -37288,7 +36647,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21835",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "980",
                     "fields_entity_id": "123",
@@ -37326,7 +36685,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21838",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37364,7 +36723,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21839",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37402,7 +36761,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21840",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37440,7 +36799,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21841",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37467,7 +36826,7 @@
             ],
             "actions": []
         },
-        "109": {
+        "107": {
             "grids_id": "1689",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -37527,7 +36886,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8856",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37565,7 +36924,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21933",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37603,7 +36962,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21934",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37641,7 +37000,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21935",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37679,7 +37038,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-22124",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37739,7 +37098,7 @@
                 }
             ]
         },
-        "110": {
+        "108": {
             "grids_id": "1691",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -37799,7 +37158,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8856",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37837,7 +37196,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21933",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37875,7 +37234,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21934",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37913,7 +37272,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21935",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -37951,7 +37310,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-22138",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38011,7 +37370,7 @@
                 }
             ]
         },
-        "111": {
+        "109": {
             "grids_id": "1692",
             "grids_entity_id": "121",
             "grids_sub_grid_id": null,
@@ -38071,7 +37430,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-8856",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38109,7 +37468,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21933",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38147,7 +37506,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21934",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38185,7 +37544,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-21935",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38223,7 +37582,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-22143",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38283,7 +37642,7 @@
                 }
             ]
         },
-        "112": {
+        "110": {
             "grids_id": "1693",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -38343,7 +37702,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-22150",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -38381,7 +37740,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-22153",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38419,7 +37778,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-22154",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38457,7 +37816,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-22155",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38495,7 +37854,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-22156",
-                    "grids_fields_module": "projects",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -38555,7 +37914,7 @@
                 }
             ]
         },
-        "114": {
+        "112": {
             "grids_id": "1699",
             "grids_entity_id": "737",
             "grids_sub_grid_id": null,
@@ -39055,7 +38414,7 @@
                 }
             ]
         },
-        "115": {
+        "113": {
             "grids_id": "1700",
             "grids_entity_id": "738",
             "grids_sub_grid_id": null,
@@ -39197,7 +38556,7 @@
                 }
             ]
         },
-        "116": {
+        "114": {
             "grids_id": "1701",
             "grids_entity_id": "739",
             "grids_sub_grid_id": null,
@@ -39339,7 +38698,7 @@
                 }
             ]
         },
-        "117": {
+        "115": {
             "grids_id": "1702",
             "grids_entity_id": "740",
             "grids_sub_grid_id": null,
@@ -40710,7 +40069,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_926",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40733,7 +40092,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_927",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40756,7 +40115,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_921",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40779,7 +40138,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_922",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40802,7 +40161,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_917",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40825,7 +40184,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_918",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40848,7 +40207,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_930",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40871,7 +40230,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_923",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40894,7 +40253,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_924",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40917,7 +40276,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_915",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40940,7 +40299,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_925",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40963,7 +40322,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_1787",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -40986,7 +40345,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2507",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41009,7 +40368,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2640",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41032,7 +40391,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2649",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41055,7 +40414,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2650",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41078,7 +40437,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2719",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41101,7 +40460,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2720",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41124,7 +40483,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_2765",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41147,7 +40506,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_3544",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41170,7 +40529,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_4397",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41193,7 +40552,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_4577",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41216,7 +40575,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_4698",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41239,7 +40598,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_4780",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41262,7 +40621,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1313_4782",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -41310,7 +40669,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1702_949",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41333,7 +40692,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1702_1011",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41356,7 +40715,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1702_947",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41379,7 +40738,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1702_980",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41402,7 +40761,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "magazzino-forms_fields-1702_967",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41425,7 +40784,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1702_932",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41448,7 +40807,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "magazzino-forms_fields-1702_1407",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -41471,7 +40830,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1702_4176",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -43444,7 +42803,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1845_949",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -43467,7 +42826,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1845_980",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -43490,7 +42849,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1845_957",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -43513,7 +42872,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1845_932",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -43536,7 +42895,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1845_1113",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -43559,7 +42918,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1845_3248",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -46149,7 +45508,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "projects-forms_fields-2323_3712",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -46172,7 +45531,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "projects-forms_fields-2323_3713",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -46195,7 +45554,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "projects-forms_fields-2323_3978",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -46218,7 +45577,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2323_4098",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -46266,7 +45625,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "projects-forms_fields-2324_921",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -46987,7 +46346,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2392_4056",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47010,7 +46369,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2392_4057",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -47530,7 +46889,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1702_949",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47553,7 +46912,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1702_1011",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47576,7 +46935,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1702_947",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47599,7 +46958,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2500_932",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -47647,7 +47006,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2502_921",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47670,7 +47029,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2502_932",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47693,7 +47052,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2502_949",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47716,7 +47075,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2502_1011",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47739,7 +47098,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2502_947",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47762,7 +47121,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2502_967",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -47785,7 +47144,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2502_980",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -47998,7 +47357,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "projects-forms_fields-2736_932",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -48021,7 +47380,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "projects-forms_fields-2736_980",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -48044,7 +47403,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "projects-forms_fields-2736_5535",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -48067,7 +47426,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "projects-forms_fields-2736_949",
-                    "forms_fields_module": "projects",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -49228,25 +48587,6 @@
             "conditions": []
         },
         "34": {
-            "layouts_id": "851",
-            "layouts_title": "Projects billable",
-            "layouts_subtitle": "",
-            "layouts_is_entity_detail": "0",
-            "layouts_entity_id": null,
-            "layouts_fullscreen": "0",
-            "layouts_pdf": "0",
-            "layouts_dashboardable": "0",
-            "layouts_cachable": "0",
-            "layouts_identifier": "",
-            "layouts_module": "projects",
-            "layouts_module_key": "projects-layout-851",
-            "layouts_show_header": "1",
-            "layouts_ajax_allowed": "1",
-            "layouts_settings": "0",
-            "layouts_is_public": "0",
-            "conditions": []
-        },
-        "35": {
             "layouts_id": "852",
             "layouts_title": "Tasks billable",
             "layouts_subtitle": "",
@@ -49265,7 +48605,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "36": {
+        "35": {
             "layouts_id": "869",
             "layouts_title": "Stampa etichetta",
             "layouts_subtitle": "",
@@ -49284,7 +48624,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "37": {
+        "36": {
             "layouts_id": "873",
             "layouts_title": "Projects - Sublayout List",
             "layouts_subtitle": "",
@@ -49303,7 +48643,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "38": {
+        "37": {
             "layouts_id": "1019",
             "layouts_title": "Sub - analisi commesse ",
             "layouts_subtitle": "",
@@ -49322,7 +48662,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "39": {
+        "38": {
             "layouts_id": "1126",
             "layouts_title": "*** sub *** Commessa {projects_name}: Ordini e fatture",
             "layouts_subtitle": "",
@@ -49341,7 +48681,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "40": {
+        "39": {
             "layouts_id": "1127",
             "layouts_title": "*** sub *** Commessa {projects_name}: Project's documents",
             "layouts_subtitle": "",
@@ -49369,7 +48709,7 @@
                 "conditions_action": "1"
             }
         },
-        "41": {
+        "40": {
             "layouts_id": "1133",
             "layouts_title": "projects orari",
             "layouts_subtitle": "",
@@ -49397,7 +48737,7 @@
                 "conditions_action": "1"
             }
         },
-        "42": {
+        "41": {
             "layouts_id": "120",
             "layouts_title": "Dettaglio prodotto",
             "layouts_subtitle": "",
@@ -49416,7 +48756,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "43": {
+        "42": {
             "layouts_id": "121",
             "layouts_title": "New product",
             "layouts_subtitle": "",
@@ -49435,7 +48775,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "44": {
+        "43": {
             "layouts_id": "141",
             "layouts_title": "Barcode prodotto",
             "layouts_subtitle": "",
@@ -49454,7 +48794,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "45": {
+        "44": {
             "layouts_id": "689",
             "layouts_title": "projects items",
             "layouts_subtitle": null,
@@ -49473,7 +48813,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "46": {
+        "45": {
             "layouts_id": "24",
             "layouts_title": "Task #{tasks_id}: {tasks_title}",
             "layouts_subtitle": "",
@@ -49492,7 +48832,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "89": {
+        "87": {
             "layouts_id": "282",
             "layouts_title": "Gantt",
             "layouts_subtitle": "",
@@ -49520,7 +48860,7 @@
                 "conditions_action": "1"
             }
         },
-        "90": {
+        "88": {
             "layouts_id": "238",
             "layouts_title": "Project Sublayout - Task",
             "layouts_subtitle": "",
@@ -49548,7 +48888,7 @@
                 "conditions_action": "1"
             }
         },
-        "91": {
+        "89": {
             "layouts_id": "239",
             "layouts_title": "Project Sublayout - Tasks Planner",
             "layouts_subtitle": "",
@@ -49576,7 +48916,7 @@
                 "conditions_action": "1"
             }
         },
-        "92": {
+        "90": {
             "layouts_id": "241",
             "layouts_title": "Project Sublayout - Gantt",
             "layouts_subtitle": "",
@@ -49604,7 +48944,7 @@
                 "conditions_action": "1"
             }
         },
-        "93": {
+        "91": {
             "layouts_id": "242",
             "layouts_title": "Project Sublayout - Timesheet",
             "layouts_subtitle": "",
@@ -49632,7 +48972,7 @@
                 "conditions_action": "1"
             }
         },
-        "94": {
+        "92": {
             "layouts_id": "244",
             "layouts_title": "Project Sublayout - Billable Hours",
             "layouts_subtitle": "",
@@ -49660,7 +49000,7 @@
                 "conditions_action": "1"
             }
         },
-        "95": {
+        "93": {
             "layouts_id": "245",
             "layouts_title": "Project Sublayout - Tickets",
             "layouts_subtitle": "",
@@ -49688,7 +49028,7 @@
                 "conditions_action": "1"
             }
         },
-        "96": {
+        "94": {
             "layouts_id": "247",
             "layouts_title": "Project Sublayout - Tickets Reports",
             "layouts_subtitle": "",
@@ -49716,7 +49056,7 @@
                 "conditions_action": "1"
             }
         },
-        "97": {
+        "95": {
             "layouts_id": "443",
             "layouts_title": "Project Sublayout - Tasks Attachments",
             "layouts_subtitle": "",
@@ -49744,7 +49084,7 @@
                 "conditions_action": "1"
             }
         },
-        "98": {
+        "96": {
             "layouts_id": "733",
             "layouts_title": "Commessa Sublayout - Appuntamenti squadre",
             "layouts_subtitle": "",
@@ -49772,7 +49112,7 @@
                 "conditions_action": "1"
             }
         },
-        "99": {
+        "97": {
             "layouts_id": "821",
             "layouts_title": "Presenze commessa",
             "layouts_subtitle": "",
@@ -49800,7 +49140,7 @@
                 "conditions_action": "1"
             }
         },
-        "100": {
+        "98": {
             "layouts_id": "941",
             "layouts_title": "Le mie task",
             "layouts_subtitle": "",
@@ -49828,7 +49168,7 @@
                 "conditions_action": "1"
             }
         },
-        "101": {
+        "99": {
             "layouts_id": "16",
             "layouts_title": "milestones",
             "layouts_subtitle": null,
@@ -49847,7 +49187,26 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "102": {
+        "100": {
+            "layouts_id": "851",
+            "layouts_title": "Projects billable",
+            "layouts_subtitle": "",
+            "layouts_is_entity_detail": "0",
+            "layouts_entity_id": null,
+            "layouts_fullscreen": "0",
+            "layouts_pdf": "0",
+            "layouts_dashboardable": "0",
+            "layouts_cachable": "0",
+            "layouts_identifier": "",
+            "layouts_module": "billable-hours",
+            "layouts_module_key": "projects-layout-851",
+            "layouts_show_header": "1",
+            "layouts_ajax_allowed": "1",
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
+        },
+        "101": {
             "layouts_id": "755",
             "layouts_title": "Sublayout Project - Lead Message",
             "layouts_subtitle": "",
@@ -49866,7 +49225,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "103": {
+        "102": {
             "layouts_id": "740",
             "layouts_title": "Project Sublayout - Lead Messages",
             "layouts_subtitle": "",
@@ -49885,7 +49244,7 @@
             "layouts_is_public": "0",
             "conditions": []
         },
-        "104": {
+        "103": {
             "layouts_id": "681",
             "layouts_title": "Vendite",
             "layouts_subtitle": "",
@@ -49913,7 +49272,7 @@
                 "conditions_action": "1"
             }
         },
-        "105": {
+        "104": {
             "layouts_id": "683",
             "layouts_title": "Acquisti",
             "layouts_subtitle": "",
@@ -49941,7 +49300,7 @@
                 "conditions_action": "1"
             }
         },
-        "106": {
+        "105": {
             "layouts_id": "1128",
             "layouts_title": "Project Sublayout - Payments",
             "layouts_subtitle": "",

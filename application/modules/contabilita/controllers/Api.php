@@ -85,6 +85,7 @@ class Api extends MY_Controller {
             'stato' => array_get($post, 'stato', 1),
             'serie' => array_get($post, 'serie', 1),
             'valuta' => array_get($post, 'valuta', 'EUR'),
+            'agente' => array_get($post, 'agente', null),
         ];
         
         if (!empty($post['articoli'])) {

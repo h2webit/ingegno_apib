@@ -53,7 +53,7 @@ $this->load->model('projects/projects');
 
 <!--------- Saldo ore ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_billable_balance'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_billable_balance']) && $ingegno_settings['enable_top_counters_billable_balance'] == DB_BOOL_TRUE): ?>
     <?php $billable_hours_balance = $this->projects->get_billable_hours_balance($value_id); ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
@@ -68,9 +68,46 @@ $this->load->model('projects/projects');
     </div>
 <?php endif; ?>
 
+<!--------- ore stimate progetto ------------>
+
+<?php if (!empty($ingegno_settings['enable_top_counters_eta']) && $ingegno_settings['enable_top_counters_eta'] == DB_BOOL_TRUE): ?>
+    <?php $estimated_hours = $this->projects->get_estimated_hours($value_id); ?>
+    <div class="col-xs-2">
+        <div class="conteggi_info">
+            <div class="conteggio_info">
+                <span class="conteggio_label"><i class="fas fa-balance-scale"></i> ETA</span>
+            </div>
+            <div class="conteggio_info">
+                <span class="conteggio_counter blue">
+                    <?php e_money($estimated_hours); ?> </span>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<!--------- % ore stimate lavorate ------------>
+<?php if (!empty($ingegno_settings['enable_top_counters_eta_perc']) && $ingegno_settings['enable_top_counters_eta_perc'] == DB_BOOL_TRUE): ?>
+    <?php
+    $estimated_hours = $this->projects->get_estimated_hours($value_id);
+    $worked_hours = $this->projects->get_eta_worked($value_id);
+    $percentage = ($estimated_hours > 0) ? ($worked_hours / $estimated_hours) * 100 : 0;
+    ?>
+    <div class="col-xs-2">
+        <div class="conteggi_info">
+            <div class="conteggio_info">
+                <span class="conteggio_label"><i class="fas fa-percentage"></i> Stimate lavorate</span>
+            </div>
+            <div class="conteggio_info">
+                <span class="conteggio_counter blue">
+                    <?php echo number_format($percentage, 0); ?>% </span>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <!--------- Ore interventi ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_interventi_hours'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_interventi_hours']) && $ingegno_settings['enable_top_counters_interventi_hours'] == DB_BOOL_TRUE): ?>
     <?php $interventi_hours = $this->projects->get_interventi_hours($value_id); ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
@@ -83,7 +120,7 @@ $this->load->model('projects/projects');
             </div>
         </div>
     </div>
-
+    
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -100,7 +137,7 @@ $this->load->model('projects/projects');
 
 <!--------- Timesheet ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_timesheet'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_timesheet']) && $ingegno_settings['enable_top_counters_timesheet'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -116,7 +153,7 @@ $this->load->model('projects/projects');
 
 <!--------- € Timesheet ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_timesheet_costo'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_timesheet_costo']) && $ingegno_settings['enable_top_counters_timesheet_costo'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -132,7 +169,7 @@ $this->load->model('projects/projects');
 
 <!--------- Timesheet ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_spese'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_spese']) && $ingegno_settings['enable_top_counters_spese'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -148,7 +185,8 @@ $this->load->model('projects/projects');
 
 <!--------- Progress task ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_progress_task'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_progress_task']) && $ingegno_settings['enable_top_counters_progress_task'] == DB_BOOL_TRUE): ?>
+    <?php $progress_task = $this->projects->get_progress_task($value_id); ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -156,7 +194,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter blue">
-                    <?php echo number_format($this->projects->get_progress_task($value_id), 0); ?>% </span>
+                    <?php echo number_format($progress_task, 0); ?>% </span>
             </div>
         </div>
     </div>
@@ -164,7 +202,8 @@ $this->load->model('projects/projects');
 
 <!--------- Ordini cliente ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_ordini_cliente']) && $ingegno_settings['enable_top_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+    <?php $ordini_cliente = $this->projects->get_project_orders($value_id)['ordini_cliente']; ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -172,16 +211,17 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_cliente']); ?> </span>
+                    € <?php e_money($ordini_cliente); ?> </span>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
 
-<!--------- Ordini cliente ------------>
+<!--------- Ordini fornitore ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_ordini_fornitore'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_ordini_fornitore']) && $ingegno_settings['enable_top_counters_ordini_fornitore'] == DB_BOOL_TRUE): ?>
+    <?php $ordini_fornitore = $this->projects->get_project_orders($value_id)['ordini_fornitore']; ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -189,15 +229,16 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter red">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_fornitore']); ?> </span>
+                    € <?php e_money($ordini_fornitore); ?> </span>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
-<!--------- Ordini cliente ------------>
+<!--------- Fatturato ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_ordini_cliente']) && $ingegno_settings['enable_top_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+    <?php $fatturato = $this->projects->get_project_orders($value_id)['fatturato']; ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -205,7 +246,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php echo $this->projects->get_project_orders($value_id)['fatturato']; ?> </span>
+                    € <?php echo $fatturato; ?> </span>
             </div>
         </div>
     </div>
@@ -213,7 +254,8 @@ $this->load->model('projects/projects');
 
 <!--------- Pagamenti totali ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_totale_pagamenti'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_totale_pagamenti']) && $ingegno_settings['enable_top_counters_totale_pagamenti'] == DB_BOOL_TRUE): ?>
+    <?php $total_payments = $this->projects->get_project_total_payments($value_id)['all']; ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -221,15 +263,16 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_total_payments($value_id)['all']); ?> </span>
+                    € <?php e_money($total_payments); ?> </span>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
-<!--------- Pagamenti totali ------------>
+<!--------- Pagamenti non saldati ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_pagamenti_non_saldati'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_pagamenti_non_saldati']) && $ingegno_settings['enable_top_counters_pagamenti_non_saldati'] == DB_BOOL_TRUE): ?>
+    <?php $non_pagato = $this->projects->get_project_total_payments($value_id)['non_pagato']; ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -237,7 +280,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter red">
-                    € <?php e_money($this->projects->get_project_total_payments($value_id)['non_pagato']); ?> </span>
+                    € <?php e_money($non_pagato); ?> </span>
             </div>
         </div>
     </div>
@@ -245,7 +288,11 @@ $this->load->model('projects/projects');
 
 <!--------- MOL ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_mol_fatturato'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_mol_fatturato']) && $ingegno_settings['enable_top_counters_mol_fatturato'] == DB_BOOL_TRUE): ?>
+    <?php
+    $fatturato_percentage = $this->projects->get_project_mol($value_id)['fatturato_percentage'];
+    $fatturato_percentage = ($fatturato_percentage !== null) ? $fatturato_percentage : 0;
+    ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -253,7 +300,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter blue">
-                    <?php e_money($this->projects->get_project_mol($value_id)['fatturato_percentage']); ?>% </span>
+                    <?php e_money($fatturato_percentage); ?>% </span>
             </div>
         </div>
     </div>
@@ -261,7 +308,11 @@ $this->load->model('projects/projects');
 
 <!--------- MOL ------------>
 
-<?php if ($ingegno_settings['enable_top_counters_mol_ordinato'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_mol_ordinato']) && $ingegno_settings['enable_top_counters_mol_ordinato'] == DB_BOOL_TRUE): ?>
+    <?php
+    $ordinato_percentage = $this->projects->get_project_mol($value_id)['ordinato_percentage'];
+    $ordinato_percentage = ($ordinato_percentage !== null) ? $ordinato_percentage : 0;
+    ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -269,7 +320,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter blue">
-                    <?php e_money($this->projects->get_project_mol($value_id)['ordinato_percentage']); ?>% </span>
+                    <?php e_money($ordinato_percentage); ?>% </span>
             </div>
         </div>
     </div>
