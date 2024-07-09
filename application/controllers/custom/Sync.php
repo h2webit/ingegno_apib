@@ -21,7 +21,7 @@ class Sync extends MY_Controller
     
     private function apib_db_connect() {
         //Mi connetto al db postgres
-        $db['crm_postgres']['hostname'] = ($_SERVER['SERVER_NAME'] == 'apib.ingegnosuite.it') ? 'localhost' : "crm.apibinfermieribologna.com"; // Cambiare per testare in linea
+        $db['crm_postgres']['hostname'] = "crm.apibinfermieribologna.com"; // Cambiare per testare in linea
         $db['crm_postgres']['database'] = 'mastercrm_apib';
         $db['crm_postgres']['username'] = 'mastercrm_apib';
         $db['crm_postgres']['password'] = 'Djf93MN@VZZF215';
