@@ -99,7 +99,7 @@ class Sync extends MY_Controller
     public function migrate_dati() {
         $this->import_associati();
         $this->import_clienti();
-        $this->import_sedi()();
+        $this->import_sedi();
         $this->import_orari();
         $this->import_pagamenti();
     }
@@ -367,6 +367,34 @@ class Sync extends MY_Controller
             
         }
         
+        $this->mycache->clearCache();
+    }
+    
+    public function import_sedi_operative_associati() {
+        $sedi_operative_associati = $this->apib_db->get('sedi_operative_associati')->result_array();
+        
+        $this->db->query('DELETE FROM project_members');
+        $this->mycache->clearCache();
+        
+        $c = 0;
+        $t = count($sedi_operative_associati);
+        foreach ($sedi_operative_associati as $sede_op) {
+            $project = $this->db->get_where('projects', ['projects_customer_address' => $sede_op['sedi_operative_id']])->row_array();
+            $dipendente = $this->db->get_where('dipendenti', ['dipendenti_id' => $sede_op['associati_id']])->row_array();
+            
+            if (!$project || !$dipendente) {
+                echo_flush("project o dipendente non trovato<br/>", '<br/>');
+                progress(++$c, $t);
+                continue;
+            }
+            
+            $this->db->insert('project_members', [
+                'projects_id' => $project['projects_id'],
+                'users_id' => $dipendente['dipendenti_user_id'],
+            ]);
+            
+            progress(++$c, $t);
+        }
         $this->mycache->clearCache();
     }
 
