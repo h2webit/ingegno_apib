@@ -102,11 +102,12 @@ class Sync extends MY_Controller
         $this->import_sedi();
         $this->import_orari();
         $this->import_pagamenti();
+        $this->import_sedi_operative_associati();
     }
     
     public function import_associati() {
         set_log_scope('sync-associati');
-        $associati = $this->apib_db->join('utenti', 'utenti_id = associati_utente', 'LEFT')->where('associati_deleted <> ', 't')->get('associati')->result_array();
+        $associati = $this->apib_db->join('utenti', 'utenti_id = associati_utente', 'LEFT')->where("associati_deleted <> 't' OR associati_deleted IS NULL ", null, false)->get('associati')->result_array();
         //debug($associati,true);
         $t = count($associati);
         $c = 0;
@@ -168,6 +169,11 @@ class Sync extends MY_Controller
                 'dipendenti_modified_date' => $associato['associati_data_modifica'],
                 
             ];
+
+if ($associato['associati_id'] == 727) {
+                debug($dipendente,true);
+}
+
             //Tutti i campi che non esistono mappati su $dipendente ma che esistono su $associato, li salvo sul json dipendenti_altri_dati
             foreach ($associato as $key => $value) {
                 $key = str_replace('associati_', 'dipendenti_', $key);
@@ -379,12 +385,18 @@ class Sync extends MY_Controller
         $c = 0;
         $t = count($sedi_operative_associati);
         foreach ($sedi_operative_associati as $sede_op) {
-            $project = $this->db->get_where('projects', ['projects_customer_address' => $sede_op['sedi_operative_id']])->row_array();
+            progress(++$c, $t);
+            $project = $this->db->get_where('projects', ['projects_id' => $sede_op['sedi_operative_id']])->row_array();
             $dipendente = $this->db->get_where('dipendenti', ['dipendenti_id' => $sede_op['associati_id']])->row_array();
             
-            if (!$project || !$dipendente) {
-                echo_flush("project o dipendente non trovato<br/>", '<br/>');
-                progress(++$c, $t);
+            if (!$project) {
+                echo_flush("project non trovato<br/>", '<br/>');
+                
+                continue;
+            }
+            if (!$dipendente) {
+                echo_flush("dipendente '{$sede_op['associati_id']}' non trovato<br/>", '<br/>');
+                
                 continue;
             }
             
@@ -393,7 +405,7 @@ class Sync extends MY_Controller
                 'users_id' => $dipendente['dipendenti_user_id'],
             ]);
             
-            progress(++$c, $t);
+            
         }
         $this->mycache->clearCache();
     }
