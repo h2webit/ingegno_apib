@@ -172,7 +172,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_cliente']); ?> </span>
+                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_cliente'], 0); ?> </span>
             </div>
         </div>
     </div>
@@ -189,15 +189,15 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter red">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_fornitore']); ?> </span>
+                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_fornitore'], 0); ?> </span>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
-<!--------- Ordini cliente ------------>
+<!--------- Fatturato ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+<?php if ($ingegno_settings['enable_big_counters_fatturato'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -205,7 +205,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['fatturato']); ?> </span>
+                    € <?php e_money($this->projects->get_project_orders($value_id)['fatturato'], 0); ?> </span>
             </div>
         </div>
     </div>
@@ -221,7 +221,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_total_payments($value_id)['all']); ?> </span>
+                    € <?php e_money($this->projects->get_project_total_payments($value_id)['all'], 0); ?> </span>
             </div>
         </div>
     </div>
@@ -237,7 +237,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter red">
-                    € <?php e_money($this->projects->get_project_total_payments($value_id)['non_pagato']); ?> </span>
+                    € <?php e_money($this->projects->get_project_total_payments($value_id)['non_pagato'], 0); ?> </span>
             </div>
         </div>
     </div>

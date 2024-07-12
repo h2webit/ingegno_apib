@@ -35,7 +35,7 @@ foreach ($filtro_fatture as $field_id => $filtro) {
                 break;
             default:
                 //if ($value) {
-                    $where_payments[] = "($field_name = '$value')";
+                $where_payments[] = "($field_name = '$value')";
                 //}
                 break;
         }
@@ -64,14 +64,41 @@ while ($current_date <= $end_date) {
     $current_date->modify('first day of next month');
 }
 
-// Prendo solo i clienti che hanno pagamenti in base al filtro $where_payments
-$clienti = $this->db->query("SELECT customers_id, customers_full_name, customers_notes FROM customers WHERE customers_id IN (SELECT payments_customer FROM payments WHERE payments_customer IS NOT NULL AND $where_payments_str)")->result_array();
+$raggruppa = isset($_GET['raggruppa']) && $_GET['raggruppa'] == 1;
 
+// Prendo solo i clienti che hanno pagamenti in base al filtro $where_payments
+$clienti_query = "
+    SELECT 
+        c.customers_id, 
+        c.customers_full_name, 
+        c.customers_notes, 
+        p.payments_centro_costo_ricavo,
+        
+        CASE 
+            WHEN p.payments_centro_costo_ricavo = '' OR p.payments_centro_costo_ricavo IS NULL THEN 'non definito' 
+            ELSE cc.centri_di_costo_ricavo_nome 
+        END AS centri_di_costo_ricavo_nome
+    FROM customers c
+    JOIN payments p ON c.customers_id = p.payments_customer
+    LEFT JOIN centri_di_costo_ricavo cc ON p.payments_centro_costo_ricavo = cc.centri_di_costo_ricavo_id
+    WHERE p.payments_customer IS NOT NULL AND $where_payments_str
+    GROUP BY " . ($raggruppa ? "p.payments_centro_costo_ricavo, " : "") . "c.customers_id
+    ORDER BY " . ($raggruppa ? "p.payments_centro_costo_ricavo, " : "") . "c.customers_full_name
+";
+
+$clienti = $this->db->query($clienti_query)->result_array();
+//debug($clienti,true);
 
 // Estraggo tutti i pagamenti filtrati e aggrego i dati con una sola query
 $payments = $this->db->query("
     SELECT
         p.payments_customer,
+         p.payments_centro_costo_ricavo,
+        
+        CASE 
+            WHEN p.payments_centro_costo_ricavo = '' OR p.payments_centro_costo_ricavo IS NULL THEN 'non definito' 
+            ELSE cc.centri_di_costo_ricavo_nome 
+        END AS centri_di_costo_ricavo_nome,
         DATE_FORMAT(p.payments_date, '%Y-%m') as payment_month,
         SUM(p.payments_amount) as total_amount,
         SUM(CASE WHEN p.payments_invoice_sent = 1 THEN p.payments_amount ELSE 0 END) as fatturato,
@@ -80,14 +107,18 @@ $payments = $this->db->query("
         SUM(CASE WHEN p.payments_paid <> 1 THEN p.payments_amount ELSE 0 END) as da_incassare,
         MAX(p.payments_date) as last_payment_date
     FROM payments p
+    LEFT JOIN centri_di_costo_ricavo cc ON p.payments_centro_costo_ricavo = cc.centri_di_costo_ricavo_id
     WHERE $where_payments_str
-    GROUP BY p.payments_customer, payment_month
+    GROUP BY p.payments_customer, p.payments_centro_costo_ricavo, payment_month
 ")->result_array();
 //debug($payments,true);
+
 // Preparo i totali per ciascun cliente e mese
 $totals = [];
 foreach ($payments as $payment) {
     $customer_id = $payment['payments_customer'];
+    $centro_costo = $raggruppa?$payment['payments_centro_costo_ricavo']:'non definito';
+    
     $payment_month = $payment['payment_month'] . '-01'; // Rende la data al primo giorno del mese per uniformità
     $total_amount = $payment['total_amount'];
     $fatturato = $payment['fatturato'];
@@ -99,36 +130,37 @@ foreach ($payments as $payment) {
     // Trova l'ultimo giorno del mese per la data di pagamento
     $last_day_of_month = (new DateTime($payment_month))->format('Y-m-t');
 
-    if (!isset($totals[$customer_id])) {
-        $totals[$customer_id] = ['importo' => 0, 'fatturato' => 0, 'da_fatturare' => 0, 'incassato' => 0, 'da_incassare' => 0, 'da_fatturare' => 0];
+    if (!isset($totals[$centro_costo][$customer_id])) {
+        $totals[$centro_costo][$customer_id] = ['importo' => 0, 'fatturato' => 0, 'da_fatturare' => 0, 'incassato' => 0, 'da_incassare' => 0, 'da_fatturare' => 0];
     }
 
-    if (!isset($totals[$customer_id][$last_day_of_month])) {
-        $totals[$customer_id][$last_day_of_month] = ['total_amount' => 0, 'incassato' => 0, 'da_incassare' => 0, 'last_payment_date' => $last_payment_date, 'da_fatturare' => 0, 'fatturato' => 0];
+    if (!isset($totals[$centro_costo][$customer_id][$last_day_of_month])) {
+        $totals[$centro_costo][$customer_id][$last_day_of_month] = ['total_amount' => 0, 'incassato' => 0, 'da_incassare' => 0, 'last_payment_date' => $last_payment_date, 'da_fatturare' => 0, 'fatturato' => 0];
     }
 
-    $totals[$customer_id]['importo'] += $total_amount;
-    $totals[$customer_id]['fatturato'] += $fatturato;
-    $totals[$customer_id]['da_fatturare'] += $da_fatturare;
-    $totals[$customer_id]['incassato'] += $incassato;
-    $totals[$customer_id]['da_incassare'] += $da_incassare;
+    $totals[$centro_costo][$customer_id]['importo'] += $total_amount;
+    $totals[$centro_costo][$customer_id]['fatturato'] += $fatturato;
+    $totals[$centro_costo][$customer_id]['da_fatturare'] += $da_fatturare;
+    $totals[$centro_costo][$customer_id]['incassato'] += $incassato;
+    $totals[$centro_costo][$customer_id]['da_incassare'] += $da_incassare;
 
-    $totals[$customer_id][$last_day_of_month]['total_amount'] += $total_amount;
-    $totals[$customer_id][$last_day_of_month]['incassato'] += $incassato;
-    $totals[$customer_id][$last_day_of_month]['da_incassare'] += $da_incassare;
-    $totals[$customer_id][$last_day_of_month]['da_fatturare'] += $da_fatturare;
-    $totals[$customer_id][$last_day_of_month]['fatturato'] += $fatturato;
-    $totals[$customer_id][$last_day_of_month]['last_payment_date'] = $last_payment_date;
+    $totals[$centro_costo][$customer_id][$last_day_of_month]['total_amount'] += $total_amount;
+    $totals[$centro_costo][$customer_id][$last_day_of_month]['incassato'] += $incassato;
+    $totals[$centro_costo][$customer_id][$last_day_of_month]['da_incassare'] += $da_incassare;
+    $totals[$centro_costo][$customer_id][$last_day_of_month]['da_fatturare'] += $da_fatturare;
+    $totals[$centro_costo][$customer_id][$last_day_of_month]['fatturato'] += $fatturato;
+    $totals[$centro_costo][$customer_id][$last_day_of_month]['last_payment_date'] = $last_payment_date;
 }
 
 // Mi calcolo i vari totali e li metto nell'array $clienti, divisi per periodo di riferimento (mese)
 foreach ($clienti as &$cliente_ref) {
     $cliente_id = $cliente_ref['customers_id'];
-    $cliente_ref['importo'] = isset($totals[$cliente_id]['importo']) ? $totals[$cliente_id]['importo'] : 0;
-    $cliente_ref['fatturato'] = isset($totals[$cliente_id]['fatturato']) ? $totals[$cliente_id]['fatturato'] : 0;
-    $cliente_ref['da_fatturare'] = isset($totals[$cliente_id]['da_fatturare']) ? $totals[$cliente_id]['da_fatturare'] : 0;
-    $cliente_ref['incassato'] = isset($totals[$cliente_id]['incassato']) ? $totals[$cliente_id]['incassato'] : 0;
-    $cliente_ref['da_incassare'] = isset($totals[$cliente_id]['da_incassare']) ? $totals[$cliente_id]['da_incassare'] : 0;
+    $centro_costo = $raggruppa?$cliente_ref['payments_centro_costo_ricavo']:'non definito';
+    $cliente_ref['importo'] = isset($totals[$centro_costo][$cliente_id]['importo']) ? $totals[$centro_costo][$cliente_id]['importo'] : 0;
+    $cliente_ref['fatturato'] = isset($totals[$centro_costo][$cliente_id]['fatturato']) ? $totals[$centro_costo][$cliente_id]['fatturato'] : 0;
+    $cliente_ref['da_fatturare'] = isset($totals[$centro_costo][$cliente_id]['da_fatturare']) ? $totals[$centro_costo][$cliente_id]['da_fatturare'] : 0;
+    $cliente_ref['incassato'] = isset($totals[$centro_costo][$cliente_id]['incassato']) ? $totals[$centro_costo][$cliente_id]['incassato'] : 0;
+    $cliente_ref['da_incassare'] = isset($totals[$centro_costo][$cliente_id]['da_incassare']) ? $totals[$centro_costo][$cliente_id]['da_incassare'] : 0;
 }
 //debug($clienti,true);
 // Calcola i totali complessivi per tutte le colonne
@@ -140,6 +172,7 @@ $total_da_incassare = 0;
 $total_monthly = array_fill_keys(array_keys($data), 0);
 
 foreach ($clienti as $cliente) {
+    $centro_costo = $raggruppa ? $cliente['payments_centro_costo_ricavo'] : 'non definito';
     $total_importo += $cliente['importo'];
     $total_fatturato += $cliente['fatturato'];
     $total_da_fatturare += $cliente['da_fatturare'];
@@ -147,8 +180,8 @@ foreach ($clienti as $cliente) {
     $total_da_incassare += $cliente['da_incassare'];
 
     foreach (array_keys($data) as $fine_mese) {
-        if (isset($totals[$cliente['customers_id']][$fine_mese]['total_amount'])) {
-            $total_monthly[$fine_mese] += $totals[$cliente['customers_id']][$fine_mese]['total_amount'];
+        if (isset($totals[$centro_costo][$cliente['customers_id']][$fine_mese]['total_amount'])) {
+            $total_monthly[$fine_mese] += $totals[$centro_costo][$cliente['customers_id']][$fine_mese]['total_amount'];
         }
     }
 }
@@ -156,33 +189,34 @@ foreach ($clienti as $cliente) {
 ?>
 
 <style>
-     .incassato {
+    .incassato {
         background-color: green;
-     }
-   .parziale {
+    }
+
+    .parziale {
         background-color: #eeee65;
         color: black;
     }
+
     .non-fatturato-incassato {
-        background: repeating-linear-gradient(
-            45deg,
-            rgba(0, 128, 0, 0.5),  /* Verde trasparente */
-            rgba(0, 128, 0, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 12px
-        );
+        background: repeating-linear-gradient(45deg,
+                rgba(0, 128, 0, 0.5),
+                /* Verde trasparente */
+                rgba(0, 128, 0, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 12px);
     }
+
     .non-fatturato-non-incassato {
-        background: repeating-linear-gradient(
-            45deg,
-            #b73333,  /* Rosso trasparente */
-            #b73333 10px,
-            rgba(240, 240, 240, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 12px
-        );
+        background: repeating-linear-gradient(45deg,
+                #b73333,
+                /* Rosso trasparente */
+                #b73333 10px,
+                rgba(240, 240, 240, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 12px);
         color: white;
     }
-    
+
     .non-incassato {
         background-color: #b73333;
         color: white;
@@ -200,8 +234,18 @@ foreach ($clienti as $cliente) {
         white-space: nowrap;
     }
 
-    .js_open_modale_pagamenti,.js_open_modale_pagamenti_all {
+    .js_open_modale_pagamenti,
+    .js_open_modale_nuovo_pagamento,
+    .js_open_modale_pagamenti_all {
         cursor: pointer;
+    }
+
+    .js_open_modale_nuovo_pagamento:hover {
+        background-color: powderblue;
+    }
+
+    .js_open_modale_nuovo_pagamento:hover:after {
+        content: 'Nuovo'
     }
 
     .progress-bar {
@@ -232,6 +276,7 @@ foreach ($clienti as $cliente) {
     td.no-padding {
         padding: 0 !important;
     }
+
     .legend {
         display: flex;
         margin-bottom: 15px;
@@ -262,32 +307,47 @@ foreach ($clienti as $cliente) {
         background-color: #f0f0f0;
         border: 1px solid black;
     }
+
     .legend-color.non-fatturato-incassato {
-        background: repeating-linear-gradient(
-            45deg,
-            rgba(0, 128, 0, 0.5),
-            rgba(0, 128, 0, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 12px
-        );
+        background: repeating-linear-gradient(45deg,
+                rgba(0, 128, 0, 0.5),
+                rgba(0, 128, 0, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 12px);
         border: 1px solid black;
     }
+
     .legend-color.non-fatturato-non-incassato {
-        background: repeating-linear-gradient(
-            45deg,
-            rgba(183, 51, 51, 0.5),
-            rgba(183, 51, 51, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 10px,
-            rgba(240, 240, 240, 0.5) 12px
-        );
+        background: repeating-linear-gradient(45deg,
+                rgba(183, 51, 51, 0.5),
+                rgba(183, 51, 51, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 10px,
+                rgba(240, 240, 240, 0.5) 12px);
         border: 1px solid black;
     }
 </style>
+<?php if ($raggruppa == 1): ?>
+    <button class="btn btn-warning" id="toggle-raggruppa">Rimuovi raggruppamento</button>
+<?php else: ?>
+    <button class="btn btn-success" id="toggle-raggruppa">Raggruppa per centro di costo</button>
+<?php endif; ?>
+
+<script>
+    document.getElementById('toggle-raggruppa').addEventListener('click', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const raggruppa = urlParams.get('raggruppa');
+        if (raggruppa === '1') {
+            urlParams.set('raggruppa', '0');
+        } else {
+            urlParams.set('raggruppa', '1');
+        }
+        window.location.search = urlParams.toString();
+    });
+</script>
+
+
 
 <div style="overflow-x: auto;">
-    
-
-
     <table class="table table-striped table-bordered table-hover nowrap table-middle">
         <thead>
             <tr>
@@ -309,9 +369,14 @@ foreach ($clienti as $cliente) {
         </thead>
         <tbody>
             <?php if (!empty($clienti)): ?>
-                
-                <?php foreach ($clienti as $cliente): ?>
-                    <?php
+
+                <?php
+                $current_centro_costo = null;
+                foreach ($clienti as $cliente):
+                    if ($raggruppa && $cliente['centri_di_costo_ricavo_nome'] !== $current_centro_costo) {
+                        $current_centro_costo = $cliente['centri_di_costo_ricavo_nome'];
+                        echo '<tr ><td class="td_left" colspan="' . (6 + count($data)) . '">Centro di costo: <strong>' . strtoupper($current_centro_costo) . '</strong></td></tr>';
+                    }
                     $importo = $cliente['importo'];
                     $incassato = $cliente['incassato'];
                     $percentuale_pagato = ($importo > 0) ? ($incassato / $importo) * 100 : 0;
@@ -325,25 +390,29 @@ foreach ($clienti as $cliente) {
                     // if ($percentuale_pagato == 0) {
                     //     $percentuale_pagato = 100;
                     // }
-
+            
                     ?>
                     <tr>
                         <td class="td_left">
-                            <a href="<?php echo base_url('main/layout/customer-detail/' . $cliente['customers_id']); ?>"
-                                target="_blank"><?php echo character_limiter($cliente['customers_full_name'], 15); ?></a>
-                                <?php
-                                    //Se ci sono note sul cliente, mostro l'icona gialla, altrimenti normale
-                                    //debug($cliente,true);
-                                $note = $cliente['customers_notes'];
+                            <a href="<?php echo base_url('main/layout/customer-detail/' . $cliente['customers_id']); ?>" class="riga_cliente"
+                               data-cliente="<?php echo $cliente['customers_id']; ?>" data-centro_di_costo="<?php echo $cliente['payments_centro_costo_ricavo']; ?>"
+                               target="_blank"><?php echo character_limiter($cliente['customers_full_name'], 15); ?></a>
+                            <?php
+                            //Se ci sono note sul cliente, mostro l'icona gialla, altrimenti normale
+                            //debug($cliente,true);
+                            $note = $cliente['customers_notes'];
 
-                                ?>
+                            ?>
                             <a class="js_open_modal"
                                 href="<?php echo base_url('get_ajax/modal_form/customers_notes/' . $cliente['customers_id']); ?>">
-                                <i class="far fa-sticky-note" style="margin-right:0px!important<?php if (strlen($note) > 10): ?>; color:red;<?php endif; ?>"></i>
+                                <i class="far fa-sticky-note"
+                                    style="margin-right:0px!important<?php if (strlen($note) > 10): ?>; color:red;<?php endif; ?>"></i>
                             </a>
                         </td>
                         <td class="no-padding">
-                            <div class="progress-bar js_open_modale_pagamenti_all" data-cliente="<?php echo $cliente['customers_id']; ?>">
+                            <div class="progress-bar js_open_modale_pagamenti_all"
+                                 data-centro_di_costo="<?php echo $cliente['payments_centro_costo_ricavo']; ?>"
+                                data-cliente="<?php echo $cliente['customers_id']; ?>">
                                 <div class="progress-bar-inner <?php echo $progress_bar_class; ?>"
                                     style="width: <?php echo $percentuale_pagato; ?>%;"></div>
                                 <strong style="position: relative;">€ <?php e_money($importo); ?></strong>
@@ -351,13 +420,13 @@ foreach ($clienti as $cliente) {
                         </td>
                         <?php foreach (array_keys($data) as $fine_mese): ?>
                             <?php
-                            
-                            $total_amount = isset($totals[$cliente['customers_id']][$fine_mese]['total_amount']) ? $totals[$cliente['customers_id']][$fine_mese]['total_amount'] : 0;
-                            $incassato = isset($totals[$cliente['customers_id']][$fine_mese]['incassato']) ? $totals[$cliente['customers_id']][$fine_mese]['incassato'] : 0;
-                            $da_incassare = isset($totals[$cliente['customers_id']][$fine_mese]['da_incassare']) ? $totals[$cliente['customers_id']][$fine_mese]['da_incassare'] : 0;
-                            $da_fatturare = isset($totals[$cliente['customers_id']][$fine_mese]['da_fatturare']) ? $totals[$cliente['customers_id']][$fine_mese]['da_fatturare'] : 0;
-                            
-                            $last_payment_date = isset($totals[$cliente['customers_id']][$fine_mese]['last_payment_date']) ? $totals[$cliente['customers_id']][$fine_mese]['last_payment_date'] : null;
+    $centro_costo = $raggruppa?$cliente['payments_centro_costo_ricavo']:'non definito';
+                            $total_amount = isset($totals[$centro_costo][$cliente['customers_id']][$fine_mese]['total_amount']) ? $totals[$centro_costo][$cliente['customers_id']][$fine_mese]['total_amount'] : 0;
+                            $incassato = isset($totals[$centro_costo][$cliente['customers_id']][$fine_mese]['incassato']) ? $totals[$centro_costo][$cliente['customers_id']][$fine_mese]['incassato'] : 0;
+                            $da_incassare = isset($totals[$centro_costo][$cliente['customers_id']][$fine_mese]['da_incassare']) ? $totals[$centro_costo][$cliente['customers_id']][$fine_mese]['da_incassare'] : 0;
+                            $da_fatturare = isset($totals[$centro_costo][$cliente['customers_id']][$fine_mese]['da_fatturare']) ? $totals[$centro_costo][$cliente['customers_id']][$fine_mese]['da_fatturare'] : 0;
+
+                            $last_payment_date = isset($totals[$centro_costo][$cliente['customers_id']][$fine_mese]['last_payment_date']) ? $totals[$centro_costo][$cliente['customers_id']][$fine_mese]['last_payment_date'] : null;
                             $class = '';
                             if ($total_amount > 0) {
                                 if ($total_amount == $incassato) {
@@ -366,26 +435,27 @@ foreach ($clienti as $cliente) {
                                     } else {
                                         $class = 'incassato';
                                     }
-                                    
+
                                 } elseif ($incassato > 0 && $da_incassare > 0) {
 
                                     $class = 'parziale';
-                                    
+
                                 } elseif ($last_payment_date && $last_payment_date < new DateTime()) {
                                     if ($da_fatturare) {
                                         $class = 'non-fatturato-non-incassato';
                                     } else {
                                         $class = 'non-incassato';
                                     }
-                                    
+
                                 }
 
-                                
+
                             }
 
                             ?>
-                            <td class="<?php echo $class; ?><?php if ($total_amount > 0): ?> js_open_modale_pagamenti<?php endif; ?>"
+                            <td class="<?php echo $class . ' ' . (($total_amount > 0) ? 'js_open_modale_pagamenti' : 'js_open_modale_nuovo_pagamento') ?>"
                                 data-cliente="<?php echo $cliente['customers_id']; ?>"
+                                data-centro_di_costo="<?php echo $cliente['payments_centro_costo_ricavo']; ?>"
                                 data-mese="<?php echo explode('-', $fine_mese)[1]; ?>"
                                 data-anno="<?php echo explode('-', $fine_mese)[0]; ?>">
                                 <?php if ($total_amount > 0): ?>
@@ -453,7 +523,7 @@ foreach ($clienti as $cliente) {
             <span class="legend-color futuro"></span>
             <span>Pagamento futuro</span>
         </div>
-        
+
         <div class="legend-item">
             <span class="legend-color non-fatturato-non-incassato"></span>
             <span>Non fatturato non incassato</span>
@@ -467,22 +537,29 @@ foreach ($clienti as $cliente) {
 
 <script>
     $(() => {
+        $('.js_open_modale_nuovo_pagamento').on('click', function () {
+            var mese = $(this).data('mese');
+            var cliente = $(this).data('cliente');
+            var anno = $(this).data('anno');
+            
+            var data_pagamento = '01' + '/' + mese + '/' + anno;
+            var centro_di_costo = $(this).data('centro_di_costo');
+            
+            loadModal(base_url + 'get_ajax/modal_form/payments_form?payments_customer=' + cliente + '&payments_date=' + data_pagamento + '&payments_centro_costo_ricavo=' + centro_di_costo);
+        });
         $('.js_open_modale_pagamenti').on('click', function () {
             var mese = $(this).data('mese');
             var cliente = $(this).data('cliente');
             var anno = $(this).data('anno');
 
-            loadModal(base_url + 'get_ajax/layout_modal/modale_payments?mese=' + mese + '&cliente=' + cliente + '&anno=' + anno + '&data_da=<?php echo $data_da; ?>&data_a=<?php echo $data_a; ?>&_size=large');
+            loadModal(base_url + 'get_ajax/layout_modal/modale_payments?mese=' + mese + '&cliente=' + cliente + '&anno=' + anno + '&data_da=<?php echo $data_da; ?>&data_a=<?php echo $data_a; ?>&_size=extra');
         });
         $('.js_open_modale_pagamenti_all').on('click', function () {
-            
+
             var cliente = $(this).data('cliente');
-            
 
-            loadModal(base_url + 'get_ajax/layout_modal/modale_payments?all=1&cliente=' + cliente  + '&data_da=<?php echo $data_da; ?>&data_a=<?php echo $data_a; ?>&_size=large');
+
+            loadModal(base_url + 'get_ajax/layout_modal/modale_payments?all=1&cliente=' + cliente + '&data_da=<?php echo $data_da; ?>&data_a=<?php echo $data_a; ?>&_size=extra');
         });
-
-        
     });
-
 </script>

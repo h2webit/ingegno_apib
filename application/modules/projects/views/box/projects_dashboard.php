@@ -241,28 +241,28 @@ foreach ($data as $project_name => $tasks) {
         if (array_key_exists($task['tasks_id'], $working_tasks)) {
             $styles['A' . ($row + 1)] = 'background-color: #e6b24c;';
         }
-
-        if ($task['tasks_status_status'] == 'To do') {
-            $styles['C' . ($row + 1)] = 'color: #ffffff; font-weight: bold;text-transform: uppercase; background-color: #1ed0eb';
-        } elseif ($task['tasks_status_status'] == 'Waiting reply...') {
-            $styles['C' . ($row + 1)] = 'color: #ffffff; font-weight: bold;text-transform: uppercase; background-color: #df75eb';
-        } elseif ($task['tasks_status_status'] == 'To be scheduled') {
-            $styles['C' . ($row + 1)] = 'color: #ffffff; font-weight: bold;text-transform: uppercase; background-color: #b3b3b3';
-        } elseif ($task['tasks_status_status'] == 'Done') {
-            $styles['C' . ($row + 1)] = 'color: #ffffff; font-weight: bold;text-transform: uppercase; background-color: #46b352';
-        } elseif ($task['tasks_status_status'] == 'Ready') {
-            $styles['C' . ($row + 1)] = 'color: #ffffff; font-weight: bold;text-transform: uppercase; background-color: #db5540';
+        
+        if ($task['tasks_status_status'] == 'To do' || $task['tasks_status_status'] == 'Da fare') {
+            $styles['C' . ($row + 1)] = 'color: #ffffff; text-transform: uppercase; background-color: #1ed0eb';
+        } elseif ($task['tasks_status_status'] == 'Waiting reply...' || $task['tasks_status_status'] == 'Attesa di risposta') {
+            $styles['C' . ($row + 1)] = 'color: #ffffff; text-transform: uppercase; background-color: #df75eb';
+        } elseif ($task['tasks_status_status'] == 'To be scheduled' || $task['tasks_status_status'] == 'Da pianificare') {
+            $styles['C' . ($row + 1)] = 'color: #ffffff; text-transform: uppercase; background-color: #b3b3b3';
+        } elseif ($task['tasks_status_status'] == 'Done' || $task['tasks_status_status'] == 'Chiusa') {
+            $styles['C' . ($row + 1)] = 'color: #ffffff; text-transform: uppercase; background-color: #46b352';
+        } elseif ($task['tasks_status_status'] == 'Ready' || $task['tasks_status_status'] == 'In consegna') {
+            $styles['C' . ($row + 1)] = 'color: #ffffff; text-transform: uppercase; background-color: #db5540';
         } else {
-            $styles['C' . ($row + 1)] = 'color: #ffffff; font-weight: bold;text-transform: uppercase; background-color: #000000';
+            $styles['C' . ($row + 1)] = 'color: #ffffff; text-transform: uppercase; background-color: #000000';
         }
 
 
         //Color priority based on value
-        if ($task['tasks_priority_value'] == 'Low') {
+        if ($task['tasks_priority_value'] == 'Low' || $task['tasks_priority_value'] == 'Bassa') {
             $styles['G' . ($row + 1)] = 'color:#ffffff;background-color: #46b352; font-weight: bold; text-transform: uppercase;';
-        } elseif ($task['tasks_priority_value'] == 'Medium') {
+        } elseif ($task['tasks_priority_value'] == 'Medium' || $task['tasks_priority_value'] == 'Media') {
             $styles['G' . ($row + 1)] = 'color:#ffffff;background-color: #e6b24c; font-weight: bold; text-transform: uppercase;';
-        } elseif ($task['tasks_priority_value'] == 'High') {
+        } elseif ($task['tasks_priority_value'] == 'High' || $task['tasks_priority_value'] == 'Alta') {
             $styles['G' . ($row + 1)] = 'color:#ffffff;background-color: #db5540; font-weight: bold; text-transform: uppercase;';
         } else {
             $styles['G' . ($row + 1)] = 'color:#000000;; font-weight: bold;';

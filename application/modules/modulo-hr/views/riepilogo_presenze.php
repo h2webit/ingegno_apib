@@ -370,6 +370,9 @@ foreach ($dipendenti as $dipendente) {
     for ($giorno = 1; $giorno <= $giorni_mese; $giorno++) {
         $day = $giorno < 10 ? '0' . $giorno : $giorno;
         $current_date = $anno . '-' . $mese . '-' . $day;
+
+        
+
         //Verifico se esiste l'entità rapportini
         if ($this->entities->entity_exists('rapportini')) {
             $ore_giorno = $this->db->query("SELECT
@@ -383,6 +386,8 @@ foreach ($dipendenti as $dipendente) {
             FROM
                 rapportini
             WHERE
+                    rapportini_da_validare = '0'
+                    AND
                 rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users WHERE users_id = '{$dipendente['dipendenti_user_id']}')  -- Sostituisci con l'ID del dipendente
                 AND rapportini_data = '$current_date'
                 
@@ -393,7 +398,10 @@ foreach ($dipendenti as $dipendente) {
         }
         $giorno_della_settimana = date('N', strtotime($current_date));
         $giorno_lavorativo = !empty($turniOrganizzati[$dipendente['dipendenti_id']][$giorno_della_settimana]);
-        $totale_ore_previste_dipendente += $this->timbrature->calcolaOreGiornalierePreviste($current_date, $dipendente['dipendenti_id']);
+        if (!in_array($current_date, $dateFestivita)) {
+            $totale_ore_previste_dipendente += $this->timbrature->calcolaOreGiornalierePreviste($current_date, $dipendente['dipendenti_id']);
+        }
+        
 
         if ($giorno_della_settimana == 7) {
             //debug($giorno_lavorativo);
@@ -829,7 +837,8 @@ td.js_last_clicked {
 
 <script>
 var baseURL = '<?php echo base_url("main/layout/presenze-recap"); ?>';
-
+//Foo alert
+//alert(1);
 function setRichiestaFilter(tipoRichiestaId) {
     var url = new URL(window.location.href);
 

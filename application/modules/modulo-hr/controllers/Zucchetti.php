@@ -147,6 +147,7 @@ class Zucchetti extends MY_Controller
                 
                 $ore_giornaliere = 0;
                 $cod_turno = null;
+                $cod_giustificativo_ril_pres = null;
                 foreach ($tipi_presenze as $tipo => $presenze) {
                     if (!empty($presenze)) {
                         if ($tipo === 'richieste_fp') {
@@ -246,8 +247,17 @@ class Zucchetti extends MY_Controller
                         
                         foreach ($presenze as $presenza) {
                             // verifico se il campo presenze_codice_turno_zucchetti è popolato e se il valore è un numero da 1 a 9, se si allora lo assegno alla variabile $cod_turno
+                            
+                            // michael, 28/06/2024 - se leggi questo, vuol dire che sei ricapitato su questo punto perchè non è stato messo un codice NUMERICO da 1 a 9.
+                            // Sappi che questo controllo NON è a caso, bensì è dato dalla DOCUMENTAZIONE UFFICIALE DI ZUCCHETTI. (cerca CodTurno nel pdf).
                             if (!empty($presenza['presenze_codice_turno_zucchetti']) && is_numeric($presenza['presenze_codice_turno_zucchetti']) && $presenza['presenze_codice_turno_zucchetti'] >= 1 && $presenza['presenze_codice_turno_zucchetti'] <= 9) {
                                 $cod_turno = $presenza['presenze_codice_turno_zucchetti'];
+                            }
+                            
+                            //------------------------------------//
+                            // michael, 02/07/2024 - questo codice va impostato sul campo "codice giustificativo (zucchetti)" nel nuovo/modifica presenza. Per info, cerca sul pdf della documentazione zucchetti, il campo CodGiustificativoRilPres.
+                            if (!empty($presenza['presenze_codice_giustificativo_presenza'])) {
+                                $cod_giustificativo_ril_pres = $presenza['presenze_codice_giustificativo_presenza'];
                             }
                         }
                     }
@@ -275,6 +285,10 @@ class Zucchetti extends MY_Controller
                 
                 if (!empty($cod_turno)) {
                     $array_dipendente_movimento['CodTurno'] = (string) $cod_turno;
+                }
+                
+                if (!empty($cod_giustificativo_ril_pres)) {
+                    $array_dipendente_movimento['CodGiustificativoRilPres'] = (string) $cod_giustificativo_ril_pres;
                 }
                 
                 $array_dipendente_movimenti['Movimento'][] = $array_dipendente_movimento;

@@ -1,0 +1,78 @@
+#stickyNotesOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: calc(100vh - 40px);
+        /* height: 100vh; */
+        background: rgba(0, 0, 0, .5);
+        display: none;
+    }
+
+    .btn-circle {
+        width: 60px !important;
+        height: 60px !important;
+        text-align: center;
+        padding: 6px 0;
+        line-height: 1.42;
+        border-radius: 50%;
+    }
+
+    .btn-br {
+        right: 10px;
+        bottom: 60px;
+        position: fixed;
+        z-index: 99999;
+    }
+
+    .btn-notes,
+    #buttonToggleStickyNotes {
+        position: relative;
+        background: #efefef;
+    }
+
+    .btn-notes>.badge {
+        position: absolute;
+        top: -3px;
+        right: 5px;
+        font-size: 10px;
+        font-weight: 400;
+    }
+
+    .customNote {
+        border: 10px solid #ff6400;
+        /* background-color: #ffb77e;
+        color: white;
+        top: 40px;
+        left: 60px;
+        width: 320px;
+        height: 200px;
+        min-width: 160px;
+        min-height: 200px;
+        opacity: 0.8;
+        filter: Alpha(Opacity=0.8);
+        font-size: 32px;
+        position: relative; */
+    }
+
+    .PIAeditable {
+        height: auto !important;
+        background-color: rgba(255, 255, 255, 0.25) !important;
+    }
+
+    .deleteNoteBtn {
+        background-image: none;
+        background-color: transparent;
+        float: right;
+        border: none;
+    }
+
+    .deleteNoteBtn::before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f2ed";
+        color: red;
+        width: 32px !important;
+        height: 32px !important;
+        margin-left: 10px;
+    }

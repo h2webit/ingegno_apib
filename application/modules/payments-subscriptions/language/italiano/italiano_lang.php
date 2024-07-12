@@ -66,3 +66,5 @@ $lang['Agente vendita'] = 'Agente vendita';
 $lang['Modale payments'] = 'Modale payments';
 $lang['Riepilogo globale'] = 'Riepilogo globale';
 $lang['Approvato'] = 'Approvato';
+$lang['Pagato/incassato'] = 'Pagato/incassato';
+$lang['Centro costo ricavo'] = 'Centro costo ricavo';

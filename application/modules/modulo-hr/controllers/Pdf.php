@@ -9,10 +9,14 @@ class Pdf extends MY_Controller
 
     public function stampa($view = 'pdf_presenze')
     {
-        //pdf custom o base del modulo
-        if (file_exists(APPPATH . 'modules/modulo-hr/views/pdf/custom/pdf_presenze.php')) {
+        //pdf custom progetto
+        if (file_exists(APPPATH . 'views/custom/pdf_presenze.php')) {
+            $view_content = $this->load->view("custom/{$view}", [], true);
+        } elseif (file_exists(APPPATH . 'modules/modulo-hr/views/pdf/custom/pdf_presenze.php')) {
+            // pdf custom modulo base del modulo
             $view_content = $this->load->view("modulo-hr/pdf/custom/{$view}", [], true);
         } else {
+            // pdf base del modulo
             $view_content = $this->load->view("modulo-hr/pdf/{$view}", [], true);
         }
 
