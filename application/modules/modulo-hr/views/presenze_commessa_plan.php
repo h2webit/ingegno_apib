@@ -18,17 +18,21 @@ if (!$c = $this->input->get('c')) {
 
 
 //Recupero solo gli i dipendenti associati a user che hanno compilato rapportini per questa commessa
-$dipendenti_rapportini_commessa = $this->db->query("SELECT *
-FROM dipendenti 
-WHERE dipendenti_user_id IN (
-    SELECT DISTINCT users_id 
-    FROM rel_rapportini_users 
-    WHERE rapportini_id IN (
-        SELECT rapportini_id 
-        FROM rapportini 
-        WHERE rapportini_commessa = '{$c}'
-    )
-)")->result_array();
+if ($this->db->table_exists('rapportini')) {
+    $dipendenti_rapportini_commessa = $this->db->query("SELECT *
+    FROM dipendenti 
+    WHERE dipendenti_user_id IN (
+        SELECT DISTINCT users_id 
+        FROM rel_rapportini_users 
+        WHERE rapportini_id IN (
+            SELECT rapportini_id 
+            FROM rapportini 
+            WHERE rapportini_commessa = '{$c}'
+        )
+    )")->result_array();
+} else {
+    $dipendenti_rapportini_commessa = $this->apilib->search('dipendenti', ["dipendenti_attivo = '1'"]);
+}
 //dump($dipendenti_rapportini_commessa);
 
 $m = str_pad($m, 2, '0', STR_PAD_LEFT);
@@ -158,60 +162,63 @@ foreach ($presenze as $p) {
  * 
  * ! 17/05/2024 - Modificato per prendere le ore anche dai rapportini
  * 
+ * ! 19/06/2024 Andrea - Controllo se la tabella rapportini esiste
  */
-// Recupero dipendente singolo, se impostato
-$additional_where = '';
-$second_additional_where = '';
-if(!empty($u)) {
-    $dipendente = $this->db->get_where('dipendenti', ['dipendenti_id' => $u])->row_array();
-    $additional_where = "AND rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users WHERE users_id = '{$dipendente['dipendenti_user_id']}')";
-    $second_additional_where = "AND presenze_dipendente = '{$dipendente['dipendenti_id']}'";
-}
-
-
-$rapportini = $this->db->query("
-    SELECT * FROM rapportini
-    LEFT JOIN projects ON projects_id = rapportini_commessa
-    LEFT JOIN customers ON customers_id = projects_customer_id
-    LEFT JOIN dipendenti ON dipendenti_user_id IN (SELECT users_id FROM rel_rapportini_users WHERE rapportini_id = rapportini.rapportini_id)
-    WHERE
-        rapportini_commessa = '{$c}'
-        AND rapportini_da_validare = '0'
-        {$additional_where}
-        AND DATE_FORMAT(rapportini_data, '%Y-%m') = '{$filtro_data}'
-        AND rapportini_id NOT IN (SELECT presenze_rapportino_id FROM presenze WHERE presenze_rapportino_id IS NOT NULL {$second_additional_where})
-")->result_array();
-
-foreach ($rapportini as $r) {
-    $dip = $r['dipendenti_nome'] . ' ' . $r['dipendenti_cognome'];
-    if (empty($data[$dip])) {
-        $data[$dip] = [];
+if ($this->db->table_exists('rapportini')) {
+    // Recupero dipendente singolo, se impostato
+    $additional_where = '';
+    $second_additional_where = '';
+    if(!empty($u)) {
+        $dipendente = $this->db->get_where('dipendenti', ['dipendenti_id' => $u])->row_array();
+        $additional_where = "AND rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users WHERE users_id = '{$dipendente['dipendenti_user_id']}')";
+        $second_additional_where = "AND presenze_dipendente = '{$dipendente['dipendenti_id']}'";
     }
 
-    //Aggiungo i dipendenti con chiave l'id per poterli usare nelle richieste anche quando non è selezionato alcun dipendente nella select
-    if (!array_key_exists($r['dipendenti_id'], $dipendentiUnici)) {
-        // Se l'id del dipendente non esiste nell'array, lo aggiungi
-        $dipendentiUnici[$r['dipendenti_id']] = [$dip];
+
+    $rapportini = $this->db->query("
+        SELECT * FROM rapportini
+        LEFT JOIN projects ON projects_id = rapportini_commessa
+        LEFT JOIN customers ON customers_id = projects_customer_id
+        LEFT JOIN dipendenti ON dipendenti_user_id IN (SELECT users_id FROM rel_rapportini_users WHERE rapportini_id = rapportini.rapportini_id)
+        WHERE
+            rapportini_commessa = '{$c}'
+            AND rapportini_da_validare = '0'
+            {$additional_where}
+            AND DATE_FORMAT(rapportini_data, '%Y-%m') = '{$filtro_data}'
+            AND rapportini_id NOT IN (SELECT presenze_rapportino_id FROM presenze WHERE presenze_rapportino_id IS NOT NULL {$second_additional_where})
+    ")->result_array();
+
+    foreach ($rapportini as $r) {
+        $dip = $r['dipendenti_nome'] . ' ' . $r['dipendenti_cognome'];
+        if (empty($data[$dip])) {
+            $data[$dip] = [];
+        }
+
+        //Aggiungo i dipendenti con chiave l'id per poterli usare nelle richieste anche quando non è selezionato alcun dipendente nella select
+        if (!array_key_exists($r['dipendenti_id'], $dipendentiUnici)) {
+            // Se l'id del dipendente non esiste nell'array, lo aggiungi
+            $dipendentiUnici[$r['dipendenti_id']] = [$dip];
+        }
+
+        $day = date("d", strtotime($r['rapportini_data']));
+
+        $ora_inizio = DateTime::createFromFormat('H:i', $r['rapportini_ora_inizio']);
+        $ora_fine = DateTime::createFromFormat('H:i', $r['rapportini_ora_fine']);
+
+        if ($ora_inizio && $ora_fine) {
+            $diff = $ora_inizio->diff($ora_fine);
+            $ore_lavorate = $diff->h + ($diff->i / 60); // Converti minuti in ore
+        } else {
+            $ore_lavorate = 0; // Se l'ora di inizio o di fine non sono valide, setta a 0
+        }
+
+        if (empty($data[$dip][$day])) {
+            $data[$dip][$day] = $ore_lavorate;
+        } else {
+            $data[$dip][$day] += $ore_lavorate;
+        }
+
     }
-
-    $day = date("d", strtotime($r['rapportini_data']));
-
-    $ora_inizio = DateTime::createFromFormat('H:i', $r['rapportini_ora_inizio']);
-    $ora_fine = DateTime::createFromFormat('H:i', $r['rapportini_ora_fine']);
-
-    if ($ora_inizio && $ora_fine) {
-        $diff = $ora_inizio->diff($ora_fine);
-        $ore_lavorate = $diff->h + ($diff->i / 60); // Converti minuti in ore
-    } else {
-        $ore_lavorate = 0; // Se l'ora di inizio o di fine non sono valide, setta a 0
-    }
-
-    if (empty($data[$dip][$day])) {
-        $data[$dip][$day] = $ore_lavorate;
-    } else {
-        $data[$dip][$day] += $ore_lavorate;
-    }
-
 }
 
 
@@ -483,7 +490,8 @@ for ($i = 0; $i <= $days_in_month; $i++) {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 20px;
     margin-bottom: 20px;
 }
@@ -493,6 +501,9 @@ for ($i = 0; $i <= $days_in_month; $i++) {
     justify-content: flex-start;
     align-items: center;
     gap: 4px;
+    /* Permette agli elementi di ridimensionarsi con una larghezza minima di 150px */
+    flex: 1 1 150px;
+    margin: 5px 0;
 }
 
 .legenda_square {
@@ -524,6 +535,17 @@ for ($i = 0; $i <= $days_in_month; $i++) {
 
 .legenda_square.l104 {
     background-color: rgb(8, 181, 234);
+}
+
+/* .jexcel>tbody>tr>td.readonly {
+    color: #000000 !important;
+} */
+.xls_container {
+    overflow-x: scroll;
+}
+
+.xls_base {
+    width: 100%;
 }
 </style>
 
@@ -587,7 +609,9 @@ for ($i = 0; $i <= $days_in_month; $i++) {
 
     <div class="row">
         <div class="col-sm-12">
-            <div id="spreadsheet_presenze"></div>
+            <div class="xls_container">
+                <div id="spreadsheet_presenze" class="xls_base"></div>
+            </div>
         </div>
     </div>
 
@@ -600,17 +624,13 @@ for ($i = 0; $i <= $days_in_month; $i++) {
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div id="spreadsheet_assenze"></div>
+            <div class="xls_container">
+                <div id="spreadsheet_assenze" class="xls_base"></div>
+            </div>
         </div>
     </div>
 
 </div>
-
-<style>
-/* .jexcel>tbody>tr>td.readonly {
-    color: #000000 !important;
-} */
-</style>
 
 <script>
 var data = <?php echo json_encode($data_xls); ?>;

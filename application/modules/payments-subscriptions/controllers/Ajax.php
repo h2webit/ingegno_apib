@@ -41,7 +41,22 @@
         public function save_payments() {
             $payments = $this->input->post('payments');
             $customer = $this->input->post('customer');
-            //debug($payments,true);
+
+$all = $this->input->get('all');
+        
+if ($all) {
+    //Cancello tutti i pagamenti del periodo
+    $data_da = $this->input->post('data_da');
+    $data_a = $this->input->post('data_a');
+
+    $this->db
+        ->where('payments_customer', $customer)
+        ->where('payments_date >=', $data_da)
+        ->where('payments_date <=', $data_a)
+        ->where_not_in('payments_id', array_column($payments, 'payments_id'))
+        ->delete('payments');
+            //debug($this->db->last_query(),true);
+}
             foreach ($payments as $payment) {
                 if (empty($payment['payments_paid'])) {
                     $payment['payments_paid'] = 0;
@@ -55,10 +70,18 @@
                 if (!empty($payment['payments_id'])) {
                     $dati = $payment;
                     unset($dati['payments_id']);
-                    $this->apilib->edit('payments', $payment['payments_id'], $payment);
+                    if ($dati['payments_amount'] > 0) {
+                        $this->apilib->edit('payments', $payment['payments_id'], $payment);
+                    } else {
+                        $this->apilib->delete('payments', $payment['payments_id']);
+                    }
+                    
                 } else {
                     $payment['payments_customer'] = $customer;
-                    $this->apilib->create('payments', $payment);
+                    if ($payment['payments_amount'] > 0) {
+                        $this->apilib->create('payments', $payment);
+                    } else {
+                    }
                 }
             }
             e_json(['status' => 7, 'close_modals'=>1, 'txt' => 'ok']);

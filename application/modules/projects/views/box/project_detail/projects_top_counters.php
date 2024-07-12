@@ -68,22 +68,6 @@ $this->load->model('projects/projects');
     </div>
 <?php endif; ?>
 
-<!--------- ore stimate progetto ------------>
-
-<?php if (!empty($ingegno_settings['enable_top_counters_eta']) && $ingegno_settings['enable_top_counters_eta'] == DB_BOOL_TRUE): ?>
-    <?php $estimated_hours = $this->projects->get_estimated_hours($value_id); ?>
-    <div class="col-xs-2">
-        <div class="conteggi_info">
-            <div class="conteggio_info">
-                <span class="conteggio_label"><i class="fas fa-balance-scale"></i> ETA</span>
-            </div>
-            <div class="conteggio_info">
-                <span class="conteggio_counter blue">
-                    <?php e_money($estimated_hours); ?> </span>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
 
 <!--------- % ore stimate lavorate ------------>
 <?php if (!empty($ingegno_settings['enable_top_counters_eta_perc']) && $ingegno_settings['enable_top_counters_eta_perc'] == DB_BOOL_TRUE): ?>
@@ -120,7 +104,7 @@ $this->load->model('projects/projects');
             </div>
         </div>
     </div>
-    
+
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -134,6 +118,25 @@ $this->load->model('projects/projects');
     </div>
 <?php endif; ?>
 
+<!--------- ETA ------------>
+
+<?php if ($ingegno_settings['enable_top_counters_eta'] == DB_BOOL_TRUE): ?>
+    <?php
+    $eta = $this->projects->get_project_worked_hours($value_id)['eta'];
+    $worked_hours = $this->projects->get_project_worked_hours($value_id)['worked_hours'];
+    ?>
+    <div class="col-xs-2">
+        <div class="conteggi_info">
+            <div class="conteggio_info">
+                <span class="conteggio_label"><i class="fas fa-clock"></i> ETA</span>
+            </div>
+            <div class="conteggio_info">
+                <span class="conteggio_counter <?php echo ($eta < $worked_hours) ? 'green' : 'red'; ?>">
+                    <?php e_money($this->projects->get_project_worked_hours($value_id)['eta']); ?> </span>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
 
 <!--------- Timesheet ------------>
 
@@ -237,7 +240,7 @@ $this->load->model('projects/projects');
 
 <!--------- Fatturato ------------>
 
-<?php if (!empty($ingegno_settings['enable_top_counters_ordini_cliente']) && $ingegno_settings['enable_top_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_top_counters_fatturato']) && $ingegno_settings['enable_top_counters_fatturato'] == DB_BOOL_TRUE): ?>
     <?php $fatturato = $this->projects->get_project_orders($value_id)['fatturato']; ?>
     <div class="col-xs-2">
         <div class="conteggi_info">

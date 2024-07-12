@@ -1655,6 +1655,8 @@ class Timbrature extends CI_Model
                 $fine_calendario = substr($richiesta['richieste_al'], 0, 10) . ' ' . '00:00:00';
             }
 
+            
+
             $inizio = new DateTime($richiesta['richieste_dal']);
             $fine = new DateTime($richiesta['richieste_al']);
             $fine->modify('+1 day'); // Includo il giorno finale nella generazione delle presenze
@@ -1665,22 +1667,30 @@ class Timbrature extends CI_Model
             foreach ($periodo as $data) {
                 $giorno_richiesta = $data->format('Y-m-d');
                 $turniDiLavoro = $this->getTurniDiLavoro($richiesta['richieste_user_id'], date('N', strtotime($giorno_richiesta)));
-                
+                $fine_richiesta_con_ora = new DateTime($giorno_richiesta . ' ' . $richiesta['richieste_ora_fine']);
                 foreach ($turniDiLavoro as $turno) {
                     //debug($giorno_richiesta);
                     $inizio_turno = new DateTime($giorno_richiesta . ' ' . $turno['turni_di_lavoro_ora_inizio']);
                     $fine_turno = new DateTime($giorno_richiesta . ' ' . $turno['turni_di_lavoro_ora_fine']);
 
                     // Determina l'inizio effettivo considerando il massimo tra l'inizio del turno e l'inizio della richiesta
-                    $inizio_effettivo = max(new DateTime($richiesta['richieste_dal']), $inizio_turno);
-
-                    if ($data->format('Y-m-d') == (new DateTime($richiesta['richieste_al']))->format('Y-m-d')) {
-                        $fine_richiesta_con_ora = new DateTime($giorno_richiesta.' '.$richiesta['richieste_ora_fine']);
-                        $fine_effettiva = min($fine_richiesta_con_ora, $fine_turno);
+                    
+                    
+                    //Nel caso di trasferta fa comunque fede l'ora indicata nella richiesta, a prescindere dal turno (al più saranno straordinari...)
+                    if ($richiesta['richieste_tipologia'] == 5) {
+                        $inizio_effettivo = $dataOraInizio;
+                        $fine_effettiva = $fine_richiesta_con_ora;
                     } else {
-                        $fine_effettiva = min(new DateTime($giorno_richiesta . ' 23:59:59'), $fine_turno);
+                        $inizio_effettivo = max($dataOraInizio, $inizio_turno);
+                        if ($data->format('Y-m-d') == (new DateTime($richiesta['richieste_al']))->format('Y-m-d')) {
+                            
+                            $fine_effettiva = min($fine_richiesta_con_ora, $fine_turno);
+                        } else {
+                            $fine_effettiva = min(new DateTime($giorno_richiesta . ' 23:59:59'), $fine_turno);
+                        }
                     }
                     
+                    //debug($fine_effettiva,true);
 //                    debug($fine_effettiva->format('Y-m-d H:i:s'));
                     // Assicurati che l'inizio effettivo sia prima della fine effettiva
                     if ($inizio_effettivo < $fine_effettiva) {
@@ -1711,12 +1721,13 @@ class Timbrature extends CI_Model
                                 'presenze_pausa' => $presenze_pausa,
                             ]);
 
-                            if ($richiesta['richieste_tipologia'] == 5) {
+                            if ($richiesta['richieste_tipologia'] == 5) { //Se è trasferta, non credo una presenza per ogni turno di lavoro, ma una unica, visto che fanno fede gli orari inseriti nella richiesta.
                                 $presenza_inserita_id = $this->db->insert_id();
                                 if ($presenza_inserita_id) {
                                     $buono = $this->gestisciBuonoPasto($giorno_richiesta, $richiesta['richieste_user_id']);
                                     $this->db->where('presenze_id', $presenza_inserita_id)->update('presenze', ['presenze_buono_pasto' => $buono]);
                                 }
+                                break;
                             }
                         } catch (Exception $e) {
                             log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());

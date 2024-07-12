@@ -18,6 +18,8 @@ class Projects extends CI_Model
     // Get project worked hours
     public function get_project_worked_hours($project_id)
     {
+        $data['eta'] = $this->db->query("SELECT projects_estimated_hours FROM projects WHERE projects_id = '$project_id'")->row()->projects_estimated_hours;
+
         if ($this->datab->module_installed('timesheet') || $this->datab->module_installed('firecrm')) {
             $data['worked_hours'] = $this->db->query("SELECT SUM(timesheet_total_hours) as s FROM timesheet LEFT JOIN tasks ON tasks.tasks_id = timesheet.timesheet_task WHERE (tasks_billable_hours IS NULL OR tasks_billable_hours = 0) AND timesheet_project = '{$project_id}'")->row()->s;
             $data['hours_last_30_days'] = $this->db->query("SELECT SUM(timesheet_total_hours) as s FROM timesheet WHERE timesheet_project = '{$project_id}' AND timesheet_creation_date > (NOW() - INTERVAL 30 day)")->row()->s;
@@ -44,35 +46,40 @@ class Projects extends CI_Model
     // Get interventi hours
     public function get_interventi_hours($project_id)
     {
-        // Calcola le ore lavorate per progetto
-        $query_hours_lavorate = "
-            SELECT SUM(
-                TIMESTAMPDIFF(SECOND, tickets_reports_start_time, tickets_reports_end_time) / 3600 * COALESCE(num_tecnici, 1)
-            ) AS total_hours_lavorate
-            FROM (
-                SELECT
-                    tr.tickets_reports_start_time,
-                    tr.tickets_reports_end_time,
-                    COUNT(trt.tickets_reports_tecnici_id) AS num_tecnici
-                FROM tickets_reports tr
-                LEFT JOIN tickets_reports_tecnici trt ON tr.tickets_reports_id = trt.tickets_reports_id
-                WHERE tr.tickets_reports_project_id = {$project_id}
-                GROUP BY tr.tickets_reports_id
-            ) AS subquery;
-        ";
-        
-        $result_hours_lavorate = $this->db->query($query_hours_lavorate)->row_array();
-        $hours['lavorate'] = round($result_hours_lavorate['total_hours_lavorate'], 2);
-        
-        // Calcola le ore fatturate per progetto
-        $query_hours_fatturato = "
-            SELECT SUM(tickets_reports_billable_hours) AS total_hours_fatturato
-            FROM tickets_reports
-            WHERE tickets_reports_project_id = {$project_id};
-        ";
-        
-        $result_hours_fatturato = $this->db->query($query_hours_fatturato)->row_array();
-        $hours['fatturate'] = $result_hours_fatturato['total_hours_fatturato'];
+        if ($this->datab->module_installed('tickets-report') || $this->datab->module_installed('firecrm')) {
+            // Calcola le ore lavorate per progetto
+            $query_hours_lavorate = "
+                SELECT SUM(
+                    TIMESTAMPDIFF(SECOND, tickets_reports_start_time, tickets_reports_end_time) / 3600 * COALESCE(num_tecnici, 1)
+                ) AS total_hours_lavorate
+                FROM (
+                    SELECT
+                        tr.tickets_reports_start_time,
+                        tr.tickets_reports_end_time,
+                        COUNT(trt.tickets_reports_tecnici_id) AS num_tecnici
+                    FROM tickets_reports tr
+                    LEFT JOIN tickets_reports_tecnici trt ON tr.tickets_reports_id = trt.tickets_reports_id
+                    WHERE tr.tickets_reports_project_id = {$project_id}
+                    GROUP BY tr.tickets_reports_id
+                ) AS subquery;
+            ";
+            
+            $result_hours_lavorate = $this->db->query($query_hours_lavorate)->row_array();
+            $hours['lavorate'] = round($result_hours_lavorate['total_hours_lavorate'], 2);
+            
+            // Calcola le ore fatturate per progetto
+            $query_hours_fatturato = "
+                SELECT SUM(tickets_reports_billable_hours) AS total_hours_fatturato
+                FROM tickets_reports
+                WHERE tickets_reports_project_id = {$project_id};
+            ";
+            
+            $result_hours_fatturato = $this->db->query($query_hours_fatturato)->row_array();
+            $hours['fatturate'] = $result_hours_fatturato['total_hours_fatturato'];
+        } else {
+            $hours['lavorate'] = 0;
+            $hours['fatturate'] = 0;
+        }
         
         return $hours;
     }

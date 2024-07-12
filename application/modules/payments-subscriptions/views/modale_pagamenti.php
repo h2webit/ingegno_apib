@@ -88,12 +88,16 @@ $payments = $this->apilib->search('payments',[
 ]);
 $totale = array_sum(array_column($payments,'payments_amount'));
 
+$centri_di_costo = $this->apilib->search('centri_di_costo_ricavo');
+
 ?>
 
 
-<form id="form_multiple_payments" class="formAjax" action="<?php echo base_url('payments-subscriptions/ajax/save_payments'); ?>">
+<form id="form_multiple_payments" class="formAjax" action="<?php echo base_url('payments-subscriptions/ajax/save_payments?all='. $all); ?>">
     <?php add_csrf(); ?>
     
+    <input type="hidden" name="data_da" value="<?php echo $data_da; ?>" />  
+    <input type="hidden" name="data_a" value="<?php echo $data_a; ?>" />
 
     <input type="hidden" name="totale" value="<?php echo $totale; ?>" />
     <input type="hidden" name="customer" value="<?php echo $cliente; ?>" />
@@ -115,15 +119,15 @@ $totale = array_sum(array_column($payments,'payments_amount'));
                             $payment_date = date('Y-m-d', strtotime($payment['payments_date']));
                             $highlight_class = ($payment_date >= $primo_del_mese && $payment_date <= $ultimo_del_mese) ? 'highlight-green' : '';
                             ?>
-                        <div class="row row_scadenza <?php echo $highlight_class; ?>">
-                            <div class="col-md-3">
+                        <div class="row row_scadenza <?php echo $highlight_class; ?>" data-payment_id="<?php echo $payment['payments_id'] ?>">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <input class="js_payments_id" type="hidden" name="payments[<?php echo $key; ?>][payments_id]" data-name="payments[<?php echo $key; ?>][payments_id]" value="<?php echo $payment['payments_id']; ?>" />
 
                                     <label>Ammontare</label> <input type="text" name="payments[<?php echo $key; ?>][payments_amount]" class="form-control payments_amount js_decimal" placeholder="Ammontare" value="<?php echo $payment['payments_amount']; ?>" data-name="payments_amount" />
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Scadenza</label>
                                     <div class="input-group js_form_datepicker date ">
@@ -132,6 +136,17 @@ $totale = array_sum(array_column($payments,'payments_amount'));
                                             <button class="btn btn-default" type="button" style="display:none"><i class="fas fa-calendar-alt-alt"></i></button>
                                         </span>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="">Centro di costo</label>
+                                    <select name="payments[<?php echo $key; ?>][payments_centro_costo_ricavo]" class="form-control" data-name="payments_centro_costo_ricavo">
+                                        <option value="">Seleziona</option>
+                                        <?php foreach ($centri_di_costo as $cds) : ?>
+                                            <option value="<?php echo $cds['centri_di_costo_ricavo_id']; ?>" <?php if ($payment['payments_centro_costo_ricavo'] == $cds['centri_di_costo_ricavo_id']) : ?> selected<?php endif; ?>><?php echo $cds['centri_di_costo_ricavo_nome']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-2">
