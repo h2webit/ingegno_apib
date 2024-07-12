@@ -171,7 +171,7 @@ class Sync extends MY_Controller
             ];
 
 if ($associato['associati_id'] == 727) {
-                debug($dipendente,true);
+                //debug($dipendente,true);
 }
 
             //Tutti i campi che non esistono mappati su $dipendente ma che esistono su $associato, li salvo sul json dipendenti_altri_dati
@@ -208,8 +208,8 @@ if ($associato['associati_id'] == 727) {
             } catch (Exception $e) {
                 
                 my_log('error', "errore inserimento associato: {$e->getMessage()}");
-                debug($associato);
-                debug($e->getMessage(),true);
+                //debug($associato);
+                echo($e->getMessage());
             }
         }
     }
@@ -399,11 +399,14 @@ if ($associato['associati_id'] == 727) {
                 
                 continue;
             }
-            
-            $this->db->insert('project_members', [
-                'projects_id' => $project['projects_id'],
-                'users_id' => $dipendente['dipendenti_user_id'],
-            ]);
+            if ($dipendente['dipendenti_user_id']) {
+                $this->db->insert('project_members', [
+                    'projects_id' => $project['projects_id'],
+                    'users_id' => $dipendente['dipendenti_user_id'],
+                ]);
+            } else {
+                echo_flush("dipendente '{$sede_op['associati_id']}' - {$dipendente['dipendenti_nome']} {$dipendente['dipendenti_cognome']} non ha utente<br/>", '<br/>');
+            }
             
             
         }
