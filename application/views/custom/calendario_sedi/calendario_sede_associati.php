@@ -48,7 +48,7 @@ foreach ($festivita as $fest) {
 $year = ($this->input->get('Y')) ? $this->input->get('Y') : date('Y');
 $month = ($this->input->get('m')) ? $this->input->get('m') : date('m');
 $days = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-$associati = $this->apilib->search(
+$dipendenti = $this->apilib->search(
     'dipendenti',
     //Prendo solo dipendenti attivi, associati a questo progetto/sede o dipendenti che hanno turni assegnati in questo mese per questo progetto
     [
@@ -161,8 +161,8 @@ foreach ($_appuntamenti as $sede_professionista) {
 }
 
 //$non_disponibilita_associati = $this->apilib->search('disponibilita_associati', [
-//        "associati_id IN (
-//            SELECT associati_id FROM projects_associati WHERE projects_id = '$value_id'
+//        "dipendenti_id IN (
+//            SELECT dipendenti_id FROM projects_associati WHERE projects_id = '$value_id'
 //        )",
 //    ]
 //);
@@ -334,17 +334,17 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
     </thead>
     <tbody>
 
-        <?php foreach ($associati as $associato) : ?>
+        <?php foreach ($dipendenti as $dipendente) : ?>
             <tr class="js-calendario_sede">
-                <td class="td-associato text-center"><?php echo $associato['associati_cognome'] . ' ' . substr($associato['associati_nome'], 0, 1); ?>.</td>
+                <td class="td-associato text-center"><?php echo $dipendente['dipendenti_cognome'] . ' ' . substr($dipendente['dipendenti_nome'], 0, 1); ?>.</td>
                 <?php for ($day = 1; $day <= $days; $day++) : ?>
                     <?php
                     $dateString = date('Y-m-d', strtotime($year . '/' . $month . '/' . $day));
 
-                    foreach (@(array) ($appuntamenti_dati[$dateString][$associato['associati_id']]) as $dati) {
+                    foreach (@(array) ($appuntamenti_dati[$dateString][$dipendente['dipendenti_id']]) as $dati) {
                         if (str_ireplace(':', '', $dati['projects_orari_alle']) < str_ireplace(':', '', $dati['projects_orari_dalle'])) {
                             @$totali_giorni[$day] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$associato['associati_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
 
                             $ore = (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
 
@@ -354,7 +354,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                             }
                         } else {
                             @$totali_giorni[$day] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$associato['associati_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
 
                             $ore = (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
 
@@ -366,20 +366,20 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                     }
                     $tooltip = $title = $td_class = '';
                     //Verifico eventuali NON disponibilità per questo associato in questo giorno
-                    if (!empty($associato['associati_id'])) {
+                    if (!empty($dipendente['dipendenti_id'])) {
                         $non_disponibile = $this->db->query("
                                     SELECT 
                                         * 
                                     FROM 
                                         disponibilita_associati 
                                     WHERE 
-                                        disponibilita_associati_associato = '{$associato['associati_id']}'
-                                        AND disponibilita_associati_tipo = '1'
-                                        AND (disponibilita_associati_dal::date <= '$dateString' AND (
-                                                disponibilita_associati_al::date >= '$dateString' 
+                                        disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
+                                        AND disponibilita_dipendenti_tipo = '1'
+                                        AND (disponibilita_dipendenti_dal::date <= '$dateString' AND (
+                                                disponibilita_dipendenti_al::date >= '$dateString' 
                                                 AND (
-                                                    to_char(disponibilita_associati_al, 'HH24:MI:SS') <> '00:00:00'
-                                                    OR disponibilita_associati_al::date <> '$dateString'
+                                                    to_char(disponibilita_dipendenti_al, 'HH24:MI:SS') <> '00:00:00'
+                                                    OR disponibilita_dipendenti_al::date <> '$dateString'
                                                 )
                                             )
                                         )");
@@ -391,13 +391,13 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     FROM 
                                         appuntamenti LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
                                     WHERE 
-                                        appuntamenti_associato = '{$associato['associati_id']}'
+                                        appuntamenti_associato = '{$dipendente['dipendenti_id']}'
                                         AND appuntamenti_impianto <> '{$value_id}'
                                         AND appuntamenti_giorno::date = '$dateString'");
                         if ($non_disponibile->num_rows() != 0 || $gia_occupato->num_rows() != 0) {
                             $non_disponibilita = [];
                             foreach ($non_disponibile->result_array() as $disp) {
-                                $non_disponibilita[] = "{$disp['disponibilita_associati_dal']} - {$disp['disponibilita_associati_al']}";
+                                $non_disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
                             }
                             foreach ($gia_occupato->result_array() as $occupato) {
                                 //debug($occupato,true);
@@ -420,13 +420,13 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     FROM 
                                         disponibilita_associati 
                                     WHERE 
-                                        disponibilita_associati_associato = '{$associato['associati_id']}'
-                                        AND disponibilita_associati_tipo = '2'
-                                        AND (disponibilita_associati_dal::date <= '$dateString' AND (
-                                                disponibilita_associati_al::date >= '$dateString' 
+                                        disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
+                                        AND disponibilita_dipendenti_tipo = '2'
+                                        AND (disponibilita_dipendenti_dal::date <= '$dateString' AND (
+                                                disponibilita_dipendenti_al::date >= '$dateString' 
                                                 AND (
-                                                    to_char(disponibilita_associati_al, 'HH24:MI:SS') <> '00:00:00'
-                                                    OR disponibilita_associati_al::date <> '$dateString'
+                                                    to_char(disponibilita_dipendenti_al, 'HH24:MI:SS') <> '00:00:00'
+                                                    OR disponibilita_dipendenti_al::date <> '$dateString'
                                                 )
                                             )
                                         )");
@@ -436,7 +436,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                         if ($disponibile->num_rows() != 0) {
                             $disponibilita = [];
                             foreach ($disponibile->result_array() as $disp) {
-                                $disponibilita[] = "{$disp['disponibilita_associati_dal']} - {$disp['disponibilita_associati_al']}";
+                                $disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
                             }
 
                             $implode = implode(', ', $disponibilita);
@@ -448,24 +448,24 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                     }
                     ?>
 
-                    <td <?php echo $tooltip; ?>data-associato="<?php echo $associato['associati_id']; ?>" data-giorno="<?php echo $dateString; ?>" class="<?php //echo $bad_days;
+                    <td <?php echo $tooltip; ?>data-associato="<?php echo $dipendente['dipendenti_id']; ?>" data-giorno="<?php echo $dateString; ?>" class="<?php //echo $bad_days;
                                                                                                                                                             ?><?php echo $td_class; ?>">
                         <div class="pallino1"></div>
                         <div class="pallino2"></div>
-                        <?php if (!empty($ore[$day][$associato['associati_id']])) : ?>
-                            <?php $ora = $ore[$day][$associato['associati_id']]; ?>
+                        <?php if (!empty($ore[$day][$dipendente['dipendenti_id']])) : ?>
+                            <?php $ora = $ore[$day][$dipendente['dipendenti_id']]; ?>
 
                             <input type="text" data-record="<?php echo $ora['ore_account_id']; ?>" value="<?php echo $ora['ore_account_ore']; ?>" class="form-control input-xs <?php echo $bad_days; ?>" />
 
                         <?php else : ?>
-                            <?php //debug(@$appuntamenti[$dateString][$associato['associati_id']]); 
+                            <?php //debug(@$appuntamenti[$dateString][$dipendente['dipendenti_id']]); 
                             ?>
                             <!--<input type="text" data-record='' class="form-control input-xs"/>-->
 
                             <?php
-                            if (!empty(@$appuntamenti[$dateString][$associato['associati_id']])) {
+                            if (!empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) {
                                 $fascie_impostate = [];
-                                foreach ($appuntamenti[$dateString][$associato['associati_id']] as $fascia_id) {
+                                foreach ($appuntamenti[$dateString][$dipendente['dipendenti_id']] as $fascia_id) {
                                     //debug($fascia_id);
                                     if (stripos($fascia_id, '!') !== false) {
                                         $fascia_id = str_ireplace('!', '', $fascia_id);
@@ -483,23 +483,23 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                             }
                             ?>
 
-                            <select multiple class="form-control <?php if (empty(@$appuntamenti[$dateString][$associato['associati_id']])) : ?>js_hover_multiselect<?php else : ?>js_hover_multiselect <?php endif; ?> field_293" name="cella[<?php echo $dateString; ?>][<?php echo $associato['associati_id']; ?>]" data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$associato['associati_id']]); ?>" data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
+                            <select multiple class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) : ?>js_hover_multiselect<?php else : ?>js_hover_multiselect <?php endif; ?> field_293" name="cella[<?php echo $dateString; ?>][<?php echo $dipendente['dipendenti_id']; ?>]" data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$dipendente['dipendenti_id']]); ?>" data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
 
                                 <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
                                     <?php $fascia_id = (string) $fascia_id; ?>
-                                    <option value="<?php echo $fascia_id; ?>" <?php if (@in_array($fascia_id, @$appuntamenti[$dateString][$associato['associati_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?></option>
+                                    <option value="<?php echo $fascia_id; ?>" <?php if (@in_array($fascia_id, @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?></option>
                                 <?php endforeach; ?>
 
                                 <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <option value="<?php echo $fascia_id; ?>*" <?php if (@in_array($fascia_id . '*', @$appuntamenti[$dateString][$associato['associati_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>*</option>
+                                    <option value="<?php echo $fascia_id; ?>*" <?php if (@in_array($fascia_id . '*', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>*</option>
                                 <?php endforeach; ?>
 
                                 <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <option value="<?php echo $fascia_id; ?>**" <?php if (@in_array($fascia_id . '**', @$appuntamenti[$dateString][$associato['associati_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>**</option>
+                                    <option value="<?php echo $fascia_id; ?>**" <?php if (@in_array($fascia_id . '**', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>**</option>
                                 <?php endforeach; ?>
 
                                 <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <?php if (@in_array('!' . $fascia_id . '!', @$appuntamenti[$dateString][$associato['associati_id']], true)) : ?><option value="!<?php echo $fascia_id; ?>!" selected>!<?php echo $fascia; ?>!</option><?php endif; ?>
+                                    <?php if (@in_array('!' . $fascia_id . '!', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?><option value="!<?php echo $fascia_id; ?>!" selected>!<?php echo $fascia; ?>!</option><?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         <?php endif; ?>
@@ -508,7 +508,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                 <?php endfor; ?>
                 <td class="text-center">
                     <strong>
-                        <?php echo number_format((empty($totali_associati[$associato['associati_id']])) ? 0 : $totali_associati[$associato['associati_id']], 2); ?>
+                        <?php echo number_format((empty($totali_associati[$dipendente['dipendenti_id']])) ? 0 : $totali_associati[$dipendente['dipendenti_id']], 2); ?>
                     </strong>
                 </td>
             </tr>
@@ -546,14 +546,14 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                     <?php
                     $dateString = date('Y-m-d', strtotime($year . '/' . $month . '/' . $day));
 
-                    foreach (@(array) ($appuntamenti_dati[$dateString][$associato['associati_id']]) as $dati) {
+                    foreach (@(array) ($appuntamenti_dati[$dateString][$dipendente['dipendenti_id']]) as $dati) {
                         if (str_ireplace(':', '', $dati['projects_orari_alle']) < str_ireplace(':', '', $dati['projects_orari_dalle'])) {
                             @$totali_giorni[$day] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$associato['associati_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
                             $totalone += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
                         } else {
                             @$totali_giorni[$day] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$associato['associati_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
                             $totalone += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
                         }
                     }
