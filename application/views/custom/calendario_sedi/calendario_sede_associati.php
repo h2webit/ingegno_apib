@@ -367,7 +367,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                     $tooltip = $title = $td_class = '';
                     //Verifico eventuali NON disponibilità per questo associato in questo giorno
                     if (!empty($dipendente['dipendenti_id'])) {
-                        $non_disponibile = $this->db->query("
+                        /*$non_disponibile = $this->db->query("
                                     SELECT 
                                         * 
                                     FROM 
@@ -375,11 +375,11 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     WHERE 
                                         disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
                                         AND disponibilita_dipendenti_tipo = '1'
-                                        AND (disponibilita_dipendenti_dal::date <= '$dateString' AND (
-                                                disponibilita_dipendenti_al::date >= '$dateString' 
+                                        AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
+                                                DATE(disponibilita_dipendenti_al) >= '$dateString' 
                                                 AND (
-                                                    to_char(disponibilita_dipendenti_al, 'HH24:MI:SS') <> '00:00:00'
-                                                    OR disponibilita_dipendenti_al::date <> '$dateString'
+                                                    TIME(disponibilita_dipendenti_al) <> '00:00:00'
+                                                    OR DATE(disponibilita_dipendenti_al) <> '$dateString'
                                                 )
                                             )
                                         )");
@@ -389,11 +389,12 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     SELECT 
                                         * 
                                     FROM 
-                                        appuntamenti LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
+                                        appuntamenti 
+                                        LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
                                     WHERE 
                                         appuntamenti_associato = '{$dipendente['dipendenti_id']}'
                                         AND appuntamenti_impianto <> '{$value_id}'
-                                        AND appuntamenti_giorno::date = '$dateString'");
+                                        AND DATE(appuntamenti_giorno) = '$dateString'");
                         if ($non_disponibile->num_rows() != 0 || $gia_occupato->num_rows() != 0) {
                             $non_disponibilita = [];
                             foreach ($non_disponibile->result_array() as $disp) {
@@ -422,11 +423,11 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     WHERE 
                                         disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
                                         AND disponibilita_dipendenti_tipo = '2'
-                                        AND (disponibilita_dipendenti_dal::date <= '$dateString' AND (
-                                                disponibilita_dipendenti_al::date >= '$dateString' 
+                                        AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
+                                                DATE(disponibilita_dipendenti_al) >= '$dateString' 
                                                 AND (
-                                                    to_char(disponibilita_dipendenti_al, 'HH24:MI:SS') <> '00:00:00'
-                                                    OR disponibilita_dipendenti_al::date <> '$dateString'
+                                                    TIME(disponibilita_dipendenti_al) <> '00:00:00'
+                                                    OR DATE(disponibilita_dipendenti_al) <> '$dateString'
                                                 )
                                             )
                                         )");
@@ -444,7 +445,9 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
 
                             $td_class .= ' disponibile';
                         }
+                           
                         $tooltip = 'data-toggle="tooltip" title="' . $title . '" ';
+                         */
                     }
                     ?>
 
@@ -483,7 +486,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                             }
                             ?>
 
-                            <select multiple class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) : ?>js_hover_multiselect<?php else : ?>js_hover_multiselect <?php endif; ?> field_293" name="cella[<?php echo $dateString; ?>][<?php echo $dipendente['dipendenti_id']; ?>]" data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$dipendente['dipendenti_id']]); ?>" data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
+                            <select multiple class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) : ?>js_hover_multiselect<?php else : ?>js_hover_multiselect <?php endif; ?> field_293 select2me" name="cella[<?php echo $dateString; ?>][<?php echo $dipendente['dipendenti_id']; ?>]" data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$dipendente['dipendenti_id']]); ?>" data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
 
                                 <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
                                     <?php $fascia_id = (string) $fascia_id; ?>
@@ -768,6 +771,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         $('.js_hover_multiselect', $(this).parent()).removeClass('js_hover_multiselect').addClass('js_multiselect');
         var that = $('.js_hover_multiselect', $(this).parent());
         var minInput = that.data('minimum-input-length');
+        alert(2);
         that.select2({
             allowClear: true,
             minimumInputLength: minInput ? minInput : 0
@@ -788,9 +792,10 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
 
     });
     var container = $('div[container_sede_id=<?php echo $value_id; ?>]');
-    $('.select2me', container).select2({
-        allowClear: true
-    });
+    
+    // $('.select2me', container).select2({
+    //     allowClear: true
+    // });
     console.log('modalità calendario: <?php echo $this->auth->get('projects_modalita_calendario'); ?>');
     //    $(document).ready(function () {
     //        

@@ -136,7 +136,7 @@ class Sync extends MY_Controller
                 'dipendenti_codice_fiscale' => $associato['associati_cf'],
                 'dipendenti_cellulare' => $associato['associati_cellulare'],
                 'dipendenti_foto' => $associato['associati_foto']??null,
-                'dipendenti_email' => $associato['associati_email'],
+                'dipendenti_email' => trim(strtolower($associato['associati_email'])),
                 'dipendenti_password' => $associato['utenti_password'],
                 'dipendenti_data_nascita' => $associato['associati_data_nascita'],
                 'dipendenti_luogo_nascita' => $associato['associati_luogo_nascita'],
@@ -170,9 +170,6 @@ class Sync extends MY_Controller
                 
             ];
 
-if ($associato['associati_id'] == 727) {
-                //debug($dipendente,true);
-}
 
             //Tutti i campi che non esistono mappati su $dipendente ma che esistono su $associato, li salvo sul json dipendenti_altri_dati
             foreach ($associato as $key => $value) {
@@ -188,6 +185,13 @@ if ($associato['associati_id'] == 727) {
 
             try {
                 $dipendente_exists = $this->db->get_where('dipendenti', ['dipendenti_id' => $dipendente['dipendenti_id']])->row_array();
+
+
+                if ($associato['associati_id'] == 727) {
+                    // debug($dipendente_exists);
+                    // debug($dipendente, true);
+                }
+
                 $_POST = $dipendente;
                 if ($dipendente_exists) {
                     $dipendente_creato = $this->apilib->edit('dipendenti', $dipendente['dipendenti_id'], $dipendente);

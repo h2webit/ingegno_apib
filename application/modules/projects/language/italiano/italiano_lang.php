@@ -871,3 +871,4 @@ $lang['*** sub *** Commessa S.ANNA COMUNITA\' MANI AMICHE OSS : Ordini e fatture
 $lang['*** sub *** Commessa S.ANNA S. CATERINA   MANI AMICHE: Ordini e fatture'] = '*** sub *** Commessa S.ANNA S. CATERINA   MANI AMICHE: Ordini e fatture';
 $lang['Commessa S.ANNA S. CATERINA   MANI AMICHE'] = 'Commessa S.ANNA S. CATERINA   MANI AMICHE';
 $lang['/ CASA DI RIPOSO S.ANNA S. CATERINA'] = '/ CASA DI RIPOSO S.ANNA S. CATERINA';
+$lang['Commessa S.ANNA S. CATERINA   CASA DELLE STELLE'] = 'Commessa S.ANNA S. CATERINA   CASA DELLE STELLE';
