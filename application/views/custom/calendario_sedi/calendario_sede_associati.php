@@ -403,10 +403,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         
                                         AND (DATE(richieste_dal) <= '$dateString' AND (
                                                 DATE(richieste_al) >= '$dateString' 
-                                                AND (
-                                                    TIME(richieste_al) <> '00:00:00'
-                                                    OR DATE(richieste_al) <> '$dateString'
-                                                )
+                                                
                                             )
                                         )");
 
@@ -425,7 +422,9 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     if ($non_disponibile->num_rows() != 0 || $gia_occupato->num_rows() != 0) {
                                         $non_disponibilita = [];
                                         foreach ($non_disponibile->result_array() as $disp) {
-                                            $non_disponibilita[] = "{$disp['richieste_dal']} - {$disp['richieste_al']}";
+                                            $disp['richieste_dal'] = substr($disp['richieste_dal'], 0, 10);
+                                            $disp['richieste_al'] = substr($disp['richieste_al'], 0, 10);
+                                            $non_disponibilita[] = "{$disp['richieste_dal']} {$disp['richieste_ora_inizio']} - {$disp['richieste_al']} {$disp['richieste_ora_fine']}";
                                         }
                                         foreach ($gia_occupato->result_array() as $occupato) {
                                             //debug($occupato,true);
@@ -453,10 +452,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         
                                         AND (DATE(richieste_dal) <= '$dateString' AND (
                                                 DATE(richieste_al) >= '$dateString' 
-                                                AND (
-                                                    TIME(richieste_al) <> '00:00:00'
-                                                    OR DATE(richieste_al) <> '$dateString'
-                                                )
+                                                
                                             )
                                         )");
 

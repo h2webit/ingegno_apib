@@ -103,6 +103,8 @@ class Sync extends MY_Controller
         $this->import_orari();
         $this->import_pagamenti();
         $this->import_sedi_operative_associati();
+        $this->import_disponibilita_associati();
+        $this->import_sedi_professionisti();
     }
     
     public function import_associati() {
@@ -473,6 +475,159 @@ class Sync extends MY_Controller
                 debug($e->getMessage(), true);
             }
         }
+        $this->mycache->clearCache();
+    }
+
+    public function import_disponibilita_associati()
+    {
+        set_log_scope('sync-disponibilita-associati');
+        //Filtro solo dal mese corrente in poi...
+        $previousMonthStart = date('Y-m-01 00:00:00', strtotime('first day of previous month'));
+
+        // Filtra solo dal mese precedente in poi
+        $disponibilita = $this->apib_db->where('disponibilita_associati_dal >=', $previousMonthStart)
+            ->get('disponibilita_associati')
+            ->result_array();
+
+
+        $t = count($disponibilita);
+        $c = 0;
+
+        foreach ($disponibilita as $disponibilita_item) {
+            progress(++$c, $t, 'import disponibilita_associati vs richieste');
+
+            // Parse the datetime strings
+            $dal_datetime = new DateTime($disponibilita_item['disponibilita_associati_dal']);
+            $al_datetime = new DateTime($disponibilita_item['disponibilita_associati_al']);
+            //Se è Marcario ed è il 6 luglio
+            
+            
+
+            // Check if al_datetime is greater than dal_datetime
+            if ($al_datetime <= $dal_datetime) {
+                my_log('error', "Errore: data/ora di fine non successiva a data/ora di inizio per disponibilita_associati_id: " . $disponibilita_item['disponibilita_associati_id']);
+                continue; // Skip this item and move to the next
+            }
+            // if ($disponibilita_item['disponibilita_associati_associato'] == 958 && $dal_datetime->format('Y-m-d') == '2024-07-01') {
+            //     debug($dal_datetime->format('H:i'), true);
+
+            // } else {
+            //     continue;
+            // }
+            $richiesta = [
+                'richieste_id' => $disponibilita_item['disponibilita_associati_id'],
+                'richieste_user_id' => $disponibilita_item['disponibilita_associati_associato'],
+                'richieste_stato' => 1, // Assuming default state
+                'richieste_tipologia' => ($disponibilita_item['disponibilita_associati_tipo'] == 2) ? 6 : 7,
+                'richieste_creation_date' => $disponibilita_item['disponibilita_associati_data_creazione'],
+                'richieste_modified_date' => $disponibilita_item['disponibilita_associati_data_modifica'],
+                'richieste_dal' => $dal_datetime->format('Y-m-d'),
+                'richieste_al' => $al_datetime->format('Y-m-d'),
+                'richieste_ora_inizio' => $dal_datetime->format('H:i'),
+                'richieste_ora_fine' => $al_datetime->format('H:i'),
+                'richieste_all_day_calendar' => DB_BOOL_FALSE,
+                'richieste_data_ora_inizio_calendar' => $disponibilita_item['disponibilita_associati_dal'],
+                'richieste_data_ora_fine_calendar' => $disponibilita_item['disponibilita_associati_al'],
+            ];
+
+            try {
+                $richiesta_exists = $this->db->get_where('richieste', ['richieste_id' => $richiesta['richieste_id']])->row_array();
+                $_POST = $richiesta;
+
+                if ($richiesta_exists) {
+                    $richiesta_creata = $this->apilib->edit('richieste', $richiesta['richieste_id'], $richiesta);
+                } else {
+                    $richiesta_creata = $this->apilib->create('richieste', $richiesta);
+                }
+
+                $_POST = [];
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento richiesta: {$e->getMessage()}");
+                debug($richiesta);
+                debug($e->getMessage(), true);
+            }
+        }
+
+        $this->mycache->clearCache();
+    }
+
+    public function import_sedi_professionisti()
+    {
+        set_log_scope('sync-sedi-professionisti');
+
+        // Ottieni la data di inizio del mese precedente
+        $previousMonthStart = date('Y-m-01 00:00:00', strtotime('first day of previous month'));
+
+        // Recupera i dati dalla tabella sedi_professionisti
+        $sedi_professionisti = $this->apib_db
+            ->where('sedi_professionisti_giorno >=', $previousMonthStart)
+            ->join('associati', 'associati_id = sedi_professionisti_associato', 'LEFT')
+            ->get('sedi_professionisti')
+            ->result_array();
+
+        $t = count($sedi_professionisti);
+        $c = 0;
+
+        //Precarico tutte le fasce orarie
+        $_orari = $this->db->get('projects_orari')->result_array();
+        //Li rimappo per avere come chiave l'id
+        $orari = array_key_map_data($_orari, 'projects_orari_id');
+        //debug($orari,true);
+        foreach ($sedi_professionisti as $sede_professionista) {
+            progress(++$c, $t, 'import sedi_professionisti vs appuntamenti');
+
+            if (278 != $sede_professionista['sedi_professionisti_sede']) {
+                continue;
+            }
+            $fascia = $orari[$sede_professionista['sedi_professionisti_fascia']];
+            
+            if ( !$fascia) {
+                my_log('error', "Errore: sede o fascia non trovata per sedi_professionisti_id: " . $sede_professionista['sedi_professionisti_id']);
+                continue;
+            }
+            
+            $appuntamento = [
+                'appuntamenti_id' => $sede_professionista['sedi_professionisti_id'],
+                'appuntamenti_impianto' => $sede_professionista['sedi_professionisti_sede'],
+                'appuntamenti_fascia_oraria' => $fascia['projects_orari_id'],
+                'appuntamenti_persone' => [$sede_professionista['associati_utente']],
+                'appuntamenti_giorno' => $sede_professionista['sedi_professionisti_giorno'],
+                'appuntamenti_ora_inizio' => $fascia['projects_orari_dalle'],
+                'appuntamenti_ora_fine' => $fascia['projects_orari_alle'],
+                'appuntamenti_all_day' => DB_BOOL_FALSE,
+                'appuntamenti_da_confermare' => DB_BOOL_FALSE,
+                'appuntamenti_annullato' => DB_BOOL_FALSE,
+                'appuntamenti_titolo' => 'Appuntamento importato',
+                'appuntamenti_creation_date' => date('Y-m-d H:i:s'),
+                'appuntamenti_modified_date' => date('Y-m-d H:i:s'),
+            ];
+
+            // Aggiungi campi aggiuntivi se necessario
+            if ($sede_professionista['sedi_professionisti_affiancamento'] == 't') {
+                $appuntamento['appuntamenti_note'] = 'Affiancamento';
+            }
+            if ($sede_professionista['sedi_professionisti_studente'] == 't') {
+                $appuntamento['appuntamenti_note'] = ($appuntamento['appuntamenti_note'] ?? '') . ' Studente';
+            }
+
+            try {
+                $appuntamento_exists = $this->db->get_where('appuntamenti', ['appuntamenti_id' => $appuntamento['appuntamenti_id']])->row_array();
+                $_POST = $appuntamento;
+
+                if ($appuntamento_exists) {
+                    $appuntamento_creato = $this->apilib->edit('appuntamenti', $appuntamento['appuntamenti_id'], $appuntamento);
+                } else {
+                    $appuntamento_creato = $this->apilib->create('appuntamenti', $appuntamento);
+                }
+
+                $_POST = [];
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento appuntamento: {$e->getMessage()}");
+                debug($appuntamento);
+                debug($e->getMessage(), true);
+            }
+        }
+
         $this->mycache->clearCache();
     }
 }
