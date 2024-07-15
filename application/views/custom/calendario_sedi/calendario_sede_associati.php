@@ -518,7 +518,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         ?>
 
                                         <select multiple
-                                            class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])): ?>js_hover_multiselect<?php else: ?>js_hover_multiselect <?php endif; ?> field_293 select2me"
+                                            class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])): ?>js_hover_multiselect<?php else: ?>js_hover_multiselect <?php endif; ?> field_293 __select2me"
                                             name="cella[<?php echo $dateString; ?>][<?php echo $dipendente['dipendenti_id']; ?>]"
                                             data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$dipendente['dipendenti_id']]); ?>"
                                             data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
@@ -831,8 +831,9 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
 
     });
 
-    $('.js_hover_multiselect').on('hover', function () {
+    $('.js_hover_multiselect').on('mouseenter', function () {
         $(this).removeClass('js_hover_multiselect').addClass('js_multiselect');
+        //debugger
         var that = $(this);
         var minInput = that.data('minimum-input-length');
         that.select2({
@@ -844,7 +845,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
     });
     var container = $('div[container_sede_id=<?php echo $value_id; ?>]');
 
-    // $('.select2me', container).select2({
+    // $('.js_hover_multiselect', container).select2({
     //     allowClear: true
     // });
     console.log('modalità calendario: <?php echo $this->auth->get('projects_modalita_calendario'); ?>');
