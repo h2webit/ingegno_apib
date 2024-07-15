@@ -160,12 +160,13 @@ foreach ($_appuntamenti as $sede_professionista) {
     }
 }
 
-//$non_disponibilita_associati = $this->apilib->search('disponibilita_associati', [
-//        "dipendenti_id IN (
-//            SELECT dipendenti_id FROM projects_associati WHERE projects_id = '$value_id'
-//        )",
-//    ]
-//);
+$non_disponibilita_associati = $this->apilib->search('richieste', [
+       "richieste_user_id IN (
+           SELECT dipendenti_id FROM project_members WHERE projects_id = '$value_id'
+       )",
+       'richieste_tipologia' => [6,7]
+   ]
+);
 //debug($non_disponibilita_associati,true);
 
 $totali_giorni = $totali_associati = [];
@@ -367,19 +368,20 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                     $tooltip = $title = $td_class = '';
                     //Verifico eventuali NON disponibilità per questo associato in questo giorno
                     if (!empty($dipendente['dipendenti_id'])) {
-                        /*$non_disponibile = $this->db->query("
+                        $non_disponibile = $this->db->query("
                                     SELECT 
                                         * 
                                     FROM 
-                                        disponibilita_associati 
+                                        richieste 
                                     WHERE 
-                                        disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
-                                        AND disponibilita_dipendenti_tipo = '1'
-                                        AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
-                                                DATE(disponibilita_dipendenti_al) >= '$dateString' 
+                                        richieste_tipologia IN (7)
+                                        AND richieste_user_id = '{$dipendente['dipendenti_id']}'
+                                        
+                                        AND (DATE(richieste_dal) <= '$dateString' AND (
+                                                DATE(richieste_al) >= '$dateString' 
                                                 AND (
-                                                    TIME(disponibilita_dipendenti_al) <> '00:00:00'
-                                                    OR DATE(disponibilita_dipendenti_al) <> '$dateString'
+                                                    TIME(richieste_al) <> '00:00:00'
+                                                    OR DATE(richieste_al) <> '$dateString'
                                                 )
                                             )
                                         )");
@@ -392,13 +394,14 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         appuntamenti 
                                         LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
                                     WHERE 
-                                        appuntamenti_associato = '{$dipendente['dipendenti_id']}'
+                                        appuntamenti_id IN (SELECT appuntamenti_id FROM rel_appuntamenti_persone WHERE users_id = (SELECT dipendenti_user_id FROM dipendenti WHERE dipendenti_id = '{$dipendente['dipendenti_id']}'))
+                                        
                                         AND appuntamenti_impianto <> '{$value_id}'
                                         AND DATE(appuntamenti_giorno) = '$dateString'");
                         if ($non_disponibile->num_rows() != 0 || $gia_occupato->num_rows() != 0) {
                             $non_disponibilita = [];
                             foreach ($non_disponibile->result_array() as $disp) {
-                                $non_disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
+                                $non_disponibilita[] = "{$disp['richieste_dal']} - {$disp['richieste_al']}";
                             }
                             foreach ($gia_occupato->result_array() as $occupato) {
                                 //debug($occupato,true);
@@ -419,15 +422,16 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                     SELECT 
                                         * 
                                     FROM 
-                                        disponibilita_associati 
+                                        richieste 
                                     WHERE 
-                                        disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
-                                        AND disponibilita_dipendenti_tipo = '2'
-                                        AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
-                                                DATE(disponibilita_dipendenti_al) >= '$dateString' 
+                                        richieste_tipologia IN (6)
+                                        AND richieste_user_id = '{$dipendente['dipendenti_id']}'
+                                        
+                                        AND (DATE(richieste_dal) <= '$dateString' AND (
+                                                DATE(richieste_al) >= '$dateString' 
                                                 AND (
-                                                    TIME(disponibilita_dipendenti_al) <> '00:00:00'
-                                                    OR DATE(disponibilita_dipendenti_al) <> '$dateString'
+                                                    TIME(richieste_al) <> '00:00:00'
+                                                    OR DATE(richieste_al) <> '$dateString'
                                                 )
                                             )
                                         )");
@@ -437,7 +441,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                         if ($disponibile->num_rows() != 0) {
                             $disponibilita = [];
                             foreach ($disponibile->result_array() as $disp) {
-                                $disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
+                                $disponibilita[] = "{$disp['richieste_dal']} - {$disp['richieste_al']}";
                             }
 
                             $implode = implode(', ', $disponibilita);
@@ -447,7 +451,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                         }
                            
                         $tooltip = 'data-toggle="tooltip" title="' . $title . '" ';
-                         */
+                         
                     }
                     ?>
 
