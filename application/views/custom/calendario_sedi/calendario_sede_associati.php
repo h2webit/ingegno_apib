@@ -276,6 +276,28 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         border-radius: 50%;
         display: inline-block;
     }
+
+    table .select2-container--default .select2-selection--multiple {
+        border-color: transparent!important;
+        border: 0px!important;
+        outline-color: transparent!important;
+    }
+
+    table .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border-color: transparent!important;
+        border: 0px!important;
+        outline-color: transparent!important;
+    }
+
+    table .select2-selection .select2-selection--multiple {
+        border-color: transparent!important;
+        border: 0px!important;
+        outline-color: transparent!important;
+    }
+
+    .custom_form span.select2-selection__clear {
+        display: none;
+    }
 </style>
 
 
@@ -820,7 +842,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         var minInput = that.data('minimum-input-length');
         alert(2);
         that.select2({
-            allowClear: true,
+            allowClear: false,
             minimumInputLength: minInput ? minInput : 0
         });
         $(this).hide();
@@ -833,7 +855,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         var that = $(this);
         var minInput = that.data('minimum-input-length');
         that.select2({
-            allowClear: true,
+            allowClear: false,
             minimumInputLength: minInput ? minInput : 0
         });
         $('.js-fascie_impostate', that.parent()).hide();
