@@ -277,324 +277,346 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
 </style>
 
 
-<div class="col-lg-8 text-center form-inline custom_form">
-    <select class="form-control select2me col-lg-4 year js-year ">
-        <?php for ($i = date('Y') - 2; $i <= date('Y') + 10; $i++) : ?>
-            <option value="<?php echo $i; ?>" <?php if ($i == $year) : ?> selected="selected" <?php endif; ?>><?php echo $i; ?></option>
-        <?php endfor; ?>
-    </select>
-    <select class="js-month form-control select2me col-lg-4 month ">
-        <?php
-        if ($this->auth->get('utenti_tipo') == '16') {
-            $m_start = date('m');
-            $m_end = date('m') + 1;
-        } else {
-            $m_start = 1;
-            $m_end = 12;
-        }
-        ?>
-        <?php for ($m = $m_start; $m <= $m_end; $m++) : ?>
-            <option value="<?php echo $m; ?>" <?php if ($m == $month) : ?> selected="selected" <?php endif; ?>><?php echo mese_testuale($m); ?></option>
-        <?php endfor; ?>
-    </select>
-
-    <button style="margin-left:300px" class="btn js_refresh">Aggiorna</button>
-    <button class="btn js-stampa">Stampa</button>
-    <?php if ($this->auth->is_admin() || in_array($this->auth->get('utenti_tipo'), [7, 8])) : ?>
-        <button class="btn red js-notifica">NOTIFICA A TUTTI</button>
-    <?php endif; ?>
-
-
-</div>
-<?php if ($this->auth->get('utenti_tipo') != 17) : ?>
-    <div class="col-lg-4">
-        <input type="checkbox" class="form-control js-notify_change" /> Notifica ogni variazione all'associato
-    </div>
-<?php endif; ?>
-<table class="table table-striped table-bordered " id="calendario_sede" sede_id="<?php echo $sede['projects_id']; ?>">
-    <thead>
-        <tr>
-            <th>Associato</th>
-
-            <?php for ($day = 1; $day <= $days; $day++) : ?>
-                <?php
-                $fullDate = $year . '-' . $month . '-' . $day;
-                if (!in_array(date('w', strtotime($fullDate)), $workingDays) || in_array(date('m-d', strtotime($fullDate)), $holidayDays)) {
-                    //debug($fullDate);
-                    $bad_days = 'btn-danger festività';
-                } else {
-                    $bad_days = '';
-                }
-                ?>
-                <th class="text-center <?php echo $bad_days; ?>"><?php echo $day; ?></th>
-
-            <?php endfor; ?>
-            <th class="text-center">Tot.</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        <?php foreach ($dipendenti as $dipendente) : ?>
-            <tr class="js-calendario_sede">
-                <td class="td-associato text-center"><?php echo $dipendente['dipendenti_cognome'] . ' ' . substr($dipendente['dipendenti_nome'], 0, 1); ?>.</td>
-                <?php for ($day = 1; $day <= $days; $day++) : ?>
-                    <?php
-                    $dateString = date('Y-m-d', strtotime($year . '/' . $month . '/' . $day));
-
-                    foreach (@(array) ($appuntamenti_dati[$dateString][$dipendente['dipendenti_id']]) as $dati) {
-                        if (str_ireplace(':', '', $dati['projects_orari_alle']) < str_ireplace(':', '', $dati['projects_orari_dalle'])) {
-                            @$totali_giorni[$day] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-
-                            $ore = (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-
-                            $totalone += $ore;
-                            if ($dati['appuntamenti_affiancamento'] == '1') {
-                                $totalone_affiancamenti += $ore;
-                            }
+<div class="row">
+    <div class="col-lg-8 text-center form-inline custom_form">
+        <div class="row">
+            <div class="col-sm-12 col-lg-3">
+                <div style="margin-bottom: 8px;">
+                    <select class="form-control select2me year js-year ">
+                        <?php for ($i = date('Y') - 2; $i <= date('Y') + 10; $i++) : ?>
+                            <option value="<?php echo $i; ?>" <?php if ($i == $year) : ?> selected="selected" <?php endif; ?>><?php echo $i; ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-3">
+                <div style="margin-bottom: 8px;">
+                    <select class="js-month form-control select2me month ">
+                        <?php
+                        if ($this->auth->get('utenti_tipo') == '16') {
+                            $m_start = date('m');
+                            $m_end = date('m') + 1;
                         } else {
-                            @$totali_giorni[$day] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-
-                            $ore = (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-
-                            $totalone += $ore;
-                            if ($dati['appuntamenti_affiancamento'] == '1') {
-                                $totalone_affiancamenti += $ore;
-                            }
+                            $m_start = 1;
+                            $m_end = 12;
                         }
-                    }
-                    $tooltip = $title = $td_class = '';
-                    //Verifico eventuali NON disponibilità per questo associato in questo giorno
-                    if (!empty($dipendente['dipendenti_id'])) {
-                        /*$non_disponibile = $this->db->query("
-                                    SELECT 
-                                        * 
-                                    FROM 
-                                        disponibilita_associati 
-                                    WHERE 
-                                        disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
-                                        AND disponibilita_dipendenti_tipo = '1'
-                                        AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
-                                                DATE(disponibilita_dipendenti_al) >= '$dateString' 
-                                                AND (
-                                                    TIME(disponibilita_dipendenti_al) <> '00:00:00'
-                                                    OR DATE(disponibilita_dipendenti_al) <> '$dateString'
-                                                )
-                                            )
-                                        )");
+                        ?>
+                        <?php for ($m = $m_start; $m <= $m_end; $m++) : ?>
+                            <option value="<?php echo $m; ?>" <?php if ($m == $month) : ?> selected="selected" <?php endif; ?>><?php echo mese_testuale($m); ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+                <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                    <button class="btn js_refresh">Aggiorna</button>
+                    <button class="btn js-stampa">Stampa</button>
+                    <?php if ($this->auth->is_admin() || in_array($this->auth->get('utenti_tipo'), [7, 8])) : ?>
+                        <button class="btn red js-notifica">NOTIFICA A TUTTI</button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        $query = $this->db->last_query();
-                        $gia_occupato = $this->db->query("
-                                    SELECT 
-                                        * 
-                                    FROM 
-                                        appuntamenti 
-                                        LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
-                                    WHERE 
-                                        appuntamenti_associato = '{$dipendente['dipendenti_id']}'
-                                        AND appuntamenti_impianto <> '{$value_id}'
-                                        AND DATE(appuntamenti_giorno) = '$dateString'");
-                        if ($non_disponibile->num_rows() != 0 || $gia_occupato->num_rows() != 0) {
-                            $non_disponibilita = [];
-                            foreach ($non_disponibile->result_array() as $disp) {
-                                $non_disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
-                            }
-                            foreach ($gia_occupato->result_array() as $occupato) {
-                                //debug($occupato,true);
-                                $non_disponibilita[] = "{$occupato['projects_orari_dalle']} - {$occupato['projects_orari_alle']}";
-                            }
-                            $implode = implode(', ', $non_disponibilita);
-                            $title .= 'Non disponibile: ' . $implode;
-                            if ($non_disponibile->num_rows() != 0) {
-                                $td_class = ' occupato';
-                            } else {
-                                $td_class = ' ';
-                            }
-                        }
+    <?php if ($this->auth->get('utenti_tipo') != 17) : ?>
+        <div class="col-lg-4">
+            <input type="checkbox" class="js-notify_change" />
+            <span>Notifica ogni variazione all'associato</span>
+        </div>
+    <?php endif; ?>
+</div>
 
 
-                        //Metto anche le DISPONIBILITA
-                        $disponibile = $this->db->query("
-                                    SELECT 
-                                        * 
-                                    FROM 
-                                        disponibilita_associati 
-                                    WHERE 
-                                        disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
-                                        AND disponibilita_dipendenti_tipo = '2'
-                                        AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
-                                                DATE(disponibilita_dipendenti_al) >= '$dateString' 
-                                                AND (
-                                                    TIME(disponibilita_dipendenti_al) <> '00:00:00'
-                                                    OR DATE(disponibilita_dipendenti_al) <> '$dateString'
-                                                )
-                                            )
-                                        )");
-
-                        $query = $this->db->last_query();
-
-                        if ($disponibile->num_rows() != 0) {
-                            $disponibilita = [];
-                            foreach ($disponibile->result_array() as $disp) {
-                                $disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
-                            }
-
-                            $implode = implode(', ', $disponibilita);
-                            $title .= ' **** Disponibile: ' . $implode;
-
-                            $td_class .= ' disponibile';
-                        }
-                           
-                        $tooltip = 'data-toggle="tooltip" title="' . $title . '" ';
-                         */
-                    }
-                    ?>
-
-                    <td <?php echo $tooltip; ?>data-associato="<?php echo $dipendente['dipendenti_id']; ?>" data-giorno="<?php echo $dateString; ?>" class="<?php //echo $bad_days;
-                                                                                                                                                            ?><?php echo $td_class; ?>">
-                        <div class="pallino1"></div>
-                        <div class="pallino2"></div>
-                        <?php if (!empty($ore[$day][$dipendente['dipendenti_id']])) : ?>
-                            <?php $ora = $ore[$day][$dipendente['dipendenti_id']]; ?>
-
-                            <input type="text" data-record="<?php echo $ora['ore_account_id']; ?>" value="<?php echo $ora['ore_account_ore']; ?>" class="form-control input-xs <?php echo $bad_days; ?>" />
-
-                        <?php else : ?>
-                            <?php //debug(@$appuntamenti[$dateString][$dipendente['dipendenti_id']]); 
-                            ?>
-                            <!--<input type="text" data-record='' class="form-control input-xs"/>-->
-
+<div class="row">
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered " id="calendario_sede" sede_id="<?php echo $sede['projects_id']; ?>">
+                <thead>
+                    <tr>
+                        <th>Associato</th>
+                        <?php for ($day = 1; $day <= $days; $day++) : ?>
                             <?php
-                            if (!empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) {
-                                $fascie_impostate = [];
-                                foreach ($appuntamenti[$dateString][$dipendente['dipendenti_id']] as $fascia_id) {
-                                    //debug($fascia_id);
-                                    if (stripos($fascia_id, '!') !== false) {
-                                        $fascia_id = str_ireplace('!', '', $fascia_id);
-                                        $fascie_impostate[] = '!' . $fascie_orarie[(int) $fascia_id] . '!';
-                                    } elseif (stripos($fascia_id, '**')) {
-                                        $fascie_impostate[] = $fascie_orarie[(int) $fascia_id] . '**';
-                                    } elseif (stripos($fascia_id, '*')) {
-                                        $fascie_impostate[] = $fascie_orarie[(int) $fascia_id] . '*';
+                            $fullDate = $year . '-' . $month . '-' . $day;
+                            if (!in_array(date('w', strtotime($fullDate)), $workingDays) || in_array(date('m-d', strtotime($fullDate)), $holidayDays)) {
+                                //debug($fullDate);
+                                $bad_days = 'btn-danger festività';
+                            } else {
+                                $bad_days = '';
+                            }
+                            ?>
+                            <th class="text-center <?php echo $bad_days; ?>"><?php echo $day; ?></th>
+
+                        <?php endfor; ?>
+                        <th class="text-center">Tot.</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php foreach ($dipendenti as $dipendente) : ?>
+                        <tr class="js-calendario_sede">
+                            <td class="td-associato text-center"><?php echo $dipendente['dipendenti_cognome'] . ' ' . substr($dipendente['dipendenti_nome'], 0, 1); ?>.</td>
+                            <?php for ($day = 1; $day <= $days; $day++) : ?>
+                                <?php
+                                $dateString = date('Y-m-d', strtotime($year . '/' . $month . '/' . $day));
+
+                                foreach (@(array) ($appuntamenti_dati[$dateString][$dipendente['dipendenti_id']]) as $dati) {
+                                    if (str_ireplace(':', '', $dati['projects_orari_alle']) < str_ireplace(':', '', $dati['projects_orari_dalle'])) {
+                                        @$totali_giorni[$day] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                        @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+
+                                        $ore = (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+
+                                        $totalone += $ore;
+                                        if ($dati['appuntamenti_affiancamento'] == '1') {
+                                            $totalone_affiancamenti += $ore;
+                                        }
                                     } else {
-                                        $fascie_impostate[] = $fascie_orarie[$fascia_id];
+                                        @$totali_giorni[$day] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                        @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+
+                                        $ore = (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+
+                                        $totalone += $ore;
+                                        if ($dati['appuntamenti_affiancamento'] == '1') {
+                                            $totalone_affiancamenti += $ore;
+                                        }
                                     }
                                 }
+                                $tooltip = $title = $td_class = '';
+                                //Verifico eventuali NON disponibilità per questo associato in questo giorno
+                                if (!empty($dipendente['dipendenti_id'])) {
+                                    /*$non_disponibile = $this->db->query("
+                                                SELECT 
+                                                    * 
+                                                FROM 
+                                                    disponibilita_associati 
+                                                WHERE 
+                                                    disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
+                                                    AND disponibilita_dipendenti_tipo = '1'
+                                                    AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
+                                                            DATE(disponibilita_dipendenti_al) >= '$dateString' 
+                                                            AND (
+                                                                TIME(disponibilita_dipendenti_al) <> '00:00:00'
+                                                                OR DATE(disponibilita_dipendenti_al) <> '$dateString'
+                                                            )
+                                                        )
+                                                    )");
 
-                                echo '<div class="js-fascie_impostate">' . implode(' ', $fascie_impostate) . '</div>';
-                            }
-                            ?>
+                                    $query = $this->db->last_query();
+                                    $gia_occupato = $this->db->query("
+                                                SELECT 
+                                                    * 
+                                                FROM 
+                                                    appuntamenti 
+                                                    LEFT JOIN projects_orari ON projects_orari_id = appuntamenti_fascia_oraria
+                                                WHERE 
+                                                    appuntamenti_associato = '{$dipendente['dipendenti_id']}'
+                                                    AND appuntamenti_impianto <> '{$value_id}'
+                                                    AND DATE(appuntamenti_giorno) = '$dateString'");
+                                    if ($non_disponibile->num_rows() != 0 || $gia_occupato->num_rows() != 0) {
+                                        $non_disponibilita = [];
+                                        foreach ($non_disponibile->result_array() as $disp) {
+                                            $non_disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
+                                        }
+                                        foreach ($gia_occupato->result_array() as $occupato) {
+                                            //debug($occupato,true);
+                                            $non_disponibilita[] = "{$occupato['projects_orari_dalle']} - {$occupato['projects_orari_alle']}";
+                                        }
+                                        $implode = implode(', ', $non_disponibilita);
+                                        $title .= 'Non disponibile: ' . $implode;
+                                        if ($non_disponibile->num_rows() != 0) {
+                                            $td_class = ' occupato';
+                                        } else {
+                                            $td_class = ' ';
+                                        }
+                                    }
 
-                            <select multiple class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) : ?>js_hover_multiselect<?php else : ?>js_hover_multiselect <?php endif; ?> field_293 select2me" name="cella[<?php echo $dateString; ?>][<?php echo $dipendente['dipendenti_id']; ?>]" data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$dipendente['dipendenti_id']]); ?>" data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
 
-                                <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <?php $fascia_id = (string) $fascia_id; ?>
-                                    <option value="<?php echo $fascia_id; ?>" <?php if (@in_array($fascia_id, @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?></option>
-                                <?php endforeach; ?>
+                                    //Metto anche le DISPONIBILITA
+                                    $disponibile = $this->db->query("
+                                                SELECT 
+                                                    * 
+                                                FROM 
+                                                    disponibilita_associati 
+                                                WHERE 
+                                                    disponibilita_dipendenti_associato = '{$dipendente['dipendenti_id']}'
+                                                    AND disponibilita_dipendenti_tipo = '2'
+                                                    AND (DATE(disponibilita_dipendenti_dal) <= '$dateString' AND (
+                                                            DATE(disponibilita_dipendenti_al) >= '$dateString' 
+                                                            AND (
+                                                                TIME(disponibilita_dipendenti_al) <> '00:00:00'
+                                                                OR DATE(disponibilita_dipendenti_al) <> '$dateString'
+                                                            )
+                                                        )
+                                                    )");
 
-                                <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <option value="<?php echo $fascia_id; ?>*" <?php if (@in_array($fascia_id . '*', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>*</option>
-                                <?php endforeach; ?>
+                                    $query = $this->db->last_query();
 
-                                <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <option value="<?php echo $fascia_id; ?>**" <?php if (@in_array($fascia_id . '**', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>**</option>
-                                <?php endforeach; ?>
+                                    if ($disponibile->num_rows() != 0) {
+                                        $disponibilita = [];
+                                        foreach ($disponibile->result_array() as $disp) {
+                                            $disponibilita[] = "{$disp['disponibilita_dipendenti_dal']} - {$disp['disponibilita_dipendenti_al']}";
+                                        }
 
-                                <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                    <?php if (@in_array('!' . $fascia_id . '!', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?><option value="!<?php echo $fascia_id; ?>!" selected>!<?php echo $fascia; ?>!</option><?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif; ?>
+                                        $implode = implode(', ', $disponibilita);
+                                        $title .= ' **** Disponibile: ' . $implode;
 
-                    </td>
-                <?php endfor; ?>
-                <td class="text-center">
-                    <strong>
-                        <?php echo number_format((empty($totali_associati[$dipendente['dipendenti_id']])) ? 0 : $totali_associati[$dipendente['dipendenti_id']], 2); ?>
-                    </strong>
-                </td>
-            </tr>
+                                        $td_class .= ' disponibile';
+                                    }
+                                    
+                                    $tooltip = 'data-toggle="tooltip" title="' . $title . '" ';
+                                    */
+                                }
+                                ?>
 
-        <?php endforeach; ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th class="text-center">Totali (ore)</th>
-            <?php for ($day = 1; $day <= $days; $day++) :
-                $fullDate = $year . '-' . $month . '-' . $day;
-                if (!in_array(date('w', strtotime($fullDate)), $workingDays) || in_array(date('m-d', strtotime($fullDate)), $holidayDays)) {
-                    $bad_days = 'btn-danger festività';
-                } else {
-                    $bad_days = '';
-                } ?>
+                                <td <?php echo $tooltip; ?>data-associato="<?php echo $dipendente['dipendenti_id']; ?>" data-giorno="<?php echo $dateString; ?>" class="<?php //echo $bad_days;
+                                                                                                                                                                        ?><?php echo $td_class; ?>">
+                                    <div class="pallino1"></div>
+                                    <div class="pallino2"></div>
+                                    <?php if (!empty($ore[$day][$dipendente['dipendenti_id']])) : ?>
+                                        <?php $ora = $ore[$day][$dipendente['dipendenti_id']]; ?>
 
-                <th class="text-center <?php echo $bad_days; ?>"><?php echo number_format((empty($totali_giorni[$day])) ? 0 : $totali_giorni[$day], 2); ?></th>
-            <?php endfor; ?>
-            <th class="text-center"><?php echo number_format($totalone, 2); ?><br />
-                di cui <?php echo number_format($totalone_affiancamenti, 2); ?>*
-            </th>
-        </tr>
-        <?php //if ($cliente['clienti_modalita_calendario'] == 2 || in_array($this->auth->get('utenti'), [7,8])) : 
-        ?>
-        <?php //if ($this->auth->get('utenti_tipo') != 15) : //amministrativo con calendario sola lettura 
-        ?>
-        <tr>
-            <td class="td-associato text-center" colspan="<?php echo 2 + $days; ?>">Richieste</td>
-        </tr>
-        <?php for ($i = 1; $i <= 4; $i++) : ?>
-            <tr class="js-turni_scoperti">
-                <td class="td-associato text-center">Riga <?php echo $i; ?></td>
-                <?php for ($day = 1; $day <= $days; $day++) : ?>
-                    <?php
-                    $dateString = date('Y-m-d', strtotime($year . '/' . $month . '/' . $day));
+                                        <input type="text" data-record="<?php echo $ora['ore_account_id']; ?>" value="<?php echo $ora['ore_account_ore']; ?>" class="form-control input-xs <?php echo $bad_days; ?>" />
 
-                    foreach (@(array) ($appuntamenti_dati[$dateString][$dipendente['dipendenti_id']]) as $dati) {
-                        if (str_ireplace(':', '', $dati['projects_orari_alle']) < str_ireplace(':', '', $dati['projects_orari_dalle'])) {
-                            @$totali_giorni[$day] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            $totalone += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                        } else {
-                            @$totali_giorni[$day] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                            $totalone += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
-                        }
-                    }
+                                    <?php else : ?>
+                                        <?php //debug(@$appuntamenti[$dateString][$dipendente['dipendenti_id']]); 
+                                        ?>
+                                        <!--<input type="text" data-record='' class="form-control input-xs"/>-->
+
+                                        <?php
+                                        if (!empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) {
+                                            $fascie_impostate = [];
+                                            foreach ($appuntamenti[$dateString][$dipendente['dipendenti_id']] as $fascia_id) {
+                                                //debug($fascia_id);
+                                                if (stripos($fascia_id, '!') !== false) {
+                                                    $fascia_id = str_ireplace('!', '', $fascia_id);
+                                                    $fascie_impostate[] = '!' . $fascie_orarie[(int) $fascia_id] . '!';
+                                                } elseif (stripos($fascia_id, '**')) {
+                                                    $fascie_impostate[] = $fascie_orarie[(int) $fascia_id] . '**';
+                                                } elseif (stripos($fascia_id, '*')) {
+                                                    $fascie_impostate[] = $fascie_orarie[(int) $fascia_id] . '*';
+                                                } else {
+                                                    $fascie_impostate[] = $fascie_orarie[$fascia_id];
+                                                }
+                                            }
+
+                                            echo '<div class="js-fascie_impostate">' . implode(' ', $fascie_impostate) . '</div>';
+                                        }
+                                        ?>
+
+                                        <select multiple class="form-control <?php if (empty(@$appuntamenti[$dateString][$dipendente['dipendenti_id']])) : ?>js_hover_multiselect<?php else : ?>js_hover_multiselect <?php endif; ?> field_293 select2me" name="cella[<?php echo $dateString; ?>][<?php echo $dipendente['dipendenti_id']; ?>]" data-val="<?php echo @implode(',', @$appuntamenti[$dateString][$dipendente['dipendenti_id']]); ?>" data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
+
+                                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                                <?php $fascia_id = (string) $fascia_id; ?>
+                                                <option value="<?php echo $fascia_id; ?>" <?php if (@in_array($fascia_id, @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?></option>
+                                            <?php endforeach; ?>
+
+                                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                                <option value="<?php echo $fascia_id; ?>*" <?php if (@in_array($fascia_id . '*', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>*</option>
+                                            <?php endforeach; ?>
+
+                                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                                <option value="<?php echo $fascia_id; ?>**" <?php if (@in_array($fascia_id . '**', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>**</option>
+                                            <?php endforeach; ?>
+
+                                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                                <?php if (@in_array('!' . $fascia_id . '!', @$appuntamenti[$dateString][$dipendente['dipendenti_id']], true)) : ?><option value="!<?php echo $fascia_id; ?>!" selected>!<?php echo $fascia; ?>!</option><?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    <?php endif; ?>
+
+                                </td>
+                            <?php endfor; ?>
+                            <td class="text-center">
+                                <strong>
+                                    <?php echo number_format((empty($totali_associati[$dipendente['dipendenti_id']])) ? 0 : $totali_associati[$dipendente['dipendenti_id']], 2); ?>
+                                </strong>
+                            </td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="text-center">Totali (ore)</th>
+                        <?php for ($day = 1; $day <= $days; $day++) :
+                            $fullDate = $year . '-' . $month . '-' . $day;
+                            if (!in_array(date('w', strtotime($fullDate)), $workingDays) || in_array(date('m-d', strtotime($fullDate)), $holidayDays)) {
+                                $bad_days = 'btn-danger festività';
+                            } else {
+                                $bad_days = '';
+                            } ?>
+
+                            <th class="text-center <?php echo $bad_days; ?>"><?php echo number_format((empty($totali_giorni[$day])) ? 0 : $totali_giorni[$day], 2); ?></th>
+                        <?php endfor; ?>
+                        <th class="text-center"><?php echo number_format($totalone, 2); ?><br />
+                            di cui <?php echo number_format($totalone_affiancamenti, 2); ?>*
+                        </th>
+                    </tr>
+                    <?php //if ($cliente['clienti_modalita_calendario'] == 2 || in_array($this->auth->get('utenti'), [7,8])) : 
                     ?>
-                    <td class="<?php //echo $bad_days; 
-                                ?>" data-giorno="<?php echo $dateString; ?>">
+                    <?php //if ($this->auth->get('utenti_tipo') != 15) : //amministrativo con calendario sola lettura 
+                    ?>
+                    <tr>
+                        <td class="td-associato text-center" colspan="<?php echo 2 + $days; ?>">Richieste</td>
+                    </tr>
+                    <?php for ($i = 1; $i <= 4; $i++) : ?>
+                        <tr class="js-turni_scoperti">
+                            <td class="td-associato text-center">Riga <?php echo $i; ?></td>
+                            <?php for ($day = 1; $day <= $days; $day++) : ?>
+                                <?php
+                                $dateString = date('Y-m-d', strtotime($year . '/' . $month . '/' . $day));
 
-                        <select multiple class="form-control <?php if (empty(@$richieste[$dateString][$i])) : ?>js_hover_multiselect<?php else : ?>js_multiselect<?php endif; ?> field_293" name="richiesta_cella[<?php echo $dateString; ?>][<?php echo $i; ?>]" data-val="<?php echo @implode(',', @(array) $richieste[$dateString][$i]); ?>" data-ref="richieste_disponibilita" data-source-field="" data-minimum-input-length="0">
+                                foreach (@(array) ($appuntamenti_dati[$dateString][$dipendente['dipendenti_id']]) as $dati) {
+                                    if (str_ireplace(':', '', $dati['projects_orari_alle']) < str_ireplace(':', '', $dati['projects_orari_dalle'])) {
+                                        @$totali_giorni[$day] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                        @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                        $totalone += (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                    } else {
+                                        @$totali_giorni[$day] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                        @$totali_associati[$dipendente['dipendenti_id']] += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                        $totalone += (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
+                                    }
+                                }
+                                ?>
+                                <td class="<?php //echo $bad_days; 
+                                            ?>" data-giorno="<?php echo $dateString; ?>">
 
-                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                <?php $fascia_id = (string) $fascia_id; ?>
-                                <option value="<?php echo $fascia_id; ?>" <?php if (@in_array($fascia_id, @$richieste[$dateString][$i], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?></option>
-                            <?php endforeach; ?>
+                                    <select multiple class="form-control <?php if (empty(@$richieste[$dateString][$i])) : ?>js_hover_multiselect<?php else : ?>js_multiselect<?php endif; ?> field_293" name="richiesta_cella[<?php echo $dateString; ?>][<?php echo $i; ?>]" data-val="<?php echo @implode(',', @(array) $richieste[$dateString][$i]); ?>" data-ref="richieste_disponibilita" data-source-field="" data-minimum-input-length="0">
 
-                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                <option value="<?php echo $fascia_id; ?>*" <?php if (@in_array($fascia_id . '*', @$richieste[$dateString][$i], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>*</option>
-                            <?php endforeach; ?>
+                                        <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                            <?php $fascia_id = (string) $fascia_id; ?>
+                                            <option value="<?php echo $fascia_id; ?>" <?php if (@in_array($fascia_id, @$richieste[$dateString][$i], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?></option>
+                                        <?php endforeach; ?>
 
-                            <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
-                                <option value="<?php echo $fascia_id; ?>**" <?php if (@in_array($fascia_id . '**', @$richieste[$dateString][$i], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>**</option>
-                            <?php endforeach; ?>
-                        </select>
+                                        <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                            <option value="<?php echo $fascia_id; ?>*" <?php if (@in_array($fascia_id . '*', @$richieste[$dateString][$i], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>*</option>
+                                        <?php endforeach; ?>
 
-                    </td>
-                <?php endfor; ?>
-                <td class="text-center">
-                    <strong>
-                        &nbsp;
-                    </strong>
-                </td>
-            </tr>
-        <?php endfor; ?>
-        <?php //endif; 
-        ?>
-        <?php //endif; 
-        ?>
-    </tfoot>
-</table>
+                                        <?php foreach ($fascie_orarie as $fascia_id => $fascia) : ?>
+                                            <option value="<?php echo $fascia_id; ?>**" <?php if (@in_array($fascia_id . '**', @$richieste[$dateString][$i], true)) : ?> selected<?php endif; ?>><?php echo $fascia; ?>**</option>
+                                        <?php endforeach; ?>
+                                    </select>
+
+                                </td>
+                            <?php endfor; ?>
+                            <td class="text-center">
+                                <strong>
+                                    &nbsp;
+                                </strong>
+                            </td>
+                        </tr>
+                    <?php endfor; ?>
+                    <?php //endif; 
+                    ?>
+                    <?php //endif; 
+                    ?>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 
@@ -604,6 +626,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         <strong>** Costo orario differenziato</strong><br />
         <strong>! Fascia oraria cancellata</strong>
     </div>
+    
     <div class="col-md-8">
         <strong>Fascie cancellate</strong>
         <?php
