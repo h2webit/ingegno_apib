@@ -146,19 +146,21 @@ foreach ($_richieste as $richiesta) {
 $appuntamenti = $appuntamenti_dati = [];
 foreach ($_appuntamenti as $sede_professionista) {
     //debug($sede_professionista, true);
-    @$appuntamenti_dati[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['appuntamenti_associato']][] = $sede_professionista;
+    @$appuntamenti_dati[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['dipendenti_id']][] = $sede_professionista;
     if ($sede_professionista['projects_orari_cancellato'] == '1') {
-        @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['appuntamenti_associato']][] = '!' . $sede_professionista['appuntamenti_fascia'] . '!';
+        @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['dipendenti_id']][] = '!' . $sede_professionista['appuntamenti_fascia_oraria'] . '!';
     } else {
-        if ($sede_professionista['appuntamenti_affiancamento'] == '1') {
-            @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['appuntamenti_associato']][] = $sede_professionista['appuntamenti_fascia'] . '*';
-        } elseif ($sede_professionista['appuntamenti_studente'] == '1') {
-            @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['appuntamenti_associato']][] = $sede_professionista['appuntamenti_fascia'] . '**';
+        if (!empty($sede_professionista['appuntamenti_affiancamento']) && $sede_professionista['appuntamenti_affiancamento'] == '1') {
+            @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['dipendenti_id']][] = $sede_professionista['appuntamenti_fascia_oraria'] . '*';
+        } elseif (!empty($sede_professionista['appuntamenti_studente'] ) && $sede_professionista['appuntamenti_studente'] == '1') {
+            @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['dipendenti_id']][] = $sede_professionista['appuntamenti_fascia_oraria'] . '**';
         } else {
-            @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['appuntamenti_associato']][] = (string) $sede_professionista['appuntamenti_fascia'];
+            //debug($sede_professionista,true);
+            @$appuntamenti[substr($sede_professionista['appuntamenti_giorno'], 0, 10)][$sede_professionista['dipendenti_id']][] = (string) $sede_professionista['appuntamenti_fascia_oraria'];
         }
     }
 }
+//debug($appuntamenti,true);
 $non_disponibilita_associati = $this->apilib->search(
     'richieste',
     [
@@ -396,7 +398,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         $ore = (strtotime('2016-01-02 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
 
                                         $totalone += $ore;
-                                        if ($dati['appuntamenti_affiancamento'] == '1') {
+                                        if (!empty($dati['appuntamenti_affiancamento']) && $dati['appuntamenti_affiancamento'] == '1') {
                                             $totalone_affiancamenti += $ore;
                                         }
                                     } else {
@@ -406,7 +408,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         $ore = (strtotime('2016-01-01 ' . $dati['projects_orari_alle'] . ':00') - strtotime('2016-01-01 ' . $dati['projects_orari_dalle'] . ':00')) / 3600;
 
                                         $totalone += $ore;
-                                        if ($dati['appuntamenti_affiancamento'] == '1') {
+                                        if (!empty($dati['appuntamenti_affiancamento']) && $dati['appuntamenti_affiancamento'] == '1') {
                                             $totalone_affiancamenti += $ore;
                                         }
                                     }
@@ -736,7 +738,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
             }
 
             var data = {
-                'appuntamenti_associato': associato,
+                'dipendenti_id': associato,
                 'appuntamenti_impianto': sede,
                 'appuntamenti_giorno': giorno,
                 'appuntamenti_fascie': fascie

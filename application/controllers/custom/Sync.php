@@ -561,7 +561,7 @@ class Sync extends MY_Controller
         // Recupera i dati dalla tabella sedi_professionisti
         $sedi_professionisti = $this->apib_db
             ->where('sedi_professionisti_giorno >=', $previousMonthStart)
-            ->join('associati', 'associati_id = sedi_professionisti_associato', 'LEFT')
+            //->join('associati', 'associati_id = sedi_professionisti_associato', 'LEFT')
             ->get('sedi_professionisti')
             ->result_array();
 
@@ -572,10 +572,15 @@ class Sync extends MY_Controller
         $_orari = $this->db->get('projects_orari')->result_array();
         //Li rimappo per avere come chiave l'id
         $orari = array_key_map_data($_orari, 'projects_orari_id');
+
+        //Mi estraggo gli associati (dipendenti) e mi rimappo associato_id => users_id
+        $_dipendenti = $this->db->get('dipendenti')->result_array();
+        $dipendenti = array_key_value_map($_dipendenti, 'dipendenti_id', 'dipendenti_user_id');
+        
         //debug($orari,true);
         foreach ($sedi_professionisti as $sede_professionista) {
             progress(++$c, $t, 'import sedi_professionisti vs appuntamenti');
-
+            
             if (278 != $sede_professionista['sedi_professionisti_sede']) {
                 continue;
             }
@@ -585,12 +590,12 @@ class Sync extends MY_Controller
                 my_log('error', "Errore: sede o fascia non trovata per sedi_professionisti_id: " . $sede_professionista['sedi_professionisti_id']);
                 continue;
             }
-            
+            //debug($sede_professionista,true);
             $appuntamento = [
                 'appuntamenti_id' => $sede_professionista['sedi_professionisti_id'],
                 'appuntamenti_impianto' => $sede_professionista['sedi_professionisti_sede'],
                 'appuntamenti_fascia_oraria' => $fascia['projects_orari_id'],
-                'appuntamenti_persone' => [$sede_professionista['associati_utente']],
+                'appuntamenti_persone' => [$dipendenti[$sede_professionista['sedi_professionisti_associato']]],
                 'appuntamenti_giorno' => $sede_professionista['sedi_professionisti_giorno'],
                 'appuntamenti_ora_inizio' => $fascia['projects_orari_dalle'],
                 'appuntamenti_ora_fine' => $fascia['projects_orari_alle'],
@@ -600,16 +605,11 @@ class Sync extends MY_Controller
                 'appuntamenti_titolo' => 'Appuntamento importato',
                 'appuntamenti_creation_date' => date('Y-m-d H:i:s'),
                 'appuntamenti_modified_date' => date('Y-m-d H:i:s'),
+                'appuntamenti_affiancamento' => $sede_professionista['sedi_professionisti_affiancamento'] == 't' ? 1 : 0,
+                'appuntamenti_studente'   => $sede_professionista['sedi_professionisti_studente'] == 't' ? 1 : 0,
             ];
 
-            // Aggiungi campi aggiuntivi se necessario
-            if ($sede_professionista['sedi_professionisti_affiancamento'] == 't') {
-                $appuntamento['appuntamenti_note'] = 'Affiancamento';
-            }
-            if ($sede_professionista['sedi_professionisti_studente'] == 't') {
-                $appuntamento['appuntamenti_note'] = ($appuntamento['appuntamenti_note'] ?? '') . ' Studente';
-            }
-
+            
             try {
                 $appuntamento_exists = $this->db->get_where('appuntamenti', ['appuntamenti_id' => $appuntamento['appuntamenti_id']])->row_array();
                 $_POST = $appuntamento;

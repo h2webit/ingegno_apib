@@ -2558,3 +2558,5 @@ $lang['Quick search entities'] = 'Quick search entities';
 $lang['Module (identifier)'] = 'Module (identifier)';
 $lang['Module (identifier)'] = 'Module (identifier)';
 $lang['edit'] = 'edit';
+$lang['Mappature Pdf Dipendenti'] = 'Mappature Pdf Dipendenti';
+$lang['Re-send email'] = 'Re-send email';
