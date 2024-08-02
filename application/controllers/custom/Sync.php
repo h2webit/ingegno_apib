@@ -630,4 +630,124 @@ class Sync extends MY_Controller
 
         $this->mycache->clearCache();
     }
+    
+    public function import_report_orari() {
+        echo_flush('import report_orari vs report_orari');
+        set_log_scope('sync-report-orari');
+        
+        $report_orari = $this->apib_db
+            ->join('sedi_operative_orari', 'sedi_operative_orari_id = report_orari_fascia', 'LEFT')
+            ->limit(10)->get('report_orari')->result_array();
+        
+        debug($report_orari, true);
+        
+        $domande_id = [
+            1, //Fascia
+            2, //Data inizio
+            3, //Ora inizio
+            4, //Data fine
+            5, //Ora fine
+            6, //Numero accessi
+            7, //Prestazione effettuate
+            8, //Festivo
+            9, //Affiancamento
+            10, //Note
+            11, //Turni a tariffa differenziata
+        ];
+        
+        /**
+         * [report_orari_id] => 9347
+         * [report_orari_data_creazione] => 2018-02-13 17:24:18
+         * [report_orari_data_modifica] =>
+         * [report_orari_associato] => 419
+         * [report_orari_sede_operativa] => 9
+         * [report_orari_note] =>
+         * [report_orari_inizio] => 2018-02-12 20:00:00
+         * [report_orari_fine] => 2018-02-13 07:00:00
+         * [report_orari_accessi] =>
+         * [report_orari_prestazioni] =>
+         * [report_orari_domiciliare] =>
+         * [report_orari_affiancamento] => f
+         * [report_orari_fascia] => 20
+         * [report_orari_costo_differenziato] => f
+         * [report_orari_festivo] => f
+         */
+        
+        $t = count($report_orari);
+        $c = 0;
+        foreach ($report_orari as $report_orario) {
+            progress(++$c, $t, 'import report_orari');
+            
+            $dipendente = $this->apilib->searchFirst('dipendenti', $report_orario['report_orari_associato']);
+            
+            debug($dipendente, true);
+            
+            try {
+                $sondaggi_domande_risposte = [
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 1,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_fascia'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 2,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_inizio'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 3,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_fine'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 4,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_inizio'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 5,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_fine'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 6,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_accessi'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 7,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_prestazioni'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 8,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_festivo'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 9,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_affiancamento'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 10,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_note'],
+                    ],
+                    [
+                        'sondaggi_domande_risposte_domanda_id' => 11,
+                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_costo_differenziato'],
+                    ],
+                ];
+                
+                foreach ($sondaggi_domande_risposte as $risposta) {
+                    // $db_risposta_id = $this->apilib->create('sondaggi_domande_risposte', $risposta, false);
+                    
+                    // $sondaggi_risposte_utenti = [
+                    //     'sondaggi_risposte_utenti_utente_id' => $dipendente['dipendenti_user_id'],
+                    //     'sondaggi_risposte_utenti_risposta_id' => $db_risposta_id,
+                    //     'sondaggi_risposte_utenti_risposta_valore',
+                    //     'sondaggi_risposte_utenti_domanda_id' => $risposta['sondaggi_domande_risposte_domanda_id'],
+                    //     'sondaggi_risposte_utenti_timestamp' => strtotime($risposta['report_orari_data_creazione']),
+                    // ];
+                    
+                    // $this->apilib->create('sondaggi_risposte_utenti', $sondaggi_risposte_utenti);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento report_orario: {$e->getMessage()}");
+                debug($report_orario);
+                debug($e->getMessage(), true);
+            }
+        }
+    }
 }
