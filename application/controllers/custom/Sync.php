@@ -631,31 +631,33 @@ class Sync extends MY_Controller
         $this->mycache->clearCache();
     }
     
-    public function import_report_orari() {
+    public function import_report_orari($offset = 0) {
         echo_flush('import report_orari vs report_orari');
         set_log_scope('sync-report-orari');
         
+        $limit = 10000;
+        
         $report_orari = $this->apib_db
-            ->join('sedi_operative_orari', 'sedi_operative_orari_id = report_orari_fascia', 'LEFT')
-            ->limit(10)->get('report_orari')->result_array();
+            ->join('sedi_operative', 'sedi_operative_id = report_orari_sede_operativa', 'LEFT')
+            // ->where('report_orari_id', 5332)
+            ->limit($limit, $offset)
+            ->get('report_orari')->result_array();
         
-        debug($report_orari, true);
+        if (empty($report_orari)) {
+            echo_log('debug', 'nessun report_orari da importare<br/>');
+            return;
+        }
         
-        $domande_id = [
-            1, //Fascia
-            2, //Data inizio
-            3, //Ora inizio
-            4, //Data fine
-            5, //Ora fine
-            6, //Numero accessi
-            7, //Prestazione effettuate
-            8, //Festivo
-            9, //Affiancamento
-            10, //Note
-            11, //Turni a tariffa differenziata
-        ];
+        $all_dipendenti = $this->db->get('dipendenti')->result_array();
+        $map_dipendente_user_id = array_column($all_dipendenti, 'dipendenti_user_id', 'dipendenti_id');
         
-        /**
+        $all_sedi_operative = $this->db->get('projects')->result_array();
+        $map_sedi_operative_cliente = array_column($all_sedi_operative, 'projects_customer_id', 'projects_id');
+        $all_sedi_operative_id = array_column($all_sedi_operative, 'projects_id');
+        
+        // debug($report_orari);
+        
+        /** VECCHIO -> report_orari
          * [report_orari_id] => 9347
          * [report_orari_data_creazione] => 2018-02-13 17:24:18
          * [report_orari_data_modifica] =>
@@ -667,87 +669,162 @@ class Sync extends MY_Controller
          * [report_orari_accessi] =>
          * [report_orari_prestazioni] =>
          * [report_orari_domiciliare] =>
-         * [report_orari_affiancamento] => f
+         * [report_orari_affiancamento] => f // da convertire in 0/1
          * [report_orari_fascia] => 20
-         * [report_orari_costo_differenziato] => f
-         * [report_orari_festivo] => f
+         * [report_orari_costo_differenziato] => f // da convertire in 0/1
+         * [report_orari_festivo] => f // da convertire in 0/1
+         */
+        
+        /** NUOVO -> rapportini
+         * [rapportini_id] => 1
+         * [rapportini_cliente] => 11 // report_orari_associato
+         * [rapportini_commessa] => 3 // report_orari_sede_operativa
+         * [rapportini_note] =>
+         * [rapportini_operatori] => 0
+         * [rapportini_appuntamento_id] =>
+         * [rapportini_data] => 2024-06-10
+         * [rapportini_ora_inizio] => 10:30
+         * [rapportini_ora_fine] => 12:45
+         * [rapportini_immagini] =>
+         * [rapportini_da_validare] => 1
+         * [rapportini_firma_cliente] =>
+         * [rapportini_firma_operatore] =>
+         * [rapportini_foto] =>
+         * [rapportini_compilazione_id] =>
+         * [rapportini_codice] => 1-2024
+         * [rapportini_servizi] => // array id della variabile servizi -> listino_prezzi_id
+         * [rapportini_fascia] =>
+         * [rapportini_costo_differenziato] =>
+         * [rapportini_festivo] =>
+         * [rapportini_accessi] =>
+         * [rapportini_affiancamento] =>
          */
         
         $t = count($report_orari);
         $c = 0;
         foreach ($report_orari as $report_orario) {
-            progress(++$c, $t, 'import report_orari');
+            progress(++$c, $t, 'import report_orari - offset ' . $offset);
             
-            $dipendente = $this->apilib->searchFirst('dipendenti', $report_orario['report_orari_associato']);
+            // michael, 19/08/2024 - metto questo controllo perchè altrimenti va in errore postprocess in quanto ne la sede operativa ne il cliente esistono.
+            if (!in_array($report_orario['report_orari_sede_operativa'], $all_sedi_operative_id)) {
+                echo_log('debug', "SKIP report_orario {$report_orario['report_orari_id']} con sede operativa non trovata<br/>");
+                continue;
+            }
             
-            debug($dipendente, true);
+            if (!empty($report_orario['report_orari_domiciliare'])) {
+                // michael, 19/08/2024 - @todo per matteo: da gestire il domiciliare
+                echo_log('debug', "SKIP report_orario {$report_orario['report_orari_id']} con domiciliare<br/>");
+                return;
+            }
             
+            $servizi = $this->apib_db
+                ->where('report_orari_id', $report_orario['report_orari_id'])
+                ->get('report_orari_listino_prezzi')->result_array();
+            
+            $id_listino_prezzi = [];
+            if (!empty($servizi)) {
+                $id_listino_prezzi = array_column($servizi, 'listino_prezzi_id');
+            }
+            
+            // debug($servizi);
+            
+            $ora_inizio = date('H:i', strtotime($report_orario['report_orari_inizio']));
+            $ora_fine = date('H:i', strtotime($report_orario['report_orari_fine']));
+            
+            // // michael, 19/08/2024 - forzo ora fine a 23:59 se è minore dell'ora inizio (il che vuol dire che andrebbe su un altro giorno, ossia turno notturno)
+            // if ($ora_fine < $ora_inizio) {
+            //     echo_log('debug', "FORZATURA MEZZANOTTE - ora fine inferiore a ora inizio: {$ora_fine} < {$ora_inizio}<br/>");
+            //     $ora_fine = '23:59';
+            // }
+            
+            // creo il rapportino
+            $rapportino = [
+                'rapportini_cliente' => $report_orario['sedi_operative_cliente'] ?: $map_sedi_operative_cliente[$report_orario['report_orari_sede_operativa']],
+                'rapportini_commessa' => $report_orario['report_orari_sede_operativa'],
+                'rapportini_note' => $report_orario['report_orari_note'],
+                'rapportini_operatori' => [
+                    $map_dipendente_user_id[$report_orario['report_orari_associato']]
+                ],
+                'rapportini_appuntamento_id' => null,
+                'rapportini_data' => date('Y-m-d', strtotime($report_orario['report_orari_inizio'])),
+                'rapportini_ora_inizio' => $ora_inizio,
+                'rapportini_ora_fine' => $ora_fine,
+                'rapportini_da_validare' => 0,
+                'rapportini_firma_cliente' => null,
+                'rapportini_firma_operatore' => null,
+                'rapportini_foto' => null,
+                'rapportini_compilazione_id' => null,
+                'rapportini_codice' => null,
+                'rapportini_servizi' => $id_listino_prezzi,
+                'rapportini_fascia' => $report_orario['report_orari_fascia'],
+                'rapportini_costo_differenziato' => $report_orario['report_orari_costo_differenziato'] == 't' ? 1 : 0,
+                'rapportini_festivo' => $report_orario['report_orari_festivo'] == 't' ? 1 : 0,
+                'rapportini_accessi' => $report_orario['report_orari_accessi'],
+                'rapportini_affiancamento' => $report_orario['report_orari_affiancamento'] == 't' ? 1 : 0,
+            ];
+            
+            // debug($rapportino, true);
+            
+            $_POST = $rapportino;
             try {
-                $sondaggi_domande_risposte = [
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 1,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_fascia'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 2,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_inizio'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 3,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_fine'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 4,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_inizio'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 5,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_fine'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 6,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_accessi'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 7,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_prestazioni'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 8,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_festivo'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 9,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_affiancamento'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 10,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_note'],
-                    ],
-                    [
-                        'sondaggi_domande_risposte_domanda_id' => 11,
-                        'sondaggi_domande_risposte_risposta' => $report_orario['report_orari_costo_differenziato'],
-                    ],
-                ];
+                $rapportino_db = $this->db->get_where('rapportini', ['rapportini_id' => $report_orario['report_orari_id']])->row_array();
                 
-                foreach ($sondaggi_domande_risposte as $risposta) {
-                    // $db_risposta_id = $this->apilib->create('sondaggi_domande_risposte', $risposta, false);
+                if ($rapportino_db) {
+                    $this->apilib->edit('rapportini', $report_orario['report_orari_id'], $rapportino);
                     
-                    // $sondaggi_risposte_utenti = [
-                    //     'sondaggi_risposte_utenti_utente_id' => $dipendente['dipendenti_user_id'],
-                    //     'sondaggi_risposte_utenti_risposta_id' => $db_risposta_id,
-                    //     'sondaggi_risposte_utenti_risposta_valore',
-                    //     'sondaggi_risposte_utenti_domanda_id' => $risposta['sondaggi_domande_risposte_domanda_id'],
-                    //     'sondaggi_risposte_utenti_timestamp' => strtotime($risposta['report_orari_data_creazione']),
-                    // ];
+                    echo_log('debug', "rapportino {$report_orario['report_orari_id']} modificato<br/>");
+                } else {
+                    $rapportino['rapportini_id'] = $report_orario['report_orari_id'];
                     
-                    // $this->apilib->create('sondaggi_risposte_utenti', $sondaggi_risposte_utenti);
+                    $this->apilib->create('rapportini', $rapportino);
+                    
+                    echo_log('debug', "rapportino {$report_orario['report_orari_id']} creato<br/>");
                 }
             } catch (Exception $e) {
-                my_log('error', "errore inserimento report_orario: {$e->getMessage()}");
-                debug($report_orario);
-                debug($e->getMessage(), true);
+                // michael, 19/08/2024 - ho messo questa distinzione perchè in alcuni casi va in errore ("throw" voluto) il post-process #6773 alla riga 66. in questo caso il rapportino NON viene creato.
+                if (stripos($e->getMessage(), 'una rapportino') !== false) {
+                    echo_log('debug', "rapportino {$report_orario['report_orari_id']} con intervallo inizio-fine in overlap con altro rapportino dello stesso utente (Errore ricevuto: {$e->getMessage()})<br/>");
+                } else {
+                    echo_log('error', "errore inserimento rapportino: {$e->getMessage()}");
+                }
+                debug($rapportino);
+            }
+            
+            $_POST = [];
+        }
+        
+        // refresh page with offset increased by limit
+        echo_flush('<script>setTimeout(function(){window.location.href = "' . base_url('custom/sync/import_report_orari/' . ($offset + $limit)) . '";}, 500);</script>');
+    }
+    
+    public function import_listino_prezzi() {
+        $listini = $this->apib_db->get('listino_prezzi')->result_array();
+        
+        $t = count($listini);
+        $c = 0;
+
+        foreach ($listini as $listino) {
+            progress(++$c, $t, 'import listino_prezzi');
+            
+            $servizio = [
+                'fw_products_name' => $listino['listino_prezzi_servizio'],
+                'fw_products_sell_price' => $listino['listino_prezzi_prezzo'],
+            ];
+            
+            try {
+                $servizio_db = $this->db->get_where('fw_products', ['fw_products_id' => $listino['listino_prezzi_id']])->row_array();
+
+                if ($servizio_db) {
+                    $this->apilib->edit('fw_products', $servizio_db['fw_products_id'], $servizio);
+                } else {
+                    $servizio['fw_products_id'] = $listino['listino_prezzi_id'];
+                    
+                    $this->apilib->create('fw_products', $servizio);
+                }
+            } catch (Exception $e) {
+                echo_log('error', "errore inserimento servizio: {$e->getMessage()}");
             }
         }
+        
     }
 }
