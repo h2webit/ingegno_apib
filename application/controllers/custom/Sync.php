@@ -21,7 +21,7 @@ class Sync extends MY_Controller
     
     private function apib_db_connect() {
         //Mi connetto al db postgres
-        $db['crm_postgres']['hostname'] = ($_SERVER['SERVER_NAME'] == 'apib.ingegnosuite.it' || $_SERVER['SERVER_NAME'] == '') ? 'localhost' : "crm.apibinfermieribologna.com"; // Cambiare per testare in linea
+        $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com'; // Cambiare per testare in linea
         $db['crm_postgres']['database'] = 'mastercrm_apib';
         $db['crm_postgres']['username'] = 'mastercrm_apib';
         $db['crm_postgres']['password'] = 'Djf93MN@VZZF215';
@@ -105,6 +105,10 @@ class Sync extends MY_Controller
         $this->import_sedi_operative_associati();
         $this->import_disponibilita_associati();
         $this->import_sedi_professionisti();
+        $this->import_domiciliari();
+
+        $this->import_listino_prezzi();
+        $this->import_report_orari();
     }
     
     public function import_associati() {
@@ -256,6 +260,8 @@ class Sync extends MY_Controller
                 'customers_deleted' => $cliente['clienti_deleted'],
                 'customers_code' => $cliente['clienti_id'],
                 'customers_status' => 1,
+                'customers_type' => 1, //customer
+                'customers_group' => 2, //azienda
 
             ];
             //Tutti i campi che non esistono mappati su $dipendente ma che esistono su $associato, li salvo sul json dipendenti_altri_dati
@@ -293,6 +299,8 @@ class Sync extends MY_Controller
         }
         $this->mycache->clearCache();
     }
+
+    
 
     public function import_sedi() {
         set_log_scope('sync-sedi');
@@ -630,19 +638,88 @@ class Sync extends MY_Controller
 
         $this->mycache->clearCache();
     }
-    
+
+    public function import_domiciliari()
+    {
+        set_log_scope('sync-domiciliari');
+        $domiciliari = $this->apib_db->get('domiciliari')->result_array();
+
+        $t = count($domiciliari);
+        $c = 0;
+        foreach ($domiciliari as $domiciliare) {
+            progress(++$c, $t, 'import domiciliari vs customers');
+            //MP: Questa forzatura serve per avere id univoci tra domiciliari e clienti (su apib_db sono due tabelle diverse, mentre qua importiamo tutto su customers quindi questo è l'unico trick rapido che mi è venuto in mente)
+            $domiciliare['domiciliari_id'] = '9999' . $domiciliare['domiciliari_id'];
+            $customer = [
+                'customers_id' => $domiciliare['domiciliari_id'],
+                'customers_name' => $domiciliare['domiciliari_nome'],
+                'customers_last_name' => $domiciliare['domiciliari_cognome'],
+                'customers_full_name' => $domiciliare['domiciliari_nome'] . ' ' . $domiciliare['domiciliari_cognome'],
+                'customers_address' => $domiciliare['domiciliari_residenza_indirizzo'],
+                'customers_city' => $domiciliare['domiciliari_residenza_comune'],
+                'customers_province' => $domiciliare['domiciliari_residenza_provincia'],
+                'customers_cf' => $domiciliare['domiciliari_codice_fiscale'],
+                'customers_phone' => $domiciliare['domiciliari_telefono'],
+                'customers_fax' => $domiciliare['domiciliari_fax'],
+                'customers_mobile' => $domiciliare['domiciliari_cellulare'],
+                'customers_email' => $domiciliare['domiciliari_email'],
+                'customers_description' => $domiciliare['domiciliari_note'],
+                'customers_status' => ($domiciliare['domiciliari_non_attivo'] == 't') ? 3 : 1,
+                'customers_type' => 1, // Assumendo che 1 sia il tipo customer
+                'customers_group' => 1, // Assumendo che 2 sia il tipo privato
+                'customers_creation_date' => $domiciliare['domiciliari_data_creazione'],
+                'customers_modified_date' => $domiciliare['domiciliari_data_modifica'],
+            ];
+
+            foreach ($domiciliare as $key => $value) {
+                $key = str_replace('domiciliari_', 'customers_', $key);
+                if (!array_key_exists($key, $customer)) {
+                    $customer['customers_dati_apib'][$key] = $value;
+                }
+
+            }
+            $customer['customers_dati_apib'] = json_encode($customer['customers_dati_apib']);
+
+            try {
+                $customer_exists = $this->db->get_where('customers', ['customers_id' => $customer['customers_id']])->row_array();
+                $_POST = $customer;
+                if ($customer_exists) {
+                    $customer_creato = $this->apilib->edit('customers', $customer['customers_id'], $customer);
+                } else {
+                    $customer_creato = $this->apilib->create('customers', $customer);
+                }
+
+                $_POST = [];
+
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento customer (domiciliare): {$e->getMessage()}");
+                debug($customer);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
+    }
+
     public function import_report_orari($offset = 0) {
         echo_flush('import report_orari vs report_orari');
         set_log_scope('sync-report-orari');
         
-        $limit = 10000;
+        $limit = 99;
         
         $report_orari = $this->apib_db
             ->join('sedi_operative', 'sedi_operative_id = report_orari_sede_operativa', 'LEFT')
-            // ->where('report_orari_id', 5332)
+            //->where('report_orari_inizio >= ', '2024-01-01')
+            
             ->limit($limit, $offset)
+            ->order_by('report_orari_id', 'ASC')
             ->get('report_orari')->result_array();
         
+$count_total = $this->apib_db
+            
+            //->where('report_orari_inizio >= ', '2024-01-01')
+            
+            ->count_all_results('report_orari');
+
         if (empty($report_orari)) {
             echo_log('debug', 'nessun report_orari da importare<br/>');
             return;
@@ -701,9 +778,9 @@ class Sync extends MY_Controller
          */
         
         $t = count($report_orari);
-        $c = 0;
+        $c = $offset;
         foreach ($report_orari as $report_orario) {
-            progress(++$c, $t, 'import report_orari - offset ' . $offset);
+            progress(++$c, $count_total, 'import report_orari - offset ' . $offset);
             
             // michael, 19/08/2024 - metto questo controllo perchè altrimenti va in errore postprocess in quanto ne la sede operativa ne il cliente esistono.
             if (!in_array($report_orario['report_orari_sede_operativa'], $all_sedi_operative_id)) {
@@ -711,10 +788,11 @@ class Sync extends MY_Controller
                 continue;
             }
             
-            if (!empty($report_orario['report_orari_domiciliare'])) {
-                // michael, 19/08/2024 - @todo per matteo: da gestire il domiciliare
-                echo_log('debug', "SKIP report_orario {$report_orario['report_orari_id']} con domiciliare<br/>");
-                return;
+           
+
+            if (empty($map_dipendente_user_id[$report_orario['report_orari_associato']])) {
+                echo_log('debug', "SKIP report_orario per mancanza associato<br/>");
+                continue;
             }
             
             $servizi = $this->apib_db
@@ -724,6 +802,7 @@ class Sync extends MY_Controller
             $id_listino_prezzi = [];
             if (!empty($servizi)) {
                 $id_listino_prezzi = array_column($servizi, 'listino_prezzi_id');
+                
             }
             
             // debug($servizi);
@@ -739,12 +818,10 @@ class Sync extends MY_Controller
             
             // creo il rapportino
             $rapportino = [
-                'rapportini_cliente' => $report_orario['sedi_operative_cliente'] ?: $map_sedi_operative_cliente[$report_orario['report_orari_sede_operativa']],
-                'rapportini_commessa' => $report_orario['report_orari_sede_operativa'],
+                
+                
                 'rapportini_note' => $report_orario['report_orari_note'],
-                'rapportini_operatori' => [
-                    $map_dipendente_user_id[$report_orario['report_orari_associato']]
-                ],
+                
                 'rapportini_appuntamento_id' => null,
                 'rapportini_data' => date('Y-m-d', strtotime($report_orario['report_orari_inizio'])),
                 'rapportini_ora_inizio' => $ora_inizio,
@@ -755,13 +832,22 @@ class Sync extends MY_Controller
                 'rapportini_foto' => null,
                 'rapportini_compilazione_id' => null,
                 'rapportini_codice' => null,
-                'rapportini_servizi' => $id_listino_prezzi,
+                //'rapportini_servizi' => $id_listino_prezzi,
                 'rapportini_fascia' => $report_orario['report_orari_fascia'],
                 'rapportini_costo_differenziato' => $report_orario['report_orari_costo_differenziato'] == 't' ? 1 : 0,
                 'rapportini_festivo' => $report_orario['report_orari_festivo'] == 't' ? 1 : 0,
                 'rapportini_accessi' => $report_orario['report_orari_accessi'],
                 'rapportini_affiancamento' => $report_orario['report_orari_affiancamento'] == 't' ? 1 : 0,
+                'rapportini_id' => $report_orario['report_orari_id'],
             ];
+
+            if (!empty($report_orario['report_orari_domiciliare'])) {
+                $report_orario['report_orari_domiciliare'] = '9999' . $report_orario['report_orari_domiciliare'];
+                $rapportino['rapportini_cliente'] = $report_orario['report_orari_domiciliare'] ?: $map_sedi_operative_cliente[$report_orario['report_orari_sede_operativa']];
+            } else {
+                $rapportino['rapportini_cliente'] = $report_orario['sedi_operative_cliente'] ?: $map_sedi_operative_cliente[$report_orario['report_orari_sede_operativa']];
+                $rapportino['rapportini_commessa'] = $report_orario['report_orari_sede_operativa'];
+            }
             
             // debug($rapportino, true);
             
@@ -770,16 +856,35 @@ class Sync extends MY_Controller
                 $rapportino_db = $this->db->get_where('rapportini', ['rapportini_id' => $report_orario['report_orari_id']])->row_array();
                 
                 if ($rapportino_db) {
-                    $this->apilib->edit('rapportini', $report_orario['report_orari_id'], $rapportino);
-                    
-                    echo_log('debug', "rapportino {$report_orario['report_orari_id']} modificato<br/>");
+                    //$this->apilib->edit('rapportini', $report_orario['report_orari_id'], $rapportino);
+                    $this->db->where('rapportini_id', $report_orario['report_orari_id'])->update('rapportini', $rapportino);
+                    //echo_log('debug', "rapportino {$report_orario['report_orari_id']} modificato<br/>");
                 } else {
-                    $rapportino['rapportini_id'] = $report_orario['report_orari_id'];
                     
-                    $this->apilib->create('rapportini', $rapportino);
                     
-                    echo_log('debug', "rapportino {$report_orario['report_orari_id']} creato<br/>");
+                    //$this->apilib->create('rapportini', $rapportino);
+                    $this->db->insert('rapportini', $rapportino);
+                    
+                    //echo_log('debug', "rapportino {$report_orario['report_orari_id']} creato<br/>");
                 }
+                //Inserisco gli operatori
+                $this->db->where('rapportini_id', $report_orario['report_orari_id'])->delete('rel_rapportini_users');
+
+                $this->db->insert('rel_rapportini_users', [
+                    'rapportini_id' => $report_orario['report_orari_id'],
+                    'users_id' => $map_dipendente_user_id[$report_orario['report_orari_associato']],
+                ]);
+
+                //Inserisco i servizi
+                $this->db->where('rapportini_id', $report_orario['report_orari_id'])->delete('rel_rapportini_servizi_prodotti');
+                if ($id_listino_prezzi) {
+                    foreach ($id_listino_prezzi as $id_listino)
+                    $this->db->insert('rel_rapportini_servizi_prodotti', [
+                        'rapportini_id' => $report_orario['report_orari_id'],
+                        'fw_products_id' => $id_listino,
+                    ]);
+                }
+
             } catch (Exception $e) {
                 // michael, 19/08/2024 - ho messo questa distinzione perchè in alcuni casi va in errore ("throw" voluto) il post-process #6773 alla riga 66. in questo caso il rapportino NON viene creato.
                 if (stripos($e->getMessage(), 'una rapportino') !== false) {
@@ -792,7 +897,7 @@ class Sync extends MY_Controller
             
             $_POST = [];
         }
-        
+        //die('TEST');
         // refresh page with offset increased by limit
         echo_flush('<script>setTimeout(function(){window.location.href = "' . base_url('custom/sync/import_report_orari/' . ($offset + $limit)) . '";}, 500);</script>');
     }

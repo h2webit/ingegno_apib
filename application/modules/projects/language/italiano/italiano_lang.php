@@ -877,3 +877,28 @@ $lang['/ SOCIETA\' E SALUTE SPA'] = '/ SOCIETA\' E SALUTE SPA';
 $lang['Commessa SOCIETA\' E SALUTE   VIA MASSARENTI '] = 'Commessa SOCIETA\' E SALUTE   VIA MASSARENTI ';
 $lang['Commessa S.ANNA COMUNITA\' MANI AMICHE OSS '] = 'Commessa S.ANNA COMUNITA\' MANI AMICHE OSS ';
 $lang['Commessa S.ANNA COMUNITA\' MANI AMICHE OSS '] = 'Commessa S.ANNA COMUNITA\' MANI AMICHE OSS ';
+$lang['Data caricamento'] = 'Data caricamento';
+$lang['Data caricamento'] = 'Data caricamento';
+$lang['Data caricamento'] = 'Data caricamento';
+$lang['Commessa S.ANNA S.CATERINA   AREA CRA COVID OSS'] = 'Commessa S.ANNA S.CATERINA   AREA CRA COVID OSS';
+$lang['Impostazioni generiche'] = 'Impostazioni generiche';
+$lang['Nuovo Stato Progetto'] = 'Nuovo Stato Progetto';
+$lang['ID Project Images Category'] = 'ID Project Images Category';
+$lang['Project Images Category'] = 'Project Images Category';
+$lang['Projects Category'] = 'Projects Category';
+$lang['Personalizza categorie immagini progetti'] = 'Personalizza categorie immagini progetti';
+$lang['Valori accettati:\\n
+{incr 4} -> Incremento del codice, il numero indica quanti zeri inserire prima del codice (es. 0099)\\n
+{year2} -> aggiunge anno corrente 2 cifre\\n
+{year4} -> aggiunge anno corrente 4 cifre\\n
+{reset_year 1} -> se presente, l\'incrementale verrà resettato al cambiare dell\'anno'] = 'Valori accettati:\\n
+{incr 4} -> Incremento del codice, il numero indica quanti zeri inserire prima del codice (es. 0099)\\n
+{year2} -> aggiunge anno corrente 2 cifre\\n
+{year4} -> aggiunge anno corrente 4 cifre\\n
+{reset_year 1} -> se presente, l\'incrementale verrà resettato al cambiare dell\'anno';
+$lang['Placeholder codice progetto'] = 'Placeholder codice progetto';
+$lang['Commessa senza nome #1092'] = 'Commessa senza nome #1092';
+$lang['/ ANNA ROSA GIOVANNINI'] = '/ ANNA ROSA GIOVANNINI';
+$lang['*** sub *** Commessa senza nome #1693: Ordini e fatture'] = '*** sub *** Commessa senza nome #1693: Ordini e fatture';
+$lang['Commessa senza nome #1693'] = 'Commessa senza nome #1693';
+$lang['/ FRANCESCO NERI'] = '/ FRANCESCO NERI';

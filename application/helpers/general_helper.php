@@ -1654,7 +1654,7 @@ if (!function_exists('time_elapsed')) {
 function getReverseGeocoding($address)
 {
     $ch = curl_init();
-    
+
     $get = http_build_query([
         'format' => 'json',
         'addressdetails' => 1,
@@ -1662,7 +1662,7 @@ function getReverseGeocoding($address)
         'polygon_svg' => 1,
         'q' => $address,
     ]);
-    
+
     $url = "https://nominatim.openstreetmap.org/search.php?{$get}";
 
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -1804,7 +1804,7 @@ if (!function_exists('progress')) {
                 progress_div.setAttribute("id", "' . $selector_id . '");
                 document.write(progress_div.outerHTML);
             }
-            progress_div.innerText = "' . $prepend . $perc . ' of 100%";
+            progress_div.innerText = "' . $prepend . $perc . '% (' . $current . ' of ' . $total . ')";
         </script>
         '
             );
@@ -2349,4 +2349,28 @@ if (!function_exists('validate_signature')) {
     }
 
 
+}
+
+if (!function_exists('is_valid_image')) {
+    function is_valid_image($image_path)
+    {
+        // Verifica se il file esiste
+        if (!file_exists($image_path)) {
+            return false;
+        }
+
+        // Verifica se è un'immagine valida
+        $image_info = @getimagesize($image_path);
+        if ($image_info === false) {
+            return false;
+        }
+
+        // Opzionale: verifica dei tipi di immagine supportati
+        $allowed_types = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF];
+        if (!in_array($image_info[2], $allowed_types)) {
+            return false;
+        }
+
+        return true;
+    }
 }
