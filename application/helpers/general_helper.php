@@ -1809,7 +1809,7 @@ if (!function_exists('progress')) {
         '
             );
         } else {
-            echo "\r{$perc} of 100%";
+            echo "\r{$prepend}{$perc} of 100%";
         }
 
         return $perc;

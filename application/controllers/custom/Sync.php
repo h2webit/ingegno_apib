@@ -96,6 +96,9 @@ class Sync extends MY_Controller
         }
     }
 
+    public function test() {
+        $this->mail_model->sendMessage('matteopuppis@gmail.com', 'test', 'test');
+    }
     public function migrate_dati() {
         $this->import_associati();
         $this->import_clienti();
@@ -703,15 +706,19 @@ class Sync extends MY_Controller
     public function import_report_orari($offset = 0) {
         echo_flush('import report_orari vs report_orari');
         set_log_scope('sync-report-orari');
+        if (is_cli()) {
+            $limit = 9999999999;
+        } else {
+            $limit = 99;
+        }
         
-        $limit = 99;
         
         $report_orari = $this->apib_db
             ->join('sedi_operative', 'sedi_operative_id = report_orari_sede_operativa', 'LEFT')
             //->where('report_orari_inizio >= ', '2024-01-01')
             
             ->limit($limit, $offset)
-            ->order_by('report_orari_id', 'ASC')
+            ->order_by('report_orari_id', (is_cli()?'DESC':'ASC'))
             ->get('report_orari')->result_array();
         
 $count_total = $this->apib_db
@@ -779,11 +786,22 @@ $count_total = $this->apib_db
         
         $t = count($report_orari);
         $c = $offset;
+
+        $_commesse_domiciliari = $this->db->where('projects_customer_id IN (SELECT customers_id FROM customers WHERE customers_group = 1)', null, false)->get('projects')->result_array();
+        $commesse_domiciliari = array_key_value_map($_commesse_domiciliari, 'projects_customer_id', 'projects_id');
+        
         foreach ($report_orari as $report_orario) {
             progress(++$c, $count_total, 'import report_orari - offset ' . $offset);
             
+            if ($report_orario['report_orari_id'] != '195005') {
+                //continue;
+            } else {
+                // debug($report_orario);
+                // debug($all_sedi_operative_id,true);
+            }
+
             // michael, 19/08/2024 - metto questo controllo perchè altrimenti va in errore postprocess in quanto ne la sede operativa ne il cliente esistono.
-            if (!in_array($report_orario['report_orari_sede_operativa'], $all_sedi_operative_id)) {
+            if (!empty($report_orario['report_orari_sede_operativa']) && (!in_array($report_orario['report_orari_sede_operativa'], $all_sedi_operative_id))) {
                 echo_log('debug', "SKIP report_orario {$report_orario['report_orari_id']} con sede operativa non trovata<br/>");
                 continue;
             }
@@ -841,15 +859,21 @@ $count_total = $this->apib_db
                 'rapportini_id' => $report_orario['report_orari_id'],
             ];
 
+            
+
             if (!empty($report_orario['report_orari_domiciliare'])) {
                 $report_orario['report_orari_domiciliare'] = '9999' . $report_orario['report_orari_domiciliare'];
                 $rapportino['rapportini_cliente'] = $report_orario['report_orari_domiciliare'] ?: $map_sedi_operative_cliente[$report_orario['report_orari_sede_operativa']];
+                $rapportino['rapportini_commessa'] = $commesse_domiciliari[$report_orario['report_orari_domiciliare']];
+                
             } else {
                 $rapportino['rapportini_cliente'] = $report_orario['sedi_operative_cliente'] ?: $map_sedi_operative_cliente[$report_orario['report_orari_sede_operativa']];
                 $rapportino['rapportini_commessa'] = $report_orario['report_orari_sede_operativa'];
             }
-            
-            // debug($rapportino, true);
+
+            if ($report_orario['report_orari_id'] == '195005') {
+                //debug($rapportino, true);
+            }
             
             $_POST = $rapportino;
             try {
@@ -899,7 +923,9 @@ $count_total = $this->apib_db
         }
         //die('TEST');
         // refresh page with offset increased by limit
-        echo_flush('<script>setTimeout(function(){window.location.href = "' . base_url('custom/sync/import_report_orari/' . ($offset + $limit)) . '";}, 500);</script>');
+        if (!is_cli()) {
+            echo_flush('<script>setTimeout(function(){window.location.href = "' . base_url('custom/sync/import_report_orari/' . ($offset + $limit)) . '";}, 500);</script>');
+        }
     }
     
     public function import_listino_prezzi() {

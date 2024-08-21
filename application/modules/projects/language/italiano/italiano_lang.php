@@ -902,3 +902,7 @@ $lang['/ ANNA ROSA GIOVANNINI'] = '/ ANNA ROSA GIOVANNINI';
 $lang['*** sub *** Commessa senza nome #1693: Ordini e fatture'] = '*** sub *** Commessa senza nome #1693: Ordini e fatture';
 $lang['Commessa senza nome #1693'] = 'Commessa senza nome #1693';
 $lang['/ FRANCESCO NERI'] = '/ FRANCESCO NERI';
+$lang['*** sub *** Commessa senza nome #1708: Ordini e fatture'] = '*** sub *** Commessa senza nome #1708: Ordini e fatture';
+$lang['Commessa: 1354 | senza nome #1708'] = 'Commessa: 1354 | senza nome #1708';
+$lang['Commessa: 0890 | senza nome #1244'] = 'Commessa: 0890 | senza nome #1244';
+$lang['/ ORLANDO ANTONINI'] = '/ ORLANDO ANTONINI';

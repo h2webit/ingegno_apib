@@ -45,7 +45,7 @@ class Charts extends CI_Model
                         $alreadyJoined[] = $_field['fields_ref'];
                     }
                 }
-
+                //debug($element);
                 $field = $this->datab->get_field($element['charts_elements_fields_id']);
                 if ($group_by) {
                     $query_group_by = str_replace('#', ',', $group_by);
@@ -59,7 +59,7 @@ class Charts extends CI_Model
 
                 $order = ($element['charts_elements_order']) ? "ORDER BY " . $element['charts_elements_order'] : '';
                 $data = array();
-
+                //debug($field);
                 $field_function_parameter = ($element['charts_elements_function_parameter']) ? $element['charts_elements_function_parameter'] : $field['fields_name'];
 
                 switch ($element['charts_elements_function']) {

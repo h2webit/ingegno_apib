@@ -695,3 +695,4 @@ $lang['You cannot save because one or more files are being uploaded.<br/>Please 
 $lang['To'] = 'To';
 $lang['Crea preventivo'] = 'Crea preventivo';
 $lang['/  - Customer'] = '/  - Customer';
+$lang['/ UNIVERSITA\' DEGLI STUDI DI PARMA - Customer'] = '/ UNIVERSITA\' DEGLI STUDI DI PARMA - Customer';

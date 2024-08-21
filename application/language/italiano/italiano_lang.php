@@ -2840,3 +2840,7 @@ $lang['Fields %s are not accepted in entity \'rapportini\''] = 'Fields %s are no
 $lang['Gestione immagini'] = 'Gestione immagini';
 $lang['Approva'] = 'Approva';
 $lang['Asterisk Settings'] = 'Asterisk Settings';
+$lang['Appearance settings'] = 'Appearance settings';
+$lang['Extra settings'] = 'Extra settings';
+$lang['Manage Templates'] = 'Manage Templates';
+$lang['Background pp'] = 'Background pp';
