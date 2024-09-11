@@ -7,3 +7,4 @@ $lang['Enable sounds'] = 'Abilita suoni notifiche';
 $lang['Notifications sound'] = 'Notifications sound';
 $lang['Configurations'] = 'Configurations';
 $lang['Last login'] = 'Last login';
+$lang['Dettagli utente'] = 'Dettagli utente';

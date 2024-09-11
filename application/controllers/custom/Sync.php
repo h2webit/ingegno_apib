@@ -229,7 +229,7 @@ class Sync extends MY_Controller
     public function import_clienti()
     {
         set_log_scope('sync-clienti');
-        $clienti = $this->apib_db->get('clienti')->result_array();
+        $clienti = $this->apib_db->where('clienti_id <>', 631)->get('clienti')->result_array();
         //debug($associati,true);
         $t = count($clienti);
         $c = 0;
@@ -704,7 +704,7 @@ class Sync extends MY_Controller
     }
 
     public function import_report_orari($offset = 0) {
-        echo_flush('import report_orari vs report_orari');
+        echo_flush('import rapportini vs report_orari');
         set_log_scope('sync-report-orari');
         if (is_cli()) {
             $limit = 9999999999;
@@ -857,6 +857,7 @@ $count_total = $this->apib_db
                 'rapportini_accessi' => $report_orario['report_orari_accessi'],
                 'rapportini_affiancamento' => $report_orario['report_orari_affiancamento'] == 't' ? 1 : 0,
                 'rapportini_id' => $report_orario['report_orari_id'],
+                'rapportini_codice' => $c,
             ];
 
             
