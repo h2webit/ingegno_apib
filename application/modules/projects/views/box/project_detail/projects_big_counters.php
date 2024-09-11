@@ -53,7 +53,7 @@ $this->load->model('projects/projects');
 
 <!--------- Saldo ore ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_billable_balance'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_billable_balance']) && $ingegno_settings['enable_big_counters_billable_balance'] == DB_BOOL_TRUE): ?>
     <?php $billable_hours_balance = $this->projects->get_billable_hours_balance($value_id); ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
@@ -70,7 +70,7 @@ $this->load->model('projects/projects');
 
 <!--------- Ore interventi ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_interventi_hours'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_interventi_hours']) && $ingegno_settings['enable_big_counters_interventi_hours'] == DB_BOOL_TRUE): ?>
     <?php $interventi_hours = $this->projects->get_interventi_hours($value_id); ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
@@ -100,7 +100,7 @@ $this->load->model('projects/projects');
 
 <!--------- Timesheet ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_timesheet'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_timesheet']) && $ingegno_settings['enable_big_counters_timesheet'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -116,7 +116,7 @@ $this->load->model('projects/projects');
 
 <!--------- € Timesheet ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_timesheet_costo'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_timesheet_costo']) && $ingegno_settings['enable_big_counters_timesheet_costo'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -124,7 +124,9 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter orange">
-                    € <?php e_money($this->projects->get_project_worked_hours($value_id)['worked_hours_cost']); ?> </span>
+                    €
+                    <?php e_money($this->projects->get_project_worked_hours($value_id)['worked_hours_cost'], '{number}', 0); ?>
+                </span>
             </div>
         </div>
     </div>
@@ -132,7 +134,7 @@ $this->load->model('projects/projects');
 
 <!--------- Timesheet ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_spese'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_spese']) && $ingegno_settings['enable_big_counters_spese'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -148,7 +150,7 @@ $this->load->model('projects/projects');
 
 <!--------- Progress task ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_progress_task'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_progress_task']) && $ingegno_settings['enable_big_counters_progress_task'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -164,7 +166,7 @@ $this->load->model('projects/projects');
 
 <!--------- Ordini cliente ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_ordini_cliente']) && $ingegno_settings['enable_big_counters_ordini_cliente'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -172,7 +174,8 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_cliente'], 0); ?> </span>
+                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_cliente'], '{number}', 0); ?>
+                </span>
             </div>
         </div>
     </div>
@@ -181,7 +184,7 @@ $this->load->model('projects/projects');
 
 <!--------- Ordini cliente ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_ordini_fornitore'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_ordini_fornitore']) && $ingegno_settings['enable_big_counters_ordini_fornitore'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -189,7 +192,8 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter red">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_fornitore'], 0); ?> </span>
+                    € <?php e_money($this->projects->get_project_orders($value_id)['ordini_fornitore'], '{number}', 0); ?>
+                </span>
             </div>
         </div>
     </div>
@@ -197,7 +201,7 @@ $this->load->model('projects/projects');
 
 <!--------- Fatturato ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_fatturato'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_fatturato']) && $ingegno_settings['enable_big_counters_fatturato'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -205,7 +209,7 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_orders($value_id)['fatturato'], 0); ?> </span>
+                    € <?php e_money($this->projects->get_project_orders($value_id)['fatturato'], '{number}', 0); ?> </span>
             </div>
         </div>
     </div>
@@ -213,7 +217,7 @@ $this->load->model('projects/projects');
 
 <!--------- Pagamenti totali ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_totale_pagamenti'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_totale_pagamenti']) && $ingegno_settings['enable_big_counters_totale_pagamenti'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -221,7 +225,8 @@ $this->load->model('projects/projects');
             </div>
             <div class="conteggio_info">
                 <span class="conteggio_counter green">
-                    € <?php e_money($this->projects->get_project_total_payments($value_id)['all'], 0); ?> </span>
+                    € <?php e_money($this->projects->get_project_total_payments($value_id)['all'], '{number}', 0); ?>
+                </span>
             </div>
         </div>
     </div>
@@ -229,7 +234,7 @@ $this->load->model('projects/projects');
 
 <!--------- Pagamenti totali ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_pagamenti_non_saldati'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_pagamenti_non_saldati']) && $ingegno_settings['enable_big_counters_pagamenti_non_saldati'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -245,7 +250,7 @@ $this->load->model('projects/projects');
 
 <!--------- MOL ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_mol_fatturato'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_mol_fatturato']) && $ingegno_settings['enable_big_counters_mol_fatturato'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">
@@ -262,7 +267,7 @@ $this->load->model('projects/projects');
 
 <!--------- MOL ------------>
 
-<?php if ($ingegno_settings['enable_big_counters_mol_ordinato'] == DB_BOOL_TRUE): ?>
+<?php if (!empty($ingegno_settings['enable_big_counters_mol_ordinato']) && $ingegno_settings['enable_big_counters_mol_ordinato'] == DB_BOOL_TRUE): ?>
     <div class="col-xs-2">
         <div class="conteggi_info">
             <div class="conteggio_info">

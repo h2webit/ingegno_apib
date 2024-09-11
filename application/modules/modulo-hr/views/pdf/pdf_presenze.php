@@ -137,6 +137,8 @@
 
     $where_dipendenti = [];
     $where_dipendenti['dipendenti_attivo'] = DB_BOOL_TRUE;
+    //Solo dipendenti da mostrare nel riepilogo
+    $where_dipendenti['dipendenti_mostra_in_riepilogo'] = DB_BOOL_TRUE;
 
     if ($filtro_dipendente_id) {
         $where_dipendenti['dipendenti_id'] = $filtro_dipendente_id;

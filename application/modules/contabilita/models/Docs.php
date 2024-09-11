@@ -2,6 +2,8 @@
 
 class Docs extends CI_Model
 {
+    private $listiniCache = [];
+    
     public function generateXmlFilename($prefisso, $documento_id)
     {
         $algoritmo = $this->incrementalHash();
@@ -1624,8 +1626,10 @@ class Docs extends CI_Model
         }
     }
 
-    public function calcolaQuantitaEvasaDoc($documenti_contabilita_articoli_rif_riga_articolo)
+    public function calcolaQuantitaEvasaDoc($documenti_contabilita_articoli_rif_riga_articolo,$padre_tipo = null, $original_tipo = null)
     {
+
+        
         $riga_articolo = $this->db
             ->join('documenti_contabilita', 'documenti_contabilita_articoli_documento = documenti_contabilita_id', 'LEFT')
             ->get_where('documenti_contabilita_articoli', ['documenti_contabilita_articoli_id' => $documenti_contabilita_articoli_rif_riga_articolo])
@@ -1634,6 +1638,15 @@ class Docs extends CI_Model
         if (!$riga_articolo) {
             return 0;
         }
+       
+        //Se il vecchio documento è un ordine interno e il nuovo è un ordine fornitore, considero chiuso l'ordine interno
+        if ($padre_tipo == 6 && $original_tipo == 14) {
+            $tipi_not = [4, 11, 12];
+
+        } else {
+            $tipi_not = [4, 11, 12, 6];
+        }
+
         $quantita_in_padri = $this->db->query("
             SELECT SUM(documenti_contabilita_articoli_quantita) AS s 
             FROM documenti_contabilita_articoli 
@@ -1642,9 +1655,10 @@ class Docs extends CI_Model
                 documenti_contabilita_articoli_rif_riga_articolo = '{$riga_articolo['documenti_contabilita_articoli_id']}'
                 AND
                 documenti_contabilita_tipo <> '{$riga_articolo['documenti_contabilita_tipo']}'
-                AND documenti_contabilita_tipo NOT IN (4,11,12,6)
+                AND documenti_contabilita_tipo NOT IN (".implode(',', $tipi_not).")
                 ")->row()->s; //I documenti di tipo nota di credito, fattura reverse e nota di credito reverse non vanno a chiudere un ordine cui son legati. Nemmeno gli ordini fornitore!!!
-
+        // debug($quantita_in_padri);
+        // debug($this->db->last_query());
         if ($this->datab->module_installed('magazzino')) {
             $this->load->model('magazzino/mov');
             $quantita_in_movimenti = $this->mov->calcolaQuantitaEvasa($riga_articolo['documenti_contabilita_articoli_id']);
@@ -1705,7 +1719,7 @@ class Docs extends CI_Model
             }
 
             //Calcolo la quantità di merce evasa
-            $quantita_evase = $this->calcolaQuantitaEvasaDoc($riga['documenti_contabilita_articoli_id']);
+            $quantita_evase = $this->calcolaQuantitaEvasaDoc($riga['documenti_contabilita_articoli_id'], $old_documento_tipo, $documento_tipo);
 
             if ($quantita_evase >= $riga['documenti_contabilita_articoli_quantita']) {
                 unset($righe_articolo[$key]);
@@ -1716,8 +1730,8 @@ class Docs extends CI_Model
         if (empty($righe_articolo)) {
             $stato = 3; //Chiuso
         }
-
-
+        // debug($documento_id);
+        // debug($stato,true);
 
         $this->apilib->edit('documenti_contabilita', $documento_id, ['documenti_contabilita_stato' => $stato]);
         return $stato;
@@ -1763,5 +1777,103 @@ class Docs extends CI_Model
         $pdfFile = $this->layout->generate_pdf($html, "portrait", "", ['documento_id' => $documento['documenti_contabilita_id']], 'contabilita', true);
 
         return $pdfFile;
+    }
+
+    public function ricalcolaPrezzoMedioVendita($product_id = false)
+    {
+        if ($product_id) {
+            $where = "AND documenti_contabilita_articoli_prodotto_id = $product_id";
+        } else {
+            $where = "";
+        }
+
+        $this->db->query("
+            UPDATE fw_products AS p
+            JOIN (
+                SELECT 
+                    documenti_contabilita_articoli_prodotto_id,
+                    SUM(documenti_contabilita_articoli_quantita * documenti_contabilita_articoli_prezzo) / 
+                    SUM(documenti_contabilita_articoli_quantita) AS prezzo_medio_acquisto
+                FROM documenti_contabilita_articoli 
+                JOIN documenti_contabilita ON documenti_contabilita_id = documenti_contabilita_articoli_documento
+                WHERE 
+                    documenti_contabilita_tipo IN (1,5)
+                    AND documenti_contabilita_data_emissione >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
+                    $where
+                GROUP BY documenti_contabilita_articoli_prodotto_id
+            ) AS calc ON p.fw_products_id = calc.documenti_contabilita_articoli_prodotto_id
+            SET p.fw_products_avg_sell_price = calc.prezzo_medio_acquisto;
+        ");
+        $this->mycache->clearCache();
+        return true;
+    }
+
+    public function ricalcolaPrezzoMedioAcquisto($product_id = false) {
+        if ($product_id) {
+            $where = "AND movimenti_articoli_prodotto_id = $product_id";
+        } else {
+            $where = "";
+        }
+        
+        $this->db->query("
+            UPDATE fw_products AS p
+            JOIN (
+                SELECT 
+                    movimenti_articoli_prodotto_id,
+                    SUM(movimenti_articoli_quantita * movimenti_articoli_prezzo) / 
+                    SUM(movimenti_articoli_quantita) AS prezzo_medio_acquisto
+                FROM movimenti_articoli 
+                JOIN movimenti ON movimenti_id = movimenti_articoli_movimento
+                WHERE 
+                    movimenti_tipo_movimento = 1
+                    AND movimenti_data_registrazione >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
+                    $where
+                GROUP BY movimenti_articoli_prodotto_id
+            ) AS calc ON p.fw_products_id = calc.movimenti_articoli_prodotto_id
+            SET p.fw_products_avg_prov_price = calc.prezzo_medio_acquisto;
+        ");
+        $this->mycache->clearCache();
+        return true;
+    }
+    
+    private function getListino($listino_id)
+    {
+        if (!isset($this->listiniCache[$listino_id])) {
+            log_message('debug', 'getListino from db: ' . $listino_id);
+            $this->listiniCache[$listino_id] = $this->apilib->view('listini', $listino_id);
+        }
+        return $this->listiniCache[$listino_id];
+    }
+    
+    public function applicaListino($listino_id, $prodotto, $tipo_documento = null)
+    {
+        if (empty($prodotto) || (!isset($prodotto['PB']) && !isset($prodotto['PF']))) {
+            return 0;
+        }
+        
+        $listino_trovato = $this->getListino($listino_id);
+        
+        if (empty($listino_trovato)) {
+            return $prodotto['PB'];
+        }
+        
+        $chiave = $tipo_documento == 6 ? 'PF' : 'PB';
+        
+        $formula = $listino_trovato['formule_formula'];
+        
+        $sconto = floatval($listino_trovato['listini_sconto']);
+        
+        // Applichiamo lo sconto
+        $prodotto['SC'] = $sconto;
+        $prodotto['MA'] = $sconto;
+        
+        // Prepariamo la formula per l'eval
+        $formula_eval = str_replace('{', '$prodotto[\'', $formula);
+        $formula_eval = str_replace('}', '\']', $formula_eval);
+        
+        // Calcoliamo il prezzo base (PB o PF)
+        $prodotto[$chiave] = eval ("return $formula_eval;");
+        
+        return $prodotto[$chiave];
     }
 }

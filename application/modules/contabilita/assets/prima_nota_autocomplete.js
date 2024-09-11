@@ -231,7 +231,7 @@ var inizializzaAutocompleteAvereSottoconto = function ($riga) {
 
 var inizializzaAutocompleteDocumento = function () {
 
-    $('.js_prima_nota_numero_documento').add('[name="prime_note_scadenza"]').add('[name="prime_note_documento"]').val('').trigger('change');
+    //$('.js_prima_nota_numero_documento').add('[name="prime_note_scadenza"]').add('[name="prime_note_documento"]').val('').trigger('change');
 
     var autocomplete_running = false;
     $('.js_prima_nota_numero_documento').on('change', function () {
@@ -409,7 +409,7 @@ var documento_selezionato = function (item) {
 
 
 var inizializzaAutocompleteSpesa = function () {
-    $('.js_prima_nota_numero_documento').add('[name="prime_note_scadenza"]').add('[name="prime_note_documento"]').val('').trigger('change');
+    //$('.js_prima_nota_numero_documento').add('[name="prime_note_scadenza"]').add('[name="prime_note_documento"]').val('').trigger('change');
 
     var autocomplete_running = false;
     $('.js_prima_nota_numero_documento').on('change', function () {

@@ -101,6 +101,7 @@ $(() => {
             var giorni_calcolati = giorni - (mesi * 30);
             $dataScadenzaBase = $dataScadenzaBase.add(giorni_calcolati, 'days');
         }
+        console.log('1:' + $dataScadenzaBase.format('DD/MM/YYYY'));
 
         if (typeof cliente_raw_data !== 'undefined') {
             var mese_escluso_1 = cliente_raw_data.customers_pag_escluso_mese_1;
@@ -114,9 +115,10 @@ $(() => {
                 }
             }
             if (giorno_fisso > 0) {
-                $dataScadenzaBase.add('1 month');
+                $dataScadenzaBase.add(1, 'month');
                 $dataScadenzaBase.date(giorno_fisso);
             }
+            console.log('2:' + $dataScadenzaBase.format('DD/MM/YYYY'));
         }
 
         return $dataScadenzaBase.format('DD/MM/YYYY');

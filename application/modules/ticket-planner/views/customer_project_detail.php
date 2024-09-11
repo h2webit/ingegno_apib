@@ -637,7 +637,8 @@
                                             $saldo += $billing_hour['billable_hours_hours']; ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo (!empty ($billing_hour['tasks_creation_date'])) ? dateFormat($billing_hour['tasks_creation_date']) : ''; ?>
+                                                    <span style="display:none;"><?php echo (!empty($billing_hour['tasks_creation_date'])) ? dateFormat($billing_hour['tasks_creation_date'], 'Ymd') : dateFormat($billing_hour['billable_hours_creation_date'], 'Ymd'); ?></span>
+                                                    <?php echo (!empty ($billing_hour['tasks_creation_date'])) ? dateFormat($billing_hour['tasks_creation_date']) : dateFormat($billing_hour['billable_hours_creation_date']); ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $billing_hour['tasks_title']; ?>

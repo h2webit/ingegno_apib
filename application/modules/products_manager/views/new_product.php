@@ -293,68 +293,22 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
             <div class="col-md-3">
             </div>
             <div class="col-md-9">
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="form-label-title js-sku-code"><?php e('Sku'); ?></label>
-
-                        <input type="text" class="form-control" placeholder="<?php e('Sku'); ?>" name="fw_products_sku" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_sku'] : ''; ?>">
-                    </div>
-                </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12 provider_column">
-                                <label class="form-label-title js-provider-code"><?php e('Provider code'); ?></label>
-                                <a href="javascript:void(0);" class=" btn btn-xs btn-default js-provider_code-add">
-                                    <i class="fa fa-plus "></i>
-                                </a>
+                        <label class="form-label-title js-sku-code"><?php e('Sku/Codice art.'); ?></label>
 
-                                <?php
-                                if ($prodotto_id) {
-                                    $providers_code = (is_array(json_decode($prodotto['fw_products_provider_code'], true))) ? json_decode($prodotto['fw_products_provider_code'], true) : [$prodotto['fw_products_provider_code']];
-
-                                    if (empty($providers_code)) {
-                                        $providers_code = [''];
-                                    }
-                                } else {
-                                    $providers_code = [''];
-                                }
-                                // debug($providers_code, true);
-
-                                ?>
-                                <?php foreach ($providers_code as $key => $provider_code) : ?>
-                                <?php
-                                    if (!empty($provider_code['code'])) {
-                                        $code = $provider_code['code'];
-                                    } else {
-                                        $code = '';
-                                    }
-                                    if (!empty($provider_code['supplier'])) {
-                                        $supplier = $provider_code['supplier'];
-                                    } else {
-                                        $supplier = '';
-                                    }
-
-
-                                    ?>
-                                <div class="row js-provider_code_container">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="<?php e('Provider code'); ?>" name="fw_products_provider_code[code][]" value="<?php echo ($prodotto_id) ? $code : ''; ?>">
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <select class="form-control" style="width: 100%;" name="fw_products_provider_code[supplier][]">
-                                            <option value=""> --- </option>
-                                            <?php foreach ($fornitori as $fornitore) : ?>
-                                            <option value="<?php echo $fornitore['customers_id']; ?>" <?php if ($prodotto_id && $fornitore['customers_id'] == $supplier) : ?> selected="selected" <?php endif; ?>><?php echo $fornitore['customers_company']; ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" placeholder="<?php e('SKU / Codice articolo'); ?>" name="fw_products_sku" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_sku'] : ''; ?>">
                     </div>
                 </div>
+                 <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="form-label-title js-variante-code"><?php e('Variante'); ?></label>
+                
+                        <input type="text" class="form-control" placeholder="<?php e('Variante'); ?>" name="fw_products_variante"
+                            value="<?php echo ($prodotto_id) ? $prodotto['fw_products_variante'] : ''; ?>">
+                    </div>
+                </div>
+                
                 <div class="col-md-3 js-barcodes_container">
                     <div class="form-group">
                         <label class="form-label-title js-sku-code"><?php e('Barcode'); ?></label>
@@ -389,14 +343,74 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
                 </div>
                 <div class="col-md-3">
                     <label class='form-label-title'><?php e('Centro di costo/ricavo'); ?></label>
-
+                
                     <select class="form-control select2_standard" style="width: 100%;" name="fw_products_centro_costo_ricavo">
                         <option value=""> --- </option>
-                        <?php foreach ($centri_costo as $centro_costo) : ?>
-                        <option value="<?php echo $centro_costo['centri_di_costo_ricavo_id']; ?>" <?php if ($prodotto_id && $centro_costo['centri_di_costo_ricavo_id'] == $prodotto['fw_products_centro_costo_ricavo']) : ?> selected="selected" <?php endif; ?>><?php echo $centro_costo['centri_di_costo_ricavo_nome']; ?></option>
+                        <?php foreach ($centri_costo as $centro_costo): ?>
+                            <option value="<?php echo $centro_costo['centri_di_costo_ricavo_id']; ?>" <?php if ($prodotto_id && $centro_costo['centri_di_costo_ricavo_id'] == $prodotto['fw_products_centro_costo_ricavo']): ?>
+                                    selected="selected" <?php endif; ?>><?php echo $centro_costo['centri_di_costo_ricavo_nome']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12 provider_column">
+                                <label class="form-label-title js-provider-code"><?php e('Provider codes'); ?></label>
+                                <a href="javascript:void(0);" class=" btn btn-xs btn-default js-provider_code-add">
+                                    <i class="fa fa-plus "></i>
+                                </a>
+                
+                                <?php
+                                if ($prodotto_id) {
+                                    $providers_code = (is_array(json_decode($prodotto['fw_products_provider_code'], true))) ? json_decode($prodotto['fw_products_provider_code'], true) : [$prodotto['fw_products_provider_code']];
+
+                                    if (empty($providers_code)) {
+                                        $providers_code = [''];
+                                    }
+                                } else {
+                                    $providers_code = [''];
+                                }
+                                // debug($providers_code, true);
+                                
+                                ?>
+                                <?php foreach ($providers_code as $key => $provider_code): ?>
+                                    <?php
+                                    if (!empty($provider_code['code'])) {
+                                        $code = $provider_code['code'];
+                                    } else {
+                                        $code = '';
+                                    }
+                                    if (!empty($provider_code['supplier'])) {
+                                        $supplier = $provider_code['supplier'];
+                                    } else {
+                                        $supplier = '';
+                                    }
+
+
+                                    ?>
+                                    <div class="row js-provider_code_container">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <input type="text" class="form-control" placeholder="<?php e('Provider code'); ?>"
+                                                name="fw_products_provider_code[code][]" value="<?php echo ($prodotto_id) ? $code : ''; ?>">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <select class="form-control" style="width: 100%;" name="fw_products_provider_code[supplier][]">
+                                                <option value=""> --- </option>
+                                                <?php foreach ($fornitori as $fornitore): ?>
+                                                    <option value="<?php echo $fornitore['customers_id']; ?>" <?php if ($prodotto_id && $fornitore['customers_id'] == $supplier): ?> selected="selected" <?php endif; ?>>
+                                                        <?php echo $fornitore['customers_company']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
 
             </div>
         </div>
@@ -617,22 +631,36 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
     </div>
     <div class="row <?php echo $is_bundle_layout ? 'hide' : ''; ?>">
         <div class="col-md-12">
-            <div class="col-md-3">
+            <div class="col-md-3 sub-label">
             </div>
             <div class="col-md-9">
-                <div class="form-group">
-                    <label class="form-label-title"><?php e('Show in point of sale'); ?></label>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="fw_products_show_in_counter" value="1" <?php if (!$prodotto_id or ($prodotto_id && $prodotto['fw_products_show_in_counter'] == DB_BOOL_TRUE)) : ?>checked="checked" <?php endif; ?>>
-                            <?php e('Yes'); ?>
-                        </label>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="form-label-title"><?php e('Show in point of sale'); ?></label>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fw_products_show_in_counter" value="1" <?php if (!$prodotto_id or ($prodotto_id && $prodotto['fw_products_show_in_counter'] == DB_BOOL_TRUE)) : ?>checked="checked" <?php endif; ?>>
+                                <?php e('Yes'); ?>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fw_products_show_in_counter" value="0" <?php if ($prodotto_id && $prodotto['fw_products_show_in_counter'] == DB_BOOL_FALSE) : ?>checked="checked" <?php endif; ?>>
+                                <?php e('No'); ?>
+                            </label>
+                        </div>
                     </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="fw_products_show_in_counter" value="0" <?php if ($prodotto_id && $prodotto['fw_products_show_in_counter'] == DB_BOOL_FALSE) : ?>checked="checked" <?php endif; ?>>
-                            <?php e('No'); ?>
-                        </label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-label-title js-quantity"><?php e('Quantity'); ?></label>
+                        <input type="text" class="form-control" placeholder="1" name="fw_products_quantity" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_quantity'] : ''; ?>">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="form-label-title js-quantity">Min qty / reorder qty</label>
+                        <input type="text" class="form-control" placeholder="1" name="fw_products_min_quantity" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_min_quantity'] : ''; ?>">
                     </div>
                 </div>
             </div>
@@ -788,8 +816,8 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
     <div class="row" <?php if (!$show_buttons) : ?> style="display:none;" <?php endif; ?>>
         <div class="col-md-12 text-center">
             <div class="btn-group">
-                <button type="button" class="btn <?php echo (!$prodotto_id || ($prodotto_id && $prodotto['fw_products_type'] == 1)) ? 'btn-primary' : 'btn-default'; ?> js_btn_simple">Simple</button>
-                <button type="button" class="btn <?php echo ($prodotto_id && $prodotto['fw_products_type'] == 2) ? 'btn-primary' : 'btn-default'; ?> js_btn_configurable">Configurable</button>
+                <button type="button" class="btn <?php echo (!$prodotto_id || ($prodotto_id && $prodotto['fw_products_type'] == 1)) ? 'btn-primary' : 'btn-default'; ?> js_btn_simple">Semplice</button>
+                <button type="button" class="btn <?php echo ($prodotto_id && $prodotto['fw_products_type'] == 2) ? 'btn-primary' : 'btn-default'; ?> js_btn_configurable">Configurabile</button>
                 
                 <input type="hidden" name="fw_products_type" class="js_fw_products_type" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_type'] : '1'; ?>" />
             </div>
@@ -871,49 +899,44 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
     <div class="row js_simple <?php echo $is_bundle_layout ? 'hide' : ''; ?>">
         <div class="col-md-12">
             <div class="col-md-3 sub-label">
-                <span><?php e('Quantity & Attributes'); ?></span></br>
+                <span><?php e('Attributes'); ?></span></br>
             </div>
             <div class="col-md-9">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="form-label-title js-quantity"><?php e('Quantity'); ?></label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_quantity" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_quantity'] : ''; ?>">
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label class="form-label-title js-quantity">Min qty / reorder qty</label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_min_quantity" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_min_quantity'] : ''; ?>">
-                    </div>
-                </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-label-title js-weight"><?php e('Weight'); ?></label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_weight" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_weight'] : ''; ?>">
+                        <input type="text" class="form-control"  name="fw_products_weight" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_weight'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-label-title js-width"><?php e('Width'); ?></label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_width" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_width'] : ''; ?>">
+                        <input type="text" class="form-control"  name="fw_products_width" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_width'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-label-title js-height"><?php e('Height'); ?></label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_height" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_height'] : ''; ?>">
+                        <input type="text" class="form-control"  name="fw_products_height" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_height'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-label-title js-depth"><?php e('Depth'); ?></label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_depth" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_depth'] : ''; ?>">
+                        <input type="text" class="form-control"  name="fw_products_depth" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_depth'] : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
+                        <label class="form-label-title js-volume"><?php e('Volume'); ?></label>
+                        <input type="text" class="form-control"  name="fw_products_volume" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_volume'] : ''; ?>">
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="form-group">
                         <label class="form-label-title js-specific-weight"><?php e('Specific Weight'); ?></label>
-                        <input type="text" class="form-control" placeholder="1" name="fw_products_peso_specifico" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_peso_specifico'] : ''; ?>">
+                        <input type="text" class="form-control"  name="fw_products_peso_specifico" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_peso_specifico'] : ''; ?>">
                     </div>
                 </div>
 

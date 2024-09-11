@@ -669,24 +669,30 @@
                 return false;
             }
             
+            // debug($post, true);
+            
             $errors = [];
+            $c_row = 1;
             foreach ($post['conditions'] as $index => $condition) {
                 if (empty($condition['field_id']) && empty($condition['operator'])) {
                     unset($post['conditions'][$index]);
+                    $c_row++;
                     continue;
                 }
                 
                 if (empty($condition['field_id'])) {
-                    $errors[] = t("Field on row %s is required", true, [$index]);
+                    $errors[] = t("Field on row %s is required", true, [$c_row]);
                 }
 
                 if (empty($condition['operator'])) {
-                    $errors[] = t("Operator on row %s is required", true, [$index]);
+                    $errors[] = t("Operator on row %s is required", true, [$c_row]);
                 }
 
-                if (empty($condition['value'])) {
-                    $errors[] = t("Value on row %s is required", true, [$index]);
+                if (empty($condition['value']) && !in_array($condition['operator'], ['empty', 'not_empty'])) {
+                    $errors[] = t("Value on row %s is required", true, [$c_row]);
                 }
+                
+                $c_row++;
             }
 
             if (!empty($errors)) {
@@ -725,7 +731,7 @@
             // Se invece ho fatto un submit normale, valuto le condizioni valide
             // da tenere in sessione
 //            debug($post, true);
-            foreach ($post['conditions'] as $conditional) {
+            foreach ($post['conditions'] as $index => $conditional) {
                 if (!array_key_exists($conditional['field_id'], $visible_fields)) {
                     //TODO Wrong! Field id can be in another left joined table, so get the field information direct from the field_id to check his type...
                     //throw new Exception("Missing field '{$conditional['field_id']}' in entity '{$entity['entity']['entity_name']}'.");
@@ -753,7 +759,8 @@
                     if (!array_key_exists('value', $conditional)) {
                         $conditional['value'] = '';
                     }
-                    $conditions[$conditional['field_id']] = $conditional;
+                    // $conditions[$conditional['field_id']] = $conditional;
+                    $conditions[$index] = $conditional;
                 } else {
                     //unset($where_data[$filterSessionKey][$conditional['field_id']]);
                 }
@@ -840,8 +847,18 @@
             }
         }
         
-        public function get_support_values($entity) {
-            $data = $this->crmentity->getEntityPreview($entity);
+        public function get_support_values($entity, $source_field = null) {
+            $additional_where_data = null;
+            
+            if (!empty($source_field)) {
+                $field = $this->datab->get_field($source_field);
+                
+                if (!empty($field) && !empty($field['fields_select_where'])) {
+                    $additional_where_data = '(' . $field['fields_select_where'] . ')';
+                }
+            }
+            
+            $data = $this->crmentity->getEntityPreview($entity, $additional_where_data);
             
             e_json(['status' => 1, 'txt' => '', 'data' => $data]);
             return;

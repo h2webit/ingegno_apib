@@ -11,5 +11,6 @@ $updates['0'] = [
 $updates['*'] = [
     'include' => [
         'setup.php',
+        'ingegno_settings.php',
     ],
 ];

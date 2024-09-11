@@ -7,12 +7,12 @@ $current_userdata = $this->auth->getSessionUserdata();
 $magazzino = $current_userdata['users_magazzino'] ?? null;
 
 //Se non ce l'ho in sessione vedo se ho un magazzino di default
-if(empty($magazzino)) {
+if (empty($magazzino)) {
     $magazzino_default = $this->apilib->searchFirst('magazzini', [
         'magazzini_default' => DB_BOOL_TRUE,
     ]);
-    
-    if(!empty($magazzino_default)) {
+
+    if (!empty($magazzino_default)) {
         $magazzino = $magazzino_default['magazzini_id'];
     } else {
         $magazzino = null;
@@ -277,14 +277,52 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
     .salvataggio_container i {
         font-size: 18px;
     }
+
+    .v-select .vs__dropdown-menu {
+        z-index: 10 !important; /* Un valore alto per assicurarsi che il dropdown sia sopra gli altri elementi */
+        position: absolute !important;
+    }
+    .cart_table, .cart_table .table-responsive, .cart_table .col-xs-6 {
+        position: relative; /* Assicurati che gli elementi genitori abbiano un contesto di stacking */
+        overflow: visible;
+    }
+    .cart_table .table-responsive {
+        overflow-x: auto;
+    }
+
+
+    .cart_table table th,
+    .cart_table table td {
+        border-top: 1px solid #cccccc !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+        .cart_table table th,
+        .cart_table table td {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .cart_table table th,
+        .cart_table table td {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+        }
+    }
 </style>
 
-<?php if ($settings['magazzino_settings_inventario_in_corso']) : ?>
+<?php if ($settings['magazzino_settings_inventario_in_corso']): ?>
     <section class="content-header">
         <div class="alert alert-danger mb-0">
             <h5>Inventario in corso!</h5>
-            
-            <div><?php e('Attenzione! E\' in corso l\'inventario. Si sconsiglia di movimentare la merce in questa fase.'); ?></div>
+
+            <div>
+                <?php e('Attenzione! E\' in corso l\'inventario. Si sconsiglia di movimentare la merce in questa fase.'); ?>
+            </div>
         </div>
     </section>
 <?php endif; ?>
@@ -299,7 +337,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="search_product">Prodotti</label>
-                                    <v-select ref="myproduct" label="fw_products_name" v-model="prodotti_select" :options="prodotti_option" @search="fetchOptions" @input="addToCart">
+                                    <v-select ref="myproduct" label="fw_products_name" v-model="prodotti_select"
+                                        :options="prodotti_option" @search="fetchOptions" @input="addToCart">
                                         <template slot="no-options">
                                             Cerca un prodotto
                                         </template>
@@ -307,15 +346,17 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                             <div class="d-center">
                                                 <div class="select_product_option">
                                                     <div>
-                                                        <img :src="printImage(option)" alt="" srcset="" class="img-responsive select_product_option_image">
+                                                        <img :src="printImage(option)" alt="" srcset=""
+                                                            class="img-responsive select_product_option_image">
                                                     </div>
                                                     <div>
                                                         {{ option.fw_products_name }}
                                                         <br />
-                                                        <p class="text-right"><strong>{{ ivaProdotto(option) }} €</strong></p>
+                                                        <p class="text-right"><strong>{{ ivaProdotto(option) }}
+                                                                €</strong></p>
                                                     </div>
                                                 </div>
-                                            
+
                                             </div>
                                         </template>
                                         <template slot="selected-option" slot-scope="option">
@@ -326,14 +367,15 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                     </v-select>
                                 </div>
                             </div>
-                            
-                            
-                            
-                            
+
+
+
+
                             <div class="col-sm-6">
-                                <div class="form-group js_barcode_container">
+                                <div class="form-group">
                                     <label for="sarch_barcode">Barcode</label>
-                                    <v-select ref="mybarcode" label="fw_products_barcode" v-model="barcode_select" :options="barcode_option" @search="fetchBarcodeOptions" @input="addToCart">
+                                    <v-select ref="mybarcode" label="fw_products_barcode" v-model="barcode_select"
+                                        :options="barcode_option" @search="fetchBarcodeOptions" @input="addToCart">
                                         <template slot="no-options">
                                             Cerca tramite barcode
                                         </template>
@@ -341,7 +383,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                             <div class="d-center">
                                                 <div class="select_product_option">
                                                     <div>
-                                                        <img :src="printImage(option)" alt="" srcset="" class="img-responsive select_product_option_image">
+                                                        <img :src="printImage(option)" alt="" srcset=""
+                                                            class="img-responsive select_product_option_image">
                                                     </div>
                                                     <div style="text-align:right">
                                                         {{ option.fw_products_name }}
@@ -351,7 +394,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                                         <p><strong>{{ ivaProdotto(option) }} €</strong></p>
                                                     </div>
                                                 </div>
-                                            
+
                                             </div>
                                         </template>
                                         <template slot="selected-option" slot-scope="option">
@@ -362,20 +405,27 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                     </v-select>
                                 </div>
                             </div>
-                            <div v-if="punto_cassa_settings.punto_cassa_settings_mostra_centro_ricavo == 1" class="col-sm-6">
+                            <div v-if="punto_cassa_settings.punto_cassa_settings_mostra_centro_ricavo == 1"
+                                class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="search_centro_costo">Centro di ricavo - {{punto_cassa_settings.punto_cassa_settings_mostra_centro_ricavo}}</label>
-                                    <v-select label="centri_di_costo_ricavo_nome" :clearable="false" v-model="centro_costo_select" :options="centri_costo" @input="selectCentroCosto"></v-select>
+                                    <label for="search_centro_costo">Centro di ricavo -
+                                        {{punto_cassa_settings.punto_cassa_settings_mostra_centro_ricavo}}</label>
+                                    <v-select label="centri_di_costo_ricavo_nome" :clearable="false"
+                                        v-model="centro_costo_select" :options="centri_costo"
+                                        @input="selectCentroCosto"></v-select>
                                 </div>
                             </div>
-                            <div v-if="punto_cassa_settings.punto_cassa_settings_mostra_magazzino == 1" class="col-sm-6">
+                            <div v-if="punto_cassa_settings.punto_cassa_settings_mostra_magazzino == 1"
+                                class="col-sm-6">
                                 <div class="form-group">
                                     <label for="search_magazzino">Magazzino</label>
                                     <p v-if="magazzino.id">{{ magazzino.titolo }}</p>
-                                    <v-select v-else label="magazzini_titolo" :clearable="false" v-model="magazzino_select" :options="magazzini_options" @input="selectMagazzino"></v-select>
+                                    <v-select v-else label="magazzini_titolo" :clearable="false"
+                                        v-model="magazzino_select" :options="magazzini_options"
+                                        @input="selectMagazzino"></v-select>
                                 </div>
                             </div>
-                            
+
                             <!--                            <div class="col-sm-3">-->
                             <!--                                <div class="form-group">-->
                             <!--                                    <label for="search_magazzino">Serie</label>-->
@@ -383,7 +433,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             <!--                                </div>-->
                             <!--                            </div>-->
                         </div>
-                        
+
                         <section class="filter_products mt-20 hidden">
                             <div class="row">
                                 <!-- <div class="col-sm-6">
@@ -393,16 +443,17 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                     </button>
                                 </div> -->
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-success btn-lg btn-block mt-10" @click="favouriteProducts">
+                                    <button type="submit" class="btn btn-success btn-lg btn-block mt-10"
+                                        @click="favouriteProducts">
                                         <i class="fas fa-star"></i>
                                         Preferiti
                                     </button>
                                 </div>
                             </div>
                         </section>
-                        
+
                         <hr />
-                        
+
                         <!-- PRODOTTI VISUALIZZATI -->
                         <div class="col-sm-12 products_container" v-show="prodotti">
                             <div class="row">
@@ -413,18 +464,19 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-md-4 col-xl-3" v-for="(prodotto, index) in prodotti" :key="index">
-                                    
+                                <div class="col-sm-6 col-md-4 col-xl-3" v-for="(prodotto, index) in prodotti"
+                                    :key="index">
+
                                     <prodotto :product="prodotto" @clicked="addToCart(prodotto)" />
-                                
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <!--CARRELLO -->
             <div class="col-md-5">
                 <div class="box box-success mh-100vh">
@@ -433,7 +485,9 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             <div class="col-sm-8">
                                 <div class="form-group">
                                     <label for="cliente">Cliente</label>
-                                    <v-select label="customers_full_name" v-model="customer_select" :options="customer_option" @search="fetchCustomerOptions" @input="selectCustomer">
+                                    <v-select label="customers_full_name" v-model="customer_select"
+                                        :options="customer_option" @search="fetchCustomerOptions"
+                                        @input="selectCustomer">
                                         <template slot="no-options">
                                             Cerca cliente
                                         </template>
@@ -457,7 +511,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="search_articolo">Nuovo cliente</label>
-                                    <a href="<?php echo base_url(); ?>get_ajax/modal_form/customers" class="js_open_modal btn btn-success btn-sm" style="display:block">
+                                    <a href="<?php echo base_url(); ?>get_ajax/modal_form/customers"
+                                        class="js_open_modal btn btn-success btn-sm" style="display:block">
                                         <i class="fas fa-plus"></i> Crea
                                     </a>
                                 </div>
@@ -473,49 +528,73 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             <div class="col-sm-12" v-for="(prodotto, index) in carrello" :key="index">
                                 <div class="row cart_product">
                                     <div class="col-md-2">
-                                        <img :src="printImage(prodotto.prodotto)" alt="" srcset="" class="img-responsive" style="max-height:100%;">
+                                        <img :src="printImage(prodotto.prodotto)" alt="" srcset=""
+                                            class="img-responsive" style="max-height:100%;">
                                     </div>
                                     <div class="col-md-10">
                                         <div class="row">
                                             <div class="col-sm-12 col-md-8">
-                                                <p class="cart_item_name"><strong>{{ prodotto.prodotto.fw_products_name}}</strong> - {{ prodotto.prodotto.fw_products_sku }}</p>
-                                                <p class="cart_item_price">Prezzo: € <strong>{{ prodotto.prezzo_ivato }} </strong> (IVA incl.) - IVA: <strong>{{ prodotto.perc_iva }}% </strong> -
-                                                    <span v-if="prodotto.quantita > prodotto.quantita_disponibile">Disp: <span class="font-bold quantity_warning">{{prodotto.quantita_disponibile || "NO"}}</span> </span>
-                                                    <span v-else>Disp: <strong>{{prodotto.quantita_disponibile || "NO"}}</strong> </span>
+                                                <p class="cart_item_name"><strong>{{
+                                                        prodotto.prodotto.fw_products_name}}</strong> - {{
+                                                    prodotto.prodotto.fw_products_sku }}</p>
+                                                <p class="cart_item_price">Prezzo: € <strong>{{ prodotto.prezzo_ivato }}
+                                                    </strong> (IVA incl.) - IVA: <strong>{{ prodotto.perc_iva }}%
+                                                    </strong> -
+                                                    <span v-if="prodotto.quantita > prodotto.quantita_disponibile">Disp:
+                                                        <span
+                                                            class="font-bold quantity_warning">{{prodotto.quantita_disponibile
+                                                            || "NO"}}</span> </span>
+                                                    <span v-else>Disp: <strong>{{prodotto.quantita_disponibile ||
+                                                            "NO"}}</strong> </span>
                                                 </p>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
-                                                <label class="cart_label" for="totale_prodotto">Totale (IVA incl.)</label>
+                                                <label class="cart_label" for="totale_prodotto">Totale (IVA
+                                                    incl.)</label>
                                                 <div class="input-group">
-                                                    <input :value="prodotto._totale_ivato_scontato" name="totale_prodotto" class="form-control input-sm" @change="setProductPrice(prodotto, index, $event)">
+                                                    <input :value="prodotto._totale_ivato_scontato"
+                                                        name="totale_prodotto" class="form-control input-sm"
+                                                        @change="setProductPrice(prodotto, index, $event)">
                                                     <span class="input-group-addon" id="basic-addon1">€</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-md-4 col-sm-12">
                                                 <label class="cart_label">Quantità</label>
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-primary btn-sm" type="button" min="1" @click="decreaseProductQuantity(prodotto, index)"><i class="fas fa-minus"></i></button>
+                                                        <button class="btn btn-primary btn-sm" type="button" min="1"
+                                                            @click="decreaseProductQuantity(prodotto, index)"><i
+                                                                class="fas fa-minus"></i></button>
                                                     </span>
-                                                    <input :value="prodotto.quantita" type="number" class="form-control quantity_input input-sm" placeholder="Quantità" name="quantita_prodotto" @change="setProductQuantity(prodotto, index, $event)">
+                                                    <input :value="prodotto.quantita" type="number"
+                                                        class="form-control quantity_input input-sm"
+                                                        placeholder="Quantità" name="quantita_prodotto"
+                                                        @change="setProductQuantity(prodotto, index, $event)">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-primary btn-sm" type="button" min="1" @click="increaseProductQuantity(prodotto, index)"><i class="fas fa-plus"></i></button>
+                                                        <button class="btn btn-primary btn-sm" type="button" min="1"
+                                                            @click="increaseProductQuantity(prodotto, index)"><i
+                                                                class="fas fa-plus"></i></button>
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-12">
                                                 <label class="cart_label" for="sconto_prodotto">Sconto</label>
                                                 <div class="input-group">
-                                                    <input :value="prodotto.sconto" type="text" class="form-control sconto input-sm" placeholder="" name="sconto_prodotto" @change="setProductDiscount(prodotto, index, $event)">
+                                                    <input :value="prodotto.sconto" type="text"
+                                                        class="form-control sconto input-sm" placeholder=""
+                                                        name="sconto_prodotto"
+                                                        @change="setProductDiscount(prodotto, index, $event)">
                                                     <span class="input-group-addon" id="basic-addon1">%</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-12 text-right">
-                                                <div style="height:54px;display:flex;justify-content:flex-end;align-items:flex-end">
-                                                    <button class="btn btn-danger" @click="removeItem(prodotto)"><i class="fas fa-trash"></i></button>
+                                                <div
+                                                    style="height:54px;display:flex;justify-content:flex-end;align-items:flex-end">
+                                                    <button class="btn btn-danger" @click="removeItem(prodotto)"><i
+                                                            class="fas fa-trash"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -524,7 +603,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                 <hr />
                             </div>
                         </div>
-                        
+
                         <div class="row mt-20">
                             <div class="col-sm-12">
                                 <div class="cart_table">
@@ -535,7 +614,10 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                                     <th scope="row" class="text-left">Sconto:</th>
                                                     <td class="text-right">
                                                         <div class="input-group total_discount">
-                                                            <input :value="sconto_totale" type="text" class="form-control sconto input-sm text_right" placeholder="" name="sconto_totale" @change="setTotalDiscount($event)">
+                                                            <input :value="sconto_totale" type="text"
+                                                                class="form-control sconto input-sm text_right"
+                                                                placeholder="" name="sconto_totale"
+                                                                @change="setTotalDiscount($event)">
                                                             <span class="input-group-addon" id="basic-addon1">%</span>
                                                         </div>
                                                     </td>
@@ -556,24 +638,49 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                                     <th scope="row" class="text-left">Totale scontato:</th>
                                                     <td class="text-right">
                                                         <div class="input-group total_price">
-                                                            <input :value="prezzo_totale" type="text" class="form-control sconto input-sm text_right" placeholder="" name="prezzo_totale" @change="setTotalPrice($event)">
+                                                            <input :value="prezzo_totale" type="text"
+                                                                class="form-control sconto input-sm text_right"
+                                                                placeholder="" name="prezzo_totale"
+                                                                @change="setTotalPrice($event)">
                                                             <span class="input-group-addon" id="basic-addon1">€</span>
                                                         </div>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th scope="row" class="text-left">Ricevuta</th>
+                                                    <td class="text-right">
+                                                        <v-select
+                                                            v-model="ricevuta_select"
+                                                            label="punto_cassa_settings_ricevuta_default_value"
+                                                            :options="ricevute_options"
+                                                            :clearable="true"
+                                                            @input="setSelectedRicevuta"
+                                                            style="width:250px; float: right; font-size: 12px;"
+                                                        >
+                                                        </v-select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" class="text-left"></th>
+                                                    <td class="text-right">
+                                                       <a href="<?php echo base_url('get_ajax/layout_modal/ricevute_punto_cassa?_size=large'); ?>" class="js_open_modal" style="font-size: 12px;">Vedi ultime ricevute</a>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                
+
                                 <div class="cart_table" v-if="errorOnSave">
                                     <div class="alert alert-danger alert-dismissible">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true" @click="resetError">×</button>
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"
+                                            @click="resetError">×</button>
                                         <h4><i class="icon fa fa-ban"></i>Errore durante il salvataggio dell'ordine</h4>
                                         <h5>{{ error_text }}</h5>
                                     </div>
                                 </div>
-                            
+
                             </div>
                             <div class="col-xs-6">
                                 <div class="btn_container">
@@ -582,7 +689,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             </div>
                             <div class="col-xs-6">
                                 <div class="btn_container">
-                                    <button class="btn btn-success" :disabled="isButtonDisabled" id="saveOrder" @click="saveOrder">Salva ordine</button>
+                                    <button class="btn btn-success" :disabled="isButtonDisabled" id="saveOrder"
+                                        @click="saveOrder">Salva ordine</button>
                                 </div>
                             </div>
                             <div v-if="loadingOrder" class="col-xs-12">
@@ -592,7 +700,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                     </div>
                                 </div>
                             </div>
-                        
+
                         </div>
                     </div>
                 </div>
@@ -619,11 +727,11 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
     const serie_default = <?php echo ($serie_default ?: 'null') ?>;
     var endpoint = base_url + '/rest/v1';
     const tokenApi = `Bearer ${punto_cassa_settings.punto_cassa_settings_bearer}`;
-    
+
     Vue.config.devtools = true;
-    
+
     Vue.component('v-select', VueSelect.VueSelect);
-    
+
     Vue.component("prodotto", {
         template: `
         <div class="product">
@@ -699,7 +807,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     return base_url + '/images/no_image.png';
                 }
             },
-            
+
             isJson(string) {
                 try {
                     JSON.parse(string);
@@ -709,15 +817,15 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 return true;
             },
         },
-        
+
         mounted() {
             let prod_id = this.product.fw_products_id;
             this.base_url = '<?php echo base_url(); ?>get_ajax/modal_layout/dettagli_prodotto_modale/' + prod_id + '?_size=large';
         }
     });
-    
-    
-    
+
+
+
     var app = new Vue({
         el: '#app',
         data: {
@@ -755,10 +863,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
             },
             magazzino_select: null,
             magazzini_options: [],
-            
             serie_select: null,
             serie_options: [],
-            
             //Sconto totale da applicare sui singoli prodotti
             sconto_totale: 0,
             //Prezzo totale manuale, calcolo inverso dello sconto da applicare sui singoli prodotti
@@ -772,6 +878,9 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
             //Loading durante salvataggio ordine
             loadingOrder: false,
             isButtonDisabled: false,
+            // Ricevuta
+            ricevuta_select: null,
+            ricevute_options: [],
         },
         methods: {
             /***********
@@ -780,21 +889,21 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
              * **********/
             setTotalDiscount(event) {
                 const sconto = parseFloat(event.target.value);
-                
+
                 if (sconto > 100 || sconto < 0 || Number.isNaN(sconto)) {
                     this.sconto_totale = 0;
                     return;
                 }
-                
+
                 if (sconto >= 0 && this.carrello.length != 0) {
                     this.sconto_totale = sconto;
-                    
+
                     this.carrello.forEach(product => {
                         product.sconto = sconto;
                     });
-                    
+
                     this.prezzo_totale = this.totalCart;
-                    
+
                     localStorage.setItem('cart', JSON.stringify(this.carrello));
                 }
             },
@@ -804,7 +913,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
              * **********/
             setTotalPrice(event) {
                 var prezzo = parseFloat(event.target.value);
-                
+
                 if (prezzo >= this.carrello_totale || prezzo <= 0 || Number.isNaN(prezzo)) {
                     //prezzo = 0;
                     this.carrello.forEach(product => {
@@ -813,19 +922,19 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     this.prezzo_totale = this.carrello_totale;
                     return;
                 }
-                
+
                 if (prezzo > 0 && this.carrello.length != 0) {
                     this.prezzo_totale = prezzo;
                     //calcolo % a cui corrisponde rispetto al totale e la imposto al singolo prodotto
                     var percentage = (100 - ((prezzo * 100) / this.carrello_totale)).toFixed(3);
-                    
+
                     this.carrello.forEach(product => {
                         product.sconto = percentage;
                     });
                     localStorage.setItem('cart', JSON.stringify(this.carrello));
                 }
             },
-            
+
             /*********** GESTIONE CLIENTI  e RICERCA CLIENTI / PRODOTTI E BARCODE **********/
             /**
              * Get all customers (will be used in cart)
@@ -841,8 +950,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     this.clienti.push(customer)
                 });
             },
-            
-            
+
+
             ricomputoProdotto(prodotto) {
                 console.log('ricomputo prodotto: ', prodotto)
                 /**
@@ -860,21 +969,21 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                  * sappiamo che se da qualche parte troviamo prodotto._xxxxx = qualcosa, è un errore logico. Queste righe di codice devono stare solo in questa funzione
                  *
                  */
-                    
-                    //calcolo automatico dello sconto quando cambio prezzo ivato
-                    //prodotto.sconto = parseFloat((((prodotto.prezzo_ivato - prodotto._prezzo_ivato) / prodotto.prezzo_ivato) * 100).toFixed(2));
-                
+
+                //calcolo automatico dello sconto quando cambio prezzo ivato
+                //prodotto.sconto = parseFloat((((prodotto.prezzo_ivato - prodotto._prezzo_ivato) / prodotto.prezzo_ivato) * 100).toFixed(2));
+
                 const sconto = (100 - prodotto.sconto);
                 if (!prodotto._prezzo_ivato) {
                     prodotto._prezzo_ivato = prodotto.prezzo_ivato;
                 }
-                
+
                 if (prodotto._lockPrice) {
                     prodotto._iva = parseFloat(prodotto._prezzo_ivato / (100 + prodotto.perc_iva) * prodotto.perc_iva);
                     prodotto._base_imponibile = parseFloat(prodotto._prezzo_ivato - prodotto._iva);
-                    
+
                     prodotto._totale_ivato = parseFloat((prodotto._prezzo_ivato * prodotto.quantita).toFixed(2));
-                    
+
                     prodotto.sconto = parseFloat((((prodotto.prezzo_ivato - prodotto._prezzo_ivato) / prodotto.prezzo_ivato) * 100).toFixed(3));
                     prodotto._totale_imponibile_scontato = parseFloat(prodotto._base_imponibile * prodotto.quantita);
                     prodotto._totale_ivato_scontato = parseFloat((prodotto._totale_ivato).toFixed(2));
@@ -884,34 +993,34 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     prodotto._prezzo_ivato = prodotto.prezzo_ivato;
                     prodotto._iva = parseFloat(prodotto._prezzo_ivato / (100 + prodotto.perc_iva) * prodotto.perc_iva);
                     prodotto._base_imponibile = parseFloat(prodotto._prezzo_ivato - prodotto._iva);
-                    
+
                     prodotto._totale_ivato = parseFloat((prodotto._prezzo_ivato * prodotto.quantita).toFixed(2));
-                    
+
                     prodotto._totale_imponibile_scontato = parseFloat(prodotto._base_imponibile * prodotto.quantita * sconto / 100);
                     prodotto._totale_ivato_scontato = parseFloat((prodotto._totale_ivato * sconto / 100).toFixed(2));
-                    
+
                     prodotto._iva_totale_scontato = parseFloat(prodotto._iva * prodotto.quantita * sconto / 100);
                 }
-                
+
                 // const baseImponibile = parseFloat((nuovo_prezzo / (100 + prodotto.perc_iva)) * 100);
                 // const nuovaIva = parseFloat(nuovo_prezzo - baseImponibile);
                 // const nuovoTotale = nuovo_prezzo;
-                
+
                 // prodotto.iva_totale = parseFloat(nuovaIva.toFixed(2));
                 // prodotto.totale_prodotto = parseFloat(nuovoTotale.toFixed(2));
                 // prodotto.base_imponibile = parseFloat(baseImponibile.toFixed(2));
                 return prodotto;
             },
-            
-            
-            
+
+
+
             /**
              * Remote search in customers select. Print customer name & last_name or customers_company
              */
-            fetchCustomerOptions: function(search, loading) {
+            fetchCustomerOptions: function (search, loading) {
                 var el = this;
                 clearTimeout(el.customersTimeout)
-                
+
                 if (search.length >= 3) {
                     el.customersTimeout = setTimeout(() => {
                         const formData = new FormData();
@@ -925,7 +1034,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             body: formData
                         })
                             .then((response) => response.json())
-                            .then(function(response) {
+                            .then(function (response) {
                                 el.customer_option = [] //svuoto option ogni volta che scrivo
                                 // Update options
                                 console.log(response.data);
@@ -973,11 +1082,11 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     } else {
                         localStorage.setItem('customerData', customer.customers_name + ' ' + customer.customers_last_name);
                     }
-                    
+
                 }
             },
-            
-            
+
+
             /**
              * Filter product by magazzino (magazzino from session)
              */
@@ -986,7 +1095,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 const formData = new FormData();
                 formData.append("where[]", "fw_products_show_in_counter = 1");
                 //formData.append("where[]", "fw_products_id IN (SELECT movimenti_articoli_prodotto_id FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento AND movimenti_magazzino = '" + magazzino + "') GROUP BY movimenti_articoli_prodotto_id HAVING SUM(CASE WHEN movimenti_tipo_movimento = 1 THEN movimenti_articoli_quantita ELSE -movimenti_articoli_quantita END) > 0)")
-                
+
                 const response = await fetch(`${endpoint}/search/fw_products`, {
                     method: 'POST',
                     headers: {
@@ -994,36 +1103,36 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     },
                     body: formData
                 })
-                
+
                 const res_prodotti = await response.json();
                 res_prodotti.data.forEach(centro => {
                     this.prodotti.push(centro)
                 });
             },
-            
-            
+
+
             abortFetching() {
                 this.controller.abort();
             },
-            
+
             /**
              * Remote search in product select. Print product image, name and price
              */
-            fetchOptions: function(search, loading) {
+            fetchOptions: function (search, loading) {
                 localStorage.setItem('fonte', 'prodotto');
-                
+
                 var el = this;
                 clearTimeout(el.productsTimeout);
-                
+
                 if (search.length >= 3) {
-                    el.productsTimeout = setTimeout(function() {
+                    el.productsTimeout = setTimeout(function () {
                         console.log('inside tiemout');
                         const formData = new FormData();
                         magazzino = localStorage.getItem('magazzino');
                         formData.append("where[]", "fw_products_name LIKE '%" + search + "%'");
                         formData.append("limit", "100");
                         //formData.append("where[]", "fw_products_id IN (SELECT movimenti_articoli_prodotto_id FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento AND movimenti_magazzino = '" + magazzino + "') GROUP BY movimenti_articoli_prodotto_id HAVING SUM(CASE WHEN movimenti_tipo_movimento = 1 THEN movimenti_articoli_quantita ELSE -movimenti_articoli_quantita END) > 0)");
-                        
+
                         fetch(`${endpoint}/search/fw_products`, {
                             method: 'POST',
                             headers: {
@@ -1033,7 +1142,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             signal: el.signal
                         })
                             .then((response) => response.json())
-                            .then(function(response) {
+                            .then(function (response) {
                                 // Update options
                                 el.prodotti_option = response.data;
                             })
@@ -1043,24 +1152,24 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     clearTimeout(el.productsTimeout);
                 }
             },
-            selectedOption: function(prodotto) {
+            selectedOption: function (prodotto) {
                 if (prodotto) {
                     addToCart(prodotto);
                 }
             },
-            
+
             /**
              * Remote search in barcode select. Print product image, barcode/sku and price
              * Auto add element to cart if seaerch returns only oone product
              */
-            fetchBarcodeOptions: function(search, loading) {
+            fetchBarcodeOptions: function (search, loading) {
                 localStorage.setItem('fonte', 'barcode');
-                
+
                 var el = this;
                 clearTimeout(el.timeout);
-                
+
                 if (search.length > 2) {
-                    el.timeout = setTimeout(function() {
+                    el.timeout = setTimeout(function () {
                         const formData = new FormData();
                         //magazzino = localStorage.getItem('magazzino');
                         formData.append("where[]", "(fw_products_barcode LIKE '%" + search + "%' OR fw_products_sku LIKE '%" + search + "%')");
@@ -1075,7 +1184,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                             body: formData,
                         })
                             .then((response) => response.json())
-                            .then(function(json) {
+                            .then(function (json) {
                                 //console.log(json.data);
                                 const res = json.data;
                                 if (res.length != 0) {
@@ -1103,9 +1212,9 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     clearTimeout(el.timeout);
                 }
             },
-            
-            
-            
+
+
+
             /*********** GESTIONE PRODOTTI  **********/
             /**
              * Get all product (will be used for most sell and favourite products)
@@ -1118,7 +1227,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 formData.append("limit", "100");
                 //formData.append("where[]", "fw_products_quantity > 0");
                 //formData.append("where[]", "fw_products_id IN (SELECT movimenti_articoli_prodotto_id FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento AND movimenti_magazzino = '" + magazzino + "') GROUP BY movimenti_articoli_prodotto_id HAVING SUM(CASE WHEN movimenti_tipo_movimento = 1 THEN movimenti_articoli_quantita ELSE -movimenti_articoli_quantita END) > 0)")
-                
+
                 const response = await fetch(`${endpoint}/search/fw_products`, {
                     method: "post",
                     headers: {
@@ -1132,8 +1241,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 });
                 this.product_loading = false;
             },
-            
-            
+
+
             /**
              *  Set product image as main image or first of the gallery
              */
@@ -1154,7 +1263,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     return base_url + '/images/no_image.png';
                 }
             },
-            
+
             isJson(string) {
                 try {
                     JSON.parse(string);
@@ -1163,12 +1272,12 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 }
                 return true;
             },
-            
+
             favouriteProducts() {
                 this.getProducts();
             },
-            
-            
+
+
             /*********** GESTIONE CARRELLO  **********/
             /**
              * Add one product to cart from each product visualization
@@ -1176,20 +1285,20 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
             addProductToCart(product) {
                 this.addToCart(product)
             },
-            
+
             addToCart(prodotto) {
                 if (prodotto) {
                     this.addProduct(prodotto);
                     //Autofocus sul barcode e tolto al product, svuoto barcode_select e le option della select
                     this.prodotti_select = null;
                     this.prodotti_option = [];
-                    
+
                     this.barcode_select = null;
                     this.barcode_option = [];
-                    
+
                     /*                 console.log(this.$refs.myproduct)
                      this.$refs.myproduct.$refs.search.blur(); */
-                    
+
                     //console.log(this.$refs.mybarcode.$refs)
                     if (localStorage.getItem('fonte') === 'barcode') {
                         this.$refs.mybarcode.$refs.search.blur();
@@ -1200,7 +1309,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     }
                 }
             },
-            
+
             /*
              * Add one product to the cart item
              */
@@ -1213,7 +1322,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 const prezzoIvato = (prezzo + (prezzo * iva) / 100);
                 const totale_prodotto = parseFloat(prezzoIvato);
                 const quantita_disponibile = prodotto.fw_products_quantity;
-                
+
                 var cart_prodotto = {
                     prezzo_ivato: parseFloat(prezzoIvato.toFixed(2)),
                     //prezzo: parseFloat(prezzo),
@@ -1236,7 +1345,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 //this.carrello.push(cart_prodotto);
                 localStorage.setItem('cart', JSON.stringify(this.carrello));
             },
-            
+
             /**
              * Removes one product from cart
              */
@@ -1259,8 +1368,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 this.customer_select = null;
                 this.prezzo_totale = 0;
             },
-            
-            
+
+
             /**
              * Calculate product VAT in cart
              */
@@ -1268,7 +1377,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 const prezzo = parseFloat(prodotto.fw_products_sell_price);
                 const iva_valore = parseInt(prodotto.iva_valore)
                 const prezzoIvato = (prezzo + (prezzo * iva_valore) / 100);
-                
+
                 return prezzoIvato.toFixed(2);
             },
             /**
@@ -1278,11 +1387,11 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 const prezzo = parseFloat(prodotto.fw_products_sell_price);
                 const iva = parseInt(prodotto.iva_valore)
                 const prezzoIvato = (prezzo + (prezzo * iva) / 100);
-                
+
                 return prezzoIvato.toFixed(2);
             },
-            
-            
+
+
             /**
              * Set product quantity
              */
@@ -1291,14 +1400,14 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 if (nuova_quantita > 0) {
                     prodotto.quantita = nuova_quantita;
                     prodotto = this.ricomputoProdotto(prodotto);
-                    
+
                     localStorage.setItem('cart', JSON.stringify(this.carrello));
                 } else {
                     prodotto.quantita = 0;
                     //console.error('La quantità deve essere maggiore di 0');
                 }
             },
-            
+
             /**
              * Descrease product quantity
              */
@@ -1307,23 +1416,23 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 if (quantity > 1) {
                     prodotto.quantita--;
                     prodotto = this.ricomputoProdotto(prodotto);
-                    
+
                     localStorage.setItem('cart', JSON.stringify(this.carrello));
                 }
             },
-            
+
             /**
              * Increase product quantity
              */
             increaseProductQuantity(prodotto, index) {
                 prodotto.quantita++;
                 prodotto = this.ricomputoProdotto(prodotto);
-                
+
                 localStorage.setItem('cart', JSON.stringify(this.carrello));
             },
-            
-            
-            
+
+
+
             /**
              * Set product discount percentage
              *
@@ -1337,17 +1446,17 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     prod.sconto = parseFloat(perc_sconto);
                 } else {
                     prod.sconto = 0;
-                    
+
                 }
                 //debugger
                 prod._lockPrice = false;
                 prod = this.ricomputoProdotto(prod);
-                
+
                 localStorage.setItem('cart', JSON.stringify(this.carrello));
             },
-            
-            
-            
+
+
+
             /**
              * Set new product price, update iva and imponibile with new value (prezzo già ivato)
              *
@@ -1356,11 +1465,11 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
              */
             setProductPrice(prodotto, index, event) {
                 const nuovo_prezzo = parseFloat(event.target.value);
-                
+
                 if (nuovo_prezzo > 0) {
                     prodotto._prezzo_ivato = nuovo_prezzo / prodotto.quantita;
                     //prodotto.sconto = parseFloat((((prodotto.prezzo_ivato - nuovo_prezzo) / prodotto.prezzo_ivato) * 100).toFixed(2));
-                    
+
                     prodotto._lockPrice = true;
                     prodotto = this.ricomputoProdotto(prodotto);
                     localStorage.setItem('cart', JSON.stringify(this.carrello));
@@ -1368,8 +1477,8 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     console.error('Il prezzo deve essere maggiore di 0')
                 }
             },
-            
-            
+
+
             /**
              * Use cart in localstorage
              */
@@ -1400,22 +1509,22 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     this.magazzino_select = magazzino;
                 }
             },
-            
+
             resetError() {
                 this.errorOnSave = !this.errorOnSave;
             },
-            
+
             saveOrder() {
                 // Disabilita il bottone all'inizio
                 this.isButtonDisabled = true;
-                
+
                 var cartContent = {
                     cart: JSON.parse(localStorage.getItem('cart')),
                     user: localStorage.getItem('customer'),
                     centro_di_costo: localStorage.getItem('centro_costo'),
                     magazzino: localStorage.getItem('magazzino')
-            }
-                
+                }
+
                 if (!cartContent.magazzino) {
                     this.error_text = 'Non puoi salvare un\'ordine senza selezionare il magazzino';
                     this.errorOnSave = true;
@@ -1434,29 +1543,40 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     // Riabilita il bottone in caso di errore
                     this.isButtonDisabled = false;
                     return;
-                //} else if (cartContent.cart && cartContent.centro_di_costo && cartContent.magazzino) {
+                    //} else if (cartContent.cart && cartContent.centro_di_costo && cartContent.magazzino) {
                 } else if (cartContent.cart && cartContent.magazzino) {
-                //console.log(cartContent);
+                    //console.log(cartContent);
                     this.error_text = '';
                     this.errorOnSave = false;
-                    
+
                     this.loadingOrder = true;
-                    
+
                     const params = new URLSearchParams();
                     params.append([token_name], token_hash);
                     params.append('cartContent', JSON.stringify(cartContent));
                     params.append('totale_scontato', this.prezzo_totale);
-                    
+
+                    // ricevuta selezionata
+                    if(this.ricevuta_select) {
+                        const ricevuta_select_id = this.ricevuta_select.punto_cassa_settings_ricevuta_default_id;
+                        params.append('cart_tipo_ricevuta', ricevuta_select_id);
+                    }
+
+
                     axios.post(base_url + 'magazzino/puntocassa/save', params)
-                    .then(function(response) {
+                        .then(function (response) {
                             if (response.data.status == 1) { //Redirect to punto cassa
                                 this.carrello = [];
-                            //localStorage.clear();
+                                //localStorage.clear();
                                 localStorage.removeItem('cart');
                                 localStorage.removeItem('customer');
                                 localStorage.removeItem('customerData');
                                 this.loadingOrder = false;
                                 window.location.href = response.data.txt;
+                            } if (response.data.status == 2) {
+                                alert('Stampa lato client ancora non gestita. Configurare correttamente contattando il supporto.');
+                                // Modale pronta per utilizzare eventuali webservices / http rest post alla stampante fiscale. No socket lato client.
+                                //loadModal(base_url + 'get_ajax/layout_modal/stampa-ricevuta-registratore?ricevuta_id=' + response.data.txt);
                             } else { //errore, mostro toast con messaggio
                                 this.error_text = response.data.txt;
                                 this.errorOnSave = true;
@@ -1465,9 +1585,9 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                 this.isButtonDisabled = false;
                                 return false;
                             }
-                    });
+                        });
                 } else {
-                //console.error('carrello vuoto')
+                    //console.error('carrello vuoto')
                     this.error_text = 'Non puoi salvare un\'ordine senza prodotti, centro di costo e magazzino';
                     this.errorOnSave = true;
                     this.loadingOrder = false;
@@ -1475,7 +1595,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     this.isButtonDisabled = false;
                 }
             },
-            
+
             /**
              * ! Popola select centri di costo e se c'è un serie nella sessione dell'utente loggato
              * ! imposta il centro di costo a quello che corrisponde con la label del serie
@@ -1506,7 +1626,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
             //     //     localStorage.setItem('serie_object', JSON.stringify(serie_utente[0]));
             //     // }
             // },
-            
+
             /**
              * ! Popola select centri di costo e se c'è un magazzino nella sessione dell'utente loggato
              * ! imposta il centro di costo a quello che corrisponde con la label del magazzino
@@ -1519,7 +1639,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     },
                 })
                 const centri_costo = await response.json();
-                
+
                 centri_costo.data.forEach(centro => {
                     this.centri_costo.push(centro)
                 });
@@ -1545,7 +1665,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     localStorage.setItem('nome_centro_costo', centro.centri_di_costo_ricavo_nome)
                 }
             },
-            
+
             /**
              * POPOLA SELECT MAGAZZINI E SETTA I DATI DEL MAGAZZINO CHE HA L'UTENTE IN SESSIONE
              */
@@ -1589,7 +1709,6 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     //this.filterProductByMagazzino(id);
                 }
             },
-            
             /**
              * Prende info del magazzino legato all'utente
              */
@@ -1597,33 +1716,33 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
              this.magazzino_id = '<?php echo $magazzino ?>';
              
              const formData = new FormData();
-             formData.append("where[]", `magazzini_id=${this.magazzino_id}`);
-             
-             const response = await fetch(`${endpoint}/search/magazzini`, {
-             method: 'POST',
-             headers: {
-             Authorization: `${tokenApi}`,
-             },
-             body: formData
-             })
+            formData.append("where[]", `magazzini_id=${this.magazzino_id}`);
+
+            const response = await fetch(`${endpoint}/search/magazzini`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `${tokenApi}`,
+                },
+                body: formData
+            })
              const res_magazzini = await response.json();
-             //console.log(res_magazzini)
-             
-             if (res_magazzini.data.length != 0) {
-             const magazzino = res_magazzini.data;
-             magazzino.forEach(magazzino => {
-             const id = magazzino.magazzini_id;
-             const titolo = magazzino.magazzini_titolo;
-             //imposto dati magazzino e salvo in localstorage
-             this.magazzino.titolo = titolo;
-             this.magazzino.id = id;
-             localStorage.setItem('magazzino', id);
-             localStorage.setItem('nome_magazzino', titolo);
-             //this.filterProductByMagazzino(id);
-             });
+            //console.log(res_magazzini)
+
+            if(res_magazzini.data.length != 0) {
+                const magazzino = res_magazzini.data;
+    magazzino.forEach(magazzino => {
+        const id = magazzino.magazzini_id;
+        const titolo = magazzino.magazzini_titolo;
+        //imposto dati magazzino e salvo in localstorage
+        this.magazzino.titolo = titolo;
+        this.magazzino.id = id;
+        localStorage.setItem('magazzino', id);
+        localStorage.setItem('nome_magazzino', titolo);
+        //this.filterProductByMagazzino(id);
+    });
              }
              }, */
-            
+
             /**
              * ! Get magazzino info for the logged user. Used for product filter
              */
@@ -1633,76 +1752,121 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 //Popola select magazzino da usare se utente non ha magazzino collegato
                 this.getMagazzini();
             },
+
+            /**
+            * ! POPOLA SELECT RICEVUTE
+            */
+            async getRicevute() {
+                const response = await fetch(`${endpoint}/search/punto_cassa_settings_ricevuta_default`, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `${tokenApi}`,
+                    },
+                })
+                const res_ricevute = await response.json();
+                
+                res_ricevute.data.forEach(ricevuta => {
+                    this.ricevute_options.push(ricevuta);
+                });
+
+                this.ricevuta_select =  1;
+                // Imposta default in base ai settings
+                if(res_ricevute.data.length == 0) {
+                    this.ricevuta_select = null;
+                }
+
+                const defaultRicevuta = punto_cassa_settings.punto_cassa_settings_ricevuta_default;
+                if(defaultRicevuta && res_ricevute.data.length > 0) {
+                    this.ricevuta_select = this.ricevute_options.find(option => option.punto_cassa_settings_ricevuta_default_id === punto_cassa_settings.punto_cassa_settings_ricevuta_default);
+                } else {
+                    this.ricevuta_select = null;
+                }
+
+                /* if(res_ricevute.data.length > 0) {
+                    this.ricevuta_select = this.ricevute_options.find(option => option.punto_cassa_settings_ricevuta_default_id === punto_cassa_settings.punto_cassa_settings_ricevuta_default);
+                } else {
+                    this.ricevuta_select = null;
+                } */
+            },
+            
+            setSelectedRicevuta(ricevuta) {
+                if (ricevuta) {
+                    this.ricevuta_select = ricevuta;
+                }
+            },
             
         },
-        
-        computed: {
-            /**
-             * C! alculate net total cart based on product in cart
-             */
-            totalNetCart() {
-                var mythis = this;
-                const totalNet = this.carrello.reduce(function(acc, current) {
-                        current = mythis.ricomputoProdotto(current);
-                        return acc + current._totale_imponibile_scontato;
-                    },
-                    0);
-                return totalNet.toFixed(2)
+
+    computed: {
+        /**
+         * C! alculate net total cart based on product in cart
+         */
+        totalNetCart() {
+            var mythis = this;
+            const totalNet = this.carrello.reduce(function (acc, current) {
+                current = mythis.ricomputoProdotto(current);
+                return acc + current._totale_imponibile_scontato;
             },
-            /**
-             * ! Calculate VAT cart total based on product in cart
-             *
-             */
-            totalVatCart() {
-                var mythis = this;
-                const totalVat = this.carrello.reduce(function(acc, current) {
-                    current = mythis.ricomputoProdotto(current);
-                    
-                    return acc + parseFloat(current._iva_totale_scontato);
-                }, 0);
-                return totalVat.toFixed(2)
-            },
-            /**
-             * ! Calculate cart total based on product in cart
-             */
-            totalCart() {
-                var mythis = this;
-                const totalNet = this.carrello.reduce(function(acc, current) {
-                        current = mythis.ricomputoProdotto(current);
-                        return acc + current._totale_imponibile_scontato;
-                    },
-                    0);
-                const totalVat = this.carrello.reduce(function(acc, current) {
-                    current = mythis.ricomputoProdotto(current);
-                    
-                    return acc + parseFloat(current._iva_totale_scontato);
-                }, 0);
-                
-                mythis.carello_totale = (totalNet + totalVat).toFixed(2);
-                //azzero il totale per i controlli e lo ricalcolo ogni volta che cambia il totale del carrello
-                this.carrello_totale = 0;
-                this.carrello.forEach(prodotto => {
-                    this.carrello_totale += prodotto.prezzo_ivato * prodotto.quantita;
-                    //this.carrello_totale += prodotto.prezzo_ivato;
-                });
-                //console.log(this.carrello_totale)
-                
-                return (totalNet + totalVat).toFixed(2);
-            },
+                0);
+            return totalNet.toFixed(2)
         },
-        
-        beforeMount() {
-            //this.getCustomers();
-            this.checkCart();
+        /**
+         * ! Calculate VAT cart total based on product in cart
+         *
+         */
+        totalVatCart() {
+            var mythis = this;
+            const totalVat = this.carrello.reduce(function (acc, current) {
+                current = mythis.ricomputoProdotto(current);
+
+                return acc + parseFloat(current._iva_totale_scontato);
+            }, 0);
+            return totalVat.toFixed(2)
         },
-        
-        mounted() {
-            //Set focus on barcode
-            this.$refs.mybarcode.$refs.search.focus();
-            this.$refs.myproduct.$refs.search.blur();
-            this.setMagazzino();
-            this.favouriteProducts();
-        }
+        /**
+         * ! Calculate cart total based on product in cart
+         */
+        totalCart() {
+            var mythis = this;
+            const totalNet = this.carrello.reduce(function (acc, current) {
+                current = mythis.ricomputoProdotto(current);
+                return acc + current._totale_imponibile_scontato;
+            },
+                0);
+            const totalVat = this.carrello.reduce(function (acc, current) {
+                current = mythis.ricomputoProdotto(current);
+
+                return acc + parseFloat(current._iva_totale_scontato);
+            }, 0);
+
+            mythis.carello_totale = (totalNet + totalVat).toFixed(2);
+            //azzero il totale per i controlli e lo ricalcolo ogni volta che cambia il totale del carrello
+            this.carrello_totale = 0;
+            this.carrello.forEach(prodotto => {
+                this.carrello_totale += prodotto.prezzo_ivato * prodotto.quantita;
+                //this.carrello_totale += prodotto.prezzo_ivato;
+            });
+            //console.log(this.carrello_totale)
+
+            return (totalNet + totalVat).toFixed(2);
+        },
+    },
+
+    beforeMount() {
+        //this.getCustomers();
+        this.checkCart();
+    },
+
+    mounted() {
+        //Set focus on barcode
+        this.$refs.mybarcode.$refs.search.focus();
+        this.$refs.myproduct.$refs.search.blur();
+        this.setMagazzino();
+        this.favouriteProducts();
+
+        // Ricevute
+        this.getRicevute();
+    }
     });
     //}, 2000);
 </script>

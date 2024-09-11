@@ -343,7 +343,6 @@ $lang['New billing documents templates'] = 'New billing documents templates';
 $lang['Document type'] = 'Document type';
 $lang['Billing documents templates'] = 'Billing documents templates';
 $lang['List billing documents templates'] = 'List billing documents templates';
-
 $lang['deadline'] = 'deadline';
 $lang['New Task'] = 'New Task';
 $lang['Dashboards'] = 'Dashboards';

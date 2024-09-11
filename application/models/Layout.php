@@ -10,6 +10,7 @@ class Layout extends CI_Model
     public $current_module_identifier = false;
     public $related_entities = [];
 
+    private $_scripts = [];
     private $_layouts_by_id = [];
     private $_layouts_by_identifier = [];
 
@@ -203,10 +204,22 @@ class Layout extends CI_Model
                 $mpdf->AddPage();
                 $mpdf->WriteHtml($this->generate_html($conditionsPage, $relative_path, $extra_data, $module, true), \Mpdf\HTMLParserMode::DEFAULT_MODE);
             }
-
-            $mpdf->Output($filename, 'I');
-
-            //TODO: return true?
+            
+            $save_as = array_get($options, 'save_as_file', false);
+            
+            if ($save_as) {
+                $physicalDir = FCPATH . "/uploads/pdf";
+                if (!is_dir($physicalDir)) {
+                    mkdir($physicalDir, 0755, true);
+                }
+                $filename = date('Ymd_His') . '_' . random_int(1, 100);
+                $filename = "{$physicalDir}/{$filename}.pdf";
+                $mpdf->Output($filename, 'F');
+                
+                return $filename;
+            } else {
+                $mpdf->Output($filename, 'I');
+            }
         } else {
             $physicalDir = FCPATH . "/uploads/pdf";
             // 2022-04-19 - Added random_int because it can happen that a generation of pdf deriving from an array,
@@ -412,15 +425,19 @@ class Layout extends CI_Model
     public function addModuleStylesheet($module_identifier, $file)
     {
         $path = $this->moduleAssets($module_identifier, $file);
-        echo '
-<link rel="stylesheet" type="text/css" href="' . $path . '" />';
+        echo '<link rel="stylesheet" type="text/css" href="' . $path . '" />';
     }
     public function addModuleJavascript($module_identifier, $file)
     {
         $path = $this->moduleAssets($module_identifier, $file);
         echo '<script src="' . $path . '"></script>';
     }
-
+    public function addModuleFooterJavascript($module_identifier, $file)
+    {
+        $path = $this->moduleAssets($module_identifier, $file);
+        $this->injectFooterScript($path);
+    }
+    
 
     public function templateAssets($template_folder, $file)
     {
@@ -526,6 +543,19 @@ class Layout extends CI_Model
         }
 
         echo '<script src="' . base_url($file) . '?v=' . VERSION . '"></script>';
+    }
+
+    public function injectFooterScript($script) {
+        $this->_scripts[] = $script;
+    }
+
+    public function injectFooterScripts($scripts) {
+        foreach ($scripts as $script) {
+            $this->injectFooterScript($script);
+        }
+    }
+    public function getFooterScripts() {
+        return $this->_scripts;
     }
 
     public function replaceTemplateHooks($html, $value_id)

@@ -13,7 +13,7 @@ function startDataTables(container) {
         $(this).dataTable({
             bSort: bEnableOrder,
             aaSorting: [],
-            stateSave: true,
+            stateSave: true, 
             aLengthMenu: lengthMenu,
             oLanguage: {
                 sUrl: base_url_scripts + 'script/datatable.transl.json',
@@ -61,7 +61,7 @@ function startDataTables(container) {
 
                 iDisplayLength: 5,
                 bFilter: false,
-                stateSave: true,
+                stateSave: true, 
                 bLengthChange: false,
                 oLanguage: { sUrl: base_url_scripts + 'script/datatable.transl.json' },
                 footerCallback: function (row, data, start, end, display) {

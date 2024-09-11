@@ -457,7 +457,7 @@ else :
                                     <?php for ($i = 0; $i < $articolo['documenti_contabilita_articoli_quantita']; $i++) :
                                     ?>
                                         <tr class="text-uppercase <?php echo ($quantity > 0) ? null : 'bg-grey'; ?><?php if ($articolo['documenti_contabilita_articoli_qty_movimentate'] > $i) : ?> js_movimentato <?php endif; ?>">
-                                            <td width="100"><?php if (!empty($image)) : ?><a href="<?php echo base_url("uploads/{$image}"); ?>" class="fancybox"><img src="<?php echo base_url("imgn/1/50/50/uploads/{$image}"); ?>" class="img-thumbnail" alt=""></a><?php endif; ?></td>
+                                            <td width="100"><?php if (!empty($image)) : ?><a href="<?php echo base_url("uploads/{$image}"); ?>" class="fancybox"><img src="<?php echo base_url("thumb/50/50/1/uploads/{$image}"); ?>" class="img-thumbnail" alt=""></a><?php endif; ?></td>
                                             <td width="500"><?php echo $articolo['documenti_contabilita_articoli_name'] ?>
                                                 <?php if (!empty($fw_product['fw_products_barcode'])) : ?>
                                                     <?php

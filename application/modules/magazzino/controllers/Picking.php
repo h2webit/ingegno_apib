@@ -34,7 +34,7 @@ class Picking extends MY_Controller
                 <tr class="text-uppercase">
                     <td>
                         <a href="' . base_url("uploads/{$image}") . '" class="fancybox">
-                            <img src="' . base_url("imgn/1/50/50/uploads/{$image}") . '" class="img-thumbnail" alt="">
+                            <img src="' . base_url("thumb/50/50/1/uploads/{$image}") . '" class="img-thumbnail" alt="">
                         </a>
                     </td>
                     <td width="500">' . $articolo['documenti_contabilita_articoli_name'] . '</td>

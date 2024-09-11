@@ -1,0 +1,74 @@
+[
+    {
+        "name": "ddeboer/imap",
+        "version": "1.11.0",
+        "version_normalized": "1.11.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ddeboer/imap.git",
+            "reference": "a089dfcb9d177f921eb5dadc8d4144a44dff22ee"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ddeboer/imap/zipball/a089dfcb9d177f921eb5dadc8d4144a44dff22ee",
+            "reference": "a089dfcb9d177f921eb5dadc8d4144a44dff22ee",
+            "shasum": ""
+        },
+        "require": {
+            "ext-iconv": "*",
+            "ext-imap": "*",
+            "ext-mbstring": "*",
+            "php": "^7.3 || ^8.0"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.16.7",
+            "laminas/laminas-mail": "^2.12.3",
+            "phpstan/phpstan": "^0.12.57",
+            "phpstan/phpstan-phpunit": "^0.12.16",
+            "phpstan/phpstan-strict-rules": "^0.12.5",
+            "phpunit/phpunit": "^9.4.3"
+        },
+        "time": "2020-11-30T14:52:49+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Ddeboer\\Imap\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "David de Boer",
+                "email": "david@ddeboer.nl"
+            },
+            {
+                "name": "Filippo Tessarotto",
+                "email": "zoeslam@gmail.com"
+            },
+            {
+                "name": "Community contributors",
+                "homepage": "https://github.com/ddeboer/imap/graphs/contributors"
+            }
+        ],
+        "description": "Object-oriented IMAP for PHP",
+        "keywords": [
+            "email",
+            "imap",
+            "mail"
+        ],
+        "funding": [
+            {
+                "url": "https://github.com/Slamdunk",
+                "type": "github"
+            },
+            {
+                "url": "https://github.com/ddeboer",
+                "type": "github"
+            }
+        ]
+    }
+]

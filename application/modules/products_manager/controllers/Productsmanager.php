@@ -78,6 +78,7 @@ class Productsmanager extends MY_Controller
                 'fw_products_width'              => $input['fw_products_width'],
                 'fw_products_height'             => $input['fw_products_height'],
                 'fw_products_depth'              => $input['fw_products_depth'],
+                'fw_products_volume'     => $input['fw_products_volume'],
                 'fw_products_peso_specifico'     => $input['fw_products_peso_specifico'],
                 'fw_products_type'               => $input['fw_products_type'], //Simple o Configurable
                 'fw_products_warehouse_location' => $input['fw_products_warehouse_location'],
@@ -90,6 +91,7 @@ class Productsmanager extends MY_Controller
                 'fw_products_out_of_production'  => (empty($input['fw_products_out_of_production'])) ? 0 : $input['fw_products_out_of_production'],
                 'fw_products_centro_costo_ricavo' => $input['fw_products_centro_costo_ricavo'] ?? null,
                 'fw_products_deleted' => DB_BOOL_FALSE,
+                'fw_products_variante' => $input['fw_products_variante'] ?? null,
             
             ];
             if ($input['fw_products_type'] == 1) {

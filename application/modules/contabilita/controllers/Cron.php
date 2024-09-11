@@ -410,4 +410,21 @@ class Cron extends MX_Controller
         //     return false;
         // }
     }
+
+    public function ricalcolaPrezzoMedioAcquisto($prodotto_id = false)
+    {
+        $this->docs->ricalcolaPrezzoMedioAcquisto($prodotto_id);
+
+    }
+    public function ricalcolaPrezzoMedioVendita($prodotto_id = false)
+    {
+        $this->docs->ricalcolaPrezzoMedioVendita($prodotto_id);
+
+    }
+    public function ricalcolaPrezziMedi($prodotto_id = false)
+    {
+        $this->docs->ricalcolaPrezzoMedioAcquisto($prodotto_id);
+        $this->docs->ricalcolaPrezzoMedioVendita($prodotto_id);
+
+    }
 }

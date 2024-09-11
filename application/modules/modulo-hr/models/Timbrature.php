@@ -1609,8 +1609,7 @@ class Timbrature extends CI_Model
         return $presenza;
     }
 
-    public function creaPresenzaDaRichiesta($richiesta) {
-        
+    public function creaPresenzaDaRichiesta($richiesta) {       
         $impostazioni_modulo = $this->apilib->searchFirst('impostazioni_hr');
         $crea_presenze = $impostazioni_modulo['impostazioni_hr_crea_presenze_da_richieste'] ?? DB_BOOL_FALSE;
         $presenze_da_cancellare = $this->apilib->search('presenze', ['presenze_richiesta' => $richiesta['richieste_id']]);
@@ -1618,8 +1617,9 @@ class Timbrature extends CI_Model
         foreach ($presenze_da_cancellare as $presenza) {
             $this->apilib->delete('presenze', $presenza['presenze_id']);
         }
-        if($crea_presenze != DB_BOOL_TRUE || $richiesta['richieste_stato'] != '2') {
+        if($crea_presenze != DB_BOOL_TRUE || $richiesta['richieste_stato'] != '2' || in_array($richiesta['richieste_tipologia'], [6,7])) {
             //Per prima cosa verifico che la richiesta sia approvata, altrimenti non creo alcuna presenza
+            // Stessa cosa per richieste di disponibilità e indisponibilità
         
             return;
 
@@ -1809,32 +1809,36 @@ class Timbrature extends CI_Model
                             }
                         }
                     } else {
-                        // Creo comunque con 09-17 e segnalo anomalia
-                        $inizio_turno = '09:00';
-                        $fine_turno = '17:00';
-                        try {
-                            $this->db->insert('presenze', [
-                                'presenze_creation_date' => date('Y-m-d H:i:s'),
-                                'presenze_dipendente' => $richiesta['richieste_user_id'],
-                                'presenze_data_inizio' => $giorno_richiesta,
-                                'presenze_data_fine' => $giorno_richiesta,
-                                'presenze_ora_inizio' => $inizio_turno,
-                                'presenze_ora_fine' => $fine_turno,
-                                'presenze_data_inizio_calendar' => $giorno_richiesta . ' 09:00:00',
-                                'presenze_data_fine_calendar' => $giorno_richiesta . ' 18:00:00',
-                                'presenze_ore_totali' => 9,
-                                'presenze_straordinario' => 0,
-                                'presenze_reparto' => $reparto,
-                                'presenze_richiesta' => $richiesta['richieste_id'],
-                                'presenze_note' => $richiesta['richieste_note'],
-                                'presenze_anomalia' => DB_BOOL_TRUE,
-                                'presenze_note_anomalie' => 'Creata dal sistema (a partire da richiesta) in giornata senza turni di lavoro registrati',
-                                'presenze_note' => $richiesta['richieste_note'],
-                                'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
-                                'presenze_scope_create' => 'CRON PRESENZE RICHIESTE'
-                            ]);
-                        } catch (Exception $e) {
-                            log_message('error', "Impossibile creare presenza automatica, per dipendente senza turno, da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
+                        // se la tipologia di richiesta NON è ferie, creo la presenza anomala.
+                        // michael, 20/08/2024 - deciso con matteo di applicare questa correzione in quanto se un dipendente non ha un turno di lavoro, viene creata la presenza con conseguente anomalia anche su zucchetti
+                        if (!in_array($richiesta['richieste_tipologia'], [2])) {
+                            // Creo comunque con 09-17 e segnalo anomalia
+                            $inizio_turno = '09:00';
+                            $fine_turno = '17:00';
+                            try {
+                                $this->db->insert('presenze', [
+                                    'presenze_creation_date' => date('Y-m-d H:i:s'),
+                                    'presenze_dipendente' => $richiesta['richieste_user_id'],
+                                    'presenze_data_inizio' => $giorno_richiesta,
+                                    'presenze_data_fine' => $giorno_richiesta,
+                                    'presenze_ora_inizio' => $inizio_turno,
+                                    'presenze_ora_fine' => $fine_turno,
+                                    'presenze_data_inizio_calendar' => $giorno_richiesta . ' 09:00:00',
+                                    'presenze_data_fine_calendar' => $giorno_richiesta . ' 18:00:00',
+                                    'presenze_ore_totali' => 9,
+                                    'presenze_straordinario' => 0,
+                                    'presenze_reparto' => $reparto,
+                                    'presenze_richiesta' => $richiesta['richieste_id'],
+                                    'presenze_note' => $richiesta['richieste_note'],
+                                    'presenze_anomalia' => DB_BOOL_TRUE,
+                                    'presenze_note_anomalie' => 'Creata dal sistema (a partire da richiesta) in giornata senza turni di lavoro registrati',
+                                    'presenze_note' => $richiesta['richieste_note'],
+                                    'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
+                                    'presenze_scope_create' => 'CRON PRESENZE RICHIESTE'
+                                ]);
+                            } catch (Exception $e) {
+                                log_message('error', "Impossibile creare presenza automatica, per dipendente senza turno, da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
+                            }
                         }
                     }
                 }

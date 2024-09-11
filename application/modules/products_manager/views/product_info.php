@@ -57,29 +57,30 @@ if(!empty($prodotto['fw_products_fw_categories'])) {
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <?php
-            if (!empty($prodotto['fw_products_main_image'])) : ?>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="product_main_image_container">
-                        <?php
-                        $main_image = (is_valid_json($prodotto['fw_products_main_image'])) ? json_decode($prodotto['fw_products_main_image'], true) : $prodotto['fw_products_main_image'];
-                        
-                        $main_image_path = $main_image['path_local'] ?? $main_image;
-                        
-                        ?>
-                        <a href='<?php echo base_url("uploads/{$main_image_path}"); ?>' class='fancybox'>
-                            <img style="max-width: 200px; max-height: 100%;" src='<?php echo base_url("uploads/{$main_image_path}"); ?>' class='img-responsive'>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <?php else :
-                $link = base_url('modulesbridge/loadAssetFile/products_manager?file=product.png');
-            ?>
-            <img class="img-responsive" style="max-width: 100px;" src="<?php echo $link; ?>" />
-            <?php endif; ?>
+            <?php if (!empty($prodotto['fw_products_main_image'])):
+                $main_image = (is_valid_json($prodotto['fw_products_main_image'])) ? json_decode($prodotto['fw_products_main_image'], true) : $prodotto['fw_products_main_image'];
+                $main_image_path = $main_image['path_local'] ?? $main_image;
+                $full_image_path = FCPATH . "uploads/{$main_image_path}";
 
+                if (is_valid_image($full_image_path)): ?>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="product_main_image_container">
+                                <a href='<?php echo base_url("uploads/{$main_image_path}"); ?>' class='fancybox'>
+                                    <img style="max-width: 200px; max-height: 100%;"
+                                        src='<?php echo base_url("uploads/{$main_image_path}"); ?>' class='img-responsive'>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <img class="img-responsive" style="max-width: 100px;"
+                        src="<?php echo base_url('modulesbridge/loadAssetFile/products_manager?file=product.png'); ?>" />
+                <?php endif; ?>
+            <?php else: ?>
+                <img class="img-responsive" style="max-width: 100px;"
+                    src="<?php echo base_url('modulesbridge/loadAssetFile/products_manager?file=product.png'); ?>" />
+            <?php endif; ?>
             <!-- Thumbnails -->
             <div class="product_thumb_container">
                 <?php
@@ -142,6 +143,16 @@ if(!empty($prodotto['fw_products_fw_categories'])) {
                 if(!empty($prodotto['fw_products_provider_price']))  {
                     echo "<div class='product_info'><strong>Prezzo del fornitore</strong>: ".number_format($prodotto['fw_products_provider_price'], 2, ',', '.')." €</div>";
                 }
+
+                if (!empty($prodotto['fw_products_avg_sell_price'])) {
+                    echo "<div class='product_info'><strong>Prezzo medio di vendita</strong>: " . number_format($prodotto['fw_products_avg_sell_price'], 2, ',', '.') . " €</div>";
+                    
+                }
+                if (!empty($prodotto['fw_products_avg_prov_price'])) {
+                    echo "<div class='product_info'><strong>Prezzo medio di acquisto</strong>: " . number_format($prodotto['fw_products_avg_prov_price'], 2, ',', '.') . " €</div>";
+
+                }
+
                 if(!empty($prodotto['fw_products_warehouse_location']))  {
                     echo "<div class='product_info'><strong>Ubicazione magazzino</strong>: {$prodotto['fw_products_warehouse_location']}</div>";
                 }

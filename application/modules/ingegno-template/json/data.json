@@ -4,15 +4,15 @@
     "modules_description": "Template ingegno",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.1",
+    "modules_version": "1.1.2",
     "modules_identifier": "ingegno-template",
     "modules_base64_zip": null,
     "modules_raw_data_install": "558,735",
     "modules_raw_data_update": "558",
     "modules_created_by_user": "1",
-    "modules_version_code": "31",
+    "modules_version_code": "32",
     "modules_thumbnail": "0d34ba2324a05fb976294ab781889e1f.png",
-    "modules_min_client_version": "3.8.4",
+    "modules_min_client_version": "3.8.5",
     "modules_version_date": "2023-02-03 16:46:58",
     "modules_auto_update": "0",
     "modules_last_update": "2023-02-03 16:46:58",
@@ -569,6 +569,29 @@
                     "fields_searchable": "1",
                     "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "5897",
+                    "fields_entity_id": "735",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_default_value",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "input_text"
                 }
             ],
             "fields_draw": [
@@ -688,6 +711,19 @@
                     "fields_draw_display_none": "0",
                     "fields_draw_enabled": "1",
                     "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "5899",
+                    "fields_draw_fields_id": "5897",
+                    "fields_draw_label": "Default value",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
                 }
             ],
             "fields_validation": [],
@@ -702,7 +738,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_tickets",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "2",
@@ -714,7 +751,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_gantt",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "3",
@@ -726,7 +764,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_map",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "4",
@@ -738,7 +777,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_interventi",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "5",
@@ -750,7 +790,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_timesheet",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "6",
@@ -762,7 +803,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_spese",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "7",
@@ -774,7 +816,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_task",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "8",
@@ -786,7 +829,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_billable",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "9",
@@ -798,7 +842,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_doc_contabilita",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "10",
@@ -810,7 +855,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_presenze",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "11",
@@ -822,7 +868,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_avanzamento",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "12",
@@ -834,7 +881,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_membri",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "13",
@@ -846,7 +894,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_circle_counters",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "14",
@@ -858,31 +907,34 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_milestones",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "15",
                     "ingegno_settings_creation_date": "2024-06-21 11:15:38",
-                    "ingegno_settings_modified_date": "2024-06-24 16:40:14",
+                    "ingegno_settings_modified_date": "2024-07-16 09:29:57",
                     "ingegno_settings_created_by": "2",
                     "ingegno_settings_edited_by": "2",
                     "ingegno_settings_insert_scope": "form",
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_prodotti_servizi",
-                    "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "16",
                     "ingegno_settings_creation_date": "2024-06-21 11:26:37",
-                    "ingegno_settings_modified_date": "2024-06-24 16:38:39",
+                    "ingegno_settings_modified_date": "2024-07-25 15:07:50",
                     "ingegno_settings_created_by": "2",
                     "ingegno_settings_edited_by": "2",
                     "ingegno_settings_insert_scope": "form",
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_appuntamenti_squadre",
-                    "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "17",
@@ -894,7 +946,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_password",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "18",
@@ -906,19 +959,21 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_equipments",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "19",
                     "ingegno_settings_creation_date": "2024-06-24 13:10:44",
-                    "ingegno_settings_modified_date": null,
+                    "ingegno_settings_modified_date": "2024-07-09 10:11:22",
                     "ingegno_settings_created_by": "5",
-                    "ingegno_settings_edited_by": null,
+                    "ingegno_settings_edited_by": "5",
                     "ingegno_settings_insert_scope": "form",
-                    "ingegno_settings_edit_scope": null,
+                    "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_ordini_cliente",
-                    "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_value": "0",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "20",
@@ -930,7 +985,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_ordini_fornitore",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "21",
@@ -942,7 +998,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_top_counters_timesheet",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "22",
@@ -954,7 +1011,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_top_counters_timesheet_costo",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "23",
@@ -966,19 +1024,21 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_spese",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "24",
                     "ingegno_settings_creation_date": "2024-06-24 13:22:41",
-                    "ingegno_settings_modified_date": "2024-06-24 16:58:35",
+                    "ingegno_settings_modified_date": "2024-07-16 14:52:19",
                     "ingegno_settings_created_by": "5",
                     "ingegno_settings_edited_by": "5",
                     "ingegno_settings_insert_scope": "form",
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_mol_fatturato",
-                    "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "25",
@@ -990,7 +1050,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_mol_ordinato",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "26",
@@ -1002,7 +1063,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_billable_balance",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "28",
@@ -1014,7 +1076,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_task_list",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "29",
@@ -1026,7 +1089,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_task_planner",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "30",
@@ -1038,7 +1102,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_task_board",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "31",
@@ -1050,7 +1115,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_task_attachments",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "32",
@@ -1062,7 +1128,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_allegati",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "33",
@@ -1074,7 +1141,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_documents",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "34",
@@ -1086,7 +1154,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_interventi_hours",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "35",
@@ -1098,7 +1167,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_top_counters_progress_task",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "36",
@@ -1110,7 +1180,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_consuntivo",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "37",
@@ -1122,19 +1193,21 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_progress_task",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "38",
                     "ingegno_settings_creation_date": "2024-06-24 16:49:58",
-                    "ingegno_settings_modified_date": null,
+                    "ingegno_settings_modified_date": "2024-07-23 16:57:41",
                     "ingegno_settings_created_by": "5",
-                    "ingegno_settings_edited_by": null,
+                    "ingegno_settings_edited_by": "5",
                     "ingegno_settings_insert_scope": "form",
-                    "ingegno_settings_edit_scope": null,
+                    "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_big_counters_interventi_hours",
-                    "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_value": "0",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "39",
@@ -1146,7 +1219,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_billable_balance",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "40",
@@ -1158,7 +1232,8 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_big_counters_mol_ordinato",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "41",
@@ -1170,7 +1245,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_messaggi",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "42",
@@ -1182,7 +1258,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_mol_fatturato",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "43",
@@ -1194,7 +1271,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_spese",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "44",
@@ -1206,7 +1284,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_timesheet_costo",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "45",
@@ -1218,7 +1297,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_timesheet",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "46",
@@ -1230,7 +1310,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_ordini_fornitore",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "47",
@@ -1242,7 +1323,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_ordini_cliente",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "48",
@@ -1254,7 +1336,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_totale_pagamenti",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "49",
@@ -1266,7 +1349,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_big_counters_pagamenti_non_saldati",
                     "ingegno_settings_value": "1",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "50",
@@ -1278,7 +1362,8 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_top_counters_pagamenti_non_saldati",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "51",
@@ -1290,19 +1375,21 @@
                     "ingegno_settings_edit_scope": null,
                     "ingegno_settings_key": "enable_top_counters_totale_pagamenti",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
                 },
                 {
                     "ingegno_settings_id": "52",
                     "ingegno_settings_creation_date": "2024-06-25 12:06:07",
-                    "ingegno_settings_modified_date": "2024-06-25 12:20:29",
+                    "ingegno_settings_modified_date": "2024-07-05 15:19:03",
                     "ingegno_settings_created_by": "5",
                     "ingegno_settings_edited_by": "5",
                     "ingegno_settings_insert_scope": "form",
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_top_counters_eta",
-                    "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 },
                 {
                     "ingegno_settings_id": "53",
@@ -1314,7 +1401,112 @@
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_projects_orari",
                     "ingegno_settings_value": "0",
-                    "ingegno_settings_module": "projects"
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
+                },
+                {
+                    "ingegno_settings_id": "54",
+                    "ingegno_settings_creation_date": "2024-07-05 15:27:33",
+                    "ingegno_settings_modified_date": "2024-07-09 10:10:20",
+                    "ingegno_settings_created_by": "22",
+                    "ingegno_settings_edited_by": "5",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_top_counters_eta_perc",
+                    "ingegno_settings_value": "0",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
+                },
+                {
+                    "ingegno_settings_id": "55",
+                    "ingegno_settings_creation_date": "2024-07-09 10:14:51",
+                    "ingegno_settings_modified_date": "2024-07-16 14:50:58",
+                    "ingegno_settings_created_by": "5",
+                    "ingegno_settings_edited_by": "5",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_top_counters_fatturato",
+                    "ingegno_settings_value": "0",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
+                },
+                {
+                    "ingegno_settings_id": "56",
+                    "ingegno_settings_creation_date": "2024-07-09 10:15:08",
+                    "ingegno_settings_modified_date": null,
+                    "ingegno_settings_created_by": "5",
+                    "ingegno_settings_edited_by": null,
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": null,
+                    "ingegno_settings_key": "enable_big_counters_fatturato",
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
+                },
+                {
+                    "ingegno_settings_id": "57",
+                    "ingegno_settings_creation_date": "2024-07-09 15:55:27",
+                    "ingegno_settings_modified_date": "2024-07-09 15:56:53",
+                    "ingegno_settings_created_by": "25",
+                    "ingegno_settings_edited_by": "25",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_project_images",
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
+                },
+                {
+                    "ingegno_settings_id": "58",
+                    "ingegno_settings_creation_date": "2024-07-11 10:16:06",
+                    "ingegno_settings_modified_date": "2024-07-16 14:51:34",
+                    "ingegno_settings_created_by": "25",
+                    "ingegno_settings_edited_by": "25",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_project_rapportini",
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
+                },
+                {
+                    "ingegno_settings_id": "59",
+                    "ingegno_settings_creation_date": "2024-07-11 14:22:05",
+                    "ingegno_settings_modified_date": "2024-07-29 09:22:21",
+                    "ingegno_settings_created_by": "25",
+                    "ingegno_settings_edited_by": "5",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_top_counters_rapportini_hours",
+                    "ingegno_settings_value": "0",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0"
+                },
+                {
+                    "ingegno_settings_id": "60",
+                    "ingegno_settings_creation_date": "2024-07-22 16:37:15",
+                    "ingegno_settings_modified_date": "2024-07-22 16:42:06",
+                    "ingegno_settings_created_by": "22",
+                    "ingegno_settings_edited_by": "22",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_task_estimated_due_date",
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "tasks",
+                    "ingegno_settings_default_value": "1"
+                },
+                {
+                    "ingegno_settings_id": "61",
+                    "ingegno_settings_creation_date": "2024-07-23 16:29:12",
+                    "ingegno_settings_modified_date": "2024-07-29 11:32:37",
+                    "ingegno_settings_created_by": "25",
+                    "ingegno_settings_edited_by": "25",
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": "form",
+                    "ingegno_settings_key": "enable_app_project_settings",
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "1"
                 }
             ],
             "raw_data_update": []
@@ -1366,32 +1558,10 @@
             "conditions": []
         },
         {
-            "layouts_boxes_id": "6581",
-            "layouts_boxes_layout": "1125",
-            "layouts_boxes_css": "box",
-            "layouts_boxes_title": "New ingegno settings",
-            "layouts_boxes_content_type": "form",
-            "layouts_boxes_content_ref": "2734",
-            "layouts_boxes_content": null,
-            "layouts_boxes_position": "1",
-            "layouts_boxes_dragable": "0",
-            "layouts_boxes_collapsible": "0",
-            "layouts_boxes_collapsed": "0",
-            "layouts_boxes_reloadable": "0",
-            "layouts_boxes_discardable": "0",
-            "layouts_boxes_titolable": "1",
-            "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "2",
-            "layouts_boxes_color": "red",
-            "layouts_boxes_module_key": null,
-            "conditions": []
-        },
-        {
             "layouts_boxes_id": "6582",
             "layouts_boxes_layout": "1125",
-            "layouts_boxes_css": "box",
-            "layouts_boxes_title": "List ingegno settings",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Elenco",
             "layouts_boxes_content_type": "grid",
             "layouts_boxes_content_ref": "1694",
             "layouts_boxes_content": null,
@@ -1404,8 +1574,61 @@
             "layouts_boxes_titolable": "1",
             "layouts_boxes_show_container": "1",
             "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "10",
+            "layouts_boxes_cols": "12",
             "layouts_boxes_color": "box-primary",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6880",
+            "layouts_boxes_layout": "1125",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Ingegno Settings (SOTTO CONDITION NASCOSTA)",
+            "layouts_boxes_content_type": "form",
+            "layouts_boxes_content_ref": "2734",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "2",
+            "layouts_boxes_cols": "6",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": {
+                "conditions_id": "241",
+                "conditions_what": "layouts_boxes",
+                "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_query\",\"field\":\"_query\",\"type\":\"string\",\"input\":\"textarea\",\"operator\":\"num rows >= 1\",\"value\":\"SELECT 1=1\"}],\"valid\":true}",
+                "conditions_ref": "6880",
+                "conditions_module": null,
+                "conditions_module_key": "ingegno-template-layouts_boxes-6880",
+                "conditions_creation_date": "2024-07-29 09:27:33",
+                "conditions_action": "2"
+            }
+        },
+        {
+            "layouts_boxes_id": "6882",
+            "layouts_boxes_layout": "1125",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Alert informativo",
+            "layouts_boxes_content_type": "",
+            "layouts_boxes_content_ref": "",
+            "layouts_boxes_content": "<div class=\"callout callout-info\" style=\"margin-bottom: 0!important; background-color: #3c8dbc!important;\n                                         border-left: 5px solid #eee;\n                                         border-left-width: 5px;\n                                         border-left-style: solid;\n                                         border-left-color: #357ca5!important;\">\n<h4><i class=\"fa fa-info\"><\/i> Informazioni:<\/h4>\nDa questa pagina si impostano delle impostazioni generiche utilizzabili in tutto il sistema INGEGNO.<br\/>\nAd ogni modifica, rilasciare il modulo INGEGNO Core\n<\/div>",
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
             "conditions": []
         }
@@ -1427,22 +1650,22 @@
             "grids_order_by": null,
             "grids_group_by": null,
             "grids_filter_session_key": null,
-            "grids_bulk_mode": "1",
+            "grids_bulk_mode": "bulk_mode_edit",
             "grids_bulk_edit_form": null,
             "grids_exportable": "0",
             "grids_append_class": null,
-            "grids_inline_form": null,
+            "grids_inline_form": "2734",
             "grids_module_key": "ingegno-template-grid-1694",
             "grids_depth": null,
             "grids_actions_column": "1",
             "grids_builder_where": null,
             "grids_identifier": null,
             "grids_datatable": "1",
-            "grids_ajax": "0",
+            "grids_ajax": "1",
             "grids_searchable": "1",
             "grids_pagination": "100",
-            "grids_inline_edit": "0",
-            "grids_design": "1",
+            "grids_inline_edit": "1",
+            "grids_design": "2",
             "grids_limit": null,
             "grids_custom_query": null,
             "grids_json": null,
@@ -1471,7 +1694,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "ingegno-template-grids_fields-22157",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "easy-erp",
                     "grids_fields_width": null,
                     "fields_id": "5732",
                     "fields_entity_id": "735",
@@ -1509,7 +1732,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "ingegno-template-grids_fields-22158",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "easy-erp",
                     "grids_fields_width": null,
                     "fields_id": "5738",
                     "fields_entity_id": "735",
@@ -1547,7 +1770,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "ingegno-template-grids_fields-22159",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "easy-erp",
                     "grids_fields_width": null,
                     "fields_id": "5739",
                     "fields_entity_id": "735",
@@ -1585,7 +1808,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "ingegno-template-grids_fields-22160",
-                    "grids_fields_module": "contabilita",
+                    "grids_fields_module": "easy-erp",
                     "grids_fields_width": null,
                     "fields_id": "5740",
                     "fields_entity_id": "735",
@@ -1608,25 +1831,47 @@
                     "fields_searchable": "1",
                     "fields_additional_data": null,
                     "conditions": []
+                },
+                {
+                    "grids_fields_id": "22398",
+                    "grids_fields_grids_id": "1694",
+                    "grids_fields_fields_id": "5897",
+                    "grids_fields_order": "999",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "easy-erp-grids_fields-22398",
+                    "grids_fields_module": "easy-erp",
+                    "grids_fields_width": null,
+                    "fields_id": "5897",
+                    "fields_entity_id": "735",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_default_value",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "conditions": []
                 }
             ],
             "actions": [
-                {
-                    "grids_actions_id": "6198",
-                    "grids_actions_grids_id": "1694",
-                    "grids_actions_order": "2",
-                    "grids_actions_name": "edit",
-                    "grids_actions_html": "",
-                    "grids_actions_link": "",
-                    "grids_actions_layout": null,
-                    "grids_actions_form": "2734",
-                    "grids_actions_icon": "fas fa-edit",
-                    "grids_actions_mode": "modal",
-                    "grids_actions_type": "edit_form",
-                    "grids_actions_color": "rgb(156, 39, 176)",
-                    "grids_actions_show": "table_and_bulk",
-                    "conditions": []
-                },
                 {
                     "grids_actions_id": "6199",
                     "grids_actions_grids_id": "1694",
@@ -1827,11 +2072,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "ingegno-template-form-2416",
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
+            "forms_submit_button_label": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2416",
@@ -1898,11 +2145,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "ingegno-template-form-2734",
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
+            "forms_submit_button_label": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2734",
@@ -1924,7 +2173,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "ingegno-template-forms_fields-2734_5738",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "easy-erp",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -1947,7 +2196,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "ingegno-template-forms_fields-2734_5739",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "easy-erp",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -1970,7 +2219,30 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "ingegno-template-forms_fields-2734_5740",
-                    "forms_fields_module": "contabilita",
+                    "forms_fields_module": "easy-erp",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2734",
+                    "forms_fields_fields_id": "5897",
+                    "forms_fields_order": "999",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "easy-erp-forms_fields-2734_5897",
+                    "forms_fields_module": "easy-erp",
                     "forms_field_full_data": "0"
                 }
             ]

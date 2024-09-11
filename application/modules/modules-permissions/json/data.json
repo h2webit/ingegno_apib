@@ -4,18 +4,18 @@
     "modules_description": "Module for export\/import permissions between different projects",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.12",
+    "modules_version": "1.2.2",
     "modules_identifier": "modules-permissions",
     "modules_base64_zip": null,
     "modules_raw_data_install": "643",
     "modules_raw_data_update": "643",
     "modules_created_by_user": "1",
-    "modules_version_code": "29",
+    "modules_version_code": "31",
     "modules_thumbnail": "d2004aee7d9b7d56663d64c5945a6620.png",
-    "modules_min_client_version": "3.8.4",
+    "modules_min_client_version": "3.8.9",
     "modules_version_date": "2023-10-23 11:39:56",
     "modules_auto_update": "1",
-    "modules_last_update": "2024-06-24 05:02:35",
+    "modules_last_update": "2024-07-23 05:02:41",
     "modules_core": "1",
     "modules_notification_message": "",
     "module_identifier": "modules-permissions",
@@ -812,13 +812,13 @@
                 {
                     "modules_permissions_id": "344",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": "2024-03-21 17:25:17",
+                    "modules_permissions_modified_date": "2024-07-16 16:32:55",
                     "modules_permissions_created_by": null,
                     "modules_permissions_edited_by": "5",
                     "modules_permissions_insert_scope": null,
                     "modules_permissions_edit_scope": "direct",
                     "modules_permissions_module": "scadenzario",
-                    "modules_permissions_json": "{\"viewAccess\":{\"scadenzario-layout-539\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-940\":[\"Admin\"],\"scadenzario-layout-534\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-533\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-535\":[\"Admin\"],\"scadenzario-layout-537\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-536\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"customers-layout-1075\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-971\":[\"Admin\",\"Employee\",\"Sales Agent\"]},\"unallowed_layouts\":{\"scadenzario-layout-533\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-534\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-535\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"scadenzario-layout-536\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-537\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-539\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-940\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"scadenzario-layout-971\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"customers-layout-1075\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"]}}"
+                    "modules_permissions_json": "{\"viewAccess\":{\"scadenzario-layout-539\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-940\":[\"Admin\",\"Amministrazione\"],\"scadenzario-layout-534\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-533\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-535\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-537\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-536\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"customers-layout-1075\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-971\":[\"Admin\",\"Amministrazione\",\"Employee\"]},\"unallowed_layouts\":{\"scadenzario-layout-533\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-534\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-535\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-536\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-537\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-539\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-940\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-971\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"customers-layout-1075\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"]}}"
                 },
                 {
                     "modules_permissions_id": "345",
@@ -878,13 +878,13 @@
                 {
                     "modules_permissions_id": "350",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": "2023-12-06 09:43:40",
+                    "modules_permissions_modified_date": "2024-07-19 11:28:50",
                     "modules_permissions_created_by": null,
                     "modules_permissions_edited_by": "5",
                     "modules_permissions_insert_scope": null,
                     "modules_permissions_edit_scope": "direct",
                     "modules_permissions_module": "openapi-integration",
-                    "modules_permissions_json": "{\"viewAccess\":{\"openapi-integration-layout-584\":[\"Admin\",\"Employee\"],\"openapi-integration-layout-832\":[\"Admin\",\"Sales Agent\"],\"openapi-integration-layout-596\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-586\":[\"Admin\"],\"openapi-integration-layout-582\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-588\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-593\":[\"Admin\",\"Employee\"],\"openapi-integration-layout-585\":[\"Admin\"],\"openapi-integration-layout-594\":[\"Admin\"],\"openapi-integration-layout-912\":[\"Admin\",\"Employee\",\"Sales Agent\"]},\"unallowed_layouts\":{\"openapi-integration-layout-582\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-584\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-585\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-586\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-588\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-593\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-594\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-596\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-832\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-912\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"]}}"
+                    "modules_permissions_json": "{\"viewAccess\":{\"openapi-integration-layout-1074\":[\"Admin\",\"Amministrazione\"],\"openapi-integration-layout-584\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-832\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-1058\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-586\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-582\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-588\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-593\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-1048\":[\"Admin\",\"Amministrazione\"],\"openapi-integration-layout-585\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-587\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-590\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-591\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-1073\":[\"Admin\",\"Amministrazione\"],\"openapi-integration-layout-596\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-594\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-912\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"]},\"unallowed_layouts\":{\"openapi-integration-layout-582\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-584\":[\"Customer\",\"Technician\",\"Agente\"],\"openapi-integration-layout-585\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-586\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-587\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-588\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-590\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-591\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-593\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-594\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-596\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-832\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-912\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-1048\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"openapi-integration-layout-1058\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-1073\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"openapi-integration-layout-1074\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"]}}"
                 },
                 {
                     "modules_permissions_id": "351",
@@ -933,13 +933,13 @@
                 {
                     "modules_permissions_id": "355",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": null,
+                    "modules_permissions_modified_date": "2024-07-23 11:44:41",
                     "modules_permissions_created_by": null,
-                    "modules_permissions_edited_by": null,
+                    "modules_permissions_edited_by": "22",
                     "modules_permissions_insert_scope": null,
-                    "modules_permissions_edit_scope": null,
+                    "modules_permissions_edit_scope": "direct",
                     "modules_permissions_module": "payments-subscriptions",
-                    "modules_permissions_json": null
+                    "modules_permissions_json": "{\"viewAccess\":{\"firecrm-layout-257\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"firecrm-layout-256\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"firecrm-layout-190\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\"],\"firecrm-layout-189\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\"],\"payments-subscriptions-layout-898\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-1118\":[\"Admin\"],\"firecrm-layout-69\":[\"Admin\",\"Amministrazione\"],\"firecrm-layout-39\":[\"Admin\",\"Amministrazione\"],\"firecrm-layout-34\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-670\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-1089\":[\"Admin\",\"Amministrazione\"],\"projects-layout-1128\":[\"Admin\"],\"payments-subscriptions-layout-894\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-1117\":[\"Admin\",\"Amministrazione\",\"Customer\",\"Employee\",\"Sales Agent\",\"Technician\"],\"payments-subscriptions-layout-917\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-918\":[\"Admin\",\"Amministrazione\"],\"contracts-layout-905\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-904\":[\"Admin\",\"Amministrazione\"],\"firecrm-layout-17\":[\"Admin\",\"Amministrazione\"]},\"unallowed_layouts\":{\"firecrm-layout-17\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-34\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-39\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-69\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-189\":[\"Customer\",\"Technician\",\"Agente\"],\"firecrm-layout-190\":[\"Customer\",\"Technician\",\"Agente\"],\"firecrm-layout-256\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-257\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-670\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-894\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-898\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-904\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"contracts-layout-905\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-917\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-918\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-1089\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-1117\":[\"Agente\"],\"payments-subscriptions-layout-1118\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"projects-layout-1128\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"]}}"
                 },
                 {
                     "modules_permissions_id": "356",
@@ -1252,7 +1252,7 @@
                 {
                     "modules_permissions_id": "384",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": "2024-05-07 10:47:09",
+                    "modules_permissions_modified_date": "2024-07-16 16:31:33",
                     "modules_permissions_created_by": null,
                     "modules_permissions_edited_by": "5",
                     "modules_permissions_insert_scope": null,
@@ -1837,13 +1837,13 @@
                 {
                     "modules_permissions_id": "344",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": "2024-03-21 17:25:17",
+                    "modules_permissions_modified_date": "2024-07-16 16:32:55",
                     "modules_permissions_created_by": null,
                     "modules_permissions_edited_by": "5",
                     "modules_permissions_insert_scope": null,
                     "modules_permissions_edit_scope": "direct",
                     "modules_permissions_module": "scadenzario",
-                    "modules_permissions_json": "{\"viewAccess\":{\"scadenzario-layout-539\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-940\":[\"Admin\"],\"scadenzario-layout-534\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-533\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-535\":[\"Admin\"],\"scadenzario-layout-537\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-536\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"customers-layout-1075\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"scadenzario-layout-971\":[\"Admin\",\"Employee\",\"Sales Agent\"]},\"unallowed_layouts\":{\"scadenzario-layout-533\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-534\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-535\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"scadenzario-layout-536\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-537\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-539\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"scadenzario-layout-940\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"scadenzario-layout-971\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"customers-layout-1075\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"]}}"
+                    "modules_permissions_json": "{\"viewAccess\":{\"scadenzario-layout-539\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-940\":[\"Admin\",\"Amministrazione\"],\"scadenzario-layout-534\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-533\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-535\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-537\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-536\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"customers-layout-1075\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"scadenzario-layout-971\":[\"Admin\",\"Amministrazione\",\"Employee\"]},\"unallowed_layouts\":{\"scadenzario-layout-533\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-534\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-535\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-536\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-537\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-539\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-940\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"scadenzario-layout-971\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"customers-layout-1075\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"]}}"
                 },
                 {
                     "modules_permissions_id": "345",
@@ -1903,13 +1903,13 @@
                 {
                     "modules_permissions_id": "350",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": "2023-12-06 09:43:40",
+                    "modules_permissions_modified_date": "2024-07-19 11:28:50",
                     "modules_permissions_created_by": null,
                     "modules_permissions_edited_by": "5",
                     "modules_permissions_insert_scope": null,
                     "modules_permissions_edit_scope": "direct",
                     "modules_permissions_module": "openapi-integration",
-                    "modules_permissions_json": "{\"viewAccess\":{\"openapi-integration-layout-584\":[\"Admin\",\"Employee\"],\"openapi-integration-layout-832\":[\"Admin\",\"Sales Agent\"],\"openapi-integration-layout-596\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-586\":[\"Admin\"],\"openapi-integration-layout-582\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-588\":[\"Admin\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-593\":[\"Admin\",\"Employee\"],\"openapi-integration-layout-585\":[\"Admin\"],\"openapi-integration-layout-594\":[\"Admin\"],\"openapi-integration-layout-912\":[\"Admin\",\"Employee\",\"Sales Agent\"]},\"unallowed_layouts\":{\"openapi-integration-layout-582\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-584\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-585\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-586\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-588\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-593\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-594\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"openapi-integration-layout-596\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-832\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Amministrazione\"],\"openapi-integration-layout-912\":[\"Customer\",\"Technician\",\"Agente\",\"Amministrazione\"]}}"
+                    "modules_permissions_json": "{\"viewAccess\":{\"openapi-integration-layout-1074\":[\"Admin\",\"Amministrazione\"],\"openapi-integration-layout-584\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\"],\"openapi-integration-layout-832\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-1058\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-586\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-582\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-588\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-593\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-1048\":[\"Admin\",\"Amministrazione\"],\"openapi-integration-layout-585\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-587\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-590\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-591\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-1073\":[\"Admin\",\"Amministrazione\"],\"openapi-integration-layout-596\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"],\"openapi-integration-layout-594\":[\"Admin\",\"Amministrazione\",\"Sales Agent\"],\"openapi-integration-layout-912\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\",\"Technician\"]},\"unallowed_layouts\":{\"openapi-integration-layout-582\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-584\":[\"Customer\",\"Technician\",\"Agente\"],\"openapi-integration-layout-585\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-586\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-587\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-588\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-590\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-591\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-593\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-594\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-596\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-832\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-912\":[\"Customer\",\"Agente\"],\"openapi-integration-layout-1048\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"openapi-integration-layout-1058\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\"],\"openapi-integration-layout-1073\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"openapi-integration-layout-1074\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"]}}"
                 },
                 {
                     "modules_permissions_id": "351",
@@ -1958,13 +1958,13 @@
                 {
                     "modules_permissions_id": "355",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": null,
+                    "modules_permissions_modified_date": "2024-07-23 11:44:41",
                     "modules_permissions_created_by": null,
-                    "modules_permissions_edited_by": null,
+                    "modules_permissions_edited_by": "22",
                     "modules_permissions_insert_scope": null,
-                    "modules_permissions_edit_scope": null,
+                    "modules_permissions_edit_scope": "direct",
                     "modules_permissions_module": "payments-subscriptions",
-                    "modules_permissions_json": null
+                    "modules_permissions_json": "{\"viewAccess\":{\"firecrm-layout-257\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"firecrm-layout-256\":[\"Admin\",\"Amministrazione\",\"Employee\"],\"firecrm-layout-190\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\"],\"firecrm-layout-189\":[\"Admin\",\"Amministrazione\",\"Employee\",\"Sales Agent\"],\"payments-subscriptions-layout-898\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-1118\":[\"Admin\"],\"firecrm-layout-69\":[\"Admin\",\"Amministrazione\"],\"firecrm-layout-39\":[\"Admin\",\"Amministrazione\"],\"firecrm-layout-34\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-670\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-1089\":[\"Admin\",\"Amministrazione\"],\"projects-layout-1128\":[\"Admin\"],\"payments-subscriptions-layout-894\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-1117\":[\"Admin\",\"Amministrazione\",\"Customer\",\"Employee\",\"Sales Agent\",\"Technician\"],\"payments-subscriptions-layout-917\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-918\":[\"Admin\",\"Amministrazione\"],\"contracts-layout-905\":[\"Admin\",\"Amministrazione\"],\"payments-subscriptions-layout-904\":[\"Admin\",\"Amministrazione\"],\"firecrm-layout-17\":[\"Admin\",\"Amministrazione\"]},\"unallowed_layouts\":{\"firecrm-layout-17\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-34\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-39\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-69\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-189\":[\"Customer\",\"Technician\",\"Agente\"],\"firecrm-layout-190\":[\"Customer\",\"Technician\",\"Agente\"],\"firecrm-layout-256\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"firecrm-layout-257\":[\"Customer\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-670\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-894\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-898\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-904\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"contracts-layout-905\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-917\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-918\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-1089\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\"],\"payments-subscriptions-layout-1117\":[\"Agente\"],\"payments-subscriptions-layout-1118\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"],\"projects-layout-1128\":[\"Customer\",\"Employee\",\"Technician\",\"Agente\",\"Sales Agent\",\"Amministrazione\"]}}"
                 },
                 {
                     "modules_permissions_id": "356",
@@ -2277,7 +2277,7 @@
                 {
                     "modules_permissions_id": "384",
                     "modules_permissions_creation_date": null,
-                    "modules_permissions_modified_date": "2024-05-07 10:47:09",
+                    "modules_permissions_modified_date": "2024-07-16 16:31:33",
                     "modules_permissions_created_by": null,
                     "modules_permissions_edited_by": "5",
                     "modules_permissions_insert_scope": null,
@@ -3954,6 +3954,8 @@
             "forms_module_key": "core-modules-permissions-form-2577",
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2577",
@@ -4002,6 +4004,8 @@
             "forms_module_key": "modules-permissions-form-2581",
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2581",

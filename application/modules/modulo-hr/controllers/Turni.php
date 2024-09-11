@@ -1,4 +1,5 @@
 <?php
+
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -6,17 +7,17 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class Turni extends MY_Controller
 {
-    
+
     public function __construct()
     {
         parent::__construct();
 
         header('Access-Control-Allow-Origin: *');
         @header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}"); //X-Requested-With
-        
+
         $this->load->model('timbrature');
     }
-    
+
     public function modifico_turni()
     {
         $turni_creati = array();
@@ -31,7 +32,7 @@ class Turni extends MY_Controller
             $data_giorno = $oggetto["data"] . "-" . $oggetto["giorno"];
             $valore = $oggetto["valore"];
             $reparto = $oggetto["reparto"];
-            
+
             $turni_creati[] = $this->createTurno($dipendente, $data_giorno, $valore, $reparto, $templates, $turni_creati);
         }
         /*debug($dipendenti_array);
@@ -54,19 +55,20 @@ class Turni extends MY_Controller
             }
         }*/
 
-        echo json_encode(array('status' => 4, 'txt' => 'Turni salvati correttamente.'));
+        //echo json_encode(array('status' => 4, 'txt' => 'Turni salvati correttamente.'));
+        echo json_encode(array('status' => 1, 'txt' => 'Turni salvati correttamente.'));
     }
     public function salva_csv()
     {
 
         if (isset($_POST['csvContent'])) {
-        $csvContent = $_POST['csvContent'];
-        $destination_folder = FCPATH . "uploads/modulo-hr";
-        if (!file_exists($destination_folder)) {
-            mkdir($destination_folder, 0777, true);
-        }
+            $csvContent = $_POST['csvContent'];
+            $destination_folder = FCPATH . "uploads/modulo-hr";
+            if (!file_exists($destination_folder)) {
+                mkdir($destination_folder, 0777, true);
+            }
 
-        file_put_contents($destination_folder."/turni.csv", $csvContent);
+            file_put_contents($destination_folder . "/turni.csv", $csvContent);
             echo 'File salvato con successo!';
         } else {
             echo 'Dati CSV non presenti nella richiesta.';
@@ -99,7 +101,7 @@ class Turni extends MY_Controller
                     if (preg_match('/^(\d+)(;\d+)*$/', $cellData)) {
                         $numbers = explode(';', $cellData);
                         $names = [];
-                    
+
                         foreach ($numbers as $number) {
                             if (is_numeric($number)) {
                                 // Esegui la chiamata  per ottenere l'orario corrispondente
@@ -110,23 +112,21 @@ class Turni extends MY_Controller
                                 $names[] = $number;
                             }
                         }
-                    
+
                         $combinedNames = implode('; ', $names);
-                    
+
                         // Imposta i nomi combinati nella cella corrispondente nel foglio di lavoro XLS
                         $worksheet->setCellValueByColumnAndRow($col, $row, $combinedNames);
-                    }else if ($worksheet->getCellByColumnAndRow($col, 1)->getValue() === 'Reparto') {
+                    } else if ($worksheet->getCellByColumnAndRow($col, 1)->getValue() === 'Reparto') {
                         $names = explode(';', $cellData);
                         $combinedNames = implode("\n", $names);
-        
+
                         // Imposta i nomi combinati nella cella corrispondente nel foglio di lavoro XLS
                         $cell = $worksheet->getCellByColumnAndRow($col, $row);
                         $cell->setValue($combinedNames);
                         $cell->getStyle()->getAlignment()->setWrapText(true);
-                    } 
-                    else {
+                    } else {
                         $worksheet->setCellValueByColumnAndRow($col, $row, $cellData);
-
                     }
                     $col++;
                 }
@@ -211,7 +211,7 @@ class Turni extends MY_Controller
         //vedo se il turno finisce il giorno dopo, metto la data fine come gg dopo
         $indice = array_search($valore, array_column($templates, 'turni_di_lavoro_template_id'));
         $template = $templates[$indice];
-        if(strtotime($template['turni_di_lavoro_template_alle']) > strtotime($template['turni_di_lavoro_template_dalle'])){
+        if (strtotime($template['turni_di_lavoro_template_alle']) > strtotime($template['turni_di_lavoro_template_dalle'])) {
             $insert['turni_di_lavoro_data_fine'] = $data_giorno;
         } else {
             $insert['turni_di_lavoro_data_fine'] = (new DateTime($data_giorno))->add(new DateInterval('P1D'))->format('Y-m-d');
@@ -226,24 +226,24 @@ class Turni extends MY_Controller
 
         return $this->apilib->create('turni_di_lavoro', $insert, false);
     }
-    private function getTurnoDaTemplate($template) {
+    private function getTurnoDaTemplate($template)
+    {
 
         if (!empty($template)) {
             $dalle = explode(':', $template['turni_di_lavoro_template_dalle']);
             $alle = explode(':', $template['turni_di_lavoro_template_alle']);
-    
+
             $ora_inizio = intval($dalle[0]);
             $minuti_inizio = intval($dalle[1]);
-    
+
             $ora_fine = intval($alle[0]);
             $minuti_fine = intval($alle[1]);
-    
+
             $output = $ora_inizio . ($minuti_inizio !== 0 ? ':' . sprintf('%02d', $minuti_inizio) : '') . '-' . $ora_fine . ($minuti_fine !== 0 ? ':' . sprintf('%02d', $minuti_fine) : '');
-    
+
             return $output;
         }
         return "nd";
-
     }
     public function creazione_massiva()
     {
@@ -257,10 +257,10 @@ class Turni extends MY_Controller
 
         try {
             // Se non ho dipendenti li creo per tutti quanti
-            if(empty($dipendenti)) {
+            if (empty($dipendenti)) {
                 $allDipendenti = $this->apilib->search('dipendenti', ['dipendenti_attivo' => DB_BOOL_TRUE]);
 
-                if(!empty($allDipendenti)) {
+                if (!empty($allDipendenti)) {
                     foreach ($allDipendenti as $dip) {
                         foreach ($giorni as $giorno) {
                             // Inserisci i dati nel database per ciascun dipendente e giorno
@@ -274,13 +274,12 @@ class Turni extends MY_Controller
                                 'turni_di_lavoro_data_inizio' => date('Y-m-d 00:00:00', strtotime('-1 day')),
                                 'turni_di_lavoro_pausa' => $pausa
                             );
-        
+
                             // Esegui l'inserimento nel database
                             $this->apilib->create('turni_di_lavoro', $data);
                         }
                     }
                 }
-
             } else {
                 // Li creo solo per i dipendenti selezionati
                 foreach ($dipendenti as $dipendente) {
@@ -296,7 +295,7 @@ class Turni extends MY_Controller
                             'turni_di_lavoro_data_inizio' => date('Y-m-d 00:00:00', strtotime('-1 day')),
                             'turni_di_lavoro_pausa' => $pausa
                         );
-    
+
                         // Esegui l'inserimento nel database
                         $this->apilib->create('turni_di_lavoro', $data);
                     }
@@ -309,7 +308,4 @@ class Turni extends MY_Controller
             echo json_encode(array('success' => false, 'txt' => 'Si è verificato un errore durante il salvataggio dei turni.'));
         }
     }
-
-
-    
 }

@@ -129,7 +129,7 @@ foreach ($categorie as $key => $categoria) {
                         <div class="rapidProduct" data-toggle="modal" data-target="#product<?php echo($prodotto['fw_products_id']); ?>"
                              prodottonum="<?php echo($prodotto_num); ?>">
                             <div class="rapid_image ">
-                                <img src="<?php echo @base_url('imgn/1/100/100/uploads/' . $prodotto['prodotti_immagini_immagine']); ?>">
+                                <img src="<?php echo @base_url('thumb/100/100/1/uploads/' . $prodotto['prodotti_immagini_immagine']); ?>">
                             </div>
                             <div class="rapid_info">
                                 <?php echo $prodotto['fw_products_name']; ?><br>
@@ -155,7 +155,7 @@ foreach ($categorie as $key => $categoria) {
                                      data-target="#product<?php echo($prodotto['fw_products_id']); ?>"
                                      prodottonum="<?php echo($prodotto_num); ?>">
                                     <div class="rapid_image ">
-                                        <img src="<?php echo @base_url('imgn/1/100/100/uploads/' . $prodotto['prodotti_immagini_immagine']); ?>">
+                                        <img src="<?php echo @base_url('thumb/100/100/1/uploads/' . $prodotto['prodotti_immagini_immagine']); ?>">
                                     </div>
                                     <div class="rapid_info">
                                         <?php echo $prodotto['fw_products_name']; ?><br>

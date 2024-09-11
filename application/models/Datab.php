@@ -795,6 +795,7 @@ class Datab extends CI_Model
     }
     public function processFieldMapping($field, $form, $value_id = null)
     {
+        //debug($field,true);
         // Il ref è il nome della tabella/entità di supporto/da joinare
         // quindi estraggo i valori da proporre
         if (!$field['fields_ref']) {
@@ -811,8 +812,10 @@ class Datab extends CI_Model
                     //debug($field['support_data'], true);
                 }
 
-                
+
             }
+
+
             return $field;
         }
 
@@ -906,9 +909,12 @@ class Datab extends CI_Model
 
         $options['depth'] = 1;
 
-
-
         $field['support_data'] = $this->crmentity->getEntityPreview($support_relation_table, $where, $limit, $offset, $options);
+
+        if ($field['forms_field_full_data']) {
+            $support_data_full = $this->apilib->search($support_relation_table, $where, $limit, $offset);
+            $field['support_data_full'] = array_key_map_data($support_data_full, $support_relation_table . '_id');
+        }
 
         return $field;
     }
@@ -995,7 +1001,7 @@ class Datab extends CI_Model
 
             $has_bulk = !empty($grid['grids_bulk_mode']);
             $where = $this->generate_where("grids", $grid['grids']['grids_id'], $value_id, is_array($where) ? implode(' AND ', $where) : $where, $additional_data);
-
+            
             // Verifico che non sia impostato un campo order by di default nell'entità, qualora non specificato un order by specifico della grid
 
             if (empty($order_by)) {
@@ -1259,7 +1265,6 @@ class Datab extends CI_Model
         if (!is_numeric($element_id)) {
             $func = "get_{$element_type}_id_by_identifier";
             $element_id = $this->$func($element_id);
-            //debug($element, true);
         }
         $element = $this->db->get_where($element_type, array($element_type . "_id" => $element_id))->row_array();
         if (!empty($element[$element_type . '_entity_id'])) {
@@ -1312,7 +1317,6 @@ class Datab extends CI_Model
                     $query_field = $this->db->join('fields_draw', 'fields_draw_fields_id = fields_id', 'left')->get_where('fields', array('fields_id' => (int) $condition['field_id']));
                     if ($query_field->num_rows() && $query_field->row()->fields_name) {
                         $field = $query_field->row();
-
                         // Se il campo è di un'entità diversa da quella del form devo fare un where in
                         // ovviamente l'entità a cui appartiene il campo deve avere almeno un campo che punta all'entità del form
                         $is_another_entity = !empty($entity) && ($entity['entity_id'] != $field->fields_entity_id);
@@ -1380,7 +1384,7 @@ class Datab extends CI_Model
 
                         // Metto in pratica i filtri e li aggiungo all'array
                         // delle condizioni del where
-                        if (in_array($field->fields_draw_html_type, array('date', 'date_time'))) {
+                        if (in_array($field->fields_draw_html_type, array('date', 'date_time')) || (is_string($condition['value']) && strpos($condition['value'], ' - ') !== false)) {
                             if ($condition['value'] == '-2') {
                                 //Special condition: means "field empty"...
                                 $arr[] = "$not({$where_prefix}{$field->fields_name} IS NULL OR ({$where_prefix}{$field->fields_name} = ''))";
@@ -1417,6 +1421,7 @@ class Datab extends CI_Model
                                 }
                             }
                         } else {
+                            
                             $condition['value'] = str_replace("'", "''", $condition['value']);
                             if ($condition['value'] == '-1') {
                                 continue;
@@ -1425,6 +1430,7 @@ class Datab extends CI_Model
                             if ($condition['value'] == '-2') {
                                 //Special condition: means "field empty"...
                                 $arr[] = "$not({$where_prefix}{$field->fields_name} IS NULL OR ({$where_prefix}{$field->fields_name} = '' AND {$where_prefix}{$field->fields_name} <> 0))";
+                                //debug($arr);
                                 continue;
                             }
 
@@ -1436,25 +1442,31 @@ class Datab extends CI_Model
                                     }
                                     $values = "'" . implode("','", $condition['value']) . "'";
                                     if (in_array(-2, $condition['value'])) {
-                                        // debug($where_prefix);
-                                        // debug($field->fields_name);
-                                        // debug($operators[$condition['operator']]['sql']);
-                                        // debug($where_suffix);
+                                        
+
+                                        
+
+
 
                                         $foo_prefix = "{$where_prefix}{$field->fields_name}";
                                         $foo_prefix = str_ireplace(' IN ', ' NOT IN ', $foo_prefix);
                                         $foo_prefix = str_ireplace('WHERE', '', $foo_prefix);
 
-                                        $arr[] = "
-                                            $not (
-                                                    (
-                                                            {$where_prefix}{$field->fields_name} {$operators[$condition['operator']]['sql']} ({$values}){$where_suffix}
-                                                            OR
-                                                            (
-                                                                {$foo_prefix}{$where_suffix}
-                                                            )
-                                                    )
-                                                )";
+                                        
+                                            $arr[] = "
+                                                $not (
+                                                        (
+                                                                {$where_prefix}{$field->fields_name} {$operators[$condition['operator']]['sql']} ({$values}){$where_suffix}
+                                                                OR
+                                                                (
+                                                                    {$foo_prefix}{$where_suffix} IS NULL
+                                                                )
+                                                        )
+                                                    )";
+                                        
+
+                                        
+                                                
                                     } else {
                                         $arr[] = "({$where_prefix}{$field->fields_name} $not {$operators[$condition['operator']]['sql']} ({$values}){$where_suffix})";
                                     }
@@ -1462,7 +1474,7 @@ class Datab extends CI_Model
 
                                 case 'like':
                                 case 'notlike':
-                                if (in_array(strtoupper($field->fields_type), array('VARCHAR', 'TEXT'))) {
+                                    if (in_array(strtoupper($field->fields_type), array('VARCHAR', 'TEXT'))) {
                                         $arr[] = "({$where_prefix}{$field->fields_name} $not{$operators[$condition['operator']]['sql']} '%{$condition['value']}%'{$where_suffix})";
                                     }
                                     break;
@@ -1792,7 +1804,7 @@ class Datab extends CI_Model
 
                 // Prendo i sottomenu che mi sono concessi...
                 $return[$parent]['submenu'] = array_filter($items, function ($menu) {
-                    return empty ($menu['menu_layout']) or array_key_exists($menu['menu_layout'], $this->_accessibleLayouts);
+                    return empty($menu['menu_layout']) or array_key_exists($menu['menu_layout'], $this->_accessibleLayouts);
                 });
 
                 foreach ($items as $item) {
@@ -1804,7 +1816,7 @@ class Datab extends CI_Model
         return array_filter($return, function ($menu) {
             // Il layout è accessibile per i permessi? (il link del menu è
             // considerato sempre accessibile se non punta ad un layout)
-            if (!empty ($menu['menu_layout']) && $menu['menu_layout'] != '-2' && !array_key_exists($menu['menu_layout'], $this->_accessibleLayouts)) {
+            if (!empty($menu['menu_layout']) && $menu['menu_layout'] != '-2' && !array_key_exists($menu['menu_layout'], $this->_accessibleLayouts)) {
                 return false;
             }
 
@@ -2497,7 +2509,7 @@ class Datab extends CI_Model
                 // punto, ma per motivi di dimensione e complessità della procedura
                 // è stata spostata in un metodo a se `getBoxContent`
                 $start = microtime(true);
-                $layout['content'] = $this->getBoxContent($layout, $value_id, $layout_data_detail);
+                $layout['content'] = $this->getBoxContent($layout, $value_id, $layout_data_detail, $dati['layout_container']);
                 if ($this->output->enable_profiler) {
 
                     $this->_layout_boxes_benchmark[$layout['layouts_boxes_title']] =
@@ -2614,7 +2626,7 @@ class Datab extends CI_Model
     /**
      * Build della cella
      */
-    public function build_grid_cell($field, $dato, $escape_date = true, $crop = true, $download = false)
+    public function build_grid_cell($field, &$dato, $escape_date = true, $crop = true, $download = false)
     {
         // Valuta eventuali grid fields eval e placeholder
         $type = isset($field['grids_fields_replace_type']) ? $field['grids_fields_replace_type'] : 'field';
@@ -2726,10 +2738,10 @@ class Datab extends CI_Model
         // Stampa del campo
         //
 
-       
+
 
         if (($field['fields_ref'] || $field['fields_additional_data']) && in_array($field['fields_type'], [DB_INTEGER_IDENTIFIER, 'INT']) && $field['fields_draw_html_type'] != 'multi_upload') {
-            
+
 
             if (is_array($value)) {
                 // Ho una relazione molti a molti - non mi serve alcuna
@@ -2952,7 +2964,7 @@ class Datab extends CI_Model
                                 } else {
                                     $_url = base_url_admin("thumb/50/50/1/uploads/{$item['path_local']}");
                                 }
-                                return anchor(base_url_uploads("uploads/{$item['path_local']}"), "<img src='" . $_url . "' style='width: 50px;' />", array ('class' => 'fancybox', 'style' => 'width:50px', 'rel' => 'group'));
+                                return anchor(base_url_uploads("uploads/{$item['path_local']}"), "<img src='" . $_url . "' style='width: 50px;' />", array('class' => 'fancybox', 'style' => 'width:50px', 'rel' => 'group'));
                             } else {
                                 // if ($this->config->item('cdn') && $this->config->item('cdn')['enabled']) {
                                 //     $_url = base_url_uploads("uploads/{$item['path_local']}");
@@ -2971,7 +2983,7 @@ class Datab extends CI_Model
                                 $_url = base_url("get_ajax/preview_pdf/" . rtrim(base64_encode("uploads/" . $item['path_local']), '='));
 
                                 //TODO: check mime type pdf, word, xls, ecc...
-                                return anchor($_url, "<img src=\"" . base_url("images/$img") . "\" style='width: 50px;'/>", array ('style' => 'width:50px', 'class' => 'js_open_modal'));
+                                return anchor($_url, "<img src=\"" . base_url("images/$img") . "\" style='width: 50px;'/>", array('style' => 'width:50px', 'class' => 'js_open_modal'));
                             }
                         }, $value);
                     } else { //Se arrivo qua i file sono scritti su un altra tabella, quindi mi arriva già l'array bello pulito con i file...
@@ -2981,7 +2993,7 @@ class Datab extends CI_Model
                             } else {
                                 $_url = base_url_admin("thumb/50/50/1/uploads/{$item}");
                             }
-                            return anchor(base_url_uploads("uploads/{$item}"), "<img src='" . $_url . "' style='width: 50px;' />", array ('class' => 'fancybox', 'style' => 'width:50px', 'rel' => 'group'));
+                            return anchor(base_url_uploads("uploads/{$item}"), "<img src='" . $_url . "' style='width: 50px;' />", array('class' => 'fancybox', 'style' => 'width:50px', 'rel' => 'group'));
                         }, $value);
                     }
 
@@ -3122,12 +3134,12 @@ class Datab extends CI_Model
         }
     }
 
-    private function buildPlaceholderGridCell($placeholderedString, $record)
+    private function buildPlaceholderGridCell($placeholderedString, &$record)
     {
         return $this->replace_superglobal_data(str_replace_placeholders($placeholderedString, $record));
     }
 
-    private function buildEvalGridCell($evalString, $data, $field)
+    private function buildEvalGridCell($evalString, &$data, $field)
     {
         extract($data);
         ob_start();
@@ -3284,7 +3296,7 @@ class Datab extends CI_Model
      *
      * @return string
      */
-    public function getBoxContent($layoutBoxData, $value_id = null, $layoutEntityData = [])
+    public function getBoxContent($layoutBoxData, $value_id = null, $layoutEntityData = [], $layout_container = null)
     {
 
         if (is_numeric($layoutBoxData)) {
@@ -3427,6 +3439,7 @@ class Datab extends CI_Model
                     'grid_data' => $grid_data,
                     'value_id' => $value_id,
                     'layout_data_detail' => $layoutEntityData,
+                    'layout' => $layout_container,
                     'where' => false,
                 ), true);
 
@@ -3730,6 +3743,8 @@ class Datab extends CI_Model
         $grid_data = $this->datab->get_grid_data($grid, $value_id, $where, null, 0, $order_by);
         $out_array = [];
         foreach ($grid_data as $dato) {
+            $dato['value_id'] = $value_id;
+            
             $tr = [];
 
             foreach ($grid['grids_fields'] as $field) {

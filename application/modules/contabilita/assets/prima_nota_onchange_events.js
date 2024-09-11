@@ -211,8 +211,8 @@ var causaleIntestazioneChanged = function () {
     var causale_tipo = $('option:selected', prima_nota_causale_intestazione).data('tipo');
 
 
-
-    $('.js_prima_nota_documento,.js_prima_nota_spesa').val('');
+    //$('.js_prima_nota_documento,.js_prima_nota_spesa').val('');
+    
 
     getPrimaNotaRighe();
     // if (causale_tipo_iva != '' && causale_tipo_iva != 4) { //NO, tutte le altre mando al form sotto per il dettaglio iva
@@ -237,7 +237,7 @@ var causaleIntestazioneChanged = function () {
     switch (causale_tipo) {
         case 1: //Vendite
         case 3: //Entrate
-
+            $('.js_prima_nota_spesa').val('');
             //Attivo autocomplete su spese
             log('Attivo autocomplete su documenti_contabilita');
             inizializzaAutocompleteDocumento();
@@ -245,6 +245,7 @@ var causaleIntestazioneChanged = function () {
         case 2: //Acquisti
         case 5: //Uscita
             //Attivo autocomplete su spese
+            $('.js_prima_nota_documento').val('');
             log('Attivo autocomplete su spese');
             inizializzaAutocompleteSpesa();
             break;

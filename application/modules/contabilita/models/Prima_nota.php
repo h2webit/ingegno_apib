@@ -356,6 +356,29 @@ class Prima_nota extends CI_Model
                         //debug($righe_iva[$articolo['iva_valore']]['prime_note_righe_iva_imponibile']);
                     }
                 }
+                $documento = $this->apilib->view('documenti_contabilita', $doc_id);
+                $dati_iva = @json_decode($documento['documenti_contabilita_iva_json'], true);
+                if ($dati_iva) {
+                    //Ho già l'iva calcolata esatta, uso quella perchè altrimenti mi perdo le differenze di arrotondamento
+                    foreach ($dati_iva as $iva_id => $dato_iva) {
+                        $dato_iva[0] = number_format($dato_iva[0], 2, '.', '');
+                        $righe_iva[$dato_iva[0]]['prime_note_righe_iva_importo_iva'] = $dato_iva[1];
+                    }
+                }
+
+                //Idem per imponibile
+                $dati_imponibile = @json_decode($documento['documenti_contabilita_imponibile_iva_json'], true);
+                if ($dati_imponibile) {
+                    //Ho già l'iva calcolata esatta, uso quella perchè altrimenti mi perdo le differenze di arrotondamento
+                    foreach ($dati_imponibile as $iva_id => $dato_imponibile) {
+                        if ($dato_imponibile[0] == 0 && $dato_imponibile[1] == 0) {
+                            continue;
+
+                        }
+                        $dato_imponibile[0] = number_format($dato_imponibile[0], 2, '.', '');
+                        $righe_iva[$dato_imponibile[0]]['prime_note_righe_iva_imponibile'] = $dato_imponibile[1];
+                    }
+                }
             } else {
                 $spesa = $this->apilib->view('spese', $doc_id);
 

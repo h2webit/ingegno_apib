@@ -195,6 +195,11 @@ class Get_ajax extends MY_Controller
     {
         $layout_box = $this->layout->getLayoutBox($lb_id); //$this->db->get_where('layouts_boxes', ['layouts_boxes_id' => $lb_id])->row_array();
 
+        $layout_id = $this->input->get('layout_id');
+        if ($layout_id) {
+            $this->layout->addLayout($layout_id);
+        }
+
 
         $layout['content'] = $this->datab->getBoxContent($layout_box, $value_id, null);
 
@@ -716,9 +721,15 @@ class Get_ajax extends MY_Controller
 
 
             $out_array = array();
+            $prev_row = [];
             foreach ($grid_data as $dato) {
                 $dato['value_id'] = $valueID;
                 $tr = array();
+                if ($prev_row) {
+                    $dato['prev_row'] = $prev_row;
+                } else {
+                    $dato['prev_row'] = false;
+                }
                 if ($has_bulk) {
                     $tr[] = '<input type="checkbox" class="js_bulk_check" value="' . $dato[$grid['grids']['entity_name'] . "_id"] . '" />';
                 }
@@ -747,7 +758,8 @@ class Get_ajax extends MY_Controller
                         'grid' => $grid['grids'],
                     ), true);
                 }
-
+                unset($dato['prev_row']);
+                $prev_row = $dato;
                 $out_array[] = $tr;
             }
 
@@ -942,23 +954,19 @@ class Get_ajax extends MY_Controller
                 }
 
                 // Elaboro le coordinate
-                
                 if ((!empty($mark['latlng']) || !empty($mark['lat']))) {
                     if (isset($geography[$marker[$data['maps']['entity_name'] . "_id"]])) {
                         $mark['lat'] = $geography[$marker[$data['maps']['entity_name'] . "_id"]]['lat'];
                         $mark['lon'] = $geography[$marker[$data['maps']['entity_name'] . "_id"]]['lon'];
                     } elseif ($latlng_field) {
                         if (stripos($marker[$latlng_field], ',') !== false) {
-                            
                             $latlng_expl = explode(',', $marker[$latlng_field]);
-                            
                             $mark['lat'] = trim($latlng_expl[0]);
                             $mark['lon'] = trim($latlng_expl[1]);
-                        } elseif (stripos($marker[$latlng_field], ';') !== false){
+                        } elseif (stripos($marker[$latlng_field], ';') !== false) {
                             $latlng_expl = explode(';', $marker[$latlng_field]);
                             $mark['lat'] = trim($latlng_expl[0]);
                             $mark['lon'] = trim($latlng_expl[1]);
-                            
                         } else {
                             continue;
                         }
@@ -1109,42 +1117,46 @@ class Get_ajax extends MY_Controller
                 $ev['start'] = substr($ev['date_start'], 0, 10);
 
                 if (array_key_exists('hours_start', $ev) && $ev['hours_start'] != '') {
-                    $ev['start'] = "{$ev['start']} {$ev['hours_start']}:00";
+                    $ev['start'] = "{$ev['start']} {$ev['hours_start']}";
                 }
 
             }
-            
             if (!array_key_exists('end', $ev)) {
                 //Assumo che sia mappato un date end
                 $ev['end'] = substr($ev['date_end'], 0, 10);
-                
                 if (array_key_exists('hours_end', $ev) && $ev['hours_end'] != '') {
-                    $ev['end'] = "{$ev['end']} {$ev['hours_end']}:00";
+                    $ev['end'] = "{$ev['end']} {$ev['hours_end']}";
                 }
-                
             }
-            
-            //debug($ev);
 
             if (array_key_exists('date_start', $ev)) {
                 $hours_start = '00:00';
+                $hours_start_seconds = ':00';
                 if (array_key_exists('hours_start', $ev)) {
+                    $hours_start_ex = explode(':', $ev['hours_start']);
+                    if (count($hours_start_ex) == 3) {
+                        $hours_start_seconds = "";
+                    }
                     $hours_start = $ev['hours_start'];
                 }
 
                 $hours_end = '00:00';
+                $hours_end_seconds = ':00';
                 if (array_key_exists('hours_end', $ev)) {
+                    $hours_end_ex = explode(':', $ev['hours_end']);
+                    if (count($hours_end_ex) == 3) {
+                        $hours_end_seconds = "";
+                    }
                     $hours_end = $ev['hours_end'];
                 }
 
-                $ev['start'] = (new DateTime($ev['start']))->format("Y-m-d\T{$hours_start}:00");
+                $ev['start'] = (new DateTime($ev['start']))->format("Y-m-d\T{$hours_start}{$hours_start_seconds}");
 
                 if (!array_key_exists('date_end', $ev)) {
-                    $ev['end'] = (new DateTime($ev['start']))->modify('+1 hour')->format("Y-m-d\T{$hours_end}:00");
+                    $ev['end'] = (new DateTime($ev['start']))->modify('+1 hour')->format("Y-m-d\T{$hours_end}{$hours_end_seconds}");
                 } else {
-                    $ev['end'] = (new DateTime($ev['end']))->format("Y-m-d\T{$hours_end}:00");
+                    $ev['end'] = (new DateTime($ev['end']))->format("Y-m-d\T{$hours_end}{$hours_end_seconds}");
                 }
-                
                 if (
                     ((new DateTime($ev['start']))->format("Y-m-d") == (new DateTime($ev['end']))->format("Y-m-d"))
                     && ($hours_end < $hours_start)

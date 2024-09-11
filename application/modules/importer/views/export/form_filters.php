@@ -9,6 +9,8 @@ $fields = $this->crmentity->getVisibleFields($grid['entity_name'], 2);
 
 $sess_data = $this->session->userdata(SESS_WHERE_DATA) ?: [];
 
+// debug($sess_data);
+
 if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['exporter_templates_filters'])) {
     $sess_data[$grid['grids_filter_session_key']] = json_decode($template['exporter_templates_filters'], true);
     
@@ -23,7 +25,7 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
     }
 </style>
 
-<form id="form_filters" role="form" method="post" action="<?php echo base_url("importer/export/save_filters/{$template['exporter_templates_id']}"); ?>" class="formAjax js_filter_form">
+<form id="form_filters" role="form" method="post" action="<?php echo base_url("importer/export/save_filters/{$template['exporter_templates_id']}"); ?>" class="formAjax js_filter_form_custom">
     <?php add_csrf(); ?>
     
     <p><?php e('Add conditions to filter the table'); ?></p>
@@ -54,7 +56,7 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
                         }
                         ?>
                     
-                        <option value="<?php echo $field['fields_id'] ?>" data-type="<?php echo strtoupper($field['fields_type']) ?>" data-source-ref="<?php echo $source_ref; ?>">
+                        <option value="<?php echo $field['fields_id'] ?>" data-type="<?php echo strtoupper($field['fields_type']) ?>" data-field_name="<?php echo $field['fields_name'] ?>" data-source-ref="<?php echo $source_ref; ?>">
                             <?php echo ucfirst($field['entity_name']) . ' - ' . $field['fields_draw_label']; ?>
                         </option>
                     <?php endforeach; ?>
@@ -67,6 +69,9 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
                     <?php foreach (unserialize(OPERATORS) as $operator_key => $operator_data) : ?>
                         <option value="<?php echo $operator_key; ?>"><?php echo (!empty($operator_data['label'])) ? t($operator_data['label']) : $operator_data['html']; ?></option>
                     <?php endforeach; ?>
+                    
+                    <option value="empty">È vuoto</option>
+                    <option value="not_empty">Non è vuoto</option>
                 </select>
             </div>
             
@@ -106,11 +111,14 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
                             <?php foreach (unserialize(OPERATORS) as $operator_key => $operator_data) : ?>
                                 <option value="<?php echo $operator_key; ?>" <?php if ($condition['operator'] == $operator_key) echo "selected"; ?>><?php echo (!empty($operator_data['label'])) ? t($operator_data['label']) : $operator_data['html']; ?></option>
                             <?php endforeach; ?>
+                            
+                            <option value="empty" <?php if ($condition['operator'] == 'empty') echo "selected"; ?>>È vuoto</option>
+                            <option value="not_empty" <?php if ($condition['operator'] == 'not_empty') echo "selected"; ?>>Non è vuoto</option>
                         </select>
                     </div>
                     <div class="col-xs-4">
                         <?php if(!is_array($condition['value'])): ?>
-                        <input type="text" class="form-control js_filter_value" name="conditions[<?php echo $k; ?>][value]" placeholder="<?php e('Matching value'); ?>" value="<?php echo $condition['value']; ?>" />
+                        <input type="text" class="form-control js_filter_value" name="conditions[<?php echo $k; ?>][value]" placeholder="<?php e('Matching value'); ?>" value="<?php echo !in_array($condition['operator'], ['empty', 'not_empty']) ? $condition['value'] : ''; ?>" <?php echo in_array($condition['operator'], ['empty', 'not_empty']) ? 'style="display:none;"' : '' ?> />
                         <?php else: ?>
                         <input type="hidden" class="js_filter_value" value="<?php echo implode(',', $condition['value']); ?>" />
                         <select class="form-control js_filter_value select2me" name="conditions[<?php echo $k; ?>][value][]" multiple></select>
@@ -148,6 +156,8 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
 
 <script>
     $(function() {
+        var filtersApplied = <?php echo empty($sess_data) ? 'false' : 'true'; ?>;
+        
         $(document).on('click', 'button.js_remove_row', function() {
             var this_btn = $(this);
             var row_ct = this_btn.closest('.js_filter_form_row');
@@ -181,7 +191,7 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
                         var _this = $(this);
                         var _val = _this.val();
                         
-                        if (_val !== 'eq' && _val !== 'neq') {
+                        if (_val !== 'eq' && _val !== 'neq' && _val !== 'empty' && _val !== 'not_empty') {
                             _this.attr('disabled', 'disabled').prop('disabled', true);
                         } else {
                             _this.removeAttr('disabled').prop('disabled', false);
@@ -222,7 +232,7 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
                         
                         $('input.js_filter_value:not([type="hidden"])', _row).replaceWith('<select class="form-control js_filter_value select2me" name="' + attr_name + '[]" multiple></select>');
                         
-                        request(base_url + 'importer/export/get_support_values/' + option.data('source-ref')).then(function(res) {
+                        request(base_url + 'importer/export/get_support_values/' + option.data('source-ref') + '/' + option.data('field_name')).then(function(res) {
                             var _select = $('select.js_filter_value', _row);
                             
                             if (!res.status == 1 || !res.data) {
@@ -251,7 +261,11 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
                 
                 initComponents();
             }
-        }).trigger('change')
+        })//.trigger('change')
+        
+        if (filtersApplied) {
+            $('.js_filter_fields:visible').trigger('change');
+        }
         
         $(document).on('change', '.js_operator:visible', function() {
             var _selected = $(this).find(':selected').val();
@@ -259,15 +273,38 @@ if (empty($sess_data[$grid['grids_filter_session_key']]) && !empty($template['ex
             
             var _reverse = $('.js_reverse', _row);
             
-            if (_selected == 'eq' || _selected == 'in' || _selected == 'like') {
+            if (_selected === 'eq' || _selected === 'in' || _selected === 'like' || _selected === 'empty') {
                 _reverse.val('0');
-            } else if (_selected == 'neq' || _selected == 'notin' || _selected == 'notlike') {
+            } else if (_selected === 'neq' || _selected === 'notin' || _selected === 'notlike' || _selected === 'not_empty') {
                 _reverse.val('1');
             }
-        })
-        
-        $('.js_filter_fields:visible').trigger('change');
+            
+            if (_selected === 'empty' || _selected === 'not_empty') {
+                $('input.js_filter_value', _row).val('-2').hide();
+            } else {
+                $('input.js_filter_value', _row).val('').show();
+            }
+        });
         
         $('select.js_select2:visible').select2();
+        
+        var form = $("#form_filters");
+        $(".js_filter_form_add_row", form).on("click", function () {
+            var container_f = $(".js_filter_form_rows_container", form);
+            var visible_rows = $(".js_filter_form_row:visible", container_f).size();
+            var tpl_row = $(".js_filter_form_row.hide", container_f);
+            
+            var cloned_row = tpl_row.filter(":first").clone();
+            
+            $("input, select", cloned_row).each(function () {
+                var data_name = $(this).attr("data-name");
+                
+                var name = "conditions[" + visible_rows + "][" + data_name + "]";
+                
+                $(this).attr("name", name).removeAttr("data-name");
+            });
+            
+            cloned_row.removeClass("hide").appendTo(container_f);
+        });
     });
 </script>

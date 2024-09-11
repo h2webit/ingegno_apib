@@ -230,7 +230,7 @@ foreach ($data as $project_name => $tasks) {
         ];
 
         //Task due date expired and status TODO
-        if (strtotime($task['tasks_due_date']) < time() && $task['tasks_status_status'] == 'To do') {
+        if (strtotime($task['tasks_due_date']) < time() && ($task['tasks_status_status'] == 'To do' || $task['tasks_status_status'] == 'Da fare')) {
             $styles['E' . ($row + 1)] = 'color: #d92307;font-weight: bold';
         }
         //Task delivery date expired

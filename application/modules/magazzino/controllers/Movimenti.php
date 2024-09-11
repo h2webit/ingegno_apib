@@ -310,14 +310,33 @@ class Movimenti extends MX_Controller
         }
 
     }
-    private function azzera_quantita_prodotti($prodotti, $magazzino)
+
+    private function azzera_lotti_matricole($prodotto_sparato, $magazzino, $exclude_movimento_id = null) {
+        if ($exclude_movimento_id == null) {
+            $exclude_movimento_id = -1;
+        }
+        $articoli_da_azzerare = $this->db->query("SELECT * FROM movimenti_articoli WHERE movimenti_articoli_lotto IS NOT NULL AND movimenti_articoli_lotto <> '' AND movimenti_articoli_prodotto_id = '{$prodotto_sparato['fw_products_id']}' AND movimenti_articoli_movimento IN (SELECT movimenti_id FROM movimenti WHERE movimenti_magazzino = '{$magazzino}' AND movimenti_id != '{$exclude_movimento_id}')")->result_array();
+        // debug($articoli_da_azzerare);
+        // debug($this->db->last_query(),true);
+        foreach ($articoli_da_azzerare as $articolo_da_azzerare) {
+            
+            $this->apilib->edit('movimenti_articoli', $articolo_da_azzerare['movimenti_articoli_id'], ['movimenti_articoli_quantita' => 0]);
+            
+        }
+        
+        //$this->db->query("DELETE FROM movimenti WHERE movimenti_id NOT IN (SELECT movimenti_articoli_movimento FROM movimenti_articoli WHERE movimenti_articoli_movimento IS NOT NULL)");
+    }
+    private function azzera_quantita_prodotti($prodotti, $magazzino, $exclude_movimento_id = null)
     {
         //Creo due movimenti in tutto...
         $prodotti_scarico = $prodotti_carico = [];
-
+        
         foreach ($prodotti as $prodotto_sparato) {
+            //Prima di tutto azzero eventuali prodotti con matricola
+            $this->azzera_lotti_matricole($prodotto_sparato, $magazzino, $exclude_movimento_id = null);
 
-            $quantity = $this->mov->calcolaGiacenzaAttuale($prodotto_sparato, $magazzino);
+            //Poi calcolo la quantità rimanente
+            $quantity = $this->mov->calcolaGiacenzaAttuale($prodotto_sparato, $magazzino, $exclude_movimento_id);
             $prodotto_sparato['fw_products_barcode'] = json_decode($prodotto_sparato['fw_products_barcode']);
             if (is_array($prodotto_sparato['fw_products_barcode'])) {
                 $prodotto_sparato['fw_products_barcode'] = $prodotto_sparato['fw_products_barcode'][0];
@@ -428,7 +447,8 @@ class Movimenti extends MX_Controller
     public function nuovo_movimento()
     {
         $input = $this->input->post();
-        //debug($input,true);
+        //TODO: FORZATURA DI TEST! Togliere...
+        //$input['movimenti_causale'] = 21;
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('movimenti_magazzino', 'Magazzino', 'required');
@@ -436,7 +456,7 @@ class Movimenti extends MX_Controller
         $this->form_validation->set_rules('movimenti_causale', 'Causale', 'required');
         //$this->form_validation->set_rules('movimenti_documento_tipo', 'Tipo documento', 'required');
         $this->form_validation->set_rules('movimenti_mittente', 'Mittente', 'required');
-        $causali_inventario = [21];
+        $causali_inventario = [21]; //Giacenze iniziali
         //Barbatrucco matteo: non è detto che sia 1 nel caso di riga eliminata (può partire da 2, da 3 o altro...)
         $chiave = 1;
         if (!empty($input['products'])) {
@@ -558,6 +578,16 @@ class Movimenti extends MX_Controller
             }
 
             $movimento['movimenti_user'] = $this->auth->get('id');
+
+            if (in_array($movimento['movimenti_causale'], $causali_inventario)) {
+                //debug($input['products'],true);
+                $ids = array_key_map($input['products'], 'movimenti_articoli_prodotto_id');
+
+                $fw_products = $this->apilib->search('fw_products', ['fw_products_id' => $ids]);
+                //debug($fw_products,true);
+                $this->azzera_quantita_prodotti($fw_products, $movimento['movimenti_magazzino'], $input['movimenti_id']);
+            }
+
             if (!empty($input['movimenti_id'])) {
 
                 $movimenti_id = $input['movimenti_id'];
@@ -605,14 +635,7 @@ class Movimenti extends MX_Controller
             } else {
                 //Se è un movimento di carico iniziale, azzero prima le quantità per questi prodotti
                 //debug($movimento['movimenti_causale'],true);
-                if (in_array($movimento['movimenti_causale'], $causali_inventario)) {
-                    //debug($input['products'],true);
-                    $ids = array_key_map($input['products'], 'movimenti_articoli_prodotto_id');
-
-                    $fw_products = $this->apilib->search('fw_products', ['fw_products_id' => $ids]);
-                    //debug($fw_products,true);
-                    $this->azzera_quantita_prodotti($fw_products, $movimento['movimenti_magazzino']);
-                }
+                
                 $movimenti_id = $this->apilib->create('movimenti', $movimento, false);
                 //se è uno spostamento di magazzino, devo aggiungere, oltre allo scarico, anche il carico.
                 if($input['movimenti_mittente'] == 4){
@@ -751,7 +774,7 @@ class Movimenti extends MX_Controller
                                 
                             }
                         }
-
+                        
                         //TODO: serve ancora? Lo usava healthaid per non movimentare alcuni prodotti... secondo me se creo un movimento deve "movimentarli" e quindi scaricare correttamente le quantità...
                         $prodotto['movimenti_articoli_genera_movimenti'] = (!empty($prodotto['movimenti_articoli_genera_movimenti']) && $prodotto['movimenti_articoli_genera_movimenti'] == DB_BOOL_TRUE) ? DB_BOOL_TRUE : DB_BOOL_FALSE;
                         $this->apilib->create("movimenti_articoli", $prodotto);
@@ -1278,5 +1301,28 @@ class Movimenti extends MX_Controller
             progress($c, $total);
             $this->docs->calcolaQuantitaEvasaDoc($articolo['documenti_contabilita_articoli_id']);
         }
+    }
+
+
+    public function ricalcolaGiacenzeMagazzini ($prodotto_id = false) {
+        return $this->mov->ricalcolaGiacenzeMagazzini($prodotto_id);
+}
+    
+    public function get_commesse($cliente_id = null) {
+        if (!$this->datab->module_installed('projects')) {
+            e_json(['status' => 0, 'txt' => 'Il modulo non è installato']);
+            return;
+        }
+        
+        $where_commesse = [];
+        
+        if ($cliente_id) {
+            $where_commesse['projects_customer_id'] = $cliente_id;
+        }
+        
+        $commesse = $this->apilib->search('projects', $where_commesse, null, 0, 'projects_name', 'ASC');
+        
+        e_json(['status' => 1, 'txt' => $commesse]);
+
     }
 }

@@ -575,7 +575,7 @@ function initComponents(container, reset = false) {
   forms.each(function () {
     var form = $(this);
     $(".js_filter_form_add_row", form).on("click", function () {
-      
+
       var container = $(".js_filter_form_rows_container", form);
       var rows = $(".js_filter_form_row", container);
       var size = rows.size();
@@ -665,6 +665,12 @@ function initComponents(container, reset = false) {
       $allow_clear = false;
     }
 
+    // Aggiungi l'opzione "Campo vuoto" alle opzioni predefinite
+    var defaultOptions = [
+      { id: '-1', text: '---' },
+      { id: '-2', text: 'Campo vuoto' }
+    ];
+
     input.select2({
       ajax: {
         url: base_url + "get_ajax/select_ajax_search" + get_params,
@@ -689,28 +695,50 @@ function initComponents(container, reset = false) {
           return data_post;
         },
         processResults: function (data) {
+          // Aggiungi le opzioni predefinite ai risultati
+          var processedData = $.map(data, function (item) {
+            return {
+              text: item.name,
+              id: item.id,
+            };
+          });
           return {
-            results: $.map(data, function (item) {
-              return {
-                text: item.name,
-                id: item.id,
-              };
-            }),
+            results: defaultOptions.concat(processedData)
           };
         },
-
         cache: false,
       },
       placeholder: "Ricerca...",
       escapeMarkup: function (markup) {
         return markup;
-      }, // let our custom formatter work
-      minimumInputLength: 1,
+      },
+      minimumInputLength: 0, // Cambiato da 1 a 0 per mostrare le opzioni predefinite senza input
       templateSelection: formatRepoSelection,
       language: lang_short_code,
       allowClear: $allow_clear,
+      templateResult: function (data) {
+        if (data.loading) return data.text;
+        // Evidenzia le opzioni predefinite
+        if (data.id === '-1' || data.id === '-2') {
+          return $('<span style="font-weight: bold;">' + data.text + '</span>');
+        }
+        return data.text;
+      }
     });
+
+    // Aggiungi le opzioni predefinite alla select2 dopo l'inizializzazione
+    var defaultData = input.select2('data');
+    defaultOptions.forEach(function (option) {
+      if (!defaultData.some(e => e.id === option.id)) {
+        defaultData.unshift(option);
+      }
+    });
+    input.select2('data', defaultData);
   });
+
+  function formatRepoSelection(repo) {
+    return repo.text || repo.id;
+  }
 
   var fieldsSources = [];
   $('[data-source-field]:not([data-source-field=""])', container).each(function () {
@@ -767,7 +795,9 @@ function initComponents(container, reset = false) {
         },
         success: function (data) {
           $("option", jsMultiselect).remove();
-          $("<option value='-1'> --- </option>").appendTo(jsMultiselect);
+          //TODO: non si può altrimenti salva -1 su chiavi esterne mancanti. Correggere prima apilib che tolga eventuali -1 da campi che puntano ad entità
+          //$("<option value='-1'> --- </option>").appendTo(jsMultiselect);
+          $("<option></option>").appendTo(jsMultiselect);
           var previousValueFound = false;
           $.each(data, function (k, v) {
             var jqOption = $("<option></option>").val(v.id).text(v.value);
@@ -1193,8 +1223,11 @@ function loadModal(url, data, callbackSuccess, method) {
       }
       mAjaxCall = null;
     },
-    error: function () {
+    error: function (xhr, status, error) {
       mAjaxCall = null;
+      toastr.warning('Oh no! Loading failed... Try again or contact support team.', 'Attenzione!', { showMethod: 'fadeIn', timeOut: 5000, progressBar: true, positionClass: 'toast-top-center' });
+      console.log('Error loading modal: ' + url);
+      console.log('Error:', error);
     },
   });
 }

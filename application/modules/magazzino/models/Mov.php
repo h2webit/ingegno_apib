@@ -38,7 +38,7 @@ class Mov extends CI_Model
             $movimenti_numero_documento = $documento['documenti_contabilita_numero'];
 
             if ($documento['documenti_contabilita_serie']) {
-                $movimenti_numero_documento                .= '/' . $documento['documenti_contabilita_serie'];
+                $movimenti_numero_documento .= '/' . $documento['documenti_contabilita_serie'];
             }
 
             $movimenti_data_documento = $documento['documenti_contabilita_data_emissione'];
@@ -103,19 +103,19 @@ class Mov extends CI_Model
 
         $movimento = [
             'movimenti_user' => $movimenti_user,
-            'movimenti_fornitori_id' => ($movimenti_fornitori_id??null),
-            'movimenti_clienti_id' => ($movimenti_clienti_id??null),
-            'movimenti_documento_id' => ($movimenti_documento_id??null),
+            'movimenti_fornitori_id' => ($movimenti_fornitori_id ?? null),
+            'movimenti_clienti_id' => ($movimenti_clienti_id ?? null),
+            'movimenti_documento_id' => ($movimenti_documento_id ?? null),
             'movimenti_magazzino' => $movimenti_magazzino,
             'movimenti_causale' => $movimenti_causale,
             'movimenti_tipo_movimento' => $movimenti_tipo_movimento,
-            'movimenti_documento_tipo' => ($movimenti_documento_tipo??null),
-            'movimenti_mittente'     => ($movimenti_mittente??null),
+            'movimenti_documento_tipo' => ($movimenti_documento_tipo ?? null),
+            'movimenti_mittente' => ($movimenti_mittente ?? null),
             'movimenti_data_registrazione' => $movimenti_data_registrazione,
-            'movimenti_numero_documento' => ($movimenti_numero_documento??null),
-            'movimenti_data_documento' => ($movimenti_data_documento??null),
-            'movimenti_totale' => ($movimenti_totale??null),
-            'movimenti_destinatario' => ($movimenti_destinatario??null),
+            'movimenti_numero_documento' => ($movimenti_numero_documento ?? null),
+            'movimenti_data_documento' => ($movimenti_data_documento ?? null),
+            'movimenti_totale' => ($movimenti_totale ?? null),
+            'movimenti_destinatario' => ($movimenti_destinatario ?? null),
         ];
 
         //Rifaccio extract perchè nulla mi vieta di passare direttamente il movimento con tutti i dati pronti all'inserimento
@@ -141,7 +141,7 @@ class Mov extends CI_Model
                     //debug($riga_ordine, true);
                     if ($riga_ordine) {
                         $this->apilib->edit('documenti_contabilita_articoli', $riga_ordine['documenti_contabilita_articoli_id'], [
-                            'documenti_contabilita_articoli_qty_movimentate' => (int)$riga_ordine['documenti_contabilita_articoli_qty_movimentate'] + $articolo['movimenti_articoli_quantita']
+                            'documenti_contabilita_articoli_qty_movimentate' => (int) $riga_ordine['documenti_contabilita_articoli_qty_movimentate'] + $articolo['movimenti_articoli_quantita']
                         ]);
                     }
                 } else {
@@ -152,7 +152,7 @@ class Mov extends CI_Model
                     ]);
                     if ($riga_ordine) {
                         $this->apilib->edit('documenti_contabilita_articoli', $riga_ordine['documenti_contabilita_articoli_id'], [
-                            'documenti_contabilita_articoli_qty_movimentate' => (int)$riga_ordine['documenti_contabilita_articoli_qty_movimentate'] + $articolo['movimenti_articoli_quantita']
+                            'documenti_contabilita_articoli_qty_movimentate' => (int) $riga_ordine['documenti_contabilita_articoli_qty_movimentate'] + $articolo['movimenti_articoli_quantita']
                         ]);
                     }
                 }
@@ -167,17 +167,18 @@ class Mov extends CI_Model
         //TODO: funzione intelligente che scarica dal magazzino più pieno
         return $this->apilib->searchFirst('magazzini')['magazzini_id'];
     }
-    
 
-    public function calcolaQuantitaEvasa($documenti_contabilita_articoli_id) {
+
+    public function calcolaQuantitaEvasa($documenti_contabilita_articoli_id)
+    {
         $riga_ordine = $this->db
             ->join('documenti_contabilita', 'documenti_contabilita_id = documenti_contabilita_articoli_documento', 'LEFT')
             ->get_where('documenti_contabilita_articoli', [
                 'documenti_contabilita_articoli_id' => $documenti_contabilita_articoli_id
-                ])
+            ])
             ->row_array();
 
-        
+
 
         $prodotto_id = $riga_ordine['documenti_contabilita_articoli_prodotto_id'];
         if (!$prodotto_id) {
@@ -185,12 +186,12 @@ class Mov extends CI_Model
         }
 
         //Gli ordini fornitore li gestisco al rovescio (carico/scarico....)
-        if (in_array($riga_ordine['documenti_contabilita_tipo'], [6,10] )) {
+        if (in_array($riga_ordine['documenti_contabilita_tipo'], [6, 10])) {
             $tipo_movimento = 1;
         } else {
             $tipo_movimento = 2;
         }
-        
+
         $qty_evasa = $this->db->query("
         
             SELECT SUM(movimenti_articoli_quantita) as s
@@ -207,7 +208,7 @@ class Mov extends CI_Model
 
         ")->row()->s;
         //debug($qty_evasa,true);
-        
+
         return $qty_evasa;
     }
     // public function calcolaQuantitaRimanenteXRiga($documenti_contabilita_articoli_id) {
@@ -219,7 +220,8 @@ class Mov extends CI_Model
     //     return $this->calcolaQuantitaRimanente($riga['documenti_contabilita_articoli_prodotto_id'], $riga_rif['documenti_contabilita_articoli_documento']);
 
     // }
-    public function calcolaQuantitaRimanente($prodotto_id, $documento_id = '') {
+    public function calcolaQuantitaRimanente($prodotto_id, $documento_id = '')
+    {
 
         $impegnate = $this->db->query("
             SELECT SUM(COALESCE(documenti_contabilita_articoli_quantita,0)-(COALESCE(documenti_contabilita_articoli_qty_movimentate,0)+COALESCE(documenti_contabilita_articoli_qty_evase_in_doc,0))) as s 
@@ -233,11 +235,11 @@ class Mov extends CI_Model
                 documenti_contabilita_tipo IN (5)
         ")->row()->s;
         //debug($this->db->last_query());
-        
+
         if ($impegnate < 0) {
             $impegnate = 0;
         }
-        
+
         return $impegnate;
     }
 
@@ -245,24 +247,29 @@ class Mov extends CI_Model
     {
 
         $impegnate = $this->db->query("
-            SELECT SUM(COALESCE(documenti_contabilita_articoli_quantita,0)-(COALESCE(documenti_contabilita_articoli_qty_movimentate,0)+COALESCE(documenti_contabilita_articoli_qty_evase_in_doc,0))) as s 
+            SELECT SUM(
+                GREATEST(0, 
+                    COALESCE(documenti_contabilita_articoli_quantita, 0) - 
+                    (COALESCE(documenti_contabilita_articoli_qty_movimentate, 0) + 
+                    COALESCE(documenti_contabilita_articoli_qty_evase_in_doc, 0))
+                )
+            ) as s 
             FROM documenti_contabilita_articoli
             LEFT JOIN documenti_contabilita ON (documenti_contabilita_id = documenti_contabilita_articoli_documento)
             WHERE
                 documenti_contabilita_articoli_prodotto_id = $prodotto_id
                 AND
-                documenti_contabilita_stato IN (1,2, 5)
+                documenti_contabilita_stato IN (1, 2, 5)
                 AND
                 documenti_contabilita_tipo IN (6)
         ")->row()->s;
-
-
+        //debug($this->db->last_query());
         return $impegnate;
     }
-    
+
     public function calcolaQuantitaOrdinataDaiClienti($prodotto_id, $where_append = '')
     {
-        
+
         $impegnate = $this->db->query("
             SELECT SUM(COALESCE(documenti_contabilita_articoli_quantita,0)-(COALESCE(documenti_contabilita_articoli_qty_movimentate,0)+COALESCE(documenti_contabilita_articoli_qty_evase_in_doc,0))) as s
             FROM documenti_contabilita_articoli
@@ -275,21 +282,26 @@ class Mov extends CI_Model
                 documenti_contabilita_tipo IN (5)
                 {$where_append}
         ")->row()->s;
-        
-        
+
+
         return $impegnate;
     }
 
-    public function calcolaGiacenzaAttuale($product, $magazzino = null) {
-        //debug($product);
-        if ($magazzino) {
-            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
-            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
+    public function calcolaGiacenzaAttuale($product, $magazzino = null, $exclude_movimento_id = null)
+    {
+        if ($exclude_movimento_id) {
+            $where_exclude = " AND movimenti_id <> $exclude_movimento_id";
         } else {
-            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}'")->row()->qty;
-            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}'")->row()->qty;
+            $where_exclude = '';
         }
-        
+        if ($magazzino) {
+            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND movimenti_magazzino = '{$magazzino}' $where_exclude")->row()->qty;
+            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND movimenti_magazzino = '{$magazzino}' $where_exclude")->row()->qty;
+        } else {
+            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' $where_exclude")->row()->qty;
+            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' $where_exclude")->row()->qty;
+        }
+
         $quantity = $quantity_carico - $quantity_scarico;
 
         return $quantity;
@@ -303,9 +315,9 @@ class Mov extends CI_Model
         }
         //debug($product);
         if ($magazzino) {
-            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (".implode(',', $categories).")) AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
-            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (".implode(',', $categories).")) AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
-            
+            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . ")) AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
+            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . ")) AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
+
         } else {
             $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . ")) ")->row()->qty;
             $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . "))")->row()->qty;
@@ -315,7 +327,7 @@ class Mov extends CI_Model
 
         return $quantity;
     }
-    
+
     /**
      * @param $documento_id
      *
@@ -326,17 +338,17 @@ class Mov extends CI_Model
         debug('TODO REMOVE', true);
         // Metto stato aperto di default
         $stato = 1; // Aperto
-        
+
         // Prendo gli articoli di quel documento
         $articoli = $this->apilib->search('documenti_contabilita_articoli', [
             'documenti_contabilita_articoli_documento' => $documento_id
         ]);
-        
+
         // Ciclo gli articoli
         foreach ($articoli as $key => $articolo) {
             if (!$articolo['documenti_contabilita_articoli_prodotto_id']) {
-unset($articoli[$key]);
-continue;
+                unset($articoli[$key]);
+                continue;
             }
             // Calcolo la quantità movimentata
             // $qta_movimentata = $this->db
@@ -349,8 +361,8 @@ continue;
 
             //Rivista logica alla luce dei nuovi metodi di calcoloquantitaevasa...
             $qty_evasa = $this->calcolaQuantitaEvasa($articolo['documenti_contabilita_articoli_id']);
-	
-            $rimanente = $articolo['documenti_contabilita_articoli_quantita']-$qty_evasa;
+
+            $rimanente = $articolo['documenti_contabilita_articoli_quantita'] - $qty_evasa;
 
 
             // Se ci sono quantità, metto a prescindere "chiuso parzialmente"
@@ -368,7 +380,56 @@ continue;
         if (empty($articoli)) {
             $stato = 3; // Chiuso
         }
-        
+
         return $stato;
     }
+
+    public function ricalcolaGiacenzeMagazzini($prodotto_id = false)
+    {
+        if ($prodotto_id) {
+            $where_delete = " AND magazzini_quantita_prodotto = $prodotto_id";
+            $where = " AND movimenti_articoli_prodotto_id = $prodotto_id";
+        } else {
+            $where = $where_delete = "";
+        }
+
+        // Cancella le giacenze esistenti per il prodotto specifico o per tutti
+        $this->db->query("DELETE FROM magazzini_quantita WHERE 1=1 $where_delete");
+
+        // Inserisci le nuove giacenze calcolate, includendo anche i prodotti non movimentati
+        $this->db->query("
+        INSERT INTO magazzini_quantita (magazzini_quantita_prodotto, magazzini_quantita_magazzino, magazzini_quantita_quantita, magazzini_quantita_lotto)
+            SELECT 
+                fw_products.fw_products_id AS magazzini_quantita_prodotto,
+                magazzini.magazzini_id AS magazzini_quantita_magazzino,
+                IFNULL(SUM(CASE 
+                    WHEN movimenti.movimenti_tipo_movimento = 1 
+                        THEN movimenti_articoli.movimenti_articoli_quantita 
+                        ELSE -movimenti_articoli.movimenti_articoli_quantita 
+                    END), 0) AS magazzini_quantita_quantita,
+                movimenti_articoli.movimenti_articoli_lotto AS magazzini_quantita_lotto
+            FROM 
+                fw_products
+            
+            LEFT JOIN 
+                movimenti_articoli ON movimenti_articoli.movimenti_articoli_prodotto_id = fw_products.fw_products_id
+            LEFT JOIN 
+                movimenti ON movimenti.movimenti_id = movimenti_articoli.movimenti_articoli_movimento
+                
+LEFT JOIN 
+                magazzini ON magazzini_id = movimenti_magazzino
+            WHERE 
+                1=1 $where
+            GROUP BY 
+                fw_products.fw_products_id, 
+                magazzini.magazzini_id,
+                COALESCE(movimenti_articoli.movimenti_articoli_lotto, '')
+        ");
+        //debug($this->db->last_query(), true);
+        // Pulizia della cache
+        $this->mycache->clearCache();
+
+        return true;
+    }
+
 }

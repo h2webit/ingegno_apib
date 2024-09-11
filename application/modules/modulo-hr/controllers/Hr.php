@@ -127,7 +127,7 @@ class Hr extends MY_Controller
         //Matteo: DUBBIONE SU QUESTA RIGA: se fosse impostato 0 perchè non si vuole tolleranza? Il sistema forzerebbe 30... o sbaglio?
         $range_uscita = $impostazioni_modulo['impostazioni_hr_range_minuti_uscita'] ?? 30;
         // Flag attivazione chiusura automatica
-        $chiusura_automatica = $impostazioni_modulo['impostazioni_hr_attiva_chiusura_automatica'];
+        $chiusura_automatica = $impostazioni_modulo['impostazioni_hr_attiva_chiusura_automatica'] ?? DB_BOOL_FALSE;
         // Orario in cui devo provare a chiudere le presenze
         $ora_chiusura_automatica = $impostazioni_modulo['impostazioni_hr_ora_chiusura_automatica'] ?? null;
         // Flag per chiudere anche chi fa straordinario
@@ -364,6 +364,7 @@ class Hr extends MY_Controller
     /**
      * ! Cron per la creazione delle presenze da richieste
      * ! Crea presenze per le richieste approvate che non sono ancora associate ad una presenza, in base ad orari permesso o turni se la richiesta è di altro tipo
+     * ! Esclude a priori richieste di disponibilità e indisponibilità
      */
     public function cronPresenzeRichieste()
     {
@@ -373,7 +374,7 @@ class Hr extends MY_Controller
         if ($crea_presenze == DB_BOOL_TRUE) {
             $today = date('N');
 
-            $richieste_approvate = $this->db->query("SELECT * FROM richieste LEFT JOIN presenze ON richieste_id = presenze_richiesta WHERE richieste_stato = '2' AND presenze_richiesta IS NULL ORDER BY richieste_id ASC")->result_array();
+            $richieste_approvate = $this->db->query("SELECT * FROM richieste LEFT JOIN presenze ON richieste_id = presenze_richiesta WHERE richieste_tipologia NOT IN (6,7) AND richieste_stato = '2' AND presenze_richiesta IS NULL ORDER BY richieste_id ASC")->result_array();
 
             if (!empty($richieste_approvate)) {
                 $c = 0;

@@ -252,7 +252,7 @@ foreach ($clienti as $cliente) {
         position: relative;
         height: 100%;
         width: 100px;
-        line-height: 32px;
+        line-height: 56px;
         background-color: #b73333;
     }
 

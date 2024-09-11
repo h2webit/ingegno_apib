@@ -143,6 +143,8 @@ class Api_manager extends MY_Controller
         echo json_encode($fields);
     }
 
+    
+
     public function get_entity_permissions($token_id, $entity_name)
     {
         $entity = $this->datab->get_entity_by_name($entity_name);
@@ -184,82 +186,73 @@ class Api_manager extends MY_Controller
     public function set_permissions($token_id)
     {
         $post = $this->input->post();
+//*debug($post['field_permission'],true);
+        // Remove all existing permissions for this token
+        $this->db->where('api_manager_permissions_token', $token_id)->delete('api_manager_permissions');
+        $this->db->where('api_manager_fields_permissions_token', $token_id)->delete('api_manager_fields_permissions');
 
-        $entity_name = $post['entity_name'];
-        unset($post['entity_name']);
+        // Process entity permissions
+        foreach ($post['entity_permission'] as $entity_name => $permission) {
 
-        $where = $post['entity_where'];
-        unset($post['entity_where']);
+            
 
-        $entity_permission = $post['entity_permission'];
-        unset($post['entity_permission']);
-
-        if ($entity_name) {
             $entity = $this->datab->get_entity_by_name($entity_name);
-        } else {
-            $this->showOutput("Choose entity", 5);
-            exit;
+
+            if (!$entity) {
+                $this->showOutput("Entity not found: $entity_name", 5);
+                continue;
+            }
+
+            $data_insert = [
+                'api_manager_permissions_token' => $token_id,
+                'api_manager_permissions_entity' => $entity['entity_id'],
+                'api_manager_permissions_chmod' => is_numeric($permission)?$permission:null,
+            ];
+
+            if (!empty($post['entity_where'][$entity_name])) {
+                $data_insert['api_manager_permissions_where'] = $post['entity_where'][$entity_name];
+            }
+            // if ($entity_name == 'customers') {
+            //     debug($data_insert, true);
+            // }
+            $this->db->insert('api_manager_permissions', $data_insert);
         }
 
-        //Rimuovo i vecchi permessi
-        $this->db
-            ->where('api_manager_permissions_token', $token_id)
-            ->where('api_manager_permissions_entity', $entity['entity_id'])
-            ->delete('api_manager_permissions');
+        // Process field permissions
+        if (isset($post['field_permission'])) {
+            $field_permissions_to_insert = [];
 
-        switch ($entity_permission) {
-            case '': //Tutti i permessi
-                //Non faccio niente, non serve inserire nulla (null viene considerato come "tutti i permessi" in automatico)
+            foreach ($post['field_permission'] as $entity_name => $permissions) {
+                $entity = $this->datab->get_entity_by_name($entity_name);
 
-                $this->db->insert('api_manager_permissions', [
-                    'api_manager_permissions_token' => $token_id,
-                    'api_manager_permissions_entity' => $entity['entity_id'],
-                    'api_manager_permissions_chmod' => '',
-                    'api_manager_permissions_where' => $where ?: ''
-                ], true);
-                break;
-            case '0': //Nessun permesso
-            case '1': //Lettura
-            case '2': //Scrittura solo update
-            case '3': //Scrittura solo insert
-            case '4': //Scrittura insert e update
-                $data_insert = [
-                    'api_manager_permissions_token' => $token_id,
-                    'api_manager_permissions_entity' => $entity['entity_id'],
-                    'api_manager_permissions_chmod' => $entity_permission,
-
-                ];
-                if ($where) {
-                    $data_insert['api_manager_permissions_where'] = $where;
+                if (!$entity) {
+                    continue; // Skip if entity not found
                 }
-                $this->db->insert('api_manager_permissions', $data_insert, false);
-                break;
 
-            default:
-                throw new ApiException(t('Permission not recognized'));
-                break;
-        }
+                foreach ($permissions as $permission_level => $field_names) {
+                    foreach ($field_names as $field_name) {
+                        $field = $this->datab->get_field_by_name($field_name);
 
-        //salvo i permessi specifici per field
+                        if (!$field) {
+                            continue; // Skip if field not found
+                        }
 
-        foreach ($post as $field_name => $chmod) {
-            $field = $this->datab->get_field_by_name($field_name);
-            //Pulisco a prescindere
-            $this->db
-                ->where('api_manager_fields_permissions_token', $token_id)
-                ->where('api_manager_fields_permissions_field', $field['fields_id'])
-                ->delete('api_manager_fields_permissions');
-            if ($chmod !== '') { //Tutti i permessi
-                $this->db->insert('api_manager_fields_permissions', [
-                    'api_manager_fields_permissions_token' => $token_id,
-                    'api_manager_fields_permissions_field' => $field['fields_id'],
-                    'api_manager_fields_permissions_chmod' => $chmod,
-                ]);
+                        $field_permissions_to_insert[] = [
+                            'api_manager_fields_permissions_token' => $token_id,
+                            'api_manager_fields_permissions_field' => $field['fields_id'],
+                            'api_manager_fields_permissions_chmod' => $permission_level,
+                        ];
+                    }
+                }
+            }
+
+            // Bulk insert field permissions
+            if (!empty($field_permissions_to_insert)) {
+                $this->db->insert_batch('api_manager_fields_permissions', $field_permissions_to_insert);
             }
         }
 
-
-        $this->showOutput(t('Permissions successfully saved!'), 5);
+        $this->showOutput(t('Permissions successfully saved!'), 4);
     }
 
     protected function generate_public_token($token_data)

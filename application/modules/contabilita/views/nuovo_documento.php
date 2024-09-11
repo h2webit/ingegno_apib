@@ -1222,7 +1222,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
 
     <input type="hidden" name="documenti_contabilita_iva_json" value="<?php echo ($documento_id && $documento['documenti_contabilita_iva_json']) ? $documento['documenti_contabilita_iva_json'] : ''; ?>" />
     <input type="hidden" name="documenti_contabilita_imponibile_iva_json" value="<?php echo ($documento_id && $documento['documenti_contabilita_imponibile_iva_json']) ? $documento['documenti_contabilita_imponibile_iva_json'] : ''; ?>" />
-    <input type="hidden" name="documenti_contabilita_extra_param" value="<?php echo ($documento_id && $documento['documenti_contabilita_extra_param']) ? $documento['documenti_contabilita_extra_param'] : (!empty($this->input->get('extra_param')) ? $this->input->get('extra_param') : ''); ?>" />
+    <input type="hidden" name="documenti_contabilita_extra_param" value="<?php echo ($documento_id && $documento['documenti_contabilita_extra_param']) ? htmlspecialchars($documento['documenti_contabilita_extra_param'], ENT_QUOTES, 'UTF-8') : (!empty($this->input->get('extra_param')) ? $this->input->get('extra_param') : ''); ?>" />
     <input type="hidden" name="documenti_contabilita_luogo_destinazione_id" value="<?php echo ($documento_id && $documento['documenti_contabilita_luogo_destinazione_id']) ? $documento['documenti_contabilita_luogo_destinazione_id'] : ''; ?>" />
     <input type='hidden' name='documenti_contabilita_utente_id' value="<?php echo ($documento_id && $documento['documenti_contabilita_utente_id']) ? $documento['documenti_contabilita_utente_id'] : $this->session->userdata('session_login')[LOGIN_ENTITY . '_id']; ?>" />
 
@@ -2035,7 +2035,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                                 <?php
                                             $applica_bollo = 'checked="checked"';
                                             if (
-                                                (!empty($documento) && $documento['documenti_contabilita_applica_bollo'] == DB_BOOL_FALSE)
+                                                (!empty($documento) && !empty($documento['documenti_contabilita_applica_bollo']) && $documento['documenti_contabilita_applica_bollo'] == DB_BOOL_FALSE)
                                                 || ($this->input->get('applica_bollo') == DB_BOOL_FALSE || $impostazioni['documenti_contabilita_settings_applica_bollo'] == DB_BOOL_FALSE)
                                             ) {
                                                 $applica_bollo = '';
@@ -2053,7 +2053,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                                 <?php
                                             $bollo_virtuale = 'checked="checked"';
                                             if (
-                                                (!empty($documento) && $documento['documenti_contabilita_bollo_virtuale'] == DB_BOOL_FALSE)
+                                                (!empty($documento) && !empty($documento['documenti_contabilita_settings_bollo_virtuale']) && $documento['documenti_contabilita_bollo_virtuale'] == DB_BOOL_FALSE)
                                                 || ($this->input->get('bollo_virtuale') == DB_BOOL_FALSE || $impostazioni['documenti_contabilita_settings_bollo_virtuale'] == DB_BOOL_FALSE)
                                             ) {
                                                 $bollo_virtuale = '';
@@ -2398,10 +2398,10 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
 
 
             <div class="row">
-                <div class="col-md-5 mb-15">
+                <div class="col-md-3 mb-15">
                     <textarea name="documenti_contabilita_note_generiche" rows="10" class="form-control" placeholder="Note generiche [opzionali]"><?php if ($documento_id): ?><?php echo $documento['documenti_contabilita_note_generiche']; ?><?php endif; ?></textarea>
                 </div>
-                <div class="col-md-7 scadenze_box" style="background-color: #b7d7ea;">
+                <div class="col-md-9 scadenze_box" style="background-color: #b7d7ea;">
                     <div class="row">
                         <div class="col-md-12">
                             <h4>Scadenza pagamento</h4>
@@ -2413,7 +2413,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                         <?php foreach ($documento['scadenze'] as $key => $scadenza): ?>
                         <div class="row row_scadenza">
                             <input type="hidden" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_template_json]" value="" class="documenti_contabilita_scadenze_template_json" data-name="documenti_contabilita_scadenze_template_json" />
-                            <div class=" col-md-3">
+                            <div class=" col-md-2">
                                 <div class="form-group">
                                     <input class="js_documenti_contabilita_scadenze_id" type="hidden" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_id]" data-name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_id]" value="<?php echo $scadenza['documenti_contabilita_scadenze_id']; ?>" />
                                     <label>Ammontare</label> <input type="text" name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_ammontare]" class="form-control documenti_contabilita_scadenze_ammontare js_decimal" placeholder="Ammontare" value="<?php echo number_format((float) $scadenza['documenti_contabilita_scadenze_ammontare'], 2, '.', ''); ?>" data-name="documenti_contabilita_scadenze_ammontare" />
@@ -2429,7 +2429,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Metodo di pagamento</label>
                                     <select name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_saldato_con]" class="_select2 form-control _js_table_select2 _js_table_select2<?php echo $key; ?> documenti_contabilita_scadenze_saldato_con" data-name="documenti_contabilita_scadenze_saldato_con">
@@ -2462,6 +2462,30 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                     </script>
                                 </div>
                             </div>
+
+                                                    <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Saldato su</label>
+                                    <select name="scadenze[<?php echo $key; ?>][documenti_contabilita_scadenze_saldato_su]"
+                                        class="select2 form-control js_table_select2 documenti_contabilita_scadenze_saldato_su" data-name="documenti_contabilita_scadenze_saldato_su"
+                                        >
+                                        <option <?php if (empty($scadenza['documenti_contabilita_scadenze_saldato_su'])): ?> selected<?php endif; ?>>---
+                                        </option>
+                                        <?php foreach ($conti_correnti as $conto_corrente): ?>
+                                            <option value="<?php echo $conto_corrente['conti_correnti_id']; ?>" <?php if ($scadenza['documenti_contabilita_scadenze_saldato_su'] == $conto_corrente['conti_correnti_id']): ?>
+                                                    selected="selected" <?php endif; ?>>
+                                                <?php echo ucfirst($conto_corrente['conti_correnti_nome_istituto']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                                    
+                                   <script>
+                                    $('.js_table_select2<?php echo $key; ?>').val('<?php echo strtolower($scadenza['documenti_contabilita_scadenze_saldato_su']); ?>').trigger('change.select2');
+                                </script>
+                                                        </div>
+                                                    </div>
+
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Data saldo</label>
@@ -2482,7 +2506,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                         <div class="row row_scadenza">
                             <input type="hidden" name="scadenze[<?php echo $key + 1; ?>][documenti_contabilita_scadenze_template_json]" value="" class="documenti_contabilita_scadenze_template_json" data-name="documenti_contabilita_scadenze_template_json" />
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Ammontare</label> <input type="text" name="scadenze[<?php echo $key + 1; ?>][documenti_contabilita_scadenze_ammontare]" class="form-control documenti_contabilita_scadenze_ammontare js_decimal" placeholder="Ammontare" value="" data-name="documenti_contabilita_scadenze_ammontare" />
                                 </div>
@@ -2497,7 +2521,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Metodo di pagamento</label>
 
@@ -2511,6 +2535,24 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                         </option>
                                         <?php endforeach; ?>
                                     </select>
+                                </div>
+                            </div>
+                             <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Saldato su</label>
+                                    <select name="scadenze[<?php echo $key + 1; ?>][documenti_contabilita_scadenze_saldato_su]"
+                                        class=" select2 form-control js_table_select2 documenti_contabilita_scadenze_saldato_su" data-name="documenti_contabilita_scadenze_saldato_su"
+                                        >
+                                        <option >---
+                                        </option>
+                                        <?php foreach ($conti_correnti as $conto_corrente): ?>
+                                            <option value="<?php echo $conto_corrente['conti_correnti_id']; ?>" >
+                                                <?php echo ucfirst($conto_corrente['conti_correnti_nome_istituto']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                            
+                                   
                                 </div>
                             </div>
                             <div class="col-md-3">

@@ -618,6 +618,7 @@ class Spese extends MY_Controller
                         } else {
                             echo "Rilevazione errata spesa azienda";
                             log_message("error", "Rilevazione errata spesa azienda");
+                            $settings = $this->apilib->searchFirst('documenti_contabilita_settings');
                         }
                     } elseif (isset($xml->FatturaElettronicaHeader->CessionarioCommittente->DatiAnagrafici->CodiceFiscale)) {
                         $cessionario_pi = (string) $xml->FatturaElettronicaHeader->CessionarioCommittente->DatiAnagrafici->CodiceFiscale;
@@ -627,6 +628,7 @@ class Spese extends MY_Controller
                         } else {
                             echo "Rilevazione errata spesa azienda";
                             log_message("error", "Rilevazione errata spesa azienda");
+                            $settings = $this->apilib->searchFirst('documenti_contabilita_settings');
                         }
                     }
                     // ANAGRAFICA
@@ -662,7 +664,12 @@ class Spese extends MY_Controller
                         $spesa['spese_tipologia_fatturazione'] = $tipologie->row()->documenti_contabilita_tipologie_fatturazione_id;
                     }
                     //controllo che il file non esista già
-
+                    $spesa['spese_totale'] = (string) $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ImportoTotaleDocumento;
+                    
+                    //$fattura['spese_totale'] = str_replace(' ', '', $fattura['spese_totale']);
+                    $spesa['spese_totale'] = preg_replace("/[^0-9.]/", "", $spesa['spese_totale']);
+                    $spesa['spese_totale'] = number_format((float) $spesa['spese_totale'], 9, '.', '');
+                    //debug($spesa,true);
                     $spesa_totale = preg_replace("/[^0-9.]/", "", $spesa['spese_totale']);
                     $spesa_totale = number_format((float) $spesa_totale, 9, '.', '');
                     $fattura_esistente = $this->apilib->searchFirst('spese', [
@@ -775,6 +782,7 @@ class Spese extends MY_Controller
 
                     $spesa['spese_customer_id'] = $supplier_id;
                     $spesa['spese_importata_da_xml'] = DB_BOOL_TRUE;
+                    
                     $spesa['spese_azienda'] = $settings['documenti_contabilita_settings_id'];
                     $spesa['spese_json'] = json_encode($xml);
 
@@ -840,9 +848,10 @@ class Spese extends MY_Controller
                         $metodi_pagamento = array_key_value_map($_metodi_pagamento, 'documenti_contabilita_metodi_pagamento_codice', 'documenti_contabilita_metodi_pagamento_id');
 
                         // Inserisco le scadenze di pagamento
-                        if (!empty($xml->FatturaElettronicaBody->DatiPagamento)) {
-                            foreach ($xml->FatturaElettronicaBody->DatiPagamento as $dati_pagamento) {
-                                $scadenza = $dati_pagamento->DettaglioPagamento;
+                        if (!empty($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento)) {
+                            
+                            foreach ($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento as $scadenza) {
+                                
                                 $spesa_scadenza = [
                                     'spese_scadenze_ammontare' => $scadenza->ImportoPagamento,
                                     'spese_scadenze_scadenza' => ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data,
@@ -853,11 +862,12 @@ class Spese extends MY_Controller
                                 // Se metodo di pagamento contanti o carta imposto data di pagamento come quella del documento oppure come data scadenza pagamento (se impostata)
                                 // Forte dubbio su questo array ma non vedo altre soluzioni
                                 $metodi_auto_saldo = array("MP01", "MP02", "MP03", "MP04", "MP08", "MP22");
-                                if ($this->settings['documenti_contabilita_settings_imp_saldate'] && in_array((string) $scadenza->ModalitaPagamento, $metodi_auto_saldo)) {
+                                
+                                if ($settings['documenti_contabilita_settings_imp_saldate'] && in_array((string) $scadenza->ModalitaPagamento, $metodi_auto_saldo)) {
                                     $spesa_scadenza['spese_scadenze_data_saldo'] = ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data;
                                     $spese_scadenza['spese_scadenze_saldata'] = DB_BOOL_TRUE;
                                 }
-
+                               //debug($spesa_scadenza);
                                 $this->apilib->create('spese_scadenze', $spesa_scadenza);
                             }
                         } else {
@@ -923,10 +933,14 @@ class Spese extends MY_Controller
 
         //Come prima cosa mi prendo il nome del file xml della fattura in uscita originale, così da avere tutte le info per aggiornare lo stato dopo...
         $nomefilexml = (string) $xml->NomeFile;
-        $documento = $this->apilib->searchFirst('documenti_contabilita', ['documenti_contabilita_nome_file_xml' => $nomefilexml], 0, 'documenti_contabilita_id', 'DESC');
+        //20240717 - MP - Fix per case sensitive search (mariadb non fa distinzione di maiuscole minuscole, quindi faccio query a mano con "Binary")
+        //$documento = $this->apilib->searchFirst('documenti_contabilita', ['documenti_contabilita_nome_file_xml' => $nomefilexml], 0, 'documenti_contabilita_id', 'DESC');
+        $documento = $this->db->query("SELECT * FROM documenti_contabilita WHERE BINARY documenti_contabilita_nome_file_xml = '$nomefilexml'")->row_array();
         if (empty($documento)) {
             $nomefilexml = str_replace(".p7m", "", $nomefilexml);
-            $documento = $this->apilib->searchFirst('documenti_contabilita', ['documenti_contabilita_nome_file_xml' => $nomefilexml], 0, 'documenti_contabilita_id', 'DESC');
+            //Anche qui come sopra faccio query a mano con "Binary"
+            //$documento = $this->apilib->searchFirst('documenti_contabilita', ['documenti_contabilita_nome_file_xml' => $nomefilexml], 0, 'documenti_contabilita_id', 'DESC');
+            $documento = $this->db->query("SELECT * FROM documenti_contabilita WHERE BINARY documenti_contabilita_nome_file_xml = '$nomefilexml'")->row_array();
         }
         if (empty($documento)) {
             $this->apilib->edit('documenti_contabilita_ricezione_sdi', $file['documenti_contabilita_ricezione_sdi_id'], [

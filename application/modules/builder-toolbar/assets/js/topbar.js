@@ -14,20 +14,18 @@ $(function () {
             // Save Function
             event.preventDefault();
 
-            if ($('#js_enable_dev').length) {
-
-                if (toolBarEnabled == true) {
-                    $('#builder_toolbar').hide();
-                    toolBarEnabled = false;
-                    localStorage.setItem('toolBarEnabled', 'false');
-                } else {
-                    $('#builder_toolbar').show();
-                    toolBarEnabled = true;
-                    localStorage.setItem('toolBarEnabled', 'true');
-                    checkPermissions();
-                }
-
+            if (toolBarEnabled == true) {
+                $('#builder_toolbar').hide();
+                toolBarEnabled = false;
+                localStorage.setItem('toolBarEnabled', 'false');
+            } else {
+                $('#builder_toolbar').show();
+                toolBarEnabled = true;
+                localStorage.setItem('toolBarEnabled', 'true');
+                checkPermissions();
             }
+
+
             return false;
         }
     }

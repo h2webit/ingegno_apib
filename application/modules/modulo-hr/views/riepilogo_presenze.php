@@ -163,6 +163,7 @@ $dati = [];
 $filters = $this->session->userdata(SESS_WHERE_DATA);
 $where_dipendenti = 'dipendenti_attivo = ' . DB_BOOL_TRUE;
 
+
 $join_dipendenti = DB_BOOL_FALSE;
 
 if (!empty($filters['filter-presenze'])) {

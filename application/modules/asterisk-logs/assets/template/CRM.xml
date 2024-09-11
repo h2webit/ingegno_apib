@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Crm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Country="BE" Name="CRM" Version="0" SupportsEmojis="false">
+  <Number Prefix="AsIs" MaxLength="" />
+  <Connection MaxConcurrentRequests="2" />
+  <Parameters>
+    <Parameter Name="Domain" Type="String" Parent="General Configuration" Editor="String" Title="Domain:" Default="" />
+    <Parameter Name="Token" Type="String" Parent="General Configuration" Editor="String" Title="Token:" Default="" />
+    <Parameter Name="ReportCallEnabled" Type="Boolean" Parent="General Configuration" Editor="String" Title="Enable Call Journaling" Default="True" />
+    <Parameter Name="NotAnsweredOutboundCallText" Parent="Call name" Type="String" Editor="String" Title="Answered Outbound Call:" Default="outgoing" />
+    <Parameter Name="OutboundCallText" Type="String" Parent="Call name" Editor="String" Title="Answered Outbound Call:" Default="outgoing" />
+    <Parameter Name="MissedCallText" Type="String" Parent="Call name" Editor="String" Title="Missed Outbound Call:" Default="out_time" />
+    <Parameter Name="InboundCallText" Type="String" Parent="Call name" Editor="String" Title="Inbound Call:" Default="incoming" />
+    <Parameter Name="AnsweredCallText" Type="String" Parent="Call name" Editor="String" Title="Answered Outbound Call:" Default="incoming" />
+    <Parameter Name="NotAnsweredCallDispText" Type="String" Parent="Call name" Editor="String" Title="Missed call:" Default="NO ANSWER" />
+    <Parameter Name="AnsweredCallDispText" Type="String" Parent="Call name" Editor="String" Title="Answered call:" Default="ANSWERED" />
+  </Parameters>
+  <Scenarios>
+    <Scenario Id="ReportCall" Type="REST" EntityId="">
+      <Request SkipIf="[ReportCallEnabled]!=True" Url="[Domain]" MessagePasses="0" RequestContentType="application/json" RequestEncoding="UrlEncoded" RequestType="Post" ResponseType="Json">
+
+        <Headers>
+          <Value Key="Authorization" Passes="0" Type="String">Bearer [Token]</Value>
+        </Headers>
+        <PostValues Key="">
+          <Value Key="asterisk_log_calls_src" Passes="0" Type="String">[Number]</Value>
+          <Value Key="asterisk_log_calls_callee_num" Passes="0" If="[CallType]==Inbound" Type="String">[Number]</Value>
+          <Value Key="asterisk_log_calls_callee_num" Passes="0" If="[CallType]==Missed" Type="String">[Number]</Value>
+          <Value Key="asterisk_log_calls_callee_num" Passes="0" If="[CallType]==Outbound" Type="String">[Agent]</Value>
+          <Value Key="asterisk_log_calls_callee_num" Passes="0" If="[CallType]==Notanswered" Type="String">[Agent]</Value>
+          <Value Key="asterisk_log_calls_calldate" Passes="0" Type="String">[[[CallStartTimeLocal].ToString("yyyy-MM-dd HH:mm:ss")]]</Value>
+          <Value Key="asterisk_log_calls_dst" Passes="0" If="[CallType]==Inbound" Type="String">[Number]</Value>
+          <Value Key="asterisk_log_calls_dst" Passes="0" If="[CallType]==Missed" Type="String">[Number]</Value>
+          <Value Key="asterisk_log_calls_dst" Passes="0" If="[CallType]==Outbound" Type="String">[Agent]</Value>
+          <Value Key="asterisk_log_calls_dst" Passes="0" If="[CallType]==Notanswered" Type="String">[Agent]</Value>
+          <Value Key="asterisk_log_calls_duration" Passes="0" Type="Integer">[[[DurationTimespan].get_TotalSeconds()].ToString("F0")]</Value>
+          <Value Key="asterisk_log_calls_call_direction" If="[CallType]==Inbound" Passes="2" Type="String">[[InboundCallText]]</Value>
+          <Value Key="asterisk_log_calls_call_direction" If="[CallType]==Missed" Passes="2" Type="String">[[MissedCallText]]</Value>
+          <Value Key="asterisk_log_calls_call_direction" If="[CallType]==Outbound" Passes="2" Type="String">[[OutboundCallText]]</Value>
+          <Value Key="asterisk_log_calls_call_direction" If="[CallType]==Notanswered" Passes="2" Type="String">[[NotAnsweredOutboundCallText]]</Value>
+          <Value Key="asterisk_log_calls_dest_num" If="[CallType]==Outbound" Passes="2" Type="String">[[Number]]</Value> 
+          <Value Key="asterisk_log_calls_disposition" If="[CallType]==Outbound" Passes="2" Type="String">[[AnsweredCallDispText]]</Value>
+          <Value Key="asterisk_log_calls_disposition" If="[CallType]==Inbound" Passes="2" Type="String">[[AnsweredCallDispText]]</Value>
+          <Value Key="asterisk_log_calls_disposition" If="[CallType]==Notanswered" Passes="2" Type="String">[[NotAnsweredCallDispText]]</Value>
+          <Value Key="asterisk_log_calls_disposition" If="[CallType]==Missed" Passes="2" Type="String">[[NotAnsweredCallDispText]]</Value>        
+          <Value Key="asterisk_log_calls_duration_test" Passes="2" Type="String">[[Duration]]</Value>        
+
+          
+        </PostValues>
+      </Request>
+    </Scenario>
+  </Scenarios>
+</Crm>
+
+
+

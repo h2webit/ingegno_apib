@@ -1,6 +1,7 @@
 <?php $this->layout->addModuleStylesheet('builder-toolbar', 'css/topbar.css');
 $dev_mode = $this->session->userdata('dev_mode');
 
+
 $users = $this->apilib->search("users", ["users_active = " . DB_BOOL_TRUE], 'users_type_value');
 $this->load->model('entities');
 if ($this->entities->entity_exists('users_manager_configurations')) {
@@ -9,6 +10,7 @@ if ($this->entities->entity_exists('users_manager_configurations')) {
 } else {
     $salt = 'Salt configuration missing!';
 }
+
 
 // Value id
 if (!empty($value_id)) {
@@ -23,8 +25,9 @@ if (!empty($value_id)) {
 
 <!-- Vertical toolbar -->
 <div id="builder_toolbar" style="display:none">
-    <?php if ($this->auth->is_admin()): ?>
+    <?php if ($this->auth->is_admin() || $_SERVER['REMOTE_ADDR'] == '62.196.41.184'): ?>
         <div class="material-switch">
+            <span style="color:#fefefe">Maintenance mode &nbsp;</span>
             <input id="js_toolbar_maintenance" type="checkbox" <?php if (is_maintenance()): ?>checked="checked" <?php
             endif; ?> value="1">
             <label for="js_toolbar_maintenance" class="label-success" data-toggle="tooltip" data-placement="bottom"

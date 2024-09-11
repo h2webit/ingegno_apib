@@ -36,7 +36,7 @@ class Ticket extends CI_Model
         $ch = curl_init();
 
         if (in_array($method, ['search', 'view', 'count'])) {
-            $post_data['maxdepth'] = 3;
+            $post_data['maxdepth'] = 2;
         }
 
         $url = 'rest/v1/' . $method . '/' . $entity . '/' . $value_id;
@@ -55,7 +55,7 @@ class Ticket extends CI_Model
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
 
         $data = curl_exec($ch);
-
+        
         curl_close($ch);
 
         return json_decode($data, true);

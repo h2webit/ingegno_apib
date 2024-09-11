@@ -360,7 +360,7 @@ function initTable(grid) {
             JSON.parse(oDataTable.attr('data-lengthmenu'));
 
     var datatable = oDataTable.dataTable({
-        stateSave: true,
+        stateSave: true, 
         bSort: bEnableOrder,
         aaSorting: [],
         ordering: !no_ordering,

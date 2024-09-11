@@ -94,7 +94,7 @@ foreach ($form['forms_fields'] as $key => $field) {
 
                                                     <div class="js_field_container">
                                                         <div class="col-lg-3">
-                                                            <label>Edit this:</label>
+                                                            <label><?php e("Edit this"); ?>:</label>
                                                             <input type="checkbox" class="_form-control js_field_check" name="edit_fields[]" value="<?php echo $field['name']; ?>" />
                                                         </div>
                                                         <div class="col-lg-9">
@@ -150,7 +150,20 @@ foreach ($form['forms_fields'] as $key => $field) {
 
                                                     <div class="pull-right">
                                                         <!-- <button type="button" class="btn btn-default " data-dismiss="modal"><?php e('Cancel'); ?></button> -->
-                                                        <button type="submit" class="btn btn-primary"><?php echo (array_key_exists('forms_submit_button_label', $form['forms']) && !empty($form['forms']['forms_submit_button_label'])) ? $form['forms']['forms_submit_button_label'] : t('Save'); ?></button>
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <?php if ($value_id): ?>
+                                                                <?php if (array_key_exists('forms_label_edit' . $edit, $form['forms']) && !empty($form['forms']['forms_label'])): ?>
+                                                                    <?php echo $form['forms']['forms_label']; ?>
+                                                                <?php else: ?>
+                                                        
+                                                                    <?php echo (array_key_exists('forms_label' . $edit, $form['forms']) && !empty($form['forms']['forms_label'])) ? $form['forms']['forms_label'] : t('Save'); ?>
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                <?php echo (array_key_exists('forms_label' . $edit, $form['forms']) && !empty($form['forms']['forms_label'])) ? $form['forms']['forms_label'] : t('Save'); ?>
+                                                            <?php endif; ?>
+                                                        
+                                                        
+                                                        </button>
                                                     </div>
                                                 </div>
                                     </div>

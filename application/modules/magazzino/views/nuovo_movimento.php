@@ -1058,31 +1058,40 @@ if ($movimenti_id) {
                                 <th width="10">
 
                                 </th>
+                                <?php if($settings['magazzino_settings_show_barcode'] == 1): ?>
                                 <th width="200">Barcode</th>
+                                <?php endif; ?>
                                 <th width="200">Code (SKU)</th>
                                 <th width="300">Nome prodotto <em style="color:#FF0000;">*</em></th>
-
+                                <?php if ($settings['magazzino_settings_show_lotto'] == 1): ?>
+                                <th width="100">Lotto/Matricola</th>
+                                <?php endif; ?>
                                 <?php if ($settings['magazzino_settings_show_scaffale'] == 1): ?>
                                 <th width="100">Scaffale</th>
                                 <th width="100">Scaffale (ric.)</th>
                                 <?php endif; ?>
+                                
                                 <?php if ($settings['magazzino_settings_show_ripiano'] == 1): ?>
                                 <th width="100">Ripiano</th>
                                 <th width="100">Ripiano (ric.)</th>
                                 <?php endif; ?>
-
-                                <?php if ($settings['magazzino_settings_show_lotto'] == 1): ?>
-                                <th width="100">Lotto/Matricola</th>
-                                <?php endif; ?>
+                                
                                 <?php if ($settings['magazzino_settings_show_scadenza'] == 1): ?>
                                 <th width="150">Data Scadenza</th>
                                 <?php endif; ?>
+                                
                                 <?php if ($settings['magazzino_settings_show_marchio'] == 1): ?>
                                 <th width="100">Marchio</th>
                                 <?php endif; ?>
+                                
                                 <?php if ($settings['magazzino_settings_show_fornitore'] == 1): ?>
                                 <th width="150">Fornitore</th>
                                 <?php endif; ?>
+                                
+                                <?php if($this->datab->module_installed('projects') && $settings['magazzino_settings_show_commessa'] == 1): ?>
+                                <th width="200">Commessa</th>
+                                <?php endif; ?>
+                                
                                 <th width="100">U.M.</th>
                                 <th width="80">Qty</th>
                                 <th width="150">Prezzo <span class="js_prezzo_label">acquisto</span></th>
@@ -1095,8 +1104,11 @@ if ($movimenti_id) {
                                 <td>
                                     <span class="circle js_icon_product"></span>
                                 </td>
+                                <?php if($settings['magazzino_settings_show_barcode'] == 1): ?>
                                 <td style="position:relative;">
                                     <input type="text" class="form-control text-right input-sm js_movimenti_articoli_barcode js_autocomplete_prodotto" data-id="1" data-name="movimenti_articoli_barcode" />
+                                </td>
+                                <?php endif; ?>
                                 <td>
                                     <input type="text" class="form-control text-right input-sm js_movimenti_articoli_codice js_autocomplete_prodotto" data-id="1" data-name="movimenti_articoli_codice" />
                                 </td>
@@ -1105,9 +1117,13 @@ if ($movimenti_id) {
                                     <small>Descrizione aggiuntiva:</small>
                                     <textarea class="form-control input-sm js_movimenti_articoli_descrizione" data-name="movimenti_articoli_descrizione" style="width:100%;" row="2"></textarea>
                                 </td>
-
-
-                                    <?php if ($settings['magazzino_settings_show_scaffale'] == 1): ?>
+                                <?php if ($settings['magazzino_settings_show_lotto'] == 1): ?>
+                                    <td>
+                                        <input type="text" class="form-control input-sm text-right js_movimenti_articoli_lotto" data-name="movimenti_articoli_lotto" />
+                                        <!--<input type="hidden" class="js_movimenti_articoli_lotto_id" data-name="movimenti_articoli_lotto_id" />-->
+                                    </td>
+                                <?php endif; ?>
+                                <?php if ($settings['magazzino_settings_show_scaffale'] == 1): ?>
                                 <td>
                                     <select class="form-control input-sm js_movimenti_articoli_scaffale" data-name="movimenti_articoli_scaffale">
                                         <option value=""> --- </option>
@@ -1138,14 +1154,7 @@ if ($movimenti_id) {
                                     <!--<input type="hidden" class="js_movimenti_articoli_lotto_id" data-name="movimenti_articoli_lotto_id" />-->
                                 </td>
                                 <?php endif; ?>
-
-
-                                <?php if ($settings['magazzino_settings_show_lotto'] == 1): ?>
-                                <td>
-                                    <input type="text" class="form-control input-sm text-right js_movimenti_articoli_lotto" data-name="movimenti_articoli_lotto" />
-                                    <!--<input type="hidden" class="js_movimenti_articoli_lotto_id" data-name="movimenti_articoli_lotto_id" />-->
-                                </td>
-                                <?php endif; ?>
+                                
                                 <?php if ($settings['magazzino_settings_show_scadenza'] == 1): ?>
                                 <td>
                                     <div class="input-group js_form_datepicker date">
@@ -1178,6 +1187,15 @@ if ($movimenti_id) {
                                         </select>
                                 </td>
                                 <?php endif; ?>
+                                
+                                <?php if ($this->datab->module_installed('projects') && $settings['magazzino_settings_show_commessa'] == 1): ?>
+                                    <td>
+                                        <select class="form-control input-sm js_movimenti_articoli_commessa" data-name="movimenti_articoli_commessa">
+                                            <option value=""> --- </option>
+                                        </select>
+                                    </td>
+                                <?php endif; ?>
+                                
                                 <td>
 
                                     <select class="form-control input-sm text-right js_movimenti_articoli_unita_misura" data-name="movimenti_articoli_unita_misura">
@@ -1328,6 +1346,15 @@ if ($movimenti_id) {
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
+                                <?php endif; ?>
+                                
+                                <?php if ($this->datab->module_installed('projects') && $settings['magazzino_settings_show_commessa'] == 1): ?>
+                                    <td>
+                                        <select class="form-control input-sm js_movimenti_articoli_commessa" name="products[<?php echo $k + 1; ?>][movimenti_articoli_commessa]">
+                                            <option value=""> --- </option>
+                                            <option value="<?php echo $prodotto['movimenti_articoli_commessa'] ?>" selected="selected"><?php echo $prodotto['projects_name']; ?></option>
+                                        </select>
+                                    </td>
                                 <?php endif; ?>
 
                                 <td>
@@ -1607,6 +1634,7 @@ function initAutocomplete(autocomplete_selector) {
 
 setTimeout(function() {
     //$('button[data-tipo="<?php echo $movimento['movimenti_mittente']; ?>"]').trigger('click');
+    updateAllCommesse();
 }, 1000);
 
 <?php endif; ?>
@@ -1671,7 +1699,9 @@ $(document).ready(function() {
                 // if (old_tipo != 1) {
                 $('.js_movimenti_tipo').val('1').trigger('change');
                 // }
-
+                
+                updateAllCommesse(1);
+                
                 break;
             case 2:
                 $('.js_dest_type').html('cliente');
@@ -1693,14 +1723,29 @@ $(document).ready(function() {
                 mittente_movimento = 3;
                 $('#carica_csv').hide();
                 //console.log(mittente_movimento);
-                $('[name="movimenti_causale"]').val('18').trigger('change');
+                
                 $('.js_dati_mittente').hide();
                 $('.js_informazioni_movimento').removeClass('col-md-8').addClass('col-md-12');
                 // alert(old_tipo);
 
                 // michael - 19-07-2023 - commentato in quanto non ha molto senso, ne triggera gli automatismi sui prezzi prodotti
                 // if (old_tipo != 2) {
-                $('.js_movimenti_tipo').val('2').trigger('change');
+                <?php if ($movimenti_id): ?>
+                    <?php //debug($movimento['movimenti_tipo_movimento'],true); ?>
+                    $('.js_movimenti_tipo').val('<?php echo $movimento['movimenti_tipo_movimento']; ?>').trigger('change');
+                <?php else: ?>
+                    $('.js_movimenti_tipo').val('2').trigger('change');
+                <?php endif; ?>
+
+                <?php if ($movimenti_id): ?>
+                    <?php //debug($movimento['movimenti_causale'],true); ?>
+                    $('[name="movimenti_causale"]').val('<?php echo $movimento['movimenti_causale']; ?>').trigger('change');
+                <?php else: ?>
+                    $('[name="movimenti_causale"]').val('18').trigger('change');
+                <?php endif; ?>
+                
+                updateAllCommesse(3);
+                
                 // }
                 break;
             case 4:
@@ -1733,6 +1778,9 @@ $(document).ready(function() {
                 // if (old_tipo != 2) {
                 //     $('.js_movimenti_tipo').val('2').trigger('change');
                 // }
+                
+                updateAllCommesse(4);
+                
                 break;
             default:
                 break;
@@ -1746,7 +1794,7 @@ $(document).ready(function() {
 
     });
     <?php if ($movimenti_id): ?>
-    $('.js_btn_mittente[data-tipo=<?php echo $movimento['movimenti_mittente']; ?>]').trigger('click');
+        $('.js_btn_mittente[data-tipo=<?php echo $movimento['movimenti_mittente']; ?>]').trigger('click');
 
     <?php endif; ?>
 
@@ -1798,6 +1846,84 @@ $(document).ready(function() {
 
     });
 });
+
+var project_module_installed = '<?php echo $this->datab->module_installed('projects'); ?>';
+var settings_show_commesse = '<?php echo $settings['magazzino_settings_show_commessa']; ?>';
+
+function getCommesseRiga($row, mittente_movimento = null) {
+    if (!project_module_installed) {
+        console.info('Il modulo "projects" non è installato');
+        return;
+    }
+    
+    if (!settings_show_commesse) {
+        return;
+    }
+    
+    if (!mittente_movimento) {
+        mittente_movimento = $('.js_movimenti_mittente').val();
+    }
+    
+    var cliente_id = '';
+    
+    if (mittente_movimento == '2') {
+        cliente_id = $('[name="dest_id"]').val();
+    }
+    
+    var html = '<option value=""> --- </option>';
+    
+    var prev_selected = '';
+    
+    if ($('.js_movimenti_articoli_commessa', $row).val() != '') {
+        prev_selected = $('.js_movimenti_articoli_commessa', $row).val();
+    }
+    
+    if (
+        mittente_movimento != '2' ||
+        (mittente_movimento == '2' && cliente_id != '')
+    ) {
+        $.ajax({
+            url: base_url + 'magazzino/movimenti/get_commesse/' + cliente_id,
+            type: 'get',
+            dataType: 'json',
+            async: false,
+            success: function(res) {
+                if (res.status == 1) {
+                    $.each(res.txt, function(i, commessa) {
+                        var selected = commessa.projects_id === prev_selected ? 'selected' : '';
+                        
+                        html += '<option value="' + commessa.projects_id + '" '+selected+'>' + commessa.projects_name + '</option>';
+                    });
+                }
+            },
+            error: function() {
+                console.log('errore');
+            }
+        });
+    }
+    
+    $('.js_movimenti_articoli_commessa', $row).html(html);
+    
+    $('.js_movimenti_articoli_commessa', $row).select2({
+        placeholder: 'Seleziona commessa',
+        allowClear: true
+    });
+}
+
+function updateAllCommesse(mittente_movimento = null) {
+    if (!project_module_installed) {
+        console.info('Il modulo "projects" non è installato');
+        return;
+    }
+    
+    if (!settings_show_commesse) {
+        return;
+    }
+    
+    $('#js_product_table tbody tr:visible').each(function() {
+        getCommesseRiga($(this), mittente_movimento);
+    });
+}
 
 function getLotti(prodotto_id, row_lotto = null) {
     //console.log(prodotto);
@@ -1920,7 +2046,12 @@ function popolaProdottoContabilita(prodotto, rowid) {
     } else {
         $("[name='products[" + rowid + "][movimenti_articoli_fornitore]']").val(parseInt(prodotto.documenti_contabilita_articoli_prodotto_id_fw_products_supplier));
     }
-
+    
+    // se la tendina delle commesse è attiva e c'è il doc contab art commessa, lo imposto sul relativo campo
+    if (settings_show_commesse && prodotto.documenti_contabilita_articoli_commessa) {
+        $("[name='products[" + rowid + "][movimenti_articoli_commessa]']").val(prodotto.documenti_contabilita_articoli_commessa).trigger('change');
+    }
+    
     $("input[name='products[" + rowid + "][movimenti_articoli_quantita]']").val(parseInt(prodotto.documenti_contabilita_articoli_quantita)).trigger('change');
 
     calculateTotals();
@@ -2080,7 +2211,12 @@ $(document).ready(function() {
         var tipo_movimento = $(this).val();
 
         if (1 == tipo_movimento) { //Carico
-            $('[name="movimenti_causale"]').val(1);
+            <?php if ($movimenti_id): ?>
+                $('[name="movimenti_causale"]').val(<?php echo $movimento['movimenti_causale']; ?>);
+            <?php else : ?>
+                $('[name="movimenti_causale"]').val(1);
+            <?php endif; ?>
+            
 
             //Nascondo le causali di scarico
             $('.js_movimenti_causali_scarico').hide();
@@ -2223,9 +2359,8 @@ $(document).ready(function() {
 
 
     function popolaCliente(cliente) {
-        console.log(cliente),
-            //Cambio la label
-            $('#js_label_rubrica').html('Modifica e sovrascrivi anagrafica');
+        //Cambio la label
+        $('#js_label_rubrica').html('Modifica e sovrascrivi anagrafica');
 
         $('.js_dest_ragione_sociale').val(cliente['customers_full_name']);
         $('.js_dest_indirizzo').val(cliente['customers_address']);
@@ -2238,6 +2373,14 @@ $(document).ready(function() {
         $('.js_dest_codice_sdi').val(cliente['customers_sdi']);
         $('.js_dest_pec').val(cliente['customers_pec']);
         $('#js_dest_id').val(cliente['customers_id']);
+        
+        if (settings_show_commesse) {
+            alert('Hai selezionato un cliente, tutte le righe articolo con una commessa selezionata che non è più associata al cliente verranno azzerate');
+        }
+        
+        updateAllCommesse();
+        
+        // updateAllCommesse();
     }
 
     function popolaFornitore(fornitore) {
@@ -2763,6 +2906,7 @@ $(document).ready(function() {
         });
 
         $('.js_movimenti_articoli_barcode:last').focus();
+        getCommesseRiga(newRow);
         //checkProducts();
     });
 

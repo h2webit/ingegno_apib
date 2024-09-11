@@ -109,6 +109,9 @@ $_uscite = $this->db->query("
 //die($this->db->last_query());
 $righe = $entrate_confermate = $entrate_previste = $uscite_confermate = $uscite_previste = [];
 $somma_entrate_confermate = $somma_entrate_previste = $somma_uscite_confermate = $somma_uscite_previste = 0;
+
+
+
 foreach ($_entrate as $entrata) {
     $mese = $entrata['d'];
     
@@ -131,6 +134,7 @@ foreach ($_entrate as $entrata) {
     $somma_entrate_confermate += $entrata['s_confermate'];
     $somma_entrate_previste += $entrata['s_previste'];
 }
+
 foreach ($_uscite as $uscita) {
     $mese = $uscita['d'];
     $righe[$mese] = $mese;

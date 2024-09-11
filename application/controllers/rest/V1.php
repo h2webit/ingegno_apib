@@ -9,7 +9,7 @@ class V1 extends MY_Controller
 
     public function __construct()
     {
-        
+
         parent::__construct();
         set_log_scope('api');
 
@@ -28,7 +28,9 @@ class V1 extends MY_Controller
         header('Access-Control-Allow-Origin: *');
         @header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}"); //X-Requested-With
 
-        if ($this->uri->segment(3) != 'help') {
+        $method = $this->uri->segment(3);
+
+        if (!in_array($method, ['help', 'generateSwaggerDocumentation', 'swagger'])) {
 
             $token_data = $this->db->get_where('api_manager_tokens', ['api_manager_tokens_token' => '' . $this->getBearerToken()]);
             if ($token_data->num_rows() == 0) {
@@ -92,6 +94,8 @@ class V1 extends MY_Controller
                 }
                 break;
             case 'help':
+            case 'generateSwaggerDocumentation':
+            case 'swagger':
             case 'entities':
             case 'describe':
                 break;
@@ -305,13 +309,14 @@ class V1 extends MY_Controller
 
     public function search($entity = null)
     {
+
         try {
             $limit = ($this->input->post('limit')) ? $this->input->post('limit') : null;
             $offset = ($this->input->post('offset')) ? $this->input->post('offset') : 0;
             $orderBy = ($this->input->post('orderby')) ? $this->input->post('orderby') : null;
 
             $orderDir = ($this->input->post('orderdir')) ? $this->input->post('orderdir') : 'ASC';
-            $maxDepth = ($this->input->post('maxdepth')) ? $this->input->post('maxdepth') : 2;
+            $maxDepth = ($this->input->post('maxdepth') || $this->input->post('maxdepth') === '0') ? $this->input->post('maxdepth') : 2;
 
             $postData = array_filter((array) $this->input->post('where'));
             if ($this->getEntityWhere($entity)) {
@@ -319,12 +324,12 @@ class V1 extends MY_Controller
             } else {
                 $where = [];
             }
-            
+            //debug($this->input->post(),true);
             $postData = $this->apilib->runDataProcessing($entity, 'pre-search', $postData);
 
             //non uso le apilib altrimenti mi fa left join e non è detto che abbia i permessi per le altre entità... una soluzione potrebbe essere quella di ciclare tutti i permessi e rimuovere nella
             ////filterOutputFields anche le tabelle joinate, ma è un lavorone... per ora no
-            
+
             $output = $this->apilib->search($entity, array_merge($where, $postData), $limit, $offset, $orderBy, $orderDir, $maxDepth);
             // debug($output,true);
             $this->filterOutputFields($entity, $output);
@@ -350,7 +355,7 @@ class V1 extends MY_Controller
             $orderBy = ($this->input->post('orderby')) ? $this->input->post('orderby') : null;
 
             $orderDir = ($this->input->post('orderdir')) ? $this->input->post('orderdir') : 'ASC';
-            $maxDepth = ($this->input->post('maxdepth')) ? $this->input->post('maxdepth') : 2;
+            $maxDepth = ($this->input->post('maxdepth') || $this->input->post('maxdepth') === '0') ? $this->input->post('maxdepth') : 2;
 
             $postData = array_filter((array) $this->input->post('where'));
             if ($this->getEntityWhere($entity)) {
@@ -729,12 +734,12 @@ class V1 extends MY_Controller
         $serial_get = json_encode($_GET);
         $serial_post = json_encode($_POST);
         $serial_files = json_encode($_FILES);
-        
+
         $serial_output = json_encode($output);
-if (strlen($serial_output) > 2000) {
+        if (strlen($serial_output) > 2000) {
             $serial_output = json_encode('***TOO MANY RECORDS***');
-}
-        
+        }
+
 
         $this->db->insert('log_api', array(
             'log_api_method' => $method,
@@ -789,5 +794,329 @@ if (strlen($serial_output) > 2000) {
         //     'message' => is_string($message) ? $message : null,
         //     'data' => is_array($message) ? $message : array()
         // ));
+    }
+
+    public function generateSwaggerJson()
+    {
+        $tabelle = $this->crmentity->getEntities();
+
+        $swaggerJson = [
+            'openapi' => '3.0.0',
+            'info' => [
+                'title' => 'CRM API',
+                'version' => '1.0.0',
+                'description' => 'API for CRM system'
+            ],
+            'servers' => [
+                [
+                    'url' => base_url('rest/v1'),
+                    'description' => 'CRM API Server'
+                ]
+            ],
+            'security' => [
+                ['bearerAuth' => []]
+            ],
+            'paths' => [],
+            'components' => [
+                'securitySchemes' => [
+                    'bearerAuth' => [
+                        'type' => 'http',
+                        'scheme' => 'bearer',
+                        'bearerFormat' => 'JWT'
+                    ]
+                ],
+                'schemas' => []
+            ]
+        ];
+
+        foreach ($tabelle as $tabella) {
+            if ($tabella['entity_type'] != 1) {
+                continue;
+            }
+            $entityName = $tabella['entity_name'];
+            $entityFields = $this->crmentity->getFields($tabella['entity_id']);
+
+
+
+            // Add GET all (index) endpoint
+            $swaggerJson['paths']["/index/{$entityName}"] = [
+                'get' => [
+                    'summary' => "Get all {$entityName}",
+                    'security' => [['bearerAuth' => []]],
+                    'responses' => [
+                        '200' => [
+                            'description' => 'Successful response',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => [
+                                        'type' => 'array',
+                                        'items' => [
+                                            '$ref' => "#/components/schemas/{$entityName}"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            // Add POST (create) endpoint
+            $swaggerJson['paths']["/create/{$entityName}"] = [
+                'post' => [
+                    'summary' => "Create a new {$entityName}",
+                    'security' => [['bearerAuth' => []]],
+                    'requestBody' => [
+                        'required' => true,
+                        'content' => [
+                            'application/json' => [
+                                'schema' => [
+                                    '$ref' => "#/components/schemas/{$entityName}"
+                                ]
+                            ]
+                        ]
+                    ],
+                    'responses' => [
+                        '201' => [
+                            'description' => 'Created successfully',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => [
+                                        '$ref' => "#/components/schemas/{$entityName}"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            // Add GET by ID (view) endpoint
+            $swaggerJson['paths']["/view/{$entityName}/{id}"] = [
+                'get' => [
+                    'summary' => "Get a specific {$entityName}",
+                    'security' => [['bearerAuth' => []]],
+                    'parameters' => [
+                        [
+                            'name' => 'id',
+                            'in' => 'path',
+                            'required' => true,
+                            'schema' => ['type' => 'integer']
+                        ]
+                    ],
+                    'responses' => [
+                        '200' => [
+                            'description' => 'Successful response',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => [
+                                        '$ref' => "#/components/schemas/{$entityName}"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            // Add PUT (edit) endpoint
+            $swaggerJson['paths']["/edit/{$entityName}/{id}"] = [
+                'post' => [
+                    'summary' => "Update a specific {$entityName}",
+                    'security' => [['bearerAuth' => []]],
+                    'parameters' => [
+                        [
+                            'name' => 'id',
+                            'in' => 'path',
+                            'required' => true,
+                            'schema' => ['type' => 'integer']
+                        ]
+                    ],
+                    'requestBody' => [
+                        'required' => true,
+                        'content' => [
+                            'application/json' => [
+                                'schema' => [
+                                    '$ref' => "#/components/schemas/{$entityName}"
+                                ]
+                            ]
+                        ]
+                    ],
+                    'responses' => [
+                        '200' => [
+                            'description' => 'Updated successfully',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => [
+                                        '$ref' => "#/components/schemas/{$entityName}"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            // Add DELETE endpoint
+            $swaggerJson['paths']["/delete/{$entityName}/{id}"] = [
+                'post' => [
+                    'summary' => "Delete a specific {$entityName}",
+                    'security' => [['bearerAuth' => []]],
+                    'parameters' => [
+                        [
+                            'name' => 'id',
+                            'in' => 'path',
+                            'required' => true,
+                            'schema' => ['type' => 'integer']
+                        ]
+                    ],
+                    'responses' => [
+                        '204' => [
+                            'description' => 'Deleted successfully'
+                        ]
+                    ]
+                ]
+            ];
+
+            $whereProperties = [];
+            foreach ($entityFields as $field) {
+                $fieldName = $field['fields_name'];
+                $whereProperties["where[{$fieldName}]"] = [
+                    'type' => 'string',
+                    'description' => "Filter by {$fieldName}",
+                    'default' => '',
+                    'nullable' => true
+                ];
+            }
+
+            // Add SEARCH endpoint
+            $swaggerJson['paths']["/search/{$entityName}"] = [
+                'post' => [
+                    'summary' => "Search {$entityName} with filters",
+                    'security' => [['bearerAuth' => []]],
+                    'requestBody' => [
+                        'required' => true,
+                        'content' => [
+                            'application/x-www-form-urlencoded' => [
+                                'schema' => [
+                                    'type' => 'object',
+                                    'properties' => array_merge($whereProperties, [
+                                        'limit' => [
+                                            'type' => 'integer',
+                                            'description' => 'Number of records to return',
+                                            'default' => '',
+                                            'nullable' => true
+                                        ],
+                                        'offset' => [
+                                            'type' => 'integer',
+                                            'description' => 'Number of records to skip',
+                                            'default' => '',
+                                            'nullable' => true
+                                        ],
+                                        'orderby' => [
+                                            'type' => 'string',
+                                            'description' => 'Field to order by',
+                                            'default' => '',
+                                            'nullable' => true
+                                        ],
+                                        'orderdir' => [
+                                            'type' => 'string',
+                                            'enum' => ['ASC', 'DESC'],
+                                            'description' => 'Order direction',
+                                            'default' => '',
+                                            'nullable' => true
+                                        ],
+                                        'maxdepth' => [
+                                            'type' => 'integer',
+                                            'description' => 'Maximum depth of related entities to return',
+                                            'default' => 1
+                                        ]
+                                    ]),
+                                ]
+                            ]
+                        ]
+                    ],
+                    'responses' => [
+                        '200' => [
+                            'description' => 'Successful response',
+                            'content' => [
+                                'application/json' => [
+                                    'schema' => [
+                                        'type' => 'array',
+                                        'items' => [
+                                            '$ref' => "#/components/schemas/{$entityName}"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+
+            // Add schema with fields
+            $swaggerJson['components']['schemas'][$entityName] = [
+                'type' => 'object',
+                'properties' => $this->getSwaggerProperties($entityFields)
+            ];
+        }
+
+        return json_encode($swaggerJson, JSON_PRETTY_PRINT);
+    }
+
+    private function getSwaggerProperties($fields)
+    {
+        $properties = [];
+        foreach ($fields as $field) {
+            $property = [
+                'type' => $this->mapFieldTypeToSwagger($field['fields_type']),
+                'description' => $field['fields_name']
+            ];
+
+            if ($field['fields_required'] == '1') {
+                $property['required'] = true;
+            }
+
+            if (!empty($field['fields_size'])) {
+                $property['maxLength'] = intval($field['fields_size']);
+            }
+
+            $properties[$field['fields_name']] = $property;
+        }
+        return $properties;
+    }
+
+    private function mapFieldTypeToSwagger($fieldType)
+    {
+        $typeMap = [
+            'varchar' => 'string',
+            'text' => 'string',
+            'int' => 'integer',
+            'bigint' => 'integer',
+            'float' => 'number',
+            'double' => 'number',
+            'date' => 'string',
+            'datetime' => 'string',
+            'boolean' => 'boolean',
+        ];
+
+        return $typeMap[$fieldType] ?? 'string';
+    }
+
+    public function generateSwaggerDocumentation()
+    {
+        $swaggerJson = $this->generateSwaggerJson();
+
+        // Option 1: Output JSON directly
+        header('Content-Type: application/json');
+        echo $swaggerJson;
+
+        // Option 2: Save to file
+        // file_put_contents('swagger.json', $swaggerJson);
+    }
+
+    public function swagger()
+    {
+        $this->load->view('pages/api_manager/swagger');
     }
 }
