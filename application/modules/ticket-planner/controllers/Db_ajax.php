@@ -79,10 +79,12 @@ class Db_ajax extends MY_Controller
 
     public function get_ticket_messages($ticket_id)
     {
-        $response = $this->ticket->apiRequest('tickets_messages', 'search', [
-            'where[tickets_messages_ticket]' => $ticket_id,
-            'orderby' => 'tickets_messages_creation_date desc'
-        ]);
+        // $response = $this->ticket->apiRequest('tickets_messages', 'search', [
+        //     'where[tickets_messages_ticket]' => $ticket_id,
+        //     'orderby' => 'tickets_messages_creation_date desc'
+        // ]);
+        
+        $response = $this->ticket->apiRequest('custom/ticket_planner/get_ticket_messages', '', [], $ticket_id, false);
 
         if ($response['status'] == '1' && !empty($response['message']) && empty($response['data'])) {
             die(json_encode(array('status' => 0, 'txt' => 'Ottenimento messaggi ticket fallito.')));

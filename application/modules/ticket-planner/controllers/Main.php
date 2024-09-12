@@ -12,14 +12,16 @@ class Main extends MY_Controller
 
     public function get_ticket_html($ticket_id = null)
     {
-        $response = $this->ticket->apiRequest('tickets', 'view', [], $ticket_id);
-
+        // $response = $this->ticket->apiRequest('tickets', 'view', [], $ticket_id);
+        
+        $response = $this->ticket->apiRequest('custom/ticket_planner/get_ticket_by_id', '', [], $ticket_id, false);
+        
         if ($response['status'] == '1' && !empty($response['message']) && empty($response['data'])) {
-            die(json_encode(array('status' => 0, 'txt' => 'Fetching ticket categories failed')));
+            die(json_encode(array('status' => 0, 'txt' => 'Fetching ticket failed')));
         }
 
         $ticket = $response['data'];
-
+        
         $page = $this->load->module_view("ticket-planner/views", 'ticket_detail', $ticket, true);
 
         echo $page;
