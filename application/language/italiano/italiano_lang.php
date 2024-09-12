@@ -2844,3 +2844,7 @@ $lang['Appearance settings'] = 'Appearance settings';
 $lang['Extra settings'] = 'Extra settings';
 $lang['Manage Templates'] = 'Manage Templates';
 $lang['Background pp'] = 'Background pp';
+$lang['Importa Pagamenti'] = 'Importa Pagamenti';
+$lang['Data evasione'] = 'Data evasione';
+$lang['Importo bonifico'] = 'Importo bonifico';
+$lang['List pagamenti'] = 'List pagamenti';
