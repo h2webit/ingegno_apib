@@ -1561,9 +1561,22 @@ class Documenti extends MX_Controller
                     'data_emissione' => $data_emissione,
                     'azienda' => $documento_old['documenti_contabilita_azienda'],
                     'agente' => $customer['customers_sales_agent'] ?? null,
+                    'sconto_percentuale' => $documento_old['documenti_contabilita_sconto_percentuale'],
+                    'documenti_contabilita_totale' => $documento_old['documenti_contabilita_totale'],
+                    'imponibile' => $documento_old['documenti_contabilita_imponibile'],
+                    'competenze' => $documento_old['documenti_contabilita_competenze'],
                 ];
             } else {
+                //Se c'è uno sconto (documenti_contabilita_sconto), devo verificare che non sia diverso. Se è diverso blocco tutto perchè non posso accorpare sconti misti
+                if ($fatture_da_generare[$customer_id]['sconto_percentuale'] != $documento_old['documenti_contabilita_sconto_percentuale']) {
+                    die("Impossibile accorpare documenti con sconti diversi per il cliente <strong>{$customer['customers_full_name']}</strong>. Operazione annullata. Ritorno all'elenco entro 5 secondi...<script>setTimeout(function () {window.close();window.history.back();}, 5000);</script>");
+                }
+
                 $fatture_da_generare[$customer_id]['articoli_data'] = array_merge($fatture_da_generare[$customer_id]['articoli_data'], $articoli_old);
+
+                $fatture_da_generare[$customer_id]['documenti_contabilita_totale'] += $documento_old['documenti_contabilita_totale'];
+                $fatture_da_generare[$customer_id]['imponibile'] += $documento_old['documenti_contabilita_imponibile'];
+                $fatture_da_generare[$customer_id]['competenze'] += $documento_old['documenti_contabilita_competenze'];
             }
 
 

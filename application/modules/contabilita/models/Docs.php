@@ -434,7 +434,7 @@ class Docs extends CI_Model
         $imponibile = 0;
         $iva_tot = 0;
 
-        $dati_documento['documenti_contabilita_sconto_percentuale'] = array_get($data, 'sconto_percentuale', (!empty($cliente['customers_sconto_abituale']) && $cliente['customers_sconto_abituale'] > 0) ? $cliente['customers_sconto_abituale'] : null);
+        $dati_documento['documenti_contabilita_sconto_percentuale'] = array_get($data, 'sconto_percentuale', (!empty($cliente['customers_sconto_abituale'] && !array_key_exists('sconto_percentuale', $data)) && $cliente['customers_sconto_abituale'] > 0) ? $cliente['customers_sconto_abituale'] : null);
 
         if (!empty($articoli_data)) {
             foreach ($articoli_data as $articolo) {
@@ -447,8 +447,12 @@ class Docs extends CI_Model
                         $articolo['documenti_contabilita_articoli_sconto'] = 0;
                     }
 
-                    $importo = ($prezzo_unit * $articolo['documenti_contabilita_articoli_quantita'] / 100) * (100 - (int) $articolo['documenti_contabilita_articoli_sconto']);
-                    if (!empty($articolo['documenti_contabilita_articoli_applica_sconto']) && $articolo['documenti_contabilita_articoli_applica_sconto'] && !empty($dati_documento['documenti_contabilita_sconto_percentuale'])) {
+                    if (!empty($articolo['documenti_contabilita_articoli_applica_sconto'])) {
+                        $importo = ($prezzo_unit * $articolo['documenti_contabilita_articoli_quantita'] / 100) * (100 - (int) $articolo['documenti_contabilita_articoli_sconto']);
+                    } else {
+                        $importo = ($prezzo_unit * $articolo['documenti_contabilita_articoli_quantita']);
+                    }
+                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] && !empty($dati_documento['documenti_contabilita_sconto_percentuale'])) {
                         $importo = $importo / 100 * (100 - $dati_documento['documenti_contabilita_sconto_percentuale']);
                     }
 
@@ -523,7 +527,7 @@ class Docs extends CI_Model
         $dati_documento['documenti_contabilita_imponibile_iva_json'] = array_get($data, 'imponibile_iva_json', json_encode([]));
 
         $dati_documento['documenti_contabilita_totale'] = array_get($data, 'documenti_contabilita_totale', number_format($totale, 2, '.', ''));
-
+        $totale_scadenza = $dati_documento['documenti_contabilita_totale'];
         $dati_documento['documenti_contabilita_rivalsa_inps_valore'] = 0;
         $dati_documento['documenti_contabilita_competenze_lordo_rivalsa'] = 0;
         $dati_documento['documenti_contabilita_cassa_professionisti_valore'] = 0;
@@ -582,7 +586,7 @@ class Docs extends CI_Model
                     // $iva_tot += $iva_valore;
                     // $totale += ($importo + $iva_valore);
 
-                    $articolo['documenti_contabilita_articoli_applica_sconto'] = (!empty($articolo['documenti_contabilita_articoli_applica_sconto']) && $articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_FALSE) ? DB_BOOL_FALSE : DB_BOOL_TRUE;
+                    $articolo['documenti_contabilita_articoli_applica_sconto'] = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_FALSE) ? DB_BOOL_FALSE : DB_BOOL_TRUE;
 
                     $articolo['documenti_contabilita_articoli_imponibile'] = $importo;
 
@@ -730,7 +734,7 @@ class Docs extends CI_Model
                 return ($a['documenti_contabilita_tpl_pag_scadenze_giorni'] < $b['documenti_contabilita_tpl_pag_scadenze_giorni']) ? -1 : 1;
             });
 
-            $residuo = $totale;
+            $residuo = $totale_scadenza;
             $count_scadenze = count($template_scadenza['documenti_contabilita_tpl_pag_scadenze']);
 
             foreach ($template_scadenza['documenti_contabilita_tpl_pag_scadenze'] as $index => $tpl_pag_scadenza) {
@@ -778,6 +782,7 @@ class Docs extends CI_Model
                     }
                 }
                 if (!empty($giorno_fisso) && $giorno_fisso > 0) {
+                    $dataScadenzaBaseObj->modify('+1 month');
                     $dataScadenzaBaseObj->setDate($dataScadenzaBaseObj->format('Y'), $dataScadenzaBaseObj->format('m'), $giorno_fisso);
                 }
 
@@ -798,9 +803,9 @@ class Docs extends CI_Model
                     'documenti_contabilita_scadenze_documento' => $documento_id,
                     'documenti_contabilita_scadenze_ammontare' => $ammontare,
                     'documenti_contabilita_scadenze_saldato_con' => $tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_metodo'],
-                    'documenti_contabilita_scadenze_saldata' => DB_BOOL_FALSE,
+                    'documenti_contabilita_scadenze_saldata' => array_get($data, 'saldato', DB_BOOL_FALSE),
                     'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
-                    'documenti_contabilita_scadenze_data_saldo' => null,
+                    'documenti_contabilita_scadenze_data_saldo' => array_get($data, 'data_saldo', null),
                     'documenti_contabilita_scadenze_scadenza' => $data_scadenza,
                 ];
                 //debug($scadenza);
@@ -828,7 +833,7 @@ class Docs extends CI_Model
             $dati_scadenza = [
                 'documenti_contabilita_scadenze_documento' => $documento_id,
                 'documenti_contabilita_scadenze_ammontare' => $dati_documento['documenti_contabilita_totale'],
-                //'documenti_contabilita_scadenze_saldato_con' => $dati_documento['documenti_contabilita_metodo_pagamento'],
+                'documenti_contabilita_scadenze_saldato_con' => array_get($data, 'saldato_con', null),
                 'documenti_contabilita_scadenze_saldata' => array_get($data, 'saldato', DB_BOOL_FALSE),
                 'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
                 'documenti_contabilita_scadenze_data_saldo' => array_get($data, 'data_saldo', null),

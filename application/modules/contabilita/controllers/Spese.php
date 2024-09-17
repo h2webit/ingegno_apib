@@ -1304,7 +1304,7 @@ class Spese extends MY_Controller
 
                 
 
-                if ($scadenza['spese_scadenze_ammontare'] > 0) {
+                if (abs($scadenza['spese_scadenze_ammontare']) > 0) {
                     if (!empty($scadenza['spese_scadenze_id'])) {
                         $scadenze_ids[] = $scadenza['spese_scadenze_id'];
                         //Modifico
@@ -1940,7 +1940,7 @@ class Spese extends MY_Controller
         //$this->db->delete('documenti_contabilita_scadenze', ['documenti_contabilita_scadenze_documento' => $documento_id]);
         $scadenze_ids = [-1];
         foreach ($input['scadenze'] as $key => $scadenza) {
-            if ($scadenza['spese_scadenze_ammontare'] > 0) {
+            if (abs($scadenza['spese_scadenze_ammontare']) > 0) {
                 if (!empty($scadenza['spese_scadenze_id'])) {
                     $scadenze_ids[] = $scadenza['spese_scadenze_id'];
                     $this->apilib->edit('spese_scadenze', $scadenza['spese_scadenze_id'], [

@@ -1754,11 +1754,14 @@ class Prima_nota extends CI_Model
                                     $totali[$registrazione['iva_id']]['split']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                                 } else {
 
-                                    if ($registrazione['sezionali_iva_origine'] == 3 || $registrazione['iva_vendite_cee'] == 1) { //INTRA
+                                    if ($registrazione['sezionali_iva_origine'] == 3) { //INTRA
 
                                         $totali[$registrazione['iva_id']]['intra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
                                         $totali[$registrazione['iva_id']]['intra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                                     } else if ($registrazione['sezionali_iva_origine'] == 4 || $registrazione['iva_vendite_est'] == 1) { // EXTRA
+
+
+
                                         $totali[$registrazione['iva_id']]['extra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'] - $registrazione['prime_note_righe_iva_imponibile_indet'];
                                         $totali[$registrazione['iva_id']]['extra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'] - $registrazione['prime_note_righe_iva_iva_valore_indet'];
                                     } else if ($registrazione['sezionali_iva_origine'] == 1) { // ITALIA
@@ -1798,15 +1801,15 @@ class Prima_nota extends CI_Model
                             } else {
 
                                 // intra -- Provvisorio, per ora verifica ==1 cioè intra, ma ci sarà anche intra extra CEE e Intra CEE nelle origini dei sezionali?
-                                if ($registrazione['sezionali_iva_origine'] == 1 && $registrazione['iva_vendite_cee'] != 1 && $registrazione['iva_vendite_est'] != 1) { // ITALIA
+                                if ($registrazione['sezionali_iva_origine'] == 1) { // ITALIA
                                     $totali[$registrazione['iva_id']]['italia']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
                                     $totali[$registrazione['iva_id']]['italia']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
-                                } elseif ($registrazione['sezionali_iva_origine'] == 3 || $registrazione['iva_vendite_cee'] == 1) { // INTRA
+                                } elseif ($registrazione['sezionali_iva_origine'] == 3) { // INTRA
 
                                     $totali[$registrazione['iva_id']]['intra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
                                     $totali[$registrazione['iva_id']]['intra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
-                                } elseif ($registrazione['sezionali_iva_origine'] == 4 || $registrazione['iva_vendite_est'] == 1) { // EXTRA
-                                    //debug($registrazione, true);
+                                } elseif ($registrazione['sezionali_iva_origine'] == 4) { // EXTRA
+
                                     $totali[$registrazione['iva_id']]['extra']['imponibile'] += $registrazione['prime_note_righe_iva_imponibile'];
                                     $totali[$registrazione['iva_id']]['extra']['imposta'] += $registrazione['prime_note_righe_iva_importo_iva'];
 

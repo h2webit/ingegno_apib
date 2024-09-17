@@ -214,13 +214,8 @@ $metodi_pagamento = $this->apilib->search('documenti_contabilita_metodi_pagament
     function increment_scadenza() {
         var counter_scad = $('.row_scadenza').length;
         var rows_scadenze = $('.js_rows_scadenze');
-        // Fix per clonare select inizializzata
-        $('.js_table_select2').filter(':first').select2('destroy');
 
         var newScadRow = $('.row_scadenza').filter(':first').clone();
-
-        // Fix per clonare select inizializzata
-        $('.js_table_select2').filter(':first').select2();
 
         /* Line manipulation begin */
         //newScadRow.removeClass('hidden');
@@ -228,11 +223,6 @@ $metodi_pagamento = $this->apilib->search('documenti_contabilita_metodi_pagament
             var control = $(this);
             var name = control.attr('data-name');
             control.attr('name', 'scadenze[' + counter_scad + '][' + name + ']').removeAttr('data-name');
-        });
-
-        $('.js_table_select2', newScadRow).select2({
-            //placeholder: "Seleziona prodotto",
-            allowClear: true
         });
 
         $('.js_form_datepicker input', newScadRow).datepicker({
@@ -261,6 +251,10 @@ $metodi_pagamento = $this->apilib->search('documenti_contabilita_metodi_pagament
 
         //Se cambio una scadenza ricalcolo il parziale di quella sucessiva, se c'è. Se non c'è la creo.
         rows_scadenze.on('change', '.spese_scadenze_ammontare', function() {
+            try {
+                $('select', rows_scadenze).select2('destroy').removeAttr('data-select2-id').find('option').removeAttr('data-select2-id');
+            } catch (e) { }
+            
             //Se la somma degli ammontare è minore del totale procedo
             var totale_scadenze = 0;
             $('.spese_scadenze_ammontare').each(function() {
@@ -297,7 +291,8 @@ $metodi_pagamento = $this->apilib->search('documenti_contabilita_metodi_pagament
 
                 }
             }
-
+            
+            $('select', rows_scadenze).select2({ allow_clear: true });
         });
 
         if (rows.length < 2) {
