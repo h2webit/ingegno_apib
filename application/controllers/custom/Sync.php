@@ -21,8 +21,8 @@ class Sync extends MY_Controller
     
     private function apib_db_connect() {
         //Mi connetto al db postgres
-        //$db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com'; // Cambiare per testare in linea
-        $db['crm_postgres']['hostname'] = 'localhost';
+        $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com'; // Cambiare per testare in linea
+        //$db['crm_postgres']['hostname'] = 'localhost';
         $db['crm_postgres']['database'] = 'mastercrm_apib';
         $db['crm_postgres']['username'] = 'mastercrm_apib';
         $db['crm_postgres']['password'] = 'Djf93MN@VZZF215';
@@ -51,6 +51,12 @@ class Sync extends MY_Controller
         
         $associati_cf = array_key_value_map($associati, 'documenti_contabilita_settings_company_codice_fiscale', 'documenti_contabilita_settings_id');
         
+        //Tolgo eventuali spazi (trim) dal codice fiscale (che è la chiave nel nostro array)
+        $associati_cf = array_combine(
+            array_map('trim', array_keys($associati_cf)),
+            array_values($associati_cf)
+        );
+
         $pagamenti_id_importati = array_key_map($this->db->get('pagamenti')->result_array(), 'pagamenti_id_esterno');
         $pagamenti_id_importati[] = '-1';
         
@@ -65,7 +71,7 @@ class Sync extends MY_Controller
             echo 'nessun pagamento da importare';
             return false;
         }
-        
+        //debug($pagamenti,true);
         $t = count($pagamenti);
         $c = 0;
         foreach ($pagamenti as $pagamento) {
@@ -79,10 +85,18 @@ class Sync extends MY_Controller
             
             $pagamento['pagamenti_pagato'] = ($pagamento['pagamenti_pagato'] == 't') ? DB_BOOL_TRUE : DB_BOOL_FALSE;
             $pagamento['pagamenti_approvato'] = ($pagamento['pagamenti_approvato'] == 't') ? DB_BOOL_TRUE : DB_BOOL_FALSE;
-            
+            if (5470.95 == $pagamento['pagamenti_acconto']) {
+                // debug($pagamento);
+                // debug($associato_old);
+                // debug($associati_cf,true);
+                
+
+            }
             if (!empty($associati_cf[$associato_old['associati_cf']])) {
                 $pagamento['pagamenti_associato'] = $associati_cf[$associato_old['associati_cf']];
             } else {
+                
+                
                 $pagamento['pagamenti_associato'] = null;
             }
             
