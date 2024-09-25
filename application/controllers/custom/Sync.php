@@ -23,11 +23,11 @@ class Sync extends MY_Controller
         //Mi connetto al db postgres
         // verifico se sono sul dominio apib.ingegnosuite.it uso localhost, altrimenti uso il dominio
         
-        // if (strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false) {
-        //     $db['crm_postgres']['hostname'] = 'localhost';
-        // } else {
+        if (strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false || is_cli()) {
+            $db['crm_postgres']['hostname'] = 'localhost';
+        } else {
             $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com';
-        // }
+        }
         
         // $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com'; // Cambiare per testare in linea
         //$db['crm_postgres']['hostname'] = 'localhost';
