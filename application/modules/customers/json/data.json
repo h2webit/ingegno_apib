@@ -4,15 +4,15 @@
     "modules_description": "Customers list with detail page",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "2.1.6",
+    "modules_version": "2.1.7",
     "modules_identifier": "customers",
     "modules_base64_zip": null,
     "modules_raw_data_install": "399,592,387,451,295,520,397,360,331,193,375,374,376",
     "modules_raw_data_update": "399,451,568,331",
     "modules_created_by_user": "1",
-    "modules_version_code": "230",
+    "modules_version_code": "231",
     "modules_thumbnail": "b3a767a0811b2b0264a98f67ca429350.png",
-    "modules_min_client_version": "3.8.5",
+    "modules_min_client_version": "3.8.6",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -15375,7 +15375,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10537",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15413,7 +15413,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10538",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -15451,7 +15451,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10539",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1385",
                     "fields_entity_id": "7",
@@ -15489,7 +15489,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10540",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1386",
                     "fields_entity_id": "7",
@@ -15527,7 +15527,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10541",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1387",
                     "fields_entity_id": "7",
@@ -15565,7 +15565,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10542",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "121",
                     "fields_entity_id": "7",
@@ -15603,7 +15603,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12362",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1509",
                     "fields_entity_id": "7",
@@ -15641,7 +15641,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13355",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1159",
                     "fields_entity_id": "7",
@@ -15679,7 +15679,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-14837",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2982",
                     "fields_entity_id": "7",
@@ -15717,7 +15717,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17282",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -15755,7 +15755,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17305",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -15793,7 +15793,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17333",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -15831,7 +15831,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17489",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16438,7 +16438,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10722",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -16476,7 +16476,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10726",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -16514,7 +16514,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10727",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -16552,7 +16552,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10728",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16590,7 +16590,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10730",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "115",
                     "fields_entity_id": "7",
@@ -16628,7 +16628,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10731",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -16748,7 +16748,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11435",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -16786,7 +16786,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11436",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "113",
                     "fields_entity_id": "7",
@@ -16824,7 +16824,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11437",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "114",
                     "fields_entity_id": "7",
@@ -16862,7 +16862,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11438",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -16900,7 +16900,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11439",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -16938,7 +16938,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11440",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -16976,7 +16976,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11441",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "393",
                     "fields_entity_id": "7",
@@ -17096,7 +17096,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10509",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -17134,7 +17134,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13707",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -17172,7 +17172,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17015",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -17210,7 +17210,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17280",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -17248,7 +17248,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17457",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -17286,7 +17286,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17469",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -17324,7 +17324,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17495",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -17362,7 +17362,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17496",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -17400,7 +17400,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17497",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -17584,7 +17584,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12154",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -17622,7 +17622,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17281",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -17660,7 +17660,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17458",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -17698,7 +17698,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17471",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -17736,7 +17736,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17492",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -17774,7 +17774,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17493",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -17812,7 +17812,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17494",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -18223,7 +18223,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12307",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18261,7 +18261,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12309",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -18299,7 +18299,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17459",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -18337,7 +18337,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17470",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18675,7 +18675,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-14595",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "124",
                     "fields_entity_id": "7",
@@ -19814,7 +19814,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10509",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -19852,7 +19852,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13707",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -19890,7 +19890,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17015",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -19928,7 +19928,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17280",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -19966,7 +19966,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17457",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -20004,7 +20004,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17469",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20042,7 +20042,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17495",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -20080,7 +20080,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17496",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -20118,7 +20118,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17497",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20254,7 +20254,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10509",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -20292,7 +20292,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13707",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -20330,7 +20330,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17015",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -20368,7 +20368,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17280",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -20406,7 +20406,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17457",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -20444,7 +20444,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17469",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20482,7 +20482,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17495",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -20520,7 +20520,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17496",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -20558,7 +20558,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17497",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21194,7 +21194,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10518",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1194",
                     "fields_entity_id": "7",
@@ -21232,7 +21232,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10519",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1192",
                     "fields_entity_id": "7",
@@ -21270,7 +21270,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10520",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1193",
                     "fields_entity_id": "7",
@@ -21308,7 +21308,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10521",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "325",
                     "fields_entity_id": "7",
@@ -21346,7 +21346,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10523",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "115",
                     "fields_entity_id": "7",
@@ -21384,7 +21384,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10524",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -21422,7 +21422,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10525",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "117",
                     "fields_entity_id": "7",
@@ -21460,7 +21460,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10527",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "118",
                     "fields_entity_id": "7",
@@ -21498,7 +21498,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-14487",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -21536,7 +21536,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17016",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1984",
                     "fields_entity_id": "7",
@@ -21574,7 +21574,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17017",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "2982",
                     "fields_entity_id": "7",
@@ -21612,7 +21612,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17149",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4121",
                     "fields_entity_id": "7",
@@ -21650,7 +21650,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18122",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "4503",
                     "fields_entity_id": "7",
@@ -21688,7 +21688,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-20958",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1892",
                     "fields_entity_id": "7",
@@ -22353,7 +22353,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12983",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -22391,7 +22391,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12985",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "113",
                     "fields_entity_id": "7",
@@ -22429,7 +22429,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12987",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "114",
                     "fields_entity_id": "7",
@@ -22467,7 +22467,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13009",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -22505,7 +22505,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13015",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -22543,7 +22543,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13047",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -22679,7 +22679,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13025",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -22717,7 +22717,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13027",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "113",
                     "fields_entity_id": "7",
@@ -22755,7 +22755,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13029",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "114",
                     "fields_entity_id": "7",
@@ -22793,7 +22793,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13031",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1387",
                     "fields_entity_id": "7",
@@ -22831,7 +22831,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13033",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -22869,7 +22869,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13035",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -22907,7 +22907,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13041",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -24564,44 +24564,6 @@
             "entity_preview_custom": null,
             "fields": [
                 {
-                    "grids_fields_id": "19681",
-                    "grids_fields_grids_id": "952",
-                    "grids_fields_fields_id": "2839",
-                    "grids_fields_order": "6",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": null,
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "modulo-hr-grids_fields-14510",
-                    "grids_fields_module": "modulo-hr",
-                    "grids_fields_width": null,
-                    "fields_id": "2839",
-                    "fields_entity_id": "6",
-                    "fields_default": null,
-                    "fields_name": "users_last_login",
-                    "fields_type": "DATETIME",
-                    "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
                     "grids_fields_id": "19682",
                     "grids_fields_grids_id": "952",
                     "grids_fields_fields_id": "58",
@@ -24833,7 +24795,7 @@
                     "grids_fields_id": "19688",
                     "grids_fields_grids_id": "952",
                     "grids_fields_fields_id": "4554",
-                    "grids_fields_order": "999",
+                    "grids_fields_order": "9",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": "",
                     "grids_fields_column_name": "Notifications sound",
@@ -24864,6 +24826,82 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22493",
+                    "grids_fields_grids_id": "952",
+                    "grids_fields_fields_id": "3490",
+                    "grids_fields_order": "8",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "modulo-hr-grids_fields-22493",
+                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_width": null,
+                    "fields_id": "3490",
+                    "fields_entity_id": "6",
+                    "fields_default": null,
+                    "fields_name": "users_default_dashboard",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "layouts",
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": "layouts_dashboardable = 1",
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22536",
+                    "grids_fields_grids_id": "952",
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "7",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php\n\n$last_login = $this->db->query(\"SELECT log_crm_time FROM log_crm WHERE log_crm_type = 4 AND log_crm_user_id = '{$data['users_id']}' ORDER BY log_crm_id DESC LIMIT 1\")->row_array();\necho (!empty($last_login)) ? dateFormat($last_login['log_crm_time'], 'd\/m\/Y H:i') : dateFormat($data['users_last_login'],'d\/m\/Y H:i');\n?>",
+                    "grids_fields_column_name": "Last Login",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "modulo-hr-grids_fields-22536",
+                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_width": null,
+                    "fields_id": null,
+                    "fields_entity_id": null,
+                    "fields_default": null,
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": null,
                     "fields_additional_data": null,
                     "conditions": []
                 }
@@ -26126,7 +26164,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16276",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26164,7 +26202,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16277",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26202,7 +26240,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16279",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26240,7 +26278,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16280",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26278,7 +26316,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16287",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -26738,7 +26776,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17312",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -26776,7 +26814,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17313",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -26814,7 +26852,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17314",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "119",
                     "fields_entity_id": "7",
@@ -26852,7 +26890,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17315",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -26890,7 +26928,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17316",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -26928,7 +26966,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17317",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1193",
                     "fields_entity_id": "7",
@@ -26966,7 +27004,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17318",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "115",
                     "fields_entity_id": "7",
@@ -27004,7 +27042,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17319",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1192",
                     "fields_entity_id": "7",
@@ -27042,7 +27080,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17322",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27080,7 +27118,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17332",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -27118,7 +27156,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17356",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "1510",
                     "fields_entity_id": "7",
@@ -28342,7 +28380,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "sales-grids_fields-19356",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -28380,7 +28418,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "sales-grids_fields-19357",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -28418,7 +28456,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "sales-grids_fields-19358",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -28858,7 +28896,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3595",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -28896,7 +28934,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3596",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -28934,7 +28972,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3597",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -28972,7 +29010,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3598",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -29010,7 +29048,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3599",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -29048,7 +29086,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3600",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -29086,7 +29124,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3604",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "118",
                     "fields_entity_id": "7",
@@ -29124,7 +29162,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3605",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -29162,7 +29200,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3607",
-                    "grids_fields_module": "payments-subscriptions",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -29480,11 +29518,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-183",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "183",
@@ -29735,11 +29775,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1337",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1337",
@@ -29898,11 +29940,13 @@
             "forms_success_status_edit": "2",
             "forms_success_message_edit": "",
             "forms_identifier": "customers",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-1683",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1683",
@@ -29924,7 +29968,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_112",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29947,7 +29991,7 @@
                     "forms_fields_dependent_on": "customers_group:1,5",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_113",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29970,7 +30014,7 @@
                     "forms_fields_dependent_on": "customers_group:1,5",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_114",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29993,7 +30037,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_115",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30016,7 +30060,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30039,7 +30083,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_117",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30062,7 +30106,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30085,7 +30129,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_120",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30108,7 +30152,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_121",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30131,7 +30175,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_122",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30154,7 +30198,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_325",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30177,7 +30221,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_393",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30200,7 +30244,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4,5",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1192",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30223,7 +30267,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1193",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30246,7 +30290,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1194",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30269,7 +30313,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1159",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30292,7 +30336,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1387",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30315,7 +30359,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1385",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30338,7 +30382,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1386",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30361,7 +30405,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30384,7 +30428,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2495",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30407,7 +30451,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2823",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30430,7 +30474,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2827",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30453,7 +30497,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4031",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30476,7 +30520,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_4109",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30499,7 +30543,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4177",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30522,7 +30566,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4202",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30545,7 +30589,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4211",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30568,7 +30612,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1509",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30591,7 +30635,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1781",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30614,7 +30658,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4824",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30637,7 +30681,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4825",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30660,7 +30704,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_5244",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30683,7 +30727,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1892",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30706,7 +30750,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_5729",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -30728,11 +30772,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1684",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1684",
@@ -31006,11 +31052,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-1685",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1685",
@@ -31238,11 +31286,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers-contact",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "customers-form-1686",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1686",
@@ -31493,11 +31543,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1688",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1688",
@@ -31519,7 +31571,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1688_124",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31541,11 +31593,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1692",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1692",
@@ -31567,7 +31621,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_115",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31590,7 +31644,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31613,7 +31667,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_117",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31636,7 +31690,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31659,7 +31713,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_325",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31682,7 +31736,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1192",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31705,7 +31759,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1193",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31728,7 +31782,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1194",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31751,7 +31805,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1984",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31774,7 +31828,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2982",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31797,7 +31851,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4121",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31820,7 +31874,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1781",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31843,7 +31897,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2823",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31866,7 +31920,7 @@
                     "forms_fields_dependent_on": "customers_listino:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4503",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31889,7 +31943,7 @@
                     "forms_fields_dependent_on": "customers_price_list:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "customers-forms_fields-1692_1729",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31912,7 +31966,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-1692_1892",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31934,11 +31988,13 @@
             "forms_success_status_edit": "2",
             "forms_success_message_edit": "",
             "forms_identifier": "customers_bank_account_form",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "customers-form-1693",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1693",
@@ -32212,11 +32268,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-1696",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1696",
@@ -32329,11 +32387,13 @@
             "forms_success_status_edit": "2",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-1710",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1710",
@@ -32355,7 +32415,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1710_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32378,7 +32438,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1710_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32401,7 +32461,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1710_2495",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32424,7 +32484,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "customers-forms_fields-1710_4177",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32447,7 +32507,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-1710_4202",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32470,7 +32530,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-1710_4211",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -32492,11 +32552,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1824",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1824",
@@ -32518,7 +32580,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1508",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32541,7 +32603,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1509",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32564,7 +32626,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1729",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32587,7 +32649,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1781",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32610,7 +32672,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1892",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32633,7 +32695,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2085",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32656,7 +32718,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2749",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32679,7 +32741,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1976",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32702,7 +32764,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2949",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32725,7 +32787,7 @@
                     "forms_fields_dependent_on": "customers_pag_giorno_fisso:",
                     "forms_fields_fieldset": "Variazioni data scadenza pagamento",
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1896",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32748,7 +32810,7 @@
                     "forms_fields_dependent_on": "customers_pag_gg_spostamento:",
                     "forms_fields_fieldset": "Variazioni data scadenza pagamento",
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1893",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -32770,11 +32832,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1850",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1850",
@@ -32796,7 +32860,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32819,7 +32883,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1843",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32842,7 +32906,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1844",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32865,7 +32929,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1974",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32888,7 +32952,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1975",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32911,7 +32975,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1976",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32934,7 +32998,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1892",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -32957,7 +33021,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1984",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -32979,11 +33043,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "suppliers-subform",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1864",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1864",
@@ -33005,7 +33071,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_112",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33028,7 +33094,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1159",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33051,7 +33117,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1192",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33074,7 +33140,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1193",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33097,7 +33163,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_115",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33120,7 +33186,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_120",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33143,7 +33209,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33166,7 +33232,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_117",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33189,7 +33255,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_122",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33212,7 +33278,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -33234,11 +33300,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "new-customers-contact",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-1874",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1874",
@@ -33489,11 +33557,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "new-customer-lead",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1995",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "1995",
@@ -33515,7 +33585,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1995_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33538,7 +33608,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1995_1386",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -33560,11 +33630,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "edit-customer-lead",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2015",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2015",
@@ -33586,7 +33658,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_112",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33609,7 +33681,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_113",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33632,7 +33704,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_114",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33655,7 +33727,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33678,7 +33750,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_122",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33701,7 +33773,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_1387",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33724,7 +33796,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_120",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33747,7 +33819,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -33770,7 +33842,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_1386",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -33792,11 +33864,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2023",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2023",
@@ -33932,11 +34006,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2053",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2053",
@@ -33980,11 +34056,13 @@
             "forms_success_status_edit": "6",
             "forms_success_message_edit": "",
             "forms_identifier": "customers-subform",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2055",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2055",
@@ -34006,7 +34084,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_113",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34029,7 +34107,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_114",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34052,7 +34130,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34075,7 +34153,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_115",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34098,7 +34176,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34121,7 +34199,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_117",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34144,7 +34222,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34167,7 +34245,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_120",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34190,7 +34268,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1387",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34213,7 +34291,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_122",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34236,7 +34314,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_325",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34259,7 +34337,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_112",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34282,7 +34360,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1193",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34305,7 +34383,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1192",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34328,7 +34406,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2823",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34351,7 +34429,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2495",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34374,7 +34452,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_4031",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34397,7 +34475,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2827",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -34420,7 +34498,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2982",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -34442,11 +34520,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "edit-user-profile",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-2092",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2092",
@@ -34536,11 +34616,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2093",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2093",
@@ -34745,11 +34827,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2101",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2101",
@@ -34793,11 +34877,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2128",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2128",
@@ -35048,11 +35134,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2129",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2129",
@@ -35096,11 +35184,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2130",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2130",
@@ -35144,11 +35234,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2131",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2131",
@@ -35284,11 +35376,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customer-map",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2134",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2134",
@@ -35310,7 +35404,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2134_123",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -35332,11 +35426,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "user_manager_form_modify",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-2135",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2135",
@@ -35564,11 +35660,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2147",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2147",
@@ -35635,11 +35733,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2159",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2159",
@@ -35683,11 +35783,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2170",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2170",
@@ -35731,11 +35833,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2171",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         },
         {
@@ -35755,11 +35859,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2232",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2232",
@@ -35803,11 +35909,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "users-manager-filters",
-            "forms_submit_button_label": "Filter",
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-2240",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2240",
@@ -35851,11 +35959,13 @@
             "forms_success_status_edit": "2",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "customers-form-2350",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2350",
@@ -36037,11 +36147,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers-contatti-orfani",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-2417",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2417",
@@ -36200,11 +36312,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2420",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2420",
@@ -36248,11 +36362,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2421",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         },
         {
@@ -36272,11 +36388,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2424",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         },
         {
@@ -36296,11 +36414,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2426",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2426",
@@ -36344,11 +36464,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2427",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         },
         {
@@ -36368,11 +36490,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2430",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2430",
@@ -36416,11 +36540,13 @@
             "forms_success_status_edit": "1",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "Cerca",
             "forms_json": null,
             "forms_module_key": "customers-form-2432",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2432",
@@ -36442,7 +36568,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-2432_4202",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -36464,11 +36590,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2473",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2473",
@@ -36535,11 +36663,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2478",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2478",
@@ -36583,11 +36713,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "modulo-hr-form-9",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         },
         {
@@ -36607,11 +36739,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2525",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2525",
@@ -36633,7 +36767,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_112",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36656,7 +36790,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_113",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36679,7 +36813,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_114",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36702,7 +36836,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_115",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36725,7 +36859,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36748,7 +36882,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_117",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36771,7 +36905,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36794,7 +36928,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_120",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36817,7 +36951,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_121",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36840,7 +36974,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_122",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36863,7 +36997,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_325",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36886,7 +37020,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_393",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36909,7 +37043,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1192",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36932,7 +37066,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1193",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36955,7 +37089,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1194",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -36978,7 +37112,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1159",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37001,7 +37135,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1387",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37024,7 +37158,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1385",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37047,7 +37181,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1386",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37070,7 +37204,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1510",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37093,7 +37227,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2495",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37116,7 +37250,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2823",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37139,7 +37273,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2827",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37162,7 +37296,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4031",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37185,7 +37319,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_4109",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37208,7 +37342,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4177",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37231,7 +37365,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4202",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37254,7 +37388,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4211",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37277,7 +37411,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1509",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37300,7 +37434,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1781",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -37322,11 +37456,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2526",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2526",
@@ -37348,7 +37484,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_115",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37371,7 +37507,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37394,7 +37530,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_117",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37417,7 +37553,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37440,7 +37576,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_325",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37463,7 +37599,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1192",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37486,7 +37622,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1193",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37509,7 +37645,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1194",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37532,7 +37668,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1984",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37555,7 +37691,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2982",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37578,7 +37714,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4121",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37601,7 +37737,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1781",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37624,7 +37760,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2823",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37647,7 +37783,7 @@
                     "forms_fields_dependent_on": "customers_listino:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4503",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37670,7 +37806,7 @@
                     "forms_fields_dependent_on": "customers_price_list:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "customers-forms_fields-1692_1729",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -37692,11 +37828,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2527",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2527",
@@ -37718,7 +37856,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1508",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37741,7 +37879,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1509",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37764,7 +37902,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1781",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37787,7 +37925,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1892",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37810,7 +37948,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2085",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37833,7 +37971,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2749",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37856,7 +37994,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1976",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -37879,7 +38017,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2949",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -37901,11 +38039,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "codici-ateco-form-2552",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2552",
@@ -37972,11 +38112,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2553",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         },
         {
@@ -37996,11 +38138,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2628",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2628",
@@ -38044,11 +38188,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-2687",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2687",
@@ -38070,7 +38216,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_116",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -38093,7 +38239,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_4177",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -38116,7 +38262,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_1509",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -38139,7 +38285,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_118",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -38162,7 +38308,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2687_2823",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -38185,7 +38331,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_4202",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -38208,7 +38354,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_2827",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -38230,11 +38376,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2696",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2696",
@@ -38278,11 +38426,13 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "create-contact-login",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "customers-form-2712",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2712",
@@ -38349,11 +38499,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers_notes",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-2738",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2738",
@@ -38375,7 +38527,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2738_5741",
-                    "forms_fields_module": "payments-subscriptions",
+                    "forms_fields_module": "modulo-hr",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -39790,7 +39942,24 @@
             "menu_type": "layout",
             "menu_form": null,
             "menu_html_attr": "",
-            "conditions": []
+            "conditions": [],
+            "menu_parent_data": {
+                "menu_id": "139",
+                "menu_label": "Dashboards",
+                "menu_link": "",
+                "menu_parent": null,
+                "menu_icon_class": "fas fa-home",
+                "menu_order": "2",
+                "menu_position": "sidebar",
+                "menu_layout": null,
+                "menu_css_class": "",
+                "menu_modal": "0",
+                "menu_module": "firecrm",
+                "menu_module_key": "firecrm-menu-90",
+                "menu_type": "",
+                "menu_form": null,
+                "menu_html_attr": ""
+            }
         },
         {
             "menu_id": "1318",

@@ -44,6 +44,11 @@ class Crmentity extends CI_Model
         // }
     }
 
+    public function getCrmSchemaCacheKey()
+    {
+        return self::SCHEMA_CACHE_KEY;
+    }
+
     /**
      * Imposta le lingue usate per le traduzioni
      * @param array $languagesId
@@ -233,7 +238,7 @@ class Crmentity extends CI_Model
                 // contenenti un HTML
                 foreach ($fieldsWysiwyg as $field) {
                     $name = $field['fields_name'];
-                    if (!empty ($_data[$name])) {
+                    if (!empty($_data[$name])) {
                         $_data[$name] = str_replace('{base_url}', $baseUrl, $_data[$name]);
                     }
                 }
@@ -250,7 +255,7 @@ class Crmentity extends CI_Model
                 //Per i campi float li formato number_format 2, altrimenti mysql fa le bizze e mostra cose tipo 123.359999999999996
                 if ($this->db->dbdriver != 'postgre') {
                     foreach ($fieldsFloat as $field) {
-                        if (!empty ($_data[$field['fields_name']]) && $_data[$field['fields_name']] !== null) {
+                        if (!empty($_data[$field['fields_name']]) && $_data[$field['fields_name']] !== null) {
                             $_data[$field['fields_name']] = number_format($_data[$field['fields_name']], 3, '.', '');
                             if (substr($_data[$field['fields_name']], -1) === '0') {
                                 $_data[$field['fields_name']] = substr($_data[$field['fields_name']], 0, -1);
@@ -293,7 +298,7 @@ class Crmentity extends CI_Model
 
                 $referingData = $this->get_data_full_list($entity['entity_id'], $refererEntity, $refererWhere, null, 0, null, false, $depth);
 
-                if (!empty ($referingData)) {
+                if (!empty($referingData)) {
                     foreach ($referingData as $record) {
                         // Se il campo è NON VISIBILE la query NON FALLISCE,
                         // ma non viene incluso nel risultato... quindi si
@@ -358,7 +363,7 @@ class Crmentity extends CI_Model
                 $relation_data_by_ids = [];
                 $related_data = [];
                 foreach ($relation_data as $relation_dato) {
-                    if (empty ($relation_data_by_ids[$relation_dato[$field]])) {
+                    if (empty($relation_data_by_ids[$relation_dato[$field]])) {
                         $relation_data_by_ids[$relation_dato[$field]] = [];
                     }
 
@@ -367,12 +372,12 @@ class Crmentity extends CI_Model
                 }
 
                 // Prendo le preview dei record relazionati
-                if (!empty ($related_data)) {
+                if (!empty($related_data)) {
                     //if entity is soft deletable, remove filter here to access deleted records in previews
                     $other_entity_table = $this->getEntity($other_table);
-                    $entityCustomActions = empty ($other_entity_table['entity_action_fields']) ? [] : json_decode($other_entity_table['entity_action_fields'], true);
+                    $entityCustomActions = empty($other_entity_table['entity_action_fields']) ? [] : json_decode($other_entity_table['entity_action_fields'], true);
                     $where_related_data = ["{$other_table}.{$other} IN (" . implode(',', $related_data) . ")"];
-                    if (array_key_exists('soft_delete_flag', $entityCustomActions) && !empty ($entityCustomActions['soft_delete_flag'])) {
+                    if (array_key_exists('soft_delete_flag', $entityCustomActions) && !empty($entityCustomActions['soft_delete_flag'])) {
                         $where_related_data[] = "({$entityCustomActions['soft_delete_flag']} = 1 OR 1=1)";
 
                     }
@@ -380,7 +385,7 @@ class Crmentity extends CI_Model
                     $related_data_preview = $this->getEntityPreview($other_table, $where_related_data_str);
                     //debug($related_data_preview);
                     foreach ($data['data'] as $key => $dato) {
-                        if (isset ($relation_data_by_ids[$dato[$field]])) {
+                        if (isset($relation_data_by_ids[$dato[$field]])) {
                             foreach ($relation_data_by_ids[$dato[$field]] as $related_value) {
 
                                 // Se il campo non è un array per il momento non ho soluzioni migliori se non farlo diventare un array vuoto
@@ -401,7 +406,7 @@ class Crmentity extends CI_Model
             // Recupero le eventuali fake relations, cioè tutti i fields con
             // fields_ref che hanno fields_type o VARCHAR o TEXT
             $fake_relations_fields = array_filter($data['visible_fields'], function ($field) {
-                return $field['fields_ref'] && in_array($field['fields_type'], array ('VARCHAR', 'TEXT'));
+                return $field['fields_ref'] && in_array($field['fields_type'], array('VARCHAR', 'TEXT'));
             });
 
             $names = [];
@@ -423,7 +428,7 @@ class Crmentity extends CI_Model
                 }
 
                 $fullData = [];
-                if (!empty ($fake_relation_ids)) {
+                if (!empty($fake_relation_ids)) {
                     $imploded_fake_relation_ids = implode(',', $fake_relation_ids);
                     $frEntity = $this->getEntity($related);
                     //debug('test');
@@ -499,7 +504,7 @@ class Crmentity extends CI_Model
 
             // Save list of joined entity, to avoid double joins...
             $this->db->from($dati['entity']['entity_name']);
-            $joined = array ($dati['entity']['entity_name']);
+            $joined = array($dati['entity']['entity_name']);
             $to_join_later = [];
 
 
@@ -749,7 +754,7 @@ class Crmentity extends CI_Model
             //array_filter does not work well. It removes also filters with value 0 or '0'. Ex.: WHERE field=0 will be removed.
             //so we used a custom function
             $func_empty = function ($value) {
-                if (empty ($value) && $value !== 0 && $value !== '0') {
+                if (empty($value) && $value !== 0 && $value !== '0') {
                     return false;
                 } else {
                     return true;
@@ -858,24 +863,24 @@ class Crmentity extends CI_Model
             $select = array_key_map($previewFields, 'fields_name');
 
             //Aggiungo ordinamento qualora l'entità ne avesse configurato uno di default
-            $entityCustomActions = empty ($entity['entity_action_fields']) ? [] : json_decode($entity['entity_action_fields'], true);
+            $entityCustomActions = empty($entity['entity_action_fields']) ? [] : json_decode($entity['entity_action_fields'], true);
 
-            if (isset ($entityCustomActions['order_by_asc'])) {
+            if (isset($entityCustomActions['order_by_asc'])) {
                 $order_by = $entityCustomActions['order_by_asc'] . ' ASC';
-            } elseif (isset ($entityCustomActions['order_by_desc'])) {
+            } elseif (isset($entityCustomActions['order_by_desc'])) {
                 $order_by = $entityCustomActions['order_by_desc'] . ' DESC';
             } else {
                 $order_by = null;
             }
 
             // Filtro per soft-delete se non viene specificato questo filtro nel where della grid
-            if (array_key_exists('soft_delete_flag', $entityCustomActions) && !empty ($entityCustomActions['soft_delete_flag'])) {
+            if (array_key_exists('soft_delete_flag', $entityCustomActions) && !empty($entityCustomActions['soft_delete_flag'])) {
                 //Se nel where c'è già un filtro specifico sul campo impostato come soft-delete, ignoro. Vuol dire che sto gestendo io il campo delete (es.: per mostrare un archivio o un history...)
 
                 // Where can be an array, so it's not correct to check online the where string conditions, but consider it different...
                 if (is_array($where)) {
                     if (!array_key_exists($entityCustomActions['soft_delete_flag'], $where)) {
-                        if (empty ($where)) {
+                        if (empty($where)) {
                             $where = ["({$entityCustomActions['soft_delete_flag']} =  '" . DB_BOOL_FALSE . "' OR {$entityCustomActions['soft_delete_flag']} IS NULL)"];
                         } else {
                             $where[] = "({$entityCustomActions['soft_delete_flag']} =  '" . DB_BOOL_FALSE . "' OR {$entityCustomActions['soft_delete_flag']} IS NULL)";
@@ -883,7 +888,7 @@ class Crmentity extends CI_Model
                     }
                 } else { // If where is passed as string i can use stripos to check if soft_delete field has been already passed trouhgt this function and has not to be forced
                     if (stripos($where, $entityCustomActions['soft_delete_flag']) === false) {
-                        if (empty ($where)) {
+                        if (empty($where)) {
                             $where = "({$entityCustomActions['soft_delete_flag']} =  '" . DB_BOOL_FALSE . "' OR {$entityCustomActions['soft_delete_flag']} IS NULL)";
                         } else {
                             $where .= " AND ({$entityCustomActions['soft_delete_flag']} =  '" . DB_BOOL_FALSE . "' OR {$entityCustomActions['soft_delete_flag']} IS NULL)";

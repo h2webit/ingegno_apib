@@ -88,6 +88,17 @@ class Api extends MY_Controller {
             'agente' => array_get($post, 'agente', null),
         ];
         
+        if (!empty($post['scadenza'])) {
+            $dati_doc['scadenza'] = $post['scadenza'];
+        } elseif (!empty($post['scadenze'])) {
+            $dati_doc['scadenze'] = $post['scadenze'];
+        } else {
+            if (!empty($post['data'])) {
+                $dati_doc['data'] = $post['data'];
+                
+            }
+        }
+        
         if (!empty($post['articoli'])) {
             $dati_doc['articoli'] = $post['articoli'];
         } else if (!empty($post['articoli_data'])) {
@@ -96,6 +107,19 @@ class Api extends MY_Controller {
         
         if (!empty($post['totale'])) {
             $dati_doc['totale'] = $post['totale'];
+        }
+        
+        // allo stesso modo dei dati precedenti, passo anche i campi: saldato, saldato_con e data_saldo
+        if (!empty($post['saldato'])) {
+            $dati_doc['saldato'] = $post['saldato'];
+        }
+        
+        if (!empty($post['saldato_con'])) {
+            $dati_doc['saldato_con'] = $post['saldato_con'];
+        }
+        
+        if (!empty($post['data_saldo'])) {
+            $dati_doc['data_saldo'] = $post['data_saldo'];
         }
         
         // debug($dati_doc, true);

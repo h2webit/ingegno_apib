@@ -191,10 +191,13 @@ class RibaAbiCbi extends CI_Model
         $scadenze = [];
         if ($accorpata) {
             foreach ($_scadenze as $key => $scadenza) {
-                if (empty($scadenze[$scadenza['documenti_contabilita_customer_id']])) {
-                    $scadenze[$scadenza['documenti_contabilita_customer_id']] = $scadenza;
+                // Creiamo una chiave unica combinando l'ID del cliente e la data di scadenza
+                $uniqueKey = $scadenza['documenti_contabilita_customer_id'] . '_' . date('dmy', strtotime($scadenza['documenti_contabilita_scadenze_scadenza']));
+
+                if (empty($scadenze[$uniqueKey])) {
+                    $scadenze[$uniqueKey] = $scadenza;
                 } else {
-                    $scadenze[$scadenza['documenti_contabilita_customer_id']]['documenti_contabilita_scadenze_ammontare'] += $scadenza['documenti_contabilita_scadenze_ammontare'];
+                    $scadenze[$uniqueKey]['documenti_contabilita_scadenze_ammontare'] += $scadenza['documenti_contabilita_scadenze_ammontare'];
                 }
             }
         } else {

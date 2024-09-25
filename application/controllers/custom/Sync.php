@@ -21,7 +21,15 @@ class Sync extends MY_Controller
     
     private function apib_db_connect() {
         //Mi connetto al db postgres
-        $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com'; // Cambiare per testare in linea
+        // verifico se sono sul dominio apib.ingegnosuite.it uso localhost, altrimenti uso il dominio
+        
+        if (strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false) {
+            $db['crm_postgres']['hostname'] = 'localhost';
+        } else {
+            $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com';
+        }
+        
+        // $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com'; // Cambiare per testare in linea
         //$db['crm_postgres']['hostname'] = 'localhost';
         $db['crm_postgres']['database'] = 'mastercrm_apib';
         $db['crm_postgres']['username'] = 'mastercrm_apib';

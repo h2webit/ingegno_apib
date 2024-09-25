@@ -6,7 +6,16 @@ if (!defined('BASEPATH')) {
 
 class V1 extends MY_Controller
 {
-
+    private $request_type_mapping = [
+        'index' => 'search',
+        'view' => 'view',
+        'create' => 'create',
+        'edit' => 'edit',
+        'delete' => 'delete',
+        'search' => 'search',
+        'count' => 'search'  // Assuming 'count' is similar to 'search' in terms of permissions
+    ];
+    private $_preloaded_permissions = [];
     public function __construct()
     {
 
@@ -30,7 +39,7 @@ class V1 extends MY_Controller
 
         $method = $this->uri->segment(3);
 
-        if (!in_array($method, ['help', 'generateSwaggerDocumentation', 'swagger'])) {
+        if (!in_array($method, ['help', 'swagger'])) {
 
             $token_data = $this->db->get_where('api_manager_tokens', ['api_manager_tokens_token' => '' . $this->getBearerToken()]);
             if ($token_data->num_rows() == 0) {
@@ -46,6 +55,10 @@ class V1 extends MY_Controller
                     'api_manager_tokens_last_use_date' => date('Y-m-d H:m:s'),
                     'api_manager_tokens_requests' => (int) ($token->api_manager_tokens_requests) + 1,
                 ]);
+
+                $this->preloadPermissions($this->token_id);
+
+                $this->processInput();
             }
         }
 
@@ -255,6 +268,7 @@ class V1 extends MY_Controller
      */
     public function create($entity = null, $output = 'json')
     {
+        
         //Se sono arrivato qua, ho già fatto i controlli che possa scrivere su questa entità
         //Devo quindi solo controllare che i dati passati siano tutti accessibili in inserimento
         try {
@@ -269,6 +283,22 @@ class V1 extends MY_Controller
         } catch (ApiException $e) {
             $this->logAction(__FUNCTION__, func_get_args());
             $this->showError($e->getMessage(), $e->getCode());
+        }
+    }
+
+    private function processInput()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $contentType = $this->input->get_request_header('Content-Type', TRUE);
+
+            if (strpos($contentType, 'application/json') !== false) {
+                $jsonData = json_decode($this->input->raw_input_stream, true);
+
+                if ($jsonData) {
+                    // Popola $_POST con i dati JSON
+                    $_POST = array_merge($_POST, $jsonData);
+                }
+            }
         }
     }
 
@@ -309,7 +339,8 @@ class V1 extends MY_Controller
 
     public function search($entity = null)
     {
-
+        $start = microtime(true);
+        
         try {
             $limit = ($this->input->post('limit')) ? $this->input->post('limit') : null;
             $offset = ($this->input->post('offset')) ? $this->input->post('offset') : 0;
@@ -317,7 +348,7 @@ class V1 extends MY_Controller
 
             $orderDir = ($this->input->post('orderdir')) ? $this->input->post('orderdir') : 'ASC';
             $maxDepth = ($this->input->post('maxdepth') || $this->input->post('maxdepth') === '0') ? $this->input->post('maxdepth') : 2;
-
+            
             $postData = array_filter((array) $this->input->post('where'));
             if ($this->getEntityWhere($entity)) {
                 $where = array_filter([$this->getEntityWhere($entity)]);
@@ -329,11 +360,14 @@ class V1 extends MY_Controller
 
             //non uso le apilib altrimenti mi fa left join e non è detto che abbia i permessi per le altre entità... una soluzione potrebbe essere quella di ciclare tutti i permessi e rimuovere nella
             ////filterOutputFields anche le tabelle joinate, ma è un lavorone... per ora no
-
+            //debug($maxDepth);
+            // debug(elapsed_time($start));
             $output = $this->apilib->search($entity, array_merge($where, $postData), $limit, $offset, $orderBy, $orderDir, $maxDepth);
-            // debug($output,true);
+            //debug($output,true);
+            // debug(elapsed_time($start));
+            
             $this->filterOutputFields($entity, $output);
-
+            // debug(elapsed_time($start),true);
             $this->logAction(__FUNCTION__, func_get_args(), $output);
             $this->showOutput($output);
         } catch (ApiException $e) {
@@ -524,35 +558,34 @@ class V1 extends MY_Controller
 
     private function checkEntityPermission($entity_name, $chmod)
     {
-        $entity = $this->datab->get_entity_by_name($entity_name);
-        $where = [
-            "api_manager_permissions_token = '{$this->token_id}'",
-            "api_manager_permissions_entity = '{$entity['entity_id']}'",
-        ];
-        $permission = $this->db->where(implode(" AND ", $where), null, false)->get('api_manager_permissions');
+        
+        $permission = $this->_preloaded_permissions[$entity_name] ?? null;
         //Se non ho impostato permessi specifici
 
-        if ($permission->num_rows() == 0 || !$permission->row()->api_manager_permissions_chmod) {
-            //Allora posso farci di tutto, perchè significa che non ho specificato nulla di particolare su questa entità...
-            return true;
+        if ($permission == null || $permission['chmod'] == 0) {
+            
+            //Allora non posso fare nulla, perchè significa che non ho specificato nulla di particolare su questa entità...
+            return false;
+
         } else {
-            $permission_chmod = $permission->row()->api_manager_permissions_chmod;
+            $permission_chmod = $permission['chmod'];
 
             switch ($chmod) {
                 case 'R': //Lettura
                     //Torno true quando ho un qualsiasi permesso diverso da 0, ovvero maggiore o uguale a 1
+                    //debug(($permission_chmod >= 1),true);
                     return ($permission_chmod >= 1);
                     break;
                 case 'U': //Scrittura solo update
                     //Per poter fare update devo avere permessi 2 o 4
 
-                    return in_array($permission_chmod, [2, 4]);
+                    return in_array($permission_chmod, [2, 4, 5]);
                 case 'I': //Scrittura solo insert
-                    return in_array($permission_chmod, [3, 4]);
+                    return in_array($permission_chmod, [3, 4, 5]);
                 case 'D': //Delete
-                    //Torno false perchè l'unico permesso che ho per cancellare è quando non viene impostato alcun permesso sull'entità
-                    return false;
-                    break;
+                    return in_array($permission_chmod, [5]);
+
+
                 default:
                     throw new ApiException("Permission '$chmod' not recognized!");
                     break;
@@ -562,22 +595,135 @@ class V1 extends MY_Controller
         return false;
     }
 
-    private function filterOutputFields($entity_name, &$output)
+    private function getCurrentRequestType()
     {
-        $entity = $this->datab->get_entity_by_name($entity_name);
-        $fields_permissions = $this->db
-            ->where('fields_entity_id', $entity['entity_id'])
-            ->where("api_manager_fields_permissions_token = '{$this->token_id}'")
-            ->where('api_manager_fields_permissions_chmod', '0')
-            ->join('fields', 'api_manager_fields_permissions.api_manager_fields_permissions_field = fields.fields_id', 'LEFT')
-            ->get('api_manager_fields_permissions')->result_array();
+        $called_method = $this->router->fetch_method();
+        return $this->request_type_mapping[$called_method] ?? 'search';  // Default to 'search' if method not found
+    }
+    private function preloadPermissions ($token) {
+        if (!empty($this->_preloaded_permissions)) {
+            return;
 
-        $output = array_map(function ($data) use ($fields_permissions) {
-            foreach ($fields_permissions as $field_permission) {
-                unset($data[$field_permission['fields_name']]);
+        }
+        $entities_permissions = $this->db
+            ->join('entity', 'entity_id = api_manager_permissions_entity', 'LEFT')    
+            ->where('api_manager_permissions_token', $token)
+            ->get('api_manager_permissions')->result_array();
+        // debug($this->db->last_query());
+        // debug($entities_permissions,true);
+        $fields_permissions = $this->db
+            ->join('fields', 'fields_id = api_manager_fields_permissions_field', 'LEFT')
+            ->join('entity', 'entity_id = fields_entity_id', 'LEFT')
+            ->where('api_manager_fields_permissions_token', $token)->get('api_manager_fields_permissions')->result_array();
+
+        foreach ($entities_permissions as $entity_permission) {
+            $this->_preloaded_permissions[$entity_permission['entity_name']]['chmod'] = $entity_permission['api_manager_permissions_chmod'];
+            $this->_preloaded_permissions[$entity_permission['entity_name']]['where'] = $entity_permission['api_manager_permissions_where'];
+            //Aggiungo sempre l'id
+            $this->_preloaded_permissions[$entity_permission['entity_name']]['fields'][$entity_permission['entity_name'] . '_id'] = 5;
+        }
+
+        foreach ($fields_permissions as $field_permission) {
+            $this->_preloaded_permissions[$field_permission['entity_name']]['fields'][$field_permission['fields_name']] = $field_permission['api_manager_fields_permissions_chmod'];
+        }
+        
+        
+    }
+    private function filterOutputFields($entity_name, &$output)
+    { 
+        //debug(count($output),true);
+        $request_type = $this->getCurrentRequestType();
+
+        $entity = $this->datab->get_entity_by_name($entity_name);
+        if (!$output) {
+            return $output;
+        }
+        $data_keys_to_keep = array_keys($output[0]);
+        $_fields_entities = $this->db
+            ->join('entity', 'entity_id = fields_entity_id', 'LEFT')
+            ->where_in('fields_name', $data_keys_to_keep)
+            ->get('fields')->result_array();
+        $fields_entities_map = array_key_value_map($_fields_entities, 'fields_name', 'entity_name');
+        
+        //Aggiungo comunque i campi id che non sono in fields, ma so che esistono di default
+        foreach ($this->db->get('entity')->result_array() as $entity) {
+            $fields_entities_map[$entity['entity_name'] . '_id'] = $entity['entity_name'];
+        }
+
+
+        
+        // Define allowed permission levels for each request type
+        $allowed_permissions = [
+            'search' => ['1', '2', '3', '4', '5'],
+            'view' => ['1', '2', '3', '4', '5'],
+            'create' => ['3', '4', '5'],
+            'edit' => ['2', '4', '5'],
+            'delete' => ['5']
+        ];
+
+        
+        
+        
+        // Filter the output
+        //debug($this->_preloaded_permissions,true);
+        
+        foreach ($data_keys_to_keep as $key => $field_name) {
+            foreach ($this->_preloaded_permissions as $_perm_entity_name => $permission_data) {
+                if (!empty($fields_entities_map[$field_name]) && $fields_entities_map[$field_name] == $_perm_entity_name) {
+                    $fields_permissions = $permission_data['fields'] ?? [];
+                
+                    //Per prima covalue: sa verifico se l'entità è accessibile
+                    if ($this->checkEntityPermission($_perm_entity_name, 'R')) {
+                        if (count($fields_permissions) > 1) {//Se (oltre al campo id, sono stati definiti permessi custom)
+                            // Check if the field has specific permissions
+                            if (isset($fields_permissions[$field_name])) {
+                                $field_permission = $fields_permissions[$field_name];
+                                if (!in_array($field_permission, $allowed_permissions[$request_type])) {
+                                    debug($field_name,true);
+                                    unset($data_keys_to_keep[$key]);
+                                }
+                            } else {
+                                //debug($field_permissions);
+                                //debug($field_name, true);
+                                //Se il campo è di questa entità, usetto
+                                if (empty($fields_entities_map[$field_name]) || $fields_entities_map[$field_name] == $_perm_entity_name) {
+                                    // debug($fields_permissions);
+                                    // debug($field_name,true);
+                                    unset($data_keys_to_keep[$key]);
+                                }
+
+
+
+
+                            }
+                        } else {
+                            //Non sono impostati permessi custom, quindi tengo tutto
+                        }
+                    } else {
+                        
+                        unset($data_keys_to_keep[$key]);
+                        
+                    }
+                } else {
+                    if (empty($fields_entities_map[$field_name])) {
+                        unset($data_keys_to_keep[$key]);
+                    }
+                }
+                
+
+                
+
             }
-            return $data;
+            
+        }
+        $output = array_map(function ($row) use ($data_keys_to_keep) {
+            return array_filter($row, function ($key) use ($data_keys_to_keep) {
+                return in_array($key, $data_keys_to_keep);
+            }, ARRAY_FILTER_USE_KEY);
         }, $output);
+            
+            return $output;
+        
     }
 
     /**
@@ -725,6 +871,7 @@ class V1 extends MY_Controller
                 return $matches[1];
             }
         }
+
         return null;
     }
     private function logAction($method, array $params, $output = array())
@@ -803,10 +950,10 @@ class V1 extends MY_Controller
         $swaggerJson = [
             'openapi' => '3.0.0',
             'info' => [
-                'title' => 'CRM API',
-                'version' => '1.0.0',
-                'description' => 'API for CRM system'
-            ],
+                    'title' => 'CRM API',
+                    'version' => '1.0.0',
+                    'description' => 'API for CRM system'
+                ],
             'servers' => [
                 [
                     'url' => base_url('rest/v1'),
@@ -818,15 +965,15 @@ class V1 extends MY_Controller
             ],
             'paths' => [],
             'components' => [
-                'securitySchemes' => [
-                    'bearerAuth' => [
-                        'type' => 'http',
-                        'scheme' => 'bearer',
-                        'bearerFormat' => 'JWT'
-                    ]
-                ],
-                'schemas' => []
-            ]
+                    'securitySchemes' => [
+                        'bearerAuth' => [
+                            'type' => 'http',
+                            'scheme' => 'bearer',
+                            'bearerFormat' => 'JWT'
+                        ]
+                    ],
+                    'schemas' => []
+                ]
         ];
 
         foreach ($tabelle as $tabella) {
@@ -844,20 +991,20 @@ class V1 extends MY_Controller
                     'summary' => "Get all {$entityName}",
                     'security' => [['bearerAuth' => []]],
                     'responses' => [
-                        '200' => [
-                            'description' => 'Successful response',
-                            'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        'type' => 'array',
-                                        'items' => [
-                                            '$ref' => "#/components/schemas/{$entityName}"
+                            '200' => [
+                                'description' => 'Successful response',
+                                'content' => [
+                                        'application/json' => [
+                                            'schema' => [
+                                                'type' => 'array',
+                                                'items' => [
+                                                        '$ref' => "#/components/schemas/{$entityName}"
+                                                    ]
+                                            ]
                                         ]
                                     ]
-                                ]
                             ]
                         ]
-                    ]
                 ]
             ];
 
@@ -867,25 +1014,25 @@ class V1 extends MY_Controller
                     'summary' => "Create a new {$entityName}",
                     'security' => [['bearerAuth' => []]],
                     'requestBody' => [
-                        'required' => true,
-                        'content' => [
-                            'application/json' => [
-                                'schema' => [
-                                    '$ref' => "#/components/schemas/{$entityName}"
+                            'required' => true,
+                            'content' => [
+                                    'application/json' => [
+                                        'schema' => [
+                                            '$ref' => "#/components/schemas/{$entityName}"
+                                        ]
+                                    ]
                                 ]
-                            ]
-                        ]
-                    ],
+                        ],
                     'responses' => [
                         '201' => [
                             'description' => 'Created successfully',
                             'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => "#/components/schemas/{$entityName}"
+                                    'application/json' => [
+                                        'schema' => [
+                                            '$ref' => "#/components/schemas/{$entityName}"
+                                        ]
                                     ]
                                 ]
-                            ]
                         ]
                     ]
                 ]
@@ -897,23 +1044,23 @@ class V1 extends MY_Controller
                     'summary' => "Get a specific {$entityName}",
                     'security' => [['bearerAuth' => []]],
                     'parameters' => [
-                        [
-                            'name' => 'id',
-                            'in' => 'path',
-                            'required' => true,
-                            'schema' => ['type' => 'integer']
-                        ]
-                    ],
+                            [
+                                'name' => 'id',
+                                'in' => 'path',
+                                'required' => true,
+                                'schema' => ['type' => 'integer']
+                            ]
+                        ],
                     'responses' => [
                         '200' => [
                             'description' => 'Successful response',
                             'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        '$ref' => "#/components/schemas/{$entityName}"
+                                    'application/json' => [
+                                        'schema' => [
+                                            '$ref' => "#/components/schemas/{$entityName}"
+                                        ]
                                     ]
                                 ]
-                            ]
                         ]
                     ]
                 ]
@@ -925,33 +1072,33 @@ class V1 extends MY_Controller
                     'summary' => "Update a specific {$entityName}",
                     'security' => [['bearerAuth' => []]],
                     'parameters' => [
-                        [
-                            'name' => 'id',
-                            'in' => 'path',
-                            'required' => true,
-                            'schema' => ['type' => 'integer']
-                        ]
-                    ],
+                            [
+                                'name' => 'id',
+                                'in' => 'path',
+                                'required' => true,
+                                'schema' => ['type' => 'integer']
+                            ]
+                        ],
                     'requestBody' => [
                         'required' => true,
                         'content' => [
-                            'application/json' => [
-                                'schema' => [
-                                    '$ref' => "#/components/schemas/{$entityName}"
-                                ]
-                            ]
-                        ]
-                    ],
-                    'responses' => [
-                        '200' => [
-                            'description' => 'Updated successfully',
-                            'content' => [
                                 'application/json' => [
                                     'schema' => [
                                         '$ref' => "#/components/schemas/{$entityName}"
                                     ]
                                 ]
                             ]
+                    ],
+                    'responses' => [
+                        '200' => [
+                            'description' => 'Updated successfully',
+                            'content' => [
+                                    'application/json' => [
+                                        'schema' => [
+                                            '$ref' => "#/components/schemas/{$entityName}"
+                                        ]
+                                    ]
+                                ]
                         ]
                     ]
                 ]
@@ -963,13 +1110,13 @@ class V1 extends MY_Controller
                     'summary' => "Delete a specific {$entityName}",
                     'security' => [['bearerAuth' => []]],
                     'parameters' => [
-                        [
-                            'name' => 'id',
-                            'in' => 'path',
-                            'required' => true,
-                            'schema' => ['type' => 'integer']
-                        ]
-                    ],
+                            [
+                                'name' => 'id',
+                                'in' => 'path',
+                                'required' => true,
+                                'schema' => ['type' => 'integer']
+                            ]
+                        ],
                     'responses' => [
                         '204' => [
                             'description' => 'Deleted successfully'
@@ -989,72 +1136,74 @@ class V1 extends MY_Controller
                 ];
             }
 
-            // Add SEARCH endpoint
+
             $swaggerJson['paths']["/search/{$entityName}"] = [
                 'post' => [
                     'summary' => "Search {$entityName} with filters",
                     'security' => [['bearerAuth' => []]],
                     'requestBody' => [
-                        'required' => true,
-                        'content' => [
-                            'application/x-www-form-urlencoded' => [
-                                'schema' => [
-                                    'type' => 'object',
-                                    'properties' => array_merge($whereProperties, [
-                                        'limit' => [
-                                            'type' => 'integer',
-                                            'description' => 'Number of records to return',
-                                            'default' => '',
-                                            'nullable' => true
-                                        ],
-                                        'offset' => [
-                                            'type' => 'integer',
-                                            'description' => 'Number of records to skip',
-                                            'default' => '',
-                                            'nullable' => true
-                                        ],
-                                        'orderby' => [
-                                            'type' => 'string',
-                                            'description' => 'Field to order by',
-                                            'default' => '',
-                                            'nullable' => true
-                                        ],
-                                        'orderdir' => [
-                                            'type' => 'string',
-                                            'enum' => ['ASC', 'DESC'],
-                                            'description' => 'Order direction',
-                                            'default' => '',
-                                            'nullable' => true
-                                        ],
-                                        'maxdepth' => [
-                                            'type' => 'integer',
-                                            'description' => 'Maximum depth of related entities to return',
-                                            'default' => 1
+                            'required' => true,
+                            'content' => [
+                                    'application/x-www-form-urlencoded' => [
+                                        'schema' => [
+                                            'type' => 'object',
+                                            'properties' => array_merge($whereProperties, [
+                                                        'limit' => [
+                                                            'type' => 'integer',
+                                                            'description' => 'Number of records to return',
+                                                            'default' => '',
+                                                            'nullable' => true
+                                                        ],
+                                                        'offset' => [
+                                                            'type' => 'integer',
+                                                            'description' => 'Number of records to skip',
+                                                            'default' => '',
+                                                            'nullable' => true
+                                                        ],
+                                                        'orderby' => [
+                                                            'type' => 'string',
+                                                            'description' => 'Field to order by',
+                                                            'default' => '',
+                                                            'nullable' => true
+                                                        ],
+                                                        'orderdir' => [
+                                                            'type' => 'string',
+                                                            'enum' => ['ASC', 'DESC'],
+                                                            'description' => 'Order direction',
+                                                            'default' => '',
+                                                            'nullable' => true
+                                                        ],
+                                                        'maxdepth' => [
+                                                            'type' => 'integer',
+                                                            'description' => 'Maximum depth of related entities to return',
+                                                            'default' => 1
+                                                        ]
+                                                    ]),
                                         ]
-                                    ]),
+                                    ]
                                 ]
-                            ]
-                        ]
-                    ],
+                        ],
                     'responses' => [
                         '200' => [
                             'description' => 'Successful response',
                             'content' => [
-                                'application/json' => [
-                                    'schema' => [
-                                        'type' => 'array',
-                                        'items' => [
-                                            '$ref' => "#/components/schemas/{$entityName}"
+                                    'application/json' => [
+                                        'schema' => [
+                                            'type' => 'array',
+                                            'items' => [
+                                                    '$ref' => "#/components/schemas/{$entityName}"
+                                                ]
                                         ]
                                     ]
                                 ]
-                            ]
                         ]
                     ]
                 ]
             ];
 
             // Add schema with fields
+            // Add SEARCH endpoint
+
             $swaggerJson['components']['schemas'][$entityName] = [
                 'type' => 'object',
                 'properties' => $this->getSwaggerProperties($entityFields)
@@ -1105,14 +1254,261 @@ class V1 extends MY_Controller
 
     public function generateSwaggerDocumentation()
     {
-        $swaggerJson = $this->generateSwaggerJson();
+        // Verifica del token
+        $token_data = $this->db->get_where('api_manager_tokens', ['api_manager_tokens_token' => '' . $this->getBearerToken()]);
+        if ($token_data->num_rows() == 0) {
+            $this->showError("Invalid bearer token.", 1, 401);
+            return;
+        }
 
-        // Option 1: Output JSON directly
+        $token = $token_data->row();
+        $this->token_id = $token->api_manager_tokens_id;
+
+        $tabelle = $this->crmentity->getEntities();
+
+        $swaggerJson = [
+            'openapi' => '3.0.0',
+            'info' => [
+                    'title' => 'CRM API',
+                    'version' => '1.0.0',
+                    'description' => 'API for CRM system'
+                ],
+            'servers' => [
+                [
+                    'url' => base_url('rest/v1'),
+                    'description' => 'CRM API Server'
+                ]
+            ],
+            'security' => [
+                ['bearerAuth' => []]
+            ],
+            'paths' => [],
+            'components' => [
+                    'securitySchemes' => [
+                        'bearerAuth' => [
+                            'type' => 'http',
+                            'scheme' => 'bearer',
+                            'bearerFormat' => 'JWT'
+                        ]
+                    ],
+                    'schemas' => []
+                ]
+        ];
+
+        foreach ($tabelle as $tabella) {
+            if (!in_array($tabella['entity_type'], [1, 2])) {
+                continue;
+            }
+            $entityName = $tabella['entity_name'];
+
+            // Verifica dei permessi per l'entità
+            if (!$this->checkEntityPermission($entityName, 'R')) {
+                continue;
+            }
+
+            $entityFields = $this->crmentity->getFields($tabella['entity_id']);
+            $allowedFields = $this->filterAllowedFields($entityName, $entityFields);
+
+            if (empty($allowedFields)) {
+                continue;
+            }
+
+            // Aggiungi i vari endpoint solo se l'entità ha i permessi necessari
+            $this->addEntityEndpoints($swaggerJson, $entityName, $allowedFields);
+
+            $swaggerJson['components']['schemas'][$entityName] = [
+                'type' => 'object',
+                'properties' => $this->getSwaggerProperties($allowedFields)
+            ];
+        }
+
         header('Content-Type: application/json');
-        echo $swaggerJson;
+        echo json_encode($swaggerJson, JSON_PRETTY_PRINT);
+    }
 
-        // Option 2: Save to file
-        // file_put_contents('swagger.json', $swaggerJson);
+    private function filterAllowedFields($entityName, $fields)
+    {
+        $entity = $this->datab->get_entity_by_name($entityName);
+        //Faccio pèrima una query. Se nessun permesso specifico per i campi è impostato allora ho accesso a tutto
+        $fields_permissions_exists = $this->db->query("SELECT * FROM api_manager_fields_permissions WHERE api_manager_fields_permissions_token = '{$this->token_id}' AND api_manager_fields_permissions_field IN (SELECT fields_id FROM fields WHERE fields_entity_id = '{$entity['entity_id']}')")->num_rows();
+        if ($fields_permissions_exists == 0) {
+            return $fields;
+
+        }
+        $allowedFields = [];
+        foreach ($fields as $field) {
+            if ($this->checkFieldPermission($entityName, $field['fields_name'], 'R')) {
+                // Aggiungi lo schema con i campi permessi
+
+                $allowedFields[] = $field;
+            }
+        }
+        return $allowedFields;
+    }
+
+    private function checkFieldPermission($entityName, $fieldName, $chmod)
+    {
+        $entity = $this->datab->get_entity_by_name($entityName);
+        $where = [
+            "api_manager_fields_permissions_token = '{$this->token_id}'",
+            "api_manager_fields_permissions_field = (SELECT fields_id FROM fields WHERE fields_entity_id = '{$entity['entity_id']}' AND fields_name = '{$fieldName}')"
+        ];
+
+        $permission = $this->db->where(implode(" AND ", $where), null, false)
+            ->get('api_manager_fields_permissions')
+            ->row();
+        // if ('customers' == $entityName) {
+        //     debug($permission, true);
+        // }
+        if (!$permission) {
+            return false; // Se non ci sono permessi specifici, consenti l'accesso
+        }
+
+        switch ($chmod) {
+            case 'R':
+                return $permission->api_manager_fields_permissions_chmod != '0';
+            case 'W':
+                return in_array($permission->api_manager_fields_permissions_chmod, ['2', '4', '5']);
+            default:
+                return false;
+        }
+    }
+
+    private function addEntityEndpoints(&$swaggerJson, $entityName, $allowedFields)
+    {
+        $baseEndpoints = ['index', 'create', 'view', 'edit', 'delete', 'search'];
+        $methodMap = [
+            'index' => 'R',
+            'create' => 'I',
+            'view' => 'R',
+            'edit' => 'U',
+            'delete' => 'D',
+            'search' => 'R'
+        ];
+
+        foreach ($baseEndpoints as $endpoint) {
+            if ($this->checkEntityPermission($entityName, $methodMap[$endpoint])) {
+                $method = $endpoint === 'create' || $endpoint === 'edit' || $endpoint === 'delete' || $endpoint === 'search' ? 'post' : 'get';
+                $path = "/{$endpoint}/{$entityName}";
+                if ($endpoint === 'view' || $endpoint === 'edit' || $endpoint === 'delete') {
+                    $path .= "/{id}";
+                }
+
+                $swaggerJson['paths'][$path][$method] = $this->generateEndpointSchema($entityName, $endpoint, $allowedFields);
+            }
+        }
+    }
+
+    private function generateEndpointSchema($entityName, $endpoint, $allowedFields)
+    {
+        $schema = [
+            'summary' => ucfirst($endpoint) . " {$entityName}",
+            'security' => [['bearerAuth' => []]],
+            'responses' => [
+                '200' => [
+                    'description' => 'Successful response',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                '$ref' => "#/components/schemas/{$entityName}"
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        if (in_array($endpoint, ['create', 'edit', 'search'])) {
+            $schema['requestBody'] = [
+                'required' => true,
+                'content' => [
+                    'application/json' => [
+                        'schema' => [
+                            '$ref' => "#/components/schemas/{$entityName}"
+                        ]
+                    ],
+                    'application/x-www-form-urlencoded' => [
+                        'schema' => [
+                            '$ref' => "#/components/schemas/{$entityName}"
+                        ]
+                    ]
+                ]
+            ];
+        }
+
+        if (in_array($endpoint, ['view', 'edit', 'delete'])) {
+            $schema['parameters'] = [
+                [
+                    'name' => 'id',
+                    'in' => 'path',
+                    'required' => true,
+                    'schema' => ['type' => 'integer']
+                ]
+            ];
+        }
+
+        if ($endpoint === 'search') {
+            $schema['requestBody']['content']['application/json']['schema'] = [
+                'type' => 'object',
+                'properties' => $this->generateSearchProperties($allowedFields)
+            ];
+            $schema['requestBody']['content']['application/x-www-form-urlencoded']['schema'] = [
+                'type' => 'object',
+                'properties' => $this->generateSearchProperties($allowedFields)
+            ];
+        }
+
+        return $schema;
+    }
+
+    private function generateSearchProperties($allowedFields)
+    {
+        $properties = [];
+        foreach ($allowedFields as $field) {
+            $fieldName = $field['fields_name'];
+            $properties["where[{$fieldName}]"] = [
+                'type' => 'string',
+                'description' => "Filter by {$fieldName}",
+                'default' => '',
+                'nullable' => true
+            ];
+        }
+
+        // Aggiungi proprietà comuni per la ricerca
+        $commonProperties = [
+            'limit' => [
+                'type' => 'integer',
+                'description' => 'Number of records to return',
+                'default' => '',
+                'nullable' => true
+            ],
+            'offset' => [
+                'type' => 'integer',
+                'description' => 'Number of records to skip',
+                'default' => '',
+                'nullable' => true
+            ],
+            'orderby' => [
+                'type' => 'string',
+                'description' => 'Field to order by',
+                'default' => '',
+                'nullable' => true
+            ],
+            'orderdir' => [
+                'type' => 'string',
+                'enum' => ['ASC', 'DESC'],
+                'description' => 'Order direction',
+                'default' => '',
+                'nullable' => true
+            ],
+            'maxdepth' => [
+                'type' => 'integer',
+                'description' => 'Maximum depth of related entities to return',
+                'default' => 1
+            ]
+        ];
+
+        return array_merge($properties, $commonProperties);
     }
 
     public function swagger()

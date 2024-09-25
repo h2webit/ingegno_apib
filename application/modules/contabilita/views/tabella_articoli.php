@@ -551,8 +551,8 @@
                     <i class="fas fa-plus"></i> Aggiungi prodotto
                 </button>
             </td>
-            <td colspan="<?php echo(count($campi_personalizzati)); ?>"></td>
-            <td class="totali" colspan="7" style="background: #faf6ea;background: #f3cf66;">
+            <td colspan="<?php echo($colonne_count - 6); ?>"></td>
+            <td class="totali" colspan="6" style="background: #faf6ea;background: #f3cf66;">
                 
                 <label>Imponibile: <span class="js_competenze">€ 0</span></label>
                 
