@@ -45,10 +45,11 @@ class Charts extends CI_Model
                         $alreadyJoined[] = $_field['fields_ref'];
                     }
                 }
-                //debug($element);
+
                 $field = $this->datab->get_field($element['charts_elements_fields_id']);
+
                 if (!$field) {
-                    log_message('error', 'Field not found: ' . $element['charts_elements_fields_id'].' in chart '.$chart['charts_id']);
+                    log_message('error', 'Field not found: ' . $element['charts_elements_fields_id'] . ' in chart ' . $chart['charts_id']);
                     unset($chart['elements'][$key_element]);
                     continue;
                 }
@@ -64,7 +65,7 @@ class Charts extends CI_Model
 
                 $order = ($element['charts_elements_order']) ? "ORDER BY " . $element['charts_elements_order'] : '';
                 $data = array();
-                //debug($field);
+
                 $field_function_parameter = ($element['charts_elements_function_parameter']) ? $element['charts_elements_function_parameter'] : $field['fields_name'];
 
                 switch ($element['charts_elements_function']) {

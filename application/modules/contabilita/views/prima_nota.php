@@ -212,7 +212,7 @@ if ($spesa_id = $this->input->get('spesa_id')) {
 
         $modello_spesa = $this->apilib->searchFirst('prime_note_modelli', [
             "prime_note_modelli_tipo IN (SELECT prime_note_mappature_id FROM prime_note_mappature WHERE prime_note_mappature_tipo_identifier = '$prime_note_mappature_tipo_identifier')",
-        ]);
+        ], 0, '', 'ASC', 3);
         //debug($modello_spesa, true);
     }
 

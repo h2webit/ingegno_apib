@@ -206,6 +206,9 @@ td.js_actions {
 }
 </style>
 <?php
+
+
+
 $this->load->model('contabilita/docs');
 if ($this->datab->module_installed('magazzino')) {
     $this->load->model('magazzino/mov');
@@ -791,11 +794,22 @@ if ($this->input->get('documenti_contabilita_clienti_id')) {
     $documento['entity_destinatario'] = $entita_clienti;
 }
 
-if ($documenti_contabilita_articoli_ids = $this->input->get_post('documenti_contabilita_articoli_ids')) {
+if ($_documenti_contabilita_articoli_ids = $this->input->get_post('documenti_contabilita_articoli_ids')) {
+    foreach (json_decode($_documenti_contabilita_articoli_ids) as $key => $documenti_contabilita_articoli_id) {
+        $documenti_contabilita_articoli_ids[$documenti_contabilita_articoli_id] = null;
+    }
+} elseif ($documenti_contabilita_articoli_ids = $this->input->get_post('documenti_contabilita_articoli_ids_qtys')) {
+    //debug($documenti_contabilita_articoli_ids, true);
+    $documenti_contabilita_articoli_ids = json_decode($documenti_contabilita_articoli_ids, true);
+} else {
+    $documenti_contabilita_articoli_ids = [];
+}
+
+if ($documenti_contabilita_articoli_ids) {
 
     $cliente = false;
     //debug($documenti_contabilita_articoli_ids,true);
-    foreach (json_decode($documenti_contabilita_articoli_ids) as $key => $documenti_contabilita_articoli_id) {
+    foreach ($documenti_contabilita_articoli_ids as $documenti_contabilita_articoli_id => $qty) {
         $riga_articolo = $this->db
             ->join('documenti_contabilita', 'documenti_contabilita_id = documenti_contabilita_articoli_documento', 'LEFT')
             ->join('documenti_contabilita_tipo', 'documenti_contabilita_tipo_id = documenti_contabilita_tipo', 'LEFT')
@@ -869,13 +883,18 @@ if ($documenti_contabilita_articoli_ids = $this->input->get_post('documenti_cont
         //debug($articolo,true);
         //Costruisco l'array da passare in modo che vengano precompilate le righe articolo
         //Passo pari pari tutti i dati, tranne la quantità, ricalcolando quella rimanente
+if ($qty) {
+            $riga_articolo['documenti_contabilita_articoli_quantita'] = $qty;
+} else {
+            $riga_articolo['documenti_contabilita_articoli_quantita'] = $rimanente;
+}
+    
+        
 
-        $riga_articolo['documenti_contabilita_articoli_quantita'] = $rimanente;
 
 
 
-
-        $documento['articoli'][$key] = $riga_articolo;
+        $documento['articoli'][] = $riga_articolo;
     }
 }
 
@@ -897,6 +916,7 @@ $ddts = $this->apilib->search('documenti_contabilita', ['documenti_contabilita_t
 $template_scadenze = $this->apilib->search('documenti_contabilita_template_pagamenti', [
     'documenti_contabilita_template_pagamenti_id IN (SELECT documenti_contabilita_tpl_pag_scadenze_tpl_id FROM documenti_contabilita_tpl_pag_scadenze)'
 ]);
+
 foreach ($template_scadenze as $key => $tpl_scad) {
     //Riordino le sotto scadenze sul campo "giorni"
     usort($tpl_scad['documenti_contabilita_tpl_pag_scadenze'], function ($a, $b) {

@@ -4,15 +4,20 @@
     "modules_description": "Backup project",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.9",
+    "modules_version": "1.0.10",
     "modules_identifier": "backup",
     "modules_base64_zip": null,
     "modules_raw_data_install": null,
     "modules_raw_data_update": null,
-    "modules_raw_data": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "11",
+    "modules_version_code": "12",
     "modules_thumbnail": "144b28dc12186ca4f042eac7754e0207.png",
+    "modules_min_client_version": null,
+    "modules_version_date": "2022-08-24 17:01:41",
+    "modules_auto_update": "0",
+    "modules_last_update": "2023-01-24 12:29:03",
+    "modules_core": "0",
+    "modules_notification_message": null,
     "module_identifier": "backup",
     "entities": {
         "357": {
@@ -24,6 +29,8 @@
             "entity_type": "1",
             "entity_action_fields": "{\"create_time\":\"backups_settings_creation_date\",\"update_time\":\"backups_settings_modified_date\"}",
             "entity_module": "backup",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "2687",
@@ -41,6 +48,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -59,6 +71,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -77,6 +94,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 },
                 {
@@ -95,6 +117,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 }
             ],
@@ -152,6 +179,7 @@
                     "fields_draw_attr": null
                 }
             ],
+            "fields_validation": [],
             "raw_data_install": [],
             "raw_data_update": []
         },
@@ -164,6 +192,8 @@
             "entity_type": "1",
             "entity_action_fields": "{\"create_time\":\"backups_downloads_creation_date\",\"update_time\":\"backups_downloads_modified_date\"}",
             "entity_module": "backup",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "fields_id": "2690",
@@ -181,6 +211,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -199,6 +234,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "date_time"
                 },
                 {
@@ -217,6 +257,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "select_ajax"
                 },
                 {
@@ -235,6 +280,11 @@
                     "fields_source": null,
                     "fields_select_where": null,
                     "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
                     "fields_draw_html_type": "input_text"
                 }
             ],
@@ -292,6 +342,7 @@
                     "fields_draw_attr": null
                 }
             ],
+            "fields_validation": [],
             "raw_data_install": [],
             "raw_data_update": []
         }
@@ -315,7 +366,9 @@
             "layouts_boxes_show_container": "1",
             "layouts_boxes_row": "2",
             "layouts_boxes_cols": "12",
-            "layouts_boxes_color": ""
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
         }
     ],
     "grids": [
@@ -352,6 +405,18 @@
             "grids_inline_edit": "0",
             "grids_design": null,
             "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "357",
+            "entity_name": "backups_settings",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"backups_settings_creation_date\",\"update_time\":\"backups_settings_modified_date\"}",
+            "entity_module": "backup",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "14137",
@@ -366,8 +431,9 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": null,
-                    "grids_fields_module": null,
+                    "grids_fields_module_key": "backup-grids_fields-14137",
+                    "grids_fields_module": "backup",
+                    "grids_fields_width": null,
                     "fields_id": "2687",
                     "fields_entity_id": "357",
                     "fields_default": null,
@@ -382,7 +448,13 @@
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0"
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
                 },
                 {
                     "grids_fields_id": "14138",
@@ -397,8 +469,9 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": null,
-                    "grids_fields_module": null,
+                    "grids_fields_module_key": "backup-grids_fields-14138",
+                    "grids_fields_module": "backup",
+                    "grids_fields_width": null,
                     "fields_id": "2689",
                     "fields_entity_id": "357",
                     "fields_default": null,
@@ -413,7 +486,13 @@
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0"
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
                 },
                 {
                     "grids_fields_id": "14143",
@@ -428,8 +507,9 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": null,
-                    "grids_fields_module": null,
+                    "grids_fields_module_key": "backup-grids_fields-14143",
+                    "grids_fields_module": "backup",
+                    "grids_fields_width": null,
                     "fields_id": "2694",
                     "fields_entity_id": "357",
                     "fields_default": null,
@@ -444,7 +524,13 @@
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0"
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
                 }
             ],
             "actions": []
@@ -482,6 +568,18 @@
             "grids_inline_edit": "0",
             "grids_design": null,
             "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "358",
+            "entity_name": "backups_downloads",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"backups_downloads_creation_date\",\"update_time\":\"backups_downloads_modified_date\"}",
+            "entity_module": "backup",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
             "fields": [
                 {
                     "grids_fields_id": "14139",
@@ -496,8 +594,9 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": null,
-                    "grids_fields_module": null,
+                    "grids_fields_module_key": "backup-grids_fields-14139",
+                    "grids_fields_module": "backup",
+                    "grids_fields_width": null,
                     "fields_id": "2690",
                     "fields_entity_id": "358",
                     "fields_default": null,
@@ -512,7 +611,13 @@
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0"
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
                 },
                 {
                     "grids_fields_id": "14140",
@@ -527,8 +632,9 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": null,
-                    "grids_fields_module": null,
+                    "grids_fields_module_key": "backup-grids_fields-14140",
+                    "grids_fields_module": "backup",
+                    "grids_fields_width": null,
                     "fields_id": "2692",
                     "fields_entity_id": "358",
                     "fields_default": null,
@@ -543,7 +649,13 @@
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0"
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
                 },
                 {
                     "grids_fields_id": "14141",
@@ -558,8 +670,9 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": null,
-                    "grids_fields_module": null,
+                    "grids_fields_module_key": "backup-grids_fields-14141",
+                    "grids_fields_module": "backup",
+                    "grids_fields_width": null,
                     "fields_id": "2693",
                     "fields_entity_id": "358",
                     "fields_default": null,
@@ -574,7 +687,13 @@
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
-                    "fields_multilingual": "0"
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
                 }
             ],
             "actions": []
@@ -598,6 +717,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "backups-superadmin-settings",
+            "forms_json": null,
+            "forms_module_key": "backup-form-2096",
+            "forms_submit_button_label": null,
+            "forms_public": "0",
+            "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2096",
@@ -613,7 +739,14 @@
                     "forms_fields_show_label": "1",
                     "forms_fields_subform_id": null,
                     "forms_fields_min": "0",
-                    "forms_fields_max": "0"
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "backup-forms_fields-2096_2689",
+                    "forms_fields_module": "backup",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2096",
@@ -629,7 +762,14 @@
                     "forms_fields_show_label": "1",
                     "forms_fields_subform_id": null,
                     "forms_fields_min": "0",
-                    "forms_fields_max": "0"
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "backup-forms_fields-2096_2694",
+                    "forms_fields_module": "backup",
+                    "forms_field_full_data": "0"
                 }
             ]
         },
@@ -650,6 +790,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
+            "forms_json": null,
+            "forms_module_key": "backup-form-2097",
+            "forms_submit_button_label": null,
+            "forms_public": "0",
+            "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2097",
@@ -665,7 +812,14 @@
                     "forms_fields_show_label": "1",
                     "forms_fields_subform_id": null,
                     "forms_fields_min": "0",
-                    "forms_fields_max": "0"
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "backup-forms_fields-2097_2692",
+                    "forms_fields_module": "backup",
+                    "forms_field_full_data": "0"
                 },
                 {
                     "forms_fields_forms_id": "2097",
@@ -681,7 +835,14 @@
                     "forms_fields_show_label": "1",
                     "forms_fields_subform_id": null,
                     "forms_fields_min": "0",
-                    "forms_fields_max": "0"
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "backup-forms_fields-2097_2693",
+                    "forms_fields_module": "backup",
+                    "forms_field_full_data": "0"
                 }
             ]
         }
@@ -697,12 +858,15 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "backup",
             "layouts_module_key": "backup-layout-511",
             "layouts_show_header": "1",
-            "layouts_ajax_allowed": "1"
+            "layouts_ajax_allowed": "1",
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         }
     ],
     "menu": [
@@ -712,7 +876,7 @@
             "menu_link": "",
             "menu_parent": null,
             "menu_icon_class": "fas fa-save",
-            "menu_order": "23",
+            "menu_order": "25",
             "menu_position": "sidebar",
             "menu_layout": "511",
             "menu_css_class": "",
@@ -721,7 +885,8 @@
             "menu_module_key": "backup-menu-1259",
             "menu_type": "layout",
             "menu_form": null,
-            "menu_html_attr": ""
+            "menu_html_attr": "",
+            "conditions": []
         }
     ],
     "relations": [],

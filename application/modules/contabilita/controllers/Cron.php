@@ -427,4 +427,50 @@ class Cron extends MX_Controller
         $this->docs->ricalcolaPrezzoMedioVendita($prodotto_id);
 
     }
+
+    public function correggiStatoSdi() {
+        $consegnato = 11;
+        $mancata_consegna = 10;
+        $decorrenza_termini = 15;
+        $accettata_dalla_pa = 12;
+        $rifiutata_dalla_pa = 13;
+        $documenti_consegnati = $this->db->query("
+            SELECT *
+            FROM 
+                documenti_contabilita 
+            WHERE 
+                documenti_contabilita_stato_invio_sdi NOT IN ($consegnato, $mancata_consegna,$decorrenza_termini,$accettata_dalla_pa, $rifiutata_dalla_pa) 
+                AND documenti_contabilita_id IN (
+                    SELECT documenti_contabilita_cambi_stato_documento_id 
+                    FROM documenti_contabilita_cambi_stato 
+                    WHERE 
+                        documenti_contabilita_cambi_stato_documento_id IS NOT NULL 
+                        AND documenti_contabilita_cambi_stato_nuovo_stato_sdi_id IN ($consegnato, $mancata_consegna,$decorrenza_termini)
+                )
+                AND documenti_contabilita_tipo IN (1,4,11,12)")->result_array();
+        $count = count($documenti_consegnati);
+        $i = 1;
+        foreach ($documenti_consegnati as $documento) {
+            progress($i++, $count);
+            $ultimo_stato_finale = $this->db->query("
+                SELECT * 
+                FROM documenti_contabilita_cambi_stato 
+                WHERE 
+                    documenti_contabilita_cambi_stato_documento_id IS NOT NULL 
+                    AND documenti_contabilita_cambi_stato_nuovo_stato_sdi_id IN ($consegnato, $mancata_consegna,$decorrenza_termini)
+                    AND documenti_contabilita_cambi_stato_documento_id = {$documento['documenti_contabilita_id']}
+                ORDER BY documenti_contabilita_cambi_stato_id DESC
+                LIMIT 1")->row_array();
+            
+            //debug($ultimo_stato_finale,true);
+            //Correggo lo stato con l'ultimo tra quelli "finali"
+            $this->apilib->edit('documenti_contabilita', $documento['documenti_contabilita_id'], [
+                'documenti_contabilita_stato_invio_sdi' => $ultimo_stato_finale['documenti_contabilita_cambi_stato_nuovo_stato_sdi_id']
+            ]);
+            // $this->db
+            //     ->where('documenti_contabilita_id', $documento['documenti_contabilita_id'])
+            //     ->update('documenti_contabilita', ['documenti_contabilita_stato_invio_sdi' => $ultimo_stato_finale['documenti_contabilita_cambi_stato_nuovo_stato_sdi_id']]);
+        }
+        //$this->mycache->clearCache();
+    }
 }

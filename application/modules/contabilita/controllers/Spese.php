@@ -214,6 +214,7 @@ class Spese extends MY_Controller
             $filename = $file['documenti_contabilita_ricezione_sdi_nome_file'];
 
             echo_log('debug', 'Elaboro il documento: ' . $filename);
+            
 
             // Se uploaded ce file fisisco altrimenti il contenuto e in base 64
             if ($file['documenti_contabilita_ricezione_sdi_source'] == 2) {
@@ -539,6 +540,9 @@ class Spese extends MY_Controller
                         //$vendita['stato_invio_sdi'] = 11;
 
                         $partita_iva_azienda = $xml->FatturaElettronicaHeader->CedentePrestatore->DatiAnagrafici->CodiceFiscale;
+                        if (!$partita_iva_azienda) {
+                            $partita_iva_azienda = $xml->FatturaElettronicaHeader->CedentePrestatore->DatiAnagrafici->IdFiscaleIVA->IdCodice;
+                        }
                         $azienda = $this->db->get_where('documenti_contabilita_settings', ['documenti_contabilita_settings_company_vat_number' => $partita_iva_azienda])->row_array();
 
                         $vendita['azienda'] = $azienda['documenti_contabilita_settings_id'] ?? null;

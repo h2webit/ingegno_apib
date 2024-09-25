@@ -2833,16 +2833,20 @@ $(document).ready(function() {
         // console.log('Svuoto prodotto id');
         $('.js_movimenti_articoli_prodotto_id', $(tr)).val('');
         checkProducts(tr);
+    });
+    
+    $(document).on('keypressed keydown', function(e) {
         //Blocco l'invio/submit
         var keyCode = e.keyCode || e.which;
-
+        
         if (keyCode === 13) {
             e.preventDefault();
-
+            
+            console.log('intercettato INVIO, blocco submit')
+            
             return false;
         }
-
-    });
+    })
 
     $('#js_product_table').on('click', '.js_check_qty', function() {
         var product_id = $(this).data('product_id');

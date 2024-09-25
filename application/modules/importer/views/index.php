@@ -1,12 +1,3 @@
-<?php
-    $module_settings = $this->apilib->searchFirst('importer_settings');
-    
-    $importer_allowed_user_types = array_keys($module_settings['importer_settings_importer_allowed_user_types'] ?? []);
-    $exporter_allowed_user_types = array_keys($module_settings['importer_settings_exporter_allowed_user_types'] ?? []);
-    
-    $current_user_type = $this->auth->get('users_type') ?? null;
-?>
-
 <style>
     .big-button span {
         height: auto !important;
@@ -28,7 +19,6 @@
 </style>
 
 <div class="row">
-    <?php if($module_settings['importer_settings_enable_importer'] == DB_BOOL_TRUE && (empty($importer_allowed_user_types) || $this->datab->is_admin() || in_array($current_user_type, $importer_allowed_user_types)) ): ?>
     <div class="col-sm-3">
         <?php
         $link_concat = '';
@@ -46,9 +36,7 @@
             </div>
         </a>
     </div>
-    <?php endif; ?>
     
-    <?php if($module_settings['importer_settings_enable_exporter'] == DB_BOOL_TRUE && (empty($exporter_allowed_user_types) || $this->datab->is_admin() || in_array($current_user_type, $exporter_allowed_user_types)) ): ?>
     <div class="col-sm-3">
         <a href="<?php echo base_url("main/layout/exporter-templates"); ?>">
             <div class="info-box big-button">
@@ -60,14 +48,4 @@
             </div>
         </a>
     </div>
-    <?php endif; ?>
 </div>
-
-<script>
-    $(function() {
-        // verifico quanti elementi con .big-button esistono. Se ne esiste solo 1, prendo il suo link (tag a parent) e faccio redirect diretto al link
-        if ($('.big-button').length == 1) {
-            window.location.href = $('.big-button').parent().attr('href');
-        }
-    })
-</script>
