@@ -999,8 +999,7 @@ $count_total = $this->apib_db
         $c = 0;
         foreach ($variazioni as $variazione) {
             progress(++$c, $t, 'import compensi_variazioni');
-            //MP: Questa forzatura serve per avere id univoci tra domiciliari e clienti (su apib_db sono due tabelle diverse, mentre qua importiamo tutto su customers quindi questo è l'unico trick rapido che mi è venuto in mente)
-
+            $variazione['compensi_variazioni_importo'] = number_format($variazione['compensi_variazioni_importo'],2,',','.'); //formato italiano
             $variazione['compensi_variazioni_creation_date'] = $variazione['compensi_variazioni_data_creazione'];
             unset($variazione['compensi_variazioni_data_creazione']);
             $variazione['compensi_variazioni_modified_date'] = $variazione['compensi_variazioni_data_modifica'];
@@ -1008,13 +1007,13 @@ $count_total = $this->apib_db
             try {
                 $variazione_exists = $this->db->get_where('compensi_variazioni', ['compensi_variazioni_id' => $variazione['compensi_variazioni_id']])->row_array();
                 
+                
                 if ($variazione_exists) {
                     $variazione_creata = $this->apilib->edit('compensi_variazioni', $variazione['compensi_variazioni_id'], $variazione);
                 } else {
                     $variazione_creata = $this->apilib->create('compensi_variazioni', $variazione);
                 }
 
-                
 
             } catch (Exception $e) {
                 my_log('error', "errore inserimento variazione compensi: {$e->getMessage()}");
