@@ -2220,3 +2220,5 @@ $lang['Pie di lista'] = 'Pie di lista';
 $lang['Validità'] = 'Validità';
 $lang['Seleziona mese'] = 'Seleziona mese';
 $lang['Inserimento variazione'] = 'Inserimento variazione';
+$lang['Note compensi'] = 'Note compensi';
+$lang['Scheda compensi'] = 'Scheda compensi';

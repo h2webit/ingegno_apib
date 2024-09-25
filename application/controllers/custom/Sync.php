@@ -1023,4 +1023,38 @@ $count_total = $this->apib_db
         }
         $this->mycache->clearCache();
     }
+    public function import_note_compensi($associato_id = null)
+    {
+        set_log_scope('sync-note_compensi');
+        if ($associato_id) {
+            $this->apib_db->where('allegati_per_scheda_compensi_associato', $associato_id);
+        }
+        $note = $this->apib_db->get('allegati_per_scheda_compensi')->result_array();
+
+
+
+        $t = count($note);
+        $c = 0;
+        foreach ($note as $nota) {
+            progress(++$c, $t, 'import note compensi');
+            
+            try {
+                $nota_exists = $this->db->get_where('allegati_per_scheda_compensi', ['allegati_per_scheda_compensi_id' => $nota['allegati_per_scheda_compensi_id']])->row_array();
+
+
+                if ($nota_exists) {
+                    $nota_creata = $this->apilib->edit('allegati_per_scheda_compensi', $nota['allegati_per_scheda_compensi_id'], $nota);
+                } else {
+                    $nota_creata = $this->apilib->create('allegati_per_scheda_compensi', $nota);
+                }
+
+
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento variazione compensi: {$e->getMessage()}");
+                debug($nota);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
+    }
 }
