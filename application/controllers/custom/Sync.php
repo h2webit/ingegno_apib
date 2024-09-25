@@ -127,6 +127,8 @@ class Sync extends MY_Controller
 
         $this->import_listino_prezzi();
         $this->import_report_orari();
+
+        $this->import_variazioni();
     }
     
     public function import_associati() {
@@ -973,5 +975,37 @@ $count_total = $this->apib_db
             }
         }
         
+    }
+
+    public function import_variazioni()
+    {
+        set_log_scope('sync-variazioni');
+        $variazioni = $this->apib_db->get('compensi_variazioni')->result_array();
+        debug($variazioni,true);
+        $t = count($variazioni);
+        $c = 0;
+        foreach ($variazioni as $variazione) {
+            progress(++$c, $t, 'import compensi_variazioni');
+            //MP: Questa forzatura serve per avere id univoci tra domiciliari e clienti (su apib_db sono due tabelle diverse, mentre qua importiamo tutto su customers quindi questo è l'unico trick rapido che mi è venuto in mente)
+            
+
+            try {
+                $variazione_exists = $this->db->get_where('compensi_variazioni', ['compensi_variazioni_id' => $variazione['compensi_variazioni_id']])->row_array();
+                
+                if ($variazione_exists) {
+                    $variazione_creata = $this->apilib->edit('compensi_variazioni', $variazione['compensi_variazioni_id'], $variazione);
+                } else {
+                    $variazione_creata = $this->apilib->create('compensi_variazioni', $variazione);
+                }
+
+                
+
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento variazione compensi: {$e->getMessage()}");
+                debug($variazione);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
     }
 }
