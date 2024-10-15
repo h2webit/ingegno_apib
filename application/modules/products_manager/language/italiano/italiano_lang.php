@@ -249,3 +249,4 @@ $lang['Ordinamento'] = 'Ordinamento';
 $lang['Giorni anticipo riordine'] = 'Giorni anticipo riordine';
 $lang['You cannot save because one or more files are being uploaded.<br/>Please wait for the upload to complete or press ‘Cancel upload’ to cancel it.'] = 'You cannot save because one or more files are being uploaded.<br/>Please wait for the upload to complete or press ‘Cancel upload’ to cancel it.';
 $lang['Provider codes'] = 'Codici fornitore';
+$lang['Codice variante'] = 'Codice variante';

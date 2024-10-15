@@ -157,7 +157,7 @@ div.panel_acc.show {
 
 <?php
 $settings = $this->apilib->searchFirst('magazzino_settings');
-
+//debug($settings,true);
 if ($this->datab->module_installed('contabilita')) {
     $settings_contabilita = $this->apilib->searchFirst('documenti_contabilita_settings');
 } else {
@@ -200,12 +200,33 @@ $tipo_mov = $this->input->get('tipo_mov');
 $causale_movimento = $this->input->get('movimenti_causale');
 $articoli_documento = $this->input->post('articoli_documento');
 
-if (empty($articoli_documento) && $documenti_contabilita_articoli_ids = $this->input->get_post('documenti_contabilita_articoli_ids')) {
+$lock_qty = false;
+
+if ($_documenti_contabilita_articoli_ids = $this->input->get_post('documenti_contabilita_articoli_ids')) {
+    //debug($_documenti_contabilita_articoli_ids,true);
+    foreach (json_decode($_documenti_contabilita_articoli_ids) as $key => $documenti_contabilita_articoli_id) {
+        $documenti_contabilita_articoli_ids[$documenti_contabilita_articoli_id] = null;
+    }
+} elseif ($documenti_contabilita_articoli_ids = $this->input->get_post('documenti_contabilita_articoli_ids_qtys')) {
+    //debug($documenti_contabilita_articoli_ids, true);
+    $documenti_contabilita_articoli_ids = json_decode($documenti_contabilita_articoli_ids, true);
+} else {
+    $documenti_contabilita_articoli_ids = [];
+}
+
+if (empty($articoli_documento) && $documenti_contabilita_articoli_ids) {
+    $lock_qty = true;
     if (!is_array($documenti_contabilita_articoli_ids)) {
         $documenti_contabilita_articoli_ids = json_decode($documenti_contabilita_articoli_ids, true);
     }
-    $articoli_documento = $this->apilib->search('documenti_contabilita_articoli', ['documenti_contabilita_articoli_id' => $documenti_contabilita_articoli_ids]);
-    //debug($articoli_documento,true);
+    $articoli_documento = $this->apilib->search('documenti_contabilita_articoli', ['documenti_contabilita_articoli_id' => array_keys($documenti_contabilita_articoli_ids)]);
+    foreach ($articoli_documento as $key => $articolo) {
+        $qty = $documenti_contabilita_articoli_ids[$articolo['documenti_contabilita_articoli_id']];
+        if ($qty !== null) {
+            $articoli_documento[$key]['documenti_contabilita_articoli_quantita'] = $qty;
+
+        }
+    }
 }
 
 try {
@@ -580,6 +601,7 @@ if ($movimenti_id) {
     }
 
 } elseif (!empty($articoli_documento)) {
+    
     // Inizializzo le variabili $movimento e $movimento['articoli']
     $movimento = [];
     $movimento['articoli'] = [];
@@ -613,17 +635,22 @@ if ($movimenti_id) {
 
     foreach ($articoli_documento as $art_doc) {
         //Retrocompatibilità - Mi sarebbe piaciuto rischivere tutto questo blocco ma non so da quanti punti è chiamato quindi ho cercato di tenerlo retrocompatibile...
-        if (empty($art_doc['articolo_id'])) {
+        if (empty($art_doc['articolo_id']) && !$lock_qty) {
             //$art_doc['articolo_id'] = $art_doc['documenti_contabilita_articoli_id'];
             //Se arrivo qui mi aspetto che articoli_documento abbia già tutte le info che mi servono (dalla sezione prodotti in ordine arrivano gli id articolo e sopra viene creata la variabile $articoli_documento)
             $qty_evasa = $art_doc['documenti_contabilita_articoli_qty_evase_in_doc'] + $art_doc['documenti_contabilita_articoli_qty_movimentate'];
 
             $rimanente = $art_doc['documenti_contabilita_articoli_quantita'] - $qty_evasa;
+            //debug($art_doc,true);
             $art_doc['qty'] = $rimanente;
             $doc_art = $art_doc;
-        } else {
+        } elseif (!empty($art_doc['articolo_id'])) {
             //Cosa mi tocca fare per tenere il vecchio codice funzionante....
             $doc_art = $this->apilib->searchFirst('documenti_contabilita_articoli', ['documenti_contabilita_articoli_id' => $art_doc['articolo_id']]);
+        } else {
+            //Se arrivo qua, vuol dire che mi è arrivato già l'array completo con le quantità da evadere
+            $art_doc['qty'] = $art_doc['documenti_contabilita_articoli_quantita'];
+            $doc_art = $art_doc;
         }
 
         if (empty($doc_art) || empty($doc_art['documenti_contabilita_articoli_prodotto_id']) || $doc_art['fw_products_stock_management'] !== DB_BOOL_TRUE)
@@ -764,10 +791,21 @@ if ($movimenti_id) {
             <div class="form-group">
                 <label>Magazzino: </label>
                 <select name="movimenti_magazzino" class="select2 form-control input-lg">
-                    <?php foreach ($magazzini as $magazzino): ?>
-                    <option value="<?php echo $magazzino['magazzini_id']; ?>" data-azienda="<?php echo $magazzino['magazzini_azienda'] ?>" <?php if (!empty($movimento['movimenti_magazzino']) && $movimento['movimenti_magazzino'] == $magazzino['magazzini_id']): ?> selected="selected" <?php endif; ?>><?php echo $magazzino['magazzini_titolo']; ?></option>
+                    <?php
+                    foreach ($magazzini as $magazzino):
+                        $selected = '';
+                        if (!empty($movimento['movimenti_magazzino'])) {
+                            if ($movimento['movimenti_magazzino'] == $magazzino['magazzini_id']) {
+                                $selected = 'selected="selected"';
+                            }
+                        } else {
+                            if ($magazzino['magazzini_default'] == DB_BOOL_TRUE) {
+                                $selected = 'selected="selected"';
+                            }
+                        }
+                    ?>
+                    <option value="<?php echo $magazzino['magazzini_id']; ?>" data-azienda="<?php echo $magazzino['magazzini_azienda'] ?>" <?php echo $selected; ?>><?php echo $magazzino['magazzini_titolo']; ?></option>
                     <?php endforeach; ?>
-
                 </select>
             </div>
         </div>
@@ -1567,6 +1605,7 @@ function initAutocomplete(autocomplete_selector) {
                     search: request.term,
                     [token_name]: token_hash
                 },
+                
                 /*search: function( event, ui ) {
                     loading(true);
                 },*/
@@ -1577,9 +1616,10 @@ function initAutocomplete(autocomplete_selector) {
                     //console.log(autocomplete_selector.data("id"));
                     //TODO: aggiunto questo false per permettere di inserire un nuovo prodotto con nome simile a uno già presente... Da capire come gestire la pistola, che invece deve popolare il prodotto in automatico
                     if ($('.uso_pistola').is(':checked') && data.count_total == 1 && ($('.js_movimenti_articoli_barcode').is(':focus') || $('.js_movimenti_articoli_codice').is(':focus'))) {
+                        
                         popolaProdotto(data.results.data[0], autocomplete_selector.data("id"));
                     } else {
-
+                        
                         $.each(data.results.data, function(i, p) {
                             <?php if ($campo_codice_prodotto): ?>
                             collection.push({
@@ -1610,6 +1650,7 @@ function initAutocomplete(autocomplete_selector) {
         },
         minLength: 2,
         select: function(event, ui) {
+            
             // fix per disabilitare la ricerca con il tab
             if (event.keyCode === 9)
                 return false;
@@ -1618,7 +1659,7 @@ function initAutocomplete(autocomplete_selector) {
                 getLotti(ui.item.value.prodotti_id, $(this).parent().parent());
                 //getLotti(ui.item.value.prodotti_id, autocomplete_selector.data("id"));
             }
-
+            //alert(autocomplete_selector.data("id"));
             popolaProdotto(ui.item.value, autocomplete_selector.data("id"));
             //Se non esiste già una riga vuota (senza nome articolo, visibile)
             //console.log($('.js_movimenti_articoli_name[value=""]'));
@@ -1851,78 +1892,85 @@ var project_module_installed = '<?php echo $this->datab->module_installed('proje
 var settings_show_commesse = '<?php echo $settings['magazzino_settings_show_commessa']; ?>';
 
 function getCommesseRiga($row, mittente_movimento = null) {
-    if (!project_module_installed) {
-        console.info('Il modulo "projects" non è installato');
-        return;
+    if (project_module_installed == '0' || settings_show_commesse == '0') {
+        return null;
     }
-    
-    if (!settings_show_commesse) {
-        return;
-    }
-    
     if (!mittente_movimento) {
         mittente_movimento = $('.js_movimenti_mittente').val();
     }
     
     var cliente_id = '';
-    
     if (mittente_movimento == '2') {
         cliente_id = $('[name="dest_id"]').val();
     }
     
-    var html = '<option value=""> --- </option>';
-    
     var prev_selected = '';
-    
     if ($('.js_movimenti_articoli_commessa', $row).val() != '') {
         prev_selected = $('.js_movimenti_articoli_commessa', $row).val();
     }
     
-    if (
-        mittente_movimento != '2' ||
-        (mittente_movimento == '2' && cliente_id != '')
-    ) {
-        $.ajax({
-            url: base_url + 'magazzino/movimenti/get_commesse/' + cliente_id,
-            type: 'get',
-            dataType: 'json',
-            async: false,
-            success: function(res) {
-                if (res.status == 1) {
-                    $.each(res.txt, function(i, commessa) {
-                        var selected = commessa.projects_id === prev_selected ? 'selected' : '';
-                        
-                        html += '<option value="' + commessa.projects_id + '" '+selected+'>' + commessa.projects_name + '</option>';
-                    });
-                }
-            },
-            error: function() {
-                console.log('errore');
-            }
-        });
+    return {
+        cliente_id: cliente_id,
+        prev_selected: prev_selected
+    };
+}
+function bulkGetCommesse(rows_data) {
+    if (rows_data.length === 0) {
+        return;
     }
     
-    $('.js_movimenti_articoli_commessa', $row).html(html);
+    var cliente_id = rows_data[0].cliente_id; // Assumiamo che il cliente sia lo stesso per tutte le righe
     
-    $('.js_movimenti_articoli_commessa', $row).select2({
-        placeholder: 'Seleziona commessa',
-        allowClear: true
+    $.ajax({
+        url: base_url + 'magazzino/movimenti/get_commesse/' + cliente_id,
+        type: 'get',
+        dataType: 'json',
+        async: true,
+        success: function(res) {
+            if (res.status == 1) {
+                populateCommesseRows(rows_data, res.txt);
+            }
+        },
+        error: function() {
+            console.log('Errore nel recupero delle commesse');
+        }
     });
 }
-
+function populateCommesseRows(rows_data, commesse) {
+    rows_data.forEach(function(row_data) {
+        var $row = row_data.$row;
+        var html = '<option value=""> --- </option>';
+        
+        commesse.forEach(function(commessa) {
+            var selected = commessa.projects_id === row_data.prev_selected ? 'selected' : '';
+            html += '<option value="' + commessa.projects_id + '" '+selected+'>' + commessa.projects_name + '</option>';
+        });
+        
+        $('.js_movimenti_articoli_commessa', $row).html(html);
+        
+        $('.js_movimenti_articoli_commessa', $row).select2({
+            placeholder: 'Seleziona commessa',
+            allowClear: true
+        });
+    });
+}
 function updateAllCommesse(mittente_movimento = null) {
-    if (!project_module_installed) {
-        console.info('Il modulo "projects" non è installato');
+    
+    if (project_module_installed == '0' || settings_show_commesse == '0') {
         return;
     }
     
-    if (!settings_show_commesse) {
-        return;
-    }
+    var rows_data = [];
     
     $('#js_product_table tbody tr:visible').each(function() {
-        getCommesseRiga($(this), mittente_movimento);
+        var row_data = getCommesseRiga($(this), mittente_movimento);
+        if (row_data) {
+            row_data.$row = $(this);
+            rows_data.push(row_data);
+        }
     });
+    
+    bulkGetCommesse(rows_data);
 }
 
 function getLotti(prodotto_id, row_lotto = null) {
@@ -1934,7 +1982,7 @@ function getLotti(prodotto_id, row_lotto = null) {
     $.ajax({
         url: base_url + "magazzino/movimenti/getlotti/" + prodotto_id + '/' + $('[name="movimenti_magazzino"]').val(),
         method: "get",
-
+        async: true,
         success: function(data) {
             var my = JSON.parse(data);
             //Sottraggo le quantità già selezionate:
@@ -1952,6 +2000,7 @@ function getLotti(prodotto_id, row_lotto = null) {
                     }
 
                 });
+                
                 if (my.data.length == 1) {
                     movimento = my.data[0];
                     quantita = movimento.s;
@@ -1975,7 +2024,9 @@ function getLotti(prodotto_id, row_lotto = null) {
 
                     $.each(my.data, function(i, item) {
                         var _data_scadenza = item.movimenti_articoli_data_scadenza;
-
+if (!item.movimenti_articoli_lotto) {
+                                    item.movimenti_articoli_lotto = 'n/a';
+                                }
                         if (_data_scadenza != null) {
                             var data_scadenza = _data_scadenza.substr(0, 10);
                         } else {
@@ -2011,6 +2062,8 @@ function getLotti(prodotto_id, row_lotto = null) {
                         $("#lotti_table tbody").append(append_tr);
 
                     });
+                    
+                    reinitDataTableLotti();
                 }
 
             } else {
@@ -2067,11 +2120,12 @@ function popolaProdottoContabilita(prodotto, rowid) {
 
     //stampo la riga su cui sto modificando i campi
     const closest_tr = $("input[name='products[" + rowid + "][movimenti_articoli_prodotto_id]']").closest('tr');
-    checkProducts(closest_tr);
+    //checkProducts(closest_tr);
 }
 
 function popolaProdotto(prodotto, rowid) {
     //QUA DA MODIFICARE
+    
     var focused = $(':focus');
     //var rowid = focused.data('id');
 
@@ -2190,6 +2244,9 @@ function popolaProdotto(prodotto, rowid) {
 
     //stampo la riga su cui sto modificando i campi
     const closest_tr = $("input[name='products[" + rowid + "][movimenti_articoli_prodotto_id]']").closest('tr');
+
+    //console.log(closest_tr);
+
     checkProducts(closest_tr);
 
     if ($('.js_movimenti_tipo').val() == 2) {
@@ -2277,6 +2334,7 @@ $(document).ready(function() {
                     [token_name]: token_hash,
                     righe_articoli: righe_articoli
                 },
+                async: true,
                 success: function(res) {
                     $.each(res, function(index, row) {
                         if (row.prodotto) {
@@ -2397,8 +2455,10 @@ $(document).ready(function() {
         $('.js_dest_codice_fiscale').val(fornitore['suppliers_cf']);
         $('#js_dest_id').val(fornitore['suppliers_id']);
     }
-
-    initAutocomplete($('.js_autocomplete_prodotto'));
+    $('.js_autocomplete_prodotto').each(function () {
+        initAutocomplete($(this));
+    })
+    
 
     $('.js_select2').each(function() {
         var select = $(this);
@@ -2685,134 +2745,90 @@ function increment_scadenza() {
 }
 
 function checkProducts(closest_tr) {
-
+    
     var magazzino_id = $('[name="movimenti_magazzino"]').val();
     var tipo_movimento = $('[name="movimenti_tipo_movimento"]').val();
-    var append_movimento = '<?php if ($movimenti_id): ?>/<?php echo $movimenti_id; ?><?php endif; ?>';
-    //$('.js_missing_products_block').addClass('hidden');
-    $('.js_alert_missing_product').remove();
-    //TODO: colorare di rosso le righe con name ma senza product_id
+    var append_movimento = '<?php if ($movimenti_id): ?><?php echo $movimenti_id; ?><?php endif; ?>';
+        $('.js_alert_missing_product').remove();
 
-    //se passo la riga esegue solo su di lei
-    if (closest_tr) {
-        var qty = parseInt($('.js_movimenti_articoli_quantita', closest_tr).val());
+        var products_to_check = [];
 
-        //20221214 - MP - Verifico che se è impostato il product_id corretto
-        if ($('.js_movimenti_articoli_prodotto_id', closest_tr).val() > 0 && closest_tr.data('hidden') != 1) {
-            var icon = 'blu';
-        } else {
-            $('.js_movimenti_articoli_prodotto_id', closest_tr).val('');
-            var icon = 'red';
-        }
-        //alert(icon);
-        $('.js_icon_product', closest_tr).removeClass('red').removeClass('blu').addClass(icon);
-        // $('.product_icons', closest_tr).html('');
-        $('.product_icons .js_check_qty', closest_tr).remove();
-        if ($('.js_movimenti_articoli_name', closest_tr).val() && (!$('.js_movimenti_articoli_prodotto_id', closest_tr).val() || $('.js_movimenti_articoli_prodotto_id', closest_tr).val() == 0)) { //} && ($('.js_movimenti_articoli_name', closest_tr).val() != '' || $('.js_movimenti_articoli_codice', closest_tr).val() != '' || $('.js_movimenti_articoli_barcode', closest_tr).val() != '')) {
-            // closest_tr.css('background-color', '#FAA');
-            // $('.product_icons', closest_tr).prepend('<span class="js_alert_missing_product" data-toggle="tooltip" title="" style="color:#F00;" data-original-title="Prodotto non trovato"><span class="fas fa-exclamation-triangle"></span></span>');
-            //$('.js_missing_products_block').removeClass('hidden');
-        } else {
+        function processRow($row) {
+            var qty = parseInt($('.js_movimenti_articoli_quantita', $row).val());
+            var product_id = $('.js_movimenti_articoli_prodotto_id', $row).val();
 
-            closest_tr.css('background-color', '');
-            //Add link for check quantity
-            if ($('.js_movimenti_articoli_prodotto_id', closest_tr).val()) {
-                //28/07/2022 - Rimosso controllo che stampa icon per qta solo se movimento è di scarico
-                var my_this = closest_tr;
-                $('.js_check_qty', my_this).remove();
-                //con un ajax, verificare se il prodotto esiste nel magazzino selezionato. Se non esiste, evidenziare in giallo
-                $.ajax({
-                    url: '<?php echo base_url('magazzino/movimenti/check_quantity_available/'); ?>' + $('.js_movimenti_articoli_prodotto_id', closest_tr).val() + '/' + magazzino_id + append_movimento, // point to server-side PHP script
-                    type: 'get',
-                    success: function(response) {
-                        response = parseInt(response);
+            if ($('.js_movimenti_articoli_prodotto_id', $row).val() > 0 && $row.data('hidden') != 1) {
+                var icon = 'blu';
+            } else {
+                $('.js_movimenti_articoli_prodotto_id', $row).val('');
+                var icon = 'red';
+            }
 
+            $('.js_icon_product', $row).removeClass('red').removeClass('blu').addClass(icon);
+            $('.product_icons .js_check_qty', $row).remove();
 
-                        my_this.data('available-quantity', parseInt(response));
-                        if (!$('.js_check_qty', my_this).length) { // ME - 09/06/23 - Ho messo questo if, perchè venivano appesi 3 bottoni uguali
-                            $('.product_icons', my_this).prepend('<button type="button" data-product_id="' + $('.js_movimenti_articoli_prodotto_id', my_this).val() + '" class="btn  btn-primary btn-xs js_check_qty" data-toggle="tooltip" title="" data-original-title="Check quantity"><span class="fas fa-warehouse"></span> ' + response + '</button>');
-                        }
-                        if (response <= 0) {
-                            my_this.css('background-color', '#FF8C00');
-                        } else if (response < qty && tipo_movimento == '2') { // ME - 09/06/23 - Il colore giallo deve essere impostato solo se la quantità non batte in fase di scarico, non carico.
-                            //alert(response+'/'+qty);
-                            console.log(response);
-                            console.log(qty);
-
-                            my_this.css('background-color', '#FFFF71');
-                        } else {
-                            my_this.css('background-color', '#84c484');
-                        }
-                        //$('.js_movimenti_articoli_quantita', my_this).trigger('change');
-
-
-
-                    }
+            if (product_id) {
+                products_to_check.push({
+                    row_index: $row.index(),
+                    product_id: product_id,
+                    qty: qty
                 });
             }
         }
-    } else {
-        console.log('richiesta senza riga')
 
-        // 20230705 - michael - ho riscritto questa parte perchè fa una chiamata per ogni riga, rallentando tutto il sistema... soprattutto in casi con più di 10 articoli.
-        // $('#js_product_table tbody tr:visible').each(function() {
-        //     checkProducts($(this));
-        // });
+        if (closest_tr) {
+            //alert(closest_tr);
+            processRow(closest_tr);
+        } else {
+            $('#js_product_table tbody tr:visible').each(function () {
+                processRow($(this));
+            });
+        }
 
-        //eseguo su tutta la tabella
-        var products_rows = [];
-        $('#js_product_table tbody tr:visible').each(function(index, trow) {
-            // checkProducts($(this));
-            if ($('.js_movimenti_articoli_prodotto_id', $(this)).val()) {
-                products_rows.push({
-                    row_index: index,
-                    product_id: $('.js_movimenti_articoli_prodotto_id', $(this)).val(),
-                    quantity_available: null
-                })
-            }
-        });
-
-        if (products_rows.length > 0) {
+        // Esegui la chiamata AJAX solo se ci sono prodotti da controllare
+        if (products_to_check.length > 0) {
             $.ajax({
-                url: base_url + 'magazzino/movimenti/bulk_check_quantity_available/' + magazzino_id + append_movimento,
+                url: base_url + 'magazzino/movimenti/bulk_check_quantity_available',
                 type: 'post',
                 dataType: 'json',
                 data: {
                     [token_name]: token_hash,
-                    products_rows: products_rows
+                    magazzino_id: magazzino_id,
+                    movimenti_id: append_movimento,
+                    products: products_to_check
                 },
-                success: function(res) {
-                    $.each(res, function(idx, row) {
-                        var qty_available = row.quantity_available;
+                async: true,
+                success: function (response) {
+                    response.forEach(function (item) {
+                        
+                        console.log("Row index:", item.row_index);
+                        console.log("Total visible rows:", $('#js_product_table tbody tr:visible').length);
 
-                        var closest_tr = $('#js_product_table tbody tr:visible:eq(' + row.row_index + ')');
 
-                        var qty = parseInt($('.js_movimenti_articoli_quantita', closest_tr).val());
+                        var $row = $('#js_product_table tbody tr:visible').eq(item.row_index-1);
 
-                        closest_tr.css('background-color', '');
-                        $('.js_check_qty', closest_tr).remove();
+                        $('.js_check_qty', $row).remove();
 
-                        closest_tr.data('available-quantity', parseInt(qty_available));
-                        if (!$('.js_check_qty', closest_tr).length) { // ME - 09/06/23 - Ho messo questo if, perchè venivano appesi 3 bottoni uguali
-                            $('.product_icons', closest_tr).prepend('<button type="button" data-product_id="' + $('.js_movimenti_articoli_prodotto_id', closest_tr).val() + '" class="btn  btn-primary btn-xs js_check_qty" data-toggle="tooltip" title="" data-original-title="Check quantity"><span class="fas fa-warehouse"></span> ' + qty_available + '</button>');
-                        }
-                        if (qty_available <= 0) {
-                            closest_tr.css('background-color', '#FF8C00');
-                        } else if (qty_available < qty && tipo_movimento == '2') { // ME - 09/06/23 - Il colore giallo deve essere impostato solo se la quantità non batte in fase di scarico, non carico.
-                            //alert(qty_available+'/'+qty);
-                            console.log(qty_available);
-                            console.log(qty);
+                        var qty = parseInt($('.js_movimenti_articoli_quantita', $row).val());
 
-                            closest_tr.css('background-color', '#FFFF71');
+                        
+
+                        $row.data('available-quantity', parseInt(item.quantity));
+                        $('.product_icons', $row).prepend('<button type="button" data-product_id="' + item.product_id + '" class="btn btn-primary btn-xs js_check_qty" data-toggle="tooltip" title="" data-original-title="Check quantity"><span class="fas fa-warehouse"></span> ' + item.quantity + '</button>');
+
+                        if (item.quantity <= 0) {
+                            $row.css('background-color', '#FF8C00');
+                        } else if (item.quantity < qty && tipo_movimento == '2') {
+                            $row.css('background-color', '#FFFF71');
                         } else {
-                            closest_tr.css('background-color', '#84c484');
+                            $row.css('background-color', '#84c484');
                         }
                     });
                 }
-            })
+            });
         }
     }
-}
+
 $(document).ready(function() {
     // checkProducts();
     $('[name="movimenti_magazzino"], [name="movimenti_tipo_movimento"]').on('change', function() {
@@ -3004,7 +3020,7 @@ function loadProductsFromDocumento(doc_id) {
         contentType: false,
         processData: false,
         type: 'get',
-        async: false,
+        async: true,
         success: function(response) {
             $('.js_remove_product').trigger('click');
 
@@ -3022,6 +3038,7 @@ function loadProductsFromDocumento(doc_id) {
                 }
 
             });
+            checkProducts();
         }
     });
 }
@@ -3036,6 +3053,7 @@ function reloadDocumenti() {
         dataType: 'html', // what to expect back from the PHP script, if anything
         type: 'post',
         data: data,
+        async: true,
         success: function(response) {
             $('[name="movimenti_documento_id"]').html('<option></option>');
             $('[name="movimenti_documento_id"]').append(response);
@@ -3161,6 +3179,7 @@ $(document).ready(function() {
             processData: false,
             data: form_data,
             type: 'post',
+            async: true,
             success: function(response) {
                 $.each(response, function() {
                     var codice_prodotto = $(this)[0];

@@ -306,6 +306,7 @@ class Datab extends CI_Model
         $cache_key = "apilib/datab.getDataEntity.{$entity_id}." . md5(serialize(func_get_args()) . serialize($_GET) . serialize($_POST) . serialize($this->session->all_userdata()));
         if (!($dati = $this->mycache->get($cache_key))) {
             $group_by = array_get($additional_parameters, 'group_by', null);
+
             // Questo è un wrapper di apilib che va a calcolare i permessi per ogni
             // entità
             $visibleFields = $this->crmentity->getFields($entity_id);
@@ -364,8 +365,9 @@ class Datab extends CI_Model
             $entity = $this->crmentity->getEntity($entity_id);
 
             if ($count) {
-                $dati = $this->apilib->count($entity['entity_name'], $where, ['group_by' => $group_by]);
+                $dati = $this->apilib->count($entity['entity_name'], $where, ['group_by' => $group_by, 'depth' => $depth]);
             } else {
+                
                 $dati = $this->apilib->search($entity['entity_name'], $where, $limit, $offset, $order_by, null, $depth, $eval_cachable_fields, ['group_by' => $group_by]);
 
 
@@ -719,6 +721,7 @@ class Datab extends CI_Model
 
 
 
+
             }
             unset($field);
 
@@ -750,7 +753,7 @@ class Datab extends CI_Model
             }
 
             foreach ($hidden as $k => $field) {
-
+                
                 $hidden[$k] = $this->build_form_input($field, isset($formData[$field['fields_name']]) ? $formData[$field['fields_name']] : null, $value_id);
             }
 
@@ -852,7 +855,8 @@ class Datab extends CI_Model
         // A questo punto se il campo è ajax non pesco i dati, ma demando
         // l'onere alla chiamata ajax
         $type = $field['forms_fields_override_type'] ?: $field['fields_draw_html_type'];
-        if ($type == 'select_ajax' or $field['fields_source']) {
+
+        if (in_array($type, ['select_ajax', 'input_hidden']) or $field['fields_source']) {
             return $field;
         }
 
@@ -958,6 +962,7 @@ class Datab extends CI_Model
         if (!($dati = $this->mycache->get($cache_key))) {
             $group_by = array_get($additional_parameters, 'group_by', null);
             $search = array_get($additional_parameters, 'search', null);
+            $depth = array_get($additional_parameters, 'depth', null);
             $preview_fields = array_get($additional_parameters, 'preview_fields', []);
 
             //@TODO: Intervenire su questa funzione per estrarre eventuali eval cachable
@@ -1056,6 +1061,7 @@ class Datab extends CI_Model
 
                 $data = $this->getDataEntityByQuery($grid['grids']['grids_entity_id'], $grid['grids']['grids_custom_query'], $where, $limit, $offset, $order_by, $count, $eval_cachable_fields, ['group_by' => $group_by]);
             } else {
+
                 $data = $this->getDataEntity($grid['grids']['grids_entity_id'], $where, $limit, $offset, $order_by, $depth, $count, $eval_cachable_fields, ['group_by' => $group_by]);
             }
             //debug($data,true);
@@ -1320,12 +1326,18 @@ class Datab extends CI_Model
                     $relationships = [];
                 }
                 foreach ($sess_where_data[$element[$element_type . "_filter_session_key"]] as $condition) {
+
                     if (!array_key_exists('value', $condition) || $condition['value'] === '' || $condition['value'] === []) {
                         continue;
                     }
                     $query_field = $this->db->join('fields_draw', 'fields_draw_fields_id = fields_id', 'left')->get_where('fields', array('fields_id' => (int) $condition['field_id']));
+
+
+
                     if ($query_field->num_rows() && $query_field->row()->fields_name) {
                         $field = $query_field->row();
+
+
                         // Se il campo è di un'entità diversa da quella del form devo fare un where in
                         // ovviamente l'entità a cui appartiene il campo deve avere almeno un campo che punta all'entità del form
                         $is_another_entity = !empty($entity) && ($entity['entity_id'] != $field->fields_entity_id);
@@ -1341,6 +1353,9 @@ class Datab extends CI_Model
                                     'fields_ref' => $entity['entity_name']
                                 )
                             )->row();
+
+
+
                             if (isset($other_field_select->fields_name)) {
                                 // Caso 1: è l'altra entità che ha il ref nell'entità in cui eseguo la ricerca
                                 $where_prefix = "{$entity['entity_name']}.{$entity['entity_name']}_id IN (SELECT {$other_field_select->fields_name} FROM {$other_entity['entity_name']} WHERE ";
@@ -1348,6 +1363,8 @@ class Datab extends CI_Model
                                 // Caso 2: è questa entità che sta ha il ref nell'altra entità
                                 // devo trovare codesto field
                                 $field_referencing = $this->db->get_where('fields', array('fields_entity_id' => $entity['entity_id'], 'fields_ref' => $other_entity['entity_name']))->row();
+
+
                                 if (empty($field_referencing)) {
                                     // Non so come gestirlo, per ora piazzo un continue e tolgo debug
                                     //continue;
@@ -1356,11 +1373,35 @@ class Datab extends CI_Model
                                     $field_referencing = $field;
                                     $where_prefix = "({$other_entity['entity_name']}.";
                                 }
+                                //Se anche la $other_entity
+                                if ($field->fields_ref && $this->crmentity->isRelation($field->fields_ref)) {
+                                    $relation = $this->crmentity->getRelationByName($field->fields_ref);
+                                    if ($relation['relations_table_1'] == $other_entity['entity_name']) {
+                                        $campo_1 = $relation['relations_field_1'];
+                                        $campo_2 = $relation['relations_field_2'];
+                                        $tabella_1 = $relation['relations_table_1'];
+                                        $tabella_2 = $relation['relations_table_2'];
+                                    } else {
+                                        $campo_1 = $relation['relations_field_2'];
+                                        $campo_2 = $relation['relations_field_1'];
+                                        $tabella_1 = $relation['relations_table_2'];
+                                        $tabella_2 = $relation['relations_table_1'];
 
-                                $where_prefix = "{$entity['entity_name']}.{$field_referencing->fields_name} IN (SELECT {$other_entity['entity_name']}_id FROM {$other_entity['entity_name']} WHERE ";
+                                    }
+
+                                    $where_prefix = "{$entity['entity_name']}.{$field_referencing->fields_name} IN (SELECT {$other_entity['entity_name']}_id FROM {$field->fields_ref} WHERE  ";
+                                    $field->fields_name = $campo_2;
+
+
+
+                                } else {
+                                    $where_prefix = "{$entity['entity_name']}.{$field_referencing->fields_name} IN (SELECT {$other_entity['entity_name']}_id FROM {$other_entity['entity_name']} WHERE ";
+                                }
+
                             }
-
                             $where_suffix = ")";
+
+
                         } elseif (array_key_exists($field->fields_ref, $relationships)) {
                             // Sto filtrando in una relazione, quindi il mio field ref punta ad una relazione
                             // prendo il campo della TABELLA 2 perché è la cossiddetta tabella correlata
@@ -1477,8 +1518,15 @@ class Datab extends CI_Model
 
 
                                     } else {
+
+
                                         $arr[] = "({$where_prefix}{$field->fields_name} $not {$operators[$condition['operator']]['sql']} ({$values}){$where_suffix})";
+
+
                                     }
+
+
+
                                     break;
 
                                 case 'like':
@@ -1776,7 +1824,7 @@ class Datab extends CI_Model
         }
     }
 
-    public function get_menu($position = 'sidebar')
+    public function get_menu($position = 'sidebar', $value_id = null)
     {
         // Prendi tutti i menu, con i sottomenu e poi ciclandoli costruisci un array multidimensionale
         $menu = $this->db->from('menu')->join('layouts', 'layouts.layouts_id = menu.menu_layout', 'left')
@@ -1784,7 +1832,7 @@ class Datab extends CI_Model
 
         $return = $subs = [];
         foreach ($menu as $key => $item) {
-            if (!$this->conditions->accessible('menu', $item['menu_id'])) {
+            if (!$this->conditions->accessible('menu', $item['menu_id'], $value_id)) {
                 unset($menu[$key]);
                 continue;
             }
@@ -3339,7 +3387,7 @@ class Datab extends CI_Model
                     $subLayout['current_page'] = sprintf("layout_%s", $layoutBoxData['layouts_boxes_layout']);
                     $subLayout['show_title'] = false;
 
-                    if ($subLayout['layout'] != []) {
+                    if (!empty($subLayout['layout']) && $subLayout['layout'] != []) {
                         return $this->load->view("pages/layout", array('dati' => $subLayout, 'value_id' => $value_id), true);
                     } else {
                         //Layout content is empty
@@ -3500,7 +3548,7 @@ class Datab extends CI_Model
             case "menu_group":
             case "menu_button_stripe":
             case "menu_big_button":
-                $data = $this->get_menu($contentRef);
+                $data = $this->get_menu($contentRef, $value_id);
                 return $this->load->view("pages/layouts/menu/{$contentType}", array('data' => $data, 'value_id' => $value_id, 'layout_data_detail' => $layoutEntityData), true);
             case "view":
                 //TODO: verificare prima se esiste un custom per questo modulo nelle view native custom

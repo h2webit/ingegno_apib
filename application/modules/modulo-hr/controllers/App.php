@@ -130,8 +130,8 @@ class App extends MY_Controller
     }
 
     /**
-    * Timbratura con NFC - dismesso visto che si timbra con il campo personalizzabile e non più con l'id reparto
-    */
+     * Timbratura con NFC - dismesso visto che si timbra con il campo personalizzabile e non più con l'id reparto
+     */
     /*public function timbraNfc()
     {
         $post = $this->input->post();
@@ -175,9 +175,9 @@ class App extends MY_Controller
 
 
     /**
-    * ! Timbra con NFC
-    * * Usato campo personalizzabile e non più id reparto
-    */
+     * ! Timbra con NFC
+     * * Usato campo personalizzabile e non più id reparto
+     */
     public function timbraNfc()
     {
         $post = $this->input->post();
@@ -187,29 +187,29 @@ class App extends MY_Controller
         $cliente = @$post['cliente'] ?? null;
         $commessa = @$post['commessa'] ?? null;
 
-        if(empty($dipendente_id) || empty($reparto_code)) {
+        if (empty($dipendente_id) || empty($reparto_code)) {
             log_message('error', "Impossibile timbrare, utente o reparto mancante");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, utente o reparto non riconosciuti']));
             exit;
         }
 
         $reparto = $this->apilib->searchFirst('reparti', [
-            'reparti_tag_nfc_code' => $reparto_code, 
+            'reparti_tag_nfc_code' => $reparto_code,
         ]);
 
-        if(empty($reparto)) {
+        if (empty($reparto)) {
             log_message('error', "Impossibile timbrare, nessun reparto associato al tag scansionato");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, nessun reparto associato al tag scansionato']));
             exit;
         }
-        
+
         //controllo che il dipendente sia associato a quel reparto
         $reparto_detail = $this->apilib->searchFirst('rel_reparto_dipendenti', [
-            'reparti_id' => $reparto['reparti_id'], 
+            'reparti_id' => $reparto['reparti_id'],
             'dipendenti_id' => $dipendente_id
         ]);
-                
-        if(empty($reparto_detail)) {
+
+        if (empty($reparto_detail)) {
             log_message('error', "Impossibile timbrare, utente non associato al reparto");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, utente non associato al reparto']));
             exit;
@@ -217,12 +217,12 @@ class App extends MY_Controller
 
         //verifico che l'utente non sia già presente, in quel caso deve fare l'uscita
         $presenza_ordierna = $this->apilib->searchFirst('presenze', [
-            'presenze_dipendente' => $dipendente_id, 
-            'presenze_data_inizio' => date('Y-m-d'), 
+            'presenze_dipendente' => $dipendente_id,
+            'presenze_data_inizio' => date('Y-m-d'),
             'presenze_data_fine IS NULL or presenze_data_fine = ""'
         ]);
-        
-        if(empty($presenza_ordierna)) {
+
+        if (empty($presenza_ordierna)) {
             $entrata = $this->timbrature->timbraEntrata($dipendente_id, null, null, "NFC", $reparto['reparti_id'], $cliente, $commessa);
             die(json_encode(['status' => 1, 'txt' => 'Entrata salvata con successo', 'tipo' => 'entrata', 'data' => $entrata]));
         } else {
@@ -230,7 +230,7 @@ class App extends MY_Controller
             die(json_encode(['status' => 1, 'txt' => 'Uscita registrata correttamente.', 'tipo' => 'uscita', 'data' => $uscita]));
         }
     }
-    
+
     public function timbraGPS()
     {
         $post = $this->input->post();
@@ -244,13 +244,13 @@ class App extends MY_Controller
         $longitude = @$post['longitude'];
 
 
-        if(empty($dipendente_id) || empty($reparto_code)) {
+        if (empty($dipendente_id) || empty($reparto_code)) {
             log_message('error', "Impossibile timbrare, utente o reparto mancante");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, utente o reparto non riconosciuti']));
             exit;
         }
 
-        if(empty($cliente) || empty($commessa)) {
+        if (empty($cliente) || empty($commessa)) {
             log_message('error', "Impossibile timbrare con GPS per dipendente #{$dipendente_id}, cliente o commessa mancanti");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, cliente e/o commessa non riconosciuti']));
             exit;
@@ -258,19 +258,19 @@ class App extends MY_Controller
 
         $reparto = $this->apilib->view('reparti', $reparto_code);
 
-        if(empty($reparto)) {
+        if (empty($reparto)) {
             log_message('error', "Impossibile timbrare, reparto non riconosciuto");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, reparto non riconosciuto']));
             exit;
         }
-        
+
         //Se ho dipendenti associati al reparto e non sono tra quelli devo bloccare
         $rel_reparto_dipendenti = $this->apilib->search('rel_reparto_dipendenti', [
-            'reparti_id' => $reparto['reparti_id'], 
+            'reparti_id' => $reparto['reparti_id'],
         ]);
         $found = in_array($dipendente_id, array_column($rel_reparto_dipendenti, 'dipendenti_id'));
-                
-        if(!empty($rel_reparto_dipendenti) && !$found) {
+
+        if (!empty($rel_reparto_dipendenti) && !$found) {
             log_message('error', "Impossibile timbrare, dipendente #{$dipendente_id} non associato al reparto #{$reparto['reparti_id']}");
             die(json_encode(['status' => 0, 'txt' => 'Impossibile timbrare, dipendente non associato al reparto']));
             exit;
@@ -278,12 +278,12 @@ class App extends MY_Controller
 
         //verifico che il dipendente non sia già presente, in quel caso deve fare l'uscita
         $presenza_ordierna = $this->apilib->searchFirst('presenze', [
-            'presenze_dipendente' => $dipendente_id, 
-            'presenze_data_inizio' => date('Y-m-d'), 
+            'presenze_dipendente' => $dipendente_id,
+            'presenze_data_inizio' => date('Y-m-d'),
             'presenze_data_fine IS NULL or presenze_data_fine = ""'
         ]);
-        
-        if(empty($presenza_ordierna)) {
+
+        if (empty($presenza_ordierna)) {
             $entrata = $this->timbrature->timbraEntrata($dipendente_id, $orario, null, "GPS", $reparto['reparti_id'], $cliente, $commessa, $latitude, $longitude);
             die(json_encode(['status' => 1, 'txt' => 'Entrata salvata con successo', 'tipo' => 'entrata', 'data' => $entrata]));
         } else {
@@ -304,27 +304,27 @@ class App extends MY_Controller
         $psw_nuova = @$post['new'];
         $psw_nuova_conferma = @$post['confirm'];
 
-        if(empty($dipendente_id)) {
+        if (empty($dipendente_id)) {
             die(json_encode(['status' => 0, 'txt' => 'Dipendente non riconosciuto']));
         }
-        if(empty($psw_corrente) || empty($psw_nuova) || empty($psw_nuova_conferma)) {
+        if (empty($psw_corrente) || empty($psw_nuova) || empty($psw_nuova_conferma)) {
             die(json_encode(['status' => 0, 'txt' => 'Devi compilare tutte e tre le password']));
         }
 
         // Cerco dipendente con password fornita
         $dipendente = $this->apilib->view('dipendenti', $dipendente_id);
-        if(empty($dipendente)) {
+        if (empty($dipendente)) {
             die(json_encode(['status' => 0, 'txt' => 'Dipendente non riconosciuto']));
         }
 
         // Controllo le password
-        if($dipendente['dipendenti_password'] != md5($psw_corrente)) {
+        if ($dipendente['dipendenti_password'] != md5($psw_corrente)) {
             die(json_encode(['status' => 0, 'txt' => 'La password corrente che è stata fornita non coincide con quella salvata nel sistema.']));
         }
-        if($psw_nuova != $psw_nuova_conferma) {
+        if ($psw_nuova != $psw_nuova_conferma) {
             die(json_encode(['status' => 0, 'txt' => 'La nuova password non coincide con quella richiesta per la conferma.']));
         }
-        if($dipendente['dipendenti_password'] === md5($psw_nuova)) {
+        if ($dipendente['dipendenti_password'] === md5($psw_nuova)) {
             die(json_encode(['status' => 0, 'txt' => 'La nuova password deve essere diversa da quella corrente.']));
         }
 
@@ -340,7 +340,7 @@ class App extends MY_Controller
 
             die(json_encode(['status' => 1, 'txt' => 'Modifica password effettuata con successo', 'data' => $updated_dipendente]));
         } catch (Exception $e) {
-            log_message('error', "Errore durante la modifica password dipendente #$$dipendente_id} e utente da app: ".$e->getMessage());
+            log_message('error', "Errore durante la modifica password dipendente #$$dipendente_id} e utente da app: " . $e->getMessage());
             die(json_encode(['status' => 0, 'txt' => 'Si è verificato un errore durante lil salvataggio della nuova password.']));
         }
     }
@@ -355,10 +355,10 @@ class App extends MY_Controller
         $presenza_id = @$post['presenza_id'];
         $giustificativo = @$post['giustificativo'];
 
-        if(empty($presenza_id)) {
+        if (empty($presenza_id)) {
             die(json_encode(['status' => 0, 'txt' => 'Presenza non riconosciuta']));
         }
-        if(empty($giustificativo)) {
+        if (empty($giustificativo)) {
             die(json_encode(['status' => 0, 'txt' => 'Il campo giustificativo non può essere vuoto']));
         }
 
@@ -368,7 +368,7 @@ class App extends MY_Controller
 
             die(json_encode(['status' => 1, 'txt' => 'Giustificativo salvato con successo', 'presenza' => $updated_presenza]));
         } catch (Exception $e) {
-            log_message('error', "Errore durante salvataggio giustivaie presenza #{$presenza_id}: ".$e->getMessage());
+            log_message('error', "Errore durante salvataggio giustivaie presenza #{$presenza_id}: " . $e->getMessage());
             die(json_encode(['status' => 0, 'txt' => 'Si è verificato un errore durante il salvataggio del giustificativo.']));
         }
     }
@@ -381,22 +381,22 @@ class App extends MY_Controller
         $post = $this->input->post();
         $dipendente_id = @$post['dipendente_id'];
 
-        if(empty($dipendente_id)) {
+        if (empty($dipendente_id)) {
             die(json_encode(['status' => 1, 'txt' => 'Dipendente non riconosciuto']));
         }
 
         $settings = $this->apilib->searchFirst('impostazioni_hr');
-        
+
         $giorno_sblocco = (int) min($settings['impostazioni_hr_giorno_sblocco_banca_ore'] ?? 0, 31);
         $giorno = intval(date('d'));
 
         $AND = '';
         $txt = '';
         $data_aggiornamento = date('d/m/Y');
-        
-        if(empty($giorno_sblocco) || $giorno_sblocco == 0) {
+
+        if (empty($giorno_sblocco) || $giorno_sblocco == 0) {
             $txt = 'Banca ore real time';
-        } else if($giorno < $giorno_sblocco) {
+        } else if ($giorno < $giorno_sblocco) {
             // Devo tornare la banca ore di due mesi fa
             // Es. sblocco = 10, oggi è 5 agosto, devo tornare la banca ore fine a fine giugno
             $AND = " AND DATE_FORMAT(banca_ore_data, '%Y-%m') <= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), '%Y-%m')";
@@ -416,14 +416,15 @@ class App extends MY_Controller
                 FROM banca_ore
                 JOIN banca_ore_movimento ON banca_ore.banca_ore_movimento = banca_ore_movimento.banca_ore_movimento_id
                 WHERE banca_ore_dipendente = '{$dipendente_id}'
+                AND banca_ore_movimento_id <> '2'
                 {$AND}
                 ORDER BY banca_ore_data DESC
             ")->result_array();
 
             //Calcolo saldo
             $saldo = 0;
-            
-            if(!empty($banca_ore)) {
+
+            if (!empty($banca_ore)) {
 
                 foreach ($banca_ore as $movimento) {
                     switch ($movimento['banca_ore_movimento']) {
@@ -446,18 +447,19 @@ class App extends MY_Controller
 
             die(json_encode(['status' => 0, 'txt' => $txt,  'data' => $banca_ore, 'saldo' => number_format($saldo, 2), 'data_aggiornamento' => $data_aggiornamento]));
         } catch (Exception $e) {
-            log_message('error', 'Errore recuperando dati banca ore da app: '.$e->getMessage());
+            log_message('error', 'Errore recuperando dati banca ore da app: ' . $e->getMessage());
             die(json_encode(['status' => 0, 'txt' => 'Si è verificato un errore durante la richiesta della banca ore']));
         }
     }
 
 
 
-    public function testTimbraentrata($dipendente_id, $ora_entrata,$reparto) {
-        
+    public function testTimbraentrata($dipendente_id, $ora_entrata, $reparto)
+    {
 
-        
-        
+
+
+
 
         $entrata = $this->timbrature->timbraEntrata($dipendente_id, $ora_entrata, null, 'TEST', $reparto, null, null, null, null);
         /* @TODO: fare un json con elenco entrate e uscite, attenzione a tutti i punti dove è usato */
@@ -466,7 +468,7 @@ class App extends MY_Controller
     public function testTimbrauscita($dipendente_id, $ora_uscita)
     {
 
-         $uscita = $this->timbrature->timbraUscita($dipendente_id, $ora_uscita, null, null, 'TEST');
+        $uscita = $this->timbrature->timbraUscita($dipendente_id, $ora_uscita, null, null, 'TEST');
         /* @TODO: fare un json con elenco entrate e uscite, attenzione a tutti i punti dove è usato */
         die(json_encode(['status' => 1, 'txt' => 'Entrata salvata con successo', 'uscita' => $uscita]));
     }

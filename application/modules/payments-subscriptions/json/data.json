@@ -4,15 +4,15 @@
     "modules_description": "Manage your subscriptions and payments easily\r\n\r\nREQUIRES FOLLOWING MODULES: customers, currencies",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.6",
+    "modules_version": "1.1.8",
     "modules_identifier": "payments-subscriptions",
     "modules_base64_zip": null,
     "modules_raw_data_install": "333,21",
     "modules_raw_data_update": "333,21",
     "modules_created_by_user": "1",
-    "modules_version_code": "35",
-    "modules_thumbnail": "",
-    "modules_min_client_version": "3.8.6",
+    "modules_version_code": "37",
+    "modules_thumbnail": "1e30512eb928e5879304f846e2f95a1c.png",
+    "modules_min_client_version": "3.8.9",
     "modules_version_date": "2022-09-14 15:44:54",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -9850,7 +9850,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10509",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -9888,7 +9888,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13707",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -9926,7 +9926,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17015",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -9964,7 +9964,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17280",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -10002,7 +10002,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17457",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -10040,7 +10040,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17469",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10078,7 +10078,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17495",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -10116,7 +10116,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17496",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -10154,7 +10154,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17497",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10338,7 +10338,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10537",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10376,7 +10376,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10538",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -10414,7 +10414,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10539",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1385",
                     "fields_entity_id": "7",
@@ -10452,7 +10452,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10540",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1386",
                     "fields_entity_id": "7",
@@ -10490,7 +10490,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10541",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1387",
                     "fields_entity_id": "7",
@@ -10528,7 +10528,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10542",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "121",
                     "fields_entity_id": "7",
@@ -10566,7 +10566,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12362",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1509",
                     "fields_entity_id": "7",
@@ -10604,7 +10604,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13355",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1159",
                     "fields_entity_id": "7",
@@ -10642,7 +10642,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-14837",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2982",
                     "fields_entity_id": "7",
@@ -10680,7 +10680,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17282",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -10718,7 +10718,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17305",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -10756,7 +10756,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17333",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -10794,7 +10794,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17489",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10939,7 +10939,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10518",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1194",
                     "fields_entity_id": "7",
@@ -10977,7 +10977,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10519",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1192",
                     "fields_entity_id": "7",
@@ -11015,7 +11015,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10520",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1193",
                     "fields_entity_id": "7",
@@ -11053,7 +11053,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10521",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "325",
                     "fields_entity_id": "7",
@@ -11091,7 +11091,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10523",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "115",
                     "fields_entity_id": "7",
@@ -11129,7 +11129,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10524",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -11167,7 +11167,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10525",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "117",
                     "fields_entity_id": "7",
@@ -11205,7 +11205,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10527",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "118",
                     "fields_entity_id": "7",
@@ -11243,7 +11243,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-14487",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -11281,7 +11281,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17016",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1984",
                     "fields_entity_id": "7",
@@ -11319,7 +11319,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17017",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2982",
                     "fields_entity_id": "7",
@@ -11357,7 +11357,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17149",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4121",
                     "fields_entity_id": "7",
@@ -11395,7 +11395,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-18122",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4503",
                     "fields_entity_id": "7",
@@ -11433,7 +11433,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-20958",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1892",
                     "fields_entity_id": "7",
@@ -11847,7 +11847,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10722",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -11885,7 +11885,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10726",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -11923,7 +11923,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10727",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -11961,7 +11961,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10728",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -11999,7 +11999,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10730",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "115",
                     "fields_entity_id": "7",
@@ -12037,7 +12037,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10731",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -12157,7 +12157,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11435",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -12195,7 +12195,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11436",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "113",
                     "fields_entity_id": "7",
@@ -12233,7 +12233,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11437",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "114",
                     "fields_entity_id": "7",
@@ -12271,7 +12271,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11438",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -12309,7 +12309,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11439",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -12347,7 +12347,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11440",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -12385,7 +12385,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-11441",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "393",
                     "fields_entity_id": "7",
@@ -12505,7 +12505,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12154",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -12543,7 +12543,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17281",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -12581,7 +12581,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17458",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -12619,7 +12619,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17471",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12657,7 +12657,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17492",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12695,7 +12695,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17493",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -12733,7 +12733,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17494",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -12869,7 +12869,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12307",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12907,7 +12907,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12309",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -12945,7 +12945,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17459",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -12983,7 +12983,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17470",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13103,7 +13103,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12983",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -13141,7 +13141,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12985",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "113",
                     "fields_entity_id": "7",
@@ -13179,7 +13179,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-12987",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "114",
                     "fields_entity_id": "7",
@@ -13217,7 +13217,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13009",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -13255,7 +13255,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13015",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13293,7 +13293,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13047",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13429,7 +13429,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13025",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "112",
                     "fields_entity_id": "7",
@@ -13467,7 +13467,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13027",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "113",
                     "fields_entity_id": "7",
@@ -13505,7 +13505,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13029",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "114",
                     "fields_entity_id": "7",
@@ -13543,7 +13543,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13031",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1387",
                     "fields_entity_id": "7",
@@ -13581,7 +13581,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13033",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -13619,7 +13619,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13035",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -13657,7 +13657,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13041",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -13761,7 +13761,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-14595",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "124",
                     "fields_entity_id": "7",
@@ -13973,7 +13973,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16276",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14011,7 +14011,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16277",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14049,7 +14049,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16279",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14087,7 +14087,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16280",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14125,7 +14125,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-16287",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14212,7 +14212,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17312",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -14250,7 +14250,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17313",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -14288,7 +14288,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17314",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "119",
                     "fields_entity_id": "7",
@@ -14326,7 +14326,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17315",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "120",
                     "fields_entity_id": "7",
@@ -14364,7 +14364,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17316",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -14402,7 +14402,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17317",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1193",
                     "fields_entity_id": "7",
@@ -14440,7 +14440,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17318",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "115",
                     "fields_entity_id": "7",
@@ -14478,7 +14478,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17319",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1192",
                     "fields_entity_id": "7",
@@ -14516,7 +14516,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17322",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14554,7 +14554,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17332",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14592,7 +14592,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17356",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "1510",
                     "fields_entity_id": "7",
@@ -14679,7 +14679,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10509",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -14717,7 +14717,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13707",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -14755,7 +14755,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17015",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -14793,7 +14793,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17280",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -14831,7 +14831,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17457",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -14869,7 +14869,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17469",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14907,7 +14907,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17495",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -14945,7 +14945,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17496",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -14983,7 +14983,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17497",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15391,7 +15391,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "sales-grids_fields-19356",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -15429,7 +15429,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "sales-grids_fields-19357",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -15467,7 +15467,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "sales-grids_fields-19358",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15571,7 +15571,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-10509",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -15609,7 +15609,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-13707",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "122",
                     "fields_entity_id": "7",
@@ -15647,7 +15647,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17015",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "2823",
                     "fields_entity_id": "7",
@@ -15685,7 +15685,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "customers-grids_fields-17280",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4177",
                     "fields_entity_id": "7",
@@ -15723,7 +15723,7 @@
                     "grids_fields_with_actions": "1",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17457",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -15761,7 +15761,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17469",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15799,7 +15799,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17495",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4211",
                     "fields_entity_id": "7",
@@ -15837,7 +15837,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17496",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4202",
                     "fields_entity_id": "7",
@@ -15875,7 +15875,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-17497",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16059,7 +16059,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3595",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3977",
                     "fields_entity_id": "7",
@@ -16097,7 +16097,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3596",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16135,7 +16135,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3597",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16173,7 +16173,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3598",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16211,7 +16211,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3599",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16249,7 +16249,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3600",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "116",
                     "fields_entity_id": "7",
@@ -16287,7 +16287,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3604",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "118",
                     "fields_entity_id": "7",
@@ -16325,7 +16325,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3605",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16363,7 +16363,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "importer-grids_fields-3607",
-                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16409,9 +16409,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "new-subscription",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "firecrm-form-198",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -16735,9 +16735,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "payments_form",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-217",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -16946,9 +16946,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "payments_filter",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-227",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -17157,9 +17157,9 @@
             "forms_success_status_edit": "2",
             "forms_success_message_edit": "",
             "forms_identifier": "customers",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-1683",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -17185,7 +17185,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_112",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17208,7 +17208,7 @@
                     "forms_fields_dependent_on": "customers_group:1,5",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_113",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17231,7 +17231,7 @@
                     "forms_fields_dependent_on": "customers_group:1,5",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_114",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17254,7 +17254,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_115",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17277,7 +17277,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17300,7 +17300,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_117",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17323,7 +17323,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17346,7 +17346,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_120",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17369,7 +17369,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_121",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17392,7 +17392,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_122",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17415,7 +17415,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_325",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17438,7 +17438,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_393",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17461,7 +17461,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4,5",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1192",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17484,7 +17484,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1193",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17507,7 +17507,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1194",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17530,7 +17530,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1159",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17553,7 +17553,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1387",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17576,7 +17576,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1385",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17599,7 +17599,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1386",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17622,7 +17622,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17645,7 +17645,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2495",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17668,7 +17668,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2823",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17691,7 +17691,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2827",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17714,7 +17714,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4031",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17737,7 +17737,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_4109",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17760,7 +17760,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4177",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17783,7 +17783,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4202",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17806,7 +17806,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4211",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17829,7 +17829,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1509",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17852,7 +17852,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1781",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17875,7 +17875,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4824",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17898,7 +17898,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4825",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17921,7 +17921,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_5244",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17944,7 +17944,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1892",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -17967,7 +17967,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_5729",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -17989,9 +17989,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1688",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -18017,7 +18017,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1688_124",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -18039,9 +18039,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1692",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -18067,7 +18067,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_115",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18090,7 +18090,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18113,7 +18113,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_117",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18136,7 +18136,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18159,7 +18159,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_325",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18182,7 +18182,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1192",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18205,7 +18205,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1193",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18228,7 +18228,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1194",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18251,7 +18251,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1984",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18274,7 +18274,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2982",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18297,7 +18297,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4121",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18320,7 +18320,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1781",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18343,7 +18343,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2823",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18366,7 +18366,7 @@
                     "forms_fields_dependent_on": "customers_listino:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4503",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18389,7 +18389,7 @@
                     "forms_fields_dependent_on": "customers_price_list:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "customers-forms_fields-1692_1729",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18412,7 +18412,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-1692_1892",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -18434,9 +18434,9 @@
             "forms_success_status_edit": "2",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-1710",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -18462,7 +18462,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1710_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18485,7 +18485,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1710_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18508,7 +18508,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1710_2495",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18531,7 +18531,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "customers-forms_fields-1710_4177",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18554,7 +18554,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-1710_4202",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18577,7 +18577,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-1710_4211",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -18599,9 +18599,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "firecrm-form-1796",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -18741,9 +18741,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1824",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -18769,7 +18769,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1508",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18792,7 +18792,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1509",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18815,7 +18815,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1729",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18838,7 +18838,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1781",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18861,7 +18861,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1892",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18884,7 +18884,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2085",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18907,7 +18907,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2749",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18930,7 +18930,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1976",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18953,7 +18953,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2949",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18976,7 +18976,7 @@
                     "forms_fields_dependent_on": "customers_pag_giorno_fisso:",
                     "forms_fields_fieldset": "Variazioni data scadenza pagamento",
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1896",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -18999,7 +18999,7 @@
                     "forms_fields_dependent_on": "customers_pag_gg_spostamento:",
                     "forms_fields_fieldset": "Variazioni data scadenza pagamento",
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1893",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -19021,9 +19021,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1850",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -19049,7 +19049,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19072,7 +19072,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1843",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19095,7 +19095,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1844",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19118,7 +19118,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1974",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19141,7 +19141,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1975",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19164,7 +19164,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1976",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19187,7 +19187,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1892",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19210,7 +19210,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1850_1984",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -19232,9 +19232,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "suppliers-subform",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1864",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -19260,7 +19260,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_112",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19283,7 +19283,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1159",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19306,7 +19306,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1192",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19329,7 +19329,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1193",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19352,7 +19352,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_115",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19375,7 +19375,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_120",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19398,7 +19398,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19421,7 +19421,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_117",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19444,7 +19444,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_122",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19467,7 +19467,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1864_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -19489,9 +19489,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "new-customer-lead",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-1995",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -19517,7 +19517,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1995_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19540,7 +19540,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1995_1386",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -19562,9 +19562,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "edit-customer-lead",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2015",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -19590,7 +19590,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_112",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19613,7 +19613,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_113",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19636,7 +19636,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_114",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19659,7 +19659,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19682,7 +19682,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_122",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19705,7 +19705,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_1387",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19728,7 +19728,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_120",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19751,7 +19751,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19774,7 +19774,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2015_1386",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -19796,9 +19796,9 @@
             "forms_success_status_edit": "6",
             "forms_success_message_edit": "",
             "forms_identifier": "customers-subform",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2055",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -19824,7 +19824,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_113",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19847,7 +19847,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_114",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19870,7 +19870,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19893,7 +19893,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_115",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19916,7 +19916,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19939,7 +19939,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_117",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19962,7 +19962,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -19985,7 +19985,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_120",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20008,7 +20008,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1387",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20031,7 +20031,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_122",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20054,7 +20054,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_325",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20077,7 +20077,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_112",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20100,7 +20100,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1193",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20123,7 +20123,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_1192",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20146,7 +20146,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2823",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20169,7 +20169,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2495",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20192,7 +20192,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_4031",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20215,7 +20215,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2827",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -20238,7 +20238,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2055_2982",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -20260,9 +20260,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2061",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -20310,9 +20310,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customer-map",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "contabilita-form-2134",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -20338,7 +20338,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2134_123",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -20360,9 +20360,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2308",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -20433,9 +20433,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "payments_filters_customers_sublayout",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2313",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -20552,9 +20552,9 @@
             "forms_success_status_edit": "1",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "Cerca",
             "forms_json": null,
             "forms_module_key": "customers-form-2432",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -20580,7 +20580,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "customers-forms_fields-2432_4202",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -20602,9 +20602,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "new-subscription-contabilita",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2490",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -20813,9 +20813,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "new-subscription-contract",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2497",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -21070,9 +21070,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2498",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -21212,9 +21212,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2499",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -21446,9 +21446,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2525",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -21474,7 +21474,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_112",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21497,7 +21497,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_113",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21520,7 +21520,7 @@
                     "forms_fields_dependent_on": "customers_group:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_114",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21543,7 +21543,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_115",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21566,7 +21566,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21589,7 +21589,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_117",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21612,7 +21612,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21635,7 +21635,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_120",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21658,7 +21658,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_121",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21681,7 +21681,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_122",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21704,7 +21704,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_325",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21727,7 +21727,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_393",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21750,7 +21750,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1192",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21773,7 +21773,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1193",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21796,7 +21796,7 @@
                     "forms_fields_dependent_on": "customers_group:2,3,4",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1194",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21819,7 +21819,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1159",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21842,7 +21842,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1387",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21865,7 +21865,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1385",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21888,7 +21888,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1386",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21911,7 +21911,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1510",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21934,7 +21934,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2495",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21957,7 +21957,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2823",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -21980,7 +21980,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1683_2827",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22003,7 +22003,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4031",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22026,7 +22026,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_4109",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22049,7 +22049,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4177",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22072,7 +22072,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4202",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22095,7 +22095,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_4211",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22118,7 +22118,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "contabilita-forms_fields-1683_1509",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22141,7 +22141,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "dati aggiuntivi",
                     "forms_fields_module_key": "customers-forms_fields-1683_1781",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -22163,9 +22163,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2526",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -22191,7 +22191,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_115",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22214,7 +22214,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22237,7 +22237,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_117",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22260,7 +22260,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22283,7 +22283,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_325",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22306,7 +22306,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1192",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22329,7 +22329,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1193",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22352,7 +22352,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1194",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22375,7 +22375,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1984",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22398,7 +22398,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2982",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22421,7 +22421,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4121",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22444,7 +22444,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1692_1781",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22467,7 +22467,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_2823",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22490,7 +22490,7 @@
                     "forms_fields_dependent_on": "customers_listino:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1692_4503",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22513,7 +22513,7 @@
                     "forms_fields_dependent_on": "customers_price_list:",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "customers-forms_fields-1692_1729",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -22535,9 +22535,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "customers-form-2527",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -22563,7 +22563,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1508",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22586,7 +22586,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1509",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22609,7 +22609,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1781",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22632,7 +22632,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1892",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22655,7 +22655,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2085",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22678,7 +22678,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2749",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22701,7 +22701,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_1976",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22724,7 +22724,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-1824_2949",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -22746,9 +22746,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2551",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -22796,9 +22796,9 @@
             "forms_success_status_edit": "7",
             "forms_success_message_edit": "",
             "forms_identifier": "",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-2687",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -22824,7 +22824,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_116",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22847,7 +22847,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_4177",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22870,7 +22870,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_1509",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22893,7 +22893,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_118",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22916,7 +22916,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2687_2823",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22939,7 +22939,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_4202",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -22962,7 +22962,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2687_2827",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -22984,9 +22984,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "filtro_riepilogo_pagamenti",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "payments-subscriptions-form-2723",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -23034,9 +23034,9 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": "",
             "forms_identifier": "customers_notes",
-            "forms_submit_button_label": "",
             "forms_json": null,
             "forms_module_key": "contabilita-form-2738",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
             "forms_label": null,
@@ -23062,7 +23062,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2738_5741",
-                    "forms_fields_module": "modulo-hr",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -23524,7 +23524,24 @@
             "menu_type": "layout",
             "menu_form": null,
             "menu_html_attr": null,
-            "conditions": []
+            "conditions": [],
+            "menu_parent_data": {
+                "menu_id": "643",
+                "menu_label": "Amministrazione",
+                "menu_link": "",
+                "menu_parent": null,
+                "menu_icon_class": "fas fa-dollar-sign",
+                "menu_order": "4",
+                "menu_position": "sidebar",
+                "menu_layout": null,
+                "menu_css_class": "menu-amministrazione",
+                "menu_modal": "0",
+                "menu_module": "contabilita",
+                "menu_module_key": "contabilita-menu-184",
+                "menu_type": null,
+                "menu_form": null,
+                "menu_html_attr": null
+            }
         },
         {
             "menu_id": "136",
@@ -23578,7 +23595,24 @@
             "menu_type": "layout",
             "menu_form": null,
             "menu_html_attr": "",
-            "conditions": []
+            "conditions": [],
+            "menu_parent_data": {
+                "menu_id": "643",
+                "menu_label": "Amministrazione",
+                "menu_link": "",
+                "menu_parent": null,
+                "menu_icon_class": "fas fa-dollar-sign",
+                "menu_order": "4",
+                "menu_position": "sidebar",
+                "menu_layout": null,
+                "menu_css_class": "menu-amministrazione",
+                "menu_modal": "0",
+                "menu_module": "contabilita",
+                "menu_module_key": "contabilita-menu-184",
+                "menu_type": null,
+                "menu_form": null,
+                "menu_html_attr": null
+            }
         },
         {
             "menu_id": "1648",

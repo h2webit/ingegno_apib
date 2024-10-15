@@ -114,3 +114,7 @@
 
 
 <script src="<?php echo base_url_scripts("script/js/core.js?v=" . VERSION); ?>"></script>
+
+<?php foreach ($this->layout->getFooterScripts() as $script) : ?>
+    <script src="<?php echo $script .'?v='. VERSION; ?>"></script>
+<?php endforeach; ?>

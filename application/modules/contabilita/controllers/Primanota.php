@@ -1870,7 +1870,7 @@ class Primanota extends MX_Controller
         $conto_patrimoniale_riepilogo_ricavi = $this->apilib->searchFirst('documenti_contabilita_sottoconti', ['documenti_contabilita_sottoconti_codice_completo' => $conto_patrimoniale_riepilogo_ricavi_codice]);
 
         $piano_dei_conti = $this->prima_nota->getPianoDeiConti(true, true, true);
-
+        $almeno_una_registrazione = false;
 
         foreach ($piano_dei_conti as $mastro_tipo) {
             $total_mastri = count($mastro_tipo['mastri']);
@@ -1890,7 +1890,7 @@ class Primanota extends MX_Controller
                     $conto_riepilogo = $conto_patrimoniale_riepilogo_ricavi;
                 }
                 $conto_riepilogo_codice = $conto_riepilogo['documenti_contabilita_sottoconti_codice_completo'];
-
+                
                 $total_conti = count($mastro['conti']);
                 foreach ($mastro['conti'] as $conto) {
                     $s = 0;
@@ -1993,7 +1993,7 @@ class Primanota extends MX_Controller
                             //debug($righe, true);
                             foreach ($righe as $registrazione) {
                                 $registrazione['prime_note_registrazioni_prima_nota'] = $prima_nota_db['prime_note_id'];
-
+                                $almeno_una_registrazione = true;
                                 $this->apilib->create('prime_note_registrazioni', $registrazione);
                             }
                         }
@@ -2003,6 +2003,91 @@ class Primanota extends MX_Controller
 
 
         }
+        
+        if (!$almeno_una_registrazione) {
+            $prima_nota = [
+                'prime_note_azienda' => $azienda,
+                'prime_note_protocollo' => null,
+                'prime_note_documento' => null,
+                'prime_note_spesa' => null,
+                'prime_note_sezionale' => null,
+                'prime_note_scadenza' => ($anno_esercizio) . '-12-31',
+                'prime_note_causale' => $causale_bilancio_chiusura_gpp_id,
+                'prime_note_numero_documento' => null,
+                'prime_note_progressivo_giornaliero' => $this->prima_nota->getProgressivoGiorno(($anno_esercizio) . '-12-31', $azienda),
+                'prime_note_progressivo_annuo' => $this->prima_nota->getProgressivoAnno(($anno_esercizio) . '-12-31', $azienda),
+                'prime_note_tipo' => null,
+                'prime_note_ref_prima_nota' => null,
+                'prime_note_modello' => 0,
+                'prime_note_json_data' => null,
+                'prime_note_data_registrazione' => ($anno_esercizio) . '-12-31',
+            ];
+            $righe = [
+                //Riga uno
+                [
+                    'prime_note_registrazioni_importo_dare' => 0,
+                    'prime_note_registrazioni_importo_avere' =>  0,
+
+                    'prime_note_registrazioni_numero_riga' => 1,
+
+                    'prime_note_registrazioni_mastro_dare' => null,
+                    'prime_note_registrazioni_mastro_avere' => null,
+
+                    'prime_note_registrazioni_conto_dare' => null,
+                    'prime_note_registrazioni_conto_avere' =>  null,
+
+                    'prime_note_registrazioni_sottoconto_dare' =>  null,
+                    'prime_note_registrazioni_sottoconto_avere' =>  null,
+
+                    'prime_note_registrazioni_mastro_dare_codice' =>  null,
+                    'prime_note_registrazioni_mastro_avere_codice' =>  null,
+
+                    'prime_note_registrazioni_conto_dare_codice' =>  null,
+                    'prime_note_registrazioni_conto_avere_codice' => null,
+
+                    'prime_note_registrazioni_sottoconto_dare_codice' =>  null,
+                    'prime_note_registrazioni_sottoconto_avere_codice' => null,
+
+                    'prime_note_registrazioni_codice_dare_testuale' => null,
+                    'prime_note_registrazioni_codice_avere_testuale' =>  null,
+                ],
+                //Riga due
+                [
+                    'prime_note_registrazioni_importo_dare' => 0,
+                    'prime_note_registrazioni_importo_avere' => 0,
+
+                    'prime_note_registrazioni_numero_riga' => 2,
+
+                    'prime_note_registrazioni_mastro_dare' => null,
+                    'prime_note_registrazioni_mastro_avere' => null,
+
+                    'prime_note_registrazioni_conto_dare' => null,
+                    'prime_note_registrazioni_conto_avere' => null,
+
+                    'prime_note_registrazioni_sottoconto_dare' => null,
+                    'prime_note_registrazioni_sottoconto_avere' => null,
+
+                    'prime_note_registrazioni_mastro_dare_codice' => null,
+                    'prime_note_registrazioni_mastro_avere_codice' => null,
+
+                    'prime_note_registrazioni_conto_dare_codice' => null,
+                    'prime_note_registrazioni_conto_avere_codice' => null,
+
+                    'prime_note_registrazioni_sottoconto_dare_codice' => null,
+                    'prime_note_registrazioni_sottoconto_avere_codice' => null,
+
+                    'prime_note_registrazioni_codice_dare_testuale' => null,
+                    'prime_note_registrazioni_codice_avere_testuale' => null,
+                ],
+            ];
+            $prima_nota_db = $this->apilib->create('prime_note', $prima_nota);
+            foreach ($righe as $registrazione) {
+                $registrazione['prime_note_registrazioni_prima_nota'] = $prima_nota_db['prime_note_id'];
+                $this->apilib->create('prime_note_registrazioni', $registrazione);
+            }
+
+        }
+
         //Reindirizzo al referer
         echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
         exit;
@@ -2076,7 +2161,7 @@ class Primanota extends MX_Controller
         // ]);
         $piano_dei_conti = $this->prima_nota->getPianoDeiConti(true, true, true);
         $m = 0;
-
+$almeno_una_registrazione = false;
         foreach ($piano_dei_conti as $mastro_tipo) {
             $total_mastri = count($mastro_tipo['mastri']);
 
@@ -2182,6 +2267,7 @@ class Primanota extends MX_Controller
 
                             $prima_nota_db = $this->apilib->create('prime_note', $prima_nota);
                             foreach ($righe as $registrazione) {
+                                $almeno_una_registrazione = true;
                                 $registrazione['prime_note_registrazioni_prima_nota'] = $prima_nota_db['prime_note_id'];
                                 $this->apilib->create('prime_note_registrazioni', $registrazione);
                             }
@@ -2191,6 +2277,89 @@ class Primanota extends MX_Controller
             }
 
 
+        }
+
+        if (!$almeno_una_registrazione) {
+            $prima_nota = [
+                'prime_note_azienda' => $azienda,
+                'prime_note_protocollo' => null,
+                'prime_note_documento' => null,
+                'prime_note_spesa' => null,
+                'prime_note_sezionale' => null,
+                'prime_note_scadenza' => ($anno_esercizio) . '-12-31',
+                'prime_note_causale' => $causale_bilancio_chiusura_blc_id,
+                'prime_note_numero_documento' => null,
+                'prime_note_progressivo_giornaliero' => $this->prima_nota->getProgressivoGiorno(($anno_esercizio) . '-12-31', $azienda),
+                'prime_note_progressivo_annuo' => $this->prima_nota->getProgressivoAnno(($anno_esercizio) . '-12-31', $azienda),
+                'prime_note_tipo' => null,
+                'prime_note_ref_prima_nota' => null,
+                'prime_note_modello' => 0,
+                'prime_note_json_data' => null,
+                'prime_note_data_registrazione' => ($anno_esercizio) . '-12-31',
+            ];
+            $righe = [
+                //Riga uno
+                [
+                    'prime_note_registrazioni_importo_dare' => 0,
+                    'prime_note_registrazioni_importo_avere' =>  0,
+
+                    'prime_note_registrazioni_numero_riga' => 1,
+
+                    'prime_note_registrazioni_mastro_dare' => null,
+                    'prime_note_registrazioni_mastro_avere' => null,
+
+                    'prime_note_registrazioni_conto_dare' => null,
+                    'prime_note_registrazioni_conto_avere' =>  null,
+
+                    'prime_note_registrazioni_sottoconto_dare' =>  null,
+                    'prime_note_registrazioni_sottoconto_avere' =>  null,
+
+                    'prime_note_registrazioni_mastro_dare_codice' =>  null,
+                    'prime_note_registrazioni_mastro_avere_codice' =>  null,
+
+                    'prime_note_registrazioni_conto_dare_codice' =>  null,
+                    'prime_note_registrazioni_conto_avere_codice' => null,
+
+                    'prime_note_registrazioni_sottoconto_dare_codice' =>  null,
+                    'prime_note_registrazioni_sottoconto_avere_codice' => null,
+
+                    'prime_note_registrazioni_codice_dare_testuale' => null,
+                    'prime_note_registrazioni_codice_avere_testuale' =>  null,
+                ],
+                //Riga due
+                [
+                    'prime_note_registrazioni_importo_dare' => 0,
+                    'prime_note_registrazioni_importo_avere' => 0,
+
+                    'prime_note_registrazioni_numero_riga' => 2,
+
+                    'prime_note_registrazioni_mastro_dare' => null,
+                    'prime_note_registrazioni_mastro_avere' => null,
+
+                    'prime_note_registrazioni_conto_dare' => null,
+                    'prime_note_registrazioni_conto_avere' => null,
+
+                    'prime_note_registrazioni_sottoconto_dare' => null,
+                    'prime_note_registrazioni_sottoconto_avere' => null,
+
+                    'prime_note_registrazioni_mastro_dare_codice' => null,
+                    'prime_note_registrazioni_mastro_avere_codice' => null,
+
+                    'prime_note_registrazioni_conto_dare_codice' => null,
+                    'prime_note_registrazioni_conto_avere_codice' => null,
+
+                    'prime_note_registrazioni_sottoconto_dare_codice' => null,
+                    'prime_note_registrazioni_sottoconto_avere_codice' => null,
+
+                    'prime_note_registrazioni_codice_dare_testuale' => null,
+                    'prime_note_registrazioni_codice_avere_testuale' => null,
+                ],
+            ];
+            $prima_nota_db = $this->apilib->create('prime_note', $prima_nota);
+            foreach ($righe as $registrazione) {
+                $registrazione['prime_note_registrazioni_prima_nota'] = $prima_nota_db['prime_note_id'];
+                $this->apilib->create('prime_note_registrazioni', $registrazione);
+            }
         }
         echo "<script>location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
         exit;
@@ -2403,7 +2572,7 @@ class Primanota extends MX_Controller
 
         $causale_bilancio_chiusura_bla = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLA']);
         $causale_bilancio_chiusura_blc = $this->apilib->searchFirst('prime_note_causali', ['prime_note_causali_codice' => 'BLC']);
-
+        //debug($causale_bilancio_chiusura_bla, true);
 
         if (!$causale_bilancio_chiusura_blc) {
             die('Non trovo la causale BLA di apertura bilancio');
@@ -2440,7 +2609,11 @@ class Primanota extends MX_Controller
             $nuova_testata['prime_note_scadenza'] = $nuovo_anno . '-01-01';
             $nuova_testata['prime_note_progressivo_giornaliero'] = $this->prima_nota->getProgressivoGiorno($nuovo_anno . '-01-01', $azienda);
             $nuova_testata['prime_note_progressivo_annuo'] = $this->prima_nota->getProgressivoAnno($nuovo_anno . '-01-01', $azienda);
+
             unset($nuova_testata['prime_note_id']);
+
+            
+
             $testata_db = $this->apilib->create('prime_note', $nuova_testata);
 
             $righe = $this->apilib->search('prime_note_registrazioni', ['prime_note_registrazioni_prima_nota' => $testata['prime_note_id']]);
@@ -2476,7 +2649,7 @@ class Primanota extends MX_Controller
         //Finita la procedura imposto l'anno esercizio nuovo
         $this->apilib->edit('documenti_contabilita_settings', $azienda, ['documenti_contabilita_settings_esercizio' => $nuovo_anno]);
 
-        echo "<script>alert('Ricordarsi di impostare l\'anno $nuovo_anno come anno di esercizio nelle configurazione dell'azienda');location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
+        echo "<script>alert('Ricordarsi di impostare l\'anno $nuovo_anno come anno di esercizio nelle configurazione dell\'azienda');location.href='" . base_url() . "main/layout/stampe-contabilita';</script>";
         exit;
     }
 }

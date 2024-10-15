@@ -162,11 +162,11 @@ if ($dati['fattura']['documenti_contabilita_sconto_su_imponibile']) {
 // debug($importo_sconto);
 // debug($dati['fattura'],true);
 //verifico se è privato o azienda
-if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 2 AND (!empty($dati['fattura']['documenti_contabilita_customer_id']))){
-    if(!empty($dati['fattura']['customers_name'])){
+if ($dati['fattura']['documenti_contabilita_tipo_destinatario'] == 2 and (!empty($dati['fattura']['documenti_contabilita_customer_id']))) {
+    if (!empty($dati['fattura']['customers_name'])) {
         $customers_name = $dati['fattura']['customers_name'];
     }
-    if(!empty($dati['fattura']['customers_last_name'])){
+    if (!empty($dati['fattura']['customers_last_name'])) {
         $customers_last_name = $dati['fattura']['customers_last_name'];
     }
 }
@@ -241,7 +241,7 @@ if (function_exists('arrayToXml') == false) {
 }
 
 if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
-    $json_editor_xml = json_decode($dati['fattura']['documenti_contabilita_json_editor_xml'],true);
+    $json_editor_xml = json_decode($dati['fattura']['documenti_contabilita_json_editor_xml'], true);
 } else {
     $json_editor_xml = [];
 }
@@ -272,11 +272,11 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
             <?php else: ?>
                 <FormatoTrasmissione>FPR12</FormatoTrasmissione>
             <?php endif; ?>
-            <?php /* <!--            Da rivedere, non chiaro--> */?>
+            <?php /* <!--            Da rivedere, non chiaro--> */ ?>
             <CodiceDestinatario>
                 <?php echo $codice_destinatario; ?>
             </CodiceDestinatario>
-            <?php /* <!--            Il campo sembra essere standard, http://www.fatturapa.gov.it/export/fatturazione/it/c-13.htm--> */?>
+            <?php /* <!--            Il campo sembra essere standard, http://www.fatturapa.gov.it/export/fatturazione/it/c-13.htm--> */ ?>
             <?php if (!empty($pec)): ?>
                 <PECDestinatario>
                     <?php echo $pec; ?>
@@ -285,7 +285,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
             <?php /* <!--<ContattiTrasmittente>
 <Telefono></Telefono>
 <Email></Email>
-</ContattiTrasmittente>--> */?>
+</ContattiTrasmittente>--> */ ?>
 
         </DatiTrasmissione>
         <CedentePrestatore>
@@ -299,15 +299,15 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                     </IdCodice>
                 </IdFiscaleIVA>
 
-                <?php /* <!--<CodiceFiscale></CodiceFiscale>--> */?>
+                <?php /* <!--<CodiceFiscale></CodiceFiscale>--> */ ?>
                 <Anagrafica>
                     <Denominazione>
                         <?php echo htmlspecialchars($company_name); ?>
                     </Denominazione>
-                    <?php /* <!--<Nome></Nome>--> */?>
-                    <?php /* <!--<Cognome></Cognome>--> */?>
+                    <?php /* <!--<Nome></Nome>--> */ ?>
+                    <?php /* <!--<Cognome></Cognome>--> */ ?>
                     <?php /* <!--<Titolo></Titolo>
-<CodEORI></CodEORI>--> */?>
+<CodEORI></CodEORI>--> */ ?>
                 </Anagrafica>
 
                 <RegimeFiscale>
@@ -358,7 +358,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                 <?php endif; ?>
             <?php endif; ?>
 
-            <?php /* <!--<RiferimentoAmministrazione><?php echo $company_name; ?></RiferimentoAmministrazione>--> */?>
+            <?php /* <!--<RiferimentoAmministrazione><?php echo $company_name; ?></RiferimentoAmministrazione>--> */ ?>
         </CedentePrestatore>
 
         <CessionarioCommittente>
@@ -379,23 +379,23 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                     </CodiceFiscale>
                 <?php endif; ?>
                 <Anagrafica>
-                    <?php if(!isset($customers_name) AND !isset($customers_last_name)): ?>
+                    <?php if (!isset($customers_name) and !isset($customers_last_name)): ?>
                         <Denominazione>
                             <?php echo htmlspecialchars($dest_ragionesociale); ?>
                         </Denominazione>
-                        <?php else: ?>
-                            <Nome><?php echo htmlspecialchars($customers_name); ?></Nome>
-                            <Cognome><?php echo htmlspecialchars($customers_last_name); ?></Cognome>
+                    <?php else: ?>
+                        <Nome><?php echo htmlspecialchars($customers_name); ?></Nome>
+                        <Cognome><?php echo htmlspecialchars($customers_last_name); ?></Cognome>
                     <?php endif; ?>
                     <?php /* <!--<Titolo></Titolo>
-<CodEORI></CodEORI>--> */?>
+<CodEORI></CodEORI>--> */ ?>
                 </Anagrafica>
             </DatiAnagrafici>
             <Sede>
                 <Indirizzo>
                     <?php echo $dest_indirizzo; ?>
                 </Indirizzo>
-                <?php /* <!--<NumeroCivico></NumeroCivico>--> */?>
+                <?php /* <!--<NumeroCivico></NumeroCivico>--> */ ?>
                 <CAP>
                     <?php echo $dest_cap; ?>
                 </CAP>
@@ -423,14 +423,14 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
 </DatiAnagrafici>
 </TerzoIntermediarioOSoggettoEmittente>
 <SoggettoEmittente>TZ</SoggettoEmittente>
-*/?>
+*/ ?>
 
 
     </FatturaElettronicaHeader>
     <FatturaElettronicaBody>
         <DatiGenerali>
             <DatiGeneraliDocumento>
-                <?php /* <!-- TODO: Creazione campo --> */?>
+                <?php /* <!-- TODO: Creazione campo --> */ ?>
                 <TipoDocumento>
                     <?php echo $fattura_tipo; ?>
                 </TipoDocumento>
@@ -519,13 +519,13 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                         <AliquotaIVA>
                             <?php echo $aliquota_iva_cassa; ?>
                         </AliquotaIVA>
-                        <?php /*<Ritenuta></Ritenuta>*/?>
+                        <?php /*<Ritenuta></Ritenuta>*/ ?>
                         <?php if ($aliquota_iva_cassa == 0): ?>
                             <Natura>
                                 <?php echo $natura_cassa; ?>
                             </Natura>
                         <?php endif; ?>
-                        <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/?>
+                        <?php /*<RiferimentoAmministrazione><?php echo $cassa_tipo['documenti_contabilita_cassa_professionisti_tipo_value']; ?></RiferimentoAmministrazione>*/ ?>
                     </DatiCassaPrevidenziale>
                 <?php } ?>
                 <?php
@@ -596,7 +596,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
 <Arrotondamento></Arrotondamento>
 
 <Causale></Causale>
-<Art73></Art73>--> */?>
+<Art73></Art73>--> */ ?>
             </DatiGeneraliDocumento>
 
             <?php if (!empty($ordine_acquisto = json_decode($dati['fattura']['documenti_contabilita_fe_ordineacquisto'], true)) && array_filter($ordine_acquisto)): ?>
@@ -724,30 +724,30 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
 <CodiceCIG></CodiceCIG>
 </DatiRicezione>
 */ ?>
-<?php 
-$path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiFattureCollegate";
-echo extractJsonEditorData($path, $json_editor_xml); ?>
-<?php /*
-*/ ?>
-<?php
-// $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiSAL";
+            <?php
+            $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiFattureCollegate";
+            echo extractJsonEditorData($path, $json_editor_xml); ?>
+            <?php /*
+              */ ?>
+            <?php
+            // $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiSAL";
 // echo extractJsonEditorData($path, $json_editor_xml); ?>
-<?php /*
-*/ ?>
-<?php 
-// $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiDDT";
+            <?php /*
+              */ ?>
+            <?php
+            // $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiDDT";
 // echo extractJsonEditorData($path, $json_editor_xml); ?>
-<?php /*
-*/ ?>
-<?php
-// $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiTrasporto";
+            <?php /*
+              */ ?>
+            <?php
+            // $path = "FatturaElettronica/FatturaElettronicaBody/DatiGenerali/DatiTrasporto";
 // echo extractJsonEditorData($path, $json_editor_xml); ?>
-<?php /*
+            <?php /*
 <NormaDiRiferimento></NormaDiRiferimento>
 <FatturaPrincipale>
 <NumeroFatturaPrincipale></NumeroFatturaPrincipale>
 <DataFatturaPrincipale></DataFatturaPrincipale>
-</FatturaPrincipale>--> */?>
+</FatturaPrincipale>--> */ ?>
 
         </DatiGenerali>
         <DatiBeniServizi>
@@ -757,7 +757,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                     <NumeroLinea>
                         <?php echo $key + 1; ?>
                     </NumeroLinea>
-                    <?php /* <!--<TipoCessionePrestazione></TipoCessionePrestazione>--> */?>
+                    <?php /* <!--<TipoCessionePrestazione></TipoCessionePrestazione>--> */ ?>
 
                     <?php if (!empty(trim($articolo['documenti_contabilita_articoli_codice']))): ?>
                         <CodiceArticolo>
@@ -788,7 +788,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
 
                     <?php // michael - 06.09.2023 - ho cambiato il replace di € da &euro; a EUR perchè altrimenti si rompe completamente la generazione dell'xml con errore "Message: DOMDocument::loadXML(): Entity 'euro' not defined in Entity, line: 138".. E' già stato testato un replace con ad esempio l'unicode ma poi non viene interpretato ne visualizzato correttamente sulle conversioni in pdf e nel xml da inviare allo sdi ?>
                     <Descrizione>
-                        <?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $articolo['documenti_contabilita_articoli_name'] . ' - ' . $articolo['documenti_contabilita_articoli_descrizione']), 0, 900); ?>
+                        <?php echo substr(str_ireplace(['&', '€', '™', '<', '>'], ['&amp;', 'EUR', '', '&lt;', '&gt;'], $articolo['documenti_contabilita_articoli_name'] . ' - ' . $articolo['documenti_contabilita_articoli_descrizione']), 0, 900); ?>
                     </Descrizione>
                     <Quantita>
                         <?php echo number_format($articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?>
@@ -798,7 +798,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                     </UnitaMisura>
 
                     <?php /* <!--<DataInizioPeriodo></DataInizioPeriodo>
-<DataFinePeriodo></DataFinePeriodo>--> */?>
+<DataFinePeriodo></DataFinePeriodo>--> */ ?>
                     <?php
                     $prezzo_senza_seri = number_format($articolo['documenti_contabilita_articoli_prezzo'], 8, '.', '');
                     $prezzo_esploso = explode('.', $prezzo_senza_seri);
@@ -835,14 +835,13 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                             <Percentuale>
                                 <?php echo number_format($sconto_da_applicare, 2, '.', ''); ?>
                             </Percentuale>
-                            <!--<Percentuale><?php echo number_format($articolo['documenti_contabilita_articoli_sconto'], 2, '.', ''); ?></Percentuale>-->
                         </ScontoMaggiorazione>
                     <?php endif; ?>
 
                     <PrezzoTotale>
                         <?php echo $segno . number_format((($articolo['documenti_contabilita_articoli_prezzo'] * $articolo['documenti_contabilita_articoli_quantita']) / 100 * (100 - $sconto_da_applicare)), 2, '.', ''); ?>
                     </PrezzoTotale>
-                    <?php /*<PrezzoTotale><?php echo $segno . number_format(($articolo['documenti_contabilita_articoli_prezzo'] / 100 * (100 - ($articolo['documenti_contabilita_articoli_sconto']))) * $articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?></PrezzoTotale>*/?>
+                    <?php /*<PrezzoTotale><?php echo $segno . number_format(($articolo['documenti_contabilita_articoli_prezzo'] / 100 * (100 - ($articolo['documenti_contabilita_articoli_sconto']))) * $articolo['documenti_contabilita_articoli_quantita'], 2, '.', ''); ?></PrezzoTotale>*/ ?>
                     <AliquotaIVA>
                         <?php echo number_format($articolo['iva_valore'], 2, '.', ''); ?>
                     </AliquotaIVA>
@@ -851,7 +850,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                         <Natura>
                             <?php echo $articolo['iva_codice']; ?>
                         </Natura>
-                        <?php /* <RiferimentoAmministrazione><?php echo $articolo['iva_descrizione']; ?></RiferimentoAmministrazione>*/?>
+                        <?php /* <RiferimentoAmministrazione><?php echo $articolo['iva_descrizione']; ?></RiferimentoAmministrazione>*/ ?>
                     <?php endif; ?>
                     <?php
                     /* 
@@ -914,7 +913,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                     <?php endif; ?>
 
                     <?php /* <!--<SpeseAccessorie></SpeseAccessorie>
-<Arrotondamento></Arrotondamento>--> */?>
+<Arrotondamento></Arrotondamento>--> */ ?>
 
                     <?php
                     ini_set('precision', 17);
@@ -984,7 +983,7 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
         <?php /* <!--<DatiVeicoli>
 <Data></Data>
 <TotalePercorso></TotalePercorso>
-</DatiVeicoli>--> */?>
+</DatiVeicoli>--> */ ?>
         <?php foreach ($dati['fattura']['scadenze'] as $key => $scadenza): ?>
             <?php if ($scadenza['documenti_contabilita_scadenze_ammontare'] != '0.00'): ?>
                 <DatiPagamento>
@@ -998,12 +997,12 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                         <?php endif; ?>
                     </CondizioniPagamento>
                     <DettaglioPagamento>
-                        <?php /* <!--<Beneficiario></Beneficiario>--> */?>
+                        <?php /* <!--<Beneficiario></Beneficiario>--> */ ?>
                         <ModalitaPagamento>
                             <?php echo $metodi_pagamento[$scadenza['documenti_contabilita_scadenze_saldato_con']]; ?>
                         </ModalitaPagamento>
                         <?php /* <!--<DataRiferimentoTerminiPagamento></DataRiferimentoTerminiPagamento>
-   <GiorniTerminiPagamento></GiorniTerminiPagamento>--> */?>
+      <GiorniTerminiPagamento></GiorniTerminiPagamento>--> */ ?>
 
 
                         <DataScadenzaPagamento>
@@ -1014,11 +1013,11 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                             <?php echo $segno . number_format($scadenza['documenti_contabilita_scadenze_ammontare'], 2, '.', ''); ?>
                         </ImportoPagamento>
                         <?php /* <!--<CodUfficioPostale></CodUfficioPostale>
-   <CognomeQuietanzante></CognomeQuietanzante>
-   <NomeQuietanzante></NomeQuietanzante>
-   <CFQuietanzante></CFQuietanzante>
-   <TitoloQuietanzante></TitoloQuietanzante>
-   <IstitutoFinanziario></IstitutoFinanziario>-->*/?>
+      <CognomeQuietanzante></CognomeQuietanzante>
+      <NomeQuietanzante></NomeQuietanzante>
+      <CFQuietanzante></CFQuietanzante>
+      <TitoloQuietanzante></TitoloQuietanzante>
+      <IstitutoFinanziario></IstitutoFinanziario>-->*/ ?>
                         <?php if (!empty($conto_corrente_nome_istituto)): ?>
                             <IstitutoFinanziario>
                                 <?php echo $conto_corrente_nome_istituto; ?>
@@ -1031,13 +1030,13 @@ echo extractJsonEditorData($path, $json_editor_xml); ?>
                         <?php endif; ?>
 
                         <?php /*<!--<ABI></ABI>
-   <CAB></CAB>
-   <BIC></BIC>
-   <ScontoPagamentoAnticipato></ScontoPagamentoAnticipato>
-   <DataLimitePagamentoAnticipato></DataLimitePagamentoAnticipato>
-   <PenalitaPagamentiRitardati></PenalitaPagamentiRitardati>
-   <DataDecorrenzaPenale></DataDecorrenzaPenale>
-   --> */?>
+      <CAB></CAB>
+      <BIC></BIC>
+      <ScontoPagamentoAnticipato></ScontoPagamentoAnticipato>
+      <DataLimitePagamentoAnticipato></DataLimitePagamentoAnticipato>
+      <PenalitaPagamentiRitardati></PenalitaPagamentiRitardati>
+      <DataDecorrenzaPenale></DataDecorrenzaPenale>
+      --> */ ?>
                         <?php if (1 == 5 && $dati['fattura']['documenti_contabilita_note_interne']): ?>
                             <CodicePagamento>
                                 <?php //echo substr($dati['fattura']['documenti_contabilita_note_interne'], 0, 59);

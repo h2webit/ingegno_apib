@@ -4,15 +4,15 @@
     "modules_description": "Products manager with configurable attributes and products fields.",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.4.8",
+    "modules_version": "1.4.11",
     "modules_identifier": "products_manager",
     "modules_base64_zip": null,
     "modules_raw_data_install": "262,448,610,502,612,150,615",
     "modules_raw_data_update": "448,610,612,615",
     "modules_created_by_user": "1",
-    "modules_version_code": "141",
+    "modules_version_code": "144",
     "modules_thumbnail": "cb56170efd5abe329210e2c54ddfac70.png",
-    "modules_min_client_version": "4.0.0",
+    "modules_min_client_version": "4.0.12",
     "modules_version_date": "2022-08-24 17:01:41",
     "modules_auto_update": "0",
     "modules_last_update": "2023-01-24 12:29:03",
@@ -1038,29 +1038,6 @@
                     "fields_draw_html_type": "input_text"
                 },
                 {
-                    "fields_id": "2383",
-                    "fields_entity_id": "130",
-                    "fields_default": null,
-                    "fields_name": "fw_categories_supplier_type",
-                    "fields_type": "integer",
-                    "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": "suppliers_type",
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "fields_draw_html_type": "select"
-                },
-                {
                     "fields_id": "5270",
                     "fields_entity_id": "130",
                     "fields_default": "0",
@@ -1209,19 +1186,6 @@
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": null,
                     "fields_draw_html_type": "input_text",
-                    "fields_draw_placeholder": null,
-                    "fields_draw_css_extra": null,
-                    "fields_draw_display_none": "0",
-                    "fields_draw_enabled": "1",
-                    "fields_draw_attr": null
-                },
-                {
-                    "fields_draw_id": "2383",
-                    "fields_draw_fields_id": "2383",
-                    "fields_draw_label": "Supplier type",
-                    "fields_draw_help_text": null,
-                    "fields_draw_onclick": null,
-                    "fields_draw_html_type": "select",
                     "fields_draw_placeholder": null,
                     "fields_draw_css_extra": null,
                     "fields_draw_display_none": "0",
@@ -2763,7 +2727,7 @@
                     "fields_required": "0",
                     "fields_preview": "0",
                     "fields_visible": "1",
-                    "fields_ref": "fw_products",
+                    "fields_ref": "confezioni",
                     "fields_ref_auto_left_join": "0",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
@@ -2867,6 +2831,29 @@
                     "fields_searchable": "1",
                     "fields_additional_data": "",
                     "fields_draw_html_type": "input_money"
+                },
+                {
+                    "fields_id": "6007",
+                    "fields_entity_id": "131",
+                    "fields_default": null,
+                    "fields_name": "fw_products_contenitore",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "fw_products",
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "select_ajax"
                 }
             ],
             "fields_draw": [
@@ -3774,6 +3761,19 @@
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": null,
                     "fields_draw_html_type": "input_money",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6009",
+                    "fields_draw_fields_id": "6007",
+                    "fields_draw_label": "Contenitore",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "select_ajax",
                     "fields_draw_placeholder": null,
                     "fields_draw_css_extra": null,
                     "fields_draw_display_none": "0",
@@ -9578,12 +9578,65 @@
             "layouts_boxes_id": "2889",
             "layouts_boxes_layout": "143",
             "layouts_boxes_css": "",
-            "layouts_boxes_title": "Categories List",
+            "layouts_boxes_title": "Categorie",
             "layouts_boxes_content_type": "grid",
             "layouts_boxes_content_ref": "455",
             "layouts_boxes_content": null,
-            "layouts_boxes_position": null,
+            "layouts_boxes_position": "0",
             "layouts_boxes_dragable": null,
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "box-primary",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "6963",
+            "layouts_boxes_layout": "143",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "Categorie figlie",
+            "layouts_boxes_content_type": "grid",
+            "layouts_boxes_content_ref": "1754",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": "1",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": {
+                "conditions_id": "251",
+                "conditions_what": "layouts_boxes",
+                "conditions_json_rules": "{\"condition\":\"AND\",\"rules\":[{\"id\":\"_is_maintenance\",\"field\":\"_is_maintenance\",\"type\":\"string\",\"input\":\"select\",\"operator\":\"equal\",\"value\":\"1\"}],\"valid\":true}",
+                "conditions_ref": "6963",
+                "conditions_module": null,
+                "conditions_module_key": "products_manager-layouts_boxes-6963",
+                "conditions_creation_date": "2024-10-01 16:56:35",
+                "conditions_action": "1"
+            }
+        },
+        {
+            "layouts_boxes_id": "6964",
+            "layouts_boxes_layout": "143",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "menu_group",
+            "layouts_boxes_content_type": "menu_group",
+            "layouts_boxes_content_ref": "Categories management",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
             "layouts_boxes_collapsed": "0",
             "layouts_boxes_reloadable": "0",
@@ -9647,7 +9700,7 @@
             "layouts_boxes_title": "Conteggi Magazzini",
             "layouts_boxes_content_type": "",
             "layouts_boxes_content_ref": "",
-            "layouts_boxes_content": "<?php\n$magazzini = $this->apilib->search('magazzini');\n\n$colors = ['red', 'blue', 'green', 'light-blue', 'orange'];\n\n$light_colors = ['#f7f1e3','#fafafa','#f5f6fa','#dcdde1','#d2dae2','#4cd1370'];\n?>\n<div class=\"row\">\n    <?php foreach ($magazzini as $key => $magazzino) : ?>\n    <?php\n$quantity_carico = $this->db->query(\"SELECT SUM(movimenti_articoli_quantita) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'\")->row()->qty;\n$quantity_scarico = $this->db->query(\"SELECT SUM(movimenti_articoli_quantita) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'\")->row()->qty;\n$quantity = $quantity_carico - $quantity_scarico;\n    ?>\n    <div class=\"col-sm-12\">\n        <!--<div class=\"small-box bg-<?php \/\/echo $colors[$key]; ?>\">-->\n    \t<div class=\"small-box\" style=\"color:<?php echo (in_array($magazzino['magazzini_colore'], $light_colors)) ? 'black' : 'white'; ?>;background-color:<?php echo $magazzino['magazzini_colore']; ?>\">\n            <div class=\"inner\">\n                <h3><?php echo $quantity; ?><\/h3>\n\n                <p style=\"font-size: 1.2em !important;\"><?php echo $magazzino['magazzini_titolo']; ?><\/p>\n            <\/div>\n            <div class=\"icon\">\n                <i class=\"fas fa-warehouse\"><\/i>\n            <\/div>\n        <\/div>\n    <\/div>\n    <?php endforeach; ?>\n<\/div>",
+            "layouts_boxes_content": "<?php\n$magazzini = $this->apilib->search('magazzini');\n$light_colors = ['#f7f1e3', '#fafafa', '#f5f6fa', '#dcdde1', '#d2dae2', '#4cd1370'];\n\nfunction getQuantity($db, $value_id, $magazzino_id, $tipo_movimento) {\n    $query = \"SELECT SUM(movimenti_articoli_quantita) as qty \n              FROM movimenti_articoli \n              LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) \n              WHERE movimenti_tipo_movimento = ? \n              AND movimenti_articoli_prodotto_id = ? \n              AND movimenti_magazzino = ?\";\n    return $db->query($query, [$tipo_movimento, $value_id, $magazzino_id])->row()->qty ?? 0;\n}\n\n$show_as_list = count($magazzini) > 5;\n\nif (!$show_as_list) {\n    echo '<div class=\"row\">';\n}\n\nforeach ($magazzini as $magazzino) :\n    $quantity_carico = getQuantity($this->db, $value_id, $magazzino['magazzini_id'], 1);\n    $quantity_scarico = getQuantity($this->db, $value_id, $magazzino['magazzini_id'], 2);\n    $quantity = $quantity_carico - $quantity_scarico;\n\n    $text_color = in_array($magazzino['magazzini_colore'], $light_colors) ? 'black' : 'white';\n\n    if ($show_as_list) :\n        ?>\n        <p style=\"color: <?= $magazzino['magazzini_colore']; ?>; font-size: 1.2em;\">\n            <?= $magazzino['magazzini_titolo'] . ': ' . $quantity; ?>\n        <\/p>\n    <?php else : ?>\n        <div class=\"col-sm-12\">\n            <div class=\"small-box\" style=\"color: <?= $text_color; ?>; background-color: <?= $magazzino['magazzini_colore']; ?>\">\n                <div class=\"inner\">\n                    <h3><?= $quantity; ?><\/h3>\n                    <p style=\"font-size: 1.2em;\"><?= $magazzino['magazzini_titolo']; ?><\/p>\n                <\/div>\n                <div class=\"icon\">\n                    <i class=\"fas fa-warehouse\"><\/i>\n                <\/div>\n            <\/div>\n        <\/div>\n    <?php endif;\nendforeach;\n\nif (!$show_as_list) {\n    echo '<\/div>';\n}\n?>",
             "layouts_boxes_position": "1",
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
@@ -10494,7 +10547,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10532,7 +10585,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10570,7 +10623,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10600,15 +10653,15 @@
                     "grids_fields_fields_id": null,
                     "grids_fields_order": "1",
                     "grids_fields_replace_type": "eval",
-                    "grids_fields_replace": "SKU: <?php echo $data['fw_products_sku']; ?><br \/>\n\n<?php\n\t$barcodes = (array)json_decode($data['fw_products_barcode'],true);\n\/\/debug($barcodes);\nif ($barcodes) {\n    $barcode = $barcodes[0];\n} else {\n    $barcode = $data['fw_products_barcode'];\n}\nif ($barcode) :\n?>\n\nBarcode: <?php echo $barcode; ?>\n<?php endif; ?>\n",
+                    "grids_fields_replace": "SKU: <?php echo $data['fw_products_sku']; ?><br \/>\n\n<?php\n$barcodes = (array)json_decode($data['fw_products_barcode'],true);\n\/\/debug($barcodes);\nif ($barcodes) {\n    $barcode = $barcodes[0];\n} else {\n    $barcode = $data['fw_products_barcode'];\n}\nif ($barcode) :\n?>\n\nBarcode: <?php echo $barcode; ?>\n<?php endif; ?>\n\n<?php \/\/ codici fornitori\n$prodotto = $data;\nif (!empty($prodotto['fw_products_provider_code'])) {\n    $provider_codes = $prodotto['fw_products_provider_code'] ? json_decode($prodotto['fw_products_provider_code'], true) : [];\n\n    $supplier_ids = array_column($provider_codes, 'supplier');\n    $suppliers = $this->apilib->search('customers', ['customers_id' => $supplier_ids]);\n\n    \/\/ aggiungo il nome del fornitore in base all'id nell'arrayh dei codici\n    foreach($provider_codes as $key => $provider_code) {\n        $supplier = array_filter($suppliers, function($supplier) use ($provider_code) {\n            if (!empty($provider_code['supplier'])) {\n                return $supplier['customers_id'] == $provider_code['supplier'];   \n            }\n        });\n        $provider_codes[$key]['supplier_name'] = $supplier ? array_values($supplier)[0]['customers_full_name'] : '';\n    }\n\n    echo \"<div class='product_info'>Codice fornitore: \";\n    $provider_code = $provider_codes[0];\n    $supplier_name = $provider_code['supplier_name'] ? \" ({$provider_code['supplier_name']})\" : '';\n    echo \"<div>{$provider_code['code']}\" . $supplier_name;\n    if(count($provider_codes) > 1) {\n        echo \"<div style='display:none;'>\";\n        foreach(array_slice($provider_codes, 1) as $provider_code) {\n            $supplier_name = $provider_code['supplier_name'] ? \"({$provider_code['supplier_name']})\" : '';\n            echo \"<div><strong>{$provider_code['code']}<\/strong> $supplier_name<\/div>\";\n        }\n        echo \"<\/div>, ...\";\n    }\n    echo '<\/div>';\n\n}\n?>",
                     "grids_fields_column_name": "SKU\/Barcode",
                     "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": "CONCAT(COALESCE(fw_products_sku,''),' ', COALESCE(fw_products_barcode,''))",
+                    "grids_fields_eval_cache_data": "CONCAT(COALESCE(fw_products_sku,''),' ', COALESCE(fw_products_barcode,''), ' ', COALESCE(fw_products_provider_code, ''))",
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10646,7 +10699,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -10684,7 +10737,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-18917",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -10988,7 +11041,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11467",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -11026,7 +11079,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11468",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1126",
                     "fields_entity_id": "131",
@@ -11064,7 +11117,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11469",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -11102,7 +11155,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11470",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -11140,7 +11193,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11471",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1124",
                     "fields_entity_id": "131",
@@ -12054,7 +12107,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11483",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -12117,17 +12170,17 @@
         "9": {
             "grids_id": "455",
             "grids_entity_id": "130",
-            "grids_sub_grid_id": null,
+            "grids_sub_grid_id": "1754",
             "grids_name": "Categories List",
             "grids_view_link": null,
             "grids_edit_link": null,
             "grids_view_layout": null,
             "grids_edit_layout": null,
             "grids_delete_link": "#",
-            "grids_where": null,
+            "grids_where": "fw_categories_parent_category IS NULL OR fw_categories_parent_category = '' OR fw_categories_parent_category = '0'",
             "grids_default": "0",
-            "grids_layout": "table",
-            "grids_order_by": null,
+            "grids_layout": "datatable_with_subentity",
+            "grids_order_by": "fw_categories_order",
             "grids_group_by": null,
             "grids_filter_session_key": null,
             "grids_bulk_mode": "1",
@@ -12136,12 +12189,12 @@
             "grids_append_class": null,
             "grids_inline_form": "1779",
             "grids_module_key": "products_manager-grid-730",
-            "grids_depth": null,
+            "grids_depth": "1",
             "grids_actions_column": "1",
             "grids_builder_where": null,
             "grids_identifier": null,
             "grids_datatable": "1",
-            "grids_ajax": "1",
+            "grids_ajax": "0",
             "grids_searchable": "1",
             "grids_pagination": "25",
             "grids_inline_edit": "1",
@@ -12237,44 +12290,6 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "11486",
-                    "grids_fields_grids_id": "455",
-                    "grids_fields_fields_id": "1096",
-                    "grids_fields_order": "2",
-                    "grids_fields_replace_type": "field",
-                    "grids_fields_replace": null,
-                    "grids_fields_column_name": "Parent",
-                    "grids_fields_eval_cache_type": null,
-                    "grids_fields_eval_cache_data": null,
-                    "grids_fields_totalable": "0",
-                    "grids_fields_with_actions": "0",
-                    "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "products_manager-grids_fields-11486",
-                    "grids_fields_module": "products_manager",
-                    "grids_fields_width": null,
-                    "fields_id": "1096",
-                    "fields_entity_id": "130",
-                    "fields_default": null,
-                    "fields_name": "fw_categories_parent_category",
-                    "fields_type": "integer",
-                    "fields_size": null,
-                    "fields_required": "0",
-                    "fields_preview": "0",
-                    "fields_visible": "1",
-                    "fields_ref": "fw_categories",
-                    "fields_ref_auto_left_join": "1",
-                    "fields_ref_auto_right_join": "0",
-                    "fields_source": null,
-                    "fields_select_where": null,
-                    "fields_multilingual": "0",
-                    "fields_xssclean": "1",
-                    "fields_preview_base": null,
-                    "fields_preview_custom": null,
-                    "fields_searchable": "1",
-                    "fields_additional_data": null,
-                    "conditions": []
-                },
-                {
                     "grids_fields_id": "20957",
                     "grids_fields_grids_id": "455",
                     "grids_fields_fields_id": "5270",
@@ -12317,7 +12332,7 @@
                 {
                     "grids_actions_id": "3575",
                     "grids_actions_grids_id": "455",
-                    "grids_actions_order": "999",
+                    "grids_actions_order": "1",
                     "grids_actions_name": "Delete",
                     "grids_actions_html": "",
                     "grids_actions_link": "",
@@ -12328,6 +12343,22 @@
                     "grids_actions_type": "delete",
                     "grids_actions_color": "#e91e63",
                     "grids_actions_show": "table_and_bulk",
+                    "conditions": []
+                },
+                {
+                    "grids_actions_id": "6348",
+                    "grids_actions_grids_id": "455",
+                    "grids_actions_order": "0",
+                    "grids_actions_name": "Modifica",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": "1784",
+                    "grids_actions_icon": "fas fa-edit",
+                    "grids_actions_mode": "modal",
+                    "grids_actions_type": "edit_form",
+                    "grids_actions_color": "rgb(156, 39, 176)",
+                    "grids_actions_show": "table",
                     "conditions": []
                 }
             ]
@@ -12392,7 +12423,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11487",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -12430,7 +12461,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11488",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -12468,7 +12499,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11489",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12506,7 +12537,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11490",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -12544,7 +12575,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11491",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -12582,7 +12613,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11492",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1121",
                     "fields_entity_id": "131",
@@ -12620,7 +12651,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11493",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -12658,7 +12689,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11494",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1132",
                     "fields_entity_id": "131",
@@ -12826,7 +12857,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11495",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -12864,7 +12895,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11496",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -12902,7 +12933,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11497",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -12940,7 +12971,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11498",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -13050,7 +13081,7 @@
                     "grids_fields_id": "11499",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": "1114",
-                    "grids_fields_order": "5",
+                    "grids_fields_order": "6",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": "Punti fedelt\u00e0",
@@ -13060,7 +13091,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11499",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1114",
                     "fields_entity_id": "131",
@@ -13088,7 +13119,7 @@
                     "grids_fields_id": "11500",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": "1102",
-                    "grids_fields_order": "4",
+                    "grids_fields_order": "5",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": "Descrizione",
@@ -13098,7 +13129,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11500",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -13126,7 +13157,7 @@
                     "grids_fields_id": "11501",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": null,
-                    "grids_fields_order": "3",
+                    "grids_fields_order": "4",
                     "grids_fields_replace_type": "eval",
                     "grids_fields_replace": "<?php \n$weight = $data['fw_products_weight'];\n$width = $data['fw_products_width'];\n$height = $data['fw_products_height'];\n$depth = $data['fw_products_depth'];\n\necho \"(L) {$width} x \",\" (P) {$depth} x \",\" (A) {$height} \",\" - Peso {$weight} \";\n?>",
                     "grids_fields_column_name": "Dimensioni",
@@ -13136,7 +13167,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11501",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13164,7 +13195,7 @@
                     "grids_fields_id": "11502",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": null,
-                    "grids_fields_order": "8",
+                    "grids_fields_order": "9",
                     "grids_fields_replace_type": "eval",
                     "grids_fields_replace": "<?php\n$sell_price = $data['fw_products_sell_price'];\n\necho \"{$sell_price} \u20ac\"\n?>",
                     "grids_fields_column_name": "Prezzo di vendita",
@@ -13174,7 +13205,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11502",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13202,7 +13233,7 @@
                     "grids_fields_id": "11503",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": null,
-                    "grids_fields_order": "7",
+                    "grids_fields_order": "8",
                     "grids_fields_replace_type": "eval",
                     "grids_fields_replace": "<?php\n$provider_price = $data['fw_products_provider_price'];\n\necho \"{$provider_price} \u20ac\"\n?>",
                     "grids_fields_column_name": "Prezzo di acquisto",
@@ -13212,7 +13243,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11503",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13250,7 +13281,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11504",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13288,7 +13319,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11505",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13326,7 +13357,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11506",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13354,7 +13385,7 @@
                     "grids_fields_id": "11507",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": null,
-                    "grids_fields_order": "6",
+                    "grids_fields_order": "7",
                     "grids_fields_replace_type": "eval",
                     "grids_fields_replace": "<?php\necho $data['iva_valore'];\n?> %",
                     "grids_fields_column_name": "Iva",
@@ -13364,7 +13395,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11507",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13392,7 +13423,7 @@
                     "grids_fields_id": "21659",
                     "grids_fields_grids_id": "514",
                     "grids_fields_fields_id": "1128",
-                    "grids_fields_order": "999",
+                    "grids_fields_order": "10",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": "Ubicazione magazzino",
@@ -13402,7 +13433,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-21659",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1128",
                     "fields_entity_id": "131",
@@ -13423,6 +13454,44 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22603",
+                    "grids_fields_grids_id": "514",
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "3",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php\n$prodotto = $data;\n$provider_codes = $prodotto['fw_products_provider_code'] ? json_decode($prodotto['fw_products_provider_code'], true) : [];\n\/\/     [fw_products_provider_code] => [{\"code\":\"IK436B\",\"supplier\":\"554\"},{\"code\":\"E83NRR\",\"supplier\":\"562\"}]\n\n\/\/ ottengo gli id dei supplier(se presenti) e li ottengo da db con un where_in\n$supplier_ids = array_column($provider_codes, 'supplier');\n$suppliers = $this->apilib->search('customers', ['customers_id' => $supplier_ids]);\n\n\/\/ aggiungo il nome del fornitore in base all'id nell'arrayh dei codici\nforeach($provider_codes as $key => $provider_code) {\n    $supplier = array_filter($suppliers, function($supplier) use ($provider_code) {\n        return $supplier['customers_id'] == $provider_code['supplier'];\n    });\n    $provider_codes[$key]['supplier_name'] = $supplier ? array_values($supplier)[0]['customers_full_name'] : '';\n}\n\nif (!empty($provider_codes)) {\n    echo \"<div class='product_info'><strong>Codici fornitore<\/strong>: \";\n    foreach($provider_codes as $provider_code) {\n        $supplier_name = $provider_code['supplier_name'] ? \"({$provider_code['supplier_name']})\" : '';\n        echo \"<div><strong>{$provider_code['code']}<\/strong> $supplier_name<\/div>\";\n    }\n    echo \"<\/div>\";\n\n}\n?>",
+                    "grids_fields_column_name": "Codici Fornitori",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22603",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": null,
+                    "fields_entity_id": null,
+                    "fields_default": null,
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": null,
                     "fields_additional_data": null,
                     "conditions": []
                 }
@@ -13538,7 +13607,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11508",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1309",
                     "fields_entity_id": "131",
@@ -13576,7 +13645,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11509",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13614,7 +13683,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11510",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13652,7 +13721,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11511",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13690,7 +13759,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11512",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -13728,7 +13797,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11513",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -13957,7 +14026,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12221",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -13995,7 +14064,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12222",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1113",
                     "fields_entity_id": "131",
@@ -14033,7 +14102,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12224",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1128",
                     "fields_entity_id": "131",
@@ -14071,7 +14140,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12225",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1451",
                     "fields_entity_id": "131",
@@ -14109,7 +14178,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12227",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14147,7 +14216,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12228",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1106",
                     "fields_entity_id": "131",
@@ -14185,7 +14254,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12229",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1739",
                     "fields_entity_id": "131",
@@ -14223,7 +14292,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12230",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14261,7 +14330,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "projects-grids_fields-18121",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1131",
                     "fields_entity_id": "131",
@@ -14397,7 +14466,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -14435,7 +14504,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14473,7 +14542,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14511,7 +14580,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14549,7 +14618,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16417",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14587,7 +14656,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16447",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3821",
                     "fields_entity_id": "131",
@@ -14625,7 +14694,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16448",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3822",
                     "fields_entity_id": "131",
@@ -14663,7 +14732,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16685",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -14847,7 +14916,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -14885,7 +14954,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14923,7 +14992,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14961,7 +15030,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -14999,7 +15068,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15037,7 +15106,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16418",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15401,7 +15470,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17437",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -15439,7 +15508,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17440",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15477,7 +15546,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17441",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15515,7 +15584,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17449",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15836,7 +15905,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11451",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -15874,7 +15943,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15912,7 +15981,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11453",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15950,7 +16019,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -15988,7 +16057,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16026,7 +16095,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16678,7 +16747,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11452",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16716,7 +16785,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11455",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16754,7 +16823,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16792,7 +16861,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16416",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -16830,7 +16899,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-18917",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -17525,7 +17594,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-22570",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1118",
                     "fields_entity_id": "131",
@@ -17563,7 +17632,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-22571",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -17601,7 +17670,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-22572",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -17639,7 +17708,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-22573",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -17667,6 +17736,240 @@
             "actions": []
         },
         "28": {
+            "grids_id": "1754",
+            "grids_entity_id": "130",
+            "grids_sub_grid_id": null,
+            "grids_name": "Categorie figlie",
+            "grids_view_link": null,
+            "grids_edit_link": null,
+            "grids_view_layout": null,
+            "grids_edit_layout": null,
+            "grids_delete_link": "#",
+            "grids_where": null,
+            "grids_default": "0",
+            "grids_layout": "table",
+            "grids_order_by": "fw_categories_order",
+            "grids_group_by": null,
+            "grids_filter_session_key": null,
+            "grids_bulk_mode": null,
+            "grids_bulk_edit_form": null,
+            "grids_exportable": "0",
+            "grids_append_class": null,
+            "grids_inline_form": "1779",
+            "grids_module_key": "products_manager-grid-1754",
+            "grids_depth": "1",
+            "grids_actions_column": "1",
+            "grids_builder_where": null,
+            "grids_identifier": null,
+            "grids_datatable": "1",
+            "grids_ajax": "1",
+            "grids_searchable": "0",
+            "grids_pagination": "5",
+            "grids_inline_edit": "0",
+            "grids_design": "2",
+            "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "130",
+            "entity_name": "fw_categories",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"fw_categories_creation_date\",\"update_time\":\"fw_categories_modified_date\",\"soft_delete_flag\":\"fw_categories_deleted\"}",
+            "entity_module": "products_manager",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "grids_fields_id": "22613",
+                    "grids_fields_grids_id": "1754",
+                    "grids_fields_fields_id": "1094",
+                    "grids_fields_order": "1",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Name",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22613",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "1094",
+                    "fields_entity_id": "130",
+                    "fields_default": null,
+                    "fields_name": "fw_categories_name",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "1",
+                    "fields_preview": "1",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22614",
+                    "grids_fields_grids_id": "1754",
+                    "grids_fields_fields_id": "1095",
+                    "grids_fields_order": "2",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": "Order",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22614",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "1095",
+                    "fields_entity_id": "130",
+                    "fields_default": "1",
+                    "fields_name": "fw_categories_order",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "1",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22616",
+                    "grids_fields_grids_id": "1754",
+                    "grids_fields_fields_id": "5270",
+                    "grids_fields_order": "3",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": "",
+                    "grids_fields_column_name": "Ecommerce export",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "1",
+                    "grids_fields_module_key": "products_manager-grids_fields-22616",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "5270",
+                    "fields_entity_id": "130",
+                    "fields_default": "0",
+                    "fields_name": "fw_categories_ecommerce_export",
+                    "fields_type": "BOOLEAN",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22618",
+                    "grids_fields_grids_id": "1754",
+                    "grids_fields_fields_id": "1096",
+                    "grids_fields_order": "0",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "products_manager-grids_fields-22618",
+                    "grids_fields_module": "products_manager",
+                    "grids_fields_width": null,
+                    "fields_id": "1096",
+                    "fields_entity_id": "130",
+                    "fields_default": null,
+                    "fields_name": "fw_categories_parent_category",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "fw_categories",
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                }
+            ],
+            "actions": [
+                {
+                    "grids_actions_id": "6346",
+                    "grids_actions_grids_id": "1754",
+                    "grids_actions_order": "1",
+                    "grids_actions_name": "Edit",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": "1779",
+                    "grids_actions_icon": "fas fa-edit",
+                    "grids_actions_mode": "modal",
+                    "grids_actions_type": "edit_form",
+                    "grids_actions_color": "rgb(156, 39, 176)",
+                    "grids_actions_show": null,
+                    "conditions": []
+                },
+                {
+                    "grids_actions_id": "6347",
+                    "grids_actions_grids_id": "1754",
+                    "grids_actions_order": "999",
+                    "grids_actions_name": "Delete",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": null,
+                    "grids_actions_icon": "fas fa-trash",
+                    "grids_actions_mode": "default",
+                    "grids_actions_type": "delete",
+                    "grids_actions_color": "rgb(244, 67, 54)",
+                    "grids_actions_show": "table",
+                    "conditions": []
+                }
+            ]
+        },
+        "29": {
             "grids_id": "225",
             "grids_entity_id": "113",
             "grids_sub_grid_id": null,
@@ -18090,7 +18393,7 @@
                 }
             ]
         },
-        "29": {
+        "30": {
             "grids_id": "430",
             "grids_entity_id": "139",
             "grids_sub_grid_id": null,
@@ -18138,7 +18441,7 @@
             "fields": [],
             "actions": []
         },
-        "30": {
+        "31": {
             "grids_id": "432",
             "grids_entity_id": "139",
             "grids_sub_grid_id": null,
@@ -18186,7 +18489,7 @@
             "fields": [],
             "actions": []
         },
-        "31": {
+        "32": {
             "grids_id": "433",
             "grids_entity_id": "130",
             "grids_sub_grid_id": null,
@@ -18458,7 +18761,7 @@
                 }
             ]
         },
-        "32": {
+        "33": {
             "grids_id": "434",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -18518,7 +18821,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11518",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -18556,7 +18859,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11519",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18594,7 +18897,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11520",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -18632,7 +18935,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11521",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -18670,7 +18973,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11522",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -18708,7 +19011,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11523",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1119",
                     "fields_entity_id": "131",
@@ -18746,7 +19049,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11524",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1120",
                     "fields_entity_id": "131",
@@ -18784,7 +19087,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11525",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1121",
                     "fields_entity_id": "131",
@@ -18822,7 +19125,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11526",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1122",
                     "fields_entity_id": "131",
@@ -18860,7 +19163,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11527",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1123",
                     "fields_entity_id": "131",
@@ -18898,7 +19201,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11528",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1124",
                     "fields_entity_id": "131",
@@ -18936,7 +19239,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11529",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1125",
                     "fields_entity_id": "131",
@@ -18974,7 +19277,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11530",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1126",
                     "fields_entity_id": "131",
@@ -19012,7 +19315,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11531",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1127",
                     "fields_entity_id": "131",
@@ -19050,7 +19353,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11532",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1128",
                     "fields_entity_id": "131",
@@ -19088,7 +19391,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11533",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1129",
                     "fields_entity_id": "131",
@@ -19126,7 +19429,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11534",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1130",
                     "fields_entity_id": "131",
@@ -19164,7 +19467,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11535",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1131",
                     "fields_entity_id": "131",
@@ -19202,7 +19505,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11536",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1132",
                     "fields_entity_id": "131",
@@ -19240,7 +19543,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11537",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1306",
                     "fields_entity_id": "131",
@@ -19278,7 +19581,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11538",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1309",
                     "fields_entity_id": "131",
@@ -19316,7 +19619,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11539",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1310",
                     "fields_entity_id": "131",
@@ -19354,7 +19657,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11540",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1451",
                     "fields_entity_id": "131",
@@ -19392,7 +19695,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11541",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1478",
                     "fields_entity_id": "131",
@@ -19430,7 +19733,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11679",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1800",
                     "fields_entity_id": "131",
@@ -19468,7 +19771,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11688",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1802",
                     "fields_entity_id": "131",
@@ -19506,7 +19809,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11692",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1806",
                     "fields_entity_id": "131",
@@ -19544,7 +19847,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11699",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1809",
                     "fields_entity_id": "131",
@@ -19582,7 +19885,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-13371",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "2311",
                     "fields_entity_id": "131",
@@ -19620,7 +19923,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-13949",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "2613",
                     "fields_entity_id": "131",
@@ -19658,7 +19961,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-14178",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "2717",
                     "fields_entity_id": "131",
@@ -19696,7 +19999,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-14179",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "2718",
                     "fields_entity_id": "131",
@@ -19734,7 +20037,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-15215",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3248",
                     "fields_entity_id": "131",
@@ -19772,7 +20075,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-15594",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3425",
                     "fields_entity_id": "131",
@@ -19810,7 +20113,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-15620",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3433",
                     "fields_entity_id": "131",
@@ -19848,7 +20151,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16446",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3821",
                     "fields_entity_id": "131",
@@ -19886,7 +20189,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16671",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3941",
                     "fields_entity_id": "131",
@@ -19924,7 +20227,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16672",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3942",
                     "fields_entity_id": "131",
@@ -19962,7 +20265,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16673",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "3943",
                     "fields_entity_id": "131",
@@ -20000,7 +20303,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-17020",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "4065",
                     "fields_entity_id": "131",
@@ -20038,7 +20341,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-18456",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "4579",
                     "fields_entity_id": "131",
@@ -20076,7 +20379,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-19345",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "4697",
                     "fields_entity_id": "131",
@@ -20136,7 +20439,7 @@
                 }
             ]
         },
-        "33": {
+        "34": {
             "grids_id": "435",
             "grids_entity_id": "139",
             "grids_sub_grid_id": null,
@@ -20201,7 +20504,7 @@
                 }
             ]
         },
-        "34": {
+        "35": {
             "grids_id": "436",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -20261,7 +20564,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11542",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -20299,7 +20602,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11543",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1104",
                     "fields_entity_id": "131",
@@ -20337,7 +20640,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11544",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -20375,7 +20678,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11545",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20413,7 +20716,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11546",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -20457,7 +20760,7 @@
                 }
             ]
         },
-        "35": {
+        "36": {
             "grids_id": "438",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -20517,7 +20820,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11547",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -20555,7 +20858,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11548",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -20582,7 +20885,7 @@
             ],
             "actions": []
         },
-        "36": {
+        "37": {
             "grids_id": "439",
             "grids_entity_id": "133",
             "grids_sub_grid_id": null,
@@ -20838,7 +21141,7 @@
                 }
             ]
         },
-        "37": {
+        "38": {
             "grids_id": "440",
             "grids_entity_id": "134",
             "grids_sub_grid_id": null,
@@ -21018,7 +21321,7 @@
                 }
             ]
         },
-        "39": {
+        "40": {
             "grids_id": "442",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -21078,7 +21381,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11458",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1114",
                     "fields_entity_id": "131",
@@ -21116,7 +21419,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11459",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -21154,7 +21457,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11460",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21192,7 +21495,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11461",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21230,7 +21533,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11462",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21268,7 +21571,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11463",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21306,7 +21609,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11464",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21344,7 +21647,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11465",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21382,7 +21685,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11466",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -21442,7 +21745,7 @@
                 }
             ]
         },
-        "40": {
+        "41": {
             "grids_id": "443",
             "grids_entity_id": "134",
             "grids_sub_grid_id": null,
@@ -21546,7 +21849,7 @@
                 }
             ]
         },
-        "43": {
+        "44": {
             "grids_id": "446",
             "grids_entity_id": "135",
             "grids_sub_grid_id": null,
@@ -21796,7 +22099,7 @@
                 }
             ]
         },
-        "44": {
+        "45": {
             "grids_id": "447",
             "grids_entity_id": "136",
             "grids_sub_grid_id": null,
@@ -21921,7 +22224,7 @@
             ],
             "actions": []
         },
-        "45": {
+        "46": {
             "grids_id": "448",
             "grids_entity_id": "137",
             "grids_sub_grid_id": null,
@@ -22079,7 +22382,7 @@
                 }
             ]
         },
-        "49": {
+        "50": {
             "grids_id": "454",
             "grids_entity_id": "138",
             "grids_sub_grid_id": null,
@@ -22508,7 +22811,7 @@
             ],
             "actions": []
         },
-        "52": {
+        "53": {
             "grids_id": "458",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -22568,7 +22871,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11570",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1107",
                     "fields_entity_id": "131",
@@ -22606,7 +22909,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11571",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1108",
                     "fields_entity_id": "131",
@@ -22644,7 +22947,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11572",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1109",
                     "fields_entity_id": "131",
@@ -22682,7 +22985,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-11573",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1110",
                     "fields_entity_id": "131",
@@ -22726,7 +23029,7 @@
                 }
             ]
         },
-        "54": {
+        "55": {
             "grids_id": "484",
             "grids_entity_id": "150",
             "grids_sub_grid_id": null,
@@ -22868,7 +23171,7 @@
                 }
             ]
         },
-        "60": {
+        "61": {
             "grids_id": "647",
             "grids_entity_id": "235",
             "grids_sub_grid_id": null,
@@ -22993,7 +23296,7 @@
             ],
             "actions": []
         },
-        "61": {
+        "62": {
             "grids_id": "648",
             "grids_entity_id": "236",
             "grids_sub_grid_id": null,
@@ -23118,7 +23421,7 @@
             ],
             "actions": []
         },
-        "63": {
+        "64": {
             "grids_id": "697",
             "grids_entity_id": "262",
             "grids_sub_grid_id": null,
@@ -23178,7 +23481,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-12166",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2014",
                     "fields_entity_id": "262",
@@ -23216,7 +23519,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "magazzino-grids_fields-12167",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "magazzino",
                     "grids_fields_width": null,
                     "fields_id": "2015",
                     "fields_entity_id": "262",
@@ -23260,7 +23563,7 @@
                 }
             ]
         },
-        "64": {
+        "65": {
             "grids_id": "698",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23320,7 +23623,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12171",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -23358,7 +23661,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12172",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -23396,7 +23699,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12174",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -23434,7 +23737,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12175",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -23472,7 +23775,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12176",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -23499,7 +23802,7 @@
             ],
             "actions": []
         },
-        "65": {
+        "66": {
             "grids_id": "699",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -23559,7 +23862,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12181",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -23597,7 +23900,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12182",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1117",
                     "fields_entity_id": "131",
@@ -23635,7 +23938,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12183",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1131",
                     "fields_entity_id": "131",
@@ -23673,7 +23976,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-12184",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1106",
                     "fields_entity_id": "131",
@@ -23733,7 +24036,7 @@
                 }
             ]
         },
-        "67": {
+        "68": {
             "grids_id": "862",
             "grids_entity_id": "333",
             "grids_sub_grid_id": null,
@@ -23837,7 +24140,7 @@
                 }
             ]
         },
-        "68": {
+        "69": {
             "grids_id": "1049",
             "grids_entity_id": "448",
             "grids_sub_grid_id": null,
@@ -23962,7 +24265,7 @@
             ],
             "actions": []
         },
-        "70": {
+        "71": {
             "grids_id": "1053",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -24043,7 +24346,7 @@
                 }
             ]
         },
-        "72": {
+        "73": {
             "grids_id": "1145",
             "grids_entity_id": "502",
             "grids_sub_grid_id": null,
@@ -24358,7 +24661,7 @@
             ],
             "actions": []
         },
-        "73": {
+        "74": {
             "grids_id": "1188",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -24418,7 +24721,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16491",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1101",
                     "fields_entity_id": "131",
@@ -24456,7 +24759,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16492",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1102",
                     "fields_entity_id": "131",
@@ -24494,7 +24797,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16493",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1103",
                     "fields_entity_id": "131",
@@ -24532,7 +24835,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "products_manager-grids_fields-16502",
-                    "grids_fields_module": "products_manager",
+                    "grids_fields_module": "projects",
                     "grids_fields_width": null,
                     "fields_id": "1124",
                     "fields_entity_id": "131",
@@ -24592,7 +24895,7 @@
                 }
             ]
         },
-        "75": {
+        "76": {
             "grids_id": "1249",
             "grids_entity_id": "113",
             "grids_sub_grid_id": null,
@@ -24978,7 +25281,7 @@
                 }
             ]
         },
-        "77": {
+        "78": {
             "grids_id": "1368",
             "grids_entity_id": "598",
             "grids_sub_grid_id": null,
@@ -25217,7 +25520,7 @@
             ],
             "actions": []
         },
-        "80": {
+        "81": {
             "grids_id": "1400",
             "grids_entity_id": "608",
             "grids_sub_grid_id": null,
@@ -25418,7 +25721,7 @@
             ],
             "actions": []
         },
-        "82": {
+        "83": {
             "grids_id": "1404",
             "grids_entity_id": "610",
             "grids_sub_grid_id": null,
@@ -25560,7 +25863,7 @@
                 }
             ]
         },
-        "83": {
+        "84": {
             "grids_id": "1406",
             "grids_entity_id": "612",
             "grids_sub_grid_id": null,
@@ -25702,7 +26005,7 @@
                 }
             ]
         },
-        "84": {
+        "85": {
             "grids_id": "1414",
             "grids_entity_id": "615",
             "grids_sub_grid_id": null,
@@ -25844,7 +26147,7 @@
                 }
             ]
         },
-        "87": {
+        "88": {
             "grids_id": "1642",
             "grids_entity_id": "707",
             "grids_sub_grid_id": null,
@@ -26121,7 +26424,7 @@
             ],
             "actions": []
         },
-        "90": {
+        "91": {
             "grids_id": "1693",
             "grids_entity_id": "131",
             "grids_sub_grid_id": null,
@@ -27242,7 +27545,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27265,7 +27568,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1112",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27288,7 +27591,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1119",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27311,7 +27614,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1120",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27334,7 +27637,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1121",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27357,7 +27660,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1122",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27380,7 +27683,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1123",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27403,7 +27706,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1124",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27426,7 +27729,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1125",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27449,7 +27752,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1126",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27472,7 +27775,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1127",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27495,7 +27798,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1128",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27518,7 +27821,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1129",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27541,7 +27844,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1130",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27564,7 +27867,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1131",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27587,7 +27890,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1132",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27610,7 +27913,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1306",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27633,7 +27936,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1309",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27656,7 +27959,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1310",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27679,7 +27982,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1451",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27702,7 +28005,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1478",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27725,7 +28028,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1800",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27748,7 +28051,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1802",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27771,7 +28074,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1806",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27794,7 +28097,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_1809",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27817,7 +28120,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2311",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27840,7 +28143,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2613",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27863,7 +28166,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2717",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27886,7 +28189,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_2718",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27909,7 +28212,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3248",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27932,7 +28235,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3425",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27955,7 +28258,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3433",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -27978,7 +28281,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3821",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28001,7 +28304,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3941",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28024,7 +28327,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3942",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28047,7 +28350,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1780_3943",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28070,7 +28373,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1780_4065",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28093,7 +28396,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1780_4579",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28116,7 +28419,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1780_4697",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -28262,7 +28565,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1782_1121",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -28345,7 +28648,7 @@
                 {
                     "forms_fields_forms_id": "1784",
                     "forms_fields_fields_id": "1094",
-                    "forms_fields_order": "1",
+                    "forms_fields_order": "0",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -28368,7 +28671,7 @@
                 {
                     "forms_fields_forms_id": "1784",
                     "forms_fields_fields_id": "1095",
-                    "forms_fields_order": "3",
+                    "forms_fields_order": "1",
                     "forms_fields_default_type": "static_value",
                     "forms_fields_default_value": "1",
                     "forms_fields_override_type": null,
@@ -28391,7 +28694,7 @@
                 {
                     "forms_fields_forms_id": "1784",
                     "forms_fields_fields_id": "1096",
-                    "forms_fields_order": "4",
+                    "forms_fields_order": "2",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
                     "forms_fields_override_type": null,
@@ -28408,6 +28711,75 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1784_1096",
+                    "forms_fields_module": "products_manager",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "1784",
+                    "forms_fields_fields_id": "5270",
+                    "forms_fields_order": "4",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "products_manager-forms_fields-1784_5270",
+                    "forms_fields_module": "products_manager",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "1784",
+                    "forms_fields_fields_id": "1099",
+                    "forms_fields_order": "3",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "4",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "products_manager-forms_fields-1784_1099",
+                    "forms_fields_module": "products_manager",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "1784",
+                    "forms_fields_fields_id": "1098",
+                    "forms_fields_order": "5",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "6",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "products_manager-forms_fields-1784_1098",
                     "forms_fields_module": "products_manager",
                     "forms_field_full_data": "0"
                 }
@@ -28531,7 +28903,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1101",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28554,7 +28926,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1118",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28577,7 +28949,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1102",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28600,7 +28972,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28623,7 +28995,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1103",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28646,7 +29018,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1106",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28669,7 +29041,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1107",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28692,7 +29064,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1108",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28715,7 +29087,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1109",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28738,7 +29110,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1110",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28761,7 +29133,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28784,7 +29156,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1114",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -28807,7 +29179,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1786_1117",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29220,7 +29592,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29243,7 +29615,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1306",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29266,7 +29638,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1451",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29289,7 +29661,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29312,7 +29684,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1792_1809",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29335,7 +29707,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-1792_3425",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29619,7 +29991,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1794_1105",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -29669,7 +30041,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1101",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29692,7 +30064,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1102",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29715,7 +30087,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1131",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29738,7 +30110,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1478",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29761,7 +30133,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1103",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29784,7 +30156,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1106",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29807,7 +30179,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1128",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29830,7 +30202,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1129",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29853,7 +30225,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29876,7 +30248,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_3433",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29899,7 +30271,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_3425",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29922,7 +30294,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1125",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29945,7 +30317,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -29968,7 +30340,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1795_2311",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -30018,7 +30390,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-1818_1800",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -30218,7 +30590,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2225_1108",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30241,7 +30613,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2225_1109",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30264,7 +30636,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2225_1110",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -30364,7 +30736,7 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "products_manager-forms_fields-2228_3248",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30387,7 +30759,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1101",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30410,7 +30782,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1102",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30433,7 +30805,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1309",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30456,7 +30828,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1103",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30479,7 +30851,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1123",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30502,7 +30874,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1118",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30525,7 +30897,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30548,7 +30920,7 @@
                     "forms_fields_dependent_on": "fw_products_servizio_licenza:1",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "products_manager-forms_fields-2228_3822",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30571,7 +30943,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_3821",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30594,7 +30966,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_1124",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30617,7 +30989,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "projects-forms_fields-2228_1106",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30640,7 +31012,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_2697",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -30663,7 +31035,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2228_2311",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31043,7 +31415,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-2440_1306",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31477,7 +31849,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "magazzino-forms_fields-2510_4579",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -31700,7 +32072,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_1104",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31723,7 +32095,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_3248",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31746,7 +32118,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_1113",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -31769,7 +32141,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2633_1451",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "projects",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -32011,7 +32383,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "products_manager-forms_fields-2747_2015",
-                    "forms_fields_module": "products_manager",
+                    "forms_fields_module": "magazzino",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -32889,7 +33261,24 @@
             "menu_type": "layout",
             "menu_form": null,
             "menu_html_attr": "",
-            "conditions": []
+            "conditions": [],
+            "menu_parent_data": {
+                "menu_id": "921",
+                "menu_label": "Magazzino",
+                "menu_link": "",
+                "menu_parent": null,
+                "menu_icon_class": "fas fa-warehouse",
+                "menu_order": "9",
+                "menu_position": "sidebar",
+                "menu_layout": null,
+                "menu_css_class": "",
+                "menu_modal": "0",
+                "menu_module": "magazzino",
+                "menu_module_key": "magazzino-menu-79",
+                "menu_type": "",
+                "menu_form": null,
+                "menu_html_attr": ""
+            }
         },
         {
             "menu_id": "960",
@@ -33009,12 +33398,12 @@
             "menu_position": "top_catalogo",
             "menu_layout": "143",
             "menu_css_class": "btn-danger",
-            "menu_modal": "1",
+            "menu_modal": "0",
             "menu_module": "products_manager",
             "menu_module_key": "products_manager-menu-1015",
             "menu_type": "layout",
             "menu_form": null,
-            "menu_html_attr": "",
+            "menu_html_attr": "target=\"_blank\"",
             "conditions": []
         },
         {
@@ -33248,6 +33637,41 @@
             "menu_module_key": "products_manager-menu-1852",
             "menu_type": "layout",
             "menu_form": null,
+            "menu_html_attr": "",
+            "conditions": [],
+            "menu_parent_data": {
+                "menu_id": "921",
+                "menu_label": "Magazzino",
+                "menu_link": "",
+                "menu_parent": null,
+                "menu_icon_class": "fas fa-warehouse",
+                "menu_order": "9",
+                "menu_position": "sidebar",
+                "menu_layout": null,
+                "menu_css_class": "",
+                "menu_modal": "0",
+                "menu_module": "magazzino",
+                "menu_module_key": "magazzino-menu-79",
+                "menu_type": "",
+                "menu_form": null,
+                "menu_html_attr": ""
+            }
+        },
+        {
+            "menu_id": "1920",
+            "menu_label": "Nuova categoria",
+            "menu_link": "?_size=extra",
+            "menu_parent": null,
+            "menu_icon_class": "fas fa-fire",
+            "menu_order": "1",
+            "menu_position": "Categories management",
+            "menu_layout": null,
+            "menu_css_class": "btn-primary",
+            "menu_modal": "1",
+            "menu_module": "products_manager",
+            "menu_module_key": "products_manager-menu-1920",
+            "menu_type": "form",
+            "menu_form": "1784",
             "menu_html_attr": "",
             "conditions": []
         }

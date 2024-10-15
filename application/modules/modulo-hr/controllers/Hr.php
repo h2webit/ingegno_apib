@@ -12,17 +12,27 @@ class Hr extends MY_Controller
     {
 
         if (empty($import_id)) {
+            echo json_encode(['status' => 3, 'txt' => 'Nessun import selezionato']);
             return false;
         }
 
         $import = $this->db->where('import_cedolini_id', $import_id)->get('import_cedolini')->row_array();
 
         if ($import['import_cedolini_imported'] != DB_BOOL_FALSE) {
+            echo json_encode(['status' => 3, 'txt' => 'Import già eseguito']);
             return false;
         }
 
         $cedolini = json_decode($import['import_cedolini_files'], true);
-
+        
+        $aggiorna_saldi = ($this->input->get('aggiorna_saldi') == '1');
+        
+        $this->load->model('modulo-hr/hrutility');
+        
+        $hr_settings = $this->db->get('impostazioni_hr')->row_array();
+        
+        $hr_settings_attiva_import_saldi = $hr_settings['impostazioni_hr_attiva_import_saldi_fp_da_cedolino'] ?? 0;
+        
         foreach ($cedolini as $cedolino) {
 
             if (!empty($cedolino['dipendenti_id'])) {
@@ -32,6 +42,32 @@ class Hr extends MY_Controller
                 $documento['documenti_dipendenti_categoria'] = 2;
                 $documento['documenti_dipendenti_file'] = $cedolino['path_local'];
                 $this->apilib->create('documenti_dipendenti', $documento);
+                
+                if ($hr_settings_attiva_import_saldi && $aggiorna_saldi) {
+                    $saldi_estratti = $this->hrutility->estrai_saldi_da_cedolino($cedolino, null);
+                    
+                    $riga_saldi = [
+                        'ratei_ferie_permessi_dipendente' => $cedolino['dipendenti_id'],
+                        'ratei_ferie_permessi_mese' => $import['import_cedolini_mese_competenza'],
+                        'ratei_ferie_permessi_anno' => $import['import_cedolini_anno_competenza'],
+                        'ratei_ferie_permessi_saldo_ferie' => $saldi_estratti['dipendenti_saldo_ferie'] ?? 0,
+                        'ratei_ferie_permessi_saldo_rol' => $saldi_estratti['dipendenti_saldo_rol'] ?? 0,
+                        'ratei_ferie_permessi_saldo_permessi' => $saldi_estratti['dipendenti_saldo_permessi'] ?? 0,
+                        'ratei_ferie_permessi_aggiorna_saldi' => 1,
+                    ];
+                    
+                    // check if already exists for month and year and dipendente
+                    $rateo_fp_db = $this->db->get_where('ratei_ferie_permessi', [
+                        'ratei_ferie_permessi_dipendente' => $cedolino['dipendenti_id'],
+                        'ratei_ferie_permessi_mese' => $import['import_cedolini_mese_competenza'],
+                        'ratei_ferie_permessi_anno' => $import['import_cedolini_anno_competenza'],
+                    ])->row_array();
+                    
+                    if (empty($rateo_fp_db)) {
+                        $this->apilib->create('ratei_ferie_permessi', $riga_saldi);
+                        // echo 'creato nuovo per ' . $cedolino['dipendenti_id'] . ' ' . $import['import_cedolini_mese_competenza'] . '/' . $import['import_cedolini_anno_competenza'] . '<br>';
+                    }
+                }
             }
         }
 
@@ -82,7 +118,7 @@ class Hr extends MY_Controller
                 if (!empty($orario)) {
                     //edit
                     try {
-                        $this->apilib->edit('turni_di_lavoro', $orario['orari_di_lavoro_id'], [
+                        $this->apilib->edit('turni_di_lavoro', $orario['turni_di_lavoro_id'], [
                             'turni_di_lavoro_ora_inizio' => '09:00',
                             'turni_di_lavoro_ora_fine' => '18:00',
                             'turni_di_lavoro_pausa' => '1',

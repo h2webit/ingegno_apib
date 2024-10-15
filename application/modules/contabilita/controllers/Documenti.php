@@ -693,9 +693,14 @@ class Documenti extends MX_Controller
                     ]);
                 }
             }
+
+            //debug($articoli_ids, true);
+            $this->db->query("DELETE FROM documenti_contabilita_articoli where documenti_contabilita_articoli_documento = $documento_id AND documenti_contabilita_articoli_id NOT IN (" . implode(',', $articoli_ids) . ")");
+            $this->mycache->clearCacheTags(['documenti_contabilita_articoli', 'documenti_contabilita']);
+
             //debug($padri_da_aggiornare,true);
             foreach ($padri_da_aggiornare as $padre) {
-
+                //Questa chiamata serve per aggiornare eventuali documenti associati, ricalcolando le quantità evase
                 $this->docs->aggiornaStatoDocumento($padre, $documents['documenti_contabilita_tipo']);
             }
             //@TODO gestire eventuali ordini multi commessa ed eventuali aggiunte/modifiche al documento
@@ -736,9 +741,7 @@ class Documenti extends MX_Controller
 
             }
 
-            //debug($articoli_ids, true);
-            $this->db->query("DELETE FROM documenti_contabilita_articoli where documenti_contabilita_articoli_documento = $documento_id AND documenti_contabilita_articoli_id NOT IN (" . implode(',', $articoli_ids) . ")");
-            $this->mycache->clearCacheTags(['documenti_contabilita_articoli', 'documenti_contabilita']);
+            
 
             //$this->docs->calcolaQuantitaEvase($documento_id);
 
@@ -946,6 +949,9 @@ class Documenti extends MX_Controller
             if ($clienti_tipo && $type) {
                 $where = ["(LOWER({$clienti_codice}) LIKE '%{$input}%' OR LOWER({$clienti_ragione_sociale}) LIKE '%{$input}%' OR LOWER({$clienti_nome}) LIKE '%{$input}%' OR LOWER({$clienti_cognome}) LIKE '%{$input}%') AND ({$clienti_tipo} IN ($type))"];
                 //debug($where, true);
+                
+                $where[] = "(customers_status = '1' OR customers_status IS NULL OR customers_status = '')";
+                
                 $res = $this->apilib->search($entita_clienti, $where, 10, 0, "{$clienti_codice},{$clienti_ragione_sociale},{$clienti_cognome},{$clienti_nome}");
             } else {
                 $res = $this->apilib->search($entita_clienti, ["(LOWER({$clienti_codice}) LIKE '%{$input}%' OR LOWER({$clienti_ragione_sociale}) LIKE '%{$input}%' OR LOWER({$clienti_nome}) LIKE '%{$input}%' OR LOWER({$clienti_cognome}) LIKE '%{$input}%')"], 10, 0, "{$clienti_codice},{$clienti_ragione_sociale},{$clienti_cognome},{$clienti_nome}");
@@ -1565,11 +1571,17 @@ class Documenti extends MX_Controller
                     'documenti_contabilita_totale' => $documento_old['documenti_contabilita_totale'],
                     'imponibile' => $documento_old['documenti_contabilita_imponibile'],
                     'competenze' => $documento_old['documenti_contabilita_competenze'],
+                    'template_pagamento' => $documento_old['documenti_contabilita_template_pagamento'],
                 ];
             } else {
                 //Se c'è uno sconto (documenti_contabilita_sconto), devo verificare che non sia diverso. Se è diverso blocco tutto perchè non posso accorpare sconti misti
                 if ($fatture_da_generare[$customer_id]['sconto_percentuale'] != $documento_old['documenti_contabilita_sconto_percentuale']) {
                     die("Impossibile accorpare documenti con sconti diversi per il cliente <strong>{$customer['customers_full_name']}</strong>. Operazione annullata. Ritorno all'elenco entro 5 secondi...<script>setTimeout(function () {window.close();window.history.back();}, 5000);</script>");
+                }
+
+                //Stesso controllo vale per il template di pagamento (non posso accorpare con template di pagamento diversi)
+                if ($fatture_da_generare[$customer_id]['template_pagamento'] != $documento_old['documenti_contabilita_template_pagamento']) {
+                    die("Impossibile accorpare documenti con template di pagamento diversi per il cliente <strong>{$customer['customers_full_name']}</strong>. Operazione annullata. Ritorno all'elenco entro 5 secondi...<script>setTimeout(function () {window.close();window.history.back();}, 5000);</script>");
                 }
 
                 $fatture_da_generare[$customer_id]['articoli_data'] = array_merge($fatture_da_generare[$customer_id]['articoli_data'], $articoli_old);
@@ -1583,6 +1595,7 @@ class Documenti extends MX_Controller
         }
         //debug($fatture_da_generare,true);
         foreach ($fatture_da_generare as $fattura_da_generare) {
+            //debug($fattura_da_generare,true);
             $documento_id = $this->docs->doc_express_save($fattura_da_generare);
         }
         foreach ($ddt_ids as $ddt_id) {

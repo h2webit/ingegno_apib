@@ -1,11 +1,28 @@
 <?php
 $prodotto = $this->apilib->searchFirst('fw_products', ['fw_products_id' => $value_id]);
 
+// debug($prodotto);
+
 $magazzini = $this->apilib->search('magazzini');
 $light_colors = ['#f7f1e3','#fafafa','#f5f6fa','#dcdde1','#d2dae2','#4cd1370'];
 
 if(!empty($prodotto['fw_products_fw_categories'])) {
     $categorie = $this->apilib->search('fw_products_fw_categories', ['fw_products_id' => $value_id]);
+}
+
+$provider_codes = $prodotto['fw_products_provider_code'] ? json_decode($prodotto['fw_products_provider_code'], true) : [];
+//     [fw_products_provider_code] => [{"code":"IK436B","supplier":"554"},{"code":"E83NRR","supplier":"562"}]
+
+// ottengo gli id dei supplier(se presenti) e li ottengo da db con un where_in
+$supplier_ids = array_column($provider_codes, 'supplier');
+$suppliers = $this->apilib->search('customers', ['customers_id' => $supplier_ids]);
+
+// aggiungo il nome del fornitore in base all'id nell'arrayh dei codici
+foreach($provider_codes as $key => $provider_code) {
+    $supplier = array_filter($suppliers, function($supplier) use ($provider_code) {
+        return $supplier['customers_id'] == $provider_code['supplier'];
+    });
+    $provider_codes[$key]['supplier_name'] = $supplier ? array_values($supplier)[0]['customers_full_name'] : '';
 }
 ?>
 
@@ -125,6 +142,15 @@ if(!empty($prodotto['fw_products_fw_categories'])) {
                     $categories = implode(", ", $prodotto['fw_products_categories']);
                     echo "<div class='product_info'><strong>Categorie</strong>: {$categories}</div>";
                 }
+                if (!empty($provider_codes)) {
+                    echo "<div class='product_info'><strong>Codici fornitore</strong>: ";
+                    foreach($provider_codes as $provider_code) {
+                        $supplier_name = $provider_code['supplier_name'] ? "({$provider_code['supplier_name']})" : '';
+                        echo "<div><strong>{$provider_code['code']}</strong> $supplier_name</div>";
+                    }
+                    echo "</div>";
+                
+                }
                 if(!empty($prodotto['fw_products_brand']))  {
                     echo "<div class='product_info'><strong>Marchio</strong>: {$prodotto['fw_products_brand_value']}</div>";
                 }
@@ -135,7 +161,7 @@ if(!empty($prodotto['fw_products_fw_categories'])) {
                     echo "<div class='product_info'><strong>Prezzo scontato (IVA esc.)</strong>: ".number_format($prodotto['fw_products_discounted_price'], 2, ',', '.')." €</div>";
                 }
                 if(!empty($prodotto['fw_products_tax']))  {
-                    echo "<div class='product_info'><strong>IVA</strong>: {$prodotto['fw_products_tax_iva_label']}</div>";
+                    echo "<div class='product_info'><strong>IVA</strong>: {$prodotto['iva_label']}</div>";
                 }
                 if(!empty($prodotto['fw_products_supplier']))  {
                     echo "<div class='product_info'><strong>Fornitore</strong>: {$prodotto['customers_company']}</div>";
@@ -189,22 +215,57 @@ if(!empty($prodotto['fw_products_fw_categories'])) {
         <div class="col-md-3">
             <?php if(!empty($magazzini)) : ?>
             <div class="counter_qty_container">
-                <?php foreach ($magazzini as $key => $magazzino) : ?>
                 <?php
-                    $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'")->row()->qty;
-                    $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$value_id}' AND movimenti_magazzino = '{$magazzino['magazzini_id']}'")->row()->qty;
+                $magazzini = $this->apilib->search('magazzini');
+                $light_colors = ['#f7f1e3', '#fafafa', '#f5f6fa', '#dcdde1', '#d2dae2', '#4cd1370'];
+                
+                function getQuantity($db, $value_id, $magazzino_id, $tipo_movimento) {
+                    $query = "SELECT SUM(movimenti_articoli_quantita) as qty
+              FROM movimenti_articoli
+              LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento)
+              WHERE movimenti_tipo_movimento = ?
+              AND movimenti_articoli_prodotto_id = ?
+              AND movimenti_magazzino = ?";
+                    return $db->query($query, [$tipo_movimento, $value_id, $magazzino_id])->row()->qty ?? 0;
+                }
+                
+                $show_as_list = count($magazzini) > 5;
+                
+                if (!$show_as_list) {
+                    echo '<div class="row">';
+                }
+                
+                foreach ($magazzini as $magazzino) :
+                    $quantity_carico = getQuantity($this->db, $value_id, $magazzino['magazzini_id'], 1);
+                    $quantity_scarico = getQuantity($this->db, $value_id, $magazzino['magazzini_id'], 2);
                     $quantity = $quantity_carico - $quantity_scarico;
+                    
+                    $text_color = in_array($magazzino['magazzini_colore'], $light_colors) ? 'black' : 'white';
+                    
+                    if ($show_as_list) :
+                        ?>
+                        <p style="color: <?= $magazzino['magazzini_colore']; ?>; font-size: 1.2em;">
+                            <?= $magazzino['magazzini_titolo'] . ': ' . $quantity; ?>
+                        </p>
+                    <?php else : ?>
+                        <div class="col-sm-12">
+                            <div class="small-box" style="color: <?= $text_color; ?>; background-color: <?= $magazzino['magazzini_colore']; ?>">
+                                <div class="inner">
+                                    <h3><?= $quantity; ?></h3>
+                                    <p style="font-size: 1.2em;"><?= $magazzino['magazzini_titolo']; ?></p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-warehouse"></i>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif;
+                endforeach;
+                
+                if (!$show_as_list) {
+                    echo '</div>';
+                }
                 ?>
-                <div class="small-box" style="color:<?php echo (in_array($magazzino['magazzini_colore'], $light_colors)) ? 'black' : 'white'; ?>;background-color:<?php echo $magazzino['magazzini_colore']; ?>">
-                    <div class="inner">
-                        <h3><?php echo $quantity; ?></h3>
-                        <p style="font-size: 1.2em !important;"><strong><?php echo $magazzino['magazzini_titolo']; ?></strong></p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-warehouse" style="font-size: 0.75em !important;"></i>
-                    </div>
-                </div>
-                <?php endforeach; ?>
             </div>
             <?php endif; ?>
         </div>

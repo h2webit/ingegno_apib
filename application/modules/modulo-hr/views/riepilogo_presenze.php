@@ -361,6 +361,37 @@ foreach ($turniQuery as $turno) {
 }
 
 $this->load->model('entities');
+$ore_giornaliere_arr = [];
+if ($this->entities->entity_exists('rapportini')) {
+    $query = "SELECT
+    rel.users_id AS dipendenti_id,
+    rapportini_data,
+    SUM(
+        TIMESTAMPDIFF(MINUTE, 
+            STR_TO_DATE(CONCAT(rapportini_data, ' ', rapportini_ora_inizio), '%Y-%m-%d %H:%i'),
+            STR_TO_DATE(CONCAT(rapportini_data, ' ', rapportini_ora_fine), '%Y-%m-%d %H:%i')
+        ) / 60 
+    ) AS totale_ore_lavoro
+FROM
+    rapportini
+JOIN
+    rel_rapportini_users rel ON rapportini.rapportini_id = rel.rapportini_id
+WHERE
+    rapportini_da_validare = '0'
+    AND rapportini_data BETWEEN '$anno-$mese-01' AND '$anno-$mese-$giorni_mese'
+GROUP BY
+    rel.users_id, rapportini_data";
+
+    $result = $this->db->query($query)->result_array();
+
+    // Creare un array associativo con le ore giornaliere
+    
+    foreach ($result as $row) {
+        $ore_giornaliere_arr[$row['dipendenti_id']][$row['rapportini_data']] = $row['totale_ore_lavoro'];
+    }
+} else {
+    
+}
 foreach ($dipendenti as $dipendente) {
     $totale_ore_dipendente = $totale_ore_previste_dipendente = 0;
 
@@ -376,25 +407,7 @@ foreach ($dipendenti as $dipendente) {
 
         //Verifico se esiste l'entità rapportini
         if ($this->entities->entity_exists('rapportini')) {
-            $ore_giorno = $this->db->query("SELECT
-                SUM(
-                    TIMESTAMPDIFF(MINUTE, 
-                            STR_TO_DATE(CONCAT(rapportini_data, ' ', rapportini_ora_inizio), '%Y-%m-%d %H:%i'),
-                            STR_TO_DATE(CONCAT(rapportini_data, ' ', rapportini_ora_fine), '%Y-%m-%d %H:%i')
-                        ) / 60 
-                    
-                ) AS totale_ore_lavoro
-            FROM
-                rapportini
-            WHERE
-                    rapportini_da_validare = '0'
-                    AND
-                rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users WHERE users_id = '{$dipendente['dipendenti_user_id']}')  -- Sostituisci con l'ID del dipendente
-                AND rapportini_data = '$current_date'
-                
-
-
-    ")->row()->totale_ore_lavoro;
+            $ore_giorno = $ore_giornaliere_arr[$dipendente['dipendenti_user_id']][$current_date] ?? 0;
             $totale_ore_dipendente_da_rapportini += $ore_giorno;
         }
         $giorno_della_settimana = date('N', strtotime($current_date));

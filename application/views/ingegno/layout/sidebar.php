@@ -122,9 +122,10 @@
             <?php endif; ?>
         </li>
         <?php else : ?>
-        <li class="heading menu-<?php echo $menu['menu_id'] ?>">
+         <?php if ($hasSubmenu) : ?><span class="pull-right-container"><i class="fas fa-angle-right pull-right"></i></span><?php endif; ?>
+        <!-- <li class="heading menu-<?php echo $menu['menu_id'] ?>">
             <h3 class="uppercase"><?php e($label, true); ?></h3>
-        </li>
+        </li> -->
         <?php endif; ?>
         <?php
             $first = false;

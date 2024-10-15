@@ -94,7 +94,7 @@ if (
         ]
     );
     $chiusura_esercizio_precedente_gpp = $chiusura_esercizio_precedente_blc = false;
-
+    //debug($gpp_registrato);
     if (date('Y') > $anno_esercizio && $conto_patrimoniale_chiusura && !$gpp_registrato) {
         $chiusura_esercizio_precedente_gpp = true;
     }

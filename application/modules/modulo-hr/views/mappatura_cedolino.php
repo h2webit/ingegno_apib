@@ -11,14 +11,24 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-heading" style="display: flex; justify-content: space-between">
-                <h3 class="panel-title">Carica il file</h3>
-                
-                <input type="file" id="file-input" accept="application/pdf">
-            </div>
-            
-            <canvas id="pdf-canvas"></canvas>
+        <div class="callout callout-info" style="background-color: #3c8dbc!important; border-left: 5px solid #357ca5;">
+            <h4>Guida rapida: Mappatura dei cedolini</h4>
+            <ol>
+                <li>Clicca su "Scegli file" e seleziona il PDF del cedolino da mappare.</li>
+                <li>Una volta caricato il PDF, vedrai un'anteprima sulla sinistra.</li>
+                <li>Sulla destra, inserisci un nome per questa mappatura.</li>
+                <li>Per mappare un'area:
+                    <ul>
+                        <li>Clicca e trascina il mouse sull'anteprima per disegnare un rettangolo intorno al dato desiderato (es. saldo ferie).</li>
+                        <li>Seleziona il tipo di dato dalla lista a destra (es. "Saldo Ferie").</li>
+                        <li>Inserisci un'etichetta che sia <strong>identica</strong> al testo nel cedolino. Ad esempio, se nel cedolino c'è scritto "FERIE RES.", l'etichetta deve essere esattamente "FERIE RES." (maiuscole, punteggiatura inclusa).</li>
+                    </ul>
+                </li>
+                <li>Ripeti il processo per mappare altri dati (es. saldo permessi, saldo ROL).</li>
+                <li>Clicca "Salva mappatura" quando hai finito.</li>
+            </ol>
+            <p>Attenzione: L'esatta corrispondenza delle etichette è fondamentale per il corretto funzionamento del sistema.</p>
+            <p>Questa mappatura ti permetterà di estrarre automaticamente questi dati da futuri cedolini con lo stesso formato.</p>
         </div>
     </div>
     
@@ -78,6 +88,20 @@
                 
                 <button type="submit" class="btn btn-sm btn-primary pull-right" form="form_mappature">Salva mappatura</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="display: flex; justify-content: space-between">
+                <h3 class="panel-title">Carica il file</h3>
+                
+                <input type="file" id="file-input" accept="application/pdf">
+            </div>
+            
+            <canvas id="pdf-canvas"></canvas>
         </div>
     </div>
 </div>

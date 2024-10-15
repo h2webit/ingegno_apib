@@ -276,11 +276,12 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
                             });
                             </script>
                         </label>
-                        <select class="form-control select2_standard" style="width: 100%;" name="fw_products_supplier">
-                            <option value=""> --- </option>
-                            <?php foreach ($fornitori as $fornitore) : ?>
-                            <option value="<?php echo $fornitore['customers_id']; ?>" <?php if ($prodotto_id && $fornitore['customers_id'] == $prodotto['fw_products_supplier']) : ?> selected="selected" <?php endif; ?>><?php echo $fornitore['customers_company']; ?></option>
-                            <?php endforeach; ?>
+                        <select class="form-control js_select_ajax_new" style="width: 100%;" name="fw_products_supplier" data-required="0" data-source-field="" data-ref="customers" data-val="<?php echo $prodotto['fw_products_supplier'] ?? null; ?>" data-dependent_on="">
+                            <?php if(!empty($prodotto['fw_products_supplier'])): ?>
+                            
+                            <option value="<?php echo $prodotto['fw_products_supplier']; ?>" selected="selected"><?php echo $prodotto['customers_full_name']; ?></option>
+                            
+                            <?php endif; ?>
                         </select>
                     </div>
                 </div>
@@ -375,8 +376,7 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
                                 // debug($providers_code, true);
                                 
                                 ?>
-                                <?php foreach ($providers_code as $key => $provider_code): ?>
-                                    <?php
+                                <?php foreach ($providers_code as $key => $provider_code):
                                     if (!empty($provider_code['code'])) {
                                         $code = $provider_code['code'];
                                     } else {
@@ -396,12 +396,12 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
                                                 name="fw_products_provider_code[code][]" value="<?php echo ($prodotto_id) ? $code : ''; ?>">
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
-                                            <select class="form-control" style="width: 100%;" name="fw_products_provider_code[supplier][]">
+                                            <select class="form-control js_select_ajax_new" style="width: 100%;" data-custom_url="<?php echo base_url('products_manager/productsmanager/get_fornitori'); ?>" name="fw_products_provider_code[supplier][]" data-required="0" data-source-field="" data-ref="customers" data-val="<?php echo $supplier ?? null; ?>" data-dependent_on="">
                                                 <option value=""> --- </option>
-                                                <?php foreach ($fornitori as $fornitore): ?>
-                                                    <option value="<?php echo $fornitore['customers_id']; ?>" <?php if ($prodotto_id && $fornitore['customers_id'] == $supplier): ?> selected="selected" <?php endif; ?>>
-                                                        <?php echo $fornitore['customers_company']; ?></option>
-                                                <?php endforeach; ?>
+                                                
+                                                <?php foreach ($fornitori as $fornitore): if ($prodotto_id && $fornitore['customers_id'] == $supplier): ?>
+                                                    <option value="<?php echo $fornitore['customers_id']; ?>" selected="selected"><?php echo $fornitore['customers_full_name']; ?></option>
+                                                <?php endif; endforeach; ?>
                                             </select>
                                         </div>
                                     </div>
@@ -1666,10 +1666,21 @@ function refreshSupportData() {
 $(() => {
     $('.js-provider_code-add').on('click', function() {
         var provider_code_container = $('.js-provider_code_container').first().clone();
-
+        
+        // Reset all input values
         $(':input', provider_code_container).val('');
-        $('.js-provider_code_container').last().after(provider_code_container);
+        
+        // Remove the Select2 span elements
+        provider_code_container.find('.select2-container').remove();
+        
+        // Reset the select element to its original state
+        provider_code_container.find('select').removeAttr('data-select2-id tabindex aria-hidden');
+        provider_code_container.find('select option').removeAttr('data-select2-id');
+        
         provider_code_container.addClass('mt-5');
+        provider_code_container.appendTo($('.provider_column'));
+        
+        initComponents($('.provider_column'));
     });
 });
 </script>

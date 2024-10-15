@@ -19,17 +19,17 @@ class Mappature_model extends CI_Model
         $this->scope = $tipo;
     }
     
-    public function estrai_saldi_da_cedolino ($pdf_path, $mappatura)
+    public function estrai_dati_da_cedolino ($pdf_path, $mappatura = null)
     {
         if (!file_exists($pdf_path)) {
             return false;
         }
         
-        if (empty($mappatura)) {
-            return false;
-        }
+        // if (empty($mappatura)) {
+        //     return false;
+        // }
         
-        if (!is_array($mappatura)) {
+        if (empty($mappatura) || !is_array($mappatura) || is_numeric($mappatura)) {
             $mappatura = $this->apilib->searchFirst('dipendenti_mappature_pdf', ['dipendenti_mappature_pdf_id' => $mappatura]);
         }
         

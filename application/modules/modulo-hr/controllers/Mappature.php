@@ -50,23 +50,80 @@
         }
         
         public function estrai_saldi_da_cedolino($id_import_cedolini) {
-            $cedolini = $this->apilib->view('import_cedolini', $id_import_cedolini);
+            $row_import_cedolini = $this->apilib->view('import_cedolini', $id_import_cedolini);
             
-            if (empty($cedolini)) {
-                e_json(['status' => 0, 'txt' => 'Cedolino non trovato']);
+            if (empty($row_import_cedolini)) {
+                echo 'Cedolino non trovato';
                 return;
             }
             
-            $this->load->model('modulo-hr/mappature_model');
+            if ($row_import_cedolini['import_cedolini_imported'] == DB_BOOL_TRUE) {
+                echo 'Cedolini già importati';
+                return;
+            }
             
-            $files = json_decode($cedolini['import_cedolini_files'], true);
-
-            $mappatura = $this->apilib->searchFirst('dipendenti_mappature_pdf', ['dipendenti_mappature_pdf_default' => 1]);
+            $this->load->model('modulo-hr/hrutility');
+            
+            $files = json_decode($row_import_cedolini['import_cedolini_files'], true);
             
             foreach ($files as $file) {
-                $saldi = $this->mappature_model->estrai_saldi_da_cedolino(FCPATH . 'uploads/' . $file['path_local'], $mappatura);
+                $saldi_estratti = $this->hrutility->estrai_saldi_da_cedolino($file, null);
+
+                /** SALDI ESTRATTI
+                 * ^ array:3 [▼
+                 * "dipendenti_saldo_ferie" => 209.34
+                 * "dipendenti_saldo_permessi" => 7.51
+                 * "dipendenti_saldo_rol" => 0
+                 * ]
+                 */
+                
+                /** TABELLA ratei_ferie_permessi
+                 * ratei_ferie_permessi_id    bigint(20) unsigned Auto Increment
+                 * ratei_ferie_permessi_creation_date    datetime NULL
+                 * ratei_ferie_permessi_modified_date    datetime NULL
+                 * ratei_ferie_permessi_created_by    int(11) NULL
+                 * ratei_ferie_permessi_edited_by    int(11) NULL
+                 * ratei_ferie_permessi_insert_scope    varchar(250) NULL
+                 * ratei_ferie_permessi_edit_scope    varchar(250) NULL
+                 * ratei_ferie_permessi_dipendente    int(11)
+                 * ratei_ferie_permessi_mese    int(11)
+                 * ratei_ferie_permessi_anno    int(11)
+                 * ratei_ferie_permessi_saldo_ferie    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_rol    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_permessi    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_ferie_precedente    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_rol_precedente    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_permessi_precedente    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_banca_ore    double(18,9) NULL
+                 * ratei_ferie_permessi_saldo_banca_ore_precedente    double(18,9) NULL
+                 * ratei_ferie_permessi_aggiorna_saldi    tinyint(1) NULL [0]
+                 */
+                
+                $riga_saldi = [
+                    'ratei_ferie_permessi_dipendente' => $file['dipendenti_id'],
+                    'ratei_ferie_permessi_mese' => $row_import_cedolini['import_cedolini_mese_competenza'],
+                    'ratei_ferie_permessi_anno' => $row_import_cedolini['import_cedolini_anno_competenza'],
+                    'ratei_ferie_permessi_saldo_ferie' => $saldi_estratti['dipendenti_saldo_ferie'],
+                    'ratei_ferie_permessi_saldo_rol' => $saldi_estratti['dipendenti_saldo_rol'],
+                    'ratei_ferie_permessi_saldo_permessi' => $saldi_estratti['dipendenti_saldo_permessi'],
+                    'ratei_ferie_permessi_aggiorna_saldi' => 1,
+                ];
+                
+                // check if already exists for month and year and dipendente
+                $rateo_fp_db = $this->apilib->searchFirst('ratei_ferie_permessi', [
+                    'ratei_ferie_permessi_dipendente' => $riga_saldi['ratei_ferie_permessi_dipendente'],
+                    'ratei_ferie_permessi_mese' => $riga_saldi['ratei_ferie_permessi_mese'],
+                    'ratei_ferie_permessi_anno' => $riga_saldi['ratei_ferie_permessi_anno'],
+                ]);
+                
+                if (empty($rateo_fp_db)) {
+                    $this->apilib->create('ratei_ferie_permessi', $riga_saldi);
+                    echo 'creato nuovo per ' . $file['dipendenti_id'] . ' ' . $row_import_cedolini['import_cedolini_mese_competenza'] . '/' . $row_import_cedolini['import_cedolini_anno_competenza'] . '<br>';
+                } else {
+                    // already exists
+                }
             }
 
-            debug($saldi,true);
+            // debug($saldi,true);
         }
     }

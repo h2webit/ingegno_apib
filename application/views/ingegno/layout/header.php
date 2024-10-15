@@ -126,7 +126,9 @@ if (defined('SIDEBAR_ELEMENT') && !empty(SIDEBAR_ELEMENT)) {
                     <!-- BEGIN show pending processes -->
                     <?php
                     $this->db->cache_off();
-                    $pending_processes = $this->db->where('_queue_pp_executed', DB_BOOL_FALSE)->get('_queue_pp')->num_rows();
+                    $pending_processes = $this->db->query("SELECT COUNT(*) AS c 
+FROM _queue_pp
+WHERE _queue_pp_executed = 0")->row()->c;
                     $this->db->cache_on();
                     ?>
                     <?php if ($pending_processes > 0): ?>

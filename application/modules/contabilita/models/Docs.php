@@ -1631,15 +1631,19 @@ class Docs extends CI_Model
         }
     }
 
-    public function calcolaQuantitaEvasaDoc($documenti_contabilita_articoli_rif_riga_articolo,$padre_tipo = null, $original_tipo = null)
+    public function calcolaQuantitaEvasaDoc($documenti_contabilita_articoli_rif_riga_articolo,$padre_tipo = null, $original_tipo = null, $exclude_doc_id = '-1')
     {
 
+        //$exclude_doc_id viene usato in caso di pre-delete... essendo PRE, la riga non è stata ancora eliminata, quindi va esclusa forzatamente dal calcolo
         
         $riga_articolo = $this->db
             ->join('documenti_contabilita', 'documenti_contabilita_articoli_documento = documenti_contabilita_id', 'LEFT')
-            ->get_where('documenti_contabilita_articoli', ['documenti_contabilita_articoli_id' => $documenti_contabilita_articoli_rif_riga_articolo])
+            
+            ->get_where('documenti_contabilita_articoli', [                'documenti_contabilita_articoli_id' => $documenti_contabilita_articoli_rif_riga_articolo            ])
             ->row_array();
-        //debug($riga_articolo,true);
+        if ($documenti_contabilita_articoli_rif_riga_articolo == '17148') {
+            //debug($riga_articolo, true);
+        }
         if (!$riga_articolo) {
             return 0;
         }
@@ -1653,16 +1657,20 @@ class Docs extends CI_Model
         }
 
         $quantita_in_padri = $this->db->query("
-            SELECT SUM(documenti_contabilita_articoli_quantita) AS s 
+            SELECT COALESCE(SUM(documenti_contabilita_articoli_quantita), 0) AS s 
             FROM documenti_contabilita_articoli 
             LEFT JOIN documenti_contabilita ON (documenti_contabilita_id = documenti_contabilita_articoli_documento)
             WHERE 
                 documenti_contabilita_articoli_rif_riga_articolo = '{$riga_articolo['documenti_contabilita_articoli_id']}'
                 AND
                 documenti_contabilita_tipo <> '{$riga_articolo['documenti_contabilita_tipo']}'
+                AND documenti_contabilita_id <> '{$exclude_doc_id}'
                 AND documenti_contabilita_tipo NOT IN (".implode(',', $tipi_not).")
                 ")->row()->s; //I documenti di tipo nota di credito, fattura reverse e nota di credito reverse non vanno a chiudere un ordine cui son legati. Nemmeno gli ordini fornitore!!!
-        // debug($quantita_in_padri);
+        if ( $documenti_contabilita_articoli_rif_riga_articolo == '17219') {
+            //debug($quantita_in_padri,true);
+        }
+                
         // debug($this->db->last_query());
         if ($this->datab->module_installed('magazzino')) {
             $this->load->model('magazzino/mov');
@@ -1698,13 +1706,13 @@ class Docs extends CI_Model
 
     }
 
-    public function aggiornaStatoDocumento($documento_id, $old_documento_tipo = false)
+    public function aggiornaStatoDocumento($documento_id, $old_documento_tipo = false, $exclude_doc_id = '-1')
     {
         //$documento = $this->apilib->view('documenti_contabilita', $documento_id);
         $documento = $this->db->get_where('documenti_contabilita', ['documenti_contabilita_id' => $documento_id])->row_array();
         $documento_tipo = $documento['documenti_contabilita_tipo'];
 
-
+        
         // debug($documento_tipo);
         // debug($old_documento_tipo,true);
 
@@ -1724,7 +1732,7 @@ class Docs extends CI_Model
             }
 
             //Calcolo la quantità di merce evasa
-            $quantita_evase = $this->calcolaQuantitaEvasaDoc($riga['documenti_contabilita_articoli_id'], $old_documento_tipo, $documento_tipo);
+            $quantita_evase = $this->calcolaQuantitaEvasaDoc($riga['documenti_contabilita_articoli_id'], $old_documento_tipo, $documento_tipo, $exclude_doc_id);
 
             if ($quantita_evase >= $riga['documenti_contabilita_articoli_quantita']) {
                 unset($righe_articolo[$key]);

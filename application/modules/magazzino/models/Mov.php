@@ -220,26 +220,42 @@ class Mov extends CI_Model
     //     return $this->calcolaQuantitaRimanente($riga['documenti_contabilita_articoli_prodotto_id'], $riga_rif['documenti_contabilita_articoli_documento']);
 
     // }
-    public function calcolaQuantitaRimanente($prodotto_id, $documento_id = '')
+    public function calcolaQuantitaRimanente($prodotto_id, $documento_id = null)
     {
-
+        
+        // michael, 20/09/2024 - aggiunto questo where in quanto mi serviva per calcolare la quantità rimanente per un documento specifico, ad esempio nella pagina di "prodotti in ordine"
+        $where_documento = '';
+        if ($documento_id && is_numeric($documento_id)) {
+            $where_documento = "documenti_contabilita_articoli_documento = '$documento_id'";
+        } else {
+            $where_documento = "documenti_contabilita_tipo IN (5)";
+        }
+        
         $impegnate = $this->db->query("
-            SELECT SUM(COALESCE(documenti_contabilita_articoli_quantita,0)-(COALESCE(documenti_contabilita_articoli_qty_movimentate,0)+COALESCE(documenti_contabilita_articoli_qty_evase_in_doc,0))) as s 
+            SELECT SUM(COALESCE(documenti_contabilita_articoli_quantita,0)-(COALESCE(documenti_contabilita_articoli_qty_movimentate,0)+COALESCE(documenti_contabilita_articoli_qty_evase_in_doc,0))) as s
             FROM documenti_contabilita_articoli
             LEFT JOIN documenti_contabilita ON (documenti_contabilita_id = documenti_contabilita_articoli_documento)
             WHERE
-                documenti_contabilita_articoli_prodotto_id = $prodotto_id
+                (
+                
+                COALESCE(documenti_contabilita_articoli_quantita, 0) -
+                (COALESCE(documenti_contabilita_articoli_qty_evase_in_doc, 0) +
+                 COALESCE(documenti_contabilita_articoli_qty_movimentate, 0)
+                ) > 0
+                
+                ) and
+                documenti_contabilita_articoli_prodotto_id = '$prodotto_id'
                 AND
                 documenti_contabilita_stato IN (1,2,5)
-                AND
-                documenti_contabilita_tipo IN (5)
+                AND 
+                $where_documento
         ")->row()->s;
         //debug($this->db->last_query());
-
+        
         if ($impegnate < 0) {
             $impegnate = 0;
         }
-
+        
         return $impegnate;
     }
 
@@ -298,8 +314,8 @@ class Mov extends CI_Model
             $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND movimenti_magazzino = '{$magazzino}' $where_exclude")->row()->qty;
             $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND movimenti_magazzino = '{$magazzino}' $where_exclude")->row()->qty;
         } else {
-            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' $where_exclude")->row()->qty;
-            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' $where_exclude")->row()->qty;
+            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) LEFT JOIN magazzini ON (magazzini_id = movimenti_magazzino) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND (magazzini_deleted IS NULL OR magazzini_deleted = 0) $where_exclude")->row()->qty;
+            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) LEFT JOIN magazzini ON (magazzini_id = movimenti_magazzino) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '{$product['fw_products_id']}' AND (magazzini_deleted IS NULL OR magazzini_deleted = 0) $where_exclude")->row()->qty;
         }
 
         $quantity = $quantity_carico - $quantity_scarico;
@@ -319,8 +335,8 @@ class Mov extends CI_Model
             $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . ")) AND movimenti_magazzino = '{$magazzino}'")->row()->qty;
 
         } else {
-            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . ")) ")->row()->qty;
-            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . "))")->row()->qty;
+            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) LEFT JOIN magazzini ON (magazzini_id = movimenti_magazzino) WHERE movimenti_tipo_movimento = 1 AND (magazzini_deleted IS NULL OR magazzini_deleted = 0) AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . ")) ")->row()->qty;
+            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) LEFT JOIN magazzini ON (magazzini_id = movimenti_magazzino) WHERE movimenti_tipo_movimento = 2 AND (magazzini_deleted IS NULL OR magazzini_deleted = 0) AND movimenti_articoli_prodotto_id IN (SELECT fw_products_id FROM fw_products_fw_categories WHERE fw_categories_id IN (" . implode(',', $categories) . "))")->row()->qty;
         }
 
         $quantity = $quantity_carico - $quantity_scarico;
@@ -416,10 +432,10 @@ class Mov extends CI_Model
             LEFT JOIN 
                 movimenti ON movimenti.movimenti_id = movimenti_articoli.movimenti_articoli_movimento
                 
-LEFT JOIN 
+            LEFT JOIN 
                 magazzini ON magazzini_id = movimenti_magazzino
             WHERE 
-                1=1 $where
+                (magazzini_deleted IS NULL OR magazzini_deleted = 0) $where
             GROUP BY 
                 fw_products.fw_products_id, 
                 magazzini.magazzini_id,

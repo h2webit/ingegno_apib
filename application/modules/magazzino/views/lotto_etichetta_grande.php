@@ -1,8 +1,12 @@
 <?php
 $barcodes = json_decode($articolo['fw_products_barcode'], true);
 
-$array = array_values($barcodes);
-$barcode = array_shift($array);
+$barcode = '';
+if (!empty($barcodes)) {
+    $array = array_values($barcodes);
+    $barcode = array_shift($array);
+}
+
 
 ?>
 

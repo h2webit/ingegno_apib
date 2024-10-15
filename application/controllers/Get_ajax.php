@@ -145,10 +145,8 @@ class Get_ajax extends MY_Controller
         $form = $this->datab->get_form($form_id, $value_id);
         if ($duplicated == true) {
             $action_form = $form['forms']['action_url'];
-            $parts = explode("/", $action_form); // Dividi l'URL in base al carattere "/"
-            $key = array_search("true", $parts); // Trova l'indice della stringa "true"
-            $result = implode("/", array_slice($parts, 0, $key)); // Unisci tutte le parti dell'URL fino all'indice "true"
-            $form['forms']['action_url'] = $result;
+            $action_form = strpos($action_form, 'true') ? substr($action_form, 0, strpos($action_form, 'true')) : $action_form;
+            $form['forms']['action_url'] = $action_form;
         }
         if (!$form) {
             $this->load->view("box/errors/missing_form", ['form_id' => $form_id]);
@@ -400,7 +398,7 @@ class Get_ajax extends MY_Controller
                 // Voglio i filtri su ricerca apilib. Quelli dei
                 // post-process quindi prima mi prendo tutti gli id facendo un
                 // apilib search e poi chiamo getEntityPreview con WHERE id IN (...)
-                $preSearchRecords = $this->apilib->search($table, $where, $limit, null, null, null, 1);
+                $preSearchRecords = $this->apilib->search($table, $where, $limit, null, null, null, 2);
                 $result_json = array();
                 if ($preSearchRecords) {
                     $idKey = "{$table}_id";

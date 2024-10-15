@@ -22,12 +22,13 @@ if (!empty($files)) {
             $this->apilib->create('documenti_contabilita_template_pdf', [
                 'documenti_contabilita_template_pdf_nome' => $nome_tpl,
                 'documenti_contabilita_template_pdf_master' => DB_BOOL_TRUE,
-                'documenti_contabilita_template_pdf_html' => $content
+                'documenti_contabilita_template_pdf_html' => $content,
             ]);
         } else {
             echo_log('debug', 'aggiorno tpl: ' . $nome_tpl . '<br/>');
             $this->apilib->edit('documenti_contabilita_template_pdf', $tpl_db['documenti_contabilita_template_pdf_id'], [
-                'documenti_contabilita_template_pdf_html' => $content
+                'documenti_contabilita_template_pdf_html' => $content,
+                'documenti_contabilita_template_pdf_file_html' => null
             ]);
         }
     }

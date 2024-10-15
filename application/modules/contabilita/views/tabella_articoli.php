@@ -274,7 +274,9 @@
         
         <?php if (isset($documento['articoli']) && $documento['articoli']) : ?>
             <?php foreach ($documento['articoli'] as $k => $prodotto) : ?>
-                
+                <?php if ($prodotto['documenti_contabilita_articoli_codice'] == 'MC TS05.N') : ?>
+                    <?php //debug($prodotto,true); ?>
+                    <?php endif; ?>
                 
                 <!-- DA RIVEDEER POTREBBERO MANCARE DEI CAMPI QUANDO SI FARA L EDIT -->
                 <tr>
@@ -706,6 +708,7 @@
                         } else {
                             $('#lotti_modal').modal('show');
                             //console.log(my.data);
+                            
                             $("#lotti_table tbody").html('');
                             
                             $.each(my.data, function(i, item) {
@@ -718,7 +721,7 @@
                                 } else {
                                     var data_scadenza = '';
                                 }
-                                if (item.movimenti_articoli_quantita > 0) {
+                                if (item.s > 0) {
                                     // console.log(row_lotto);
                                     // alert(JSON.stringify(row_lotto));
                                     var button = "<button type='button' class='btn btn-success btn-sm btn_lotto' data-row='" + JSON.stringify(row_lotto) + "' data-lotto_codice='" + item.movimenti_articoli_lotto + "' data-lotto_scadenza='" + data_scadenza + "' data-lotto_quantita='" + item.movimenti_articoli_quantita + "'><i class='fa fa-plus'></i> Seleziona</button>";
@@ -744,12 +747,16 @@
                                 append_tr += "<td>" + (item.customers_company == null ? '' : item.customers_company) + "</td>";
                                 <?php endif; ?>
                                 
-                                append_tr += "<td>" + item.movimenti_articoli_quantita + "</td><td>" + button + "</td></tr>";
+                                append_tr += "<td>" + item.s + "</td>";
+                                append_tr += "<td>" + (item.qta_impegnate == null ? '' : item.qta_impegnate) + "</td>";
+                                append_tr += "<td>" + button + "</td></tr>";
                                 
                                 //$("#lotti_table tbody").append("<tr><td>" + item.movimenti_articoli_lotto + "</td><td>" + data_scadenza + "</td><td>" + item.movimenti_articoli_quantita + "</td><td>" + button + "</td></tr>");
                                 $("#lotti_table tbody").append(append_tr);
                                 
                             });
+                            reinitDataTableLotti();
+                            //initDataTableLotti();
                         }
                         
                     } else {

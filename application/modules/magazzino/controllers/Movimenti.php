@@ -858,6 +858,8 @@ class Movimenti extends MX_Controller
                 //$this->db->where($campo_prodotto_eliminato, DB_BOOL_FALSE);
                 $this->db->where("({$campo_prodotto_eliminato} = '".DB_BOOL_FALSE."' OR {$campo_prodotto_eliminato} IS NULL OR {$campo_prodotto_eliminato} = '')", null, false);
             }
+            
+            $this->db->where("(fw_products_kind IS NOT NULL AND fw_products_kind <> '')", null, false);
     
             if (!empty($campo_nascondi_prodotto)) {
                 //$this->db->where("({$campo_nascondi_prodotto} = '".DB_BOOL_FALSE."' OR {$campo_nascondi_prodotto} IS NULL OR {$campo_nascondi_prodotto} = '')", null, false);
@@ -912,6 +914,57 @@ class Movimenti extends MX_Controller
             exit;
         }
     }
+    public function bulk_check_quantity_available()
+    {
+        $post = $this->input->post();
+        $magazzino_id = $post['magazzino_id'];
+        $movimenti_id = $post['movimenti_id'] ?? -1;
+        $products = $post['products'];
+
+        $product_ids = array_column($products, 'product_id');
+        $product_ids_string = implode(',', $product_ids);
+
+        $query_carico = "SELECT movimenti_articoli_prodotto_id, COALESCE(SUM(movimenti_articoli_quantita), 0) as qty 
+                     FROM movimenti_articoli 
+                     LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) 
+                     WHERE movimenti_tipo_movimento = 1 
+                     AND movimenti_articoli_prodotto_id IN ($product_ids_string) 
+                     AND movimenti_magazzino = '$magazzino_id' 
+                     AND movimenti_id <> '$movimenti_id'
+                     GROUP BY movimenti_articoli_prodotto_id";
+
+        $query_scarico = "SELECT movimenti_articoli_prodotto_id, COALESCE(SUM(movimenti_articoli_quantita), 0) as qty 
+                      FROM movimenti_articoli 
+                      LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) 
+                      WHERE movimenti_tipo_movimento = 2 
+                      AND movimenti_articoli_prodotto_id IN ($product_ids_string) 
+                      AND movimenti_magazzino = '$magazzino_id' 
+                      AND movimenti_id <> '$movimenti_id'
+                      GROUP BY movimenti_articoli_prodotto_id";
+
+        $quantity_carico = $this->db->query($query_carico)->result_array();
+        $quantity_scarico = $this->db->query($query_scarico)->result_array();
+
+        $carico_map = array_column($quantity_carico, 'qty', 'movimenti_articoli_prodotto_id');
+        $scarico_map = array_column($quantity_scarico, 'qty', 'movimenti_articoli_prodotto_id');
+
+        $results = [];
+        foreach ($products as $product) {
+            $product_id = $product['product_id'];
+            $carico = $carico_map[$product_id] ?? 0;
+            $scarico = $scarico_map[$product_id] ?? 0;
+            $quantity = $carico - $scarico;
+
+            $results[] = [
+                'product_id' => $product_id,
+                'quantity' => $quantity,
+                'row_index' => $product['row_index']
+            ];
+        }
+
+        echo json_encode($results);
+        exit;
+    }
 
     /**
      * @param int $prodotto_id
@@ -942,26 +995,26 @@ class Movimenti extends MX_Controller
         }
     }
 
-    /**
-     * @param $magazzino_id
-     * @param $movimenti_id
-     * @return void
-     * 20230705 - michael - queste due funzioni (bulk_check_quantity_available / bulkGetProdotto) vengono richiamate tramite ajax dal nuovo_movimento.php e servono ad evitare che venga fatta una chiamata per ogni riga articolo. il che è meglio soprattutto su movimenti con più di 10 righe articolo.
-     */
-    public function bulk_check_quantity_available($magazzino_id, $movimenti_id = -1) {
-        $post = $this->input->post();
+    // /**
+    //  * @param $magazzino_id
+    //  * @param $movimenti_id
+    //  * @return void
+    //  * 20230705 - michael - queste due funzioni (bulk_check_quantity_available / bulkGetProdotto) vengono richiamate tramite ajax dal nuovo_movimento.php e servono ad evitare che venga fatta una chiamata per ogni riga articolo. il che è meglio soprattutto su movimenti con più di 10 righe articolo.
+    //  */
+    // public function bulk_check_quantity_available($magazzino_id, $movimenti_id = -1) {
+    //     $post = $this->input->post();
 
-        if (empty($post) || empty($post['products_rows'])) return;
+    //     if (empty($post) || empty($post['products_rows'])) return;
 
-        $products_rows = $post['products_rows'];
-        foreach ($products_rows as $row_index => $product_row) {
-            $quantity_available = $this->check_quantity_available($product_row['product_id'], $magazzino_id, $movimenti_id, true);
+    //     $products_rows = $post['products_rows'];
+    //     foreach ($products_rows as $row_index => $product_row) {
+    //         $quantity_available = $this->check_quantity_available($product_row['product_id'], $magazzino_id, $movimenti_id, true);
 
-            $products_rows[$row_index]['quantity_available'] = $quantity_available;
-        }
+    //         $products_rows[$row_index]['quantity_available'] = $quantity_available;
+    //     }
 
-        e_json($products_rows);
-    }
+    //     e_json($products_rows);
+    // }
 
     /**
      * @return void
@@ -1223,9 +1276,7 @@ class Movimenti extends MX_Controller
             $c++;
             $prodotto_id = $prodotto['fw_products_id'];
 
-            $quantity_carico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 1 AND movimenti_articoli_prodotto_id = '$prodotto_id' ")->row()->qty;
-            $quantity_scarico = $this->db->query("SELECT COALESCE(SUM(movimenti_articoli_quantita), 0) as qty FROM movimenti_articoli LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento) WHERE movimenti_tipo_movimento = 2 AND movimenti_articoli_prodotto_id = '$prodotto_id' ")->row()->qty;
-            $quantity = ($quantity_carico - $quantity_scarico);
+            $quantity = $this->mov->calcolaGiacenzaAttuale($prodotto);
 
             $this->apilib->edit('fw_products', $prodotto_id, [
                 'fw_products_quantity' => $quantity,
@@ -1324,5 +1375,108 @@ class Movimenti extends MX_Controller
         
         e_json(['status' => 1, 'txt' => $commesse]);
 
+    }
+
+    public function deleteMagazzini() {
+        $ids = json_decode($this->input->post('ids'));
+        $magazzino_replace = $this->input->post('magazzino_replace');
+        $total_magazzini = count($ids);
+        $m = 0;
+        foreach ($ids as $magazzino_id) {
+            progress(++$m,$total_magazzini, 'Magazzini');
+            $articoli_movimentati = $this->db->query("
+                SELECT *
+                FROM 
+                    movimenti_articoli
+                    LEFT JOIN fw_products ON (fw_products_id = movimenti_articoli_prodotto_id)
+                    LEFT JOIN movimenti ON (movimenti_id = movimenti_articoli_movimento)
+                WHERE
+                    movimenti_magazzino = '$magazzino_id'
+                    AND fw_products_id IS NOT NULL
+                GROUP BY movimenti_articoli_prodotto_id
+
+            ")->result_array();
+            //debug($articoli_movimentati,true);
+            $art = 0;
+            $total_art = count($articoli_movimentati);
+
+            $prodotti_scarico = $prodotti_carico = [];
+
+
+
+            foreach ($articoli_movimentati as $articolo) {
+                progress(++$art,$total_art, 'Articoli magazzino '. $magazzino_id);
+                $quantity = $this->mov->calcolaGiacenzaAttuale($articolo, $magazzino_id);
+                
+                $articolo['fw_products_barcode'] = json_decode($articolo['fw_products_barcode']);
+                if (is_array($articolo['fw_products_barcode'])) {
+                    $articolo['fw_products_barcode'] = $articolo['fw_products_barcode'][0];
+                }
+
+                $prodotto = [
+                    'movimenti_articoli_prodotto_id' => $articolo['fw_products_id'],
+                    'movimenti_articoli_prezzo' => $articolo['fw_products_sell_price'],
+                    'movimenti_articoli_descrizione' => $articolo['fw_products_description'],
+                    'movimenti_articoli_name' => $articolo['fw_products_name'],
+                    'movimenti_articoli_codice' => $articolo['fw_products_sku'],
+                    'movimenti_articoli_iva_id' => $articolo['fw_products_tax'],
+                    'movimenti_articoli_unita_misura' => $articolo['fw_products_unita_misura'],
+                    'movimenti_articoli_codice_fornitore' => $articolo['fw_products_provider_code'],
+                    'movimenti_articoli_quantita' => abs($quantity),
+                    'movimenti_articoli_importo_totale' => abs($quantity * $articolo['fw_products_sell_price']),
+                    'movimenti_articoli_barcode' => ($articolo['fw_products_barcode']) ?? null,
+                ];
+
+                if ($quantity > 0) {
+                    if (array_key_exists($articolo['fw_products_id'], $prodotti_carico)) {
+                        $prodotto['movimenti_articoli_quantita'] += $prodotti_scarico[$articolo['fw_products_id']]['movimenti_articoli_quantita'];
+
+                    } 
+                    $prodotti_carico[$articolo['fw_products_id']] = $prodotto;
+                    
+                    
+                }
+                if ($quantity < 0) {
+                    if (array_key_exists($articolo['fw_products_id'], $prodotti_scarico)) {
+                        $prodotto['movimenti_articoli_quantita'] += $prodotti_carico[$articolo['fw_products_id']]['movimenti_articoli_quantita'];
+
+                    }
+                    $prodotti_scarico[$articolo['fw_products_id']] = $prodotto;
+                }
+            }
+
+            //debug($prodotti_scarico,true);
+
+            if ($prodotti_scarico) {
+                $this->mov->creaMovimento(
+                    [
+                        'movimenti_magazzino' => $magazzino_replace,
+                        'movimenti_data_registrazione' => date('Y-m-d H:i:s'),
+                        'movimenti_articoli' => $prodotti_scarico,
+                        'movimenti_tipo_movimento' => 2, //Scarico
+                        'movimenti_causale' => 25, //    Inventario (scarico base)
+                    ]
+                );
+            }
+
+            if ($prodotti_carico) {
+                $this->mov->creaMovimento(
+                    [
+                        'movimenti_magazzino' => $magazzino_replace,
+                        'movimenti_data_registrazione' => date('Y-m-d H:i:s'),
+                        'movimenti_articoli' => $prodotti_carico,
+                        'movimenti_tipo_movimento' => 1, //Carico
+                        'movimenti_causale' => 26, //    Inventario (carico base)
+                    ]
+                );
+            }
+
+            //Magazzini è in soft-delete
+            $this->apilib->delete("magazzini", $magazzino_id);
+
+            
+        }
+        echo '<script>location.href="'.base_url('main/layout/magazzini').'"</script>';
+        
     }
 }

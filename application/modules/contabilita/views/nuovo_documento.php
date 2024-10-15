@@ -1754,7 +1754,8 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                         <div class="form-group">
                                             <label>Max n° articoli per pagina: </label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="json_stampa[max_articoli_pagina]" value="<?php if (!empty($json_stampa['max_articoli_pagina'])): ?><?php echo $json_stampa['max_articoli_pagina']; ?><?php else: ?>10<?php endif; ?>" />
+                                            <input type="hidden" name="json_stampa[max_articoli_pagina]" value="10">    
+                                            <input type="text" class="form-control" name="json_stampa[max_articoli_pagina]" value="<?php if (!empty($json_stampa['max_articoli_pagina'])): ?><?php echo $json_stampa['max_articoli_pagina']; ?><?php else: ?>10<?php endif; ?>" />
                                             </div>
                                         </div>
                                     </div>
@@ -1771,7 +1772,8 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                         <div class="form-group">
                                             <label>Font Size:</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="json_stampa[font-size]" value="<?php if (!empty($json_stampa['font-size'])): ?><?php echo $json_stampa['font-size']; ?><?php else: ?>14<?php endif; ?>" />
+                                            <input type="hidden" name="json_stampa[font-size]" value="14">    
+                                            <input type="text" class="form-control" name="json_stampa[font-size]" value="<?php if (!empty($json_stampa['font-size'])): ?><?php echo $json_stampa['font-size']; ?><?php else: ?>14<?php endif; ?>" />
                                             </div>
                                         </div>
                                     </div>
@@ -1792,31 +1794,36 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label style="min-width:80px">Foto prodotti:</label>
-                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_foto]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_foto'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_foto']) && $json_stampa['mostra_foto'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                            <input type="hidden" name="json_stampa[mostra_foto]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_foto]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_foto']) && $json_stampa['mostra_foto'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label style="min-width:80px">Totali documento: </label>
-                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_totali]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_totali'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_totali']) && $json_stampa['mostra_totali'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                            <input type="hidden" name="json_stampa[mostra_totali]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_totali]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_totali']) && $json_stampa['mostra_totali'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label style="min-width:80px">Totali senza IVA: </label>
-                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_totali_senza_iva]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_totali_senza_iva'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_totali_senza_iva']) && $json_stampa['mostra_totali_senza_iva'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                            <input type="hidden" name="json_stampa[mostra_totali_senza_iva]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_totali_senza_iva]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_totali_senza_iva']) && $json_stampa['mostra_totali_senza_iva'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label style="min-width:80px">Scadenze pagamento: </label>
-                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_scadenze_pagamento]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_scadenze_pagamento'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_scadenze_pagamento']) && $json_stampa['mostra_scadenze_pagamento'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                            <input type="hidden" name="json_stampa[mostra_scadenze_pagamento]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_scadenze_pagamento]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_scadenze_pagamento']) && $json_stampa['mostra_scadenze_pagamento'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label style="min-width:80px">Prodotti senza importi: </label>
-                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_prodotti_senza_importi]" class="rcr-adjust" value="<?php echo $json_stampa['mostra_prodotti_senza_importi'] ?? DB_BOOL_FALSE; ?>" <?php if (!empty($json_stampa['mostra_prodotti_senza_importi']) && $json_stampa['mostra_prodotti_senza_importi'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                            <input type="hidden" name="json_stampa[mostra_prodotti_senza_importi]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_prodotti_senza_importi]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_prodotti_senza_importi']) && $json_stampa['mostra_prodotti_senza_importi'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
                                 </div>
@@ -4286,7 +4293,7 @@ function reverseRowCalculate(tr) {
     $('.js-importo', tr).val(importo_ricalcolato.toFixed(2));
     $('.js_documenti_contabilita_articoli_prezzo', tr).val(importo.toFixed(2));
     //
-    calculateTotals();
+    calculateTotals(false, true);
 }
 
 var generaScadenze = function(totale, totale_iva) {

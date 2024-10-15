@@ -511,4 +511,25 @@ class Productsmanager extends MY_Controller
         e_json(['status' => 4, 'txt' => "Aggiornati con successo {$updated} prodotti su {$total}"]);
         return true;
     }
+    
+    public function get_fornitori() {
+        $post = $this->input->post();
+        
+        $where_fornitori = ['customers_status' => 1, 'customers_type' => [2,3]];
+        
+        if (!empty($post['q'])) {
+            $where_fornitori['customers_full_name LIKE'] = "%{$post['q']}%";
+        }
+        
+        $fornitori = $this->apilib->search('customers', $where_fornitori, ($post['limit'] ?: null));
+        
+        $fornitori = array_map(function($fornitore) {
+            return [
+                'id' => $fornitore['customers_id'],
+                'name' => $fornitore['customers_full_name'],
+            ];
+        }, $fornitori);
+        
+        e_json($fornitori);
+    }
 }

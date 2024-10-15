@@ -42,7 +42,7 @@ $ultima_stampa_definitiva = $this->apilib->searchFirst('contabilita_stampe_defin
 $settings = $this->apilib->searchFirst('documenti_contabilita_settings');
 //TODO: indagare perchè mettendo i filtri non va più...
 $i = 0;
-foreach ($mesi as $mese) {
+foreach ($mesi?$mesi:[1+(3*($trimestre-1)),2 + (3 * ($trimestre - 1)),3 + (3 * ($trimestre - 1))] as $mese) {
     $liquidazione_iva_data = $this->prima_nota->getIvaData(
         [
             "MONTH(prime_note_data_registrazione)" => $mese,

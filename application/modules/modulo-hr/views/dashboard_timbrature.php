@@ -1,42 +1,52 @@
 <?php
 $dipendente_id = $this->auth->get('dipendenti_id');
-if(!empty($dipendente_id)) :
+if (!empty($dipendente_id)) :
 
-$dipendente = $this->apilib->view('dipendenti', $dipendente_id);
+    $dipendente = $this->apilib->view('dipendenti', $dipendente_id);
 
-$form_id = $this->datab->get_form_id_by_identifier('form-dashboard-dipendente');
-$form = $this->datab->get_form($form_id, null);
+    $form_id = $this->datab->get_form_id_by_identifier('form-dashboard-dipendente');
+    $form = $this->datab->get_form($form_id, null);
 
 
-// Mostro form se timbra entrata uscita è disabilitato o vuoto e se posteriori è attivo
-if(
-    (empty($dipendente['dipendenti_timbra_entrata_uscita']) || $dipendente['dipendenti_timbra_entrata_uscita'] == DB_BOOL_FALSE) 
-    && $dipendente['dipendenti_timbra_posteriori'] == DB_BOOL_TRUE
-) {
-    $this->load->view("pages/layouts/forms/form_{$form['forms']['forms_layout']}", [
-        'form' => $form,
-        'ref_id' => $form_id,
-        'value_id' => null,
-    ], false);
-
-} else if(
-    (empty($dipendente['dipendenti_timbra_entrata_uscita']) || $dipendente['dipendenti_timbra_entrata_uscita'] == DB_BOOL_TRUE)
-    && $dipendente['dipendenti_timbra_posteriori'] == DB_BOOL_FALSE
-) :
-    // Mostro button se timbra entrata uscita è abilitato e se posteriori è disabilitato o vuoto
-
-    // Cerco presenza aperta per oggi, se la trovo disabilito btn entrata
-    $presenze_odierna = $this->apilib->search('presenze', [
-        'presenze_dipendente' => $dipendente_id, 
-        'presenze_data_inizio' => date('Y-m-d'), 
-        'presenze_data_fine IS NULL or presenze_data_fine = ""'
-    ]);
-
-    $entrata_timbrata = DB_BOOL_FALSE;
-    
-    if(!empty($presenze_odierna)) {
-        $entrata_timbrata = DB_BOOL_TRUE;
+    /*************************************************************************
+     * 
+     * ! Mostro form se timbra a posteriori è attivo
+     * ? 13/09/2024 L'abilitazione di una opzione non esclude più l'altra
+     * 
+     *************************************************************************/
+    if (
+        !empty($dipendente['dipendenti_timbra_posteriori']) || $dipendente['dipendenti_timbra_posteriori'] == DB_BOOL_TRUE
+    ) {
+        $this->load->view("pages/layouts/forms/form_{$form['forms']['forms_layout']}", [
+            'form' => $form,
+            'ref_id' => $form_id,
+            'value_id' => null,
+        ], false);
     }
+
+    /*************************************************************************
+     * 
+     * ! Mostro button se timbra entrata uscita è abilitato
+     * ? 13/09/2024 L'abilitazione di una opzione non esclude più l'altra
+     * 
+     *************************************************************************/
+    if (
+        !empty($dipendente['dipendenti_timbra_entrata_uscita']) || $dipendente['dipendenti_timbra_entrata_uscita'] == DB_BOOL_TRUE
+    ):
+        // Mostro button se timbra entrata uscita è abilitato e se posteriori è disabilitato o vuoto
+
+        // Cerco presenza aperta per oggi, se la trovo disabilito btn entrata
+        $presenze_odierna = $this->apilib->search('presenze', [
+            'presenze_dipendente' => $dipendente_id,
+            'presenze_data_inizio' => date('Y-m-d'),
+            'presenze_data_fine IS NULL or presenze_data_fine = ""'
+        ]);
+
+        $entrata_timbrata = DB_BOOL_FALSE;
+
+        if (!empty($presenze_odierna)) {
+            $entrata_timbrata = DB_BOOL_TRUE;
+        }
 
 ?>
 
