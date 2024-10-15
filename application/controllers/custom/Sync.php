@@ -160,7 +160,7 @@ class Sync extends MY_Controller
             $dipendente = [
                 'dipendenti_id' => $associato['associati_id'],
                 //'dipendenti_user_id' => $associato['associati_utente'],
-                'dipendenti_tipologia' => 3, //Empolyee
+                'dipendenti_tipologia' => 7, //Empolyee
                 
                 'dipendenti_posizione' => 2, //P.iva
                 'dipendenti_azienda' => 1, //Apib
