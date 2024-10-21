@@ -853,4 +853,23 @@ class Hr extends MY_Controller
             }
         }
     }
+
+    public function salva_presenza($presenza_id) {
+        $post = $this->input->post();
+        $presenza_new = $this->apilib->edit('presenze', $presenza_id, $post);
+
+        $Ymd = date('Y-m-d', strtotime($presenza_new['presenze_data_inizio']));
+        $dipendente_id = $presenza_new['presenze_dipendente'];
+
+        $this->mycache->clearEntityCache('presenze');
+//debug($Ymd);
+        $ore = $this->timbrature->calcolaOreTotali($Ymd, $dipendente_id);
+
+        //Restituisco js per aggiornamento singola cella su jsexcel
+        $js = 'setTimeout(function() {'."$('td.js_last_clicked a').html('$ore');$('td.js_last_clicked .js_cella_presenza').trigger('click');".'},500);';
+
+        //debug($presenza_new,true);
+
+        e_json(['status' => 9, 'txt' => $js,'close_modals' => 1]);
+    }
 }

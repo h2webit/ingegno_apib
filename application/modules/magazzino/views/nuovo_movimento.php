@@ -395,7 +395,8 @@ if ($movimenti_id) {
 
         $_articolo['movimenti_articoli_rif_riga_doc'] = $articolo['documenti_contabilita_articoli_id'];
 
-        $movimento['articoli'][] = $_articolo;
+        //20241017 - MP - Commentato perchè comunque parte un ajax alla selezione del documento che popola i prodotti
+        //$movimento['articoli'][] = $_articolo;
     }
     //debug($movimento,true);
 } elseif ($spesa_id) {
@@ -2316,7 +2317,9 @@ $(document).ready(function() {
 
         var righe_articoli = [];
         $('#js_product_table tbody tr:visible').each(function(index, trow) {
+            
             if ($('.js_movimenti_articoli_prodotto_id', $(this)).val()) {
+                //console.log(index);
                 righe_articoli.push({
                     row_index: index,
                     product_id: $('.js_movimenti_articoli_prodotto_id', $(this)).val(),
@@ -2804,7 +2807,7 @@ function checkProducts(closest_tr) {
                         console.log("Row index:", item.row_index);
                         console.log("Total visible rows:", $('#js_product_table tbody tr:visible').length);
 
-
+                        //alert(item.row_index);
                         var $row = $('#js_product_table tbody tr:visible').eq(item.row_index-1);
 
                         $('.js_check_qty', $row).remove();
@@ -3022,7 +3025,7 @@ function loadProductsFromDocumento(doc_id) {
         type: 'get',
         async: true,
         success: function(response) {
-            $('.js_remove_product').trigger('click');
+            $('.js_remove_product:visible').trigger('click');
 
             $.each(response, function(index, item) {
                 if (!(item.documenti_contabilita_articoli_riga_desc == 1)) {

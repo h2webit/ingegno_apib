@@ -1,12 +1,10 @@
 // sw.js
 const CACHE_NAME = 'timbratore-cache-v1';
 const urlsToCache = [
-    /* './',
-    'index.html',
-    'manifest.json',*/
     "../pwa/manifest.json",
-    '../../../modulo-hr/qrcode/pwa', // Assicurati che questo corrisponda al tuo `start_url` nel manifest
-    // Aggiungi altre risorse necessarie, ad esempio CSS, immagini, ecc.
+    '../../../modulo-hr/qrcode/pwa', // `start_url` nel manifest
+    '../../../modulo-hr/qrcode/timbratore',
+    // Altre risorse JS, CSS e immagini da mettere in cache
     "./sw.js",
     "./scan_badge.js",
     "./html5-qrcode.min.js",
@@ -16,6 +14,12 @@ const urlsToCache = [
     "../audio/success.mp3",
     "../css/toastr.min.css",
     "../images/logo_ingegno.png",
+    // Risorse esterne
+    "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css",
+    "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css",
+    "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js",
+    "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css",
 ];
 
 self.addEventListener('install', function(event) {
@@ -63,30 +67,29 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(response) {
-            // Se la risorsa è nella cache, restituiscila
+            // Restituisci la risorsa dalla cache se esiste
             if (response) {
                 return response;
             }
 
-            // Altrimenti, prova a recuperarla dalla rete e mettila in cache
+            // Prova a recuperare la risorsa dalla rete e mettila in cache
             return fetch(event.request).then(function(networkResponse) {
-                // Verifica che la risposta sia valida
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+                if (!networkResponse || networkResponse.status !== 200 || (networkResponse.type !== 'basic' && networkResponse.type !== 'cors')) {
                     return networkResponse;
                 }
 
-                // Clona la risposta per metterla in cache
+                // Clona la risposta e mettila in cache
                 var responseToCache = networkResponse.clone();
-
                 caches.open(CACHE_NAME).then(function(cache) {
                     cache.put(event.request, responseToCache);
                 });
 
                 return networkResponse;
             }).catch(function() {
-                // Fallback se la risorsa non è disponibile nella cache e la rete non è raggiungibile
-                console.log('Risorsa non trovata nella cache e non disponibile in rete:', event.request.url);
+                // Se la rete non è disponibile e non troviamo la risorsa nella cache
+                return caches.match('offline.html'); // Mostra una pagina di fallback se esiste
             });
         })
     );
 });
+

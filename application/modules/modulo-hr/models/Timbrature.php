@@ -965,7 +965,7 @@ class Timbrature extends CI_Model
 
     public function calcolaOrePausaPranzo($Ymd, $dipendente_id, $presenze = null)
     {
-       
+       $dipendente = $this->db->get_where('dipendenti', ['dipendenti_id' => $dipendente_id])->row_array();
         if ($presenze === null) {
             // $presenze = $this->apilib->search('presenze', [
             //     'DATE(presenze_data_inizio)' => $Ymd,
@@ -975,6 +975,7 @@ class Timbrature extends CI_Model
             $presenze = $this->db
                 ->where("DATE(presenze_data_inizio) = '$Ymd'",null, false)
                 ->where('presenze_dipendente', $dipendente_id)
+                //->where('presenze_richiesta IS NULL', null, false)
                 ->get('presenze')->result_array();
         }
         if ($Ymd == '20240210') {
@@ -985,7 +986,7 @@ class Timbrature extends CI_Model
         $oreTotali = 0;
 
         foreach ($presenze as $presenza) {
-            if ($presenza['presenze_ore_totali'] <= 0) {
+            if ($presenza['presenze_ore_totali'] <= 0 || $presenza['presenze_richiesta']) {
                 continue;
             }
             $oreTotali += str_replace(',', '.', $presenza['presenze_ore_totali']);
@@ -1039,6 +1040,16 @@ class Timbrature extends CI_Model
         //     $orePausaTotale -= $orePausaTotaleAutomatica;
         // }
         
+        //Se il dipendente ha impostato il parametro min_pausa_pranzo e il valore calcolato è inferiore, allora imposto il valore minimo
+        $min_pausa_pranzo = $dipendente['dipendenti_min_pausa_pranzo'] ?? 0;
+        if ($Ymd == '20240913') {
+            //debug($orePausaTotale);
+        }
+        
+        if ($orePausaTotale > 0 && $orePausaTotale < $min_pausa_pranzo){
+            $orePausaTotale = $min_pausa_pranzo;
+        }
+        //debug($orePausaTotale);
         return round($orePausaTotale,2);
     }
     public function calcolaOreRichieste($Ymd, $dipendente_id, $sottotipogia = null)
@@ -1263,6 +1274,98 @@ class Timbrature extends CI_Model
             }
         }
     }
+
+    public function gestisciRichiestaBancaOre($richiesta) {
+        
+            
+       
+
+
+        
+        if (empty($richiesta['richieste_id']) || empty($richiesta['richieste_dal']) || empty($richiesta['richieste_al'])) {
+            //Se non ho un id richiesta non posso fare niente. Vuol dire che sono in un pre-insert
+            return;
+        }
+        $banche_ore = $this->apilib->search('banca_ore', ['banca_ore_richiesta' => $richiesta['richieste_id'], 'banca_ore_movimento <>' => 2]);
+        
+        //Se ho richiesto banca ore e la richiesta è approvata e di tipo ferie/permesso
+        if ($richiesta['richieste_utilizzo_banca_ore'] == DB_BOOL_TRUE && $richiesta['richieste_stato'] == 2 && ($richiesta['richieste_tipologia'] == 1 || $richiesta['richieste_tipologia'] == 2)) {
+            foreach ($banche_ore as $banca_ore) {
+                $this->apilib->delete('banca_ore', $banca_ore['banca_ore_id']);
+
+            }
+            //per ogni giorno 
+            $begin = new DateTime($richiesta['richieste_dal']);
+            $end = new DateTime($richiesta['richieste_al']);
+            
+
+            //Vedo il saldo banca ore
+
+
+            $saldo_ore_originale = $this->db->query("SELECT SUM(CASE WHEN banca_ore_movimento = 1 THEN banca_ore_hours ELSE -banca_ore_hours END) as saldo FROM banca_ore WHERE banca_ore_dipendente = {$richiesta['richieste_user_id']} AND banca_ore_movimento <> 2 AND (banca_ore_richiesta IS NULL OR banca_ore_richiesta <> {$richiesta['richieste_id']})")->row()->saldo;
+            $saldo_ore = $saldo_ore_originale;
+            //debug($saldo_ore_originale,true);
+            //verificare giorno per giorno che non si superi il saldo.
+                
+
+                for ($i = $begin; $i <= $end; $i->modify('+1 day')) {
+                    $today = $i->format("Y-m-d");
+                    $ore_giornaliere_previste = $this->timbrature->calcolaOreGiornalierePreviste($today, $richiesta['richieste_user_id'], DB_BOOL_TRUE);
+
+                    $ora_inizio = $richiesta['richieste_ora_inizio'];
+                    $ora_fine = $richiesta['richieste_ora_fine'];
+                    $richiesta_ore = round((strtotime($ora_fine) - strtotime($ora_inizio)) / 3600, 2);
+                    //debug($today.': '.$ore_giornaliere_previste.' - '.$richiesta_ore);
+                    // Ferie, sovrascivo con il totale di ore lavorative l'orario di lavoro
+                    if ($richiesta['richieste_tipologia'] == 2) {
+                        $richiesta_ore = $ore_giornaliere_previste;
+                    }
+
+                    if ($ore_giornaliere_previste != 0) {
+                        if ($richiesta_ore > $ore_giornaliere_previste) {
+                            $richiesta_ore = $ore_giornaliere_previste;
+                        }
+                        $saldo_ore -= $richiesta_ore;
+                        if ($saldo_ore <= 0) {
+                            throw new ApiException('Errore: il dipendente non ha abbastanza disponibilità nella sua banca ore. Totale disponibile: ' . $saldo_ore_originale . '');
+                            exit;
+                        } else {
+                            $array_banca_ore = [
+                                'banca_ore_dipendente' => $richiesta['richieste_user_id'],
+                                'banca_ore_movimento' => 4,
+                                'banca_ore_richiesta' => $richiesta['richieste_id'],
+                                'banca_ore_hours' => $richiesta_ore,
+                                'banca_ore_data' => $today,
+                            ];
+
+                            try {
+                                $this->apilib->create('banca_ore', $array_banca_ore);
+                            } catch (Exception $e) {
+                                throw new ApiException('Errore in banca ore');
+                                exit;
+                            }
+
+                        }
+                    }
+                }
+            
+        } else {
+            foreach ($banche_ore as $ora) {
+                $this->apilib->edit('banca_ore', $ora['banca_ore_id'], [
+                    'banca_ore_movimento' => 2
+                ]);
+
+            }
+            
+        }
+        
+        
+        
+                
+            
+        
+    }
+
     public function getDayOfWeek($dateString)
     {
         $date = $this->stringToDate($dateString);
@@ -1678,21 +1781,49 @@ class Timbrature extends CI_Model
                     
                     //Nel caso di trasferta fa comunque fede l'ora indicata nella richiesta, a prescindere dal turno (al più saranno straordinari...)
                     if ($richiesta['richieste_tipologia'] == 5) {
-                        $inizio_effettivo = $dataOraInizio;
-                        $fine_effettiva = $fine_richiesta_con_ora;
+                        if ($impostazioni_modulo['impostazioni_hr_consenti_rich_extra_orario'] == DB_BOOL_TRUE && $richiesta['richieste_ora_inizio']) {
+                            $inizio_effettivo = $dataOraInizio;
+                        } else {
+                            $inizio_effettivo = $inizio_turno;
+                        }
+                        if ($impostazioni_modulo['impostazioni_hr_consenti_rich_extra_orario'] == DB_BOOL_TRUE && $richiesta['richieste_ora_fine']) {
+                            $fine_effettiva = $fine_richiesta_con_ora;
+                        } else {
+                            $fine_effettiva = $fine_turno;
+                        }
+                        
+                        //debug($fine_effettiva);
                     } else {
-                        $inizio_effettivo = max($dataOraInizio, $inizio_turno);
+                        if ($impostazioni_modulo['impostazioni_hr_consenti_rich_extra_orario'] == DB_BOOL_TRUE && $richiesta['richieste_ora_inizio']) {
+                            $inizio_effettivo = $dataOraInizio;
+                        } else {
+                            $inizio_effettivo = max($dataOraInizio, $inizio_turno);
+                        }
+                        
                         if ($data->format('Y-m-d') == (new DateTime($richiesta['richieste_al']))->format('Y-m-d')) {
-                            
-                            $fine_effettiva = min($fine_richiesta_con_ora, $fine_turno);
+                            //Verifico se posso fare richieste extra orario lavorativo. Se sì tengo la fine effettiva così com'è, altrimenti la imposto come fine turno
+
+                            if ($impostazioni_modulo['impostazioni_hr_consenti_rich_extra_orario'] == DB_BOOL_TRUE && $richiesta['richieste_ora_fine']) {
+                                $fine_effettiva = $fine_richiesta_con_ora;
+                                // debug($fine_effettiva);
+                            } else {
+                                $fine_effettiva = min($fine_richiesta_con_ora, $fine_turno);
+                                // debug($fine_effettiva);
+                            }
+
+                           
                         } else {
                             $fine_effettiva = min(new DateTime($giorno_richiesta . ' 23:59:59'), $fine_turno);
+                            // debug($fine_effettiva);
                         }
                     }
-                    
+                    // debug($fine_turno);
+                    // debug($fine_effettiva, true);
                     //debug($fine_effettiva,true);
 //                    debug($fine_effettiva->format('Y-m-d H:i:s'));
                     // Assicurati che l'inizio effettivo sia prima della fine effettiva
+                    //debug('foo');
+                    
                     if ($inizio_effettivo < $fine_effettiva) {
                         //debug($giorno_richiesta);
                         // Calcola le ore totali tra l'inizio e la fine effettivi
@@ -1707,28 +1838,47 @@ class Timbrature extends CI_Model
                                 $presenze_pausa = null;
 
                             }
-                            $this->db->insert('presenze', [
+                            $presenza_to_insert = [
                                 'presenze_creation_date' => date('Y-m-d H:i:s'),
                                 'presenze_dipendente' => $richiesta['richieste_user_id'],
                                 'presenze_data_inizio' => $giorno_richiesta,
                                 'presenze_ora_inizio' => $inizio_effettivo->format('H:i'),
                                 'presenze_data_fine' => $giorno_richiesta,
                                 'presenze_ora_fine' => $fine_effettiva->format('H:i'),
-                                'presenze_ore_totali' => $ore_totali- $turno['orari_di_lavoro_ore_pausa_value'],
+                                'presenze_ore_totali' => $ore_totali - $turno['orari_di_lavoro_ore_pausa_value'],
                                 'presenze_reparto' => $reparto,
                                 'presenze_richiesta' => $richiesta['richieste_id'],
                                 'presenze_scope_create' => 'Funzione creaPresenzaDaRichiesta',
                                 'presenze_pausa' => $presenze_pausa,
-                            ]);
+                            ];
+                            
+                            $exists = $this->db->get_where('presenze', [
+                                'presenze_dipendente' => $presenza_to_insert['presenze_dipendente'],
+                                'presenze_data_inizio' => $presenza_to_insert['presenze_data_inizio'],
+                                'presenze_ora_inizio' => $presenza_to_insert['presenze_ora_inizio'],
+                                'presenze_data_fine' => $presenza_to_insert['presenze_data_fine'],
+                                'presenze_ora_fine' => $presenza_to_insert['presenze_ora_fine'],
+                                'presenze_richiesta' => $presenza_to_insert['presenze_richiesta'],
+                            ])->num_rows();
+                            if (!$exists) {
+                                $this->db->insert('presenze', $presenza_to_insert);
+                                if ($richiesta['richieste_tipologia'] == 5) { //Se è trasferta, non credo una presenza per ogni turno di lavoro, ma una unica, visto che fanno fede gli orari inseriti nella richiesta.
+                                    $presenza_inserita_id = $this->db->insert_id();
+                                    if ($presenza_inserita_id) {
+                                        $buono = $this->gestisciBuonoPasto($giorno_richiesta, $richiesta['richieste_user_id']);
+                                        //debug($buono);
+                                        $this->db->where('presenze_id', $presenza_inserita_id)->update('presenze', ['presenze_buono_pasto' => $buono]);
+                                    }
+                                    if ($richiesta['richieste_ora_inizio'] && $richiesta['richieste_ora_fine']) {
+                                        //break;
 
-                            if ($richiesta['richieste_tipologia'] == 5) { //Se è trasferta, non credo una presenza per ogni turno di lavoro, ma una unica, visto che fanno fede gli orari inseriti nella richiesta.
-                                $presenza_inserita_id = $this->db->insert_id();
-                                if ($presenza_inserita_id) {
-                                    $buono = $this->gestisciBuonoPasto($giorno_richiesta, $richiesta['richieste_user_id']);
-                                    $this->db->where('presenze_id', $presenza_inserita_id)->update('presenze', ['presenze_buono_pasto' => $buono]);
+                                    }
+                                    
                                 }
-                                break;
                             }
+                            
+
+                            
                         } catch (Exception $e) {
                             log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
                         }
@@ -1741,7 +1891,7 @@ class Timbrature extends CI_Model
 
         // Se è malattia/ferie/smart working o missione devo crearla in base all'orario del profilo
         elseif (in_array($richiesta['richieste_tipologia'], [2, 3, 4])) {
-
+            
             // Se non ho data di fine richiesta (malattia senza fine) salto la creazione
             if (!empty($richiesta['richieste_al'])) {
                 // Ricavo intervallo di date della richiesta
@@ -1750,95 +1900,115 @@ class Timbrature extends CI_Model
                 $fine->modify('+1 day'); // Aggiungi un giorno per includere anche l'ultimo giorno
                 $intervallo = new DateInterval('P1D'); // Intervallo di un giorno
                 $periodo = new DatePeriod($inizio, $intervallo, $fine);
-
+                
+                
+                // matteo/michael/andrea, 09/10/2024 - modificata logica creazione presenza senza turni di lavoro in quanto chi non usa i turni di lavoro (es. ingegno plan) non avrebbe le presenze legate alle ferie post modifica 20/08...
+                // aggiunto e gestito quindi tramite flag e check se il dipendente ha o meno turni di lavoro in corso validità (vedi tk#11858)
+                
+                // ottengo tutti i turni di lavoro del dipendente a prescindere (tk#11858)
+                $all_turni_lavoro = $this->db
+                    ->where('turni_di_lavoro_dipendente', $richiesta['richieste_user_id'])
+                    ->where("(turni_di_lavoro_data_fine >= DATE(NOW()) OR turni_di_lavoro_data_fine IS NULL)", null, false) //aggiungo anche il vuoto, se uno non imposta la data di fine.
+                    ->get('turni_di_lavoro')->num_rows();
+                
                 // Creo presenza per ogni giorno della richiesta
                 foreach ($periodo as $data) {
                     $giorno_richiesta = $data->format('Y-m-d');
-
+                    
                     //$data_inizio_richiesta = dateFormat($richiesta['richieste_dal'], 'Y-m-d');
                     $richiesta_inizio_giorno = date('N', strtotime($giorno_richiesta));
-
-                    // Recupero turni lavoro
-                    $this->db->where("turni_di_lavoro_data_inizio <= '{$giorno_richiesta}'", null, false);
-                    $this->db->where("(turni_di_lavoro_data_fine >= '{$giorno_richiesta}' OR turni_di_lavoro_data_fine IS NULL)", null, false); //aggiungo anche il vuoto, se uno non imposta la data di fine.
-                    $this->db->where('turni_di_lavoro_dipendente', $richiesta['richieste_user_id']);
-                    $this->db->where('turni_di_lavoro_giorno', $richiesta_inizio_giorno); //Prendo il giorno della richiesta
-                    $this->db->join('orari_di_lavoro_ore_pausa', 'turni_di_lavoro_pausa = orari_di_lavoro_ore_pausa_id', 'LEFT');
-                    $turni_lavoro = $this->db->get('turni_di_lavoro')->result_array();
                     
-                    if (!empty($turni_lavoro)) {
-                        // Creo una presenza per ogni turno che trovo
-                        foreach ($turni_lavoro as $turno) {
-                            $inizio_turno = $turno['turni_di_lavoro_ora_inizio'] ?? '00:00';
-                            $fine_turno = $turno['turni_di_lavoro_ora_fine'] ?? '23:59';
-                            // Calcolo ore totali
-                            $dataOraInizio = new DateTime($giorno_richiesta . ' ' . $inizio_turno);
-                            $dataOraFine = new DateTime($giorno_richiesta . ' ' . $fine_turno);
-                            $diff_orari = $dataOraInizio->diff($dataOraFine);
-                            $ore_tot = round(($diff_orari->s / 3600) + ($diff_orari->i / 60) + $diff_orari->h + ($diff_orari->days * 24), 2);
-
-                            try {
-                                //debug($turno);
-                                $presenze_pausa = $this->db->get_where('presenze_pausa', ['presenze_pausa_value' => $turno['orari_di_lavoro_ore_pausa_value']]);
-                                if ($presenze_pausa->num_rows() == 1) {
-                                    $presenze_pausa = $presenze_pausa->row()->presenze_pausa_id;
-                                } else {
-                                    $presenze_pausa = null;
-
+                    $flag_force_crea_presenza = false;
+                    
+                    // se non ho turni, allora creao a prescindere la presenza 9-17 (tk#11858)
+                    if ($all_turni_lavoro == 0) {
+                        $flag_force_crea_presenza = true;
+                    } else {
+                        // Recupero turni lavoro
+                        $this->db->where("turni_di_lavoro_data_inizio <= '{$giorno_richiesta}'", null, false);
+                        $this->db->where("(turni_di_lavoro_data_fine >= '{$giorno_richiesta}' OR turni_di_lavoro_data_fine IS NULL)", null, false); //aggiungo anche il vuoto, se uno non imposta la data di fine.
+                        $this->db->where('turni_di_lavoro_dipendente', $richiesta['richieste_user_id']);
+                        $this->db->where('turni_di_lavoro_giorno', $richiesta_inizio_giorno); //Prendo il giorno della richiesta
+                        $this->db->join('orari_di_lavoro_ore_pausa', 'turni_di_lavoro_pausa = orari_di_lavoro_ore_pausa_id', 'LEFT');
+                        $turni_lavoro = $this->db->get('turni_di_lavoro')->result_array();
+                        
+                        if (!empty($turni_lavoro)) {
+                            // Creo una presenza per ogni turno che trovo
+                            foreach ($turni_lavoro as $turno) {
+                                $inizio_turno = $turno['turni_di_lavoro_ora_inizio'] ?? '00:00';
+                                $fine_turno = $turno['turni_di_lavoro_ora_fine'] ?? '23:59';
+                                // Calcolo ore totali
+                                $dataOraInizio = new DateTime($giorno_richiesta . ' ' . $inizio_turno);
+                                $dataOraFine = new DateTime($giorno_richiesta . ' ' . $fine_turno);
+                                $diff_orari = $dataOraInizio->diff($dataOraFine);
+                                $ore_tot = round(($diff_orari->s / 3600) + ($diff_orari->i / 60) + $diff_orari->h + ($diff_orari->days * 24), 2);
+                                
+                                try {
+                                    //debug($turno);
+                                    $presenze_pausa = $this->db->get_where('presenze_pausa', ['presenze_pausa_value' => $turno['orari_di_lavoro_ore_pausa_value']]);
+                                    if ($presenze_pausa->num_rows() == 1) {
+                                        $presenze_pausa = $presenze_pausa->row()->presenze_pausa_id;
+                                    } else {
+                                        $presenze_pausa = null;
+                                        
+                                    }
+                                    $this->db->insert('presenze', [
+                                        'presenze_creation_date' => date('Y-m-d H:i:s'),
+                                        'presenze_dipendente' => $richiesta['richieste_user_id'],
+                                        'presenze_data_inizio' => $giorno_richiesta,
+                                        'presenze_data_fine' => $giorno_richiesta,
+                                        'presenze_ora_inizio' => $inizio_turno,
+                                        'presenze_ora_fine' => $fine_turno,
+                                        'presenze_data_inizio_calendar' => $giorno_richiesta . ' ' . $inizio_turno . ':00',
+                                        'presenze_data_fine_calendar' => $giorno_richiesta . ' ' . $fine_turno . ':00',
+                                        'presenze_ore_totali' => $ore_tot,
+                                        'presenze_straordinario' => 0,
+                                        'presenze_reparto' => $reparto,
+                                        'presenze_richiesta' => $richiesta['richieste_id'],
+                                        'presenze_note' => $richiesta['richieste_note'],
+                                        'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
+                                        'presenze_scope_create' => 'CRON PRESENZE RICHIESTE',
+                                        'presenze_pausa' => $presenze_pausa,
+                                    ]);
+                                } catch (Exception $e) {
+                                    log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
                                 }
-                                $this->db->insert('presenze', [
-                                    'presenze_creation_date' => date('Y-m-d H:i:s'),
-                                    'presenze_dipendente' => $richiesta['richieste_user_id'],
-                                    'presenze_data_inizio' => $giorno_richiesta,
-                                    'presenze_data_fine' => $giorno_richiesta,
-                                    'presenze_ora_inizio' => $inizio_turno,
-                                    'presenze_ora_fine' => $fine_turno,
-                                    'presenze_data_inizio_calendar' => $giorno_richiesta . ' ' . $inizio_turno . ':00',
-                                    'presenze_data_fine_calendar' => $giorno_richiesta . ' ' . $fine_turno . ':00',
-                                    'presenze_ore_totali' => $ore_tot,
-                                    'presenze_straordinario' => 0,
-                                    'presenze_reparto' => $reparto,
-                                    'presenze_richiesta' => $richiesta['richieste_id'],
-                                    'presenze_note' => $richiesta['richieste_note'],
-                                    'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
-                                    'presenze_scope_create' => 'CRON PRESENZE RICHIESTE',
-                                    'presenze_pausa' => $presenze_pausa,
-                                ]);
-                            } catch (Exception $e) {
-                                log_message('error', "Impossibile creare presenza automatica da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
+                            }
+                        } else {
+                            // se la tipologia di richiesta NON è ferie, creo la presenza anomala.
+                            // michael, 20/08/2024 - deciso con matteo di applicare questa correzione in quanto se un dipendente non ha un turno di lavoro, viene creata la presenza con conseguente anomalia anche su zucchetti
+                            if (!in_array($richiesta['richieste_tipologia'], [2])) {
+                                $flag_force_crea_presenza = true;
                             }
                         }
-                    } else {
-                        // se la tipologia di richiesta NON è ferie, creo la presenza anomala.
-                        // michael, 20/08/2024 - deciso con matteo di applicare questa correzione in quanto se un dipendente non ha un turno di lavoro, viene creata la presenza con conseguente anomalia anche su zucchetti
-                        if (!in_array($richiesta['richieste_tipologia'], [2])) {
-                            // Creo comunque con 09-17 e segnalo anomalia
-                            $inizio_turno = '09:00';
-                            $fine_turno = '17:00';
-                            try {
-                                $this->db->insert('presenze', [
-                                    'presenze_creation_date' => date('Y-m-d H:i:s'),
-                                    'presenze_dipendente' => $richiesta['richieste_user_id'],
-                                    'presenze_data_inizio' => $giorno_richiesta,
-                                    'presenze_data_fine' => $giorno_richiesta,
-                                    'presenze_ora_inizio' => $inizio_turno,
-                                    'presenze_ora_fine' => $fine_turno,
-                                    'presenze_data_inizio_calendar' => $giorno_richiesta . ' 09:00:00',
-                                    'presenze_data_fine_calendar' => $giorno_richiesta . ' 18:00:00',
-                                    'presenze_ore_totali' => 9,
-                                    'presenze_straordinario' => 0,
-                                    'presenze_reparto' => $reparto,
-                                    'presenze_richiesta' => $richiesta['richieste_id'],
-                                    'presenze_note' => $richiesta['richieste_note'],
-                                    'presenze_anomalia' => DB_BOOL_TRUE,
-                                    'presenze_note_anomalie' => 'Creata dal sistema (a partire da richiesta) in giornata senza turni di lavoro registrati',
-                                    'presenze_note' => $richiesta['richieste_note'],
-                                    'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
-                                    'presenze_scope_create' => 'CRON PRESENZE RICHIESTE'
-                                ]);
-                            } catch (Exception $e) {
-                                log_message('error', "Impossibile creare presenza automatica, per dipendente senza turno, da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
-                            }
+                    }
+                    
+                    if ($flag_force_crea_presenza) {
+                        // Creo comunque con 09-17 e segnalo anomalia
+                        $inizio_turno = '09:00';
+                        $fine_turno = '17:00';
+                        try {
+                            $this->db->insert('presenze', [
+                                'presenze_creation_date' => date('Y-m-d H:i:s'),
+                                'presenze_dipendente' => $richiesta['richieste_user_id'],
+                                'presenze_data_inizio' => $giorno_richiesta,
+                                'presenze_data_fine' => $giorno_richiesta,
+                                'presenze_ora_inizio' => $inizio_turno,
+                                'presenze_ora_fine' => $fine_turno,
+                                'presenze_data_inizio_calendar' => $giorno_richiesta . ' 09:00:00',
+                                'presenze_data_fine_calendar' => $giorno_richiesta . ' 18:00:00',
+                                'presenze_ore_totali' => 9,
+                                'presenze_straordinario' => 0,
+                                'presenze_reparto' => $reparto,
+                                'presenze_richiesta' => $richiesta['richieste_id'],
+                                'presenze_anomalia' => DB_BOOL_TRUE,
+                                'presenze_note_anomalie' => 'Creata dal sistema (a partire da richiesta) in giornata senza turni di lavoro registrati',
+                                'presenze_note' => $richiesta['richieste_note'],
+                                'presenze_smartworking' => $richiesta['richieste_tipologia'] == 4 ? DB_BOOL_TRUE : DB_BOOL_FALSE,
+                                'presenze_scope_create' => 'CRON PRESENZE RICHIESTE'
+                            ]);
+                        } catch (Exception $e) {
+                            log_message('error', "Impossibile creare presenza automatica, per dipendente senza turno, da richiesta #{$richiesta['richieste_id']}: " . $e->getMessage());
                         }
                     }
                 }

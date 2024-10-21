@@ -12,12 +12,17 @@ let settingscode = 12345;
 // Registrazione service worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        console.log(base_url + "module_bridge/modulo-hr/js/sw.js");
-        
-        //navigator.serviceWorker.register(base_url + "modulo-hr/assets/js/sw.js")
         navigator.serviceWorker.register(base_url + "module_bridge/modulo-hr/js/sw.js")
             .then(registration => {
                 console.log('Service Worker registrato con successo:', registration);
+                    // Forza il Service Worker a prendere il controllo immediatamente
+                    registration.addEventListener('updatefound', () => {
+                        registration.installing.addEventListener('statechange', () => {
+                            if (navigator.serviceWorker.controller) {
+                                window.location.reload();
+                            }
+                        });
+                    });
             })
             .catch(error => {
                 console.log('Errore nella registrazione del Service Worker:', error);
