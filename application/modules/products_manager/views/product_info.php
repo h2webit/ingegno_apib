@@ -68,6 +68,7 @@ foreach($provider_codes as $key => $provider_code) {
     display: flex;
     flex-direction: column;
     max-height: 360px;
+    overflow-y: scroll;
 }
 </style>
 

@@ -32,14 +32,18 @@ $this->lang->load($selected_lang, $selected_lang_name);
 
 // IMPOSTAZIONI STAMPA
 $impostazioni_stampa = json_decode($documento['documenti_contabilita_impostazioni_stampa_json'], true);
+//dump($impostazioni_stampa);
 $max_articoli = $impostazioni_stampa['max_articoli_pagina'] ?? 10;
 $font = $impostazioni_stampa['font'] ?? '"Helvetica Neue", Helvetica, Arial, sans-serif';
 $font_size = $impostazioni_stampa['font-size'] ?? '14';
-$mostra_foto_articoli = $impostazioni_stampa['mostra_foto'] ?? DB_BOOL_FALSE;
+// Totali documento
 $mostra_totali = $impostazioni_stampa['mostra_totali'] ?? DB_BOOL_FALSE;
 $mostra_scadenze_pagamento = $impostazioni_stampa['mostra_scadenze_pagamento'] ?? DB_BOOL_FALSE;
 $mostra_totali_senza_iva = $impostazioni_stampa['mostra_totali_senza_iva'] ?? DB_BOOL_FALSE;
+// Righe articoli
+$mostra_foto_articoli = $impostazioni_stampa['mostra_foto'] ?? DB_BOOL_FALSE;
 $mostra_prodotti_senza_importi = $impostazioni_stampa['mostra_prodotti_senza_importi'] ?? DB_BOOL_FALSE;
+$mostra_lotto_matricola = $impostazioni_stampa['mostra_lotto_matricola'] ?? DB_BOOL_FALSE;
 
 // PERSONALIZZA LA FRASE NEL FOOTER
 $frase = "THANK YOU FOR YOUR BUSINESS!";
@@ -274,9 +278,9 @@ $this->load->model('contabilita/docs');
 $documenti_tree = $this->docs->getDocumentiPadri($id);
 
 $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_righe_articoli_mostra_in_pdf' => DB_BOOL_TRUE], null, 0, 'campi_righe_articoli_pos');
-
 // debug($campi_personalizzati);
 
+$count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mostra_prodotti_senza_importi) + $mostra_totali_senza_iva);
 ?>
 <!DOCTYPE html>
 <html>
@@ -601,7 +605,6 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                             del <?php echo date('d-m-Y', strtotime($documento['documenti_contabilita_data_emissione'])); ?></strong>
                                     </div>
                                 </div>
-                            
                             </div>
                             
                             <?php if(!empty($documento['documenti_contabilita_oggetto'])) : ?>
@@ -611,8 +614,8 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                     </div>
                                 </div>
                             <?php endif; ?>
+
                             <div class="table-responsive-sm table_articoli">
-                                
                                 <table class="table table-cleared">
                                     <?php
                                     $iva_perc_before = "";
@@ -623,7 +626,11 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                         <?php if($mostra_foto_articoli == DB_BOOL_TRUE) : ?>
                                             <th><?php e('Foto'); ?></th>
                                         <?php endif; ?>
-                                        <th><?php e('Codice'); ?></th>
+                                        <?php if($mostra_lotto_matricola == DB_BOOL_TRUE) : ?>
+                                            <th><?php e('Lotto/matr.'); ?></th>
+                                        <?php else : ?>
+                                            <th><?php e('Codice'); ?></th>
+                                        <?php endif; ?>
                                         <th><?php e('Prodotto'); ?></th>
                                         <th><?php e('U.m.'); ?></th>
                                         <?php
@@ -650,153 +657,157 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                         <?php endif; ?>
                                     </tr>
                                     
-                                    <?php foreach ($gruppo as $articolo) : if (!empty($articolo['documenti_contabilita_articoli_name'])) : ?>
-                                        <?php //debug($articolo); ?>
-                                        <?php if ($articolo['documenti_contabilita_articoli_iva_perc'] != $iva_perc_before or !$iva_perc_before) : ?>
-                                            <?php $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] = 0; ?>
-                                            <?php $iva_perc_before = number_format((float)$articolo['documenti_contabilita_articoli_iva_perc'], 2, ',', '.'); ?>
-                                        <?php endif; ?>
-                                        
-                                        <?php $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] = $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] + $articolo['documenti_contabilita_articoli_iva']; ?>
-                                        <tr class="t_rows">
-                                            <?php
-                                            if($mostra_foto_articoli == DB_BOOL_TRUE) :
-                                                echo '<td>';
-                                                $main_image = null;
-                                                if (!empty($articolo['fw_products_main_image'])) {
-                                                    $main_image = (is_valid_json($articolo['fw_products_main_image'])) ? json_decode($articolo['fw_products_main_image'], true) : $articolo['fw_products_main_image'];
-                                                }
-                                                
-                                                $main_image_path = $main_image['path_local'] ?? $main_image;
-                                                if(!empty($main_image_path)) :
-                                                    ?>
-                                                    <img width="100px" src="<?php echo base_url("uploads/{$main_image_path}") ?>" />
-                                                <?php
-                                                endif;
-                                                echo '</td>';
-                                            endif;
-                                            ?>
-                                            <td class="left"><?php echo $articolo['documenti_contabilita_articoli_codice']; ?></td>
-                                            <td class="left strong"><?php echo $articolo['documenti_contabilita_articoli_name']; ?>
-                                                <br>
-                                                <small><?php echo $articolo['documenti_contabilita_articoli_descrizione']; ?></small>
-                                            </td>
-                                            <td class="left"><?php echo $articolo['documenti_contabilita_articoli_unita_misura']; ?></td>
-                                            <?php
-                                            if (!empty($campi_personalizzati)) {
-                                                foreach ($campi_personalizzati as $campo) {
-                                                    $valore_campo = '';
-                                                    
-                                                    if (isset($articolo[$campo['campi_righe_articoli_map_to']])) {
-                                                        if (!empty($articolo[$campo['campi_righe_articoli_map_to']])) {
-                                                            $valore_campo = $articolo[$campo['campi_righe_articoli_map_to']];
-                                                        }
-                                                    }
-                                                    echo "<td>{$valore_campo}</td>";
-                                                }
+                                    <?php
+                                    foreach ($gruppo as $articolo) :
+                                        if (!empty($articolo['documenti_contabilita_articoli_name'])) :
+                                            //debug($articolo);
+                                            if ($articolo['documenti_contabilita_articoli_iva_perc'] != $iva_perc_before or !$iva_perc_before) {
+                                                $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] = 0;
+                                                $iva_perc_before = number_format((float)$articolo['documenti_contabilita_articoli_iva_perc'], 2, ',', '.');
                                             }
+
+                                            $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] = $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] + $articolo['documenti_contabilita_articoli_iva'];
+                                    ?>
+                                    <tr class="t_rows">
+                                        <?php
+                                        if($mostra_foto_articoli == DB_BOOL_TRUE) :
+                                            echo '<td>';
+                                            $main_image = null;
+                                            if (!empty($articolo['fw_products_main_image'])) {
+                                                $main_image = (is_valid_json($articolo['fw_products_main_image'])) ? json_decode($articolo['fw_products_main_image'], true) : $articolo['fw_products_main_image'];
+                                            }
+                                            
+                                            $main_image_path = $main_image['path_local'] ?? $main_image;
+                                            if(!empty($main_image_path)) :
+                                        ?>
+                                                <img width="100px" src="<?php echo base_url("uploads/{$main_image_path}") ?>" />
+                                            <?php
+                                            endif;
+                                            echo '</td>';
+                                        endif;
+                                        ?>
+                                        <td class="left">
+                                            <?php
+                                            echo ($mostra_lotto_matricola == DB_BOOL_TRUE) ? $articolo['documenti_contabilita_articoli_lotto'] : $articolo['documenti_contabilita_articoli_codice'];
                                             ?>
-                                            <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
-                                                <td class="right">
-                                                    <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo number_format((float)$articolo['documenti_contabilita_articoli_prezzo'], 2, ',', '.'); ?>
-                                                    <?php echo (!empty($articolo['documenti_contabilita_articoli_sconto']) && $articolo['documenti_contabilita_articoli_sconto'] > 0) ? "<br /><small>Sconto " . number_format((float)$articolo['documenti_contabilita_articoli_sconto'], 2, ',', '.') . '% </small>' : ''; ?>
-                                                </td>
+                                        </td>
+                                        <td class="left strong"><?php echo $articolo['documenti_contabilita_articoli_name']; ?>
+                                            <br>
+                                            <small><?php echo $articolo['documenti_contabilita_articoli_descrizione']; ?></small>
+                                        </td>
+                                        <td class="left"><?php echo $articolo['documenti_contabilita_articoli_unita_misura']; ?></td>
+                                        <?php
+                                        if (!empty($campi_personalizzati)) {
+                                            foreach ($campi_personalizzati as $campo) {
+                                                $valore_campo = '';
+                                                
+                                                if (isset($articolo[$campo['campi_righe_articoli_map_to']])) {
+                                                    if (!empty($articolo[$campo['campi_righe_articoli_map_to']])) {
+                                                        $valore_campo = $articolo[$campo['campi_righe_articoli_map_to']];
+                                                    }
+                                                }
+                                                echo "<td>{$valore_campo}</td>";
+                                            }
+                                        }
+                                        ?>
+                                        <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
+                                            <td class="right">
+                                                <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo number_format((float)$articolo['documenti_contabilita_articoli_prezzo'], 2, ',', '.'); ?>
+                                                <?php echo (!empty($articolo['documenti_contabilita_articoli_sconto']) && $articolo['documenti_contabilita_articoli_sconto'] > 0) ? "<br /><small>Sconto " . number_format((float)$articolo['documenti_contabilita_articoli_sconto'], 2, ',', '.') . '% </small>' : ''; ?>
+                                            </td>
+                                        <?php endif; ?>
+                                        <td class="center"><?php echo $articolo['documenti_contabilita_articoli_quantita']; ?></td>
+                                        <?php if($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
+                                            <td class="right">
+                                                <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_iva'], 2, ',', '.'); ?>
+                                                <br /><small><?php echo '('.number_format((float)$articolo['documenti_contabilita_articoli_iva_perc'], 2, ',', '.').'%)'; ?></small>
+                                            </td>
+                                        <?php endif; ?>
+                                        <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
+                                            <?php if ($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
+                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_importo_totale'], 2, ',', '.'); ?></td>
+                                            <?php else : ?>
+                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_imponibile'], 2, ',', '.'); ?></td>
                                             <?php endif; ?>
-                                            <td class="center"><?php echo $articolo['documenti_contabilita_articoli_quantita']; ?></td>
-                                            <?php if($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
-                                                <td class="right">
-                                                    <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_iva'], 2, ',', '.'); ?>
-                                                    <br /><small><?php echo '('.number_format((float)$articolo['documenti_contabilita_articoli_iva_perc'], 2, ',', '.').'%)'; ?></small>
-                                                </td>
-                                            <?php endif; ?>
-                                            <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
-                                                <?php if ($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
-                                                    <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_importo_totale'], 2, ',', '.'); ?></td>
-                                                <?php else : ?>
-                                                    <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_imponibile'], 2, ',', '.'); ?></td>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </tr>
-                                    <?php endif;
-                                    endforeach; ?>
+                                        <?php endif; ?>
+                                    </tr>
+                                    <?php 
+                                        endif;
+                                    endforeach;
+                                    ?>
 
                                     
-                                    <?php if ($mostra_totali): ?>
+                                    <?php
+                                    if ($pagina == count($gruppi_articoli)) :
+                                        if ($mostra_totali):
+                                    ?>
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right"><?php e('Competenze'); ?></td>
+                                            <td colspan="<?php echo 4 + $count_colonne; ?>" class="right"><?php e('Competenze'); ?></td>
                                             <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_competenze'], 2, ',', '.'); ?></td>
                                         </tr>
                                         
                                         <?php if ($documento['documenti_contabilita_importo_bollo'] > 0) : ?>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right">Bollo su quietanza</td>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_importo_bollo'], 2, ',', '.'); ?></td>
-                                            </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="<?php echo 4 + $count_colonne; ?>" class="right">Bollo su quietanza</td>
+                                            <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_importo_bollo'], 2, ',', '.'); ?></td>
+                                        </tr>
                                         <?php endif; ?>
                                         
                                         <?php if ($documento['documenti_contabilita_rivalsa_inps_valore'] > 0) : ?>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right">Rivalsa
-                                                    INPS <?php echo number_format((float)$documento['documenti_contabilita_rivalsa_inps_perc'], 2, ',', '.'); ?>%
-                                                </td>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_rivalsa_inps_valore'], 2, ',', '.'); ?></td>
-                                            </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="<?php echo 4 + $count_colonne; ?>" class="right">Rivalsa
+                                                INPS <?php echo number_format((float)$documento['documenti_contabilita_rivalsa_inps_perc'], 2, ',', '.'); ?>%
+                                            </td>
+                                            <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_rivalsa_inps_valore'], 2, ',', '.'); ?></td>
+                                        </tr>
                                         <?php endif; ?>
                                         <?php if ($documento['documenti_contabilita_competenze_lordo_rivalsa'] && $documento['documenti_contabilita_rivalsa_inps_perc'] > 0) : ?>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right">Competenze (al lordo della rivalsa)</td>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_competenze_lordo_rivalsa'], 2, ',', '.'); ?></td>
-                                            </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="<?php echo 4 + $count_colonne; ?>" class="right">Competenze (al lordo della rivalsa)</td>
+                                            <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_competenze_lordo_rivalsa'], 2, ',', '.'); ?></td>
+                                        </tr>
                                         <?php endif; ?>
                                         
                                         <?php if ($documento['documenti_contabilita_cassa_professionisti_valore'] > 0) : ?>
-                                            <tr>
-                                                <td colspan="<?php echo 6 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right">
-                                                    <?php
-                                                    $label = 'Cassa professionisti';
-                                                    if (!empty($documento['documenti_contabilita_cassa_professionisti_tipo_value'])) {
-                                                        $label = $documento['documenti_contabilita_cassa_professionisti_tipo_value'];
-                                                    }
-                                                    
-                                                    echo $label . '&nbsp;' . number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, ',', '.') . '%';
-                                                    ?>
-                                                </td>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_cassa_professionisti_valore'], 2, ',', '.'); ?></td>
-                                            </tr>
+                                        <tr>
+                                            <td colspan="<?php echo 7 + $count_colonne; ?>" class="right">
+                                                <?php
+                                                $label = 'Cassa professionisti';
+                                                if (!empty($documento['documenti_contabilita_cassa_professionisti_tipo_value'])) {
+                                                    $label = $documento['documenti_contabilita_cassa_professionisti_tipo_value'];
+                                                }
+                                                
+                                                echo $label . '&nbsp;' . number_format((float) $documento['documenti_contabilita_cassa_professionisti_perc'], 2, ',', '.') . '%';
+                                                ?>
+                                            </td>
+                                            <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_cassa_professionisti_valore'], 2, ',', '.'); ?></td>
+                                        </tr>
                                         <?php endif; ?>
-                                        
                                         
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
-                                            <td colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right"><?php e('Imponibile'); ?></td>
+                                            <td colspan="<?php echo 4 + $count_colonne; ?>" class="right"><?php e('Imponibile'); ?></td>
                                             <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_imponibile'], 2, ',', '.'); ?></td>
                                         </tr>
                                         
-                                        
                                         <?php if ($documento['documenti_contabilita_ritenuta_acconto_valore'] > 0) : ?>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" class="right">Ritenuta d'acconto
-                                                    -<?php echo number_format((float)$documento['documenti_contabilita_ritenuta_acconto_perc']); ?>
-                                                    di <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?> <?php echo number_format((float)$documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'], 2, ',', '.'); ?></td>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_ritenuta_acconto_valore'], 2, ',', '.'); ?></td>
-                                            </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="<?php echo 4 + $count_colonne; ?>" class="right">Ritenuta d'acconto
+                                                -<?php echo number_format((float)$documento['documenti_contabilita_ritenuta_acconto_perc']); ?>
+                                                di <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?> <?php echo number_format((float)$documento['documenti_contabilita_ritenuta_acconto_perc_imponibile'], 2, ',', '.'); ?></td>
+                                            <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_ritenuta_acconto_valore'], 2, ',', '.'); ?></td>
+                                        </tr>
                                         <?php endif; ?>
                                         
                                         <?php
@@ -808,8 +819,7 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                                 <tr>
                                                     <td></td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td class="right" colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>"><?php e('IVA'); ?> <?php echo $percentuale; ?>%</td>
+                                                    <td class="right" colspan="<?php echo 4 + $count_colonne; ?>"><?php e('IVA'); ?> <?php echo $percentuale; ?>%</td>
                                                     <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format(($imponibile_iva * $percentuale / 100), 2, ',', '.'); ?></td>
                                                 </tr>
                                             <?php
@@ -817,44 +827,39 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                         endif;
                                         ?>
                                         
-                                        <?php if ($pagina == count($gruppi_articoli)) : ?>
-                                            
-                                            <tr class="blu">
-                                                <td></td>
-                                                <td class="left"></td>
-                                                <td class="center"></td>
-                                                <td class="right" colspan="<?php echo 3 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>" style="padding: 10px;">
-                                                    <strong style="margin-bottom: 1px;">
-                                                        <?php
-                                                        if ($documento['documenti_contabilita_tipo'] != 4) {
-                                                            if($mostra_totali_senza_iva == DB_BOOL_FALSE) {
-                                                                e('Netto a pagare');
-                                                            } else {
-                                                                e('Totale iva esclusa');
-                                                            }
+                                        <tr class="blu">
+                                            <td></td>
+                                            <td class="left"></td>
+                                            <td class="right" colspan="<?php echo 4 + $count_colonne; ?>" style="padding: 10px;">
+                                                <strong style="margin-bottom: 1px;">
+                                                    <?php
+                                                    if ($documento['documenti_contabilita_tipo'] != 4) {
+                                                        if($mostra_totali_senza_iva == DB_BOOL_FALSE) {
+                                                            e('Netto a pagare');
                                                         } else {
-                                                            e('Nota di credito');
+                                                            e('Totale iva esclusa');
                                                         }
-                                                        ?>
-                                                    </strong>
-                                                </td>
-                                                <td class="right" style="font-size:1.4em;">
-                                                    <?php if($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
-                                                            <strong><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_totale'], 2, ',', '.'); ?></strong>
-                                                        <?php else : ?>
-                                                            <strong><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_imponibile'], 2, ',', '.'); ?></strong>
-                                                    <?php endif; ?>
-                                                </td>
-                                            </tr>
-                                        
-                                        <?php endif; ?>
+                                                    } else {
+                                                        e('Nota di credito');
+                                                    }
+                                                    ?>
+                                                </strong>
+                                            </td>
+                                            <td class="right" style="font-size:1.4em;">
+                                                <?php if($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
+                                                        <strong><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_totale'], 2, ',', '.'); ?></strong>
+                                                    <?php else : ?>
+                                                        <strong><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$documento['documenti_contabilita_imponibile'], 2, ',', '.'); ?></strong>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
                                         
                                         <?php if ($documento['documenti_contabilita_importo_bollo'] > 0) : ?>
                                             <tr class="">
-                                                <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>">Esente art. Esente art. 10 D.P.R. 633/72 e succ.mod.</td>
+                                                <td colspan="<?php echo 7 + $count_colonne; ?>">Esente art. Esente art. 10 D.P.R. 633/72 e succ.mod.</td>
                                             </tr>
                                             <tr class="">
-                                                <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>">Es. art. 15 Escluso IVA art. 15</td>
+                                                <td colspan="<?php echo 7 + $count_colonne; ?>">Es. art. 15 Escluso IVA art. 15</td>
                                             </tr>
                                         <?php endif; ?>
                                         
@@ -873,38 +878,42 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                             if (!empty($iva_stampate)):
                                                 ?>
                                                 <tr class="">
-                                                    <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>"><?php e('Esenzioni iva'); ?>:</td>
+                                                    <td colspan="<?php echo 7 + $count_colonne; ?>"><?php e('Esenzioni iva'); ?>:</td>
                                                 </tr>
                                                 <?php foreach ($iva_stampate as $i): ?>
                                                 <tr class="">
-                                                    <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>"><?php echo number_format((float)$i['valore'], 2, ',', '.'); ?>% - <?php echo $i['descrizione']; ?></td>
+                                                    <td colspan="<?php echo 7 + $count_colonne; ?>"><?php echo number_format((float)$i['valore'], 2, ',', '.'); ?>% - <?php echo $i['descrizione']; ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                             <?php endif; ?>
                                             
                                             <?php if ($documento['documenti_contabilita_importo_bollo'] > 0) : ?>
                                                 <tr class="">
-                                                    <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>">Esente art. Esente art. 10 D.P.R. 633/72 e succ.mod.</td>
+                                                    <td colspan="<?php echo 7 + $count_colonne; ?>">Esente art. Esente art. 10 D.P.R. 633/72 e succ.mod.</td>
                                                 </tr>
                                                 <tr class="">
-                                                    <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>">Es. art. 15 Escluso IVA art. 15</td>
+                                                    <td colspan="<?php echo 7 + $count_colonne; ?>">Es. art. 15 Escluso IVA art. 15</td>
                                                 </tr>
                                             <?php endif; ?>
                                             
                                             <?php if ($documento['documenti_contabilita_split_payment'] == DB_BOOL_TRUE) : ?>
                                                 <tr>
-                                                    <td colspan="<?php echo 7 + $mostra_foto_articoli + count($campi_personalizzati) - $mostra_totali_senza_iva - (2 * $mostra_prodotti_senza_importi); ?>">
+                                                    <td colspan="<?php echo 7 + $count_colonne; ?>">
                                                         <strong>Questa fattura applica lo "Split Payment", pertanto l'IVA dovrà
                                                             essere versata dal cliente ai sensi dell'art. 17-ter, DPR n. 633/72.</strong>
                                                     </td>
                                                 </tr>
                                             <?php endif; ?>
                                         <?php endif; ?>
-                                    <?php endif; ?>
+                                        
+                                    <?php 
+                                    endif; 
+                                        endif;
+                                    ?>
                                 </table>
                             </div>
                             
-                            <?php if ($documento['documenti_contabilita_fattura_accompagnatoria'] == DB_BOOL_TRUE) : ?>
+                            <?php if ($pagina == count($gruppi_articoli) && $documento['documenti_contabilita_fattura_accompagnatoria'] == DB_BOOL_TRUE) : ?>
                                 <div class="dati_trasporto">
                                     <div class="row">
                                         <div class="col-md-3">
@@ -934,7 +943,7 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                 </div>
                             <?php endif; ?>
                             
-                            <?php if (!in_array($documento['documenti_contabilita_tipo'], [6,8,10,14])): ?>
+                            <?php if ($pagina == count($gruppi_articoli) && !in_array($documento['documenti_contabilita_tipo'], [6,8,10,14])): ?>
                                 <!--
                                     mostro la sezione solo se il documento non è un:
                                     -ordine fornitore
@@ -1016,7 +1025,6 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                             </table>
                                         </div>
                                     <?php endif; ?>
-                                
                                 </div>
                             
                             <?php endif; ?>
@@ -1047,7 +1055,7 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                 <br />
                             <?php endif; ?>
                             
-                            <?php if(!empty($frase)) : ?>
+                            <?php if($pagina == count($gruppi_articoli) && !empty($frase)) : ?>
                                 <div class="Thanks">
                                     <strong><?php echo $frase; ?></strong>
                                 </div>
@@ -1058,6 +1066,8 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                 <?php echo $documento['documenti_contabilita_note_interne']; ?>
                             </div>
                             <hr size="1" width="1066px" color="black">
+
+                            <?php if($pagina == count($gruppi_articoli)) : ?>
                             <div class="informativa">
                                 <?php if ($documento['documenti_contabilita_formato_elettronico'] == DB_BOOL_TRUE && in_array($documento['documenti_contabilita_tipo'], [1, 4, 11, 12])): ?>
                                     <p>
@@ -1072,6 +1082,8 @@ $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_ri
                                     anagrafici, la P.IVA e il Cod. Fiscale. Non ci riteniamo responsabili di eventuali errori.
                                 </p>
                             </div>
+                            <?php endif; ?>
+
                             <div class="row">
                                 <div class="col-md-12 paginator">
                                     <?php e('Pagina'); ?> <?php echo $pagina; ?>/<?php echo count($gruppi_articoli); ?>

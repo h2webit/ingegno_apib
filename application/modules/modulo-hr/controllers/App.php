@@ -340,8 +340,8 @@ class App extends MY_Controller
 
             die(json_encode(['status' => 1, 'txt' => 'Modifica password effettuata con successo', 'data' => $updated_dipendente]));
         } catch (Exception $e) {
-            log_message('error', "Errore durante la modifica password dipendente #$$dipendente_id} e utente da app: " . $e->getMessage());
-            die(json_encode(['status' => 0, 'txt' => 'Si è verificato un errore durante lil salvataggio della nuova password.']));
+            log_message('error', "Errore durante la modifica password dipendente #{$dipendente_id} e utente da app: " . $e->getMessage());
+            die(json_encode(['status' => 0, 'txt' => 'Si è verificato un errore durante il salvataggio della nuova password.']));
         }
     }
 
@@ -445,7 +445,7 @@ class App extends MY_Controller
                 }
             }
 
-            die(json_encode(['status' => 0, 'txt' => $txt,  'data' => $banca_ore, 'saldo' => number_format($saldo, 2), 'data_aggiornamento' => $data_aggiornamento]));
+            die(json_encode(['status' => 0, 'txt' => $txt, 'data' => $banca_ore, 'saldo' => number_format($saldo, 2), 'data_aggiornamento' => $data_aggiornamento]));
         } catch (Exception $e) {
             log_message('error', 'Errore recuperando dati banca ore da app: ' . $e->getMessage());
             die(json_encode(['status' => 0, 'txt' => 'Si è verificato un errore durante la richiesta della banca ore']));

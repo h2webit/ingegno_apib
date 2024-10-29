@@ -109,13 +109,21 @@
                         'ratei_ferie_permessi_saldo_ferie' => $saldo_ferie,
                         'ratei_ferie_permessi_saldo_rol' => $saldo_rol,
                         'ratei_ferie_permessi_saldo_permessi' => $saldo_permessi,
+                        
+                        'ratei_ferie_permessi_aggiorna_saldi' => 1,
                     ]);
+                    
+                    echo_flush("inseriti saldi per {$cf_dipendente}: ferie: {$saldo_ferie}, rol: {$saldo_rol}, permessi: {$saldo_permessi}<br/>", '<br/>');
                 } else {
                     $this->apilib->edit('ratei_ferie_permessi', $saldo_dipendente['ratei_ferie_permessi_id'], [
                         'ratei_ferie_permessi_saldo_ferie' => $saldo_ferie,
                         'ratei_ferie_permessi_saldo_rol' => $saldo_rol,
                         'ratei_ferie_permessi_saldo_permessi' => $saldo_permessi,
+                        
+                        'ratei_ferie_permessi_aggiorna_saldi' => 1,
                     ]);
+                    
+                    echo_flush("aggiornati saldi per {$cf_dipendente}: ferie: {$saldo_ferie}, rol: {$saldo_rol}, permessi: {$saldo_permessi}<br/>", '<br/>');
                 }
                 
                 progress(++$c_saldi, $t_saldi, "IMPORT");
