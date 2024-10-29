@@ -106,6 +106,8 @@ $unita_misura = $this->apilib->search('fw_products_unita_misura');
 $price_list_labels = $this->apilib->search('price_list_labels');
 
 $fw_products_kind = $this->apilib->search('fw_products_kind');
+// Rimuovo il kind "Servizio"
+array_splice($fw_products_kind, 1, 1);
 
 $centri_costo = $this->apilib->search('centri_di_costo_ricavo');
 

@@ -207,7 +207,7 @@ td.js_actions {
 </style>
 <?php
 
-
+//debug($this->input->post(),true);
 
 $this->load->model('contabilita/docs');
 if ($this->datab->module_installed('magazzino')) {
@@ -1117,6 +1117,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_json_ed
     $json_editor_xml = json_encode([]);
 }
 
+// Modifica, non clonazione e impostazioni presenti
 if ($documento_id && !$clone && !empty($documento['documenti_contabilita_impostazioni_stampa_json'])) {
     $json_stampa = json_decode($documento['documenti_contabilita_impostazioni_stampa_json'], true);
 } else {
@@ -1129,7 +1130,48 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
         'mostra_scadenze_pagamento' => DB_BOOL_TRUE,
         'mostra_totali_senza_iva' => DB_BOOL_FALSE,
         'mostra_prodotti_senza_importi' => DB_BOOL_FALSE,
+        'mostra_lotto_matricola' => DB_BOOL_FALSE,
     ];
+
+    $documento_tipo_get = $this->input->get('doc_type') ?? null;
+    if($documento_tipo_get) {
+        $mappatura_tipi_doc = [
+            'Fattura' => 1,
+            'Pro forma' => 3,
+            'Nota di credito' => 4,
+            'Ordine cliente' => 5,
+            'Ordine fornitore' => 6,
+            'Preventivo' => 7,
+            'DDT' => 8,
+            /* 'DDT Fornitore' => 10,
+            'Fattura Reverse' => 11,
+            'Nota di credito Reverse' => 12, */
+            'Ordine interno' => 14,
+            'Ordini interni' => 14,
+        ];
+    
+        // Creo documento, cerco impostazioni stampa dell'ultimo documento creato con lo stesso tipo
+        if(empty($documento_id)) {
+            $ultimo_documento_creato = $this->apilib->searchFirst('documenti_contabilita', [
+                'documenti_contabilita_tipo' => $mappatura_tipi_doc[$documento_tipo_get]
+            ], 0, 'documenti_contabilita_id', 'DESC');
+        
+            if(!empty($ultimo_documento_creato) && !empty($ultimo_documento_creato['documenti_contabilita_impostazioni_stampa_json'])) {
+                $json_stampa = json_decode($ultimo_documento_creato['documenti_contabilita_impostazioni_stampa_json'], true);
+            }
+        }
+    }
+    /* $json_stampa = [
+        'max_articoli_pagina' => '10',
+        'font' => '',
+        'font-size' => '14',
+        'mostra_foto' => DB_BOOL_FALSE,
+        'mostra_totali' => DB_BOOL_TRUE,
+        'mostra_scadenze_pagamento' => DB_BOOL_TRUE,
+        'mostra_totali_senza_iva' => DB_BOOL_FALSE,
+        'mostra_prodotti_senza_importi' => DB_BOOL_FALSE,
+        'mostra_lotto_matricola' => DB_BOOL_FALSE,
+    ]; */
 }
 
 ?>
@@ -1807,7 +1849,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label style="min-width:80px">Totali senza IVA: </label>
+                                            <label style="min-width:80px">Totali/prodotti senza IVA: </label>
                                             <input type="hidden" name="json_stampa[mostra_totali_senza_iva]" value="0">
                                             <input type="checkbox" class="minimal" name="json_stampa[mostra_totali_senza_iva]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_totali_senza_iva']) && $json_stampa['mostra_totali_senza_iva'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
@@ -1824,6 +1866,13 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             <label style="min-width:80px">Prodotti senza importi: </label>
                                             <input type="hidden" name="json_stampa[mostra_prodotti_senza_importi]" value="0">
                                             <input type="checkbox" class="minimal" name="json_stampa[mostra_prodotti_senza_importi]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_prodotti_senza_importi']) && $json_stampa['mostra_prodotti_senza_importi'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Lotto/matricola prodotti: </label>
+                                            <input type="hidden" name="json_stampa[mostra_lotto_matricola]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_lotto_matricola]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_lotto_matricola']) && $json_stampa['mostra_lotto_matricola'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
                                 </div>
@@ -2426,7 +2475,14 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
 
             <div class="row">
                 <div class="col-md-3 mb-15">
-                    <textarea name="documenti_contabilita_note_generiche" rows="10" class="form-control" placeholder="Note generiche [opzionali]"><?php if ($documento_id): ?><?php echo $documento['documenti_contabilita_note_generiche']; ?><?php endif; ?></textarea>
+                    <textarea name="documenti_contabilita_note_generiche" rows="10" class="form-control" style="max-height: 185px;" placeholder="Note generiche [opzionali]"><?php if ($documento_id): ?><?php echo $documento['documenti_contabilita_note_generiche']; ?><?php endif; ?></textarea>
+                    <div style="margin-top: 12px;">
+                        <div class="form-group">
+                            <input type="hidden" name="documenti_contabilita_stampa_note_generiche" value="0">
+                            <input type="checkbox" class="minimal" name="documenti_contabilita_stampa_note_generiche" class="rcr-adjust" value="1" <?php if (!empty($documento['documenti_contabilita_stampa_note_generiche']) && $documento['documenti_contabilita_stampa_note_generiche'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                            <label>Mostra in stampa PDF</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-9 scadenze_box" style="background-color: #b7d7ea;">
                     <div class="row">
@@ -3161,6 +3217,12 @@ var popolaProdotto = function(prodotto, rowid) {
         "PA": <?php echo (int) ($this->auth->get('provvigione')); ?>,
         "RAW_DATA": prodotto
     };
+
+
+    const link_checkqty = `<a id="js_showhide_stock${prodotto.fw_products_id}" class="js_open_modal" href="<?php echo base_url('get_ajax/layout_modal/product-quantities/'); ?>${prodotto.fw_products_id}"> ${prodotto.<?php echo $campo_quantita; ?>}</a>`;
+
+    $('.js_riga_quantita', $("input[name='products[" + rowid + "][documenti_contabilita_articoli_quantita]']").closest('td')).html(link_checkqty);
+
     <?php if ($campo_codice): ?>
     $("input[name='products[" + rowid + "][documenti_contabilita_articoli_codice]']").val(prodotto['<?php echo $campo_codice; ?>']);
 
@@ -4475,6 +4537,7 @@ function calculateTotals(documento_id, regenerate_scadenze) {
         $('.js-importo', $(this)).val(totale_riga_scontato_ivato.toFixed(2));
         $('.js_documenti_contabilita_articoli_iva', $(this)).val(parseFloat((totale_riga_scontato / 100) * iva).toFixed(2));
         $('.js_riga_imponibile', $(this)).html(parseFloat(totale_riga_scontato).toFixed(2));
+        
         $('.js_documenti_contabilita_articoli_imponibile', $(this)).val(parseFloat(totale_riga_scontato).toFixed(2));
 
     });
