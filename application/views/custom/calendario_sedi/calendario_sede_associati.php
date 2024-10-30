@@ -815,16 +815,16 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
     }
     
     $('.js-stampa').on('click', function () {
-        var month = $('select.js-month', $(this).parent()).val();
-        var year = $('select.js-year', $(this).parent()).val();
+        var month = $('select.js-month', $(this).parents('.row').first()).val();
+        var year = $('select.js-year', $(this).parents('.row').first()).val();
 
         window.open('<?php echo base_url("custom/apib/stampaCalendarioSede/$value_id"); ?>?Y=' + year + '&m=' + month + '&_regen=1', '_blank');
 
     });
 
     $('.js-notifica').on('click', function () {
-        var month = $('select.js-month', $(this).parent()).val();
-        var year = $('select.js-year', $(this).parent()).val();
+        var month = $('select.js-month', $(this).parents('.row').first()).val();
+        var year = $('select.js-year', $(this).parents('.row').first()).val();
 
         var r = confirm("Sei sicuro di voler notificare a tutti?");
         if (r == true) {

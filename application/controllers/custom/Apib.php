@@ -113,4 +113,63 @@ class Apib extends MY_Controller
         echo json_encode(['status' => 0]);
     }
 
+    public function stampaCalendarioSede($sede_id)
+    {
+
+        $regenerate = (bool) $this->input->get('_regen');
+        $data['associato'] = $this->input->get('associati_id');
+
+        $data['sede'] = $this->apilib->view('projects', $sede_id);
+
+        //Prendo i turni assegnati, ordinati decrescentemente (così per primo ho l'ultimo assegnato e capisco se devo rigenerare il file)
+        $data['calendario'] = $this->apilib->search('appuntamenti', [
+            'appuntamenti_impianto' => $sede_id
+            //TODO: filtro data????
+        ], null, 0, 'appuntamenti_id', 'DESC');
+
+
+        // Vedo se ho già il file generato
+        $physicalDir = "./uploads/calendari";
+        $filename = 'calendariosede_' . $data['sede']['projects_id'] . '-' . @$data['calendario'][0]['appuntamenti_id'];
+        $pdfFile = "{$physicalDir}/{$filename}.pdf";
+
+        if (!file_exists($pdfFile) or is_development() or $regenerate) {
+            $this->load->library('parser');
+
+            $data['year'] = ($this->input->get('Y')) ? $this->input->get('Y') : date('Y');
+            $data['month'] = ($this->input->get('m')) ? $this->input->get('m') : date('m');
+
+            $contents = $this->parser->parse("custom/pdf/calendario_sede", $data, true);
+
+            $html = $this->input->get('html');
+            if ($html) {
+                die($contents);
+            } else {
+                // Create a temporary file with the view html
+                if (!is_dir($physicalDir)) {
+                    mkdir($physicalDir, 0755, true);
+                }
+                $tmpHtml = "{$physicalDir}/{$filename}.html";
+                file_put_contents($tmpHtml, $contents, LOCK_EX);
+                //die('test');
+                // Exec the command
+                $options = "-T '10mm' -B '10mm' -O landscape";
+                // die("wkhtmltopdf {$options} --viewport-size 1024 {$tmpHtml} {$pdfFile}");
+                exec("wkhtmltopdf {$options} --viewport-size 1024 {$tmpHtml} {$pdfFile}");
+                //debug("wkhtmltopdf {$options} --viewport-size 1024 {$tmpHtml} {$pdfFile}",true);
+            }
+        }
+        // Send the file
+        $fp = fopen($pdfFile, 'rb');
+        header("Content-Type: application/pdf");
+        header("Content-Length: " . filesize($pdfFile));
+        fpassthru($fp);
+
+        // Remove the temp files
+        //        @unlink($tmpHtml);
+        //        if ($isH2Web) {
+        //            @unlink($pdfFile);
+        //        }
+    }
+
 }

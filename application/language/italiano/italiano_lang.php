@@ -2222,3 +2222,5 @@ $lang['Seleziona mese'] = 'Seleziona mese';
 $lang['Inserimento variazione'] = 'Inserimento variazione';
 $lang['Note compensi'] = 'Note compensi';
 $lang['Scheda compensi'] = 'Scheda compensi';
+$lang['Produzione'] = 'Produzione';
+$lang['Gestione immagini'] = 'Gestione immagini';
