@@ -444,7 +444,7 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_bollo_virtuale'] = (!empty($input['documenti_contabilita_bollo_virtuale'])) ? $input['documenti_contabilita_bollo_virtuale'] : DB_BOOL_FALSE;
 
             $documents['documenti_contabilita_json_editor_xml'] = (!empty($input['FatturaElettronica']) ? json_encode(['FatturaElettronica' => $input['FatturaElettronica']]) : null);
-
+            $documents['documenti_contabilita_stampa_note_generiche'] = (!empty($input['documenti_contabilita_stampa_note_generiche']) ? $input['documenti_contabilita_stampa_note_generiche'] : DB_BOOL_FALSE);
 
             // Michael - 14/02/2023 - Va fatto un json_decode e poi json_encode, in quanto in questo punto si stava ciclando un json (per cui ovvimaente dava errore sul foreach stesso)
             $input['documenti_contabilita_iva_json'] = json_decode($input['documenti_contabilita_iva_json'], true);
@@ -2672,12 +2672,13 @@ class Documenti extends MX_Controller
                 'tipo_documento' => $post['tipo_documento'],
                 'data_emissione' => $post['data_emissione'],
             ];
-
+            
             $articoli = $this->db->where('documenti_contabilita_articoli_documento', $doc['documenti_contabilita_id'])->get('documenti_contabilita_articoli')->result_array();
 
             if (!empty($articoli)) {
                 foreach ($articoli as $key => $art) {
                     $articoli[$key]['documenti_contabilita_articoli_descrizione'] = ((!empty($post['periodo_competenza']) ? 'periodo di competenza: ' . $post['periodo_competenza'] : ''));
+                    $articoli[$key]['documenti_contabilita_articoli_rif_riga_articolo'] = $art['documenti_contabilita_articoli_id'];
                 }
 
                 if ($post['tipologia'] == 4) {
@@ -2710,10 +2711,15 @@ class Documenti extends MX_Controller
 
             try {
                 $this->docs->doc_express_save($clone);
+
+                //Aggiorno gli stati documento...
+                $this->docs->aggiornaStatoDocumento($doc['documenti_contabilita_id'], $post['tipo_documento']);
             } catch (Exception $e) {
                 die($e->getMessage());
             }
         }
+
+       
 
         echo 'documenti duplicati con successo. reindirizzamento in corso...';
         sleep(2);

@@ -1733,7 +1733,7 @@ class Docs extends CI_Model
 
             //Calcolo la quantità di merce evasa
             $quantita_evase = $this->calcolaQuantitaEvasaDoc($riga['documenti_contabilita_articoli_id'], $old_documento_tipo, $documento_tipo, $exclude_doc_id);
-
+            //debug($quantita_evase);
             if ($quantita_evase >= $riga['documenti_contabilita_articoli_quantita']) {
                 unset($righe_articolo[$key]);
             } elseif ($quantita_evase) {

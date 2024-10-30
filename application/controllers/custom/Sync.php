@@ -202,6 +202,8 @@ class Sync extends MY_Controller
                 'dipendenti_creation_date' => $associato['associati_data_creazione'],
                 'dipendenti_modified_date' => $associato['associati_data_modifica'],
                 
+                'dipendenti_percentuale_sedi' => $associato['associati_percentuale_sedi'] ?? 0,
+                'dipendenti_percentuale_domiciliari' => $associato['associati_percentuale_domiciliari'] ?? 0,
             ];
 
 
@@ -209,14 +211,18 @@ class Sync extends MY_Controller
             foreach ($associato as $key => $value) {
                 $key = str_replace('associati_', 'dipendenti_', $key);
                 if (!array_key_exists($key, $dipendente)) {
-                    $dipendente['dipendenti_dati_apib'][$key] = $value;
+                    // $dipendente['dipendenti_dati_apib'][$key] = $value;
+                    $dipendente['dipendenti_dati_apib'][] = [
+                        'key' => $key,
+                        'value' => $value,
+                    ];
                 }
 
             }
-            //$dipendente['dipendenti_dati_apib'] = json_encode($dipendente['dipendenti_dati_apib']);
+            // debug($dipendente['dipendenti_dati_apib'],true);
+            // $dipendente['dipendenti_dati_apib'] = json_encode($dipendente['dipendenti_dati_apib']);
 
-            //debug($dipendente,true);
-
+            // debug($dipendente,true);
             try {
                 $dipendente_exists = $this->db->get_where('dipendenti', ['dipendenti_id' => $dipendente['dipendenti_id']])->row_array();
 

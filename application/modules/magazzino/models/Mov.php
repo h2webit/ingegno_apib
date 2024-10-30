@@ -222,7 +222,7 @@ class Mov extends CI_Model
     // }
     public function calcolaQuantitaRimanente($prodotto_id, $documento_id = null)
     {
-        
+
         // michael, 20/09/2024 - aggiunto questo where in quanto mi serviva per calcolare la quantità rimanente per un documento specifico, ad esempio nella pagina di "prodotti in ordine"
         $where_documento = '';
         if ($documento_id && is_numeric($documento_id)) {
@@ -230,7 +230,7 @@ class Mov extends CI_Model
         } else {
             $where_documento = "documenti_contabilita_tipo IN (5)";
         }
-        
+
         $impegnate = $this->db->query("
             SELECT SUM(COALESCE(documenti_contabilita_articoli_quantita,0)-(COALESCE(documenti_contabilita_articoli_qty_movimentate,0)+COALESCE(documenti_contabilita_articoli_qty_evase_in_doc,0))) as s
             FROM documenti_contabilita_articoli
@@ -244,6 +244,8 @@ class Mov extends CI_Model
                 ) > 0
                 
                 ) and
+                 (documenti_contabilita_articoli_riga_desc = 0 OR documenti_contabilita_articoli_riga_desc IS NULL)
+                AND
                 documenti_contabilita_articoli_prodotto_id = '$prodotto_id'
                 AND
                 documenti_contabilita_stato IN (1,2,5)
@@ -251,11 +253,11 @@ class Mov extends CI_Model
                 $where_documento
         ")->row()->s;
         //debug($this->db->last_query());
-        
+
         if ($impegnate < 0) {
             $impegnate = 0;
         }
-        
+
         return $impegnate;
     }
 
@@ -275,6 +277,8 @@ class Mov extends CI_Model
             WHERE
                 documenti_contabilita_articoli_prodotto_id = $prodotto_id
                 AND
+                (documenti_contabilita_articoli_riga_desc = 0 OR documenti_contabilita_articoli_riga_desc IS NULL)
+                AND
                 documenti_contabilita_stato IN (1, 2, 5)
                 AND
                 documenti_contabilita_tipo IN (6)
@@ -292,6 +296,8 @@ class Mov extends CI_Model
             LEFT JOIN documenti_contabilita ON (documenti_contabilita_id = documenti_contabilita_articoli_documento)
             WHERE
                 documenti_contabilita_articoli_prodotto_id = $prodotto_id
+                AND
+                (documenti_contabilita_articoli_riga_desc = 0 OR documenti_contabilita_articoli_riga_desc IS NULL)
                 AND
                 documenti_contabilita_stato IN (1,2, 5)
                 AND

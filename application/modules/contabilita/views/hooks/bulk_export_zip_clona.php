@@ -1,6 +1,6 @@
 <?php
 $tipologie = $this->db->get('documenti_contabilita_tipologie_fatturazione')->result_array();
-$tipi_doc = $this->db->get('documenti_contabilita_tipo')->result_array();
+$tipi_doc = $this->db->where('documenti_contabilita_tipo_id <>',10)->get('documenti_contabilita_tipo')->result_array();
 $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_array();
 ?>
 
@@ -8,6 +8,13 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
     id="form_export_zip">
     <input type="hidden" id="fatture_ids" name="ids" value="" />
     <?php add_csrf(); ?>
+</form>
+
+<form style="display: hidden" action="<?php echo base_url(); ?>main/layout/nuovo_documento/" method="POST" id="form_bulk_clona">
+    <?php add_csrf(); ?>
+    <input type="hidden" id="cl_var1_bulk_clona" name="ddt_ids" value="" />
+    <input type="hidden" id="tipo_doc_bulk_clona" name="tipo_doc" value="Ord." />
+    <input type="hidden" id="cl_bulk_action_bulk_clona" name="bulk_action" value="" />
 </form>
 
 <form style="display: hidden" action="<?php echo base_url(); ?>contabilita/documenti/print_all" method="POST"
@@ -50,6 +57,7 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
             $(this).append('<option value="download_zip">Download zip</option>');
             $(this).append('<option value="bulk_clone">Duplica / Trasforma</option>');
             $(this).append('<option value="stampa_accorpata_template">Stampa accorpata (con template)</option>');
+            $(this).append('<option value="Genera DDT accorpato">Genera DDT accorpato</option>');
             <?php if ($this->datab->can_access_layout('prima-nota', null)): ?>
                 $(this).append('<option value="registra_prima_nota">Registra in prima nota</option>');
             <?php endif; ?>
@@ -104,6 +112,14 @@ $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_ar
                     if (chkbx_ids.length > 0) {
                         $('#form_export_zip').submit();
                     }
+                }
+
+                if ($(this).val() == 'Genera DDT accorpato') {
+                    $('#tipo_doc_bulk_clona').val('DDT');
+                    $('#cl_var1_bulk_clona').val(JSON.stringify(chkbx_ids));
+                    $('#cl_bulk_action_bulk_clona').val($(this).val());
+                    //$('#cl_bulk_action').val('Genera fattura accorpata');
+                    $('#form_bulk_clona').submit();
                 }
 
                 if ($(this).val() == 'bulk_clone') {

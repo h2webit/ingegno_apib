@@ -129,7 +129,11 @@
                             <td>
                                 <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_unita_misura" data-name="documenti_contabilita_articoli_unita_misura" placeholder="(facoltativo)" />
                             </td>
-                            <td><input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_quantita" data-name="documenti_contabilita_articoli_quantita" value="1" /></td>
+                            <td><input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_quantita" data-name="documenti_contabilita_articoli_quantita" value="1" />
+                                    <small style="text-align:center;display:block;">In magazzino<br />
+                                    <span class="js_riga_quantita">0</span>
+                                </small>
+                        </td>
                             <td>
                                 <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_prezzo js_decimal" data-name="documenti_contabilita_articoli_prezzo" value="0.00" />
                                 <input type="hidden" class="form-control input-sm text-right js_documenti_contabilita_articoli_imponibile" data-name="documenti_contabilita_articoli_imponibile" value="0" />
@@ -287,7 +291,19 @@
                             <thead __style="visibility: hidden">
                                 <tr>
                                     <th width='7%'>Codice</th>
-                                    <th>Nome prodotto <span class="js_modal_product_detail"></span></th>
+                                    <th>Nome prodotto <span class="js_modal_product_detail">
+                                        <?php if (!empty($prodotto['documenti_contabilita_articoli_prodotto_id'])): ?>
+                                            
+                                                <a href="<?php echo base_url("get_ajax/layout_modal/dettagli_prodotto_modale/{$prodotto['documenti_contabilita_articoli_prodotto_id']}?_size=large"); ?>"
+                                                    class="js_open_modal btn-xs btn-primary product_link_modal">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            
+                                        <?php endif; ?>
+
+                                    </span> 
+                                    
+                                </th>
                                     <?php if (!empty($campi_personalizzati[1])) : ?>
                                         <?php foreach ($campi_personalizzati[1] as $campo) : ?>
                                             <th>
@@ -354,6 +370,9 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control input-sm js_autocomplete_prodotto" data-id="<?php echo $k + 1; ?>" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_name]" value="<?php echo str_replace('"', '&quot;', $prodotto['documenti_contabilita_articoli_name']); ?>" />
+                                        
+                                        
+                                        
                                         <small>Descrizione aggiuntiva:</small>
                                         <textarea class="form-control input-sm js_documenti_contabilita_articoli_descrizione" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_descrizione]" style="width:100%;" row="2"><?php echo $prodotto['documenti_contabilita_articoli_descrizione']; ?></textarea>
                                     </td>
@@ -389,7 +408,21 @@
                                     <td width="20">
                                         <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_unita_misura" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_unita_misura]" placeholder="(facoltativo)" value="<?php echo $prodotto['documenti_contabilita_articoli_unita_misura']; ?>" />
                                     </td>
-                                    <td width="30"><input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_quantita" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_quantita]" value="<?php echo $prodotto['documenti_contabilita_articoli_quantita']; ?>" placeholder="1" /></td>
+                                    <td width="30">
+                                        <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_quantita" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_quantita]" value="<?php echo $prodotto['documenti_contabilita_articoli_quantita']; ?>" placeholder="1" />
+                                        <?php if (!empty($prodotto['documenti_contabilita_articoli_prodotto_id'])): ?>
+                                            <small style="text-align:center;display:block;">
+                                                In magazzino<br />
+                                                <span class="js_riga_quantita">
+                                                    <a id="js_showhide_stock<?php echo $prodotto['documenti_contabilita_articoli_prodotto_id']; ?>"
+                                                        class="js_open_modal"
+                                                        href="<?php echo base_url("get_ajax/layout_modal/product-quantities/{$prodotto['documenti_contabilita_articoli_prodotto_id']}"); ?>">
+                                                        <?php echo $prodotto['fw_products_quantity']; ?>
+                                                    </a>
+                                                </span>
+                                            </small>
+                                        <?php endif; ?>
+                                    </td>
                                     <td width="90">
                                         <input type="text" class="form-control input-sm text-right js_documenti_contabilita_articoli_prezzo js_decimal" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_prezzo]" value="<?php echo number_format((float) $prodotto['documenti_contabilita_articoli_prezzo'], 3, '.', ''); ?>" placeholder="0.00" />
                                         <input type="hidden" class="js_documenti_contabilita_articoli_imponibile" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_imponibile]" value="<?php echo number_format((float) $prodotto['documenti_contabilita_articoli_imponibile'], 3, '.', ''); ?>" placeholder="0.00" />

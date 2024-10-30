@@ -339,7 +339,11 @@ class Spese extends MY_Controller
                         $vendita['documenti_contabilita_tipologia_fatturazione'] = $tipologie->row()->documenti_contabilita_tipologie_fatturazione_id;
                         $vendita['tipo_documento'] = $tipologie->row()->documenti_contabilita_tipologie_fatturazione_tipo_genitore;
                     }
-
+                    // Estrazione del numero e delle lettere
+                    if (preg_match('/([a-zA-Z]+)(\d+)/', $fattura['numero_documento'], $matches)) {
+                        $fattura['serie_documento'] = $matches[1];
+                        $fattura['numero_documento'] = (int) $matches[2];
+                    }
                     $fattura_esistente = $this->apilib->searchFirst('documenti_contabilita', [
                         'documenti_contabilita_numero' => $fattura['numero_documento'],
                         'documenti_contabilita_serie' => $fattura['serie_documento'],
