@@ -1,5 +1,5 @@
 <?php
-
+//debug($value_id);
 
 $sede = $this->apilib->view('projects', $value_id);
 $cliente = $this->apilib->view('customers', $sede['projects_customer_id']);
@@ -302,8 +302,8 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
     }
 </style>
 
-
-<div class="row">
+<div class="box box-primary">
+<div class="row ">
     <div class="col-lg-8 text-center form-inline custom_form">
         <div class="row">
             <div class="col-sm-12 col-lg-3">
@@ -698,7 +698,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
     </div>
 </div>
 
-
+</div>
 
 <script>
     var table_calendario = $('.js-calendario_sede');
@@ -795,21 +795,25 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
         //alert($('select.js-month', container).val());
         var month = $('select.js-month', container).val();
         var year = $('select.js-year', container).val();
+        
+        // alert(month);
+        // alert(year);
+        // return;
 
-        <?php if ($this->auth->get('utenti_tipo') == 17): ?>
-            location.href = '<?php echo base_url("main/layout/52"); ?>?Y=' + year + '&m=' + month;
-
-        <?php elseif (empty($this->auth->get('clienti_id')) && empty($this->auth->get('projects_id'))): ?>
-            location.href = '<?php echo base_url("main/layout/55/$value_id"); ?>?Y=' + year + '&m=' + month;
-        <?php else: ?>
-            location.href = '<?php echo base_url("main/dashboard"); ?>?Y=' + year + '&m=' + month;
-        <?php endif; ?>
+        // Prendi l'URL corrente
+        var currentUrl = window.location.href;
+        
+        // Crea un oggetto URL per manipolare facilmente i parametri
+        var url = new URL(currentUrl);
+        
+        // Aggiorna o aggiungi i parametri
+        url.searchParams.set('Y', year);
+        url.searchParams.set('m', month);
+        
+        // Reindirizza alla nuova URL
+        location.href = url.toString();
     }
-    //cambi anno/mese
-    $('.js-change_month').on('click', function () {
-        change_date($(this).parent());
-
-    });
+    
     $('.js-stampa').on('click', function () {
         var month = $('select.js-month', $(this).parent()).val();
         var year = $('select.js-year', $(this).parent()).val();
@@ -831,7 +835,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
 
     $('.js-month,.js-year').on('change', function () {
 
-        change_date($(this).parent());
+       change_date($(this).parents('.row').first());
     });
 
     $('.js_refresh').on('click', function () {

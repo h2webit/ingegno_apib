@@ -1090,6 +1090,7 @@ class Get_ajax extends MY_Controller
                     if ($field['fields_ref'] && isset($previews[$field['fields_ref']][$event[$field['fields_name']]]) && in_array($field['calendars_fields_type'], array('title', 'description'))) {
                         $ev[$field['calendars_fields_type']] = $previews[$field['fields_ref']][$event[$field['fields_name']]];
                     } else {
+                        //debug($event);
                         $ev[$field['calendars_fields_type']] = $event[$field['fields_name']];
                     }
                 }

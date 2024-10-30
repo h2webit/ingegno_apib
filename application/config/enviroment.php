@@ -93,6 +93,15 @@ define('DEFAULT_EMAIL_SENDER', 'OpenBuilder');
     //If true, when no user is admin, every user is considered as admin. If one user is admin, this parameter will have no effetc.
     define('PROMOTE_ADMIN', false);
 
+
+
+
+    define('ALLARMI_REPORT_MANCANTI', 1);
+    define('ALLARMI_CAMBIO_TURNO', 2);
+    define('ALLARMI_FATTURAZIONE_DOMICILIARE', 3);
+    define('ALLARMI_DOCUMENTO_IN_SCADENZA', 4);
+    define('ALLARMI_REPORT_MANCANTI_BLOCCO', 5);
+
     /* ============
  * Custom colors
  * ============ */
@@ -104,6 +113,11 @@ define('DEFAULT_EMAIL_SENDER', 'OpenBuilder');
     define('PASSWORD_EXPIRE_DAYS', 180);
 
     /*
+
+
+
+    
+
 REGEX EXPLAIN:
 
 ^                   Match the beginning of the string
@@ -115,6 +129,8 @@ REGEX EXPLAIN:
 $                   Match the end of the string.
 
 */
+
+
 
     $regex_msg = 'Require that at least one number<br/>';
     $regex_msg .= 'Require that at least one lowercase letter<br/>';

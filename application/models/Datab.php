@@ -2645,6 +2645,7 @@ class Datab extends CI_Model
      */
     public function getHookContent($hookType, $hookRef, $valueId = null, $include_every_layouts = true)
     {
+        
         $hooks_by_type = array_get($this->_precalcHooks(), $hookType, []);
         $hooks = array_filter($hooks_by_type, function ($hook) use ($hookRef, $include_every_layouts) {
             return ($hook['hooks_ref'] == $hookRef or (!$hook['hooks_ref'] && $include_every_layouts));
