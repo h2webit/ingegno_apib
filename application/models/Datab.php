@@ -44,6 +44,18 @@ class Datab extends CI_Model
 
         $this->preloadLanguages();
         $this->prefetchMyAccessibleLayouts();
+        
+        // Inizializza le variabili d'istanza del controller
+        if ($this->db->table_exists('settings_template')) {
+            $this->db->join('settings_template', 'settings.settings_template = settings_template.settings_template_id', 'LEFT');
+        }
+        
+        if ($this->db->table_exists('currencies')) {
+            $this->db->join('currencies', 'settings.settings_default_currency = currencies.currencies_id', 'LEFT');
+            
+        }
+        
+        $this->settings = $this->db->get('settings')->row_array();
     }
 
     protected function prefetchMyAccessibleLayouts()
@@ -2645,7 +2657,6 @@ class Datab extends CI_Model
      */
     public function getHookContent($hookType, $hookRef, $valueId = null, $include_every_layouts = true)
     {
-        
         $hooks_by_type = array_get($this->_precalcHooks(), $hookType, []);
         $hooks = array_filter($hooks_by_type, function ($hook) use ($hookRef, $include_every_layouts) {
             return ($hook['hooks_ref'] == $hookRef or (!$hook['hooks_ref'] && $include_every_layouts));
@@ -3160,7 +3171,15 @@ class Datab extends CI_Model
                     } else {
                         return $value;
                     }
-
+                    
+                case 'input_money':
+                    $currency = '€';
+                    
+                    if (!empty($this->settings['currencies_symbol'])) {
+                        $currency = $this->settings['currencies_symbol'];
+                    }
+                    
+                    return r_money($value, $currency . ' {number}');
                 // no break
                 default:
                     if ($field['fields_type'] === 'DATERANGE') {
@@ -3364,9 +3383,9 @@ class Datab extends CI_Model
         $contentType = $layoutBoxData['layouts_boxes_content_type'];
         $contentRef = $layoutBoxData['layouts_boxes_content_ref'];
 
-        $parent_layout = $this->layout->getLayout($layoutBoxData['layouts_boxes_layout']);
+        $parent_layout = !empty($layoutBoxData['layouts_boxes_layout'])?$this->layout->getLayout($layoutBoxData['layouts_boxes_layout']):false;
 
-        if ($value_id && $parent_layout['layouts_entity_id'] > 0 && $layoutEntityData == null) {
+        if ($value_id && $parent_layout && $parent_layout['layouts_entity_id'] > 0 && $layoutEntityData == null) {
             $entity = $this->crmentity->getEntity($parent_layout['layouts_entity_id']);
             if (isset($entity['entity_name'])) {
                 $this->layout->addRelatedEntity($entity['entity_name'], $value_id);

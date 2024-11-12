@@ -71,14 +71,14 @@ class Builder extends MY_Controller
         //$unallowed_users = $this->db->query("SELECT * FROM unallowed_layouts WHERE unallowed_layouts_layout = '{$layout_id}'")->result_array();
 
         // Normal user can see this layout
-        $users_can_view = $this->db->query("SELECT permissions_group, permissions_admin FROM users 
+        $users_can_view = $this->db->query("SELECT permissions_group, permissions_admin, users_id, users_first_name FROM users 
                                             LEFT JOIN permissions ON users_id = permissions_user_id 
                                             WHERE (users_deleted = '" . DB_BOOL_FALSE . "' OR users_deleted IS NULL OR users_deleted = '') AND users_active = '" . DB_BOOL_TRUE . "'
                                             AND users_id NOT IN (SELECT unallowed_layouts_user FROM unallowed_layouts WHERE unallowed_layouts_layout = '{$layout_id}') 
                                             GROUP BY permissions_group ORDER BY permissions_group ASC 
                                              ")->result_array();
 
-        $all_groups = $this->db->query("SELECT * FROM permissions 
+        $all_groups = $this->db->query("SELECT permissions.*,users_first_name, users_last_name FROM permissions LEFT JOIN users ON permissions_user_id = users_id
                                         GROUP BY permissions_group ORDER BY permissions_group DESC")->result_array();
 
         if (!empty($users_can_view)) {
@@ -91,6 +91,7 @@ class Builder extends MY_Controller
         $layout = $this->db->get_where('layouts', ['layouts_id' => $layout_id])->row_array();
 
         // $only_super_admin = true;
+
         echo json_encode(array('only_super_admin' => $only_super_admin, 'all_groups' => $all_groups, 'users_can_view' => $users_can_view, 'layout' => $layout));
     }
 
@@ -103,17 +104,36 @@ class Builder extends MY_Controller
             }
             return false;
         }
+
+        $type = $this->input->post('type');
         if (!$group) {
             $group = $this->input->post('group');
             $checked = $this->input->post('checked') == 'true';
         }
 
-        if ($checked) {
-            $this->db->query("DELETE FROM unallowed_layouts WHERE unallowed_layouts_layout = $layout_id AND unallowed_layouts_user IN (SELECT permissions_user_id FROM permissions WHERE permissions_group = '$group')");
-        } else {
-            $query = "INSERT INTO unallowed_layouts (unallowed_layouts_layout,unallowed_layouts_user) SELECT $layout_id, permissions_user_id FROM permissions WHERE permissions_group = '$group' AND permissions_group IS NOT NULL AND permissions_user_id IS NOT NULL";
 
-            $this->db->query($query);
+        if (empty($type)) {
+            $type = 'group';
+        }
+
+        // Gruppo
+        if ($type == 'group') {
+
+            if ($checked) {
+                $this->db->query("DELETE FROM unallowed_layouts WHERE unallowed_layouts_layout = $layout_id AND unallowed_layouts_user IN (SELECT permissions_user_id FROM permissions WHERE permissions_group = '$group')");
+            } else {
+                $query = "INSERT INTO unallowed_layouts (unallowed_layouts_layout,unallowed_layouts_user) SELECT $layout_id, permissions_user_id FROM permissions WHERE permissions_group = '$group' AND permissions_group IS NOT NULL AND permissions_user_id IS NOT NULL";
+
+                $this->db->query($query);
+            }
+        } else if ($type == 'single_user') {
+            $user_id = $group;
+            if ($checked) {
+                $this->db->query("DELETE FROM unallowed_layouts WHERE unallowed_layouts_layout = $layout_id AND unallowed_layouts_user = '$user_id'");
+            } else {
+                $this->db->insert('unallowed_layouts', ['unallowed_layouts_layout' => $layout_id, 'unallowed_layouts_user' => $user_id]);
+            }
+
         }
 
         $module = $this->input->post('module');
@@ -129,7 +149,6 @@ class Builder extends MY_Controller
             $_children_layouts = $this->db->query("SELECT layouts_boxes_content_ref as layout_id FROM layouts_boxes WHERE layouts_boxes_content_type = 'layout' AND layouts_boxes_layout = '$layout_id' AND layouts_boxes_content_ref IS NOT NULL AND layouts_boxes_content_ref IN (SELECT layouts_id FROM layouts)")->result_array();
 
         }
-
 
         foreach ($_children_layouts as $lay) {
             if ($lay['layout_id']) {

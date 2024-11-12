@@ -52,6 +52,16 @@
     /*margin-top: 7px;*/
     margin-right: 20px;
   }
+
+  /* Permission menu tooltip */
+.js_users_can_view:not(.btn-toolbar .js_users_can_view) {
+    top: 0!important;
+    left: -180px!important;
+    padding: 10px!important;
+    height: auto!important;
+    z-index:999999!important;
+}
+
   
   /* Elements */
   .box_highlight {
@@ -397,4 +407,25 @@ text-align: left;
 }
 .js_submenu_item {
   position:relative;
+}
+
+
+.js-user-item.hidden {
+  display: none;
+}
+.js-user-item:hover, .js-user-item a:hover{
+  color: #298BA8 !important;
+}
+.dropdown-menu .js-user-search:focus {
+  /*outline: none;*/
+}
+.dropdown-menu .js-user-search {
+  margin: 0;
+  border-radius: 3px;
+}
+.dropdown-menu .divider {
+  margin: 5px 0;
+}
+.js-user-item.hidden {
+  display: none;
 }

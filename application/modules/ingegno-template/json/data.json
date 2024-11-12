@@ -4,15 +4,15 @@
     "modules_description": "Template ingegno",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.1.9",
+    "modules_version": "1.1.10",
     "modules_identifier": "ingegno-template",
     "modules_base64_zip": null,
-    "modules_raw_data_install": "558,735",
-    "modules_raw_data_update": "558",
+    "modules_raw_data_install": "773,775,558,735",
+    "modules_raw_data_update": "773,775,558",
     "modules_created_by_user": "1",
-    "modules_version_code": "39",
+    "modules_version_code": "40",
     "modules_thumbnail": "0d34ba2324a05fb976294ab781889e1f.png",
-    "modules_min_client_version": "4.1.0",
+    "modules_min_client_version": "4.1.3",
     "modules_version_date": "2023-02-03 16:46:58",
     "modules_auto_update": "0",
     "modules_last_update": "2023-02-03 16:46:58",
@@ -615,6 +615,52 @@
                     "fields_searchable": "1",
                     "fields_additional_data": "",
                     "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "6531",
+                    "fields_entity_id": "735",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_presets_enabled",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "settings_presets",
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "multiselect"
+                },
+                {
+                    "fields_id": "6532",
+                    "fields_entity_id": "735",
+                    "fields_default": "1",
+                    "fields_name": "ingegno_settings_type",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "2",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "ingegno_settings_type",
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "select"
                 }
             ],
             "fields_draw": [
@@ -760,6 +806,32 @@
                     "fields_draw_display_none": "0",
                     "fields_draw_enabled": "1",
                     "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6395",
+                    "fields_draw_fields_id": "6531",
+                    "fields_draw_label": "Presets enabled",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "multiselect",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6396",
+                    "fields_draw_fields_id": "6532",
+                    "fields_draw_label": "Type",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "select",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
                 }
             ],
             "fields_validation": [],
@@ -776,7 +848,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "2",
@@ -790,7 +864,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "3",
@@ -804,7 +880,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "4",
@@ -818,7 +896,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "5",
@@ -832,7 +912,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "6",
@@ -846,7 +928,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "7",
@@ -860,7 +944,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "8",
@@ -874,7 +960,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "9",
@@ -888,7 +976,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "10",
@@ -902,7 +992,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "11",
@@ -916,7 +1008,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "12",
@@ -930,7 +1024,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "13",
@@ -944,7 +1040,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "14",
@@ -958,7 +1056,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "15",
@@ -972,7 +1072,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "16",
@@ -986,7 +1088,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "17",
@@ -1000,7 +1104,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "18",
@@ -1014,7 +1120,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "19",
@@ -1028,7 +1136,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "20",
@@ -1042,7 +1152,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "21",
@@ -1056,7 +1168,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "22",
@@ -1070,7 +1184,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "23",
@@ -1084,7 +1200,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "24",
@@ -1098,7 +1216,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "25",
@@ -1112,7 +1232,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "26",
@@ -1126,7 +1248,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "28",
@@ -1140,7 +1264,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "29",
@@ -1154,7 +1280,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "30",
@@ -1168,7 +1296,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "31",
@@ -1182,7 +1312,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "32",
@@ -1196,7 +1328,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "33",
@@ -1210,7 +1344,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "34",
@@ -1224,7 +1360,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "35",
@@ -1238,7 +1376,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "36",
@@ -1252,7 +1392,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "37",
@@ -1266,7 +1408,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "38",
@@ -1280,7 +1424,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "39",
@@ -1294,7 +1440,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "40",
@@ -1308,7 +1456,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "41",
@@ -1322,7 +1472,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "42",
@@ -1336,7 +1488,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "43",
@@ -1350,7 +1504,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "44",
@@ -1364,7 +1520,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "45",
@@ -1378,7 +1536,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "46",
@@ -1392,7 +1552,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "47",
@@ -1406,7 +1568,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "48",
@@ -1420,7 +1584,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "49",
@@ -1434,7 +1600,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "50",
@@ -1448,7 +1616,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "51",
@@ -1462,7 +1632,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "52",
@@ -1476,21 +1648,25 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "53",
                     "ingegno_settings_creation_date": "2024-07-01 16:23:05",
-                    "ingegno_settings_modified_date": "2024-07-01 16:25:03",
+                    "ingegno_settings_modified_date": "2024-11-05 10:03:52",
                     "ingegno_settings_created_by": "2",
                     "ingegno_settings_edited_by": "2",
                     "ingegno_settings_insert_scope": "form",
                     "ingegno_settings_edit_scope": "form",
                     "ingegno_settings_key": "enable_projects_orari",
-                    "ingegno_settings_value": "0",
+                    "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "54",
@@ -1504,7 +1680,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "55",
@@ -1518,7 +1696,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "56",
@@ -1532,7 +1712,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "57",
@@ -1546,7 +1728,9 @@
                     "ingegno_settings_value": "",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita tab Immagini in dettaglio commessa"
+                    "ingegno_settings_description": "Abilita tab Immagini in dettaglio commessa",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "58",
@@ -1560,7 +1744,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita tab Rapportini in dettaglio commessa"
+                    "ingegno_settings_description": "Abilita tab Rapportini in dettaglio commessa",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "59",
@@ -1574,7 +1760,9 @@
                     "ingegno_settings_value": "",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": "Conteggio alto, ore rapportini"
+                    "ingegno_settings_description": "Conteggio alto, ore rapportini",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "60",
@@ -1588,7 +1776,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "tasks",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "61",
@@ -1602,7 +1792,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": null
+                    "ingegno_settings_description": null,
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "62",
@@ -1616,7 +1808,9 @@
                     "ingegno_settings_value": "",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": "Abilita tab Presenze dettaglio commessa"
+                    "ingegno_settings_description": "Abilita tab Presenze dettaglio commessa",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "63",
@@ -1630,7 +1824,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "projects",
                     "ingegno_settings_default_value": "0",
-                    "ingegno_settings_description": "Abilita tab Articoli ordinati in dettaglio commessa"
+                    "ingegno_settings_description": "Abilita tab Articoli ordinati in dettaglio commessa",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "64",
@@ -1644,7 +1840,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Disponibilita\/Indisponibilit\u00e0: pagina e relative sezioni"
+                    "ingegno_settings_description": "Abilita Disponibilita\/Indisponibilit\u00e0: pagina e relative sezioni",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "65",
@@ -1658,7 +1856,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Banca ore: pagina e relative sezioni (dipendente e richieste)"
+                    "ingegno_settings_description": "Abilita Banca ore: pagina e relative sezioni (dipendente e richieste)",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "66",
@@ -1672,7 +1872,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Rimborsi Km: pagina e relative sezioni"
+                    "ingegno_settings_description": "Abilita Rimborsi Km: pagina e relative sezioni",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "67",
@@ -1686,7 +1888,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Partecipazioni sociali: pagina e relative sezioni"
+                    "ingegno_settings_description": "Abilita Partecipazioni sociali: pagina e relative sezioni",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "68",
@@ -1700,7 +1904,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Prenotazione automezzi: calendario e impostazioni"
+                    "ingegno_settings_description": "Abilita Prenotazione automezzi: calendario e impostazioni",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "69",
@@ -1714,7 +1920,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Assegnazione Materiali in dettaglio dipendente"
+                    "ingegno_settings_description": "Abilita Assegnazione Materiali in dettaglio dipendente",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "70",
@@ -1728,7 +1936,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Reperibilit\u00e0: pagina e relative sezioni"
+                    "ingegno_settings_description": "Abilita Reperibilit\u00e0: pagina e relative sezioni",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "71",
@@ -1742,7 +1952,9 @@
                     "ingegno_settings_value": "0",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita riepilogo presenze commesse generale"
+                    "ingegno_settings_description": "Abilita riepilogo presenze commesse generale",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "72",
@@ -1756,7 +1968,9 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Nota spese: pagina e relative sezioni"
+                    "ingegno_settings_description": "Abilita Nota spese: pagina e relative sezioni",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 },
                 {
                     "ingegno_settings_id": "73",
@@ -1770,10 +1984,490 @@
                     "ingegno_settings_value": "1",
                     "ingegno_settings_module": "modulo-hr",
                     "ingegno_settings_default_value": "1",
-                    "ingegno_settings_description": "Abilita Buoni pasto in dettaglio dipendente"
+                    "ingegno_settings_description": "Abilita Buoni pasto in dettaglio dipendente",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
+                },
+                {
+                    "ingegno_settings_id": "76",
+                    "ingegno_settings_creation_date": "2024-11-04 11:00:51",
+                    "ingegno_settings_modified_date": null,
+                    "ingegno_settings_created_by": "25",
+                    "ingegno_settings_edited_by": null,
+                    "ingegno_settings_insert_scope": "form",
+                    "ingegno_settings_edit_scope": null,
+                    "ingegno_settings_key": "enable_planner_projects",
+                    "ingegno_settings_value": "1",
+                    "ingegno_settings_module": "projects",
+                    "ingegno_settings_default_value": "0",
+                    "ingegno_settings_description": "Abilita planner generale dei progetti",
+                    "ingegno_settings_presets_enabled": null,
+                    "ingegno_settings_type": "1"
                 }
             ],
             "raw_data_update": []
+        },
+        "773": {
+            "entity_id": "773",
+            "entity_name": "ingegno_settings_preset",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"ingegno_settings_preset_creation_date\",\"update_time\":\"ingegno_settings_preset_modified_date\",\"created_by\":\"ingegno_settings_preset_created_by\",\"edited_by\":\"ingegno_settings_preset_edited_by\",\"insert_scope\":\"ingegno_settings_preset_insert_scope\",\"edit_scope\":\"ingegno_settings_preset_edit_scope\"}",
+            "entity_module": "ingegno-template",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "fields_id": "6524",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_creation_date",
+                    "fields_type": "DATETIME",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "date_time"
+                },
+                {
+                    "fields_id": "6525",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_modified_date",
+                    "fields_type": "DATETIME",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "date_time"
+                },
+                {
+                    "fields_id": "6526",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_created_by",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "{login_entity}",
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "select_ajax"
+                },
+                {
+                    "fields_id": "6527",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_edited_by",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": "{login_entity}",
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "select_ajax"
+                },
+                {
+                    "fields_id": "6528",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_insert_scope",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "6529",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_edit_scope",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "6530",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_name",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "6581",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_description",
+                    "fields_type": "LONGTEXT",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "fields_draw_html_type": "textarea"
+                }
+            ],
+            "fields_draw": [
+                {
+                    "fields_draw_id": "6388",
+                    "fields_draw_fields_id": "6524",
+                    "fields_draw_label": "Creation date",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "date_time",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6389",
+                    "fields_draw_fields_id": "6525",
+                    "fields_draw_label": "Modified date",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "date_time",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6390",
+                    "fields_draw_fields_id": "6526",
+                    "fields_draw_label": "Created by",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "select_ajax",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6391",
+                    "fields_draw_fields_id": "6527",
+                    "fields_draw_label": "Edited by",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "select_ajax",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6392",
+                    "fields_draw_fields_id": "6528",
+                    "fields_draw_label": "Insert scope",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6393",
+                    "fields_draw_fields_id": "6529",
+                    "fields_draw_label": "Edit scope",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6394",
+                    "fields_draw_fields_id": "6530",
+                    "fields_draw_label": "Name",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6445",
+                    "fields_draw_fields_id": "6581",
+                    "fields_draw_label": "Description",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "textarea",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                }
+            ],
+            "fields_validation": [],
+            "raw_data_install": [
+                {
+                    "ingegno_settings_preset_id": "1",
+                    "ingegno_settings_preset_creation_date": "2024-11-06 14:45:29",
+                    "ingegno_settings_preset_modified_date": "2024-11-07 10:12:08",
+                    "ingegno_settings_preset_created_by": "5",
+                    "ingegno_settings_preset_edited_by": "5",
+                    "ingegno_settings_preset_insert_scope": "form",
+                    "ingegno_settings_preset_edit_scope": "form",
+                    "ingegno_settings_preset_name": "INGENGO Plan",
+                    "ingegno_settings_preset_description": "Aziende di pulizia, multiservizi, gestione squadre, quindi:\r\n- Appuntamenti squadre\r\n- Rapportini\r\n- Presenze in commessa\r\netc"
+                },
+                {
+                    "ingegno_settings_preset_id": "3",
+                    "ingegno_settings_preset_creation_date": "2024-11-07 10:07:28",
+                    "ingegno_settings_preset_modified_date": "2024-11-07 10:13:36",
+                    "ingegno_settings_preset_created_by": "5",
+                    "ingegno_settings_preset_edited_by": "5",
+                    "ingegno_settings_preset_insert_scope": "form",
+                    "ingegno_settings_preset_edit_scope": "form",
+                    "ingegno_settings_preset_name": "INGEGNO Task e Tickets",
+                    "ingegno_settings_preset_description": "Aziende che gestiscono attivit\u00e0 di assistenza ad esempio:\r\n- Task e Ticket t\r\n- Timesheet\r\n- Pacchetti ore\r\n"
+                }
+            ],
+            "raw_data_update": [
+                {
+                    "ingegno_settings_preset_id": "1",
+                    "ingegno_settings_preset_creation_date": "2024-11-06 14:45:29",
+                    "ingegno_settings_preset_modified_date": "2024-11-07 10:12:08",
+                    "ingegno_settings_preset_created_by": "5",
+                    "ingegno_settings_preset_edited_by": "5",
+                    "ingegno_settings_preset_insert_scope": "form",
+                    "ingegno_settings_preset_edit_scope": "form",
+                    "ingegno_settings_preset_name": "INGENGO Plan",
+                    "ingegno_settings_preset_description": "Aziende di pulizia, multiservizi, gestione squadre, quindi:\r\n- Appuntamenti squadre\r\n- Rapportini\r\n- Presenze in commessa\r\netc"
+                },
+                {
+                    "ingegno_settings_preset_id": "3",
+                    "ingegno_settings_preset_creation_date": "2024-11-07 10:07:28",
+                    "ingegno_settings_preset_modified_date": "2024-11-07 10:13:36",
+                    "ingegno_settings_preset_created_by": "5",
+                    "ingegno_settings_preset_edited_by": "5",
+                    "ingegno_settings_preset_insert_scope": "form",
+                    "ingegno_settings_preset_edit_scope": "form",
+                    "ingegno_settings_preset_name": "INGEGNO Task e Tickets",
+                    "ingegno_settings_preset_description": "Aziende che gestiscono attivit\u00e0 di assistenza ad esempio:\r\n- Task e Ticket t\r\n- Timesheet\r\n- Pacchetti ore\r\n"
+                }
+            ]
+        },
+        "775": {
+            "entity_id": "775",
+            "entity_name": "ingegno_settings_type",
+            "entity_visible": "1",
+            "entity_searchable": "0",
+            "entity_login_entity": "0",
+            "entity_type": "2",
+            "entity_action_fields": null,
+            "entity_module": "ingegno-template",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "fields_id": "6533",
+                    "fields_entity_id": "775",
+                    "fields_default": "",
+                    "fields_name": "ingegno_settings_type_id",
+                    "fields_type": "INT",
+                    "fields_size": null,
+                    "fields_required": 0,
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "1",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "input_text"
+                },
+                {
+                    "fields_id": "6534",
+                    "fields_entity_id": "775",
+                    "fields_default": "",
+                    "fields_name": "ingegno_settings_type_value",
+                    "fields_type": "VARCHAR",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "1",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "1",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "fields_draw_html_type": "input_text"
+                }
+            ],
+            "fields_draw": [
+                {
+                    "fields_draw_id": "6397",
+                    "fields_draw_fields_id": "6533",
+                    "fields_draw_label": "ID Ingegno Settings Type",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                },
+                {
+                    "fields_draw_id": "6398",
+                    "fields_draw_fields_id": "6534",
+                    "fields_draw_label": "Ingegno Settings Type",
+                    "fields_draw_help_text": null,
+                    "fields_draw_onclick": null,
+                    "fields_draw_html_type": "input_text",
+                    "fields_draw_placeholder": null,
+                    "fields_draw_css_extra": null,
+                    "fields_draw_display_none": "0",
+                    "fields_draw_enabled": "1",
+                    "fields_draw_attr": null
+                }
+            ],
+            "fields_validation": [],
+            "raw_data_install": [
+                {
+                    "ingegno_settings_type_id": "1",
+                    "ingegno_settings_type_value": "True\/False"
+                },
+                {
+                    "ingegno_settings_type_id": "2",
+                    "ingegno_settings_type_value": "Value"
+                }
+            ],
+            "raw_data_update": [
+                {
+                    "ingegno_settings_type_id": "1",
+                    "ingegno_settings_type_value": "True\/False"
+                },
+                {
+                    "ingegno_settings_type_id": "2",
+                    "ingegno_settings_type_value": "Value"
+                }
+            ]
         }
     },
     "layouts_boxes": [
@@ -1859,7 +2553,7 @@
             "layouts_boxes_discardable": "0",
             "layouts_boxes_titolable": "1",
             "layouts_boxes_show_container": "1",
-            "layouts_boxes_row": "4",
+            "layouts_boxes_row": "6",
             "layouts_boxes_cols": "4",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
@@ -1881,8 +2575,8 @@
             "layouts_boxes_title": "Alert informativo",
             "layouts_boxes_content_type": "",
             "layouts_boxes_content_ref": "",
-            "layouts_boxes_content": "<div class=\"callout callout-info\" style=\"margin-bottom: 0!important; background-color: #3c8dbc!important;\n                                         border-left: 5px solid #eee;\n                                         border-left-width: 5px;\n                                         border-left-style: solid;\n                                         border-left-color: #357ca5!important;\">\n<h4><i class=\"fa fa-info\"><\/i> Informazioni:<\/h4>\nDa questa pagina si impostano delle impostazioni generiche utilizzabili in tutto il sistema INGEGNO.<br\/>\nAd ogni modifica, rilasciare il modulo INGEGNO Core\n<\/div>",
-            "layouts_boxes_position": "0",
+            "layouts_boxes_content": "<div class=\"callout callout-info\" style=\"margin-bottom: 0!important; background-color: #3c8dbc!important;\n                                         border-left: 5px solid #eee;\n                                         border-left-width: 5px;\n                                         border-left-style: solid;\n                                         border-left-color: #357ca5!important;\">\n<h4><i class=\"fa fa-info\"><\/i> Informazioni:<\/h4>\nDa questa pagina si impostano delle impostazioni generiche utilizzabili in tutto il sistema INGEGNO.<br\/>\nAd ogni modifica, rilasciare il modulo INGEGNO Core<br \/><br \/>\n<strong>PRESET: <\/strong>\n                                    <p>\n                                    Se si crea un json di preset, rilasciare il modulo dal progetto dal quale si crea, cosi se lo porta dietro e dove si aggiorna il modulo sar\u00e0 importabile.\n                                    <\/p>\n<\/div>",
+            "layouts_boxes_position": "2",
             "layouts_boxes_dragable": "0",
             "layouts_boxes_collapsible": "0",
             "layouts_boxes_collapsed": "0",
@@ -1891,7 +2585,7 @@
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "12",
+            "layouts_boxes_cols": "7",
             "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
             "conditions": []
@@ -1913,14 +2607,102 @@
             "layouts_boxes_titolable": "0",
             "layouts_boxes_show_container": "0",
             "layouts_boxes_row": "1",
-            "layouts_boxes_cols": "12",
+            "layouts_boxes_cols": "5",
             "layouts_boxes_color": null,
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "7008",
+            "layouts_boxes_layout": "1125",
+            "layouts_boxes_css": "",
+            "layouts_boxes_title": "menu_group",
+            "layouts_boxes_content_type": "menu_group",
+            "layouts_boxes_content_ref": "(#1125) ingegno settings",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": "0",
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "0",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "7010",
+            "layouts_boxes_layout": "1125",
+            "layouts_boxes_css": "box",
+            "layouts_boxes_title": "Import \/ Export PRESET",
+            "layouts_boxes_content_type": "grid",
+            "layouts_boxes_content_ref": "1772",
+            "layouts_boxes_content": null,
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "0",
+            "layouts_boxes_row": "4",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "box-danger",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "7013",
+            "layouts_boxes_layout": "1192",
+            "layouts_boxes_css": "box",
+            "layouts_boxes_title": "Create JSON in get create_json=1",
+            "layouts_boxes_content_type": "",
+            "layouts_boxes_content_ref": "",
+            "layouts_boxes_content": "<?php \n$create_json = $this->input->get('create_json');\n\nif (!empty($create_json) && $create_json == 1) {\n\n\/\/ Create a json preset\n$preset = $this->input->get('preset');\n\n    \/\/ Esegui la query per ottenere tutti i settings\n        $query = $this->db->get('ingegno_settings');\n        $settings = $query->result_array();\n\n        \/\/ Prepara l'array per il JSO=\n        $json_data = [];\n        foreach ($settings as $setting) {\n            $json_data[] = [\n                'key' => $setting['ingegno_settings_key'],\n                'value' => $setting['ingegno_settings_value'],\n                'default_value' => $setting['ingegno_settings_default_value']\n            ];\n        }\n\n        \/\/ Converti in JSON\n$json_content = json_encode($json_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);\n\n\/\/ Definisci il percorso del file\n$date = date('d-m-Y');\n$preset = url_title($preset);\n$filename = url_title($preset.\"-\".$date);\n$directory_path = APPPATH . 'modules\/ingegno-template\/uploads\/preset\/'.$preset.'\/';\n$file_path = $directory_path . $filename.'.json';\n\n\/\/ Assicurati che la directory esista\nif (!is_dir($directory_path)) {\n    mkdir($directory_path, 0755, true);\n} else {\n    \/\/ Elimina tutti i file JSON esistenti nella directory\n    $existing_files = glob($directory_path . \"*.json\");\n    foreach($existing_files as $file) {\n        if(is_file($file)) {\n            unlink($file);\n        }\n    }\n}\n\n\/\/ Salva il nuovo file\nif (file_put_contents($file_path, $json_content) !== false) {\n    echo \"Json Creato con successo: \".$file_path;\n} else {\n    echo \"Errore durante il salvataggio del file\";\n}\n}\n?>",
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
+            "layouts_boxes_module_key": null,
+            "conditions": []
+        },
+        {
+            "layouts_boxes_id": "7040",
+            "layouts_boxes_layout": "1192",
+            "layouts_boxes_css": "box",
+            "layouts_boxes_title": "Import del json passando in get import=1",
+            "layouts_boxes_content_type": "",
+            "layouts_boxes_content_ref": "",
+            "layouts_boxes_content": "<?php \n\/\/ Export to JSON\n$create_json = $this->input->get('create_json');\nif (!empty($create_json) && $create_json == 1) {\n    \/\/ Create a json preset\n    $preset = $this->input->get('preset');\n    \/\/ Esegui la query per ottenere tutti i settings\n    $query = $this->db->get('ingegno_settings');\n    $settings = $query->result_array();\n    \/\/ Prepara l'array per il JSON\n    $json_data = [];\n    foreach ($settings as $setting) {\n        $json_data[] = [\n            'key' => $setting['ingegno_settings_key'],\n            'value' => $setting['ingegno_settings_value'],\n            'default_value' => $setting['ingegno_settings_default_value']\n        ];\n    }\n    \/\/ Converti in JSON\n    $json_content = json_encode($json_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);\n    \/\/ Definisci il percorso del file\n    $date = date('d-m-Y');\n    $preset = url_title($preset);\n    $filename = url_title($preset.\"-\".$date);\n    $directory_path = APPPATH . 'modules\/ingegno-template\/uploads\/preset\/'.$preset.'\/';\n    $file_path = $directory_path . $filename.'.json';\n    \/\/ Assicurati che la directory esista\n    if (!is_dir($directory_path)) {\n        mkdir($directory_path, 0755, true);\n    } else {\n        \/\/ Elimina tutti i file JSON esistenti nella directory\n        $existing_files = glob($directory_path . \"*.json\");\n        foreach($existing_files as $file) {\n            if(is_file($file)) {\n                unlink($file);\n            }\n        }\n    }\n    \/\/ Salva il nuovo file\n    if (file_put_contents($file_path, $json_content) !== false) {\n        echo \"Json Creato con successo: \".$file_path;\n    } else {\n        echo \"Errore durante il salvataggio del file\";\n    }\n}\n\n\/\/ Import from JSON\n$import = $this->input->get('import');\nif (!empty($import) && $import == 1) {\n    $preset = $this->input->get('preset');\n    $preset = url_title($preset);\n    $directory_path = APPPATH . 'modules\/ingegno-template\/uploads\/preset\/'.$preset.'\/';\n    \n    \/\/ Trova il file JSON nella directory\n    $json_files = glob($directory_path . \"*.json\");\n    \n    if (!empty($json_files)) {\n        \/\/ Prendi il primo (e dovrebbe essere l'unico) file JSON\n        $json_file = $json_files[0];\n        \n        \/\/ Leggi il contenuto del file\n        $json_content = file_get_contents($json_file);\n        $settings = json_decode($json_content, true);\n        \n        if ($settings !== null) {\n            \/\/ Itera attraverso i settings e aggiorna il database\n            foreach ($settings as $setting) {\n                \/\/ Verifica se il setting esiste gi\u00e0\n                $this->db->where('ingegno_settings_key', $setting['key']);\n                $query = $this->db->get('ingegno_settings');\n                \n                $data = [\n                    'ingegno_settings_value' => $setting['value'],\n                    'ingegno_settings_default_value' => $setting['default_value']\n                ];\n                \n                if ($query->num_rows() > 0) {\n                    \/\/ Update\n                    $this->db->where('ingegno_settings_key', $setting['key']);\n                    $this->db->update('ingegno_settings', $data);\n                } else {\n                    \/\/ Insert\n                    $data['ingegno_settings_key'] = $setting['key'];\n                    $this->db->insert('ingegno_settings', $data);\n                }\n            }\n            echo \"Importazione completata con successo\";\n        } else {\n            echo \"Errore nella decodifica del file JSON\";\n        }\n    } else {\n        echo \"Nessun file JSON trovato nella directory: \" . $directory_path;\n    }\n}\n?>",
+            "layouts_boxes_position": null,
+            "layouts_boxes_dragable": "0",
+            "layouts_boxes_collapsible": "0",
+            "layouts_boxes_collapsed": "0",
+            "layouts_boxes_reloadable": "0",
+            "layouts_boxes_discardable": "0",
+            "layouts_boxes_titolable": "1",
+            "layouts_boxes_show_container": "1",
+            "layouts_boxes_row": "1",
+            "layouts_boxes_cols": "12",
+            "layouts_boxes_color": "",
             "layouts_boxes_module_key": null,
             "conditions": []
         }
     ],
-    "grids": [
-        {
+    "grids": {
+        "0": {
             "grids_id": "1694",
             "grids_entity_id": "735",
             "grids_sub_grid_id": null,
@@ -1980,7 +2762,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "ingegno-template-grids_fields-22158",
-                    "grids_fields_module": "ingegno-crm",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "5738",
                     "fields_entity_id": "735",
@@ -2018,7 +2800,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "ingegno-template-grids_fields-22160",
-                    "grids_fields_module": "ingegno-crm",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "5740",
                     "fields_entity_id": "735",
@@ -2046,7 +2828,7 @@
                     "grids_fields_id": "22398",
                     "grids_fields_grids_id": "1694",
                     "grids_fields_fields_id": "5897",
-                    "grids_fields_order": "4",
+                    "grids_fields_order": "5",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
                     "grids_fields_column_name": null,
@@ -2056,7 +2838,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "easy-erp-grids_fields-22398",
-                    "grids_fields_module": "ingegno-crm",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "5897",
                     "fields_entity_id": "735",
@@ -2094,7 +2876,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "contabilita-grids_fields-22620",
-                    "grids_fields_module": "ingegno-crm",
+                    "grids_fields_module": "modulo-hr",
                     "grids_fields_width": null,
                     "fields_id": "6021",
                     "fields_entity_id": "735",
@@ -2119,9 +2901,47 @@
                     "conditions": []
                 },
                 {
-                    "grids_fields_id": "22642",
+                    "grids_fields_id": "22715",
                     "grids_fields_grids_id": "1694",
-                    "grids_fields_fields_id": "5739",
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "4",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php if ($data['ingegno_settings_value'] == \"0\"):?>\n<a class=\"text-red js_link_ajax\" href=\"<?php echo base_url('db_ajax\/change_value\/ingegno_settings\/'.$data['ingegno_settings_id'].'\/ingegno_settings_value\/1');?>\"><?php echo ($data['ingegno_settings_value'] == 0) ? 'Disattivo' : 'Attivo';?><\/a>\n<?php elseif ($data['ingegno_settings_value'] == \"1\"):?>\n<a class=\"text-green js_link_ajax\" href=\"<?php echo base_url('db_ajax\/change_value\/ingegno_settings\/'.$data['ingegno_settings_id'].'\/ingegno_settings_value\/0');?>\"><?php echo ($data['ingegno_settings_value'] == 0) ? 'Disattivo' : 'Attivo';?><\/a>\n<?php else:?>\n<?php echo $data['ingegno_settings_value']; ?>\n    <?php endif; ?>\n",
+                    "grids_fields_column_name": "Value",
+                    "grids_fields_eval_cache_type": "query_equivalent",
+                    "grids_fields_eval_cache_data": "ingegno_settings_value",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "modulo-hr-grids_fields-22715",
+                    "grids_fields_module": "modulo-hr",
+                    "grids_fields_width": null,
+                    "fields_id": null,
+                    "fields_entity_id": null,
+                    "fields_default": null,
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22815",
+                    "grids_fields_grids_id": "1694",
+                    "grids_fields_fields_id": "6532",
                     "grids_fields_order": "3",
                     "grids_fields_replace_type": "field",
                     "grids_fields_replace": null,
@@ -2131,20 +2951,20 @@
                     "grids_fields_totalable": "0",
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
-                    "grids_fields_module_key": "contabilita-grids_fields-22642",
-                    "grids_fields_module": "ingegno-crm",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-22815",
+                    "grids_fields_module": "ingegno-template",
                     "grids_fields_width": null,
-                    "fields_id": "5739",
+                    "fields_id": "6532",
                     "fields_entity_id": "735",
-                    "fields_default": null,
-                    "fields_name": "ingegno_settings_value",
-                    "fields_type": "varchar",
-                    "fields_size": "250",
-                    "fields_required": "0",
+                    "fields_default": "1",
+                    "fields_name": "ingegno_settings_type",
+                    "fields_type": "integer",
+                    "fields_size": null,
+                    "fields_required": "2",
                     "fields_preview": "0",
                     "fields_visible": "1",
-                    "fields_ref": null,
-                    "fields_ref_auto_left_join": "0",
+                    "fields_ref": "ingegno_settings_type",
+                    "fields_ref_auto_left_join": "1",
                     "fields_ref_auto_right_join": "0",
                     "fields_source": null,
                     "fields_select_where": null,
@@ -2153,7 +2973,7 @@
                     "fields_preview_base": null,
                     "fields_preview_custom": null,
                     "fields_searchable": "1",
-                    "fields_additional_data": null,
+                    "fields_additional_data": "",
                     "conditions": []
                 }
             ],
@@ -2176,7 +2996,241 @@
                 }
             ]
         },
-        {
+        "1": {
+            "grids_id": "1772",
+            "grids_entity_id": "773",
+            "grids_sub_grid_id": null,
+            "grids_name": "Ingegno Settings Preset",
+            "grids_view_link": null,
+            "grids_edit_link": null,
+            "grids_view_layout": null,
+            "grids_edit_layout": null,
+            "grids_delete_link": null,
+            "grids_where": null,
+            "grids_default": "1",
+            "grids_layout": "table",
+            "grids_order_by": null,
+            "grids_group_by": null,
+            "grids_filter_session_key": null,
+            "grids_bulk_mode": null,
+            "grids_bulk_edit_form": null,
+            "grids_exportable": "0",
+            "grids_append_class": null,
+            "grids_inline_form": null,
+            "grids_module_key": "ingegno-template-grid-1772",
+            "grids_depth": null,
+            "grids_actions_column": "1",
+            "grids_builder_where": null,
+            "grids_identifier": null,
+            "grids_datatable": "0",
+            "grids_ajax": "0",
+            "grids_searchable": "0",
+            "grids_pagination": null,
+            "grids_inline_edit": "0",
+            "grids_design": null,
+            "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "773",
+            "entity_name": "ingegno_settings_preset",
+            "entity_visible": "1",
+            "entity_searchable": "1",
+            "entity_login_entity": "0",
+            "entity_type": "1",
+            "entity_action_fields": "{\"create_time\":\"ingegno_settings_preset_creation_date\",\"update_time\":\"ingegno_settings_preset_modified_date\",\"created_by\":\"ingegno_settings_preset_created_by\",\"edited_by\":\"ingegno_settings_preset_edited_by\",\"insert_scope\":\"ingegno_settings_preset_insert_scope\",\"edit_scope\":\"ingegno_settings_preset_edit_scope\"}",
+            "entity_module": "ingegno-template",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "grids_fields_id": "22812",
+                    "grids_fields_grids_id": "1772",
+                    "grids_fields_fields_id": "6530",
+                    "grids_fields_order": "1",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-22812",
+                    "grids_fields_module": "ingegno-template",
+                    "grids_fields_width": null,
+                    "fields_id": "6530",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_name",
+                    "fields_type": "varchar",
+                    "fields_size": "250",
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "0",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22816",
+                    "grids_fields_grids_id": "1772",
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "3",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<?php\n$dir = url_title($data['ingegno_settings_preset_name']);\n$file_path = APPPATH . 'modules\/ingegno-template\/uploads\/preset\/'.$dir;\n\n\/\/ Usa glob invece di scandir per prendere solo i file .json\n$files = glob($file_path . \"\/*.json\");\n\n\/\/ Estrai solo i nomi dei file dal percorso completo\n$json_files = array_map(function($file) {\n    return basename($file);\n}, $files);\n?>\n<pre>\n<?php if (!empty($json_files[0])):\n    echo ($json_files[0]);\nelse:\n    echo \"No JSON files found.\";\nendif;\n?>\n<\/pre>",
+                    "grids_fields_column_name": "File",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-22816",
+                    "grids_fields_module": "ingegno-template",
+                    "grids_fields_width": null,
+                    "fields_id": null,
+                    "fields_entity_id": null,
+                    "fields_default": null,
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22817",
+                    "grids_fields_grids_id": "1772",
+                    "grids_fields_fields_id": null,
+                    "grids_fields_order": "4",
+                    "grids_fields_replace_type": "eval",
+                    "grids_fields_replace": "<a target=\"_blank\" href=\"<?php echo base_url('main\/layout\/settings-preset-manager?import_json=1&preset='.$data['ingegno_settings_preset_name']);?>\" \nonclick=\"return confirm('Sei sicuro creare un json con tutti gli attuali settings? \\n\\ Questa operazione si deve fare con progetto pulito, master che determina la configurazione iniziale in fase di avvio progetto !!')\">\nImporta settings dal json<\/a>\n<br \/>\n<br \/>\n<a target=\"_blank\" href=\"<?php echo base_url('main\/layout\/settings-preset-manager?create_json=1&preset='.$data['ingegno_settings_preset_name']);?>\" \nonclick=\"return confirm('Sei proprio sicuro di voler sovrascrivere TUTTI gli ingegno settings, importando quelli presenti nel file json? \\n\\ Questa operazione \u00e8 utile solo ad avvio nuovo progetto !!')\">\nDistruggi e ricrea file<\/a>\n",
+                    "grids_fields_column_name": "Azioni",
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": "",
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-22817",
+                    "grids_fields_module": "ingegno-template",
+                    "grids_fields_width": null,
+                    "fields_id": null,
+                    "fields_entity_id": null,
+                    "fields_default": null,
+                    "fields_name": null,
+                    "fields_type": null,
+                    "fields_size": null,
+                    "fields_required": null,
+                    "fields_preview": null,
+                    "fields_visible": null,
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": null,
+                    "fields_ref_auto_right_join": null,
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": null,
+                    "fields_xssclean": null,
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": null,
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "23009",
+                    "grids_fields_grids_id": "1772",
+                    "grids_fields_fields_id": "6581",
+                    "grids_fields_order": "2",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-23009",
+                    "grids_fields_module": "ingegno-template",
+                    "grids_fields_width": null,
+                    "fields_id": "6581",
+                    "fields_entity_id": "773",
+                    "fields_default": null,
+                    "fields_name": "ingegno_settings_preset_description",
+                    "fields_type": "LONGTEXT",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "0",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "0",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": "",
+                    "conditions": []
+                }
+            ],
+            "actions": [
+                {
+                    "grids_actions_id": "6462",
+                    "grids_actions_grids_id": "1772",
+                    "grids_actions_order": "1",
+                    "grids_actions_name": "Delete",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": null,
+                    "grids_actions_icon": "fas fa-trash",
+                    "grids_actions_mode": "default",
+                    "grids_actions_type": "delete",
+                    "grids_actions_color": "rgb(233, 30, 99)",
+                    "grids_actions_show": "table",
+                    "conditions": []
+                },
+                {
+                    "grids_actions_id": "6463",
+                    "grids_actions_grids_id": "1772",
+                    "grids_actions_order": "0",
+                    "grids_actions_name": "Edit",
+                    "grids_actions_html": "",
+                    "grids_actions_link": "",
+                    "grids_actions_layout": null,
+                    "grids_actions_form": "2810",
+                    "grids_actions_icon": "fas fa-edit",
+                    "grids_actions_mode": "modal",
+                    "grids_actions_type": "edit_form",
+                    "grids_actions_color": "rgb(156, 39, 176)",
+                    "grids_actions_show": "table",
+                    "conditions": []
+                }
+            ]
+        },
+        "2": {
             "grids_id": "1280",
             "grids_entity_id": "558",
             "grids_sub_grid_id": null,
@@ -2338,8 +3392,150 @@
                 }
             ],
             "actions": []
+        },
+        "5": {
+            "grids_id": "1774",
+            "grids_entity_id": "775",
+            "grids_sub_grid_id": null,
+            "grids_name": "Customize ingegno_settings_type",
+            "grids_view_link": null,
+            "grids_edit_link": null,
+            "grids_view_layout": null,
+            "grids_edit_layout": null,
+            "grids_delete_link": null,
+            "grids_where": null,
+            "grids_default": "0",
+            "grids_layout": "datatable_ajax_inline_form",
+            "grids_order_by": null,
+            "grids_group_by": null,
+            "grids_filter_session_key": null,
+            "grids_bulk_mode": null,
+            "grids_bulk_edit_form": null,
+            "grids_exportable": "0",
+            "grids_append_class": null,
+            "grids_inline_form": "2812",
+            "grids_module_key": "ingegno-template-grid-1774",
+            "grids_depth": null,
+            "grids_actions_column": "1",
+            "grids_builder_where": null,
+            "grids_identifier": null,
+            "grids_datatable": "0",
+            "grids_ajax": "0",
+            "grids_searchable": "0",
+            "grids_pagination": null,
+            "grids_inline_edit": "0",
+            "grids_design": null,
+            "grids_limit": null,
+            "grids_custom_query": null,
+            "grids_json": null,
+            "entity_id": "775",
+            "entity_name": "ingegno_settings_type",
+            "entity_visible": "1",
+            "entity_searchable": "0",
+            "entity_login_entity": "0",
+            "entity_type": "2",
+            "entity_action_fields": null,
+            "entity_module": "ingegno-template",
+            "entity_preview_base": null,
+            "entity_preview_custom": null,
+            "fields": [
+                {
+                    "grids_fields_id": "22813",
+                    "grids_fields_grids_id": "1774",
+                    "grids_fields_fields_id": "6533",
+                    "grids_fields_order": "0",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-22813",
+                    "grids_fields_module": "ingegno-template",
+                    "grids_fields_width": null,
+                    "fields_id": "6533",
+                    "fields_entity_id": "775",
+                    "fields_default": "",
+                    "fields_name": "ingegno_settings_type_id",
+                    "fields_type": "INT",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "0",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "1",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                },
+                {
+                    "grids_fields_id": "22814",
+                    "grids_fields_grids_id": "1774",
+                    "grids_fields_fields_id": "6534",
+                    "grids_fields_order": "0",
+                    "grids_fields_replace_type": "field",
+                    "grids_fields_replace": null,
+                    "grids_fields_column_name": null,
+                    "grids_fields_eval_cache_type": null,
+                    "grids_fields_eval_cache_data": null,
+                    "grids_fields_totalable": "0",
+                    "grids_fields_with_actions": "0",
+                    "grids_fields_switch_inline": "0",
+                    "grids_fields_module_key": "ingegno-template-grids_fields-22814",
+                    "grids_fields_module": "ingegno-template",
+                    "grids_fields_width": null,
+                    "fields_id": "6534",
+                    "fields_entity_id": "775",
+                    "fields_default": "",
+                    "fields_name": "ingegno_settings_type_value",
+                    "fields_type": "VARCHAR",
+                    "fields_size": null,
+                    "fields_required": "0",
+                    "fields_preview": "1",
+                    "fields_visible": "1",
+                    "fields_ref": null,
+                    "fields_ref_auto_left_join": "1",
+                    "fields_ref_auto_right_join": "1",
+                    "fields_source": null,
+                    "fields_select_where": null,
+                    "fields_multilingual": "0",
+                    "fields_xssclean": "1",
+                    "fields_preview_base": null,
+                    "fields_preview_custom": null,
+                    "fields_searchable": "1",
+                    "fields_additional_data": null,
+                    "conditions": []
+                }
+            ],
+            "actions": [
+                {
+                    "grids_actions_id": "6395",
+                    "grids_actions_grids_id": "1774",
+                    "grids_actions_order": "99",
+                    "grids_actions_name": "Delete",
+                    "grids_actions_html": null,
+                    "grids_actions_link": null,
+                    "grids_actions_layout": null,
+                    "grids_actions_form": null,
+                    "grids_actions_icon": "fas fa-trash",
+                    "grids_actions_mode": null,
+                    "grids_actions_type": "delete",
+                    "grids_actions_color": "rgb(233, 30, 99)",
+                    "grids_actions_show": null,
+                    "conditions": []
+                }
+            ]
         }
-    ],
+    },
     "forms": [
         {
             "forms_id": "2416",
@@ -2442,98 +3638,6 @@
                 {
                     "forms_fields_forms_id": "2734",
                     "forms_fields_fields_id": "5738",
-                    "forms_fields_order": "0",
-                    "forms_fields_default_type": null,
-                    "forms_fields_default_value": null,
-                    "forms_fields_override_type": null,
-                    "forms_fields_override_label": null,
-                    "forms_fields_override_placeholder": null,
-                    "forms_fields_override_colsize": "12",
-                    "forms_fields_show_required": null,
-                    "forms_fields_show_label": "1",
-                    "forms_fields_subform_id": null,
-                    "forms_fields_min": "0",
-                    "forms_fields_max": "0",
-                    "forms_fields_extra_class": null,
-                    "forms_fields_allow_reverse": "0",
-                    "forms_fields_dependent_on": null,
-                    "forms_fields_fieldset": null,
-                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_5738",
-                    "forms_fields_module": "ingegno-crm",
-                    "forms_field_full_data": "0"
-                },
-                {
-                    "forms_fields_forms_id": "2734",
-                    "forms_fields_fields_id": "5739",
-                    "forms_fields_order": "2",
-                    "forms_fields_default_type": null,
-                    "forms_fields_default_value": null,
-                    "forms_fields_override_type": null,
-                    "forms_fields_override_label": null,
-                    "forms_fields_override_placeholder": null,
-                    "forms_fields_override_colsize": "12",
-                    "forms_fields_show_required": null,
-                    "forms_fields_show_label": "1",
-                    "forms_fields_subform_id": null,
-                    "forms_fields_min": "0",
-                    "forms_fields_max": "0",
-                    "forms_fields_extra_class": null,
-                    "forms_fields_allow_reverse": "0",
-                    "forms_fields_dependent_on": null,
-                    "forms_fields_fieldset": null,
-                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_5739",
-                    "forms_fields_module": "ingegno-crm",
-                    "forms_field_full_data": "0"
-                },
-                {
-                    "forms_fields_forms_id": "2734",
-                    "forms_fields_fields_id": "5740",
-                    "forms_fields_order": "3",
-                    "forms_fields_default_type": null,
-                    "forms_fields_default_value": null,
-                    "forms_fields_override_type": null,
-                    "forms_fields_override_label": null,
-                    "forms_fields_override_placeholder": null,
-                    "forms_fields_override_colsize": "12",
-                    "forms_fields_show_required": null,
-                    "forms_fields_show_label": "1",
-                    "forms_fields_subform_id": null,
-                    "forms_fields_min": "0",
-                    "forms_fields_max": "0",
-                    "forms_fields_extra_class": null,
-                    "forms_fields_allow_reverse": "0",
-                    "forms_fields_dependent_on": null,
-                    "forms_fields_fieldset": null,
-                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_5740",
-                    "forms_fields_module": "ingegno-crm",
-                    "forms_field_full_data": "0"
-                },
-                {
-                    "forms_fields_forms_id": "2734",
-                    "forms_fields_fields_id": "5897",
-                    "forms_fields_order": "4",
-                    "forms_fields_default_type": null,
-                    "forms_fields_default_value": null,
-                    "forms_fields_override_type": null,
-                    "forms_fields_override_label": null,
-                    "forms_fields_override_placeholder": null,
-                    "forms_fields_override_colsize": "12",
-                    "forms_fields_show_required": null,
-                    "forms_fields_show_label": "1",
-                    "forms_fields_subform_id": null,
-                    "forms_fields_min": "0",
-                    "forms_fields_max": "0",
-                    "forms_fields_extra_class": null,
-                    "forms_fields_allow_reverse": "0",
-                    "forms_fields_dependent_on": null,
-                    "forms_fields_fieldset": null,
-                    "forms_fields_module_key": "easy-erp-forms_fields-2734_5897",
-                    "forms_fields_module": "ingegno-crm",
-                    "forms_field_full_data": "0"
-                },
-                {
-                    "forms_fields_forms_id": "2734",
-                    "forms_fields_fields_id": "6021",
                     "forms_fields_order": "1",
                     "forms_fields_default_type": null,
                     "forms_fields_default_value": null,
@@ -2550,8 +3654,123 @@
                     "forms_fields_allow_reverse": "0",
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_5738",
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2734",
+                    "forms_fields_fields_id": "5739",
+                    "forms_fields_order": "3",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_5739",
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2734",
+                    "forms_fields_fields_id": "5740",
+                    "forms_fields_order": "4",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_5740",
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2734",
+                    "forms_fields_fields_id": "5897",
+                    "forms_fields_order": "5",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "easy-erp-forms_fields-2734_5897",
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2734",
+                    "forms_fields_fields_id": "6021",
+                    "forms_fields_order": "2",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
                     "forms_fields_module_key": "contabilita-forms_fields-2734_6021",
-                    "forms_fields_module": "ingegno-crm",
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2734",
+                    "forms_fields_fields_id": "6532",
+                    "forms_fields_order": "0",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2734_6532",
+                    "forms_fields_module": "ingegno-template",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -2601,7 +3820,130 @@
                     "forms_fields_dependent_on": "",
                     "forms_fields_fieldset": "",
                     "forms_fields_module_key": "contabilita-forms_fields-2804_5740",
-                    "forms_fields_module": "ingegno-crm",
+                    "forms_fields_module": "modulo-hr",
+                    "forms_field_full_data": "0"
+                }
+            ]
+        },
+        {
+            "forms_id": "2810",
+            "forms_entity_id": "773",
+            "forms_name": "Ingegno Settings Preset",
+            "forms_action": null,
+            "forms_default": "1",
+            "forms_layout": "horizontal",
+            "forms_one_record": "0",
+            "forms_show_delete": "0",
+            "forms_css_extra": null,
+            "forms_display_none": "0",
+            "forms_filter_session_key": null,
+            "forms_success_status": "7",
+            "forms_success_message": null,
+            "forms_success_status_edit": null,
+            "forms_success_message_edit": null,
+            "forms_identifier": null,
+            "forms_json": null,
+            "forms_module_key": "ingegno-template-form-2810",
+            "forms_submit_button_label": null,
+            "forms_public": "0",
+            "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
+            "fields": [
+                {
+                    "forms_fields_forms_id": "2810",
+                    "forms_fields_fields_id": "6530",
+                    "forms_fields_order": "0",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2810_6530",
+                    "forms_fields_module": "ingegno-template",
+                    "forms_field_full_data": "0"
+                },
+                {
+                    "forms_fields_forms_id": "2810",
+                    "forms_fields_fields_id": "6581",
+                    "forms_fields_order": "999",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": "12",
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2810_6581",
+                    "forms_fields_module": "ingegno-template",
+                    "forms_field_full_data": "0"
+                }
+            ]
+        },
+        {
+            "forms_id": "2812",
+            "forms_entity_id": "775",
+            "forms_name": "Inline edit ingegno settings type",
+            "forms_action": null,
+            "forms_default": "0",
+            "forms_layout": "horizontal",
+            "forms_one_record": "0",
+            "forms_show_delete": "0",
+            "forms_css_extra": null,
+            "forms_display_none": "0",
+            "forms_filter_session_key": null,
+            "forms_success_status": "7",
+            "forms_success_message": null,
+            "forms_success_status_edit": null,
+            "forms_success_message_edit": null,
+            "forms_identifier": null,
+            "forms_json": null,
+            "forms_module_key": "ingegno-template-form-2812",
+            "forms_submit_button_label": null,
+            "forms_public": "0",
+            "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
+            "fields": [
+                {
+                    "forms_fields_forms_id": "2812",
+                    "forms_fields_fields_id": "6534",
+                    "forms_fields_order": "2",
+                    "forms_fields_default_type": null,
+                    "forms_fields_default_value": null,
+                    "forms_fields_override_type": null,
+                    "forms_fields_override_label": null,
+                    "forms_fields_override_placeholder": null,
+                    "forms_fields_override_colsize": null,
+                    "forms_fields_show_required": null,
+                    "forms_fields_show_label": "1",
+                    "forms_fields_subform_id": null,
+                    "forms_fields_min": "0",
+                    "forms_fields_max": "0",
+                    "forms_fields_extra_class": null,
+                    "forms_fields_allow_reverse": "0",
+                    "forms_fields_dependent_on": null,
+                    "forms_fields_fieldset": null,
+                    "forms_fields_module_key": "ingegno-template-forms_fields-2812_6534",
+                    "forms_fields_module": "ingegno-template",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -2646,6 +3988,25 @@
             "layouts_settings": "1",
             "layouts_is_public": "0",
             "conditions": []
+        },
+        {
+            "layouts_id": "1192",
+            "layouts_title": "Settings Create json Preset",
+            "layouts_subtitle": "",
+            "layouts_is_entity_detail": "0",
+            "layouts_entity_id": null,
+            "layouts_fullscreen": "0",
+            "layouts_pdf": "0",
+            "layouts_dashboardable": "0",
+            "layouts_cachable": "0",
+            "layouts_identifier": "settings-preset-manager",
+            "layouts_module": "ingegno-template",
+            "layouts_module_key": "ingegno-template-layout-1192",
+            "layouts_show_header": "1",
+            "layouts_ajax_allowed": "1",
+            "layouts_settings": "0",
+            "layouts_is_public": "0",
+            "conditions": []
         }
     ],
     "menu": [
@@ -2682,6 +4043,24 @@
             "menu_module_key": "ingegno-template-menu-1026",
             "menu_type": "",
             "menu_form": null,
+            "menu_html_attr": "",
+            "conditions": []
+        },
+        {
+            "menu_id": "1932",
+            "menu_label": "Nuovo preset",
+            "menu_link": "",
+            "menu_parent": null,
+            "menu_icon_class": "fas fa-plus",
+            "menu_order": "1",
+            "menu_position": "(#1125) ingegno settings",
+            "menu_layout": null,
+            "menu_css_class": "btn-primary",
+            "menu_modal": "1",
+            "menu_module": "ingegno-template",
+            "menu_module_key": "ingegno-template-menu-1932",
+            "menu_type": "form",
+            "menu_form": "2810",
             "menu_html_attr": "",
             "conditions": []
         }

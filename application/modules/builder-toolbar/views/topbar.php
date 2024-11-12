@@ -22,7 +22,6 @@ if (!empty($value_id)) {
 // debug($users);
 ?>
 
-
 <!-- Vertical toolbar -->
 <div id="builder_toolbar" style="display:none">
     <?php if ($this->auth->is_admin() || $_SERVER['REMOTE_ADDR'] == '62.196.41.184'): ?>
@@ -69,28 +68,36 @@ if (!empty($value_id)) {
                         data-container="body" title="Reload with profiler"><i class="fas fa-bug"></i></a>
                 <?php endif; ?>
                 <!-- Live/Debug -->
-
-
-                <!-- Users Login -->
-
-                <div class="btn-group btn-spaced" style=" width:auto" data-toggle="tooltip" data-placement="bottom"
-                    data-container="body" title="All users">
-
-                    <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown"
-                        aria-expanded="true">
+                
+                
+                <!-- Users Login Dropdown -->
+                <div class="btn-group btn-spaced" style="width:auto" data-toggle="tooltip" data-placement="bottom"
+                     data-container="body" title="All users">
+                    
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="true">
                         <span class="fas fa-key"></span>
                     </button>
-
-                    <ul class="dropdown-menu " role="menu" style="z-index: 9999;">
-
-                        <?php foreach ($users as $user): ?>
-
-                            <li><a target="_blank"
-                                    href="<?php echo base_url('user-extender/accessextender/login_force/' . $user['users_id'] . '/' . md5($salt . $user['users_id'])); ?>">
-                                    <?php echo "<strong>" . $user['users_first_name'] . " " . $user['users_last_name'] . "</strong> " . $user['users_type_value']; ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
+                    
+                    <ul class="dropdown-menu" role="menu" style="z-index: 9999; min-width: 300px;">
+                        <li class="search-container" style="position: sticky; top: 0; padding-bottom: 5px;">
+                            <input type="text" class="js-user-search" style="width: 95%; margin-left: 8px;">
+                        </li>
+                        <li class="divider" style="margin: 0;"></li>
+                        <li style="max-height: 400px; overflow-y: auto;">
+                            <ul style="padding: 0; margin: 0; list-style: none;">
+                                <?php foreach ($users as $user): ?>
+                                    <li class="js-user-item" style="padding-left: 8px;">
+                                        <a target="_blank"
+                                           style='color: #343434;'
+                                           href="<?php echo base_url('user-extender/accessextender/login_force/' . $user['users_id'] . '/' . md5($salt . $user['users_id'])); ?>"
+                                           data-search="<?php echo strtolower($user['users_first_name'] . ' ' . $user['users_last_name'] . ' ' . $user['users_type_value']); ?>">
+                                            <?php echo "<strong>" . $user['users_first_name'] . " " . $user['users_last_name'] . "</strong> " . "<span class='pull-right'>" . $user['users_type_value'] . "</span>"; ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
 

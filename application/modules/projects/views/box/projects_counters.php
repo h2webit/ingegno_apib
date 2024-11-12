@@ -9,7 +9,7 @@ if (!empty($projects_status)) :
         $projects_count = $this->db->query("SELECT COUNT(*) AS count FROM projects WHERE projects_status = '{$status['projects_status_id']}' AND projects_deleted != '1'")->row()->count;
 ?>
 
-<div class="col-sm-12">
+<div class="col-md-12 hidden-xs hidden-sm">
     <div class="small-box" style="background-color: <?php echo $status['projects_status_color'] ?? '#4b4b4b'; ?>; color: white;">
         <div class="inner">
             <h3><?php echo $projects_count; ?></h3>

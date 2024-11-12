@@ -35,8 +35,6 @@ class Main extends MX_Controller
             $this->token = null;
         }
 
-        $this->settings = $this->apilib->searchFirst('modules_manager_settings');
-
         $this->load->model('core');
         //$this->load->model('module-manager/modules_model');
 
@@ -164,9 +162,10 @@ class Main extends MX_Controller
 //     $this->load->view('layout/main', $this->template);
 // }
 
-    public function show_details($module_identifier) {
+    public function show_details($module_identifier)
+    {
         // $module = $this->db->get_where('modules', ['modules_identifier' => $module_identifier])->row_array();
-        
+
         $module = $this->core->getModuleRepositoryDataFull($module_identifier);
 
         $this->load->view(
@@ -180,6 +179,6 @@ class Main extends MX_Controller
             )
         );
 
-        
+
     }
 }

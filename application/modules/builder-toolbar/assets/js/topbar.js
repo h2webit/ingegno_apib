@@ -745,6 +745,8 @@ function checkPermissions(layout_id, container) {
                         return user.permissions_group === null;
                     }).length;
                     $('.js_users_can_view ul', container).html('');
+
+
                     $.each(data.all_groups, function (i, p) {
                         // Stabilisce se la checkbox dovrebbe essere selezionata
                         var isChecked = data.users_can_view.some(function (user) {
@@ -753,35 +755,16 @@ function checkPermissions(layout_id, container) {
 
                         // Aggiunge la checkbox alla lista
                         if (p.permissions_group == null) {
-                            var inputElement = ' +';
-                            p.permissions_group = nullGroupCount + ' users without group';
+
+                            var inputElement = '<input class="js_checkbox_group" data-type="single_user" data-group-layout-id="' + layout_id + '" type="checkbox" name="" value="' + p.permissions_user_id + '" ' + (isChecked ? 'checked="checked"' : '') + ' />';
+                            var display_name = p.users_first_name + " " + p.users_last_name;
                         } else {
-                            var inputElement = '<input class="js_checkbox_group" data-group-layout-id="' + layout_id + '" type="checkbox" name="" value="' + p.permissions_group + '" ' + (isChecked ? 'checked="checked"' : '') + ' />';
+                            var inputElement = '<input class="js_checkbox_group" data-type="group" data-group-layout-id="' + layout_id + '" type="checkbox" name="" value="' + p.permissions_group + '" ' + (isChecked ? 'checked="checked"' : '') + ' />';
+                            var display_name = p.permissions_group;
                         }
-                        $('.js_users_can_view', container).first().prepend('<li>' + inputElement + ' <strong> ' + p.permissions_group + '</strong> </li>');
+                        $('.js_users_can_view', container).first().prepend('<li>' + inputElement + ' <strong> ' + display_name + '</strong> </li>');
                     });
 
-                    //alert(1);
-                    // DEPRECATO
-                    /*if (data.layout.layouts_module) {
-                        $('.js_users_can_view', container).first().append('<li class="divider"></li>');
-                        $('.js_users_can_view', container).first().append('<li class=""><strong>Grant full access to module ' + data.layout.layouts_module + '</strong></li>');
-                        $.each(data.all_groups.slice().reverse(), function (i, p) {
-                            // Stabilisce se la checkbox dovrebbe essere selezionata
-                            var isChecked = data.users_can_view.some(function (user) {
-                                return user.permissions_group === p.permissions_group;
-                            });
-
-                            // Aggiunge la checkbox alla lista
-                            if (p.permissions_group == null) {
-                                var inputElement = ' +';
-                                p.permissions_group = nullGroupCount + ' users without group';
-                            } else {
-                                var inputElement = '<input class="js_checkbox_group" data-group-layout-id="' + layout_id + '" data-module_name="' + data.layout.layouts_module +'" type="checkbox" name="" value="' + p.permissions_group + '" ' + (isChecked ? 'checked="checked"' : '') + ' />';
-                            }
-                            $('.js_users_can_view', container).first().append('<li>' + inputElement + ' <strong> ' + p.permissions_group + '</strong> </li>');
-                        });
-                    }*/
 
                     // Add group permission
                     container.on('click', '.js_checkbox_group[data-group-layout-id="' + layout_id + '"]', function () {
@@ -792,66 +775,56 @@ function checkPermissions(layout_id, container) {
                         var token_hash = token.hash;
                         var group = $(this).val();
                         var module = $(this).data('module_name');
-                        // Esegui la chiamata fetch quando la checkbox viene selezionata
-                        // fetch(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, { // Sostituisci con il tuo URL
-                        //     method: 'POST', // o 'GET', a seconda delle tue necessità
-                        //     headers: {
-                        //         'Content-Type': 'application/json'
-                        //         // Aggiungi altri headers se necessario
-                        //     },
-                        //     body: JSON.stringify({
-                        //         [token_name]: token_hash
-                        //     })
-                        // })
-                        //     .then(response => response.json()) // or .text() or another parsing method if you're not receiving JSON
-                        //     .then(data => {
-                        //         // Gestisci la risposta del server qui
-                        //         console.log(data);
-                        //     })
-                        //     .catch(error => {
-                        //         // Gestisci eventuali errori qui
-                        //         console.error(error);
-                        //     });
+                        var type = $(this).data('type');
+
+                        if (type == 'single_user') {
+                            $.ajax(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, {
+                                type: 'POST',
+                                data: {
+                                    [token_name]: token_hash,
+                                    'type': type,
+                                    'group': group,
+                                    'checked': checked,
+                                    'module': module,
+                                },
+                                dataType: 'json',
+
+                                success: function (data) {
+                                    $('#builder_toolbar').show();
+                                    var toolBarEnabled = true;
+                                    localStorage.setItem('toolBarEnabled', 'true');
+                                    localStorage.setItem('toolBarToken', data);
+                                },
+                            });
+                        } else if (type == 'group') {
+                            $.ajax(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, {
+                                type: 'POST',
+                                data: {
+                                    [token_name]: token_hash,
+                                    'type': type,
+                                    'group': group,
+                                    'checked': checked,
+                                    'module': module,
+                                },
+                                dataType: 'json',
+
+                                success: function (data) {
 
 
-                        $.ajax(base_url + 'builder-toolbar/builder/add_group_permission/' + layout_id, {
-                            type: 'POST',
-                            data: {
-                                [token_name]: token_hash,
-                                'group': group,
-                                'checked': checked,
-                                'module': module,
-                            },
-                            dataType: 'json',
-
-                            success: function (data) {
-
-
-                                $('#builder_toolbar').show();
-                                var toolBarEnabled = true;
-                                localStorage.setItem('toolBarEnabled', 'true');
-                                localStorage.setItem('toolBarToken', data);
+                                    $('#builder_toolbar').show();
+                                    var toolBarEnabled = true;
+                                    localStorage.setItem('toolBarEnabled', 'true');
+                                    localStorage.setItem('toolBarToken', data);
 
 
 
-                            },
-                        });
+                                },
+                            });
+                        }
 
-
-                        // Aggiungi eventualmente un else per gestire il caso in cui la checkbox viene deselezionata
                     });
 
-                    // $.each(data.all_groups, function (i, p) {
-                    //     $('.js_users_can_view').prepend('<li><input type="checkbox" name="" value="" /> <strong>PP' + p.permissions_group + '</strong> </li>');
-                    // });
-                    // $.each(data.users_can_view, function (i, p) {
-                    //     // super_admin = "";
-                    //     // if (p.permissions_admin == 1) {
-                    //     //     super_admin = "- *superAdmin*";
-                    //     // }
-                    //     // $('.js_users_can_view').prepend('<li><a target="_blank" href="' + base_url + 'main/layout/user-detail/' + p.users_id + '">(' + p.users_id + ') <strong>' + p.users_first_name + ' ' + p.users_last_name + '</strong> ' + super_admin + ' - ' + p.permissions_group + '</a></li>');
-                    //     $('.js_users_can_view').prepend('<li><input type="checkbox" name="" value="" /> <strong>' + p.permissions_group + '</strong> </li>');
-                    // });
+
                 }
             },
         });
@@ -863,3 +836,27 @@ function showLayoutPermissions(layout_id) {
     //Todo mostrare un div autogenerato (in che posizione?) che carica il checkPermission() di quel layoutid
     checkPermissions(layout_id);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const userSearch = document.querySelector('.js-user-search');
+    const userItems = document.querySelectorAll('.js-user-item');
+
+    userSearch.addEventListener('input', function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+
+        userItems.forEach(item => {
+            const searchText = item.querySelector('a').getAttribute('data-search');
+            const words = searchTerm.split(' ');
+
+            // Check if all search words are found in the search text
+            const found = words.every(word => searchText.includes(word.toLowerCase()));
+
+            item.classList.toggle('hidden', !found);
+        });
+    });
+
+    // Prevent dropdown from closing when clicking on the search input
+    userSearch.addEventListener('click', function (e) {
+        e.stopPropagation();
+    });
+});
