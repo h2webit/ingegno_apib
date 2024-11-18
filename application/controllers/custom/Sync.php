@@ -137,6 +137,8 @@ class Sync extends MY_Controller
         $this->import_report_orari();
 
         $this->import_variazioni();
+        
+        $this->import_allegati_per_fattura();
     }
     
     public function import_associati() {
@@ -1058,6 +1060,36 @@ $count_total = $this->apib_db
             } catch (Exception $e) {
                 my_log('error', "errore inserimento variazione compensi: {$e->getMessage()}");
                 debug($nota);
+                debug($e->getMessage(), true);
+            }
+        }
+        $this->mycache->clearCache();
+    }
+    
+    public function import_allegati_per_fattura() {
+        $allegati = $this->apib_db->get('allegati_per_fattura')->result_array();
+        
+        $t = count($allegati);
+        $c = 0;
+        foreach ($allegati as $allegato) {
+            progress(++$c, $t, 'import allegati_per_fattura');
+            
+            $allegato['allegati_per_fattura_creation_date'] = $allegato['allegati_per_fattura_data_creazione'];
+            $allegato['allegati_per_fattura_modified_date'] = $allegato['allegati_per_fattura_data_modifica'];
+            
+            unset($allegato['allegati_per_fattura_data_creazione'], $allegato['allegati_per_fattura_data_modifica']);
+            
+            try {
+                $allegato_exists = $this->db->get_where('allegati_per_fattura', ['allegati_per_fattura_id' => $allegato['allegati_per_fattura_id']])->row_array();
+                
+                if ($allegato_exists) {
+                    $allegato_creata = $this->apilib->edit('allegati_per_fattura', $allegato['allegati_per_fattura_id'], $allegato);
+                } else {
+                    $allegato_creata = $this->apilib->create('allegati_per_fattura', $allegato);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento allegato per fattura: {$e->getMessage()}");
+                debug($allegato);
                 debug($e->getMessage(), true);
             }
         }
