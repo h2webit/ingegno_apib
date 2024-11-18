@@ -1239,7 +1239,16 @@ $(document).ready(function() {
 
     $('.js-ricarico, .js-provider_price, .js-sconto_percentuale, .js-variante_prodotto, .js-tasse').on('change', function() {
         console.log('cambio')
-        calcolaPrezzoVendita();
+        
+        if ($(this).hasClass('js-ricarico')) {
+            // verifico se il campo ricarico quello con classe ".js-ricarico" ha un valore ed è > 0, se ce l'ha, richiamo la funzione per calcolare il prezzo di vendita, altrimenti nulla
+            if ($('.js-ricarico').val() && $('.js-ricarico').val() > 0) {
+                calcolaPrezzoVendita();
+            }
+        } else {
+            calcolaPrezzoVendita();
+        }
+        
         aggiorna();
     });
     $('.js-prezzo_vendita, .js-tasse').on('change', function() {

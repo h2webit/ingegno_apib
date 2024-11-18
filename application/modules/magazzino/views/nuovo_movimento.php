@@ -1442,7 +1442,7 @@ if ($movimenti_id) {
                         <tfoot>
                             <tr>
                                 <td colspan="8">
-                                    <button id="js_add_product" type="button" class="btn btn-primary btn-sm"><span class="fas fa-plus"></span> Aggiungi prodotto
+                                    <button id="js_add_product" type="button" class="btn btn-primary btn-sm"><span class="fas fa-plus"></span> Nuova riga
                                     </button><br />
                                     <button id="js_fix_qty" type="button" class="btn btn-danger btn-sm"><span class="fas fa-fa-balance-scale"></span> Correggi quantit&agrave;
                                     </button>
@@ -1575,7 +1575,7 @@ $('#new_movimento').on('submit',function(){
         left: 25%
     }
     
-    #new_movimento {
+    #new_movimento .autosave-running {
         filter: blur(0.15rem);
         pointer-events: none;
     }
@@ -1684,11 +1684,29 @@ setTimeout(function() {
 <?php if(!empty($this->input->get('autosave')) && $this->input->get('autosave') == '1'): ?>
 $(document).ready(function() {
     $('#salvataggio_automatico').show();
+    $('#new_movimento').addClass('autosave-running');
     setTimeout(function() {
+        console.clear()
         // alert('movimento salvato');
         $('#new_movimento').submit();
         // toastr.success('Movimento salvato automaticamente', 'Salvataggio automatico');
-    }, 750);
+        
+        // uso set interval per capire se l'alert msg_new_movimento è visibile (qunidi con un errore) e lo è pure il bottone di submit, in tal caso disattiva il messaggio di autosave
+        var interval = setInterval(function() {
+            // console log per capire quando appare o no
+            console.log("verifico se c'è un errore");
+            
+            if ($('#msg_new_movimento').is(':visible') && $('button[type="submit"]').is(':visible')) {
+                console.log("errore trovato, disattivo autosave");
+                
+                $('#salvataggio_automatico').hide();
+                $('#new_movimento').removeClass('autosave-running');
+                clearInterval(interval);
+            } else {
+                console.log("errore non trovato");
+            }
+        }, 1000);
+    }, 3500);
 })
 <?php endif; ?>
 var current_row_lotto;

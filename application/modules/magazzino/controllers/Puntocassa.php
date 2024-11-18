@@ -122,7 +122,7 @@ class Puntocassa extends MY_Controller
             $return_status = 1;
 
             // Emissione documento fiscale / ricevuta / fattura
-            switch ($pc_settings['cart_tipo_ricevuta']) { // Todo sostituire con campo che arriva dal form
+            switch ($tipo_ricevuta) { // Todo sostituire con campo che arriva dal form
 
                 case 1: // Nessuna ricevuta
                     break;

@@ -29,6 +29,7 @@ class Documenti extends MX_Controller
     public function create_document()
     {
         $input = $this->input->post();
+        //debug($input['documenti_contabilita_note_generiche'],true);
         if (!empty($input['spesa_id'])) {
             $spesa_id = $input['spesa_id'];
             unset($input['spesa_id']);
@@ -922,8 +923,9 @@ class Documenti extends MX_Controller
 
         if ($entity == $entita_prodotti) {
             $campo_codice = $campo_codice_prodotto;
+            $campo_barcode = $campo_barcode_prodotto?? $campo_codice;
             $campo_preview = $campo_preview_prodotto;
-            $where = ["( (LOWER($campo_preview) LIKE '%{$input}%' OR $campo_preview LIKE '{$input}%') OR (LOWER($campo_codice) LIKE '%{$input}%' OR $campo_codice LIKE '{$input}%') )"];
+            $where = ["( (LOWER($campo_preview) LIKE '%{$input}%' OR $campo_preview LIKE '{$input}%') OR (LOWER($campo_codice) LIKE '%{$input}%' OR $campo_codice LIKE '{$input}%') OR (LOWER($campo_barcode) LIKE '%{$input}%' OR $campo_barcode LIKE '{$input}%') )"];
 
             if (!empty($campo_gestione_giacenza_prodotto)) {
                 $where[] = "$campo_gestione_giacenza_prodotto => '1'";
@@ -1987,7 +1989,7 @@ class Documenti extends MX_Controller
         $fatture = $this->apilib->search('documenti_contabilita', [
             'documenti_contabilita_tipo' => 1,
             //'documenti_contabilita_stato_invio_sdi' => [6, 13],
-            "documenti_contabilita_data_emissione > '2024-02-28'"
+            "documenti_contabilita_data_emissione > '2024-01-01'"
         ]);
 
         $c = count($fatture);
@@ -2750,7 +2752,7 @@ class Documenti extends MX_Controller
             $post['serie'] = '';
         }
 
-        $check_data = $this->db->query("SELECT documenti_contabilita_data_emissione AS data_emissione FROM documenti_contabilita WHERE documenti_contabilita_tipo = '1' AND documenti_contabilita_serie = '{$post['serie']}' ORDER BY documenti_contabilita_data_emissione DESC LIMIT 1")->row();
+        $check_data = $this->db->query("SELECT DATE(documenti_contabilita_data_emissione) AS data_emissione FROM documenti_contabilita WHERE documenti_contabilita_tipo = '1' AND documenti_contabilita_serie = '{$post['serie']}' ORDER BY documenti_contabilita_data_emissione DESC LIMIT 1")->row();
 
         if ($post['data_emissione'] < $check_data->data_emissione) {
             die(e_json(['status' => 0, 'txt' => "Inserire una data maggiore o uguale all'ultima data di emissione per questa serie!"]));
@@ -2766,7 +2768,7 @@ class Documenti extends MX_Controller
                 'azienda' => $azienda['documenti_contabilita_settings_id'],
                 'tipo_documento' => 1,
                 'data_emissione' => (!empty($post['data_emissione'])) ? $post['data_emissione'] : dateFormat($pagamento['payments_date'], 'Y-m-d'),
-                'totale' => $pagamento['payments_amount'],
+                // 'totale' => $pagamento['payments_amount'],
                 'stato' => 1,
                 'formato_elettronico' => 1,
                 'articoli_data' => [

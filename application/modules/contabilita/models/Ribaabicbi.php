@@ -150,19 +150,19 @@ class RibaAbiCbi extends CI_Model
             'cc' => substr($iban, 15),
         ];
     }
-
+    
     public function creaFileFromDocumenti($settings, $_scadenze, $accorpata = false)
     {
-
+        
         $conto = $this->apilib->view('conti_correnti', $this->input->post('conto_riba'));
-
+        
         $iban = $conto['conti_correnti_iban']; //$settings['documenti_contabilita_settings_iban'];
         $iban_data = $this->extractIbanData($iban);
-
+        
         // debug($settings);
         // debug($documenti, true);
         //        exit;
-
+        
         $intestazione = [
             0 => $iban_data['abi'],
             //         [0] = abi_assuntrice variabile lunghezza 5 numerico
@@ -193,7 +193,7 @@ class RibaAbiCbi extends CI_Model
             foreach ($_scadenze as $key => $scadenza) {
                 // Creiamo una chiave unica combinando l'ID del cliente e la data di scadenza
                 $uniqueKey = $scadenza['documenti_contabilita_customer_id'] . '_' . date('dmy', strtotime($scadenza['documenti_contabilita_scadenze_scadenza']));
-
+                
                 if (empty($scadenze[$uniqueKey])) {
                     $scadenze[$uniqueKey] = $scadenza;
                 } else {
@@ -203,7 +203,7 @@ class RibaAbiCbi extends CI_Model
         } else {
             $scadenze = $_scadenze;
         }
-
+        
         foreach ($scadenze as $documento) {
             //debug($documento, true);
             $dest = json_decode($documento['documenti_contabilita_destinatario'], true);
@@ -222,8 +222,8 @@ class RibaAbiCbi extends CI_Model
                 $dest['customers_bank_accounts_abi'] = $iban_data['abi'];
                 $dest['customers_bank_accounts_cab'] = $iban_data['cab'];
             }
-
-
+            
+            
             // if (!empty($dest['iban'])) {
             //     $dest_iban_data = $this->extractIbanData($dest['iban']);
             // } elseif (!empty($dest['customers_iban'])) {
@@ -233,7 +233,7 @@ class RibaAbiCbi extends CI_Model
             // } else {
             //     //$dest_iban_data = $iban_data;
             //     $banca = $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_default' => DB_BOOL_TRUE, 'customers_bank_accounts_customer_id' => $documento['documenti_contabilita_customer_id']]);
-
+            
             //     if (!$banca) {
             //         die("Iban mancante per il cliente '{$dest['ragione_sociale']}'.");
             //     } else {
@@ -243,10 +243,10 @@ class RibaAbiCbi extends CI_Model
             //             $dest_iban_data['abi'] = $banca['customers_bank_account_abi'];
             //             $dest_iban_data['cab'] = $banca['customers_bank_account_cab'];
             //         }
-
+            
             //     }
             // }
-
+            
             $ricevute[] = [
                 0 => $documento['documenti_contabilita_numero'],
                 //        [0] = numero ricevuta lunghezza 10 numerico

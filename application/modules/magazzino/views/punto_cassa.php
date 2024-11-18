@@ -626,10 +626,21 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                                                     <th scope="row" class="text-left">imponibile:</th>
                                                     <td class="text-right">€ {{ totalNetCart }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row" class="text-left">iva:</th>
-                                                    <td class="text-right">€ {{ totalVatCart }}</td>
-                                                </tr>
+                                               <template v-if="punto_cassa_settings.punto_cassa_settings_iva_separata == 1">
+<template v-for="vat in splitVatCart">
+    <tr :key="vat.rate">
+        <th scope="row" class="text-left">Totale {{ vat.rate }}%:</th>
+        <td class="text-right">
+            € {{ vat.totale }}
+            <div style="font-size: 11px; color: #666;">(di cui IVA: € {{ vat.iva }})</div>
+        </td>
+    </tr>
+</template>
+                                                    </template>
+<tr>
+    <th scope="row" class="text-left">totale iva:</th>
+    <td class="text-right">€ {{ totalVatCart }}</td>
+</tr>
                                                 <tr>
                                                     <th scope="row" class="text-left">totale:</th>
                                                     <td class="text-right">€ {{ totalCart }}</td>
@@ -907,6 +918,7 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                     localStorage.setItem('cart', JSON.stringify(this.carrello));
                 }
             },
+            
             /***********
              * ! GESTIONE PREZZO TOTALE
              * ! calcola % rispetto al totale e lo imposta come sconto per ogni prodotto ed in automatico ricalcola tutti i giusti valori (imponibile iva, ecc ecc)
@@ -1822,6 +1834,34 @@ if (!empty($pc_settings['punto_cassa_settings_serie_default'])) {
                 return acc + parseFloat(current._iva_totale_scontato);
             }, 0);
             return totalVat.toFixed(2)
+        },
+        splitVatCart() {
+            var mythis = this;
+            const vatSplit = this.carrello.reduce(function(acc, current) {
+                current = mythis.ricomputoProdotto(current);
+                const vatRate = current.perc_iva;
+                if (!acc[vatRate]) {
+                    acc[vatRate] = {
+                        imponibile: 0,
+                        iva: 0,
+                        totale: 0
+                    };
+                }
+                acc[vatRate].imponibile += current._totale_imponibile_scontato;
+                acc[vatRate].iva += parseFloat(current._iva_totale_scontato);
+                acc[vatRate].totale = acc[vatRate].imponibile + acc[vatRate].iva;
+                return acc;
+            }, {});
+            
+            // Convert to array and sort by VAT rate
+            return Object.entries(vatSplit)
+                .map(([rate, amounts]) => ({
+                    rate: parseFloat(rate),
+                    totale: amounts.totale.toFixed(2),
+                    imponibile: amounts.imponibile.toFixed(2),
+                    iva: amounts.iva.toFixed(2)
+                }))
+                .sort((a, b) => a.rate - b.rate);
         },
         /**
          * ! Calculate cart total based on product in cart

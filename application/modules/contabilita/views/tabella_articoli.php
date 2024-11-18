@@ -417,7 +417,7 @@
                                                     <a id="js_showhide_stock<?php echo $prodotto['documenti_contabilita_articoli_prodotto_id']; ?>"
                                                         class="js_open_modal"
                                                         href="<?php echo base_url("get_ajax/layout_modal/product-quantities/{$prodotto['documenti_contabilita_articoli_prodotto_id']}"); ?>">
-                                                        <?php echo $prodotto['fw_products_quantity']; ?>
+                                                        <?php echo (int)$prodotto['fw_products_quantity']; ?>
                                                     </a>
                                                 </span>
                                             </small>
@@ -583,7 +583,7 @@
         <tr>
             <td>
                 <button id="js_add_product" type="button" class="btn btn-primary btn-sm">
-                    <i class="fas fa-plus"></i> Aggiungi prodotto
+                    <i class="fas fa-plus"></i> Nuova riga
                 </button>
             </td>
             <td colspan="<?php echo($colonne_count - 6); ?>"></td>

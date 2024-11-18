@@ -267,8 +267,10 @@ $metodi_pagamento = $this->apilib->search('documenti_contabilita_metodi_pagament
              * 2. se le scadenza non superano l'importo totale, tolgo tutte le righe sucessiva all'ultima modificata, ne creo una nuova e forzo importo corretto sull'ultima
              */
             next_row_exists = $(this).closest('.row_scadenza').next('.row_scadenza').length != 0;
-
-            if (totale_scadenze < totale) {
+            console.log(totale_scadenze);
+            console.log(totale);
+            
+            if (Math.abs(totale_scadenze) < Math.abs(totale)) {
                 if (next_row_exists) {
                     console.log('Rimuovo tutte le righe dopo e ritriggherò, così entra nell\'if precedente...');
                     $(this).closest('.row_scadenza').next('.row_scadenza').remove();

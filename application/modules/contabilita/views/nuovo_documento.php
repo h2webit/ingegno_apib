@@ -1143,15 +1143,15 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
             'Ordine fornitore' => 6,
             'Preventivo' => 7,
             'DDT' => 8,
-            /* 'DDT Fornitore' => 10,
+            'DDT Fornitore' => 10,
             'Fattura Reverse' => 11,
-            'Nota di credito Reverse' => 12, */
+            'Nota di credito Reverse' => 12,
             'Ordine interno' => 14,
             'Ordini interni' => 14,
         ];
     
         // Creo documento, cerco impostazioni stampa dell'ultimo documento creato con lo stesso tipo
-        if(empty($documento_id)) {
+        if(empty($documento_id) && !empty($mappatura_tipi_doc[$documento_tipo_get])) {
             $ultimo_documento_creato = $this->apilib->searchFirst('documenti_contabilita', [
                 'documenti_contabilita_tipo' => $mappatura_tipi_doc[$documento_tipo_get]
             ], 0, 'documenti_contabilita_id', 'DESC');
@@ -1315,7 +1315,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                      if ($this->input->get('from') == 'spese' && $tipo['documenti_contabilita_tipo_id'] != 10) {
                             continue;
                      } elseif (!$this->input->get('from') == 'spese' && $tipo['documenti_contabilita_tipo_id'] == 10) {//Arrivo da vendite, quindi tolgo il DDT Fornitore
-                            continue;
+                            //continue;
                      }
                     ?>
                 <button style="font-size:11px;" type="button" class="btn <?php if (($documento_id && ($documento_id && $documento['documenti_contabilita_tipo'] == $tipo['documenti_contabilita_tipo_id'])) || $tipo['documenti_contabilita_tipo_value'] == $this->input->get('doc_type')): ?>btn-primary<?php else: ?>btn-default<?php endif; ?> js_btn_tipo" data-tipo="<?php echo $tipo['documenti_contabilita_tipo_id']; ?>"><?php echo $tipo['documenti_contabilita_tipo_value']; ?></button>
@@ -1682,7 +1682,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                             <?php //debug($documento);
                             ?>
                             <div class="input-group js_form_datepicker date ">
-                                <input type="text" name="documenti_contabilita_rif_data" class="form-control" placeholder="Rif. data" value="<?php if (!empty($documento['documenti_contabilita_rif_data']) && !$clone): ?><?php echo date('d/m/Y', strtotime($documento['documenti_contabilita_data_emissione'])); ?><?php endif; ?>" data-name="documenti_contabilita_rif_data" /> <span class="input-group-btn">
+                                <input type="text" name="documenti_contabilita_rif_data" class="form-control" placeholder="dd/mm/yyyy" value="<?php if (!empty($documento['documenti_contabilita_rif_data']) && !$clone): ?><?php echo date('d/m/Y', strtotime($documento['documenti_contabilita_data_emissione'])); ?><?php endif; ?>" data-name="documenti_contabilita_rif_data" /> <span class="input-group-btn">
                                     <button class="btn btn-default" type="button" style="display:none">
                                         <i class="fa fa-calendar"></i>
                                     </button>
@@ -2475,7 +2475,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
 
             <div class="row">
                 <div class="col-md-3 mb-15">
-                    <textarea name="documenti_contabilita_note_generiche" rows="10" class="form-control" style="max-height: 185px;" placeholder="Note generiche [opzionali]"><?php if ($documento_id): ?><?php echo $documento['documenti_contabilita_note_generiche']; ?><?php endif; ?></textarea>
+                    <textarea name="documenti_contabilita_note_generiche" rows="10" class="form-control js_tinymce" id="documento_note_generiche" style="max-height: 185px;" placeholder="Note generiche [opzionali]"><?php if ($documento_id): ?><?php echo $documento['documenti_contabilita_note_generiche']; ?><?php endif; ?></textarea>
                     <div style="margin-top: 12px;">
                         <div class="form-group">
                             <input type="hidden" name="documenti_contabilita_stampa_note_generiche" value="0">
@@ -3125,6 +3125,10 @@ var initAutocomplete = function(autocomplete_selector) {
 
 
                         <?php if ($campo_quantita): ?>
+                        if (p.<?php echo $campo_quantita; ?> == null) {
+                            p.<?php echo $campo_quantita; ?> = 0;
+
+                        }
                         label += ' (qty: ' + p.<?php echo $campo_quantita; ?> + ')';
                         <?php endif; ?>
                         collection.push({
@@ -3200,6 +3204,13 @@ var initAutocomplete = function(autocomplete_selector) {
 
 var popolaProdotto = function(prodotto, rowid) {
     //Add modal link to selected product
+    <?php if ($campo_quantita) : ?>
+    if (prodotto.<?php echo $campo_quantita; ?> == null) {
+        prodotto.<?php echo $campo_quantita; ?> = 0;
+
+    }
+    <?php endif; ?>
+
     const product_link_container = $("input[name='products[" + rowid + "][documenti_contabilita_articoli_name]']").closest('table').find('thead th span.js_modal_product_detail');
     const current_link = $("input[name='products[" + rowid + "][documenti_contabilita_articoli_name]']").closest('table').find('thead th span.js_modal_product_detail a.product_link_modal');
     const has_current_link = current_link.length === 0 ? false : true;
@@ -3218,10 +3229,13 @@ var popolaProdotto = function(prodotto, rowid) {
         "RAW_DATA": prodotto
     };
 
+    <?php if ($campo_quantita) : ?>
 
-    const link_checkqty = `<a id="js_showhide_stock${prodotto.fw_products_id}" class="js_open_modal" href="<?php echo base_url('get_ajax/layout_modal/product-quantities/'); ?>${prodotto.fw_products_id}"> ${prodotto.<?php echo $campo_quantita; ?>}</a>`;
+    const link_checkqty = `<a id="js_showhide_stock${prodotto.fw_products_id}" class="js_open_modal" href="<?php echo base_url('get_ajax/layout_modal/product-quantities/'); ?>${prodotto.fw_products_id}"> <?php echo ($campo_quantita) ? '${prodotto.'.$campo_quantita . '}' : "";?></a>`;
 
     $('.js_riga_quantita', $("input[name='products[" + rowid + "][documenti_contabilita_articoli_quantita]']").closest('td')).html(link_checkqty);
+
+    <?php endif; ?>
 
     <?php if ($campo_codice): ?>
     $("input[name='products[" + rowid + "][documenti_contabilita_articoli_codice]']").val(prodotto['<?php echo $campo_codice; ?>']);
@@ -5032,6 +5046,10 @@ $(document).ready(function() {
     updateDestinationFromWarehouse();
     <?php endif; ?>
 
+    $('#new_fattura').on('submit', function(e) {
+        // Forza il salvataggio del contenuto dell'editor nel textarea prima del submit
+        tinymce.triggerSave();
+    });
 
 });
 </script>

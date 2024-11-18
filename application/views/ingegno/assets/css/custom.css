@@ -1843,12 +1843,6 @@ body.dark .daterangepicker .ranges ul li.active {
   background-color: #35addc;
 }
 
-/* Permission menu tooltip */
-.js_users_can_view:not(.btn-toolbar .js_users_can_view) {
-  top: auto;
-  bottom: 100%;
-  padding: 8px;
-}
 
 /*
 1) Fix index header e sidebar in mobile
