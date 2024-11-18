@@ -171,5 +171,136 @@ class Apib extends MY_Controller
         //            @unlink($pdfFile);
         //        }
     }
-
+    
+    public function stampaSchedaCompensiCliente($cliente_id = null)
+    {
+        if ($cliente_id == null) {
+            if ($this->auth->get('utenti_tipo') == 15) {
+                debug('TODO....', true);
+                $cliente_id = $this->apilib->searchFirst('clienti', ['clienti_utente_amministrativo' => $this->auth->get('utenti_id')])['clienti_id'];
+            } else {
+                show_404();
+                exit;
+            }
+        }
+        
+        $regenerate = (bool) $this->input->get('_regen');
+        
+        //Prevedo di poter passare sia un id che l'array coi dati direttamente
+        //$data['cartella'] = (is_numeric($cartella))?$this->apilib->view('cartelle_cliniche', $cartella):$cartella;
+        
+        $mese_start = ($this->input->get('m') == 'tutti') ? 1 : $this->input->get('m');
+        $mese_end = ($this->input->get('m') == 'tutti') ? date('m') : $this->input->get('m');
+        $anno = $this->input->get('Y');
+        
+        $physicalDir = "./uploads/schede_compensi";
+        $filename = "{$anno}_{$this->input->get('m')}_cliente_schedacompensi_{$cliente_id}";
+        $pdfFile = "{$physicalDir}/{$filename}.pdf";
+        
+        // Vedo se ho già il file generato
+        if (!file_exists($pdfFile) or is_development() or $regenerate) {
+            $this->load->library('parser');
+            $contents = [];
+            for ($mese = $mese_start; $mese <= $mese_end; $mese++) {
+                $data = $this->getSchedaCompensiMensileCliente($cliente_id, $mese, $anno);
+                
+                $data['mese'] = mese_testuale($mese);
+                $data['anno'] = $anno;
+                $data['mese_numero'] = $mese;
+                $contents[] = $this->parser->parse("custom/pdf/scheda_compensi/cliente_mese", $data, true);
+            }
+            $content = $this->parser->parse("custom/pdf/scheda_compensi_cliente", compact('contents'), true);
+            $html = $this->input->get('html');
+            if ($html) {
+                die($content);
+            } else {
+                // Create a temporary file with the view html
+                if (!is_dir($physicalDir)) {
+                    mkdir($physicalDir, 0755, true);
+                }
+                $tmpHtml = "{$physicalDir}/{$filename}.html";
+                file_put_contents($tmpHtml, $content, LOCK_EX);
+                
+                // Exec the command
+                $options = "-T '20mm' -B '20mm' -O landscape";
+                
+                exec("wkhtmltopdf {$options} --viewport-size 1024 {$tmpHtml} {$pdfFile}", $output);
+                
+                //debug($output,true);
+                //debug("wkhtmltopdf {$options} --viewport-size 1024 {$tmpHtml} {$pdfFile}",true);
+            }
+        }
+        // Send the file
+        $fp = fopen($pdfFile, 'rb');
+        header("Content-Type: application/pdf");
+        header("Content-Length: " . filesize($pdfFile));
+        fpassthru($fp);
+        
+        // Remove the temp files
+        //        @unlink($tmpHtml);
+        //        if ($isH2Web) {
+        //            @unlink($pdfFile);
+        //        }
+    }
+    
+    private function getSchedaCompensiMensileCliente($cliente_id, $mese, $anno)
+    {
+        $data = [];
+        
+        $days = cal_days_in_month(CAL_GREGORIAN, $mese, $anno);
+        $data_fine = "$anno-$mese-$days";
+        $data_inizio = "$anno-$mese-01";
+        
+        
+        // $_report_prestazioni_domiciliari = $this->apilib->search('report_orari', [
+        //     "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL))",
+        //     // "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL) AND (sedi_operative_nascosta <> '1' OR sedi_operative_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro sedi_operative_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
+        //     "report_orari_inizio <= '$data_fine 23:59:59'::timestamp AND report_orari_inizio >= '$data_inizio'::date",
+        //     'report_orari_id IN (SELECT report_orari_id FROM report_orari_listino_prezzi)',
+        //     'report_orari_domiciliare IS NOT NULL',
+        // ]);
+        $_report_orari_sedi = $this->apilib->search('report_orari', [
+            "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL))",
+            // "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL) AND (sedi_operative_nascosta <> '1' OR sedi_operative_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro sedi_operative_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
+            "report_orari_inizio <= '$data_fine 23:59:59'::timestamp AND report_orari_inizio >= '$data_inizio'::date",
+            'report_orari_sede_operativa IS NOT NULL',
+            'report_orari_accessi IS NULL',
+            'report_orari_associato IN (SELECT associati_id FROM associati)',
+        ]);
+        
+        //debug($_report_orari_sedi,true);
+        
+        $_report_accessi_sedi = $this->apilib->search('report_orari', [
+            "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL))",
+            // "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL) AND (sedi_operative_nascosta <> '1' OR sedi_operative_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro sedi_operative_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
+            "report_orari_inizio <= '$data_fine 23:59:59'::timestamp AND report_orari_inizio >= '$data_inizio'::date",
+            'report_orari_sede_operativa IS NOT NULL',
+            'report_orari_accessi IS NOT NULL',
+        
+        ]);
+        
+        $data['report_accessi_sedi'] = $data['report_orari_sedi'] = $data['report_prestazioni_domiciliari'] = [];
+        foreach ($_report_accessi_sedi as $report) {
+            $report['tariffa'] = calcola_tariffa_accesso_sede($report['report_orari_sede_operativa'], $report['report_orari_fine'], $report['report_orari_affiancamento'] == '1', $report['report_orari_costo_differenziato'] == '1');
+            
+            $report['tariffa_totale'] = $report['tariffa'] * $report['report_orari_accessi'];
+            $data['report_accessi_sedi'][$report['report_orari_sede_operativa']][$report['report_orari_associato']][] = $report;
+        }
+        //debug($data['report_accessi_sedi'],true);
+        foreach ($_report_orari_sedi as $report) {
+            if ($report['report_orari_festivo'] == '1') {
+                $report['sedi_operative_orari_categoria'] = 3;
+            }
+            //recupero le informazioni che mi mancano
+            //debug($report,true);
+            $report['tariffa_totale'] = calcola_tariffa_totale_oraria_sede($report, false);
+            //debug($report['tariffa_totale'],true);
+            $data['report_orari_sedi'][$report['report_orari_sede_operativa']][$report['report_orari_associato']][] = $report;
+        }
+        
+        $data['cliente'] = $this->apilib->view('clienti', $cliente_id);
+        //$data['rimborso_spese'] = (int)($this->db->query("SELECT SUM(rimborsi_km_costo_viaggio) as s FROM rimborsi_km WHERE rimborsi_km_utente = '{$data['associato']['associati_utente']}' AND rimborsi_km_data <= '$data_fine'::date AND rimborsi_km_data >= '$data_inizio'::date")->row()->s);
+        
+        return $data;
+    }
 }
