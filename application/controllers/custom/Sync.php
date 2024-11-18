@@ -295,7 +295,7 @@ class Sync extends MY_Controller
                 //'clienti_referente' => $cliente['clienti_note_cliente'],
                 'customers_deleted' => $cliente['clienti_deleted'],
                 'customers_code' => $cliente['clienti_id'],
-                'customers_status' => 1,
+                // 'customers_status' => 1,
                 'customers_type' => 1, //customer
                 'customers_group' => 2, //azienda
 
@@ -882,7 +882,6 @@ $count_total = $this->apib_db
                 'rapportini_firma_operatore' => null,
                 'rapportini_foto' => null,
                 'rapportini_compilazione_id' => null,
-                'rapportini_codice' => null,
                 //'rapportini_servizi' => $id_listino_prezzi,
                 'rapportini_fascia' => $report_orario['report_orari_fascia'],
                 'rapportini_costo_differenziato' => $report_orario['report_orari_costo_differenziato'] == 't' ? 1 : 0,
