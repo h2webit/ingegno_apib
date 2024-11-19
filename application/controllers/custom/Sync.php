@@ -137,6 +137,8 @@ class Sync extends MY_Controller
         $this->import_report_orari();
 
         $this->import_variazioni();
+
+        $this->inport_tariffe();
     }
     
     public function import_associati() {
@@ -472,7 +474,7 @@ class Sync extends MY_Controller
             1 => 1, //Mattina
             2=> 2, //Pomeriggio
             3 => 3, //Notte/Festivo
-            6 => 5 //Accesso
+            6 => 4 //Accesso
 
         ];
         foreach ($orari as $orario) {
@@ -1061,6 +1063,57 @@ $count_total = $this->apib_db
                 debug($e->getMessage(), true);
             }
         }
+        $this->mycache->clearCache();
+    }
+    public function import_tariffe() {
+        set_log_scope('sync-tariffe');
+        $tariffe = $this->apib_db->get('tariffe')->result_array();
+        
+        $categorie_map = [
+                    1 => 1, //Mattina
+                    2=> 2, //Pomeriggio
+                    3 => 3, //Notte/Festivo
+                    6 => 4 //Accesso
+
+                ];
+
+        $t = count($tariffe);
+        $c = 0;
+        
+        foreach ($tariffe as $tariffa) {
+            //debug($tariffa,true);
+            progress(++$c, $t, 'import tariffe');
+
+            // Format the monetary values to match the new system's format
+            $tariffa['tariffe_costo_orario'] = number_format($tariffa['tariffe_costo_orario'], 2, ',', '.');
+            $tariffa['tariffe_costo_accesso'] = number_format($tariffa['tariffe_costo_accesso'], 2, ',', '.');
+            $tariffa['tariffe_costo_affiancamento'] = number_format($tariffa['tariffe_costo_affiancamento'], 2, ',', '.');
+            $tariffa['tariffe_costo_extra'] = number_format($tariffa['tariffe_costo_extra'], 2, ',', '.');
+
+            // Map creation and modification dates
+            $tariffa['tariffe_creation_date'] = $tariffa['tariffe_data_creazione'] ?? null;
+            unset($tariffa['tariffe_data_creazione']);
+            $tariffa['tariffe_modified_date'] = $tariffa['tariffe_data_modifica'] ?? null;
+            unset($tariffa['tariffe_data_modifica']);
+
+            $tariffa['tariffe_categoria'] = $categorie_map[$tariffa['tariffe_categoria']]??null;
+
+            try {
+                $tariffa_exists = $this->db->get_where('tariffe', ['tariffe_id' => $tariffa['tariffe_id']])->row_array();
+                
+                if ($tariffa_exists) {
+                    $tariffa_creata = $this->apilib->edit('tariffe', $tariffa['tariffe_id'], $tariffa);
+                } else {
+                    $tariffa_creata = $this->apilib->create('tariffe', $tariffa);
+                }
+
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento tariffa: {$e->getMessage()}");
+                debug($tariffa);
+                debug($e->getMessage(), true);
+            }
+        }
+        
         $this->mycache->clearCache();
     }
 }
