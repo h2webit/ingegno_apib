@@ -23,7 +23,7 @@ class Sync extends MY_Controller
         //Mi connetto al db postgres
         // verifico se sono sul dominio apib.ingegnosuite.it uso localhost, altrimenti uso il dominio
         
-        if (strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false || is_cli()) {
+        if ((strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false || is_cli())) {
             $db['crm_postgres']['hostname'] = 'localhost';
         } else {
             $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com';
@@ -46,6 +46,8 @@ class Sync extends MY_Controller
         $db['crm_postgres']['swap_pre'] = '';
         $db['crm_postgres']['autoinit'] = true;
         $db['crm_postgres']['stricton'] = false;
+
+        //echo $db['crm_postgres']['hostname'];
         
         $this->apib_db = $this->load->database($db['crm_postgres'], true);
     }
@@ -598,7 +600,7 @@ class Sync extends MY_Controller
         $this->mycache->clearCache();
     }
 
-    public function import_sedi_professionisti()
+    public function import_sedi_professionisti($sede_id = false)
     {
         set_log_scope('sync-sedi-professionisti');
 
@@ -628,7 +630,7 @@ class Sync extends MY_Controller
         foreach ($sedi_professionisti as $sede_professionista) {
             progress(++$c, $t, 'import sedi_professionisti vs appuntamenti');
             
-            if (278 != $sede_professionista['sedi_professionisti_sede']) {
+            if ($sede_id && $sede_id != $sede_professionista['sedi_professionisti_sede']) {
                 continue;
             }
             $fascia = $orari[$sede_professionista['sedi_professionisti_fascia']];
