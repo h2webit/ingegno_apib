@@ -1,6 +1,6 @@
 <?php
 $tipologie = $this->db->get('documenti_contabilita_tipologie_fatturazione')->result_array();
-$tipi_doc = $this->db->where('documenti_contabilita_tipo_id <>',10)->get('documenti_contabilita_tipo')->result_array();
+$tipi_doc = $this->db->get('documenti_contabilita_tipo')->result_array();
 $pdf_templates = $this->db->get('documenti_contabilita_template_pdf')->result_array();
 ?>
 

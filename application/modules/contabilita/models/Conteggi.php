@@ -12,7 +12,7 @@ class Conteggi extends CI_Model
 
         $order_by = array_get($options, 'order_by', '');
         $group_by = array_get($options, 'group_by', '');
-        $limit = array_get($options, 'limit', '');
+        $limit = array_get($options, 'limit', null);
 
         $custom_from = array_get($options, 'custom_from', 'documenti_contabilita');
         
@@ -261,7 +261,7 @@ class Conteggi extends CI_Model
 
         $order_by = array_get($options, 'order_by', '');
         $group_by = array_get($options, 'group_by', '');
-        $limit = array_get($options, 'limit', '');
+        $limit = array_get($options, 'limit', null);
         $custom_from = array_get($options, 'custom_from', 'spese');
         
         $where = array_get($options, 'where', [

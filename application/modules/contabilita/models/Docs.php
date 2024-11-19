@@ -280,6 +280,18 @@ class Docs extends CI_Model
             $customer['partita_iva'] = $cliente[$clienti_partita_iva];
             $customer['codice_fiscale'] = $cliente[$clienti_codice_fiscale];
             $customer['codice_sdi'] = $cliente[$clienti_codice_sdi];
+            //TODO: verificare se cliente è privato/azienda/pa e scatenare automatismi vari (campo radio checkato e split payment)
+            //1 azienda, 2 privato, 3 pa
+            if ($cliente[$clienti_sottotipo] == 1) {
+                $customer['documenti_contabilita_tipo_destinatario'] = 2;
+            } elseif ($cliente[$clienti_sottotipo] == 2) {
+                $customer['documenti_contabilita_tipo_destinatario'] = 1;
+            } elseif ($cliente[$clienti_sottotipo] == 3) {
+                $customer['documenti_contabilita_tipo_destinatario'] = 1;
+            } elseif ($cliente[$clienti_sottotipo] == 4) {
+                $customer['documenti_contabilita_tipo_destinatario'] = 3;
+
+            }
 
             $destinario = json_encode($customer);
         } else {
@@ -310,6 +322,9 @@ class Docs extends CI_Model
         $totale = array_get($data, 'totale', 0);
         $costo_spedizione = array_get($data, 'costo_spedizione', false);
         $tipo_destinatario = array_get($data, 'tipo_destinatario', null);
+        if (!$tipo_destinatario) {
+            $tipo_destinatario = $customer['documenti_contabilita_tipo_destinatario'] ?? 2;
+        }
         $tipo = array_get($data, 'tipo_documento', 1);
 
         $tpl_pdf = $this->db
@@ -345,6 +360,7 @@ class Docs extends CI_Model
             'documenti_contabilita_template_pdf' => $tpl_pdf,
             'documenti_contabilita_stato' => array_get($data, 'stato', 1),
             'documenti_contabilita_agente' => array_get($data, 'agente', null),
+            'documenti_contabilita_split_payment' => ($tipo_destinatario==3)?1:0,
         ];
 
         if (!empty($cliente['customers_template_pagamento'])) {
@@ -422,7 +438,7 @@ class Docs extends CI_Model
 
         //Pagamento
         $dati_documento['documenti_contabilita_accetta_paypal'] = DB_BOOL_FALSE;
-        $dati_documento['documenti_contabilita_split_payment'] = DB_BOOL_FALSE;
+        //$dati_documento['documenti_contabilita_split_payment'] = DB_BOOL_FALSE;
 
         //Note generiche
         $dati_documento['documenti_contabilita_note_generiche'] = array_get($data, 'note_generiche', null);
@@ -452,7 +468,7 @@ class Docs extends CI_Model
                     } else {
                         $importo = ($prezzo_unit * $articolo['documenti_contabilita_articoli_quantita']);
                     }
-                    if ($articolo['documenti_contabilita_articoli_applica_sconto'] && !empty($dati_documento['documenti_contabilita_sconto_percentuale'])) {
+                    if (!empty($articolo['documenti_contabilita_articoli_applica_sconto']) && $articolo['documenti_contabilita_articoli_applica_sconto'] && !empty($dati_documento['documenti_contabilita_sconto_percentuale'])) {
                         $importo = $importo / 100 * (100 - $dati_documento['documenti_contabilita_sconto_percentuale']);
                     }
 
@@ -586,7 +602,7 @@ class Docs extends CI_Model
                     // $iva_tot += $iva_valore;
                     // $totale += ($importo + $iva_valore);
 
-                    $articolo['documenti_contabilita_articoli_applica_sconto'] = ($articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_FALSE) ? DB_BOOL_FALSE : DB_BOOL_TRUE;
+                    $articolo['documenti_contabilita_articoli_applica_sconto'] = (empty($articolo['documenti_contabilita_articoli_applica_sconto']) || $articolo['documenti_contabilita_articoli_applica_sconto'] == DB_BOOL_FALSE) ? DB_BOOL_FALSE : DB_BOOL_TRUE;
 
                     $articolo['documenti_contabilita_articoli_imponibile'] = $importo;
 

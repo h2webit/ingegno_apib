@@ -138,7 +138,10 @@ class Sync extends MY_Controller
 
         $this->import_variazioni();
 
+
         $this->inport_tariffe();
+        
+        $this->import_allegati_per_fattura();
     }
     
     public function import_associati() {
@@ -1065,21 +1068,23 @@ $count_total = $this->apib_db
         }
         $this->mycache->clearCache();
     }
-    public function import_tariffe() {
+
+    public function import_tariffe()
+    {
         set_log_scope('sync-tariffe');
         $tariffe = $this->apib_db->get('tariffe')->result_array();
-        
-        $categorie_map = [
-                    1 => 1, //Mattina
-                    2=> 2, //Pomeriggio
-                    3 => 3, //Notte/Festivo
-                    6 => 4 //Accesso
 
-                ];
+        $categorie_map = [
+            1 => 1, //Mattina
+            2 => 2, //Pomeriggio
+            3 => 3, //Notte/Festivo
+            6 => 4 //Accesso
+
+        ];
 
         $t = count($tariffe);
         $c = 0;
-        
+
         foreach ($tariffe as $tariffa) {
             //debug($tariffa,true);
             progress(++$c, $t, 'import tariffe');
@@ -1096,11 +1101,11 @@ $count_total = $this->apib_db
             $tariffa['tariffe_modified_date'] = $tariffa['tariffe_data_modifica'] ?? null;
             unset($tariffa['tariffe_data_modifica']);
 
-            $tariffa['tariffe_categoria'] = $categorie_map[$tariffa['tariffe_categoria']]??null;
+            $tariffa['tariffe_categoria'] = $categorie_map[$tariffa['tariffe_categoria']] ?? null;
 
             try {
                 $tariffa_exists = $this->db->get_where('tariffe', ['tariffe_id' => $tariffa['tariffe_id']])->row_array();
-                
+
                 if ($tariffa_exists) {
                     $tariffa_creata = $this->apilib->edit('tariffe', $tariffa['tariffe_id'], $tariffa);
                 } else {
@@ -1113,7 +1118,38 @@ $count_total = $this->apib_db
                 debug($e->getMessage(), true);
             }
         }
+    }
         
+
+    
+    public function import_allegati_per_fattura() {
+        $allegati = $this->apib_db->get('allegati_per_fattura')->result_array();
+        
+        $t = count($allegati);
+        $c = 0;
+        foreach ($allegati as $allegato) {
+            progress(++$c, $t, 'import allegati_per_fattura');
+            
+            $allegato['allegati_per_fattura_creation_date'] = $allegato['allegati_per_fattura_data_creazione'];
+            $allegato['allegati_per_fattura_modified_date'] = $allegato['allegati_per_fattura_data_modifica'];
+            
+            unset($allegato['allegati_per_fattura_data_creazione'], $allegato['allegati_per_fattura_data_modifica']);
+            
+            try {
+                $allegato_exists = $this->db->get_where('allegati_per_fattura', ['allegati_per_fattura_id' => $allegato['allegati_per_fattura_id']])->row_array();
+                
+                if ($allegato_exists) {
+                    $allegato_creata = $this->apilib->edit('allegati_per_fattura', $allegato['allegati_per_fattura_id'], $allegato);
+                } else {
+                    $allegato_creata = $this->apilib->create('allegati_per_fattura', $allegato);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento allegato per fattura: {$e->getMessage()}");
+                debug($allegato);
+                debug($e->getMessage(), true);
+            }
+        }
+
         $this->mycache->clearCache();
     }
 }

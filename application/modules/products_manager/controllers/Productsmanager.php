@@ -130,12 +130,84 @@ class Productsmanager extends MY_Controller
             }
             
             // debug($prodotto, true);
-            
-            if (!empty($input['prodotto_id'])) {
-                $prodotto_id = $input['prodotto_id'];
-                $this->apilib->edit('fw_products', $prodotto_id, $prodotto);
-            } else {
-                $prodotto_id = $this->apilib->create('fw_products', $prodotto, false);
+
+            try {
+                if (!empty($input['prodotto_id'])) {
+                    $prodotto_id = $input['prodotto_id'];
+
+                    //Prima di salvare verifico se i barcodes inseriti sono già presenti in altri prodotti
+                    if (!empty($prodotto['fw_products_barcode'])) {
+                        $barcodes = json_decode($prodotto['fw_products_barcode'], true);
+                        $barcodes = array_filter($barcodes);
+                        if (!empty($barcodes)) {
+
+
+                            foreach ($barcodes as $barcode) {
+                                $barcode_check = $this->db->query("
+                                    SELECT 
+                                        fw_products_id 
+                                    FROM 
+                                        fw_products 
+                                    WHERE 
+                                        fw_products_barcode LIKE '%$barcode%'
+                                        AND (fw_products_deleted = 0 OR fw_products_deleted IS NULL)
+                                        AND fw_products_id != '$prodotto_id'
+                                        ")->result_array();
+                                if (!empty($barcode_check)) {
+                                    $barcode_check = array_map(function ($barcode) {
+                                        return $barcode['fw_products_id'];
+                                    }, $barcode_check);
+                                    $barcode_check = implode(',', $barcode_check);
+                                    die(json_encode(['status' => 3, 'txt' => "Barcode duplicato: " . $barcode]));
+                                }
+                            }
+
+
+
+
+                        }
+                    }
+
+                    $this->apilib->edit('fw_products', $prodotto_id, $prodotto);
+                } else {
+                    if (!empty($prodotto['fw_products_barcode'])) {
+                        $barcodes = json_decode($prodotto['fw_products_barcode'], true);
+                        $barcodes = array_filter($barcodes);
+                        if (!empty($barcodes)) {
+                           
+                            
+                            foreach ($barcodes as $barcode) {
+                                $barcode_check = $this->db->query("
+                                    SELECT 
+                                        fw_products_id 
+                                    FROM 
+                                        fw_products 
+                                    WHERE 
+                                        fw_products_barcode LIKE '%$barcode%'
+                                        AND (fw_products_deleted = 0 OR fw_products_deleted IS NULL)
+                                        ")->result_array();
+                                if (!empty($barcode_check)) {
+                                    $barcode_check = array_map(function ($barcode) {
+                                        return $barcode['fw_products_id'];
+                                    }, $barcode_check);
+                                    $barcode_check = implode(',', $barcode_check);
+                                    die(json_encode(['status' => 3, 'txt' => "Barcode duplicato: " . $barcode]));
+                                }
+                            }
+
+
+
+                            
+                        }
+                    }
+
+                    //debug('foo',true);
+
+                    $prodotto_id = $this->apilib->create('fw_products', $prodotto, false);
+                }
+            } catch (Exception $ex) {
+                //debug($ex);
+                die(json_encode(['status' => 3, 'txt' => $ex->getMessage()]));
             }
             if (!empty($input['product_prices'])) {
                 foreach ($input['product_prices'] as $price_list_label_id => $price) {

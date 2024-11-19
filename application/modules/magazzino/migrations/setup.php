@@ -11,3 +11,11 @@ foreach ($core_modules as $module) {
         $this->core->installModule($module);
     }
 }
+
+//TODO: Creo magazzino di default
+$this->apilib->create('magazzini', [
+    'magazzini_titolo' => 'Principale',
+    'magazzini_colore' => '3c40c6',
+    'magazzini_default' => 1,
+    'magazzini_azienda' => 1
+]);
