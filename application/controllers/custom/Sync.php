@@ -141,7 +141,7 @@ class Sync extends MY_Controller
         $this->import_variazioni();
 
 
-        $this->inport_tariffe();
+        $this->import_tariffe();
         
         $this->import_allegati_per_fattura();
     }
