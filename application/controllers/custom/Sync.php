@@ -23,7 +23,7 @@ class Sync extends MY_Controller
         //Mi connetto al db postgres
         // verifico se sono sul dominio apib.ingegnosuite.it uso localhost, altrimenti uso il dominio
         
-        if (strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false || is_cli()) {
+        if ((strpos($_SERVER['HTTP_HOST'], 'apib.ingegnosuite.it') !== false || is_cli())) {
             $db['crm_postgres']['hostname'] = 'localhost';
         } else {
             $db['crm_postgres']['hostname'] = 'crm.apibinfermieribologna.com';
@@ -46,6 +46,8 @@ class Sync extends MY_Controller
         $db['crm_postgres']['swap_pre'] = '';
         $db['crm_postgres']['autoinit'] = true;
         $db['crm_postgres']['stricton'] = false;
+
+        //echo $db['crm_postgres']['hostname'];
         
         $this->apib_db = $this->load->database($db['crm_postgres'], true);
     }
@@ -137,6 +139,9 @@ class Sync extends MY_Controller
         $this->import_report_orari();
 
         $this->import_variazioni();
+
+
+        $this->inport_tariffe();
         
         $this->import_allegati_per_fattura();
     }
@@ -474,7 +479,7 @@ class Sync extends MY_Controller
             1 => 1, //Mattina
             2=> 2, //Pomeriggio
             3 => 3, //Notte/Festivo
-            6 => 5 //Accesso
+            6 => 4 //Accesso
 
         ];
         foreach ($orari as $orario) {
@@ -595,7 +600,7 @@ class Sync extends MY_Controller
         $this->mycache->clearCache();
     }
 
-    public function import_sedi_professionisti()
+    public function import_sedi_professionisti($sede_id = false)
     {
         set_log_scope('sync-sedi-professionisti');
 
@@ -625,7 +630,7 @@ class Sync extends MY_Controller
         foreach ($sedi_professionisti as $sede_professionista) {
             progress(++$c, $t, 'import sedi_professionisti vs appuntamenti');
             
-            if (278 != $sede_professionista['sedi_professionisti_sede']) {
+            if ($sede_id && $sede_id != $sede_professionista['sedi_professionisti_sede']) {
                 continue;
             }
             $fascia = $orari[$sede_professionista['sedi_professionisti_fascia']];
@@ -1064,6 +1069,59 @@ $count_total = $this->apib_db
         }
         $this->mycache->clearCache();
     }
+
+    public function import_tariffe()
+    {
+        set_log_scope('sync-tariffe');
+        $tariffe = $this->apib_db->get('tariffe')->result_array();
+
+        $categorie_map = [
+            1 => 1, //Mattina
+            2 => 2, //Pomeriggio
+            3 => 3, //Notte/Festivo
+            6 => 4 //Accesso
+
+        ];
+
+        $t = count($tariffe);
+        $c = 0;
+
+        foreach ($tariffe as $tariffa) {
+            //debug($tariffa,true);
+            progress(++$c, $t, 'import tariffe');
+
+            // Format the monetary values to match the new system's format
+            $tariffa['tariffe_costo_orario'] = number_format($tariffa['tariffe_costo_orario'], 2, ',', '.');
+            $tariffa['tariffe_costo_accesso'] = number_format($tariffa['tariffe_costo_accesso'], 2, ',', '.');
+            $tariffa['tariffe_costo_affiancamento'] = number_format($tariffa['tariffe_costo_affiancamento'], 2, ',', '.');
+            $tariffa['tariffe_costo_extra'] = number_format($tariffa['tariffe_costo_extra'], 2, ',', '.');
+
+            // Map creation and modification dates
+            $tariffa['tariffe_creation_date'] = $tariffa['tariffe_data_creazione'] ?? null;
+            unset($tariffa['tariffe_data_creazione']);
+            $tariffa['tariffe_modified_date'] = $tariffa['tariffe_data_modifica'] ?? null;
+            unset($tariffa['tariffe_data_modifica']);
+
+            $tariffa['tariffe_categoria'] = $categorie_map[$tariffa['tariffe_categoria']] ?? null;
+
+            try {
+                $tariffa_exists = $this->db->get_where('tariffe', ['tariffe_id' => $tariffa['tariffe_id']])->row_array();
+
+                if ($tariffa_exists) {
+                    $tariffa_creata = $this->apilib->edit('tariffe', $tariffa['tariffe_id'], $tariffa);
+                } else {
+                    $tariffa_creata = $this->apilib->create('tariffe', $tariffa);
+                }
+
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento tariffa: {$e->getMessage()}");
+                debug($tariffa);
+                debug($e->getMessage(), true);
+            }
+        }
+    }
+        
+
     
     public function import_allegati_per_fattura() {
         $allegati = $this->apib_db->get('allegati_per_fattura')->result_array();
@@ -1092,6 +1150,7 @@ $count_total = $this->apib_db
                 debug($e->getMessage(), true);
             }
         }
+
         $this->mycache->clearCache();
     }
 }
