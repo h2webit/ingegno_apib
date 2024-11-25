@@ -1711,6 +1711,14 @@ $(document).ready(function() {
 <?php endif; ?>
 var current_row_lotto;
 $(document).ready(function() {
+
+    $('input[name="missing_products_insert"]').on('change', function() {
+        if (this.checked && '<?php echo ($settings["magazzino_settings_allow_prod_create"] ?? "0"); ?>' != '1') {
+            alert('Non è consentito creare nuovi prodotti dal movimento. Selezionare solo prodotti esistenti.');
+            $(this).prop('checked', false);
+        }
+    });
+
     $("[name='movimenti_magazzino']").on('change', function() {
         $('.js_magazzino_ricevente option').prop('disabled', false);
         document.querySelector(".js_magazzino_ricevente option[value='" + this.value + "']").disabled = true;

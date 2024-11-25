@@ -55,7 +55,7 @@ class App extends MY_Controller
                     //'movimenti_articoli_accantonamento' => $articolo['product']['documenti_contabilita_articoli_id'],
                     'movimenti_articoli_unita_misura' => $articolo['product']['fw_products_unita_misura'],
                     //'movimenti_articoli_codice_fornitore' => $articolo['product']['documenti_contabilita_articoli_codice'],
-                    'movimenti_articoli_quantita' => 1,
+                    'movimenti_articoli_quantita' => $articolo['quantity'],
                     // 'movimenti_articoli_iva' => $articolo['product']['documenti_contabilita_articoli_iva'],
                     'movimenti_articoli_importo_totale' => $articolo['product']['fw_products_sell_price_tax_included'],
                     //'movimenti_articoli_sconto' => $articolo['product']['documenti_contabilita_articoli_sconto'],

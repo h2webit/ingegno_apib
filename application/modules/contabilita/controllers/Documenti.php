@@ -279,7 +279,7 @@ class Documenti extends MX_Controller
             $customer[$clienti_codice_fiscale] = $input['codice_fiscale'];
             $customer[$clienti_codice_sdi] = $input['codice_sdi'];
 
-            $customer[$clienti_tipo] = 1;
+            $customer[$clienti_tipo] = (in_array($input['documenti_contabilita_tipo'],[6,10]))?2:1; //TODO: correggere in base al tipo di documento! Può essere un fornitore
 
             // Se già censito lo collego altrimenti lo salvo se richiesto
             try {
@@ -293,6 +293,12 @@ class Documenti extends MX_Controller
 
                     //Se ho comunque richiesto la sovrascrittura dei dati
                     if (isset($input['save_dest']) && isset($input['save_dest']) && $input['save_dest'] == 'true') {
+                        $old_customer = $this->apilib->view('customers', $input['dest_id']);
+                        //Verifico: se prima era un cliente e ora sto salvando un documento di tipo fornitore, lo metto come cliente/fornitore
+                        if ($old_customer[$clienti_tipo] != $customer[$clienti_tipo]) {
+                            $customer[$clienti_tipo] = 3;
+                        }
+                        
                         $this->apilib->edit($entita_clienti, $input['dest_id'], $customer);
                     }
                 } elseif (isset($input['save_dest']) && $input['save_dest'] == 'true') {
@@ -699,7 +705,19 @@ class Documenti extends MX_Controller
             $this->db->query("DELETE FROM documenti_contabilita_articoli where documenti_contabilita_articoli_documento = $documento_id AND documenti_contabilita_articoli_id NOT IN (" . implode(',', $articoli_ids) . ")");
             $this->mycache->clearCacheTags(['documenti_contabilita_articoli', 'documenti_contabilita']);
 
-            //debug($padri_da_aggiornare,true);
+            //Se ho creato questo documento partendo da un movimento, marco le righe articolo collegandole a questo movimento
+            if (!empty($input['movimento_id'])) {
+                $movimento = $this->apilib->view('movimenti', $input['movimento_id']);
+                //TODO: aggiorno il movimento impostando questo documento nelle "informazioni movimento"
+                $this->apilib->edit('movimenti', $input['movimento_id'], [
+                    'movimenti_documento_id' => $movimento['movimenti_documento_id'] ?? $documento_id,
+                    'movimenti_documento_tipo' => $movimento['movimenti_documento_tipo'] ?? $input['documenti_contabilita_tipo'],
+                    'movimenti_data_documento' => $movimento['movimenti_data_documento'] ?? $input['documenti_contabilita_data_emissione']
+                ]);
+            }
+
+            $this->docs->aggiornaStatoDocumento($documento_id);
+
             foreach ($padri_da_aggiornare as $padre) {
                 //Questa chiamata serve per aggiornare eventuali documenti associati, ricalcolando le quantità evase
                 $this->docs->aggiornaStatoDocumento($padre, $documents['documenti_contabilita_tipo']);
@@ -785,6 +803,8 @@ class Documenti extends MX_Controller
                 //     $this->apilib->edit("documenti_contabilita", $documento_id, ['documenti_contabilita_file' => $pdf_b64]);
                 // }
             }
+
+            
 
             $this->mycache->clearCache();
             $return = array('status' => 1, 'txt' => base_url('main/layout/contabilita_dettaglio_documento/' . $documento_id . '?first_save=1'));

@@ -229,6 +229,7 @@
                                 
                                 <input type="hidden" class="form-control input-sm text-right js_documenti_contabilita_articoli_iva" data-name="documenti_contabilita_articoli_iva" value="0" />
                                 <input type="hidden" class="js_documenti_contabilita_articoli_prodotto_id" data-name="documenti_contabilita_articoli_prodotto_id" />
+                                <input type="hidden" class="js_documenti_contabilita_articoli_rif_riga_mov" data-name="documenti_contabilita_articoli_rif_riga_mov" />
                             </td>
                             
                             <td class="js_column_importo">
@@ -517,7 +518,10 @@
                                             <?php foreach ($elenco_iva as $iva) : ?>
                                                 <option value="<?php echo $iva['iva_id']; ?>" data-perc="<?php echo (int) $iva['iva_valore']; ?>" <?php if ($iva['iva_id'] == $prodotto['documenti_contabilita_articoli_iva_id']) : ?> selected="selected" <?php endif; ?>><?php echo $iva['iva_label']; ?></option>
                                             <?php endforeach; ?>
-                                        </select> <input type="hidden" class="form-control input-sm text-right js_documenti_contabilita_articoli_iva" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_iva]" value="0" /> <input type="hidden" class="js_documenti_contabilita_articoli_prodotto_id" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_prodotto_id]" value="<?php echo $prodotto['documenti_contabilita_articoli_prodotto_id']; ?>" />
+                                        </select> 
+                                        <input type="hidden" class="form-control input-sm text-right js_documenti_contabilita_articoli_iva" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_iva]" value="0" /> 
+                                        <input type="hidden" class="js_documenti_contabilita_articoli_prodotto_id" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_prodotto_id]" value="<?php echo $prodotto['documenti_contabilita_articoli_prodotto_id']; ?>" />
+                                        <input type="hidden" class="js_documenti_contabilita_articoli_rif_riga_mov" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_rif_riga_mov]" value="<?php echo $prodotto['documenti_contabilita_articoli_rif_riga_mov']??''; ?>" />
                                     </td>
                                     <td width="90" class="js_column_importo">
                                         <input type="text" class="form-control input-sm text-right js-importo js_decimal" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_importo_totale]" placeholder="0" /> <input type="checkbox" class="_form-control js-applica_ritenute" name="products[<?php echo $k + 1; ?>][documenti_contabilita_articoli_applica_ritenute]" value="<?php echo DB_BOOL_TRUE; ?>" <?php if ($prodotto['documenti_contabilita_articoli_applica_ritenute'] == DB_BOOL_TRUE) : ?> checked="checked" <?php endif; ?> />
@@ -838,4 +842,4 @@
         
         
     });
-</script>
+</script> 

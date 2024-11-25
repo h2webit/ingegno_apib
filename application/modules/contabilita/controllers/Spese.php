@@ -214,7 +214,7 @@ class Spese extends MY_Controller
             $filename = $file['documenti_contabilita_ricezione_sdi_nome_file'];
 
             echo_log('debug', 'Elaboro il documento: ' . $filename);
-            
+
 
             // Se uploaded ce file fisisco altrimenti il contenuto e in base 64
             if ($file['documenti_contabilita_ricezione_sdi_source'] == 2) {
@@ -320,10 +320,14 @@ class Spese extends MY_Controller
                     $fattura['spese_totale'] = number_format((float) $fattura['spese_totale'], 9, '.', '');
                     //se ho una serie
                     if (str_contains($fattura['numero_documento'], '/')) {
-                        $numero = preg_split("#/#", $fattura['numero_documento']);
-                        $fattura['numero_documento'] = $numero[0];
-                        //$fattura['serie_documento'] = $numero[1];
-                        $fattura['serie_documento'] = str_replace(' ', '', $numero[1]);
+                        $parti = preg_split("#/#", $fattura['numero_documento']);
+
+                        // Estrai solo i numeri dalla prima parte
+                        preg_match("/(\d+)/", $parti[0], $matches);
+                        $fattura['numero_documento'] = (int) $matches[1];
+
+                        // Pulisci la serie documento (seconda parte) dagli spazi
+                        $fattura['serie_documento'] = str_replace(' ', '', $parti[1]);
                     } else {
                         //$fattura['numero_documento'] = $fattura['numero_documento'];
                         $fattura['serie_documento'] = "";
@@ -331,6 +335,7 @@ class Spese extends MY_Controller
                     if ($xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ScontoMaggiorazione) {
                         $fattura['spese_totale'] = (string) $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ScontoMaggiorazione->Importo;
                     }
+
                     // Tipologia di documento
                     $tipologia = (string) $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->TipoDocumento;
 
@@ -341,8 +346,12 @@ class Spese extends MY_Controller
                     }
                     // Estrazione del numero e delle lettere
                     if (preg_match('/([a-zA-Z]+)(\d+)/', $fattura['numero_documento'], $matches)) {
-                        $fattura['serie_documento'] = $matches[1];
-                        $fattura['numero_documento'] = (int) $matches[2];
+                        if ($matches[1] && $matches[2]) {
+                            $fattura['serie_documento'] = $matches[1];
+                            $fattura['numero_documento'] = (int) $matches[2];
+
+                        }
+
                     }
                     $fattura_esistente = $this->apilib->searchFirst('documenti_contabilita', [
                         'documenti_contabilita_numero' => $fattura['numero_documento'],
@@ -469,7 +478,7 @@ class Spese extends MY_Controller
                         } else {
                             die('Mittente privo di partita_iva e/o codice_fiscale');
                         }
-                        
+
                         if (empty($fornitore)) {
 
                             //Lo creo
@@ -587,6 +596,57 @@ class Spese extends MY_Controller
                             }
                         }
 
+                        $vendita['scadenze'] = [];
+
+                        $_metodi_pagamento = $this->apilib->search('documenti_contabilita_metodi_pagamento');
+                        $metodi_pagamento = array_key_value_map($_metodi_pagamento, 'documenti_contabilita_metodi_pagamento_codice', 'documenti_contabilita_metodi_pagamento_id');
+
+                        // Inserisco le scadenze di pagamento
+                        if (!empty($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento)) {
+
+                            foreach ($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento as $scadenza) {
+                                // debug($metodi_pagamento);
+                                // debug($scadenza->ModalitaPagamento);
+                                // debug((string)$scadenza->ModalitaPagamento,true);
+
+                                $documento_scadenza = [
+
+                                    'documenti_contabilita_scadenze_ammontare' => $scadenza->ImportoPagamento,
+                                    'documenti_contabilita_scadenze_saldato_con' => ($scadenza->ModalitaPagamento) ? $metodi_pagamento[(string) $scadenza->ModalitaPagamento] : null,
+                                    'documenti_contabilita_scadenze_saldata' => DB_BOOL_FALSE,
+                                    'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
+                                    'documenti_contabilita_scadenze_data_saldo' => null,
+                                    'documenti_contabilita_scadenze_scadenza' => ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data,
+                                ];
+
+                                // Se metodo di pagamento contanti o carta imposto data di pagamento come quella del documento oppure come data scadenza pagamento (se impostata)
+                                // Forte dubbio su questo array ma non vedo altre soluzioni
+                                $metodi_auto_saldo = array("MP01", "MP02", "MP03", "MP04", "MP08", "MP22");
+
+                                if ($settings['documenti_contabilita_settings_imp_saldate'] && in_array((string) $scadenza->ModalitaPagamento, $metodi_auto_saldo)) {
+                                    $documento_scadenza['documenti_contabilita_scadenze_data_saldo'] = ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data;
+                                    $documento_scadenza['documenti_contabilita_scadenze_saldata'] = DB_BOOL_TRUE;
+                                }
+                                //debug($spesa_scadenza);
+                                $vendita['scadenze'][] = $documento_scadenza;
+                            }
+                        } else {
+                            // Se non ci sono mi baso su importo del documento e inserisco una sola scadenza
+
+
+
+                            $documento_scadenza = [
+
+                                'documenti_contabilita_scadenze_ammontare' => $vendita['documenti_contabilita_totale'],
+                                'documenti_contabilita_scadenze_saldato_con' => $metodi_pagamento["MP08"],
+                                'documenti_contabilita_scadenze_saldata' => DB_BOOL_FALSE,
+                                'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
+                                'documenti_contabilita_scadenze_data_saldo' => null,
+                                'documenti_contabilita_scadenze_scadenza' => $vendita['documenti_contabilita_data_emissione'],
+                            ];
+                            $vendita['scadenze'][] = $documento_scadenza;
+                        }
+
                         $vendita_id = $this->docs->doc_express_save_import($vendita);
 
                         // Aggiorno lo stato del file zip ricevuto come elaborato
@@ -607,7 +667,7 @@ class Spese extends MY_Controller
             } else { //E' una spesa da registrare
                 echo "Il documento è una <strong>spesa</strong><br />";
 
-                
+
 
                 if (isset($xml->FatturaElettronicaHeader)) {
                     $tmpXmlFile = "{$physicalDir}/spese/{$filename}";
@@ -663,7 +723,7 @@ class Spese extends MY_Controller
                     // IMPORTI
                     //$spesa['spese_imponibile'] = $xml->FatturaElettronicaBody->DatiBeniServizi->DatiRiepilogo->ImponibileImporto;
                     $spesa['spese_valuta'] = $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Divisa;
-                    
+
 
                     // Tipologia di documento
                     $tipologia = (string) $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->TipoDocumento;
@@ -673,7 +733,7 @@ class Spese extends MY_Controller
                     }
                     //controllo che il file non esista già
                     $spesa['spese_totale'] = (string) $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->ImportoTotaleDocumento;
-                    
+
                     //$fattura['spese_totale'] = str_replace(' ', '', $fattura['spese_totale']);
                     $spesa['spese_totale'] = preg_replace("/[^0-9.]/", "", $spesa['spese_totale']);
                     $spesa['spese_totale'] = number_format((float) $spesa['spese_totale'], 9, '.', '');
@@ -713,7 +773,7 @@ class Spese extends MY_Controller
                     } else {
                         $spesa['spese_totale'] = $spesa['spese_iva'] + $spesa['spese_imponibile'];
                     }
-                    
+
 
                     $spesa['spese_extra'] = ''; //$filename;
                     $spesa['spese_file_da_sdi'] = $file['documenti_contabilita_ricezione_sdi_id'];
@@ -760,7 +820,7 @@ class Spese extends MY_Controller
                     //     $this->apilib->edit('customers', $customer_exists['customers_id'], $customer_cliente);
                     // }
 
-                        //debug($fornitore, true);
+                    //debug($fornitore, true);
 
                     if (empty($fornitore)) {
                         //Lo creo
@@ -790,7 +850,7 @@ class Spese extends MY_Controller
 
                     $spesa['spese_customer_id'] = $supplier_id;
                     $spesa['spese_importata_da_xml'] = DB_BOOL_TRUE;
-                    
+
                     $spesa['spese_azienda'] = $settings['documenti_contabilita_settings_id'];
                     $spesa['spese_json'] = json_encode($xml);
 
@@ -833,7 +893,7 @@ class Spese extends MY_Controller
                                 $articolo['spese_articoli_codici_json'] = json_encode($codici_articolo);
                             }
 
-                            
+
                             $this->apilib->create('spese_articoli', $articolo);
                         }
 
@@ -857,9 +917,11 @@ class Spese extends MY_Controller
 
                         // Inserisco le scadenze di pagamento
                         if (!empty($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento)) {
-                            
+
                             foreach ($xml->FatturaElettronicaBody->DatiPagamento->DettaglioPagamento as $scadenza) {
-                                
+                                // debug($metodi_pagamento);
+                                // debug($scadenza->ModalitaPagamento);
+                                // debug((string)$scadenza->ModalitaPagamento,true);
                                 $spesa_scadenza = [
                                     'spese_scadenze_ammontare' => $scadenza->ImportoPagamento,
                                     'spese_scadenze_scadenza' => ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data,
@@ -870,12 +932,12 @@ class Spese extends MY_Controller
                                 // Se metodo di pagamento contanti o carta imposto data di pagamento come quella del documento oppure come data scadenza pagamento (se impostata)
                                 // Forte dubbio su questo array ma non vedo altre soluzioni
                                 $metodi_auto_saldo = array("MP01", "MP02", "MP03", "MP04", "MP08", "MP22");
-                                
+
                                 if ($settings['documenti_contabilita_settings_imp_saldate'] && in_array((string) $scadenza->ModalitaPagamento, $metodi_auto_saldo)) {
                                     $spesa_scadenza['spese_scadenze_data_saldo'] = ($scadenza->DataScadenzaPagamento) ? $scadenza->DataScadenzaPagamento : $xml->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data;
                                     $spese_scadenza['spese_scadenze_saldata'] = DB_BOOL_TRUE;
                                 }
-                               //debug($spesa_scadenza);
+                                //debug($spesa_scadenza);
                                 $this->apilib->create('spese_scadenze', $spesa_scadenza);
                             }
                         } else {
@@ -1229,7 +1291,7 @@ class Spese extends MY_Controller
             } else {
                 $nazione['countries_id'] = 105;
             }
-            
+
 
             $supplier['customers_address'] = $input['indirizzo'];
             $supplier['customers_city'] = $input['citta'];
@@ -1310,7 +1372,7 @@ class Spese extends MY_Controller
             $scadenze_ids = [-1];
             foreach ($input['scadenze'] as $scadenza) {
 
-                
+
 
                 if (abs($scadenza['spese_scadenze_ammontare']) > 0) {
                     if (!empty($scadenza['spese_scadenze_id'])) {
@@ -1329,7 +1391,7 @@ class Spese extends MY_Controller
                                 'spese_scadenze_spesa' => $spesa_id,
                                 'spese_scadenze_saldata' => DB_BOOL_TRUE,
                             ]);
-                            
+
                             $this->apilib->edit('flussi_cassa', $scadenza['_flussi_cassa_id'], ['flussi_cassa_spese_scadenze_collegate' => [$scadenza['spese_scadenze_id']]]);
                         } else {
                             $this->apilib->edit('spese_scadenze', $scadenza['spese_scadenze_id'], [
@@ -1343,7 +1405,7 @@ class Spese extends MY_Controller
                             ]);
                         }
                     } else {
-                       //Creo
+                        //Creo
                         if (!empty($scadenza['_flussi_cassa_id'])) {
 
                             //debug(date_toDbFormat($scadenza['spese_scadenze_scadenza']),true);
@@ -1360,7 +1422,7 @@ class Spese extends MY_Controller
                                 'spese_scadenze_saldata' => DB_BOOL_TRUE,
                             ]);
                             $spese_scadenze_id = $this->db->insert_id();
-                            
+
                             $this->apilib->edit('flussi_cassa', $scadenza['_flussi_cassa_id'], ['flussi_cassa_spese_scadenze_collegate' => [$spese_scadenze_id]]);
                         } else {
                             $spese_scadenze_id = $this->apilib->create('spese_scadenze', [
@@ -1376,7 +1438,7 @@ class Spese extends MY_Controller
                         $scadenze_ids[] = $spese_scadenze_id;
                     }
 
-                    
+
                 }
             }
             //TODO: sostituire con foreach e apilib delete
@@ -1392,7 +1454,7 @@ class Spese extends MY_Controller
                 foreach ($input['products'] as $prodotto) {
                     if (!empty($prodotto['spese_articoli_name'])) {
 
-                        if ($prodotto['spese_articoli_prodotto_id'] && $ext_prodotto = $this->apilib->view('fw_products', $prodotto['spese_articoli_prodotto_id'])) {
+                        if (!empty($prodotto['spese_articoli_prodotto_id']) && $ext_prodotto = $this->apilib->view('fw_products', $prodotto['spese_articoli_prodotto_id'])) {
                             if (!empty($ext_prodotto['fw_products_stock_management'])) {
                                 $prodotti_movimentabili = true;
                             }
@@ -1677,7 +1739,7 @@ class Spese extends MY_Controller
     {
         $this->apilib->delete('spese_allegati', $id);
     }
-    
+
     public function print_all()
     {
         if (!command_exists('pdfunite')) {
@@ -1686,13 +1748,13 @@ class Spese extends MY_Controller
             echo "<alert>Errore generico durante la generazione del pdf (pdfunite non installato).</alert>";
             exit;
         }
-        
+
         $ids = json_decode($this->input->post('ids'));
-        
+
         $spese = $this->apilib->search('spese_allegati', ['spese_allegati_spesa IN (' . implode(',', $ids) . ')']);
-        
+
         $dest_folder = FCPATH . "uploads/modules_files/contabilita/spese";
-        
+
         $files = [];
         foreach ($spese as $spesa) {
             if (
@@ -1701,14 +1763,14 @@ class Spese extends MY_Controller
             ) {
                 if (stripos($spesa['spese_allegati_file'], '.xml.html') == false) {
                     ob_start();
-                    
+
                     $this->visualizza_formato_compatto($spesa['spese_allegati_spesa'], true);
-                    
+
                     $file_pdf = ob_get_clean();
-                    
+
                     $full_filepath = FCPATH . 'spesa_' . $spesa['spese_allegati_spesa'] . '.pdf';
                     file_put_contents($full_filepath, $file_pdf);
-                    
+
                     $files[] = $full_filepath;
                 }
             }
@@ -1734,7 +1796,7 @@ class Spese extends MY_Controller
 
         exit;
     }
-    
+
     public function downloadZip()
     {
         $ids = json_decode($this->input->post('ids'));
@@ -1767,15 +1829,15 @@ class Spese extends MY_Controller
             ) {
                 $file_content = file_get_contents($dest_folder . '/' . $spesa['spese_allegati_file']);
                 $zip->addFromString($spesa['spese_allegati_file'], $file_content);
-                
+
                 // salvo il pdf dell'xml
                 if (stripos($spesa['spese_allegati_file'], '.xml.html') == false) {
                     ob_start();
-                    
+
                     $this->visualizza_formato_compatto($spesa['spese_allegati_spesa'], true);
-                    
+
                     $file_pdf = ob_get_clean();
-                    
+
                     $zip->addFromString("{$spesa['spese_allegati_file']}.pdf", $file_pdf);
                 }
             }
@@ -1827,49 +1889,49 @@ class Spese extends MY_Controller
             //$pagina = mb_convert_encoding($pagina, 'UTF-8', 'UTF-8');
             //
             $view_content = $this->load->view('contabilita/pdf/visualizzazione_compatta', ['xml' => $pagina], true);
-            
+
             if ($pdf) { //TODO
-                
-                
+
+
                 // URL del file XSL
                 $xslUrl = base_url('module_bridge/contabilita/fattura-compatta.xsl');
-                
+
                 // XML da una variabile
                 $xmlString = $view_content;
-                
+
                 // Carica il file XSL
                 $xsl = new DOMDocument();
                 $xsl->load($xslUrl);
-                
+
                 // Carica il file XML dalla variabile
                 $xml = new DOMDocument();
                 $xml->loadXML($xmlString);
-                
+
                 // Crea il trasformatore XSLT
                 $processor = new XSLTProcessor();
                 $processor->importStylesheet($xsl);
-                
+
                 // Esegui la trasformazione XSLT in HTML
                 $html = $processor->transformToXML($xml);
-                
+
                 // Stampa l'HTML risultante
                 //echo $html;
                 //die();
-                
-                
-                
-                
-                
+
+
+
+
+
                 $orientation = $this->input->get('orientation') ? $this->input->get('orientation') : 'portrait';
                 $pdfFile = $this->layout->generate_pdf($html, $orientation, "", [], false, true, ['--disable-external-links']);
-                
+
                 $contents = file_get_contents($pdfFile, true);
-                
+
                 $file_name = 'spesa_' . $spesa_id . '_formato_compatto';
-                
+
                 header('Content-Type: application/pdf');
                 header('Content-disposition: inline; filename="' . $file_name . time() . '.pdf"');
-                
+
                 echo $contents;
             } else {
                 header("Content-Type:text/xml");
@@ -1955,7 +2017,7 @@ class Spese extends MY_Controller
                         'spese_scadenze_ammontare' => $scadenza['spese_scadenze_ammontare'],
                         'spese_scadenze_scadenza' => $scadenza['spese_scadenze_scadenza'],
                         'spese_scadenze_saldato_con' => $scadenza['spese_scadenze_saldato_con'],
-                        'spese_scadenze_saldato_da' => (empty($scadenza['spese_scadenze_saldato_da']))?null: $scadenza['spese_scadenze_saldato_da'],
+                        'spese_scadenze_saldato_da' => (empty($scadenza['spese_scadenze_saldato_da'])) ? null : $scadenza['spese_scadenze_saldato_da'],
                         'spese_scadenze_data_saldo' => ($scadenza['spese_scadenze_data_saldo']) ?: null,
                         'spese_scadenze_spesa' => $spesa_id,
                     ]);

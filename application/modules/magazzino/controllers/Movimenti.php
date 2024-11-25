@@ -490,6 +490,21 @@ class Movimenti extends MX_Controller
                 'data' => '',
             ));
         } else {
+
+            foreach ($input['products'] as $prodotto) {
+                if (!empty($prodotto['movimenti_articoli_name']) && empty($prodotto['movimenti_articoli_prodotto_id'])) {
+                    if (empty($this->magazzino_settings['magazzino_settings_allow_prod_create']) || $this->magazzino_settings['magazzino_settings_allow_prod_create'] != 1) {
+                        echo json_encode([
+                            'status' => 0,
+                            'txt' => 'Non è consentito creare nuovi prodotti dal movimento. Selezionare solo prodotti esistenti a catalogo.',
+                            'data' => '',
+                        ]);
+                        return;
+                    }
+                }
+            }
+
+
             $magazzino = $this->apilib->view('magazzini', $input['movimenti_magazzino']);
             
             if (!empty($magazzino['magazzini_utenti_abilitati']) && !empty($this->auth->get('users_id'))) {
@@ -688,7 +703,7 @@ class Movimenti extends MX_Controller
                                 $campo_prezzo_fornitore_prodotto => $prodotto['movimenti_articoli_prezzo'],
                                 $campo_preview_prodotto => $prodotto['movimenti_articoli_name'],
                         
-                                $campo_nascondi_prodotto => ($input['missing_products_insert']) ? DB_BOOL_FALSE : DB_BOOL_TRUE,
+                                $campo_nascondi_prodotto => (!empty($input['missing_products_insert'])) ? DB_BOOL_FALSE : DB_BOOL_TRUE,
                         
                                 $campo_iva_prodotto => $prodotto['movimenti_articoli_iva_id'],
                                 $campo_tipo_prodotto => '1',

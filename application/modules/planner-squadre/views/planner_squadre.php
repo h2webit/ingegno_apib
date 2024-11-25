@@ -1,5 +1,9 @@
 <script src="<?php echo base_url(); ?>script/global/plugins/sortable/Sortable.min.js?v=2.2.2"></script>
 
+<?php //$this->layout->addModuleJavascript('planner-squadre', 'main.js'); 
+?>
+<?php $this->layout->addModuleStylesheet('planner-squadre', 'main.css'); ?>
+
 <?php
 
 $numOfDays = 5;
@@ -47,9 +51,10 @@ $mostra_cliente = $settings_modulo['impostazioni_planner_squadre_mostra_cliente'
 $mostra_impianto = $settings_modulo['impostazioni_planner_squadre_mostra_impianto'] ?? DB_BOOL_FALSE;
 $where_persone = $settings_modulo['impostazioni_planner_squadre_where_custom_persone'] ?? null;
 $where_automezzi = $settings_modulo['impostazioni_planner_squadre_where_custom_automezzi'] ?? null;
+$mostra_sab_dom = $impostazioni['impostazioni_planner_squadre_mostra_sab_dom'] ?? DB_BOOL_FALSE;
 
 $utenti_permessi = $this->apilib->search('rel_impostazioni_planner_squadre_users');
-if(!empty($utenti_permessi)) {
+if (!empty($utenti_permessi)) {
     $userIds = array_column($utenti_permessi, 'users_id');
     $userIdsString = implode(',', $userIds);
     $query = "users_id IN ($userIdsString)";
@@ -58,27 +63,28 @@ if(!empty($utenti_permessi)) {
 }
 
 //Filtro a monte gli appuntamenti
-$_where_appuntamenti = $where_appuntamenti ? base64_decode($where_appuntamenti) : '';
-
+//$_where_appuntamenti = !empty($where_appuntamenti) ? base64_decode($where_appuntamenti) : '';
+$_where_appuntamenti = isset($where_appuntamenti) && !empty($where_appuntamenti) ? base64_decode($where_appuntamenti) : [];
 
 $users = array_key_map_data($this->apilib->search('users'), 'users_id');
 
 $tecnici = array_key_map_data($this->apilib->search('users', $where_persone), 'users_id');
-$automezzi = array_key_map_data($this->apilib->search('automezzi', $where_automezzi), 'automezzi_id'); // $_appuntamenti = $this->apilib->search('appuntamenti', [
-//     'appuntamenti_giorno >= ' => $days[0],
-//     'appuntamenti_giorno <= ' => $days[$numOfDays],
-//     $_where_appuntamenti,
-// ]);
+$automezzi = array_key_map_data($this->apilib->search('automezzi', $where_automezzi), 'automezzi_id');
 
-$_appuntamenti = $this->db
+$_appuntamenti = $this->apilib->search('appuntamenti', [
+    'appuntamenti_giorno >= ' => $days[0],
+    'appuntamenti_giorno <= ' => $days[$numOfDays],
+    $_where_appuntamenti,
+], 0, null, 'appuntamenti_ora_inizio ASC, appuntamenti_ora_fine ASC');
+;
+/* $_appuntamenti = $this->db
     ->join('customers', 'customers_id = appuntamenti_cliente', 'LEFT')
     ->join('projects', 'projects_id = appuntamenti_impianto', 'LEFT')
     ->get_where('appuntamenti', [
         'appuntamenti_giorno >= ' => $days[0],
         'appuntamenti_giorno <= ' => $days[$numOfDays],
         $_where_appuntamenti,
-    ])->result_array();
-// dump($_appuntamenti);
+    ])->result_array(); */
 
 $appuntamenti = [];
 $squadre = [];
@@ -92,7 +98,7 @@ foreach ($_appuntamenti as $appuntamento) {
 
     if ($day >= date('Y-m-d') && !array_key_exists($appuntamento['appuntamenti_riga'], $squadre)) {
         // SEZIONE PERSONE
-        $appuntamento['appuntamenti_persone'] = (array)$appuntamento['appuntamenti_persone'];
+        $appuntamento['appuntamenti_persone'] = (array) $appuntamento['appuntamenti_persone'];
 
         //Come squadra viene sempre presa quella "da oggi in poi". Le vecchie sono comunque storicizzate nella tabella appuntamneti
         foreach ($appuntamento['appuntamenti_persone'] as $users_id => $nomecognome) {
@@ -107,7 +113,7 @@ foreach ($_appuntamenti as $appuntamento) {
         }
 
         // SEZIONE AUTOMEZZI
-        $appuntamento['appuntamenti_automezzi'] = (array)$appuntamento['appuntamenti_automezzi'];
+        $appuntamento['appuntamenti_automezzi'] = (array) $appuntamento['appuntamenti_automezzi'];
 
         foreach ($appuntamento['appuntamenti_automezzi'] as $automezzo_id => $targa) {
             if (!array_key_exists($automezzo_id, $automezzi)) {
@@ -140,852 +146,117 @@ foreach ($mezzi as $mezzo) {
 } */
 ?>
 
-<style>
-@media print {
-    * {
-        visibility: hidden;
-    }
 
-    /* Show element to print, and any children he has. */
-    .table-week-plan,
-    .table-week-plan * {
-        visibility: initial;
-        font-size: 24px;
-    }
-}
-</style>
-
-<style>
-/*
- * ========================================================
- * Planner 1
- * ========================================================
- */
-#planner-container {
-    overflow-x: auto;
-    position: relative;
-}
-
-#planner-container .nav-tabs,
-#planner-container .nav-pills {
-    margin-bottom: 0;
-}
-
-#planner-container .column {
-    width: 320px;
-    display: table-cell;
-    border-right: 1px solid #999;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-#planner-container .column:first-child {
-    border-left: 1px solid #999;
-}
-
-#planner-container .planner-header {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-}
-
-#planner-container .planner-body {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-}
-
-#planner-container .planner-header .column {
-    color: #e4e4e4;
-    text-align: center;
-    background: #1f1f1f;
-    border-top: 1px solid #999;
-}
-
-#planner-container .planner-header .column.blue {
-    background: #4B8DF8;
-    color: #fff
-}
-
-#planner-container .planner-header .column.purple {
-    background: #852B99;
-}
-
-#planner-container .planner-header .column.yellow {
-    background: #FFB848;
-    color: #fff
-}
-
-#planner-container .planner-header .column.green {
-    background: #35AA47;
-    color: #fff
-}
-
-#planner-container .planner-header .column * {
-    margin: 5px 0;
-    color: inherit
-}
-
-#planner-container .planner-body .column {
-    background: #efefef;
-    padding-top: 10px;
-    padding-bottom: 150px;
-    border-bottom: 1px solid #999;
-    vertical-align: top
-}
-
-#planner-container .sortable-box-placeholder.round-all {
-    border-color: #000;
-}
-
-#planner-container .sortable .task-box {
-    cursor: move
-}
-
-
-
-
-/** Grafica task-box **/
-.task-box {
-    margin-bottom: 10px;
-    border: 1px solid #e4e4e4;
-}
-
-.task-box.blue {
-    background: #4B8DF8
-}
-
-.task-box.purple {
-    background: #852B99
-}
-
-.task-box.yellow {
-    background: #FFB848
-}
-
-.task-box.green {
-    background: #35AA47
-}
-
-.task-box.grey {
-    background: #555555
-}
-
-.task-box.red {
-    background: #FF0000
-}
-
-.task-box>.task-inner {
-    padding: 6px 8px;
-    margin-left: 10px;
-    background: #fff;
-    overflow: hidden;
-    font-size: 11px;
-}
-
-.task-box>.task-inner .left {
-    width: 85%
-}
-
-.task-box>.task-inner .right {
-    width: 15%
-}
-
-.task-box .task-head,
-.task-box .task-body {
-    margin-bottom: 10px
-}
-
-.task-box .task-head .task-title {
-    font-size: 15px
-}
-
-.task-box.blue .task-head .task-title {
-    color: #4B8DF8
-}
-
-.task-box.purple .task-head .task-title {
-    color: #852B99
-}
-
-.task-box.yellow .task-head .task-title {
-    color: #FFB848
-}
-
-.task-box.green .task-head .task-title {
-    color: #35AA47
-}
-
-.task-box.grey .task-head .task-title {
-    color: #555555
-}
-
-.task-box.red .task-head .task-title {
-    color: #FF0000
-}
-
-.task-box .task-head .task-title * {
-    display: block;
-    color: inherit;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.task-box .task-head .project {
-    color: #777;
-    text-decoration: none
-}
-
-.task-box .task-head .project:hover {
-    color: #1f1f1f
-}
-
-.task-box .task-body .text {
-    overflow: hidden;
-    height: 33px;
-    cursor: pointer;
-    font-size: 10px
-}
-
-.task-box .task-foot {
-    overflow: hidden
-}
-
-.task-box .task-foot .dates .expired {
-    color: #E43538
-}
-
-.task-box .task-foot .dates {
-    float: left
-}
-
-.task-box .task-foot .actions {
-    float: right;
-    width: 92px
-}
-
-.task-box .task-foot .actions .btn {
-    padding: 3px 5px;
-    font-size: 5px;
-}
-
-.task-box .photos {
-    float: right;
-    width: 40px;
-    text-align: right
-}
-
-
-.task-box .photos img {
-    margin-bottom: 5px
-}
-
-.warning-icon {
-    width: 15px;
-    margin-top: -3px;
-    margin-left: 10px;
-}
-
-
-
-
-/** Show all */
-#planner-container.limited {
-    max-height: 1500px;
-    overflow-y: hidden;
-}
-
-#planner-container .show-all {
-    display: none;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 20px;
-    padding: 55px 0 55px;
-    border-top: 1px solid #e4e4e4;
-    border-bottom: 1px solid #e4e4e4;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), #FFF)
-}
-
-#planner-container .show-all:hover {
-    color: #4B8DF8;
-    cursor: pointer;
-    border: 1px solid #e4e4e4;
-    background: rgba(255, 255, 255, 0.89);
-}
-
-#planner-container.limited .show-all {
-    display: block;
-}
-
-
-
-
-/** Grafica a portlet **/
-#planner-container .portlet-title {
-    padding: 5px 10px;
-}
-
-#planner-container .portlet-title .caption {
-    margin: 0;
-    font-size: 15px;
-}
-
-#planner-container .portlet-title .caption small {
-    font-size: 70%;
-}
-
-#planner-container .portlet-title .actions {
-    margin-top: 0;
-}
-
-#planner-container .portlet.solid {
-    padding: 0;
-}
-
-#planner-container .portlet.solid .portlet-title {
-    margin-bottom: 1px;
-}
-
-#planner-container .portlet.solid .portlet-body {
-    padding: 10px;
-}
-
-#planner-container .portlet .portlet-body {
-    cursor: pointer
-}
-
-#planner-container .portlet .portlet-body:hover {
-    background: #EEEEEE
-}
-
-
-/*
- * ========================================================
- * Planner settimanale
- * ========================================================
- */
-
-/* Table structure */
-.table-week-plan th {
-    background-color: #1f1f1f;
-    color: #fff;
-    font-size: 13px !important;
-    font-weight: normal !important;
-    text-align: center
-}
-
-.table-week-plan td {
-    background-color: #EFEFEF;
-    border-right: 1px solid #999;
-    border-left: 1px solid #a4a4a4;
-    border-bottom: 1px solid #999;
-    border-top: 1px solid #a4a4a4;
-    width: 290px
-}
-
-.avatar {
-    border-radius: 50%;
-    width: 45px;
-}
-
-.table-week-plan .avatar {
-    width: 67px;
-}
-
-.table-week-plan .tasks-column {
-    width: 275px;
-    margin: 0 auto;
-    min-height: 100px;
-}
-
-
-/* Task Box */
-.table-week-plan .task-item {
-    background-color: #fff;
-    border: 1px solid #e4e4e4;
-    margin-bottom: 8px;
-}
-
-.table-week-plan .task-item.blue {
-    background-color: #4B8DF8
-}
-
-.table-week-plan .task-item.purple {
-    background-color: #852B99
-}
-
-.table-week-plan .task-item.yellow {
-    background-color: #FFB848
-}
-
-.table-week-plan .task-item.green {
-    background-color: #35AA47
-}
-
-.table-week-plan .task-item.grey {
-    background-color: #555555
-}
-
-.table-week-plan .task-item.red {
-    background-color: #FF0000
-}
-
-.table-week-plan .task-item>.task-inner {
-    padding: 5px 8px;
-    margin-left: 5px;
-    background: #fff;
-    overflow: hidden;
-}
-
-
-.table-week-plan .task-item .task-title {
-    font-size: 120%;
-    float: left;
-}
-
-.table-week-plan .task-item.blue .task-title {
-    color: #4B8DF8
-}
-
-.table-week-plan .task-item.purple .task-title {
-    color: #852B99
-}
-
-.table-week-plan .task-item.yellow .task-title {
-    color: #FFB848
-}
-
-.table-week-plan .task-item.green .task-title {
-    color: #35AA47
-}
-
-.table-week-plan .task-item.grey .task-title {
-    color: #555555
-}
-
-.table-week-plan .task-item .task-title a {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
-
-.table-week-plan .task-item .task-title a:hover {
-    text-decoration: underline
-}
-
-
-.table-week-plan .task-item .project {
-    font-size: 105%;
-    color: #777;
-    text-decoration: none
-}
-
-.table-week-plan .task-item .project:hover {
-    color: #1f1f1f
-}
-
-.table-week-plan .task-item .actions {
-    float: left;
-    width: 20px;
-}
-
-.table-week-plan .task-item .actions a {
-    font-size: 85%;
-    text-decoration: none;
-    width: 21px;
-    height: 19px;
-    margin: 1px 0;
-}
-
-.table-week-plan .task-item .actions a.purple {
-    background: rgb(156, 39, 176);
-    color: #ffffff;
-}
-
-
-/* Sortable */
-.portlet-sortable-placeholder {
-    border-color: #bbb;
-    width: 70px;
-    height: 70px;
-
-    background-color: #e3e3e3;
-    z-index: 999999999999;
-    opacity: 0.7;
-}
-
-.table-week-plan .portlet-sortable-placeholder.round-all {
-    border-color: #000;
-    border-radius: 50%;
-}
-
-.table-week-plan .ui-sortable .task-item {
-    cursor: move
-}
-
-
-.container-persone,
-.container-mezzi {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    border: 1px solid #d2d2d2;
-    border-radius: 5px;
-    padding: 5px;
-    min-height: 100px;
-}
-
-/*** circle ***/
-.automezzo,
-.persona {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-bottom: 5px;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #ffffff;
-    font-weight: 500;
-    font-size: 9px;
-    cursor: grab;
-    overflow: hidden;
-}
-
-.automezzosmall,
-.personasmall {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-bottom: 0px;
-    margin-right: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: #ffffff;
-    font-weight: 500;
-    font-size: 12px;
-}
-
-.customer_container {
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    /*border: 2px dashed #d6d6d6;*/
-    position: absolute;
-    /*top: 15px;*/
-    top: 5px;
-    left: 0;
-}
-
-.box-persone {
-    /*border-bottom: 1px dashed #999999;*/
-    border-botton: 1px solid #d9d9d9
-}
-
-.box-persone,
-.box-automezzi {
-    /*width: 250px;*/
-    width: 100%;
-    height: 50%;
-    min-height: 50px;
-    min-width: 200px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 5px;
-}
-
-td.relative {
-    position: relative;
-}
-
-.selected_customer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 10px;
-    background-color: #fefefe;
-    box-shadow: 1px 3px 12px 0px rgb(0 0 0 / 15%);
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.selected_customer div.info {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin: 0;
-}
-
-.selected_customer div.info>strong {
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.selected_customer a.edit_appuntamento {
-    margin-left: 5px;
-}
-
-.selected_customer_customer {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
-}
-
-.selected_customer_info {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.customer_detail,
-.customer_detail:hover {
-    color: inherit;
-}
-
-span.day_reference {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.appuntamento {
-    cursor: grab;
-}
-
-.fixed_container {
-    /* position: fixed;
-        z-index: 999;
-        width: 100%; */
-    z-index: 999;
-    padding-bottom: 20px;
-    background: #f5f5f5;
-}
-
-.sticky {
-    position: fixed;
-    top: 0;
-    left: 50px;
-    width: 100%;
-    padding-top: 20px;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, .25);
-}
-
-.sticky+.calendar_section {
-    padding-top: 200px;
-}
-
-.selected_customer_composizione_squadra {
-    width: 100%;
-}
-
-.container_appuntamenti .selected_customer {
-    margin-top: 35px;
-}
-
-.table-week-plan tbody tr td {
-    height: 140px;
-}
-
-.copia_appuntamento {
-    cursor: pointer;
-}
-
-.copia_appuntamento span {
-    color: #3c8dbc;
-    font-size: 18px;
-}
-
-.custom_label_tecnici {
-    margin-left: 10px;
-}
-
-.note_appuntamento {
-    color: #3c8dbc;
-}
-
-.info .info_actions {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.settings_planner {
-    width: 100%;
-    margin-bottom: 16px;
-}
-
-.intestazione_planner {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.intestazione_planner label,
-.intestazione_planner div {
-    width: 100%;
-}
-
-.settings_planner div.help-block {
-    margin-left: 4px;
-}
-
-.opacity_clicked {
-    opacity: 0.4;
-}
-
-.card_link {
-    transition: all .3s ease-in;
-}
-
-.card_link:hover {
-    color: #0073b7 !important;
-}
-
-.toggleUsers {
-    margin-left: 16px;
-    cursor: pointer;
-}
-
-.container-persone {
-    max-height: 155px;
-    overflow-y: hidden;
-}
-
-.container-persone_visible {
-    max-height: unset;
-    overflow-y: visible;
-}
-
-.container_intestazione {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.icon_intestazione {
-    margin-right: 8px;
-    font-size: 18px;
-}
-</style>
-
+<?php /*
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12 col-md-6">
-            <div class="settings_planner">
-                <div class="form-group">
-                    <div class="intestazione_planner">
-                        <label class="control-label">
-                            Utilizza drag & drop
-                        </label>
-                        <div class="help-block">
-                            Se disabilitato, il planner squadre funzionerà tramite click. Seleziona una persona/automezzo e poi clicca su un appuntamento, in questo modo l'elemento verrà inserito e salvato.
-                        </div>
-                    </div>
-                    <div>
-                        <?php if ($settings_module['appuntamenti_squadre_impostazioni_usa_drag'] == 0) : ?>
-                        <a href="<?php echo base_url("db_ajax/change_value/appuntamenti_squadre_impostazioni/1/appuntamenti_squadre_impostazioni_usa_drag/1"); ?>" class="btn btn-xs btn-success js_link_ajax">
-                            Abilita
-                        </a>
-                        <?php else : ?>
-                        <a href="<?php echo base_url("db_ajax/change_value/appuntamenti_squadre_impostazioni/1/appuntamenti_squadre_impostazioni_usa_drag/0"); ?>" class="btn btn-xs btn-danger js_link_ajax">
-                            Disabilita
-                        </a>
-                        <?php endif; ?>
-                    </div>
+<div class="row">
+   <div class="col-sm-12 col-md-6">
+       <div class="settings_planner">
+           <div class="form-group">
+               <div class="intestazione_planner">
+                   <label class="control-label">
+                       Utilizza drag & drop
+                   </label>
+                   <div class="help-block">
+                       Se disabilitato, il planner squadre funzionerà tramite click. Seleziona una persona/automezzo e poi clicca su un appuntamento, in questo modo l'elemento verrà inserito e salvato.
+                   </div>
+               </div>
+               <div>
+                   <?php if ($settings_module['appuntamenti_squadre_impostazioni_usa_drag'] == 0) : ?>
+<a href="<?php echo base_url("db_ajax/change_value/appuntamenti_squadre_impostazioni/1/appuntamenti_squadre_impostazioni_usa_drag/1"); ?>" class="btn btn-xs btn-success js_link_ajax">
+    Abilita
+</a>
+<?php else : ?>
+<a href="<?php echo base_url("db_ajax/change_value/appuntamenti_squadre_impostazioni/1/appuntamenti_squadre_impostazioni_usa_drag/0"); ?>" class="btn btn-xs btn-danger js_link_ajax">
+    Disabilita
+</a>
+<?php endif; ?>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-12 col-md-6">
+    <div class="settings_planner">
+        <div class="form-group">
+            <div class="intestazione_planner">
+                <label class="control-label">
+                    Imposta utenti da visualizzare
+                </label>
+                <div class="help-block">
+                    Qui si possono specificare gli utenti da visualizzare nella selezione del planner
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="settings_planner">
-                <div class="form-group">
-                    <div class="intestazione_planner">
-                        <label class="control-label">
-                            Imposta utenti da visualizzare
-                        </label>
-                        <div class="help-block">
-                            Qui si possono specificare gli utenti da visualizzare nella selezione del planner
-                        </div>
-                    </div>
-                    <div>
-                        <a href="<?php echo base_url("get_ajax/modal_form/imposta-utenti-planner?_size=large"); ?>" class="btn btn-xs btn-primary js_open_modal">Imposta utenti</a>
-                    </div>
-                </div>
+            <div>
+                <a href="<?php echo base_url("get_ajax/modal_form/imposta-utenti-planner?_size=large"); ?>" class="btn btn-xs btn-primary js_open_modal">Imposta utenti</a>
             </div>
         </div>
     </div>
 </div>
+</div>
+</div>
+*/ ?>
+
+
+<section class="labels_container">
+    <div>
+        <a href="javascript:void(0);" class="label_settings toggle_fullscreen" data-toggle="tooltip" title="Fullscreen" data-placement="left">
+            <i class="fas fa-compress"></i>
+        </a>
+    </div>
+    <div>
+        <a href="<?php echo base_url("get_ajax/layout_modal/personalizza_planner_squadre?_size=large"); ?>" class="js_open_modal label_settings" data-toggle="tooltip" title="Impostazioni" data-placement="left">
+            <i class="fas fa-cogs"></i>
+        </a>
+    </div>
+    <div>
+        <a class="js_open_selection label_settings" data-toggle="tooltip" title="Persone e mezzi" data-placement="left">
+            <i class="fas fa-users"></i>
+        </a>
+    </div>
+</section>
 
 <section class="fixed_container" id="myHeader">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-sm-12">
+                <div class="pull-right close_persone_mezzi">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="col-sm-12">
                 <h3 class="text-center container_intestazione">
-                    <span class="fas fa-users icon_intestazione"></span>Utenti
+                    <span class="fas fa-users icon_intestazione"></span><span class="sidebar_section_title">Utenti</span>
                     <span class="btn btn-xs btn-primary toggleUsers">Mostra tutti</span>
                 </h3>
                 <div class="container-persone">
-                    <?php if (empty($tecnici)) : ?>
+                    <?php if (empty($tecnici)): ?>
                     <div class="text-red">Nessun utente da visualizzare</div>
-                    <?php else : ?>
+                    <?php else: ?>
                     <div style="display:flex;flex-direction: row;flex-wrap: wrap;" id="tecnici">
-                        <?php foreach ($tecnici as $persona_id => $persona) : ?>
-                        <div class="persona bg-primary js_selected_persona" data-users_id="<?php echo $persona['users_id']; ?>">
-                            <?php if ($persona['users_avatar']) : ?>
+                        <?php foreach ($tecnici as $persona_id => $persona): ?>
+                        <div class="persona container_single_persona bg-primary js_selected_persona ui-sortable-handle" data-users_id="<?php echo $persona['users_id']; ?>">
+                            <?php if ($persona['users_avatar']): ?>
                             <img class="avatar" src="<?php echo base_url("uploads/" . $persona['users_avatar']); ?>" <?php echo $planner_squadre_mode == 0 ? 'draggable="false"' : ''; ?> title="<?php echo $persona['users_first_name'] . " " . $persona['users_last_name']; ?>" data-toggle="tooltip" data-placement="right" />
-                            <?php else : ?>
+                            <?php else: ?>
                             <img class="avatar" src="<?php echo base_url("images/user.png"); ?>" <?php echo $planner_squadre_mode == 0 ? 'draggable="false"' : ''; ?> title="<?php echo $persona['users_first_name'] . " " . $persona['users_last_name']; ?>" data-toggle="tooltip" data-placement="right" />
                             <?php endif; ?>
                         </div>
                         <?php endforeach; ?>
                     </div>
                     <?php endif; ?>
-
-                    <script>
-                    $(function() {
-                        $('.btn-showall').on('click', function() {
-                            var this_btn = $(this);
-                            var impiegati = $('#impiegati');
-
-                            if (impiegati.is(':visible')) {
-                                impiegati.css('display', 'none')
-                            } else {
-                                impiegati.css('display', 'flex')
-                            }
-                        })
-                    })
-                    </script>
                 </div>
             </div>
-            <div class="col-md-5">
-                <h3 class="text-center">Automezzi</h3>
+            <div class="col-sm-12">
+                <h3 class="text-center">
+                    <span class="fas fa-car icon_intestazione"></span><span class="sidebar_section_title">Automezzi</span>
+                </h3>
                 <div class="container-mezzi">
-                    <?php if (empty($automezzi)) : ?>
+                    <?php if (empty($automezzi)): ?>
                     <div class="text-red">Nessun automezzo da visualizzare</div>
-                    <?php else : ?>
-                    <?php foreach ($automezzi as $automezzo_id => $automezzo) : ?>
-                    <div class="automezzo bg-red js_selected_automezzo" data-automezzi_id="<?php echo $automezzo['automezzi_id']; ?>">
-                        <div class="text-center"><?php echo $automezzo['automezzi_modello']; ?></div>
+                    <?php else: ?>
+                    <?php foreach ($automezzi as $automezzo_id => $automezzo): ?>
+                    <div class="automezzo container_single_automezzo bg-automezzo js_selected_automezzo ui-sortable-handle" data-automezzi_id="<?php echo $automezzo['automezzi_id']; ?>">
+                        <div class="text-center"><?php echo strlen($automezzo['automezzi_modello']) > 9 ? substr($automezzo['automezzi_modello'], 0, 8) . '...' : $automezzo['automezzi_modello']; ?></div>
                         <div class="text-center automezzo_targa"><?php echo $automezzo['automezzi_targa']; ?></div>
                     </div>
                     <?php endforeach; ?>
@@ -1026,69 +297,104 @@ span.day_reference {
             <table id="week-planner" class="table table-condensed table-week-plan">
                 <thead>
                     <tr>
-                        <?php foreach ($days as $k => $day) : ?>
                         <?php
+                        foreach ($days as $k => $day):
                             $tecnici_impegnati = [];
+                            $automezzi_impegnati = [];
 
                             if (!empty($appuntamenti[$day])) {
-                                foreach ($appuntamenti[$day] as $key => $_appuntamenti) {
-                                    foreach ($_appuntamenti as $key => $appuntamento) {
+                                foreach ($appuntamenti[$day] as $_appuntamenti) {
+                                    foreach ($_appuntamenti as $appuntamento) {
+                                        // Se ci sono tecnici associati all'appuntamento, aggiungili all'array
                                         if (!empty($appuntamento['appuntamenti_persone'])) {
-                                            foreach ($appuntamento['appuntamenti_persone'] as $tecnico_id => $tecnico) {
-                                                $tecnici_impegnati[$tecnico_id] = $tecnico;
-                                            }
+                                            $tecnici_impegnati = array_merge($tecnici_impegnati, $appuntamento['appuntamenti_persone']);
+                                        }
+                                        // Se ci sono automezzi associati all'appuntamento, aggiungili all'array
+                                        if (!empty($appuntamento['appuntamenti_automezzi'])) {
+                                            $automezzi_impegnati = array_merge($automezzi_impegnati, $appuntamento['appuntamenti_automezzi']);
                                         }
                                     }
                                 }
+                                // Rimuovi i duplicati (se un tecnico o automezzo può essere assegnato più volte)
+                                $tecnici_impegnati = array_unique($tecnici_impegnati, SORT_REGULAR);
+                                $automezzi_impegnati = array_unique($automezzi_impegnati, SORT_REGULAR);
                             }
-                            //debug($tecnici_impegnati);
+
+                            // N° tecnici ed automezzi impegnati
+                            $numero_tecnici_impegnati = count($tecnici_impegnati);
+                            $numero_automezzi_impegnati = count($automezzi_impegnati);
                             ?>
-                        <th><span class="day_reference"><?php echo $weekMap[$k % 6] . ', &nbsp; ' . dateFormat($day, 'd.m'); ?></span> <span class="label label-primary custom_label_tecnici" data-toggle="tooltip" title="Tecnici impeganti"><?php echo count($tecnici_impegnati); ?></span></th>
+                        <th>
+                            <div style="display: flex; justify-content: space-around; align-items: baseline; gap: 12px;">
+                                <span class="day_reference"><?php echo substr($weekMap[$k % 6], 0, 3) . '&nbsp;' . dateFormat($day, 'd'); ?></span>
+                                <div>
+                                    <span class="custom_label_tecnici"><i class="fas fa-users"></i><?php echo $numero_tecnici_impegnati; ?></span>
+                                    <span class="custom_label_tecnici"><i class="fas fa-car"></i><?php echo $numero_automezzi_impegnati; ?></span>
+                                </div>
+                                <span>
+                                    <a href="<?php echo base_url("get_ajax/modal_form/new-appuntamenti-cliente?appuntamenti_giorno=$day"); ?>" data-toggle="tooltip" title="Aggiungi appuntamento" class="js_aggiungi_cliente js_open_modal btn btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </th>
                         <?php endforeach; ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for ($i = 1; $i <= 10; $i++) : ?>
+                    <?php for ($i = 1; $i <= 20; $i++): ?>
                     <tr data-riga="<?php echo $i; ?>">
-                        <?php foreach ($days as $k => $day) : ?>
+                        <?php foreach ($days as $k => $day): ?>
 
                         <td class="relative container_appuntamenti" data-day="<?php echo $day; ?>" data-riga="<?php echo $i; ?>" style="min-width: 250px;">
-                            <div class="customer_container">
-                                <a href="javascript:void(0);" data-url="<?php echo base_url("get_ajax/modal_form/new-appuntamenti-cliente?appuntamenti_giorno=$day"); ?>" data-toggle="tooltip" title="Aggiungi appuntamento" class="js_aggiungi_cliente btn btn-sm">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            </div>
-                            <?php //debug($appuntamenti, true); ?>
-                            <?php if (!empty($appuntamenti[$day][$i])) : ?>
-                            <?php foreach ($appuntamenti[$day][$i] as $appuntamento) : ?>
+                            <?php if (!empty($appuntamenti[$day][$i])): ?>
+                            <?php foreach ($appuntamenti[$day][$i] as $appuntamento): ?>
+                            <?php //debug($appuntamento, true); 
+                                                            ?>
 
-                            <?php //debug($appuntamento, true);  ?>
-
-                            <div class="js_card_clicked selected_customer appuntamento" data-appuntamento_id="<?php echo $appuntamento['appuntamenti_id']; ?>" data-previous_riga="<?php echo $i; ?>">
+                            <div class="selected_customer appuntamento" data-appuntamento_id="<?php echo $appuntamento['appuntamenti_id']; ?>" data-previous_riga="<?php echo $i; ?>">
                                 <div class="selected_customer_customer">
-
-                                    <div class="selected_customer_composizione_squadra">
+                                    <div class="js_card_clicked selected_customer_composizione_squadra">
                                         <!-- Squadra - persone -->
-                                        <div class="box-persone">
-                                            <?php if (!empty($appuntamento['appuntamenti_persone'])) : ?>
-                                            <?php foreach ($appuntamento['appuntamenti_persone'] as $users_id => $name) : ?>
+                                        <div class="box-persone ui-sortable-handle">
+                                            <?php
+                                                            if (!empty($appuntamento['appuntamenti_persone'])) {
+                                                                $total_persons = count($appuntamento['appuntamenti_persone']);
+                                                                $display_limit = 2;
+                                                                $j = 0;
 
+                                                                foreach ($appuntamento['appuntamenti_persone'] as $users_id => $name) {
+                                                                    if ($j < $display_limit) {
+                                                                        $avatar_src = $users[$users_id]['users_avatar']
+                                                                            ? base_url("uploads/" . $users[$users_id]['users_avatar'])
+                                                                            : base_url("images/user.png");
+
+                                                                        $user_name = $users[$users_id]['users_first_name'] . " " . $users[$users_id]['users_last_name'];
+                                                                        ?>
                                             <div class="persona bg-primary ui-sortable-handle" data-users_id="<?php echo $users_id; ?>" style="opacity: 1;" data-previous_riga="<?php echo $i; ?>" data-appuntamento_id="<?php echo $appuntamento['appuntamenti_id']; ?>">
-                                                <?php if ($users[$users_id]['users_avatar']) : ?>
-                                                <img class="avatar" src="<?php echo base_url("uploads/" . $users[$users_id]['users_avatar']); ?>" <?php echo $planner_squadre_mode == 0 ? 'draggable="false"' : ''; ?> title="<?php echo $users[$users_id]['users_first_name'] . " " . $users[$users_id]['users_last_name']; ?>" data-toggle="tooltip" data-placement="right" />
-                                                <?php else : ?>
-                                                <img class="avatar" src="<?php echo base_url("images/user.png"); ?>" <?php echo $planner_squadre_mode == 0 ? 'draggable="false"' : ''; ?> title="<?php echo @$users[$users_id]['users_first_name'] . " " . @$users[$users_id]['users_last_name']; ?>" data-toggle="tooltip" data-placement="right" />
-                                                <?php endif; ?>
-
+                                                <img class="avatar" src="<?php echo $avatar_src; ?>" <?php echo $planner_squadre_mode == 0 ? 'draggable="false"' : ''; ?> title="<?php echo $user_name; ?>" data-toggle="tooltip" data-placement="right" />
                                             </div>
-                                            <?php endforeach; ?>
-                                            <?php endif; ?>
+                                            <?php
+                                                                    }
+                                                                    $j++;
+                                                                }
+
+                                                                if ($j > $display_limit) {
+                                                                    ?>
+                                            <div class="persona rimanenti avatar-rimanenti">
+                                                +<?php echo ($j - $display_limit); ?>
+                                            </div>
+                                            <?php
+                                                                }
+                                                            }
+                                                            ?>
                                         </div>
+
                                         <!-- Squadra - mezzi -->
-                                        <div class="box-automezzi">
-                                            <?php if (!empty($appuntamento['appuntamenti_automezzi'])) : ?>
-                                            <?php foreach ($appuntamento['appuntamenti_automezzi'] as $mezzo_id => $mezzo) : ?>
-                                            <div class="automezzo bg-red ui-sortable-handle" data-automezzi_id="<?php echo $mezzo_id; ?>" style="opacity: 1;" data-previous_riga="<?php echo $i; ?>" data-appuntamento_id="<?php echo $appuntamento['appuntamenti_id']; ?>">
+                                        <div class="box-automezzi ui-sortable-handle">
+                                            <?php if (!empty($appuntamento['appuntamenti_automezzi'])): ?>
+                                            <?php foreach ($appuntamento['appuntamenti_automezzi'] as $mezzo_id => $mezzo): ?>
+                                            <div class="automezzo bg-automezzo ui-sortable-handle" data-automezzi_id="<?php echo $mezzo_id; ?>" style="opacity: 1;" data-previous_riga="<?php echo $i; ?>" data-appuntamento_id="<?php echo $appuntamento['appuntamenti_id']; ?>">
                                                 <div class="text-center"><?php echo $automezzi[$mezzo_id]['automezzi_modello']; ?></div>
                                                 <div class="text-center"><?php echo $automezzi[$mezzo_id]['automezzi_targa']; ?></div>
                                             </div>
@@ -1098,21 +404,24 @@ span.day_reference {
                                     </div>
                                     <div class="info">
                                         <strong>
-                                            <?php if($mostra_cliente == DB_BOOL_TRUE): ?>
-                                            <a target="blank" href="<?php echo base_url("main/layout/customer-detail/" . $appuntamento['appuntamenti_cliente']); ?>" class="text-black card_link">
-                                                <?php echo ($appuntamento['customers_company'] ?? $appuntamento['customers_name'] . ' ' . $appuntamento['customers_last_name']); ?>
-                                            </a>
-                                            <?php endif; ?>
-
-                                            <?php if (!empty($appuntamento['appuntamenti_impianto']) && $mostra_cliente == DB_BOOL_TRUE) : ?>
-                                            <a target="_blank" href="<?php echo base_url("main/layout/dettaglio_progetto_commessa/" . $appuntamento['appuntamenti_impianto']); ?>" class="text-black card_link">
+                                            <?php if (!empty($appuntamento['appuntamenti_impianto']) && $mostra_cliente == DB_BOOL_TRUE): ?>
+                                            <a target="_blank" href="<?php echo base_url("main/layout/dettaglio_progetto_commessa/" . $appuntamento['appuntamenti_impianto']); ?>" class="text-black card_link card_link_impianto">
                                                 <?php echo $appuntamento['projects_name']; ?>
                                             </a>
                                             <?php endif; ?>
+                                            <?php if ($mostra_cliente == DB_BOOL_TRUE): ?>
+                                            <a target="blank" href="<?php echo base_url("main/layout/customer-detail/" . $appuntamento['appuntamenti_cliente']); ?>" class="text-black card_link card_link_customer">
+                                                <?php
+                                                                    $customer_name = $appuntamento['customers_full_name'] ?? $appuntamento['customers_name'] . ' ' . $appuntamento['customers_last_name'];
+                                                                    echo (strlen($customer_name) > 25) ? "{$appuntamento['appuntamenti_ora_inizio']} - {$appuntamento['appuntamenti_ora_fine']} " . substr($customer_name, 0, 25) . '...' : "{$appuntamento['appuntamenti_ora_inizio']} - {$appuntamento['appuntamenti_ora_fine']} " . $customer_name;
+                                                                    ?>
+                                            </a>
+                                            <?php endif; ?>
 
-                                            <?php if (!empty($appuntamento['appuntamenti_note'])) : ?>
+
+                                            <?php if (!empty($appuntamento['appuntamenti_note'])): ?>
                                             <p title="<?php echo strip_tags($appuntamento['appuntamenti_note']); ?>" data-toggle="tooltip" data-placement="bottom" style="margin-bottom: 5px; font-weight: 600; font-size: 12px;">
-                                                <?php echo strlen($appuntamento['appuntamenti_note']) > 31 ? substr($appuntamento['appuntamenti_note'], 0, 30).'...' : $appuntamento['appuntamenti_note']; ?>
+                                                <?php echo strlen($appuntamento['appuntamenti_note']) > 31 ? substr($appuntamento['appuntamenti_note'], 0, 30) . '...' : $appuntamento['appuntamenti_note']; ?>
                                             </p>
                                             <?php endif; ?>
                                         </strong>
@@ -1121,7 +430,6 @@ span.day_reference {
                                             <a class="js_open_modal label bg-blue" href="<?php echo base_url("get_ajax/modal_form/edit-appuntamento-cliente/{$appuntamento['appuntamenti_id']}"); ?>">
                                                 Modifica
                                             </a>
-
                                             <a href="<?php echo base_url('planner-squadre/planner/duplicaAppuntamento/' . $appuntamento['appuntamenti_id']); ?>" class="js_copia_appuntamento copia_appuntamento label bg-blue">
                                                 Copia
                                             </a>
@@ -1130,13 +438,14 @@ span.day_reference {
 
                                 </div>
                                 <div class="selected_customer_info" style="display:none;">
-                                    <?php foreach ((array)$appuntamento['appuntamenti_persone'] as $id => $persona) :   $expl = explode(' ', $persona);                                         ?>
+                                    <?php foreach ((array) $appuntamento['appuntamenti_persone'] as $id => $persona):
+                                                        $expl = explode(' ', $persona); ?>
                                     <div class="personasmall bg-primary" data-users_id="<?php echo $id; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $persona; ?>">
                                         <div class="text-center"><?php echo substr($expl[0], 0, 1); ?>.<?php echo substr($expl[1], 0, 1); ?>.</div>
                                     </div>
                                     <?php endforeach; ?>
-                                    <?php foreach ((array)$appuntamento['appuntamenti_automezzi'] as $id => $automezzo) :                                          ?>
-                                    <div class="automezzosmall bg-red" data-automezzi_id="<?php echo $id; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $automezzo; ?>">
+                                    <?php foreach ((array) $appuntamento['appuntamenti_automezzi'] as $id => $automezzo): ?>
+                                    <div class="automezzosmall bg-automezzo" data-automezzi_id="<?php echo $id; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $automezzo; ?>">
                                         <div class="text-center"><?php echo explode(' ', $automezzo)[0]; ?></div>
                                     </div>
                                     <?php endforeach; ?>
@@ -1158,6 +467,11 @@ span.day_reference {
     </div>
 </section>
 
+
+
+<script>
+const plannerMode = <?php echo $planner_squadre_mode ?>;
+</script>
 
 
 <script>
@@ -1207,18 +521,21 @@ var aggiornaAppuntamento = function(id, day, riga) {
         success: function(ajax_response) {
             console.log('Salvato!');
             //salvaRiga(riga);
-
+            toast('', 'success', 'Appuntamento aggiornato', 'toastr', false);
         }
     });
 }
-var aggiungiMezzoAppuntamento = function(id, mezzo_id) {
+var aggiungiMezzoAppuntamento = function(id, mezzo_id, ui) {
     $.ajax({
         method: 'get',
         url: base_url + "planner-squadre/planner/aggiungiMezzoAppuntamento/" + id + "/" + mezzo_id,
 
         success: function(ajax_response) {
             console.log('Salvato!');
-
+            toast('', 'success', 'Mezzo aggiunto', 'toastr', false);
+            //ui.item.remove();
+            // così lo rimuove da dove l'ho tolto, se sono in un'altra card
+            // se invece lo sto trascinando dal container principale lo rimuove subito
         }
     });
 };
@@ -1229,7 +546,7 @@ var aggiungiPersonaAppuntamento = function(id, persona_id) {
 
         success: function(ajax_response) {
             console.log('Salvato!');
-
+            toast('', 'success', 'Operatore aggiunto', 'toastr', false);
         }
     });
 };
@@ -1241,6 +558,7 @@ var rimuoviMezzoAppuntamento = function(id, mezzo_id, dom_automezzo) {
         success: function(ajax_response) {
             console.log('Salvato!');
             dom_automezzo && dom_automezzo.remove();
+            toast('', 'success', 'Mezzo rimosso', 'toastr', false);
         }
     });
 };
@@ -1252,6 +570,7 @@ var rimuoviPersonaAppuntamento = function(id, persona_id, dom_persona) {
         success: function(ajax_response) {
             console.log('Salvato!');
             dom_persona && dom_persona.remove();
+            toast('', 'success', 'Persona rimossa', 'toastr', false);
         }
     });
 };
@@ -1290,117 +609,211 @@ var salvaRiga = function(riga) {
             }); */
 };
 
+function handleUserToggle() {
+    $(".toggleUsers").on("click", function() {
+        const toggler = $(this);
+        const togglerContainer = toggler.parent();
+        const target = togglerContainer.siblings(".container-persone");
+
+        target.toggleClass("container-persone_visible");
+
+        toggler.text(target.hasClass("container-persone_visible") ? "Mostra di meno" : "Mostra tutti");
+    });
+}
+
 
 
 $(function() {
-    const plannerMode = <?php echo $planner_squadre_mode; ?>;
+    $(".content-header.page-title").hide();
 
-    //MODALITA DRAG AND DROP
-    if (plannerMode) {
-        /************ CONTAINER PERSONE ****************/
+    /* if (plannerMode) {
+        initializeDragAndDrop();
+    } else {
+        initializeClickMode();
+    } */
+
+    handleUserToggle();
+
+    $(".btn-showall").on("click", function() {
+        var this_btn = $(this);
+        var impiegati = $("#impiegati");
+
+        if (impiegati.is(":visible")) {
+            impiegati.css("display", "none");
+        } else {
+            impiegati.css("display", "flex");
+        }
+    });
+
+    //$(".js_open_selection, .js_card_clicked").on("click", function(event) {
+    $(".js_open_selection").on("click", function(event) {
+        // Se il click non è su una persona o automezzo, apri la sidebar
+        selectedPersona = null;
+        selectedMezzo = null;
+
+        if (!$(event.target).closest('.persona, .automezzo').length) {
+            $(".fixed_container").css({
+                left: '0px', // 20px di margine
+                top: '154px', // Posiziona verticalmente allineato alla tabella
+                right: "auto", // Rimuovi il posizionamento a destra
+                position: 'absolute' // Assicurati che sia posizionato rispetto al documento
+            });
+
+            $(".fixed_container").show(500, "easeInOutQuad");
+        }
+    });
+
+    $(".close_persone_mezzi").on("click", function() {
+        selectedPersona = null;
+        selectedMezzo = null;
+        $(".fixed_container").hide(500, "easeInOutQuad");
+    });
+
+    $(".toggle_fullscreen").on("click", function() {
+        var elem = document.documentElement;
+
+        if (!document.fullscreenElement) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    });
+
+
+
+    const plannerMode = <?php echo $planner_squadre_mode; ?>;
+    var selectedPersona = null;
+    var selectedMezzo = null;
+
+    function initializePlanner() {
+        if (plannerMode) {
+            initializeDragAndDrop();
+        } else {
+            initializeClickMode();
+        }
+    }
+
+    function initializeDragAndDrop() {
         $('.container-persone').sortable({
             connectWith: '.box-persone',
             items: '.persona',
-            opacity: 0.8,
+            opacity: 0.7,
             forceHelperSize: true,
             placeholder: 'portlet-sortable-placeholder round-all',
             forcePlaceholderSize: true,
             tolerance: "pointer",
+            cancel: ".avatar-rimanenti",
         }).on('sortupdate', function(event, ui) {
             if (this === ui.item.parent().parent()[0]) {
-                var riga_precedente = ui.item.data('previous_riga');
+                var rigaPrecedente = ui.item.data('previous_riga');
+                var rigaId = ui.item.closest('tr').data('riga');
+                ui.item.data('previous_riga', rigaId);
+                var personaId = ui.item.data('users_id');
+                var appuntamentoId = ui.item.data('appuntamento_id');
 
-                var riga_id = ui.item.closest('tr').data('riga');
-                ui.item.data('previous_riga', riga_id);
-                // salvaRiga(riga_precedente);
-                // salvaRiga(riga_id);
-                var persona_id = ui.item.data('users_id');
-                var appuntamento_id = ui.item.data('appuntamento_id');
-
-                rimuoviPersonaAppuntamento(appuntamento_id, persona_id);
+                rimuoviPersonaAppuntamento(appuntamentoId, personaId);
+                //ui.item.remove(); // Remove the item from the previous card
             }
         });
+
         $('.container-mezzi').sortable({
             connectWith: '.box-automezzi',
             items: '.automezzo',
-            opacity: 0.8,
+            opacity: 0.7,
             forceHelperSize: true,
             placeholder: 'portlet-sortable-placeholder round-all',
             forcePlaceholderSize: true,
             tolerance: "pointer",
+            cancel: ".avatar-rimanenti",
         }).on('sortupdate', function(event, ui) {
             if (this === ui.item.parent()[0]) {
-                var riga_precedente = ui.item.data('previous_riga');
+                var rigaPrecedente = ui.item.data('previous_riga');
+                var rigaId = ui.item.closest('tr').data('riga');
+                ui.item.data('previous_riga', rigaId);
+                var mezzoId = ui.item.data('automezzi_id');
+                var appuntamentoId = ui.item.data('appuntamento_id');
 
-                var riga_id = ui.item.closest('tr').data('riga');
-                ui.item.data('previous_riga', riga_id);
-                console.log(ui.item.parent());
-                // salvaRiga(riga_precedente);
-                // salvaRiga(riga_id);
-                var mezzo_id = ui.item.data('automezzi_id');
-                var appuntamento_id = ui.item.data('appuntamento_id');
-
-                rimuoviMezzoAppuntamento(appuntamento_id, mezzo_id);
+                rimuoviMezzoAppuntamento(appuntamentoId, mezzoId);
+                //ui.item.remove(); // Remove the item from the previous card
             }
         });
 
-
-        /************ CONTAINER MEZZI ****************/
         $('.box-persone').sortable({
             connectWith: ['.box-persone', '.container-persone'],
             items: '.persona',
-            opacity: 0.8,
+            opacity: 0.7,
             forceHelperSize: true,
             placeholder: 'portlet-sortable-placeholder round-all',
             forcePlaceholderSize: true,
             tolerance: "pointer",
+            cancel: ".avatar-rimanenti",
         }).on('sortupdate', function(event, ui) {
             if (this === ui.item.parent()[0]) {
-                var riga_precedente = ui.item.data('previous_riga');
+                var rigaId = ui.item.closest('tr').data('riga');
+                var appuntamentoId = $(event.currentTarget.closest('.appuntamento')).data('appuntamento_id');
+                ui.item.data('appuntamento_id', appuntamentoId);
+                var personaId = ui.item.data('users_id');
 
-                var riga_id = ui.item.closest('tr').data('riga');
-                ui.item.data('previous_riga', riga_id);
-                // salvaRiga(riga_precedente);
-                // salvaRiga(riga_id);
-                var appuntamento_id = $(event.currentTarget.closest('.appuntamento')).data('appuntamento_id');
-                ui.item.data('appuntamento_id', appuntamento_id);
-                var persona_id = ui.item.data('users_id');
+                const appointmentIdPrecedente = ui.item.data('appuntamento_id');
+                const appointmentIdCorrente = $(event.currentTarget.closest('.appuntamento')).data('appuntamento_id');
+                //console.log(appointmentIdPrecedente, appointmentIdCorrente);
 
-                aggiungiPersonaAppuntamento(appuntamento_id, persona_id);
-                $('#tecnici').prepend(ui.item.clone());
+                // Aggiungo solo se sto effettivamente cambiando appuntamento
+                if (appointmentIdPrecedente !== appointmentIdCorrente) {
+                    aggiungiPersonaAppuntamento(appuntamentoId, personaId);
+                    //ui.item.remove(); // Remove the item from the previous card
+                }
             }
         });
 
         $('.box-automezzi').sortable({
             connectWith: ['.box-automezzi', '.container-mezzi'],
             items: '.automezzo',
-            opacity: 0.8,
+            opacity: 0.7,
             forceHelperSize: true,
             placeholder: 'portlet-sortable-placeholder round-all',
             forcePlaceholderSize: true,
             tolerance: "pointer",
+            cancel: ".avatar-rimanenti",
         }).on('sortupdate', function(event, ui) {
             if (this === ui.item.parent()[0]) {
-                var riga_precedente = ui.item.data('previous_riga');
+                var rigaId = ui.item.closest('tr').data('riga');
+                var appuntamentoId = $(event.currentTarget.closest('.appuntamento')).data('appuntamento_id');
+                ui.item.data('appuntamento_id', appuntamentoId);
+                var mezzoId = ui.item.data('automezzi_id');
 
-                var riga_id = ui.item.closest('tr').data('riga');
-                ui.item.data('previous_riga', riga_id);
+                const appointmentIdPrecedente = ui.item.data('appuntamento_id');
+                const appointmentIdCorrente = $(event.currentTarget.closest('.appuntamento')).data('appuntamento_id');
+                //console.log(appointmentIdPrecedente, appointmentIdCorrente);
 
-                var appuntamento_id = $(event.currentTarget.closest('.appuntamento')).data('appuntamento_id');
-                ui.item.data('appuntamento_id', appuntamento_id);
-
-                var mezzo_id = ui.item.data('automezzi_id');
-
-                aggiungiMezzoAppuntamento(appuntamento_id, mezzo_id);
-                $('.container-mezzi').prepend(ui.item.clone());
+                // Aggiungo solo se sto effettivamente cambiando appuntamento
+                //if (appointmentIdPrecedente !== appointmentIdCorrente) {
+                aggiungiMezzoAppuntamento(appuntamentoId, mezzoId, ui);
+                //ui.item.remove(); // Remove the item from the previous card
+                //}
             }
         });
 
-        //Rendo draggabili anche gli appuntamenti dentro il planner
         $('.container_appuntamenti').sortable({
             connectWith: ['.container_appuntamenti'],
             items: '.appuntamento',
-            opacity: 0.8,
+            opacity: 0.7,
             forceHelperSize: true,
             placeholder: 'portlet-sortable-placeholder',
             forcePlaceholderSize: true,
@@ -1408,153 +821,177 @@ $(function() {
             delay: 500
         }).on('sortupdate', function(event, ui) {
             if (this === ui.item.parent()[0]) {
-                //console.log('sortupdate appuntamento');
-                //console.log(event.currentTarget);
                 var day = $(event.currentTarget).data('day');
                 var riga = $(event.currentTarget).data('riga');
+                var appuntamentoId = ui.item.data('appuntamento_id');
 
-                var appuntamento_id = ui.item.data('appuntamento_id');
-
-                //alert('sposto appuntamento ' + appuntamento_id);
-
-                aggiornaAppuntamento(appuntamento_id, day, riga);
-            }
-        });
-
-    } else {
-        //MODALITA CLICK
-
-        /**
-         * ! Selezione persona
-         */
-        const container_persone = $('.container-persone');
-        var selected_persona = null;
-        $('.js_selected_persona', container_persone).on('click', function() {
-            //console.log($(this));
-            selected_persona = $(this);
-            selected_persona.addClass('opacity_clicked');
-        });
-        /**
-         * ! Click su card, devo incollare persona 
-         */
-        var card_clicked = null;
-        $('.js_card_clicked').on('click', function() {
-            card_clicked = $(this);
-            if (selected_persona) {
-                var riga_id = card_clicked.closest('tr').data('riga');
-                var persona_id = selected_persona.data('users_id');
-                var appuntamento_id = card_clicked.data('appuntamento_id');
-
-                aggiungiPersonaAppuntamento(appuntamento_id, persona_id);
-
-                var cloned_persona = selected_persona.clone(false, true);
-                cloned_persona.attr('data-appuntamento_id', appuntamento_id);
-                cloned_persona.attr('data-previous_riga', riga_id);
-                cloned_persona.removeClass('opacity_clicked');
-
-                var card_container_automezzi = card_clicked.find('.box-persone');
-                card_container_automezzi.append(cloned_persona);
-
-                selected_persona.removeClass('opacity_clicked');
-                selected_persona = null;
-                card_clicked = null;
-            }
-        });
-        /**
-         * ! Rimozione persona dall'appuntamento
-         */
-        const js_card_clicked = $('.js_card_clicked');
-        //        $('.persona', '.js_card_clicked').on('click', function() {
-        $('.js_card_clicked').on('click', '.persona', function() {
-            //console.log($(this))
-            var persona_clicked = $(this);
-            card_clicked = persona_clicked.closest('.js_card_clicked');
-
-            if (persona_clicked) {
-                var riga_id = card_clicked.closest('tr').data('riga');
-                card_clicked.data('previous_riga', riga_id);
-
-                var persona_id = persona_clicked.data('users_id');
-                var appuntamento_id = card_clicked.data('appuntamento_id');
-
-                var riferimento_persona = persona_clicked.find('img.avatar').data('original-title');
-
-                x = confirm('Vuoi rimuovere ' + riferimento_persona + ' dall\'appuntamento?');
-                if (x) {
-                    rimuoviPersonaAppuntamento(appuntamento_id, persona_id, persona_clicked);
-                }
-
-                riga_id = null;
-                persona_clicked = null;
-                card_clicked = null;
-                riferimento_persona = null;
-            }
-        });
-
-
-        /**
-         * ! Selezione automezzo
-         */
-        const container_mezzi = $('.container-mezzi');
-        var selected_automezzo = null;
-        $('.js_selected_automezzo', container_mezzi).on('click', function() {
-            //console.log($(this));
-            selected_automezzo = $(this);
-            selected_automezzo.addClass('opacity_clicked');
-        });
-        /**
-         * ! Click su card, devo incollare automezzo 
-         */
-        var card_clicked = null;
-        $('.js_card_clicked').on('click', function() {
-            card_clicked = $(this);
-            if (selected_automezzo) {
-                var riga_id = card_clicked.closest('tr').data('riga');
-                var mezzo_id = selected_automezzo.data('automezzi_id');
-                var appuntamento_id = card_clicked.data('appuntamento_id');
-
-                aggiungiMezzoAppuntamento(appuntamento_id, mezzo_id);
-
-                var cloned_automezzo = selected_automezzo.clone(false, true);
-                cloned_automezzo.attr('data-appuntamento_id', appuntamento_id);
-                cloned_automezzo.attr('data-previous_riga', riga_id);
-                cloned_automezzo.removeClass('opacity_clicked');
-                cloned_automezzo.removeClass('js_selected_automezzo');
-
-                var card_container_automezzi = card_clicked.find('.box-automezzi');
-                card_container_automezzi.append(cloned_automezzo);
-
-                selected_automezzo.removeClass('opacity_clicked');
-                selected_automezzo = null;
-                card_clicked = null;
-            }
-        });
-        /**
-         * ! Rimozione automezzo dall'appuntamento
-         */
-        //        $('.automezzo', '.js_card_clicked').on('click', function() {
-        $('.js_card_clicked').on('click', '.automezzo', function() {
-            var automezzo_clicked = $(this);
-            card_clicked = automezzo_clicked.closest('.js_card_clicked');
-
-            if (automezzo_clicked) {
-                var riga_id = card_clicked.closest('tr').data('riga');
-                card_clicked.data('previous_riga', riga_id);
-
-                var mezzo_id = automezzo_clicked.data('automezzi_id');
-                var appuntamento_id = card_clicked.data('appuntamento_id');
-
-                x = confirm('Vuoi rimuovere questo automezzo dall\'appuntamento?');
-                if (x) {
-                    rimuoviMezzoAppuntamento(appuntamento_id, mezzo_id, automezzo_clicked);
-                }
-
-                riga_id = null;
-                automezzo_clicked = null;
-                card_clicked = null;
+                aggiornaAppuntamento(appuntamentoId, day, riga);
             }
         });
     }
+
+    function initializeClickMode() {
+        // Selezione persona
+        $('.js_selected_persona').on('click', function() {
+            selectedPersona = handleSelection($(this), selectedPersona);
+        });
+
+        // Selezione automezzo
+        $('.js_selected_automezzo').on('click', function() {
+            selectedMezzo = handleSelection($(this), selectedMezzo);
+        });
+
+        // Click su card per aggiungere persona
+        $('.js_card_clicked').on('click', function() {
+            /* console.log(selectedPersona);
+            console.log(selectedMezzo); */
+
+            if (selectedPersona) {
+                attachPersonaToAppointment($(this), selectedPersona);
+                selectedPersona = null;
+            }
+
+            if (selectedMezzo) {
+                attachMezzoToAppointment($(this), selectedMezzo);
+                selectedMezzo = null;
+            }
+        });
+        // Click su card per aggiungere persona o mezzo
+        /* $('.js_card_clicked').on('click', function() {
+                return;
+                const parentAppuntamento = $(this).closest('.appuntamento');
+                const appointmentId = parentAppuntamento.data('appuntamento_id');
+                const rigaId = parentAppuntamento.closest('tr').data('riga');
+    
+                console.log(selectedPersona);
+                console.log(selectedMezzo);
+    
+    
+                if (selectedPersona) {
+                    // Aggiungi la persona alla card
+                    const personaId = selectedPersona.data('users_id');
+    
+                    aggiungiPersonaAppuntamento(appointmentId, personaId);
+    
+                    const clonedPersona = selectedPersona.clone(false, true);
+                    clonedPersona.attr('data-appuntamento_id', appointmentId);
+                    clonedPersona.attr('data-previous_riga', rigaId);
+                    clonedPersona.removeClass('opacity_clicked');
+    
+                    $(this).find('.box-persone').append(clonedPersona);
+    
+                    // Deseleziona la persona
+                    selectedPersona = null;
+                }
+    
+                if (selectedMezzo) {
+                    // Aggiungi il mezzo alla card
+                    const mezzoId = selectedMezzo.data('automezzi_id');
+    
+                    aggiungiMezzoAppuntamento(appointmentId, mezzoId);
+    
+                    const clonedMezzo = selectedMezzo.clone(false, true);
+                    clonedMezzo.attr('data-appuntamento_id', appointmentId);
+                    clonedMezzo.attr('data-previous_riga', rigaId);
+                    clonedMezzo.removeClass('opacity_clicked');
+    
+                    $(this).find('.box-automezzi').append(clonedMezzo);
+    
+                    // Deseleziona il mezzo
+                    selectedMezzo = null;
+                }
+            }); */
+
+        // Rimozione persona dall'appuntamento
+        $('.js_card_clicked').on('click', '.persona', function(event) {
+            //event.stopPropagation(); // Impedisce che l'evento si propaghi alla card
+            handlePersonaRemoval($(this));
+        });
+
+        // Rimozione mezzo dall'appuntamento
+        $('.js_card_clicked').on('click', '.automezzo', function(event) {
+            //event.stopPropagation(); // Impedisce che l'evento si propaghi alla card
+            handleMezzoRemoval($(this));
+        });
+    }
+
+    function handleSelection(element, previousSelection) {
+        if (previousSelection) {
+            previousSelection.removeClass("opacity_clicked");
+        }
+        element.addClass("opacity_clicked");
+        return element;
+    }
+
+    function attachPersonaToAppointment(card, persona) {
+        var rigaId = card.closest("tr").data("riga");
+        var personaId = persona.data("users_id");
+        var appuntamentoId = card.closest(".appuntamento").data("appuntamento_id");
+
+        aggiungiPersonaAppuntamento(appuntamentoId, personaId);
+
+        var clonedPersona = persona.clone().attr({
+            "data-appuntamento_id": appuntamentoId,
+            "data-previous_riga": rigaId,
+        }).removeClass("opacity_clicked container_single_persona");
+        persona.removeClass("opacity_clicked");
+
+        card.find(".box-persone").append(clonedPersona);
+        // Rimuovo solo se sto spostando tra appuntamenti, non se sto spostando dalla sidebar
+        if (!persona.hasClass("container_single_persona")) {
+            persona.remove(); // Remove from original position
+        }
+    }
+
+    function attachMezzoToAppointment(card, mezzo) {
+        var rigaId = card.closest("tr").data("riga");
+        var mezzoId = mezzo.data("automezzi_id");
+        var appuntamentoId = card.closest(".appuntamento").data("appuntamento_id");
+
+        aggiungiMezzoAppuntamento(appuntamentoId, mezzoId);
+
+        var clonedMezzo = mezzo.clone().attr({
+            "data-appuntamento_id": appuntamentoId,
+            "data-previous_riga": rigaId,
+        }).removeClass("opacity_clicked container_single_persona");
+        mezzo.removeClass("opacity_clicked");
+
+        card.find(".box-automezzi").append(clonedMezzo);
+        // Rimuovo solo se sto spostando tra appuntamenti, non se sto spostando dalla sidebar
+        if (!mezzo.hasClass("container_single_automezzo")) {
+            mezzo.remove(); // Remove from original position
+        }
+    }
+
+    function handlePersonaRemoval(persona) {
+        //Solo se non ho una persona selezionata dalla sidebar e se non è avatar rimanenti
+        if (!selectedPersona && !persona.hasClass("rimanenti")) {
+            var appuntamentoId = persona.closest(".appuntamento").data("appuntamento_id");
+            var personaId = persona.data("users_id");
+
+            if (confirm("Vuoi rimuovere questa persona dall'appuntamento?")) {
+                rimuoviPersonaAppuntamento(appuntamentoId, personaId, persona);
+            }
+        }
+    }
+
+    function handleMezzoRemoval(mezzo) {
+        //Solo se non ho una persona selezionata dalla sidebar e se non è avatar rimanenti
+        if (!selectedMezzo && !mezzo.hasClass("rimanenti")) {
+            var appuntamentoId = mezzo.closest(".js_card_clicked").data("appuntamento_id");
+            var mezzoId = mezzo.data("automezzi_id");
+
+            if (confirm("Vuoi rimuovere questo automezzo dall'appuntamento?")) {
+                rimuoviMezzoAppuntamento(appuntamentoId, mezzoId, mezzo);
+            }
+        }
+    }
+
+    initializePlanner();
+    handleUserToggle();
+
+    // Handle modal open/close and other UI interactions here...
+
 
 
 
@@ -1566,13 +1003,6 @@ $(function() {
         var automezzi = getRowAutomezzi(riga_id);
         //console.log(users);
         var append_pars = '';
-        // for (var i in users) {
-        //     console.log(users[i]);
-        //     append_pars += '&appuntamenti_persone[' + users[i] + '] = ' + users[i];
-        // }
-        // for (var i in automezzi) {
-        //     append_pars += '&appuntamenti_automezzi[' + automezzi[i] + ']=' + automezzi[i];
-        // }
         append_pars += '&appuntamenti_riga=' + riga_id;
         url = url + append_pars;
 
@@ -1599,7 +1029,6 @@ $(function() {
     });
 
     $('body').on('click', '.btn-danger.js_confirm_button.js_link_ajax', function(e) {
-
         $('.modal').modal('toggle');
     });
 

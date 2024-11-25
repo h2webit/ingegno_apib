@@ -345,6 +345,11 @@ class Docs extends CI_Model
 
         $rif_doc = array_get($data, 'documenti_contabilita_rif_documento_id', null);
 
+        $template_pagamento_default = $this->db->order_by('documenti_contabilita_template_pagamenti_default', 'DESC')->get('documenti_contabilita_template_pagamenti')->row()->documenti_contabilita_template_pagamenti_id;
+        
+        if (empty($cliente['customers_template_pagamento'])) {
+            $cliente['customers_template_pagamento'] = $template_pagamento_default;
+        }
         $dati_documento = [
             'documenti_contabilita_numero' => $numero_documento,
             'documenti_contabilita_serie' => $serie,
@@ -353,7 +358,7 @@ class Docs extends CI_Model
             'documenti_contabilita_supplier_id' => $fornitore_id ?? null,
             'documenti_contabilita_data_emissione' => $data_emissione,
             //'documenti_contabilita_metodo_pagamento' => array_get($data, 'metodo_pagamento', 'carta di credito'),
-            'documenti_contabilita_template_pagamento' => array_get($data, 'template_pagamento', ($cliente['customers_template_pagamento']) ?? null),
+            'documenti_contabilita_template_pagamento' => array_get($data, 'template_pagamento', $cliente['customers_template_pagamento']),
             'documenti_contabilita_tipo_destinatario' => $tipo_destinatario,
             'documenti_contabilita_azienda' => $azienda,
             'documenti_contabilita_utente_id' => array_get($data, 'utente', $this->auth->get('users_id')),
@@ -361,6 +366,17 @@ class Docs extends CI_Model
             'documenti_contabilita_stato' => array_get($data, 'stato', 1),
             'documenti_contabilita_agente' => array_get($data, 'agente', null),
             'documenti_contabilita_split_payment' => ($tipo_destinatario==3)?1:0,
+            'documenti_contabilita_impostazioni_stampa_json' => json_encode([ // @todo micahel, 20/11/2024 - potenzialmente potrebbero andare anche questi sotto settings array_get, ad esempio: array_get($data['stampa_pdf'], 'mostra_periodo_competenza', 0)
+                "max_articoli_pagina" => "10",
+                "font-size" => "14",
+                "mostra_foto" => "0",
+                "mostra_totali" => "1",
+                "mostra_totali_senza_iva" => "0",
+                "mostra_scadenze_pagamento" => "1",
+                "mostra_prodotti_senza_importi" => "0",
+                "mostra_lotto_matricola" => "0",
+                "mostra_periodo_competenza" => "1"
+            ])
         ];
 
         if (!empty($cliente['customers_template_pagamento'])) {
@@ -727,6 +743,14 @@ class Docs extends CI_Model
 
             $data['scadenze'] = [$dati_scadenza];
         }
+        //debug($clienti_template_pagamento);
+        
+        if (empty($cliente[$clienti_template_pagamento])) {
+            $cliente[$clienti_template_pagamento] = $template_pagamento_default;
+        }
+        
+        //debug($cliente);
+        //debug($template_pagamento_default, true);
 
         // Se mi arriva l'array di SCADENZE (plurale, quindi un array con più scadenze) le ciclo e le inserisco.
         if (!empty($data['scadenze'])) {
@@ -846,10 +870,11 @@ class Docs extends CI_Model
                 $data_scadenza = $data_emissione;
             }
 
+            $metodo_pagamento_default = $this->db->get('documenti_contabilita_metodi_pagamento')->row()->documenti_contabilita_metodi_pagamento_id;
             $dati_scadenza = [
                 'documenti_contabilita_scadenze_documento' => $documento_id,
                 'documenti_contabilita_scadenze_ammontare' => $dati_documento['documenti_contabilita_totale'],
-                'documenti_contabilita_scadenze_saldato_con' => array_get($data, 'saldato_con', null),
+                'documenti_contabilita_scadenze_saldato_con' => array_get($data, 'saldato_con', $metodo_pagamento_default),
                 'documenti_contabilita_scadenze_saldata' => array_get($data, 'saldato', DB_BOOL_FALSE),
                 'documenti_contabilita_scadenze_utente_id' => $this->auth->get('users_id'),
                 'documenti_contabilita_scadenze_data_saldo' => array_get($data, 'data_saldo', null),
@@ -984,7 +1009,13 @@ class Docs extends CI_Model
             ->get("documenti_contabilita_template_pdf")->row_array();
 
         $tpl_pdf = array_get($data, 'template', $tpl_pdf['documenti_contabilita_template_pdf_id'] ?? null);
-
+        
+        $template_pagamento_default = $this->db->order_by('documenti_contabilita_template_pagamenti_default', 'DESC')->get('documenti_contabilita_template_pagamenti')->row()->documenti_contabilita_template_pagamenti_id;
+        
+        if (empty($cliente['customers_template_pagamento'])) {
+            $cliente['customers_template_pagamento'] = $template_pagamento_default;
+        }
+        
         $data_emissione = array_get($data, 'data_emissione', date('Y-m-d'));
         if (array_get($data, 'documenti_contabilita_data_emissione')) {
             $data_emissione = array_get($data, 'documenti_contabilita_data_emissione', date('Y-m-d'));
@@ -1012,6 +1043,17 @@ class Docs extends CI_Model
             'documenti_contabilita_template_pdf' => $tpl_pdf,
             'documenti_contabilita_stato' => array_get($data, 'stato', 1),
             'documenti_contabilita_codice_esterno' => array_get($data, 'codice_esterno', null),
+            'documenti_contabilita_impostazioni_stampa_json' => json_encode([ // @todo micahel, 20/11/2024 - potenzialmente potrebbero andare anche questi sotto settings array_get, ad esempio: array_get($data['stampa_pdf'], 'mostra_periodo_competenza', 0)
+                "max_articoli_pagina" => "10",
+                "font-size" => "14",
+                "mostra_foto" => "0",
+                "mostra_totali" => "1",
+                "mostra_totali_senza_iva" => "0",
+                "mostra_scadenze_pagamento" => "1",
+                "mostra_prodotti_senza_importi" => "0",
+                "mostra_lotto_matricola" => "0",
+                "mostra_periodo_competenza" => "1"
+            ])
         ];
 
         // Cerco se c'è un template di default uso quello altrimenti il primo che creato che si presume il generico
@@ -1394,6 +1436,10 @@ class Docs extends CI_Model
                 'documenti_contabilita_articoli_descrizione' => '',
                 'documenti_contabilita_articoli_importo_totale' => $costo_spedizione,
             ]);
+        }
+        
+        if (empty($cliente[$clienti_template_pagamento])) {
+            $cliente[$clienti_template_pagamento] = $template_pagamento_default;
         }
 
         if (!empty($data['scadenze'])) {
