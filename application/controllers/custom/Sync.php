@@ -128,6 +128,7 @@ class Sync extends MY_Controller
         $this->import_associati();
         $this->import_clienti();
         $this->import_sedi();
+        $this->import_sedi_operative_orari_categoria();
         $this->import_orari();
         $this->import_pagamenti();
         $this->import_sedi_operative_associati();
@@ -341,7 +342,20 @@ class Sync extends MY_Controller
         $this->mycache->clearCache();
     }
 
-    
+    public function import_sedi_operative_orari_categoria() {
+        // the only fields are: sedi_operative_orari_categoria_id + sedi_operative_orari_categoria_value
+        
+        $categorie = $this->apib_db->get('sedi_operative_orari_categoria')->result_array();
+        
+        foreach ($categorie as $categoria) {
+            $categoria_db = $this->db->get_where('sedi_operative_orari_categoria', ['sedi_operative_orari_categoria_id' => $categoria['sedi_operative_orari_categoria_id']])->row_array();
+            if (!$categoria_db) {
+                $this->db->insert('sedi_operative_orari_categoria', $categoria);
+            } else {
+                $this->db->where('sedi_operative_orari_categoria_id', $categoria['sedi_operative_orari_categoria_id'])->update('sedi_operative_orari_categoria', $categoria);
+            }
+        }
+    }
 
     public function import_sedi() {
         set_log_scope('sync-sedi');
@@ -358,6 +372,11 @@ class Sync extends MY_Controller
         
         $sedi_cliente = [];
         foreach ($all_sedi as $sede_cliente) {
+            if (empty($sede_cliente['sedi_operative_cliente'])) {
+                echo_log('error', "sede senza cliente: {$sede_cliente['sedi_operative_id']}");
+                continue;
+            }
+            
             $sedi_cliente[$sede_cliente['sedi_operative_cliente']][] = $sede_cliente;
         }
         
