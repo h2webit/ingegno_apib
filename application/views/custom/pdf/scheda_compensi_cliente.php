@@ -4,8 +4,7 @@
     <head>
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="<?php echo base_url_template('template/crm-v2/assets/global/plugins/bootstrap/css/bootstrap.min.css'); ?>">
-        <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="<?php echo base_url_template('template/adminlte/bower_components/bootstrap/dist/css/bootstrap.min.css'); ?>">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <style>
             html, body, p, * {

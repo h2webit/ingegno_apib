@@ -202,8 +202,10 @@ class Apib extends MY_Controller
             $this->load->library('parser');
             $contents = [];
             for ($mese = $mese_start; $mese <= $mese_end; $mese++) {
-                $data = $this->getSchedaCompensiMensileCliente($cliente_id, $mese, $anno);
+                $mese = str_pad($mese, 2, '0', STR_PAD_LEFT);
                 
+                $data = $this->getSchedaCompensiMensileCliente($cliente_id, $mese, $anno);
+
                 $data['mese'] = mese_testuale($mese);
                 $data['anno'] = $anno;
                 $data['mese_numero'] = $mese;
@@ -245,62 +247,73 @@ class Apib extends MY_Controller
     
     private function getSchedaCompensiMensileCliente($cliente_id, $mese, $anno)
     {
+        $this->load->helper('custom/apib');
+        
         $data = [];
         
         $days = cal_days_in_month(CAL_GREGORIAN, $mese, $anno);
         $data_fine = "$anno-$mese-$days";
         $data_inizio = "$anno-$mese-01";
         
-        
-        // $_report_prestazioni_domiciliari = $this->apilib->search('report_orari', [
-        //     "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL))",
-        //     // "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL) AND (sedi_operative_nascosta <> '1' OR sedi_operative_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro sedi_operative_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
-        //     "report_orari_inizio <= '$data_fine 23:59:59'::timestamp AND report_orari_inizio >= '$data_inizio'::date",
-        //     'report_orari_id IN (SELECT report_orari_id FROM report_orari_listino_prezzi)',
-        //     'report_orari_domiciliare IS NOT NULL',
-        // ]);
-        $_report_orari_sedi = $this->apilib->search('report_orari', [
-            "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL))",
-            // "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL) AND (sedi_operative_nascosta <> '1' OR sedi_operative_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro sedi_operative_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
-            "report_orari_inizio <= '$data_fine 23:59:59'::timestamp AND report_orari_inizio >= '$data_inizio'::date",
-            'report_orari_sede_operativa IS NOT NULL',
-            'report_orari_accessi IS NULL',
-            'report_orari_associato IN (SELECT associati_id FROM associati)',
+        $_rapportini_sedi = $this->apilib->search('rapportini', [
+            "rapportini_commessa IN (SELECT projects_id FROM projects WHERE projects_customer_id = '$cliente_id' AND (projects_deleted = '0' OR projects_deleted IS NULL OR projects_deleted = ''))",
+            // "rapportini_commessa IN (SELECT projects_id FROM projects WHERE projects_customer_id = '$cliente_id' AND (projects_deleted = '0' OR projects_deleted IS NULL) AND (projects_nascosta <> '1' OR projects_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro projects_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
+            "DATE(rapportini_data) <= '$data_fine' AND DATE(rapportini_data) >= '$data_inizio'",
+            'rapportini_commessa IS NOT NULL',
+            'rapportini_accessi IS NULL',
+            "rapportini_id IN (SELECT rapportini_id FROM rel_rapportini_users)",
         ]);
         
-        //debug($_report_orari_sedi,true);
+        //debug($_rapportini_sedi,true);
         
-        $_report_accessi_sedi = $this->apilib->search('report_orari', [
-            "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL))",
-            // "report_orari_sede_operativa IN (SELECT sedi_operative_id FROM sedi_operative WHERE sedi_operative_cliente = '$cliente_id' AND (sedi_operative_deleted = '0' OR sedi_operative_deleted IS NULL) AND (sedi_operative_nascosta <> '1' OR sedi_operative_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro sedi_operative_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
-            "report_orari_inizio <= '$data_fine 23:59:59'::timestamp AND report_orari_inizio >= '$data_inizio'::date",
-            'report_orari_sede_operativa IS NOT NULL',
-            'report_orari_accessi IS NOT NULL',
+        $_report_accessi_sedi = $this->apilib->search('rapportini', [
+            "rapportini_commessa IN (SELECT projects_id FROM projects WHERE projects_customer_id = '$cliente_id' AND (projects_deleted = '0' OR projects_deleted IS NULL OR projects_deleted = ''))",
+            // "rapportini_commessa IN (SELECT projects_id FROM projects WHERE projects_customer_id = '$cliente_id' AND (projects_deleted = '0' OR projects_deleted IS NULL) AND (projects_nascosta <> '1' OR projects_nascosta IS NULL))",  // 20200630 - Michael E. - Rimetto il where senza il filtro projects_nascosta in quanto un cliente può aver fatto report di sedi operative successivamente disattivate
+            "DATE(rapportini_data) <= '$data_fine' AND DATE(rapportini_data) >= '$data_inizio'",
+            'rapportini_commessa IS NOT NULL',
+            'rapportini_accessi IS NOT NULL',
         
         ]);
         
-        $data['report_accessi_sedi'] = $data['report_orari_sedi'] = $data['report_prestazioni_domiciliari'] = [];
+        $data['rapportini_sedi_accessi'] = $data['rapportini_sedi'] = $data['report_prestazioni_domiciliari'] = [];
         foreach ($_report_accessi_sedi as $report) {
-            $report['tariffa'] = calcola_tariffa_accesso_sede($report['report_orari_sede_operativa'], $report['report_orari_fine'], $report['report_orari_affiancamento'] == '1', $report['report_orari_costo_differenziato'] == '1');
+            $report['tariffa'] = calcola_tariffa_accesso_sede($report['rapportini_commessa'], $report['rapportini_fine'], $report['rapportini_affiancamento'] == '1', $report['rapportini_costo_differenziato'] == '1');
             
-            $report['tariffa_totale'] = $report['tariffa'] * $report['report_orari_accessi'];
-            $data['report_accessi_sedi'][$report['report_orari_sede_operativa']][$report['report_orari_associato']][] = $report;
+            $report['tariffa_totale'] = $report['tariffa'] * $report['rapportini_accessi'];
+            $data['rapportini_sedi_accessi'][$report['rapportini_commessa']][$report['rapportini_associato']][] = $report;
         }
-        //debug($data['report_accessi_sedi'],true);
-        foreach ($_report_orari_sedi as $report) {
-            if ($report['report_orari_festivo'] == '1') {
-                $report['sedi_operative_orari_categoria'] = 3;
+
+        //debug($data['rapportini_sedi'],true);
+        foreach ($_rapportini_sedi as $report) {
+            $associato_user_id = array_key_first($report['rapportini_operatori']);
+            
+            $associato = $this->apilib->searchFirst('dipendenti', ['dipendenti_user_id' => $associato_user_id]);
+            
+            $associato_id = $associato['dipendenti_id'];
+            
+            //debug($report, true);
+            if ($report['rapportini_festivo'] == '1') {
+                $report['projects_orari_categoria'] = 3;
             }
+            
+            $report['rapportini_operatori'] = $associato;
+            $report['rapportini_associato'] = $associato_id;
+            
             //recupero le informazioni che mi mancano
             //debug($report,true);
             $report['tariffa_totale'] = calcola_tariffa_totale_oraria_sede($report, false);
             //debug($report['tariffa_totale'],true);
-            $data['report_orari_sedi'][$report['report_orari_sede_operativa']][$report['report_orari_associato']][] = $report;
+            
+            if (empty($data['rapportini_sedi'][$report['rapportini_commessa']])) {
+                $data['rapportini_sedi'][$report['rapportini_commessa']] = [];
+            }
+            
+            $data['rapportini_sedi'][$report['rapportini_commessa']][$report['rapportini_associato']][] = $report;
         }
         
-        $data['cliente'] = $this->apilib->view('clienti', $cliente_id);
+        $data['cliente'] = $this->apilib->view('customers', $cliente_id);
         //$data['rimborso_spese'] = (int)($this->db->query("SELECT SUM(rimborsi_km_costo_viaggio) as s FROM rimborsi_km WHERE rimborsi_km_utente = '{$data['associato']['associati_utente']}' AND rimborsi_km_data <= '$data_fine'::date AND rimborsi_km_data >= '$data_inizio'::date")->row()->s);
-        
+        //dump($data);
         return $data;
     }
 }

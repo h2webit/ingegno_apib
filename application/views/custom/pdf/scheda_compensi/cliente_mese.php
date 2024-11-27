@@ -21,6 +21,10 @@
     tfoot {
         /* display: table-footer-group */
     }
+    
+    .right {
+        float: right;
+    }
 </style>
 <div class="col-md-4" style="font-size:0.8em;">
     <strong>A.P.I.B. S.R.L. S.T.P.</strong><br />
@@ -36,7 +40,7 @@
 <div class="right">
     <p>
         Spett.le<br />
-        <?php echo $cliente['clienti_ragione_sociale']; ?>
+        <?php echo $cliente['customers_full_name']; ?>
     </p>
 
     <p>
@@ -50,7 +54,7 @@
             <th class="tg-7nj3">NOMINATIVO</th>
             <th class="tg-7nj3">PERIODO MESE LAVORATO</th>
             <th class="tg-7nj3">ORE TOT O NUM. PRESTAZIONI</th>
-            <?php if ($this->auth->get('utenti_tipo') != 15) : ?>
+            <?php if ($this->auth->get('users_type') != 15) : ?>
                 <th class="tg-pbc0">
 
                     <div class="red">TARIFFA</div>
@@ -59,15 +63,15 @@
                 <th class="tg-7nj3">TOTALE</th>
             <?php endif; ?>
             <th class="tg-slju">CLIENTE</th>
-            <?php if ($this->auth->get('utenti_tipo') != 15) : ?>
+            <?php if ($this->auth->get('users_type') != 15) : ?>
                 <th class="tg-slju">Tot.da fatturare</th>
             <?php endif; ?>
         </tr>
         <tr>
             <td class="tg-031e" colspan="7"><strong>Ore sedi operative</strong></td>
         </tr>
-        <?php $categorie = $this->db->where(['sedi_operative_orari_categoria_id <>' => '6'])->get('sedi_operative_orari_categoria')->result_array(); ?>
         <?php
+        $categorie = $this->db->where(['sedi_operative_orari_categoria_id <>' => '6'])->get('sedi_operative_orari_categoria')->result_array();
         global $totalone_euro, $totale_sedi, $righe_stampate, $dati_grezzi;
 
         $totalone_euro = 0;
@@ -88,14 +92,12 @@
             Totale ore (pomeriggio)/ tariffa / importo.
         </div>-->
 
-        <?php foreach ($report_orari_sedi as $sede_id => $reports_associato) : ?>
-            <?php $sede = $this->apilib->view('sedi_operative', $sede_id); ?>
+        <?php foreach ($rapportini_sedi as $sede_id => $reports_associato) : ?>
+            <?php $sede = $this->apilib->view('customers_shipping_address', $sede_id); ?>
             <?php foreach ($reports_associato as $associato_id => $reports) : ?>
                 <?php //if (705 == $associato_id) {debug($reports,true);} 
                 ?>
-                <?php $associato = $this->apilib->view('associati', $associato_id); ?>
-                <?php //debug($associato_id,true); 
-                ?>
+                <?php $associato = $this->apilib->view('dipendenti', $associato_id); ?>
                 <?php foreach ($categorie as $categoria) : ?>
 
 
@@ -104,8 +106,8 @@
                     ?>
                     <?php $this->load->view('pdf/scheda_compensi/riga_report_cliente', [
                         'sede' => $sede,
-                        'affiancamento' => 'f',
-                        'costo_differenziato' => 'f',
+                        'affiancamento' => '0',
+                        'costo_differenziato' => '0',
                         'categoria' => $categoria,
                         'totalone_euro' => $totalone_euro,
                         'reports' => $reports, 'sede_id' => $sede_id,
@@ -123,8 +125,8 @@
                     ?>
                     <?php $this->load->view('pdf/scheda_compensi/riga_report_cliente', [
                         'sede' => $sede,
-                        'affiancamento' => 't',
-                        'costo_differenziato' => 'f',
+                        'affiancamento' => '1',
+                        'costo_differenziato' => '0',
                         'categoria' => $categoria,
                         'totalone_euro' => $totalone_euro,
                         'reports' => $reports,
@@ -141,8 +143,8 @@
                     ?>
                     <?php $this->load->view('pdf/scheda_compensi/riga_report_cliente', [
                         'sede' => $sede,
-                        'affiancamento' => 'f',
-                        'costo_differenziato' => 't',
+                        'affiancamento' => '0',
+                        'costo_differenziato' => '1',
                         'categoria' => $categoria,
                         'totalone_euro' => $totalone_euro,
                         'reports' => $reports,
@@ -161,9 +163,9 @@
 
                 <?php endforeach; ?>
             <?php endforeach; ?>
-            <?php if ($this->auth->get('utenti_tipo') != 15) : ?>
+            <?php if ($this->auth->get('users_type') != 15) : ?>
                 <tr>
-                    <td><strong>Totale <?php echo $sede['sedi_operative_reparto']; ?></strong></td>
+                    <td><strong>Totale <?php echo $sede['customers_shipping_address_name']; ?></strong></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -177,41 +179,44 @@
             <td class="tg-031e" colspan="7"><strong>Accessi sedi operative</strong></td>
 
         </tr>
-        <?php //debug($report_accessi_sedi, true); 
+        <?php //debug($rapportini_sedi, true); 
         ?>
-        <?php foreach ($report_accessi_sedi as $sede_id => $reports_associato) : ?>
-            <?php $sede = $this->apilib->view('sedi_operative', $sede_id); ?>
+        <?php foreach ($rapportini_sedi_accessi as $sede_id => $reports_associato) : ?>
+            <?php $sede = $this->apilib->view('customers_shipping_address', $sede_id); ?>
 
             <?php foreach ($reports_associato as $associato_id => $reports) : $righe_stampate++; ?>
-                <?php $associato = $this->apilib->view('associati', $associato_id); ?>
+                <?php $associato = $this->apilib->view('dipendenti', $associato_id); ?>
                 <tr>
                     <?php
                     //Calcolo il totale ore
                     $totale_accessi = $totale_euro = 0;
                     foreach ($reports as $report) {
-                        if (!array_key_exists('report_orari_accessi', $report)) {
+                        if (!array_key_exists('rapportini_accessi', $report)) {
                             debug($report, true);
                         } else {
                         }
-                        $totale_accessi += $report['report_orari_accessi'];
+                        $totale_accessi += $report['rapportini_accessi'];
                         $totale_euro += $report['tariffa_totale'];
+                        
+                        $report['rapportini_inizio'] = dateFormat($report['rapportini_data'], 'Y-m-d') . ' ' . dateTimeFormat($report['rapportini_ora_inizio'], 'H:i:00');
+                        $report['rapportini_fine'] = dateFormat($report['rapportini_data'], 'Y-m-d') . ' ' . dateTimeFormat($report['rapportini_ora_fine'], 'H:i:00');
                     }
-                    $totalone_euro += round($totale_euro, 2); //round($totale_euro * $associato['associati_percentuale_sedi'] / 100,2);
+                    $totalone_euro += round($totale_euro, 2); //round($totale_euro * $associato['dipendenti_percentuale_sedi'] / 100,2);
                     ?>
-                    <td class="tg-031e"><?php echo $associato['associati_nome']; ?> <?php echo $associato['associati_cognome']; ?></td>
-                    <td class="tg-031e"><?php echo mese_testuale($report['report_orari_inizio']); ?></td>
+                    <td class="tg-031e"><?php echo $associato['dipendenti_nome']; ?> <?php echo $associato['dipendenti_cognome']; ?></td>
+                    <td class="tg-031e"><?php echo mese_testuale($report['rapportini_inizio']); ?></td>
                     <td class="tg-0ord"><?php echo $totale_accessi; ?></td>
 
-                    <?php if ($this->auth->get('utenti_tipo') != 15) : ?>
-                        <td class="tg-0ord"><?php echo round($report['tariffa'], 2); // * $associato['associati_percentuale_sedi'] / 100, 2); 
+                    <?php if ($this->auth->get('users_type') != 15) : ?>
+                        <td class="tg-0ord"><?php echo round($report['tariffa'], 2); // * $associato['dipendenti_percentuale_sedi'] / 100, 2); 
                                             ?></td>
-                        <td class="tg-0ord"><?php echo $totale_euro; // * $associato['associati_percentuale_sedi'] / 100; 
+                        <td class="tg-0ord"><?php echo $totale_euro; // * $associato['dipendenti_percentuale_sedi'] / 100; 
                                             ?></td>
                     <?php endif; ?>
 
-                    <td class="tg-yw4l"><?php echo $sede['clienti_ragione_sociale']; ?> - <?php echo $sede['sedi_operative_reparto']; ?></td>
+                    <td class="tg-yw4l"><?php echo $sede['customers_full_name']; ?> - <?php echo $sede['customers_shipping_address_name']; ?></td>
 
-                    <?php if ($this->auth->get('utenti_tipo') != 15) : ?>
+                    <?php if ($this->auth->get('users_type') != 15) : ?>
                         <td class="tg-lqy6"><?php echo (int) $report['tariffa']; ?></td>
                     <?php endif; ?>
                 </tr>
@@ -223,7 +228,7 @@
         <?php endforeach; ?>
 
 
-        <?php if ($this->auth->get('utenti_tipo') != 15) : ?>
+        <?php if ($this->auth->get('users_type') != 15) : ?>
             <tr>
                 <td class="tg-yw4l" colspan="5"></td>
                 <td class="tg-yw4l">TOTALE</td>
@@ -273,7 +278,7 @@
     <?php
     //debug($mese_numero,true);
     $note_per_fattura = $this->apilib->search('allegati_per_fattura', [
-        "allegati_per_fattura_cliente" => $cliente['clienti_id'],
+        "allegati_per_fattura_cliente" => $cliente['customers_id'],
         'allegati_per_fattura_mese' => $mese_numero,
         'allegati_per_fattura_anno' => $anno
     ]);
