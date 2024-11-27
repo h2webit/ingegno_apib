@@ -20,6 +20,116 @@ class Apib extends MY_Controller
             throw new AssertionError("Undetected authorization type");
         }
     }
+    
+    public function editRichiesteDisponibilita()
+    {
+        $data = $this->input->post();
+        $gruppi_fascie = $this->input->post('fascie');
+        $sede = $this->input->post('sede');
+        $giorno = $this->input->post('giorno');
+        
+        //debug($this->input->post(),true);
+        $old_data = $this->db
+            ->where("richieste_disponibilita_giorno::date = '$giorno'::date", null, false)
+            ->where("richieste_disponibilita_turno_assegnato IS NULL", null, false)
+            ->where("richieste_disponibilita_sede_operativa", $sede)->get('richieste_disponibilita')->result_array();
+        
+        $this->db
+            ->where("richieste_disponibilita_giorno::date = '$giorno'::date", null, false)
+            ->where("richieste_disponibilita_turno_assegnato IS NULL", null, false)
+            ->where("richieste_disponibilita_sede_operativa", $sede)->delete('richieste_disponibilita');
+        
+        $this->apilib->clearCache();
+        
+        $dati_sede = $this->apilib->view('sedi_operative', $sede);
+        $utente = $this->apilib->view('utenti', 22);
+        foreach ($gruppi_fascie as $fascie) {
+            if (!empty($fascie)) {
+                foreach ($fascie as $fascia) {
+                    
+                    if (stripos($fascia, '**')) { //Se è costo differenziato/studente
+                        $fascia = str_ireplace('*', '', $fascia);
+                        $affiancamento = 'f';
+                        $studente = 't';
+                    } else if (stripos($fascia, '*')) { //Se è affiancamento
+                        $fascia = str_ireplace('*', '', $fascia);
+                        $affiancamento = 't';
+                        $studente = 'f';
+                    } else {
+                        $affiancamento = 'f';
+                        $studente = 'f';
+                    }
+                    
+                    $this->apilib->create('richieste_disponibilita', [
+                        'richieste_disponibilita_sede_operativa' => $sede,
+                        'richieste_disponibilita_giorno' => $giorno,
+                        'richieste_disponibilita_fascia' => $fascia,
+                        'richieste_disponibilita_turno_assegnato' => null,
+                        'richieste_disponibilita_affiancamento' => $affiancamento,
+                        'richieste_disponibilita_studente' => $studente,
+                    ]);
+                    
+                    if (!in_array($this->auth->get('utenti_tipo'), [7, 8])) {
+                        
+                        foreach ($old_data as $richiesta) {
+                            //Se avevo già fatto questa richiesta, non notifico
+                            if ($richiesta['richieste_disponibilita_fascia'] == $fascia) {
+                                continue 2;
+                            }
+                        }
+                        
+                        $dati_sede = $this->apilib->view('sedi_operative', $sede);
+                        $notification = [
+                            'notifications_user_id' => 22,
+                            'notifications_type' => NOTIFICATION_TYPE_WARNING,
+                            'notifications_link' => "main/layout/55/{$sede}",
+                            'notifications_message' => "Nuova richiesta disponibilità per la sede {$dati_sede['sedi_operative_reparto']}"
+                        ];
+                        
+                        $this->db->insert('notifications', $notification);
+                        
+                        
+                        $dati_fascia = $this->apilib->view('sedi_operative_orari', $fascia);
+                        //E mando anche una mail
+                        $data['richieste_disponibilita_giorno'] = $giorno;
+                        $this->mail_model->send($utente['utenti_email'], 'nuova_richiesta_disponibilita', 'it', array_merge($data, $dati_sede, $dati_fascia));
+                    }
+                }
+            }
+        }
+        
+        //A questo punto faccio un controllo per capire se sia stata rimossa una richiesta
+        $new_data = $this->db
+            ->where("richieste_disponibilita_giorno::date = '$giorno'::date", null, false)
+            ->where("richieste_disponibilita_turno_assegnato IS NULL", null, false)
+            ->where("richieste_disponibilita_sede_operativa", $sede)->get('richieste_disponibilita')->result_array();
+        
+        foreach ($old_data as $key => $old) {
+            foreach ($new_data as $key1 => $new) {
+                if ($new['richieste_disponibilita_fascia'] == $old['richieste_disponibilita_fascia']) {
+                    unset($old_data[$key]);
+                    break;
+                }
+            }
+        }
+        
+        if (!empty($old_data)) {
+            $dati_fascia = $this->apilib->view('sedi_operative_orari', $old_data[0]['richieste_disponibilita_fascia']);
+            $data['richieste_disponibilita_giorno'] = $giorno;
+            $notification = [
+                'notifications_user_id' => 22,
+                'notifications_type' => NOTIFICATION_TYPE_WARNING,
+                'notifications_link' => "main/layout/55/{$sede}",
+                'notifications_message' => "Richiesta disponibilità rimossa per la sede {$dati_sede['sedi_operative_reparto']}"
+            ];
+            
+            $this->db->insert('notifications', $notification);
+            $this->mail_model->send($utente['utenti_email'], 'richiesta_disponibilita_eliminata', 'it', array_merge($data, $dati_sede, $dati_fascia));
+        }
+        
+        
+        echo json_encode(['status' => 0]);
+    }
 
     public function editSediProfessionisti($notity_check = 0)
     {
