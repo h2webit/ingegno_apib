@@ -627,7 +627,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         class="form-control <?php if (empty(@$richieste[$dateString][$i])): ?>js_hover_multiselect<?php else: ?>js_multiselect<?php endif; ?> field_293"
                                         name="richiesta_cella[<?php echo $dateString; ?>][<?php echo $i; ?>]"
                                         data-val="<?php echo @implode(',', @(array) $richieste[$dateString][$i]); ?>"
-                                        data-ref="richieste_disponibilita" data-source-field="" data-minimum-input-length="0">
+                                        data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
 
                                         <?php foreach ($fascie_orarie as $fascia_id => $fascia): ?>
                                             <?php $fascia_id = (string) $fascia_id; ?>
