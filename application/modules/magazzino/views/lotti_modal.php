@@ -43,7 +43,9 @@
     <script>
         function reinitDataTableLotti() {
             if ($.fn.DataTable.isDataTable('#lotti_table')) {
+               //alert(1);
                 $('#lotti_table').DataTable().destroy();
+                //alert(2);
             }
             $('#lotti_table').DataTable({
                 "paging": true,

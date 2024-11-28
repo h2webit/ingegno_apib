@@ -1908,7 +1908,11 @@ $(document).ready(function() {
 
 
         }
-
+if ($.fn.DataTable.isDataTable('#lotti_table')) {
+               //alert(1);
+                $('#lotti_table').DataTable().destroy();
+                //alert(2);
+            }
         $('#lotti_modal').modal('hide');
         $('.modal-backdrop').remove();
 
@@ -2001,6 +2005,7 @@ function updateAllCommesse(mittente_movimento = null) {
 }
 
 function getLotti(prodotto_id, row_lotto = null) {
+    //alert(10);
     //console.log(prodotto);
     //console.log(row_lotto);
 
@@ -2045,10 +2050,9 @@ function getLotti(prodotto_id, row_lotto = null) {
                         console.log('TODO: duplicare la riga con la differenza ' + differenza);
                     }
                 } else {
+                     $("#lotti_table tbody").html('');
                     $('#lotti_modal').modal('show');
-                    //console.log(my.data);
-                    $("#lotti_table tbody").html('');
-
+                    
                     $.each(my.data, function(i, item) {
                         var _data_scadenza = item.movimenti_articoli_data_scadenza;
 if (!item.movimenti_articoli_lotto) {

@@ -152,9 +152,19 @@ class Documenti extends MX_Controller
         } else {
             $filtro_data = "AND documenti_contabilita_data_emissione::date < '{$data_emissione}'::date";
         }
+
+
+        $tipi_da_controllare = $this->contabilita_settings['documenti_contabilita_settings_check_data_num'];
+
+        if (empty($tipi_da_controllare) || in_array($tipo, array_keys($tipi_da_controllare))) {
+            $check_tipo_data_numero = true;
+        } else {
+            $check_tipo_data_numero = false;
+        }
+
         $exists_with_number_next = $this->db->query("SELECT documenti_contabilita_id,documenti_contabilita_numero,documenti_contabilita_data_emissione FROM documenti_contabilita WHERE documenti_contabilita_serie = '$serie' AND documenti_contabilita_azienda = '$azienda' AND documenti_contabilita_numero > '$numero' AND documenti_contabilita_tipo = '{$tipo}' $filtro_data $filtro_anno");
 
-        if ($exists_with_number_next->num_rows()) {
+        if ($check_tipo_data_numero && $exists_with_number_next->num_rows()) {
             $fattura = $exists_with_number_next->row();
             echo json_encode(
                 array(
@@ -190,7 +200,7 @@ class Documenti extends MX_Controller
                     $filtro_data
                     $filtro_anno");
         }
-        if ($exists_with_date_next->num_rows()) {
+        if ($check_tipo_data_numero && $exists_with_date_next->num_rows()) {
             $fattura = $exists_with_date_next->row();
             echo json_encode(
                 array(
@@ -279,7 +289,7 @@ class Documenti extends MX_Controller
             $customer[$clienti_codice_fiscale] = $input['codice_fiscale'];
             $customer[$clienti_codice_sdi] = $input['codice_sdi'];
 
-            $customer[$clienti_tipo] = (in_array($input['documenti_contabilita_tipo'],[6,10]))?2:1; //TODO: correggere in base al tipo di documento! Può essere un fornitore
+            $customer[$clienti_tipo] = (in_array($input['documenti_contabilita_tipo'], [6, 10])) ? 2 : 1; //TODO: correggere in base al tipo di documento! Può essere un fornitore
 
             // Se già censito lo collego altrimenti lo salvo se richiesto
             try {
@@ -298,7 +308,7 @@ class Documenti extends MX_Controller
                         if ($old_customer[$clienti_tipo] != $customer[$clienti_tipo]) {
                             $customer[$clienti_tipo] = 3;
                         }
-                        
+
                         $this->apilib->edit($entita_clienti, $input['dest_id'], $customer);
                     }
                 } elseif (isset($input['save_dest']) && $input['save_dest'] == 'true') {
@@ -432,7 +442,7 @@ class Documenti extends MX_Controller
             $documents['documenti_contabilita_lingua'] = (!empty($input['documenti_contabilita_lingua']) ? $input['documenti_contabilita_lingua'] : 2); //Default italiano
             $documents['documenti_contabilita_mostra_foto'] = (!empty($input['documenti_contabilita_mostra_foto']) ? $input['documenti_contabilita_mostra_foto'] : DB_BOOL_FALSE);
             $documents['documenti_contabilita_impostazioni_stampa_json'] = (!empty($input['json_stampa']) ? json_encode($input['json_stampa']) : null);
-            
+
             //Importi
             $documents['documenti_contabilita_totale'] = $input['documenti_contabilita_totale'];
             $documents['documenti_contabilita_iva'] = $input['documenti_contabilita_iva'];
@@ -495,7 +505,7 @@ class Documenti extends MX_Controller
                 //se ho un lead collegato, lo imposto come
                 if (!empty($documents['documenti_contabilita_extra_param'])) {
                     $extra_params = json_decode($documents['documenti_contabilita_extra_param'], true);
-                    
+
                     if ($this->datab->module_installed('sales')) {
                         if (isset($extra_params['lead_id']) && !empty($extra_params['lead_id'])) {
                             $this->apilib->edit('leads', $extra_params['lead_id'], [
@@ -549,7 +559,7 @@ class Documenti extends MX_Controller
                         $scadenze_ids[] = $scadenza['documenti_contabilita_scadenze_id'];
                         $this->apilib->edit('documenti_contabilita_scadenze', $scadenza['documenti_contabilita_scadenze_id'], [
                             'documenti_contabilita_scadenze_ammontare' => $scadenza['documenti_contabilita_scadenze_ammontare'],
-                            
+
                             'documenti_contabilita_scadenze_scadenza' => $scadenza['documenti_contabilita_scadenze_scadenza'],
                             'documenti_contabilita_scadenze_saldato_con' => $scadenza['documenti_contabilita_scadenze_saldato_con'] ?? null,
                             'documenti_contabilita_scadenze_saldato_su' => $scadenza['documenti_contabilita_scadenze_saldato_su'] ?? null,
@@ -760,7 +770,7 @@ class Documenti extends MX_Controller
 
             }
 
-            
+
 
             //$this->docs->calcolaQuantitaEvase($documento_id);
 
@@ -804,7 +814,7 @@ class Documenti extends MX_Controller
                 // }
             }
 
-            
+
 
             $this->mycache->clearCache();
             $return = array('status' => 1, 'txt' => base_url('main/layout/contabilita_dettaglio_documento/' . $documento_id . '?first_save=1'));
@@ -830,7 +840,7 @@ class Documenti extends MX_Controller
 
                 if (!empty($magazzino_settings['magazzino_settings_movimenta_per']) && in_array($input['documenti_contabilita_tipo'], array_keys($magazzino_settings['magazzino_settings_movimenta_per']))) {
                     $movimentato = $this->db->get_where('movimenti', ['movimenti_documento_id' => $documento_id])->num_rows() > 0;
-                    
+
                     if (!empty($rif_docs)) {
                         foreach ($rif_docs as $doc_ref_id) {
                             $movimentato = $this->db->get_where('movimenti', ['movimenti_documento_id' => $doc_ref_id])->num_rows() > 0;
@@ -839,7 +849,7 @@ class Documenti extends MX_Controller
                             }
                         }
                     }
-                    
+
                     if (!$movimentato) {
                         if (
                             !empty($documento['documenti_contabilita_magazzino'])
@@ -943,7 +953,7 @@ class Documenti extends MX_Controller
 
         if ($entity == $entita_prodotti) {
             $campo_codice = $campo_codice_prodotto;
-            $campo_barcode = $campo_barcode_prodotto?? $campo_codice;
+            $campo_barcode = $campo_barcode_prodotto ?? $campo_codice;
             $campo_preview = $campo_preview_prodotto;
             $where = ["( (LOWER($campo_preview) LIKE '%{$input}%' OR $campo_preview LIKE '{$input}%') OR (LOWER($campo_codice) LIKE '%{$input}%' OR $campo_codice LIKE '{$input}%') OR (LOWER($campo_barcode) LIKE '%{$input}%' OR $campo_barcode LIKE '{$input}%') )"];
 
@@ -971,9 +981,9 @@ class Documenti extends MX_Controller
             if ($clienti_tipo && $type) {
                 $where = ["(LOWER({$clienti_codice}) LIKE '%{$input}%' OR LOWER({$clienti_ragione_sociale}) LIKE '%{$input}%' OR LOWER({$clienti_nome}) LIKE '%{$input}%' OR LOWER({$clienti_cognome}) LIKE '%{$input}%') AND ({$clienti_tipo} IN ($type))"];
                 //debug($where, true);
-                
+
                 $where[] = "(customers_status = '1' OR customers_status IS NULL OR customers_status = '')";
-                
+
                 $res = $this->apilib->search($entita_clienti, $where, 10, 0, "{$clienti_codice},{$clienti_ragione_sociale},{$clienti_cognome},{$clienti_nome}");
             } else {
                 $res = $this->apilib->search($entita_clienti, ["(LOWER({$clienti_codice}) LIKE '%{$input}%' OR LOWER({$clienti_ragione_sociale}) LIKE '%{$input}%' OR LOWER({$clienti_nome}) LIKE '%{$input}%' OR LOWER({$clienti_cognome}) LIKE '%{$input}%')"], 10, 0, "{$clienti_codice},{$clienti_ragione_sociale},{$clienti_cognome},{$clienti_nome}");
@@ -1166,87 +1176,288 @@ class Documenti extends MX_Controller
         }
     }
 
-    // IN TEORIA DEPRECATO --
-    // public function xml_fattura_elettronica($id, $reverse = false)
-    // {
-    //     //Ho dovuto centralizzare questo metodo perchè utilizzato anche da altre parti...
-    //     $pagina = $this->docs->get_content_fattura_elettronica($id, $reverse);
-    //     header("Content-Type:text/xml");
-    //     echo $pagina;
-    // }
-    public function visualizza_formato_compatto($id)
-    {
-        $documento = $this->apilib->view('documenti_contabilita', $id);
-        $file_xml = "uploads/" . $documento['documenti_contabilita_file_xml'];
 
-        if (empty($documento['documenti_contabilita_file_xml']) || !file_exists($file_xml)) {
-            log_message('error', "Formato compatto non visualizzabile perchè il file xml non è salvato o non esiste il file fisico.");
-            return false;
+
+    /**
+     * Remove all XML declarations from content
+     */
+    private function removeXmlDeclarations($content)
+    {
+        //debug("XML originale:\n" . $content);
+
+        // Remove standard XML declarations
+        $content = preg_replace('/<\?xml.*?\?>/s', '', $content);
+
+        // Normalize line endings
+        $content = str_replace(["\r\n", "\r"], "\n", $content);
+        $content = trim($content);
+
+        //debug("XML dopo rimozione dichiarazioni:\n" . $content);
+        return $content;
+    }
+
+    private function normalizeFatturaNamespace($content)
+    {
+        //debug("XML prima della normalizzazione namespace:\n" . $content);
+
+        $standard_namespace = '<p:FatturaElettronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" '
+            . 'xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" '
+            . 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            . 'versione="FPR12" '
+            . 'xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 '
+            . 'https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">';
+
+        // Replace opening tag with detailed error logging
+        $matches = [];
+        if (preg_match('/<FatturaElettronica[^>]+>/', $content, $matches)) {
+            //debug("Tag FatturaElettronica trovato: " . $matches[0]);
+        } else {
+            //debug("Tag FatturaElettronica non trovato nel contenuto");
         }
 
-        $reverse = in_array($documento['documenti_contabilita_tipologie_fatturazione_codice'], ['TD17', 'TD18', 'TD19']);
-        $content_xml = file_get_contents($file_xml);
-        $content_xml = preg_replace('/<\?xml(.*?)\?>/', '', $content_xml);
+        $content = preg_replace('/<FatturaElettronica[^>]+>/', $standard_namespace, $content);
 
-        if ($documento['documenti_contabilita_importata_da_xml']) {
-            $pos = strpos($content_xml, '<FatturaElettronica xmlns:');
-            if ($pos !== false) {
-                $content_xml = substr_replace($content_xml, '<p:FatturaElettronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" versione="FPR12" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">', 0, $pos + strlen('<FatturaElettronica xmlns:'));
-                $content_xml = str_ireplace('</FatturaElettronica>', '</p:FatturaElettronica>', $content_xml);
+        // Replace closing tag
+        $content = str_ireplace('</FatturaElettronica>', '</p:FatturaElettronica>', $content);
+
+        //debug("XML dopo normalizzazione namespace:\n" . $content);
+        return $content;
+    }
+
+    private function validateXml($xml)
+    {
+        libxml_clear_errors();
+        $prev = libxml_use_internal_errors(true);
+
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $valid = $doc->loadXML($xml, LIBXML_NOCDATA);
+
+        if (!$valid) {
+            $errors = libxml_get_errors();
+            foreach ($errors as $error) {
+                debug(sprintf(
+                    "Errore XML [%d]: %s (Line: %d, Column: %d)",
+                    $error->code,
+                    $error->message,
+                    $error->line,
+                    $error->column
+                ));
             }
         }
 
-        header("Content-Type:text/xml");
-        $this->load->view('contabilita/pdf/visualizzazione_compatta', ['xml' => $content_xml]);
+        libxml_clear_errors();
+        libxml_use_internal_errors($prev);
+
+        return $valid;
+    }
+
+    private function prepareXmlForXslt($xml_content, $xsl_path)
+    {
+        //debug("\n\n=== Inizio preparazione XML ===");
+
+        // Remove declarations
+        $xml_content = $this->removeXmlDeclarations($xml_content);
+
+        // Create new structure
+        $output = [];
+        $output[] = '<?xml version="1.0" encoding="UTF-8"?>';
+        $output[] = '<?xml-stylesheet type="text/xsl" href="' . $xsl_path . '"?>';
+
+        // Handle FatturaElettronica
+        if (stripos($xml_content, '<FatturaElettronica') !== false) {
+            // debug("Trovato tag FatturaElettronica - procedo con normalizzazione");
+            $xml_content = $this->normalizeFatturaNamespace($xml_content);
+        } else {
+            //debug("Tag FatturaElettronica non trovato nel contenuto");
+        }
+
+        $output[] = $xml_content;
+
+        // Join and validate
+        $final_xml = implode("\n", $output);
+
+        //debug("XML finale prima della validazione:\n" . $final_xml);
+
+        if (!$this->validateXml($final_xml)) {
+            //debug("=== Validazione XML fallita ===");
+            throw new Exception('Failed to generate valid XML - check error log for details');
+        }
+
+        //debug("=== XML validato con successo ===\n\n");
+        return $final_xml;
+    }
+
+    public function visualizza_formato_compatto($id)
+    {
+        try {
+            $documento = $this->apilib->view('documenti_contabilita', $id);
+            $file_xml = "uploads/" . $documento['documenti_contabilita_file_xml'];
+
+            if (empty($documento['documenti_contabilita_file_xml']) || !file_exists($file_xml)) {
+                throw new Exception("XML file not found or empty");
+            }
+
+            // Leggi il contenuto XML e rimuovi BOM se presente
+            $xml_content = file_get_contents($file_xml);
+            $xml_content = preg_replace('/^\xEF\xBB\xBF/', '', $xml_content); // Rimuovi BOM
+            $xml_content = preg_replace('/^\x00\xEF\xBB\xBF/', '', $xml_content); // Rimuovi BOM con null byte
+
+            // Rimuovi tutte le dichiarazioni XML esistenti
+            $xml_content = preg_replace('/<\?xml.*?\?>/s', '', $xml_content);
+
+            // Normalizza line endings
+            $xml_content = str_replace(["\r\n", "\r"], "\n", $xml_content);
+            $xml_content = trim($xml_content);
+
+            // Fix namespace e tag duplicati
+            if (strpos($xml_content, '<FatturaElettronica') !== false) {
+                // Estrai il contenuto tra i tag FatturaElettronicaHeader e FatturaElettronicaBody
+                preg_match('/<FatturaElettronicaHeader.*?>(.*?)<\/FatturaElettronicaHeader>/s', $xml_content, $header_matches);
+                preg_match('/<FatturaElettronicaBody.*?>(.*?)<\/FatturaElettronicaBody>/s', $xml_content, $body_matches);
+
+                if (!empty($header_matches[1]) && !empty($body_matches[1])) {
+                    $header_content = $header_matches[1];
+                    $body_content = $body_matches[1];
+
+                    // Costruisci l'XML corretto
+                    $new_xml = '<p:FatturaElettronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" '
+                        . 'xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" '
+                        . 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                        . 'versione="FPR12" '
+                        . 'xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 '
+                        . 'https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">'
+                        . "\n<FatturaElettronicaHeader>\n"
+                        . $header_content
+                        . "\n</FatturaElettronicaHeader>\n"
+                        . "<FatturaElettronicaBody>\n"
+                        . $body_content
+                        . "\n</FatturaElettronicaBody>\n"
+                        . '</p:FatturaElettronica>';
+
+                    $xml_content = $new_xml;
+                }
+            }
+
+            // Crea l'output finale
+            $output = [];
+            $output[] = '<?xml version="1.0" encoding="UTF-8"?>';
+            $output[] = '<?xml-stylesheet type="text/xsl" href="' . $this->layout->moduleAssets('contabilita', 'fattura-compatta.xsl') . '"?>';
+            $output[] = $xml_content;
+
+            $final_xml = implode("\n", $output);
+
+            // Valida l'XML
+            libxml_use_internal_errors(true);
+            $doc = new DOMDocument('1.0', 'UTF-8');
+            if (!$doc->loadXML($final_xml)) {
+                $errors = libxml_get_errors();
+                $error_msg = '';
+                foreach ($errors as $error) {
+                    $error_msg .= sprintf("Line %d: %s\n", $error->line, $error->message);
+                }
+                libxml_clear_errors();
+                throw new Exception("XML Validation failed: " . $error_msg);
+            }
+
+            // Pulisci output buffer prima di inviare headers
+            if (ob_get_level())
+                ob_end_clean();
+
+            header("Content-Type: text/xml; charset=UTF-8");
+            echo $final_xml;
+
+        } catch (Exception $e) {
+            // Log error
+            log_message('error', "Error processing XML: " . $e->getMessage());
+            show_error("Unable to process document: " . $e->getMessage());
+        }
     }
 
 
     public function visualizza_formato_completo($id)
     {
-        $documento = $this->apilib->view('documenti_contabilita', $id);
-        $reverse = in_array($documento['documenti_contabilita_tipologie_fatturazione_codice'], ['TD17', 'TD18', 'TD19']);
-        $this->load->helper('download');
-        $general_settings = $this->apilib->searchFirst('documenti_contabilita_general_settings');
-        $xsl_url_ordinaria = $general_settings['documenti_contabilita_general_settings_xsl_fattura_ordinaria'];
-        $xsl_url_pa = $general_settings['documenti_contabilita_general_settings_xsl_fattura_pa'];
+        try {
+            $documento = $this->apilib->view('documenti_contabilita', $id);
+            $file_xml = "uploads/" . $documento['documenti_contabilita_file_xml'];
 
-        $physicalDir = FCPATH . "application/modules/contabilita/assets/uploads/";
-
-        // Verifico se è per soggetti privati (e aziende) oppure pubblica amministrazione perche hanno due xslt diversi
-        if ($documento['documenti_contabilita_tipo_destinatario'] == 3) {
-            $xsl_url = $xsl_url_pa;
-            $file_xsl = 'fattura_completa_pa.xsl';
-            $tmpXsl = $physicalDir . $file_xsl;
-        } else {
-            $xsl_url = $xsl_url_ordinaria;
-            $file_xsl = 'fattura_completa_ordinaria.xsl';
-            $tmpXsl = $physicalDir . $file_xsl;
-        }
-
-        // Se non ce foglio xsl salvarlo.. Per modificare il file caricarlo sui general settings.
-        if (!file_exists($tmpXsl)) {
-            log_message('debug', "XSL Foglio di stile fattura elettronica non trovato, lo scarico e lo salvo.");
-            file_put_contents($tmpXsl, file_get_contents($xsl_url));
-        } else {
-            log_message('debug', "XSL Foglio di stile fattura elettronica trovato correttamente: " . $tmpXsl);
-        }
-
-
-        $file_xml = "uploads/" . $documento['documenti_contabilita_file_xml'];
-
-        $content_xml = file_get_contents($file_xml);
-        $content_xml = preg_replace('/<\?xml(.*?)\?>/', '', $content_xml);
-
-        if ($documento['documenti_contabilita_importata_da_xml']) {
-            $pos = strpos($content_xml, '<FatturaElettronica xmlns:');
-            if ($pos !== false) {
-                $content_xml = substr_replace($content_xml, '<p:FatturaElettronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" versione="FPR12" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">', 0, $pos + strlen('<FatturaElettronica xmlns:'));
-                $content_xml = str_ireplace('</FatturaElettronica>', '</p:FatturaElettronica>', $content_xml);
+            if (empty($documento['documenti_contabilita_file_xml']) || !file_exists($file_xml)) {
+                throw new Exception("XML file not found or empty");
             }
-        }
 
-        header("Content-Type:text/xml");
-        $this->load->view('contabilita/pdf/visualizzazione_completa', ['xml' => $content_xml, 'file_xsl' => $file_xsl]);
+            // Leggi il contenuto XML e rimuovi BOM se presente
+            $xml_content = file_get_contents($file_xml);
+            $xml_content = preg_replace('/^\xEF\xBB\xBF/', '', $xml_content); // Rimuovi BOM
+            $xml_content = preg_replace('/^\x00\xEF\xBB\xBF/', '', $xml_content); // Rimuovi BOM con null byte
+
+            // Rimuovi tutte le dichiarazioni XML esistenti
+            $xml_content = preg_replace('/<\?xml.*?\?>/s', '', $xml_content);
+
+            // Normalizza line endings
+            $xml_content = str_replace(["\r\n", "\r"], "\n", $xml_content);
+            $xml_content = trim($xml_content);
+
+            // Fix namespace e tag duplicati
+            if (strpos($xml_content, '<FatturaElettronica') !== false) {
+                // Estrai il contenuto tra i tag FatturaElettronicaHeader e FatturaElettronicaBody
+                preg_match('/<FatturaElettronicaHeader.*?>(.*?)<\/FatturaElettronicaHeader>/s', $xml_content, $header_matches);
+                preg_match('/<FatturaElettronicaBody.*?>(.*?)<\/FatturaElettronicaBody>/s', $xml_content, $body_matches);
+
+                if (!empty($header_matches[1]) && !empty($body_matches[1])) {
+                    $header_content = $header_matches[1];
+                    $body_content = $body_matches[1];
+
+                    // Costruisci l'XML corretto
+                    $new_xml = '<p:FatturaElettronica xmlns:ds="http://www.w3.org/2000/09/xmldsig#" '
+                        . 'xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2" '
+                        . 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+                        . 'versione="FPR12" '
+                        . 'xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 '
+                        . 'https://www.fatturapa.gov.it/export/documenti/fatturapa/v1.2.1/Schema_del_file_xml_FatturaPA_v1.2.2.xsd">'
+                        . "\n<FatturaElettronicaHeader>\n"
+                        . $header_content
+                        . "\n</FatturaElettronicaHeader>\n"
+                        . "<FatturaElettronicaBody>\n"
+                        . $body_content
+                        . "\n</FatturaElettronicaBody>\n"
+                        . '</p:FatturaElettronica>';
+
+                    $xml_content = $new_xml;
+                }
+            }
+
+            // Crea l'output finale
+            $output = [];
+            $output[] = '<?xml version="1.0" encoding="UTF-8"?>';
+            $output[] = '<?xml-stylesheet type="text/xsl" href="' . $this->layout->moduleAssets('contabilita', 'uploads/fattura_completa_ordinaria.xsl') . '"?>';
+            $output[] = $xml_content;
+
+            $final_xml = implode("\n", $output);
+
+            // Valida l'XML
+            libxml_use_internal_errors(true);
+            $doc = new DOMDocument('1.0', 'UTF-8');
+            if (!$doc->loadXML($final_xml)) {
+                $errors = libxml_get_errors();
+                $error_msg = '';
+                foreach ($errors as $error) {
+                    $error_msg .= sprintf("Line %d: %s\n", $error->line, $error->message);
+                }
+                libxml_clear_errors();
+                throw new Exception("XML Validation failed: " . $error_msg);
+            }
+
+            // Pulisci output buffer prima di inviare headers
+            if (ob_get_level())
+                ob_end_clean();
+
+            header("Content-Type: text/xml; charset=UTF-8");
+            echo $final_xml;
+
+        } catch (Exception $e) {
+            // Log error
+            log_message('error', "Error processing XML: " . $e->getMessage());
+            show_error("Unable to process document: " . $e->getMessage());
+        }
     }
 
     public function generaRiba()
@@ -1286,18 +1497,18 @@ class Documenti extends MX_Controller
     public function generaSdd($override_data = [])
     {
         $ids = json_decode($this->input->post('ids') ?? $this->input->post('ids_b2b'));
-        
+
         $conto_id = $this->input->post('conto_sdd') ?? $this->input->post('conto_sdd_b2b');
         $conto = $this->apilib->view('conti_correnti', $conto_id);
-        
+
         $data_incasso = $this->input->post('data_incasso');
-        
+
         if (empty($data_incasso)) {
             $data_incasso = $this->input->post('sdd_data_incasso');
         }
 
         //debug($ids,true);
-        
+
         $documenti = $this->apilib->search('documenti_contabilita_scadenze', "documenti_contabilita_scadenze_id IN (" . implode(',', $ids) . ")");
 
         if ($documenti) {
@@ -1313,7 +1524,7 @@ class Documenti extends MX_Controller
         $sdd = [];
 
         $tot_docs = array_reduce($documenti, function ($sum, $doc) {
-            if (empty ($doc['documenti_contabilita_scadenze_ammontare'])) {
+            if (empty($doc['documenti_contabilita_scadenze_ammontare'])) {
                 $doc['documenti_contabilita_scadenze_ammontare'] = 0;
             }
 
@@ -1327,29 +1538,31 @@ class Documenti extends MX_Controller
         $sdd['azienda'] = $settings;
         $sdd['documenti'] = $documenti;
 
-        $sdd['data_incasso']    = $data_incasso;
+        $sdd['data_incasso'] = $data_incasso;
 
         $sdd['conto'] = $conto;
 
         // dd($sdd);
 
         $file_content = $this->load->view('contabilita/xml_sdd', ['sdd' => $sdd, 'override_data' => $override_data], true);
+        $file_content = trim($file_content);
+        $file_content = preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $file_content);
 
         if (!empty($this->input->get('valida_xml')) && $this->input->get('valida_xml') == 1) {
             //debug($ids, true);
             header("Content-type: application/json");
-            
+
             $xsdPath = $this->layout->moduleAssets('contabilita', 'uploads/CBISDDReqLogMsg.00.01.00.xsd.xml');
-            
+
             $file_path = $path = tempnam(sys_get_temp_dir(), 'prefix');
             file_put_contents($file_path, $file_content);
-            
+
             libxml_use_internal_errors(true);
             $xml = new DOMDocument();
             $xml->load($file_path);
-            
+
             if (!$xml->schemaValidate($xsdPath)) {
-                
+
                 $error = libxml_get_last_error();
                 if ($error) {
                     $errorMsg = $this->formatXmlError($error, $file_path);
@@ -1364,13 +1577,13 @@ class Documenti extends MX_Controller
         } else {
             header("Content-type: text/xml");
             header("Content-Disposition: attachment; filename=sdd.xml");
-            
+
             $this->db->where_in('documenti_contabilita_scadenze_id', $ids)->update('documenti_contabilita_scadenze', [
                 'documenti_contabilita_scadenze_rid_riba_emesso' => DB_BOOL_TRUE,
                 'documenti_contabilita_scadenze_rid_riba_banca' => $this->input->post('conto_sdd_b2b')
             ]);
             $this->mycache->clearEntityCache('documenti_contabilita_scadenze');
-            
+
             die($file_content);
         }
     }
@@ -1446,7 +1659,7 @@ class Documenti extends MX_Controller
         $files = [];
         foreach ($documenti as $key => $documento) {
             //var_dump(base64_decode($documento[$field_name]));
-            if ($tpl == 'formato_compatto') {
+            if ($tpl == 'debugatto') {
                 //Se formato compatto uso il model per salvarmi il file
                 $pdf_file = $this->docs->getPdfFormatoCompatto($documento);
             } elseif (!empty($template_pdf)) {
@@ -1501,49 +1714,34 @@ class Documenti extends MX_Controller
 
             $documento_new['documenti_contabilita_tipologia_fatturazione'] = 1;
 
+            $documento_new['cliente_id'] = $documento_old['documenti_contabilita_customer_id'];
+
             //Creo il nuovo documento
             //$new_documento_id = $this->apilib->create('documenti_contabilita', $documento_new, false);
-            $this->db->insert('documenti_contabilita', $documento_new);
-            $new_documento_id = $this->db->insert_id();
 
-            // 08-05-2023 rif_doc diventa multplo
-            // Imposto documento padre nella relazione
-            if (!empty($ddt_id)) {
-                $this->docs->associaDocumenti($ddt_id, [$new_documento_id]);
+            $articoli = $this->db->where('documenti_contabilita_articoli_documento', $ddt_id)->get('documenti_contabilita_articoli')->result_array();
+            $documento_new['articoli'] = [];
+            foreach ($articoli as $articolo) {
+
+
+                $articolo['documenti_contabilita_articoli_rif_riga_articolo'] = $articolo['documenti_contabilita_articoli_id'];
+                unset($articolo['documenti_contabilita_articoli_id']);
+                $documento_new['articoli_data'][] = $articolo;
             }
+
+            $new_documento_id = $this->docs->doc_express_save($documento_new);
+
+
+
+
+            $this->docs->associaDocumenti($ddt_id, [$new_documento_id]);
 
             //Copio gli articoli nel nuovo documento
-            $articoli = $this->db->where('documenti_contabilita_articoli_documento', $ddt_id)->get('documenti_contabilita_articoli')->result_array();
-            foreach ($articoli as $articolo) {
-                unset($articolo['documenti_contabilita_articoli_id']);
-                $articolo['documenti_contabilita_articoli_documento'] = $new_documento_id;
-
-                $this->db->insert('documenti_contabilita_articoli', $articolo);
-            }
-
-            //Creo una scadenza
-            $this->db->insert('documenti_contabilita_scadenze', [
-                'documenti_contabilita_scadenze_documento' => $new_documento_id,
-                'documenti_contabilita_scadenze_ammontare' => $documento_old['documenti_contabilita_totale'],
-                'documenti_contabilita_scadenze_scadenza' => date("Y-m-d"),
-            ]);
 
 
-            // Cerco se c'è un template di default uso quello altrimenti il primo che creato che si presume il generico
-            $tpl_pdf_db = $this->apilib->searchFirst('documenti_contabilita_template_pdf', ["documenti_contabilita_template_pdf_default" => DB_BOOL_TRUE], 0, 'documenti_contabilita_template_pdf_id', 'ASC');
-            if (empty($tpl_pdf_db)) {
-                $tpl_pdf_db = $this->apilib->searchFirst('documenti_contabilita_template_pdf', [], 0, 'documenti_contabilita_template_pdf_id', 'ASC');
-            }
-            $documento_new['documenti_contabilita_template_pdf'] = $tpl_pdf_db['documenti_contabilita_template_pdf_id'];
 
-            $this->apilib->edit('documenti_contabilita', $new_documento_id, ['documenti_contabilita_template_pdf' => $documento_new['documenti_contabilita_template_pdf']]);
-
-            // TODO: Qua sarà da cambiare perche lavorando multiazienda si dovrebbe indicare l'azienda id che genera il documento.
-            $prefisso = "IT" . $settings['documenti_contabilita_settings_company_vat_number'];
-            $this->docs->generateXmlFilename($prefisso, $new_documento_id);
-            $documento = $this->apilib->view('documenti_contabilita', $new_documento_id);
-
-            $this->docs->generate_xml($documento, $nomefilexml);
+            $this->docs->aggiornaStatoDocumento($new_documento_id);
+            $this->docs->aggiornaStatoDocumento($ddt_id);
         }
 
         redirect('main/layout/elenco_documenti');
@@ -2603,7 +2801,7 @@ class Documenti extends MX_Controller
         $documento_contabilita = $this->apilib->searchFirst('documenti_contabilita', ['documenti_contabilita_id' => $documento]);
         $cliente = $documento_contabilita['documenti_contabilita_customer_id'];
         $lead_id = json_decode($documento_contabilita['documenti_contabilita_extra_param'], true)['lead_id'] ?? null;
-        
+
         if (!empty($lead_id)) {
             //Creo ordine per questo fornitore
             $documento_id = $this->docs->doc_express_save([
@@ -2694,7 +2892,7 @@ class Documenti extends MX_Controller
                 'tipo_documento' => $post['tipo_documento'],
                 'data_emissione' => $post['data_emissione'],
             ];
-            
+
             $articoli = $this->db->where('documenti_contabilita_articoli_documento', $doc['documenti_contabilita_id'])->get('documenti_contabilita_articoli')->result_array();
 
             if (!empty($articoli)) {
@@ -2741,7 +2939,7 @@ class Documenti extends MX_Controller
             }
         }
 
-       
+
 
         echo 'documenti duplicati con successo. reindirizzamento in corso...';
         sleep(2);
@@ -2965,11 +3163,11 @@ class Documenti extends MX_Controller
         foreach ($filtri as $filtro) {
             $field_id = $filtro['field_id'];
             $value = $filtro['value'];
-            
+
             if ($value == '-1' || $value == '') {
                 continue;
             }
-            
+
             $field_data = $this->db->query("SELECT * FROM fields LEFT JOIN fields_draw ON (fields_draw_fields_id = fields_id) WHERE fields_id = '$field_id'")->row_array();
             $field_name = $field_data['fields_name'];
             if (!in_array($field_name, $filtri_previsti)) {
@@ -2979,7 +3177,7 @@ class Documenti extends MX_Controller
                     $azienda = $value;
                 }
                 if ($field_name == 'prime_note_periodo_di_competenza' && $value) {
-                    
+
                     $mesi = $value;
                 }
                 if ($field_name == 'prime_note_data_registrazione') {
@@ -2988,9 +3186,9 @@ class Documenti extends MX_Controller
                     $mesi = [];
                     $mese_start = explode('/', $date[0])[1];
                     $mese_end = explode('/', $date[1])[1];
-                    
+
                     for ($i = $mese_start; $i <= $mese_end; $i++) {
-                        $mesi[] = (int)$i;
+                        $mesi[] = (int) $i;
                     }
                     //debug($mesi,true);
                 }
@@ -3001,18 +3199,18 @@ class Documenti extends MX_Controller
             die('Impostare correttamente il filtro azienda e il periodo di competenza!');
         }
         $impostazioni = $this->apilib->view('documenti_contabilita_settings', $azienda);
-        if (in_array(12,$mesi)) {//Se c'è il mese dicembre, allora l'anno di riferimento è il precedente
+        if (in_array(12, $mesi)) {//Se c'è il mese dicembre, allora l'anno di riferimento è il precedente
             $anno = date('Y', strtotime('-1 year'));
             $trimestre = 4;
         } else {
             $anno = date('Y');
-            if ( in_array(1,$mesi) && in_array(2,$mesi) && in_array(3,$mesi) ) {
+            if (in_array(1, $mesi) && in_array(2, $mesi) && in_array(3, $mesi)) {
                 $trimestre = 1;
-            } elseif ( in_array(4,$mesi) && in_array(5,$mesi) && in_array(6,$mesi) ) {
+            } elseif (in_array(4, $mesi) && in_array(5, $mesi) && in_array(6, $mesi)) {
                 $trimestre = 2;
-            } elseif ( in_array(7,$mesi) && in_array(8,$mesi) && in_array(9,$mesi) ) {
+            } elseif (in_array(7, $mesi) && in_array(8, $mesi) && in_array(9, $mesi)) {
                 $trimestre = 3;
-            } elseif ( in_array(10,$mesi) && in_array(11,$mesi) && in_array(12,$mesi) ) {
+            } elseif (in_array(10, $mesi) && in_array(11, $mesi) && in_array(12, $mesi)) {
                 $trimestre = 4;
 
             } else {
@@ -3046,9 +3244,9 @@ class Documenti extends MX_Controller
         libxml_use_internal_errors(true);
         $xml = new DOMDocument();
         $xml->load($xmlPath);
-        
+
         if (!$xml->schemaValidate($xsdPath)) {
-            
+
             $error = libxml_get_last_error();
             if ($error) {
                 $errorMsg = $this->formatXmlError($error, $xmlPath);
@@ -3066,12 +3264,12 @@ class Documenti extends MX_Controller
     {
         //debug($error,true);
         $returnMessage = "Errore fatale {$error->code}: {$error->message}";
-        
+
         $returnMessage .= " alla linea {$error->line}.";
-        
+
         // Aggiungiamo l'estratto del codice XML
         $lines = file($xmlPath);
-        
+
         $extract = array_slice($lines, max($error->line - 6, 0), 11);
 
         $highlightedError = '<pre class="text-left">';
@@ -3079,75 +3277,75 @@ class Documenti extends MX_Controller
         foreach ($extract as $i => $line) {
             if ($i === 5) {
                 $highlightedError .= '<span style="color: red;font-weight:bold;">' . htmlspecialchars($line) . '</span>';
-                
+
 
             } else {
                 $highlightedError .= htmlspecialchars($line);
             }
-            
+
         }
 
         $highlightedError .= '</pre>';
-       
+
 
         // $highlightedExtract = implode("", $extract);
         // $highlightedExtract = htmlspecialchars($highlightedExtract);
         // $highlightedExtract = preg_replace('/^.*$/m', '<span class="xml-line">$0</span>', $highlightedExtract);
         // $highlightedExtract = str_replace("<span class=\"xml-line\">{$lines[$error->line - 1]}</span>", "<span class=\"xml-error-line\">{$lines[$error->line - 1]}</span>", $highlightedExtract);
-        
+
         return $returnMessage . "<br/>Estratto del codice:<br/>{$highlightedError}";
     }
-    
+
     public function stampa_riba()
     {
         $post = $this->security->xss_clean($this->input->post());
-        
+
         if (empty($post) || empty($post['ids'])) {
             die(show_404());
         }
-        
+
         error_reporting(0);  // Disable error reporting
         ini_set('display_errors', false);
         ini_set('display_startup_errors', false);
-        
+
         $ids = implode(',', json_decode($post['ids'], true));
-        
-        $rows = $this->apilib->search('documenti_contabilita_scadenze', ['documenti_contabilita_scadenze_id IN ('.$ids.')']);
-        
+
+        $rows = $this->apilib->search('documenti_contabilita_scadenze', ['documenti_contabilita_scadenze_id IN (' . $ids . ')']);
+
         if (empty($rows)) {
             die('ANOMALIA: Nessun documento trovato. contattare assistenza!');
         }
-        
+
         $this->load->model('contabilita/ribaabicbi');
-        
+
         $_aziende = $this->apilib->search('documenti_contabilita_settings');
-        
+
         $aziende = [];
         foreach ($_aziende as $_azienda) {
             $aziende[$_azienda['documenti_contabilita_settings_id']] = $_azienda;
         }
-        
+
         foreach ($rows as $index => $row) {
             $customer = $this->apilib->searchFirst('customers', ['customers_id' => $row['documenti_contabilita_customer_id']]);
             $bank_account = $this->apilib->searchFirst('customers_bank_accounts', ['customers_bank_accounts_customer_id' => $row['documenti_contabilita_customer_id'], 'customers_bank_accounts_default' => DB_BOOL_TRUE]);
-            
+
             $rows[$index]['_customer'] = $customer ?? [];
             $rows[$index]['_bank_account'] = $bank_account ?? [];
             $rows[$index]['_azienda'] = $aziende[$row['documenti_contabilita_azienda']];
         }
-        
+
         $html = $this->load->view('contabilita/pdf/stampa_riba', ['rows' => $rows], true);
-        
+
         $pdf = $this->layout->generate_pdf($html, 'portrait', '', [], false, true);  // Generate the PDF using the specified orientation
-        
+
         $fp = fopen($pdf, 'rb');  // Open the PDF file in binary mode
-        
+
         header('Content-Type: application/pdf');  // Set the content type header to indicate PDF
         header('Content-Length: ' . filesize($pdf));  // Set the content length header
         header("Content-disposition: inline; filename=\"stampa_riba.pdf\"");  // Set the content disposition header to specify inline or attachment
-        
+
         fpassthru($fp);  // Output the PDF file
     }
 
-   
+
 }

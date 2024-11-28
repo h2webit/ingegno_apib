@@ -1801,6 +1801,9 @@ class Primanota extends MX_Controller
         //     'documenti_contabilita_id' => $ids,
         //     'documenti_contabilita_tipo' => 1,
         // ]);
+
+
+        
         $c = count($ids);
         $i = 0;
         foreach ($ids as $documenti_contabilita_id) {

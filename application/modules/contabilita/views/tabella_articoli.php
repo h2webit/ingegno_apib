@@ -743,10 +743,11 @@
                                 console.log('TODO: duplicare la riga con la differenza ' + differenza);
                             }
                         } else {
-                            $('#lotti_modal').modal('show');
+                            
                             //console.log(my.data);
                             
                             $("#lotti_table tbody").html('');
+                            $('#lotti_modal').modal('show');
                             
                             $.each(my.data, function(i, item) {
                                 var _data_scadenza = item.movimenti_articoli_data_scadenza;
@@ -793,6 +794,7 @@
                                 
                             });
                             reinitDataTableLotti();
+                            
                             //initDataTableLotti();
                         }
                         
@@ -805,6 +807,8 @@
         
         $('#lotti_table').on('click', '.btn_lotto', function() {
             
+            
+
             var riga = current_row_lotto; //$(this).data('row');
             var lotto = $(this).data('lotto_codice');
             var scadenza = $(this).data('lotto_scadenza');
@@ -831,7 +835,11 @@
                 
                 
             }
-            
+            if ($.fn.DataTable.isDataTable('#lotti_table')) {
+               //alert(1);
+                $('#lotti_table').DataTable().destroy();
+                //alert(2);
+            }
             $('#lotti_modal').modal('hide');
             $('.modal-backdrop').remove();
             

@@ -691,3 +691,4 @@ $lang['Conteggi'] = 'Conteggi';
 $lang['Ogni 3 mesi'] = 'Ogni 3 mesi';
 $lang['/ COMFER S.P.A. - Customer'] = '/ COMFER S.P.A. - Customer';
 $lang['/ A. IACOBUCCI SRL - Customer'] = '/ A. IACOBUCCI SRL - Customer';
+$lang['/ Shenzhenshi lihongfu - Cliente'] = '/ Shenzhenshi lihongfu - Cliente';

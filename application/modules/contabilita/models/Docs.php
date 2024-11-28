@@ -1788,8 +1788,11 @@ class Docs extends CI_Model
         ])->result_array();
 
         $stato = 1; //Di default aperto
+        $prodotti_rimossi = 0;
+        $count = count($righe_articolo);
         foreach ($righe_articolo as $key => $riga) {
             if (empty($riga['documenti_contabilita_articoli_prodotto_id'])) {
+                $prodotti_rimossi++;
                 unset($righe_articolo[$key]);
             }
 

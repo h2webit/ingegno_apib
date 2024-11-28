@@ -1075,6 +1075,8 @@ class Movimenti extends MX_Controller
             Having s > 0
             "
         )->result_array();
+
+        //debug($getlottiprod,true);
         //TODO: non basta, bisogna mostrare le quantità corrette raggruppate per lotti
     
         if (empty($getlottiprod)) {

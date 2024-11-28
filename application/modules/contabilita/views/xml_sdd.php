@@ -1,4 +1,4 @@
-<?php $this->load->model('contabilita/docs'); ?><?php echo '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL; ?><?php extract($sdd); $doc=$documenti[0];?>
+<?php $this->load->model('contabilita/docs'); echo '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL; extract($sdd); $doc=$documenti[0];?>
 <CBISDDReqLogMsg xmlns="urn:CBI:xsd:CBISDDReqLogMsg.00.01.00">
     <GrpHdr>
         <MsgId><?php echo $sdd_id; ?></MsgId>
@@ -43,7 +43,7 @@
         </Cdtr>
         <CdtrAcct>
             <Id>
-                <IBAN><?php echo trim($conto['conti_correnti_iban']); ?></IBAN>
+                <IBAN><?php echo trim(str_ireplace(' ', '', $conto['conti_correnti_iban'])); ?></IBAN>
             </Id>
         </CdtrAcct>
         <CdtrAgt>
@@ -73,8 +73,8 @@
                 'customers_bank_accounts_customer_id' => $doc['documenti_contabilita_customer_id'],
                 "customers_bank_accounts_id IN (SELECT customers_bank_accounts_id FROM customers_banks_types WHERE bank_types_id = 2)" //Rid
             ]);
-
-
+            
+            
             //Se non c'è prendo il conto rid
             if (!$conto) {
                 $conto = $this->apilib->searchFirst('customers_bank_accounts', [
@@ -103,7 +103,10 @@
             if (!$conto) {
                 die("<br /><br /><strong>Non trovo il conto per il cliente '{$dest['ragione_sociale']}'</strong>");
             }
-        ?>
+            
+            
+            $MndtId = (!empty($conto['customers_id_mandato'])) ? $conto['customers_id_mandato'] : substr($dest['ragione_sociale'], 0, 3) . '' . substr($conto['customers_bank_accounts_iban'], 0, -5);
+            ?>
             <DrctDbtTxInf>
                 <PmtId>
                     <InstrId><?php echo $doc['documenti_contabilita_scadenze_id'] ?></InstrId>
@@ -113,7 +116,7 @@
                 <ChrgBr>SLEV</ChrgBr>
                 <DrctDbtTx>
                     <MndtRltdInf>
-                        <MndtId><?php echo (!empty($conto['customers_id_mandato'])) ? $conto['customers_id_mandato'] : substr($dest['ragione_sociale'], 0, 3) . '' . substr($conto['customers_bank_accounts_iban'], 0, -5); ?></MndtId>
+                        <MndtId><?php echo str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $MndtId); ?></MndtId>
                         <DtOfSgntr><?php echo date('Y-m-d') ?></DtOfSgntr>
                     </MndtRltdInf>
                 </DrctDbtTx>
@@ -122,7 +125,7 @@
                     <PstlAdr>
                         <StrtNm><?php echo substr(str_ireplace(['&', '€', '™'], ['&amp;', 'EUR', ''], $dest['indirizzo']), 0,65); ?></StrtNm>
                         <PstCd><?php echo $dest['cap'] ?></PstCd>
-                        <TwnNm><?php echo substr($dest['citta'], 0, 30); ?> ?></TwnNm>
+                        <TwnNm><?php echo substr($dest['citta'], 0, 30); ?></TwnNm>
                         <CtrySubDvsn><?php echo $dest['provincia'] ?></CtrySubDvsn>
                         <Ctry><?php echo strtoupper(substr($dest['nazione'], 0, 2)); ?></Ctry>
                     </PstlAdr>
@@ -137,7 +140,7 @@
                 </Dbtr>
                 <DbtrAcct>
                     <Id>
-                        <IBAN><?php echo trim($conto['customers_bank_accounts_iban'] ?? ''); ?></IBAN>
+                        <IBAN><?php echo trim(str_ireplace(' ', '', $conto['customers_bank_accounts_iban'] ?? '')); ?></IBAN>
                     </Id>
                 </DbtrAcct>
                 <Purp>
