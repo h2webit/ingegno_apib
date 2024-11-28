@@ -28,71 +28,74 @@ class Apib extends MY_Controller
         $sede = $this->input->post('sede');
         $giorno = $this->input->post('giorno');
         
-        //debug($this->input->post(),true);
         $old_data = $this->db
-            ->where("richieste_disponibilita_giorno::date = '$giorno'::date", null, false)
-            ->where("richieste_disponibilita_turno_assegnato IS NULL", null, false)
-            ->where("richieste_disponibilita_sede_operativa", $sede)->get('richieste_disponibilita')->result_array();
+            ->where("DATE(appuntamenti_giorno) = DATE('$giorno')", null, false)
+            ->where("appuntamenti_fascia_oraria IS NULL", null, false)
+            ->where("appuntamenti_disponibilita", 1)
+            ->where("appuntamenti_impianto", $sede)->get('appuntamenti')->result_array();
         
         $this->db
-            ->where("richieste_disponibilita_giorno::date = '$giorno'::date", null, false)
-            ->where("richieste_disponibilita_turno_assegnato IS NULL", null, false)
-            ->where("richieste_disponibilita_sede_operativa", $sede)->delete('richieste_disponibilita');
+            ->where("DATE(appuntamenti_giorno) = DATE('$giorno')", null, false)
+            ->where("appuntamenti_fascia_oraria IS NULL", null, false)
+            ->where("appuntamenti_disponibilita", 1)
+            ->where("appuntamenti_impianto", $sede)->delete('appuntamenti');
         
         $this->apilib->clearCache();
         
-        $dati_sede = $this->apilib->view('sedi_operative', $sede);
-        $utente = $this->apilib->view('utenti', 22);
+        $dati_sede = $this->apilib->view('projects', $sede);
+        $utente = $this->apilib->view('users', 22);
         foreach ($gruppi_fascie as $fascie) {
             if (!empty($fascie)) {
                 foreach ($fascie as $fascia) {
+                    $fascia_oraria = $this->apilib->searchFirst('projects_orari', ['projects_orari_id' => $fascia]);
                     
                     if (stripos($fascia, '**')) { //Se è costo differenziato/studente
                         $fascia = str_ireplace('*', '', $fascia);
-                        $affiancamento = 'f';
-                        $studente = 't';
+                        $affiancamento = 0;
+                        $studente = 1;
                     } else if (stripos($fascia, '*')) { //Se è affiancamento
                         $fascia = str_ireplace('*', '', $fascia);
-                        $affiancamento = 't';
-                        $studente = 'f';
+                        $affiancamento = 1;
+                        $studente = 0;
                     } else {
-                        $affiancamento = 'f';
-                        $studente = 'f';
+                        $affiancamento = 0;
+                        $studente = 0;
                     }
                     
-                    $this->apilib->create('richieste_disponibilita', [
-                        'richieste_disponibilita_sede_operativa' => $sede,
-                        'richieste_disponibilita_giorno' => $giorno,
-                        'richieste_disponibilita_fascia' => $fascia,
-                        'richieste_disponibilita_turno_assegnato' => null,
-                        'richieste_disponibilita_affiancamento' => $affiancamento,
-                        'richieste_disponibilita_studente' => $studente,
+                    $this->apilib->create('appuntamenti', [
+                        'appuntamenti_impianto' => $sede,
+                        'appuntamenti_giorno' => $giorno,
+                        'appuntamenti_fascia_oraria' => $fascia,
+                        'appuntamenti_affiancamento' => $affiancamento,
+                        'appuntamenti_studente' => $studente,
+                        'appuntamenti_ora_inizio' => $fascia_oraria['projects_orari_dalle'],
+                        'appuntamenti_ora_fine' => $fascia_oraria['projects_orari_alle'],
+                        'appuntamenti_disponibilita' => 1,
                     ]);
                     
                     if (!in_array($this->auth->get('utenti_tipo'), [7, 8])) {
                         
                         foreach ($old_data as $richiesta) {
                             //Se avevo già fatto questa richiesta, non notifico
-                            if ($richiesta['richieste_disponibilita_fascia'] == $fascia) {
+                            if ($richiesta['appuntamenti_fascia_oraria'] == $fascia) {
                                 continue 2;
                             }
                         }
                         
-                        $dati_sede = $this->apilib->view('sedi_operative', $sede);
                         $notification = [
                             'notifications_user_id' => 22,
                             'notifications_type' => NOTIFICATION_TYPE_WARNING,
                             'notifications_link' => "main/layout/55/{$sede}",
-                            'notifications_message' => "Nuova richiesta disponibilità per la sede {$dati_sede['sedi_operative_reparto']}"
+                            'notifications_message' => "Nuova richiesta disponibilità per la commessa {$dati_sede['projects_name']}"
                         ];
                         
                         $this->db->insert('notifications', $notification);
                         
                         
-                        $dati_fascia = $this->apilib->view('sedi_operative_orari', $fascia);
+                        $dati_fascia = $this->apilib->view('projects_orari', $fascia);
                         //E mando anche una mail
-                        $data['richieste_disponibilita_giorno'] = $giorno;
-                        $this->mail_model->send($utente['utenti_email'], 'nuova_richiesta_disponibilita', 'it', array_merge($data, $dati_sede, $dati_fascia));
+                        $data['appuntamenti_giorno'] = $giorno;
+                        $this->mail_model->send($utente['users_email'], 'nuova_richiesta_disponibilita', 'it', array_merge($data, $dati_sede, $dati_fascia));
                     }
                 }
             }
@@ -100,13 +103,13 @@ class Apib extends MY_Controller
         
         //A questo punto faccio un controllo per capire se sia stata rimossa una richiesta
         $new_data = $this->db
-            ->where("richieste_disponibilita_giorno::date = '$giorno'::date", null, false)
-            ->where("richieste_disponibilita_turno_assegnato IS NULL", null, false)
-            ->where("richieste_disponibilita_sede_operativa", $sede)->get('richieste_disponibilita')->result_array();
+            ->where("DATE(appuntamenti_giorno) = DATE('$giorno')", null, false)
+            ->where("appuntamenti_fascia_oraria IS NULL", null, false)
+            ->where("appuntamenti_impianto", $sede)->get('appuntamenti')->result_array();
         
         foreach ($old_data as $key => $old) {
             foreach ($new_data as $key1 => $new) {
-                if ($new['richieste_disponibilita_fascia'] == $old['richieste_disponibilita_fascia']) {
+                if ($new['appuntamenti_fascia_oraria'] == $old['appuntamenti_fascia_oraria']) {
                     unset($old_data[$key]);
                     break;
                 }
@@ -114,13 +117,13 @@ class Apib extends MY_Controller
         }
         
         if (!empty($old_data)) {
-            $dati_fascia = $this->apilib->view('sedi_operative_orari', $old_data[0]['richieste_disponibilita_fascia']);
-            $data['richieste_disponibilita_giorno'] = $giorno;
+            $dati_fascia = $this->apilib->view('projects_orari', $old_data[0]['appuntamenti_fascia_oraria']);
+            $data['appuntamenti_giorno'] = $giorno;
             $notification = [
                 'notifications_user_id' => 22,
                 'notifications_type' => NOTIFICATION_TYPE_WARNING,
                 'notifications_link' => "main/layout/55/{$sede}",
-                'notifications_message' => "Richiesta disponibilità rimossa per la sede {$dati_sede['sedi_operative_reparto']}"
+                'notifications_message' => "Richiesta disponibilità rimossa per la commessa {$dati_sede['sedi_operative_reparto']}"
             ];
             
             $this->db->insert('notifications', $notification);
@@ -139,7 +142,7 @@ class Apib extends MY_Controller
         $associato = $this->input->post('dipendenti_id');
         $giorno = $this->input->post('appuntamenti_giorno');
         $user_id = $this->apilib->view('dipendenti', $associato)['dipendenti_user_id'];
-        //Rimuovo tutte le assegnazioni in quel giorno di quella sede per quell'associato (null se turno scoperto)
+        //Rimuovo tutte le assegnazioni in quel giorno di quella commessa per quell'associato (null se turno scoperto)
         // $turni_assegnati = $this->db->where([
         //     'DATE(appuntamenti_giorno)' => $giorno,
         //     "appuntamenti_id IN (SELECT appuntamenti_id FROM rel_appuntamenti_persone WHERE users_id = '$user_id)",
@@ -182,7 +185,7 @@ class Apib extends MY_Controller
                     'appuntamenti_studente' => $studente,
                 ], false);
 
-                //Verifico se in questo giorno per questa fascia, era richiesta una disponibilità da parte della sede.
+                //Verifico se in questo giorno per questa fascia, era richiesta una disponibilità da parte della commessa.
                 //Se sì allora associo quest'id alla richiesta (così quando e se lo rimuoverò, la richiesta tornerà a comparire.
                 //Viceversa, se questo turno rimane, la richiesta sparirà (essendo una richiesta ormai "evasa")
                 //TODO: da capire coem gestire le richieste di disponibilità
@@ -212,7 +215,7 @@ class Apib extends MY_Controller
                     'allarmi_utente' => $user_id,
                     'allarmi_tipo' => ALLARMI_CAMBIO_TURNO,
                     'allarmi_titolo' => 'Turno modificato',
-                    'allarmi_testo' => "Il giorno <strong>{$giorno}</strong> è stato modificato il tuo turno presso la sede <strong>{$sede_data['projects_name']}</strong>.",
+                    'allarmi_testo' => "Il giorno <strong>{$giorno}</strong> è stato modificato il tuo turno presso la commessa <strong>{$sede_data['projects_name']}</strong>.",
                     'allarmi_data' => json_encode($this->input->post()),
                 ];
 
@@ -229,7 +232,7 @@ class Apib extends MY_Controller
         $regenerate = (bool) $this->input->get('_regen');
         $data['associato'] = $this->input->get('associati_id');
 
-        $data['sede'] = $this->apilib->view('projects', $sede_id);
+        $data['commessa'] = $this->apilib->view('projects', $sede_id);
 
         //Prendo i turni assegnati, ordinati decrescentemente (così per primo ho l'ultimo assegnato e capisco se devo rigenerare il file)
         $data['calendario'] = $this->apilib->search('appuntamenti', [
@@ -240,7 +243,7 @@ class Apib extends MY_Controller
 
         // Vedo se ho già il file generato
         $physicalDir = "./uploads/calendari";
-        $filename = 'calendariosede_' . $data['sede']['projects_id'] . '-' . @$data['calendario'][0]['appuntamenti_id'];
+        $filename = 'calendariosede_' . $data['commessa']['projects_id'] . '-' . @$data['calendario'][0]['appuntamenti_id'];
         $pdfFile = "{$physicalDir}/{$filename}.pdf";
 
         if (!file_exists($pdfFile) or is_development() or $regenerate) {

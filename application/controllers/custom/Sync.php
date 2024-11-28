@@ -698,6 +698,123 @@ class Sync extends MY_Controller
 
         $this->mycache->clearCache();
     }
+    
+    public function import_richieste_disponibilita()
+    {
+        /** Tabella richieste_disponibilita su apib_db
+         * Column    Type    Comment
+         * richieste_disponibilita_id    integer Auto Increment [nextval('richieste_disponibilita_richieste_disponibilita_id_seq')]
+         * richieste_disponibilita_data_creazione    timestamp NULL
+         * richieste_disponibilita_data_modifica    timestamp NULL
+         * richieste_disponibilita_sede_operativa    integer NULL
+         * richieste_disponibilita_giorno    timestamp NULL
+         * richieste_disponibilita_fascia    integer NULL
+         * richieste_disponibilita_turno_assegnato    integer NULL
+         * richieste_disponibilita_affiancamento    boolean [false]
+         * richieste_disponibilita_studente    boolean [false]
+         */
+        
+        /** Tabella appuntamenti
+         * Column    Type
+         * appuntamenti_id    bigint(20) unsigned Auto Increment
+         * appuntamenti_creation_date    datetime NULL
+         * appuntamenti_modified_date    datetime NULL
+         * appuntamenti_created_by    int(11) NULL
+         * appuntamenti_edited_by    int(11) NULL
+         * appuntamenti_insert_scope    varchar(250) NULL
+         * appuntamenti_edit_scope    varchar(250) NULL
+         * appuntamenti_cliente    int(11) -> rif. customers.customers_id
+         * appuntamenti_impianto    int(11) -> rif. projects.projects_id + filtered by projects_customer_id = customers.customers_id
+         * appuntamenti_persone    int(11)
+         * appuntamenti_automezzi    int(11) NULL
+         * appuntamenti_riga    int(11) NULL
+         * appuntamenti_note    longtext NULL
+         * appuntamenti_giorno    datetime
+         * appuntamenti_all_day    tinyint(1) NULL [0]
+         * appuntamenti_ora_inizio    varchar(250)
+         * appuntamenti_ora_fine    varchar(250)
+         * appuntamenti_pianificazione    int(11) NULL
+         * appuntamenti_titolo    varchar(250) NULL
+         * appuntamenti_da_confermare    tinyint(1) NULL [0]
+         * appuntamenti_colore_calendario    varchar(250) NULL
+         * appuntamenti_annullato    tinyint(1) NULL [0]
+         * appuntamenti_motivazione    longtext NULL
+         * appuntamenti_checklist    int(11) NULL
+         * appuntamenti_mail_cliente    tinyint(1) NULL [0]
+         * appuntamenti_n_ore    varchar(250) NULL
+         * appuntamenti_n_camere    varchar(250) NULL
+         * appuntamenti_fascia_oraria    int(11) NULL
+         * appuntamenti_affiancamento    tinyint(1) NULL
+         * appuntamenti_studente    tinyint(1) NULL
+         * appuntamenti_tipologia    int(11) NULL
+         * appuntamenti_external_id    varchar(250) NULL
+         * appuntamenti_codice    varchar(250) NULL
+         * appuntamenti_note2    longtext NULL
+         * appuntamenti_note3    longtext NULL
+         * appuntamenti_disponibilita	tinyint(1) NULL [0] -> 1 se è una richiesta di disponibilità
+         */
+        
+        set_log_scope('sync-richieste-disponibilita');
+        //Filtro solo dal mese corrente in poi...
+        $previousMonthStart = date('Y-m-01 00:00:00', strtotime('first day of previous month'));
+
+        // Filtra solo dal mese precedente in poi
+        $richieste_disponibilita = $this->apib_db->where('richieste_disponibilita_giorno >=', $previousMonthStart)
+            ->get('richieste_disponibilita')->result_array();
+        
+        $clienti_id_map = [];
+        $sedi_operative = $this->db->where("(projects_customer_id IS NOT NULL AND projects_customer_id <> '')", null, false)->get('projects')->result_array();
+        foreach ($sedi_operative as $sede_operativa) {
+            $clienti_id_map[$sede_operativa['projects_id']] = $sede_operativa['projects_customer_id'];
+        }
+        
+        $t = count($richieste_disponibilita);
+        $c = 0;
+        
+        foreach ($richieste_disponibilita as $richiesta_disponibilita) {
+            if (!in_array($richiesta_disponibilita['richieste_disponibilita_sede_operativa'], array_keys($clienti_id_map))) {
+                my_log('error', "Errore: sede operativa non trovata per richieste_disponibilita_id: " . $richiesta_disponibilita['richieste_disponibilita_id']);
+                progress(++$c, $t, 'import richieste_disponibilita vs richieste');
+                continue;
+            }
+            
+            // map richieste_disponibilita to appuntamenti
+            $appuntamento = [
+                'appuntamenti_id' => $richiesta_disponibilita['richieste_disponibilita_id'],
+                'appuntamenti_cliente' => $clienti_id_map[$richiesta_disponibilita['richieste_disponibilita_sede_operativa']] ?? null, // Assumendo che 1 sia il cliente
+                'appuntamenti_impianto' => $richiesta_disponibilita['richieste_disponibilita_sede_operativa'],
+                'appuntamenti_persone' => [],
+                'appuntamenti_giorno' => $richiesta_disponibilita['richieste_disponibilita_giorno'],
+                'appuntamenti_ora_inizio' => '00:00',
+                'appuntamenti_ora_fine' => '23:59',
+                'appuntamenti_all_day' => DB_BOOL_TRUE,
+                'appuntamenti_da_confermare' => DB_BOOL_FALSE,
+                'appuntamenti_annullato' => DB_BOOL_FALSE,
+                'appuntamenti_titolo' => 'Richiesta di disponibilità',
+                'appuntamenti_creation_date' => $richiesta_disponibilita['richieste_disponibilita_data_creazione'],
+                'appuntamenti_modified_date' => $richiesta_disponibilita['richieste_disponibilita_data_modifica'],
+                'appuntamenti_affiancamento' => $richiesta_disponibilita['richieste_disponibilita_affiancamento'] == 't' ? 1 : 0,
+                'appuntamenti_studente'   => $richiesta_disponibilita['richieste_disponibilita_studente'] == 't' ? 1 : 0,
+                'appuntamenti_disponibilita' => 1,
+            ];
+            
+            try {
+                $appuntamento_exists = $this->db->get_where('appuntamenti', ['appuntamenti_id' => $appuntamento['appuntamenti_id']])->row_array();
+                
+                if ($appuntamento_exists) {
+                    $appuntamento_creato = $this->apilib->edit('appuntamenti', $appuntamento['appuntamenti_id'], $appuntamento);
+                } else {
+                    $appuntamento_creato = $this->apilib->create('appuntamenti', $appuntamento);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento appuntamento: {$e->getMessage()}");
+                debug($appuntamento);
+                debug($e->getMessage(), true);
+            }
+            
+            progress(++$c, $t, 'import richieste_disponibilita vs richieste');
+        }
+    }
 
     public function import_domiciliari()
     {
