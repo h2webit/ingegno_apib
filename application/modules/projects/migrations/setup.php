@@ -7,7 +7,8 @@ $last_version = $this->core->updatePatches(null, 4, $recursive_to_last);
 
 
 $core_modules = [
-    'planner'
+    'planner',
+    'billable-hours'
 ];
 
 

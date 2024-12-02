@@ -112,6 +112,7 @@ class Docs extends CI_Model
             $dom = new DOMDocument();
             $dom->preserveWhiteSpace = false;
             $dom->formatOutput = true;
+            //die($pagina);
             $dom->loadXML($pagina);
             return $dom->saveXML();
         } else {
@@ -809,12 +810,14 @@ class Docs extends CI_Model
                         // Gestione del caso di tipo non specificato o errato
                         throw new Exception('Tipo scadenza (Fine Mese o Data Fattura) non specificato o errato. Controllare la configurazione scadenze.');
                 }
-
+                
                 // Gestione dei mesi esclusi e dei giorni di spostamento
                 $mese_escluso_1 = $cliente['customers_pag_escluso_mese_1'];
                 $mese_escluso_2 = $cliente['customers_pag_escluso_mese_2'];
                 $giorni_spostamento = $cliente['customers_pag_gg_spostamento'];
                 $giorno_fisso = $cliente['customers_pag_giorno_fisso'];
+
+                
 
                 if (($mese_escluso_1 > 0 && $dataScadenzaBaseObj->format('n') == $mese_escluso_1) || ($mese_escluso_2 > 0 && $dataScadenzaBaseObj->format('n') == $mese_escluso_2)) {
                     if (!empty($giorni_spostamento) && $giorni_spostamento > 0) {
@@ -822,10 +825,9 @@ class Docs extends CI_Model
                     }
                 }
                 if (!empty($giorno_fisso) && $giorno_fisso > 0) {
-                    $dataScadenzaBaseObj->modify('+1 month');
+                    $dataScadenzaBaseObj->modify('first day of next month');
                     $dataScadenzaBaseObj->setDate($dataScadenzaBaseObj->format('Y'), $dataScadenzaBaseObj->format('m'), $giorno_fisso);
                 }
-
                 $data_scadenza = $dataScadenzaBaseObj->format('Y-m-d H:i:s');
 
                 if ($tpl_pag_scadenza['documenti_contabilita_tpl_pag_scadenze_percentuale'] == 100 && $count_scadenze > 1) {
@@ -848,7 +850,7 @@ class Docs extends CI_Model
                     'documenti_contabilita_scadenze_data_saldo' => array_get($data, 'data_saldo', null),
                     'documenti_contabilita_scadenze_scadenza' => $data_scadenza,
                 ];
-                //debug($scadenza);
+                
                 try {
                     $this->apilib->create('documenti_contabilita_scadenze', $scadenza);
                 } catch (Exception $e) {

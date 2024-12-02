@@ -324,8 +324,8 @@ if ($movimenti_id) {
     $movimento['movimenti_documento_tipo'] = $documento['documenti_contabilita_tipo'];
 
     if (empty($documento['documenti_contabilita_magazzino'])) {
-        $magazzino = $this->apilib->searchFirst('magazzini', ['magazzini_azienda' => $documento['documenti_contabilita_azienda']]);
-        
+        $magazzino = $this->apilib->searchFirst('magazzini', ['magazzini_azienda' => $documento['documenti_contabilita_azienda']],0,'magazzini_default=1','DESC');
+        //debug($magazzino,true);
         if (!empty($magazzino)) {
             $movimento['movimenti_magazzino'] = $magazzino['magazzini_id'];
         }
@@ -804,6 +804,9 @@ if ($movimenti_id) {
                                 $selected = 'selected="selected"';
                             }
                         }
+                        // debug($movimento['movimenti_magazzino']);
+                        // debug($magazzino);
+                        // continue;
                     ?>
                     <option value="<?php echo $magazzino['magazzini_id']; ?>" data-azienda="<?php echo $magazzino['magazzini_azienda'] ?>" <?php echo $selected; ?>><?php echo $magazzino['magazzini_titolo']; ?></option>
                     <?php endforeach; ?>

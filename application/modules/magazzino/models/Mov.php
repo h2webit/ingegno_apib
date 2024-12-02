@@ -254,7 +254,7 @@ class Mov extends CI_Model
                 AND
                 documenti_contabilita_articoli_prodotto_id = '$prodotto_id'
                 AND
-                documenti_contabilita_stato IN (1,2,5)
+                documenti_contabilita_stato IN (1,2,5,6,8)
                 AND 
                 $where_documento
         ")->row()->s;

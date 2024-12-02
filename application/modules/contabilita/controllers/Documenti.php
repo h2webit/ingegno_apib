@@ -169,7 +169,7 @@ class Documenti extends MX_Controller
             echo json_encode(
                 array(
                     'status' => 0,
-                    'txt' => "Esiste un documento (numero '{$fattura->documenti_contabilita_numero}' del '{$fattura->documenti_contabilita_data_emissione}') con numero maggiore ma data inferiore!",
+                    'txt' => "Esiste un documento dello stesso tipo (numero '{$fattura->documenti_contabilita_numero}' del '{$fattura->documenti_contabilita_data_emissione}') con numero maggiore ma data inferiore!",
                     'data' => '',
                 )
             );
@@ -205,7 +205,7 @@ class Documenti extends MX_Controller
             echo json_encode(
                 array(
                     'status' => 0,
-                    'txt' => "Esiste una fattura (la numero '{$fattura->documenti_contabilita_numero}' del '{$fattura->documenti_contabilita_data_emissione}') con numero minore ma data superiore!",
+                    'txt' => "Esiste un documento dello stesso tipo (numero '{$fattura->documenti_contabilita_numero}' del '{$fattura->documenti_contabilita_data_emissione}') con numero minore ma data superiore!",
                     'data' => '',
                 )
             );

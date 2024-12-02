@@ -223,7 +223,7 @@ $form = $this->db->join('entity', 'forms_entity_id = entity_id')->get_where('for
                     <div class="form-group">
                         <label class="form-label-title"><?php e('Name'); ?></label>
                         <small class="text-danger fas fa-asterisk" style="font-size: 85%"></small>
-                        <input type="text" class="form-control" required placeholder="nome prodotto" name="fw_products_name" value="<?php echo ($prodotto_id) ? $prodotto['fw_products_name'] : ''; ?>">
+                        <input type="text" class="form-control" required placeholder="nome prodotto" name="fw_products_name" value="<?php echo ($prodotto_id) ? htmlspecialchars($prodotto['fw_products_name']) : ''; ?>">
                     </div>
                 </div>
                 <div class="col-md-3">

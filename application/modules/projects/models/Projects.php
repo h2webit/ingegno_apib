@@ -227,6 +227,7 @@ class Projects extends CI_Model
         return $hours;
     }
     
+    // ATTENZIONE, QUESTA IDENTICA FUNZIONE E' STATA USATA ANCHE SUL MODEL Leads_model NEL MODULO SALES. SARANNO ENTRAMBE DA DISMETTERE QUANDO SI PORTERA' NATIVA LA FUNZIONE
     public function genera_codice_commessa($format, $last_code) {
         // Ottiene l'anno corrente
         $current_year = date('Y');

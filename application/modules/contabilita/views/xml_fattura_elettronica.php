@@ -600,7 +600,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
             </DatiGeneraliDocumento>
             <?php
             $ordine_acquisto = json_decode($dati['fattura']['documenti_contabilita_fe_ordineacquisto'] , true);
-            $ordine_acquisto = array_filter($ordine_acquisto);
+            $ordine_acquisto = array_filter((array)$ordine_acquisto);
             unset($ordine_acquisto['riferimento_amministrazione']);
             
             ?>
@@ -654,7 +654,7 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
             <?php endif; ?>
                 <?php
                 $dati_contratto = json_decode($dati['fattura']['documenti_contabilita_fe_dati_contratto'] , true);
-                $dati_contratto = array_filter($dati_contratto);
+                $dati_contratto = array_filter((array)$dati_contratto);
                 unset($dati_contratto['riferimento_amministrazione']);
                 ?>
             <?php if (!empty($dati_contratto)): ?>

@@ -1122,7 +1122,7 @@ class Movimenti extends MX_Controller
                 LEFT JOIN accantonamenti ON (accantonamenti_riga_ordine = documenti_contabilita_articoli_id AND accantonamenti_prodotto = documenti_contabilita_articoli_prodotto_id AND (accantonamenti_movimento = $movimento_id OR accantonamenti_movimento IS NULL))
                 WHERE documenti_contabilita_articoli_prodotto_id IN (
                     SELECT fw_products_id FROM fw_products WHERE fw_products_barcode = '{$keyword}' AND fw_products_supplier = '$supplier'
-                ) AND documenti_contabilita_stato IN (1,2,5,6)
+                ) AND documenti_contabilita_stato IN (1,2,5,6,8)
                 AND (documenti_contabilita_articoli_id,documenti_contabilita_articoli_quantita) NOT IN (
                     SELECT accantonamenti_riga_ordine,COALESCE(accantonamenti_stk,0)+COALESCE(accantonamenti_shp,0)+COALESCE(accantonamenti_del,0)-accantonamenti_qty  FROM accantonamenti
 
