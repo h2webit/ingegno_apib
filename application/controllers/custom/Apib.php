@@ -24,19 +24,20 @@ class Apib extends MY_Controller
     public function editRichiesteDisponibilita()
     {
         $data = $this->input->post();
+        
         $gruppi_fascie = $this->input->post('fascie');
         $sede = $this->input->post('sede');
         $giorno = $this->input->post('giorno');
         
         $old_data = $this->db
             ->where("DATE(appuntamenti_giorno) = DATE('$giorno')", null, false)
-            ->where("appuntamenti_fascia_oraria IS NULL", null, false)
+            ->where("(appuntamenti_id NOT IN (SELECT appuntamenti_id FROM rel_appuntamenti_persone WHERE appuntamenti_id IS NOT NULL))")
             ->where("appuntamenti_disponibilita", 1)
             ->where("appuntamenti_impianto", $sede)->get('appuntamenti')->result_array();
         
         $this->db
             ->where("DATE(appuntamenti_giorno) = DATE('$giorno')", null, false)
-            ->where("appuntamenti_fascia_oraria IS NULL", null, false)
+            ->where("(appuntamenti_id NOT IN (SELECT appuntamenti_id FROM rel_appuntamenti_persone WHERE appuntamenti_id IS NOT NULL))")
             ->where("appuntamenti_disponibilita", 1)
             ->where("appuntamenti_impianto", $sede)->delete('appuntamenti');
         
@@ -84,7 +85,7 @@ class Apib extends MY_Controller
                         
                         $notification = [
                             'notifications_user_id' => 22,
-                            'notifications_type' => NOTIFICATION_TYPE_WARNING,
+                            'notifications_type' => '1',
                             'notifications_link' => "main/layout/55/{$sede}",
                             'notifications_message' => "Nuova richiesta disponibilità per la commessa {$dati_sede['projects_name']}"
                         ];
