@@ -124,6 +124,7 @@ class Sync extends MY_Controller
     public function test() {
         $this->mail_model->sendMessage('matteopuppis@gmail.com', 'test', 'test');
     }
+    
     public function migrate_dati() {
         $this->import_associati();
         $this->import_clienti();
@@ -146,6 +147,8 @@ class Sync extends MY_Controller
         
         $this->import_allegati_per_fattura();
         $this->import_richieste_disponibilita();
+        
+        $this->import_documenti_clienti();
     }
     
     public function import_associati() {
@@ -266,6 +269,7 @@ class Sync extends MY_Controller
             }
         }
     }
+    
     public function import_clienti()
     {
         set_log_scope('sync-clienti');
@@ -297,9 +301,9 @@ class Sync extends MY_Controller
                 'customers_description' => $cliente['clienti_note'],
                 'customers_status' => ($cliente['clienti_non_attivo']?3:1),
                 //'clienti_referente' => $cliente['clienti_referente'],
-                //'clienti_referente' => $cliente['clienti_termini_pagamento'],
-                //'clienti_referente' => $cliente['clienti_cp'],
-                //'clienti_referente' => $cliente['clienti_note_cliente'],
+                //'clienti_apib_termini_pagamento' => $cliente['clienti_termini_pagamento'],
+                //'clienti_apib_cp' => $cliente['clienti_cp'],
+                //'clienti_apib_note_cliente' => $cliente['clienti_note_cliente'],
                 'customers_deleted' => $cliente['clienti_deleted'],
                 'customers_code' => $cliente['clienti_id'],
                 // 'customers_status' => 1,
@@ -1172,6 +1176,7 @@ $count_total = $this->apib_db
         }
         $this->mycache->clearCache();
     }
+    
     public function import_note_compensi($associato_id = null)
     {
         set_log_scope('sync-note_compensi');
@@ -1257,8 +1262,6 @@ $count_total = $this->apib_db
             }
         }
     }
-        
-
     
     public function import_allegati_per_fattura() {
         $allegati = $this->apib_db->get('allegati_per_fattura')->result_array();
@@ -1289,5 +1292,122 @@ $count_total = $this->apib_db
         }
 
         $this->mycache->clearCache();
+    }
+    
+    public function import_documenti_clienti() {
+        /** TABELLA documenti_clienti su apib_db
+         * Colonna    Tipo
+         * documenti_clienti_id    integer Auto incremento [nextval('documenti_clienti_documenti_clienti_id_seq')]
+         * documenti_clienti_data_creazione    timestamp NULL
+         * documenti_clienti_data_modifica    timestamp NULL
+         * documenti_clienti_nome    character varying NULL
+         * documenti_clienti_categoria    integer NULL
+         * documenti_clienti_scadenza    character varying NULL
+         * documenti_clienti_documento    character varying NULL
+         * documenti_clienti_cliente    integer NULL
+         */
+
+        /** TABELLA documents
+         * Column    Type
+         * documents_id    bigint(20) unsigned Auto Increment
+         * documents_creation_date    datetime NULL
+         * documents_modified_date    datetime NULL
+         * documents_due_date    datetime NULL
+         * documents_template    int(11) NULL
+         * documents_filename    varchar(250) NULL
+         * documents_title    varchar(250)
+         * documents_file    varchar(250) NULL
+         * documents_required    tinyint(1) NULL [0]
+         * documents_type    int(11) NULL
+         * documents_customer    int(11) NULL
+         * documents_project    int(11) NULL
+         * documents_value    double(18,9) NULL
+         * documents_notes    longtext NULL
+         * documents_date    datetime NULL
+         * documents_protocollo    tinyint(1) NULL [0]
+         * documents_text    longtext NULL
+         * documents_code    varchar(250) NULL
+         * documents_azienda    int(11) NULL
+         * documents_template_protocollo    int(11) NULL
+         * documents_tipo_protocollo    int(11) NULL [1]
+         * documents_seleziona_anagrafica    tinyint(1) NULL [0]
+         * documents_mittente_destinatario    longtext NULL
+         * documents_mail_sent    tinyint(1) NULL [0]
+         * documents_category    int(11) NULL
+         */
+
+        $this->import_documenti_clienti_categorie();
+
+        $documenti = $this->apib_db->get('documenti_clienti')->result_array();
+        
+        //debug($documenti, true);
+        
+        $t = count($documenti);
+        $c = 0;
+        foreach ($documenti as $documento) {
+            progress(++$c, $t, 'import documenti_clienti');
+            
+            $documento['documenti_clienti_nome'] = trim($documento['documenti_clienti_nome']);
+            
+            if (empty($documento['documenti_clienti_nome'])) {
+                $documento['documenti_clienti_nome'] = '**TITOLO MANCANTE**';
+            }
+            
+            $dati_documento = [
+                'documents_id' => $documento['documenti_clienti_id'],
+                'documents_title' => $documento['documenti_clienti_nome'],
+                'documents_category' => $documento['documenti_clienti_categoria'],
+                'documents_due_date' => $documento['documenti_clienti_scadenza'],
+                'documents_file' => $documento['documenti_clienti_documento'],
+                'documents_customer' => $documento['documenti_clienti_cliente'],
+                'documents_creation_date' => $documento['documenti_clienti_data_creazione'],
+                'documents_modified_date' => $documento['documenti_clienti_data_modifica'],
+            ];
+            
+            try {
+                $documento_exists = $this->db->get_where('documents', ['documents_id' => $documento['documenti_clienti_id']])->row_array();
+                
+                if ($documento_exists) {
+                    $documento_creato = $this->apilib->edit('documents', $documento_exists['documents_id'], $dati_documento);
+                } else {
+                    $documento_creato = $this->apilib->create('documents', $dati_documento);
+                    
+                    echo '<pre>', print_r(shell_exec("wget -xnH https://crm.apibinfermieribologna.com/uploads/documents/{$dati_documento['documents_file']}")), '</pre>';
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento documento cliente: {$e->getMessage()}");
+                debug($documento);
+                debug($e->getMessage(), true);
+            }
+        }
+    }
+    
+    private function import_documenti_clienti_categorie() {
+        $categorie = $this->apib_db->get('documenti_clienti_categoria')->result_array();
+        
+        $t = count($categorie);
+        $c = 0;
+        foreach ($categorie as $categoria) {
+            progress(++$c, $t, 'import documenti_clienti_categoria');
+            
+            $dati_categoria = [
+                'documents_category_id' => $categoria['documenti_clienti_categoria_id'],
+                'documents_category_value' => $categoria['documenti_clienti_categoria_value'],
+            ];
+            
+            try {
+                $categoria_exists = $this->db->get_where('documents_category', ['documents_category_id' => $categoria['documenti_clienti_categoria_id']])->row_array();
+                
+                if ($categoria_exists) {
+                    $categoria_creato = $this->apilib->edit('documents_category', $categoria['documenti_clienti_categoria_id'], $dati_categoria);
+                } else {
+                    $categoria_creato = $this->apilib->create('documents_category', $dati_categoria);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento categoria documenti: {$e->getMessage()}");
+                debug($categoria);
+                debug($e->getMessage(), true);
+            }
+        }
     }
 }
