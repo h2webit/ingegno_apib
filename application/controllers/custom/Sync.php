@@ -1372,7 +1372,9 @@ $count_total = $this->apib_db
                 } else {
                     $documento_creato = $this->apilib->create('documents', $dati_documento);
                     
-                    echo '<pre>', print_r(shell_exec("wget -xnH https://crm.apibinfermieribologna.com/uploads/documents/{$dati_documento['documents_file']}")), '</pre>';
+                    if (!file_exists(FCPATH . 'uploads/documents/' . $dati_documento['documents_file'])) {
+                        echo '<pre>', print_r(shell_exec("wget -xnH https://crm.apibinfermieribologna.com/uploads/documents/{$dati_documento['documents_file']}")), '</pre>';
+                    }
                 }
             } catch (Exception $e) {
                 my_log('error', "errore inserimento documento cliente: {$e->getMessage()}");
