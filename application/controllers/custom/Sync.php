@@ -1412,4 +1412,58 @@ $count_total = $this->apib_db
             }
         }
     }
+    
+    public function import_storico_associati() {
+        /** TABELLA storico_associati su apib_db
+         * Colonna    Tipo
+         * storico_associati_id    integer Auto incremento [nextval('storico_associati_storico_associati_id_seq')]
+         * storico_associati_data_creazione    timestamp NULL
+         * storico_associati_data_modifica    timestamp NULL
+         * storico_associati_associato    integer NULL
+         * storico_associati_percentuale_sedi    double precision NULL
+         * storico_associati_associati_percentuale_domiciliari    double precision NULL
+         */
+
+        /** TABELLA storico_associati
+         * Column    Type
+         * storico_associati_id    bigint(20) unsigned Auto Increment
+         * storico_associati_creation_date    datetime NULL
+         * storico_associati_modified_date    datetime NULL
+         * storico_associati_created_by    int(11) NULL
+         * storico_associati_edited_by    int(11) NULL
+         * storico_associati_insert_scope    varchar(250) NULL
+         * storico_associati_edit_scope    varchar(250) NULL
+         * storico_associati_associato    int(11) NULL
+         * storico_associati_percentuale_sedi    double(18,9) NULL
+         * storico_associati_associati_percentuale_domiciliari    double(18,9) NULL
+         */
+
+        $storico = $this->apib_db->get('storico_associati')->result_array();
+        
+        $t = count($storico);
+        $c = 0;
+        
+        foreach ($storico as $storico_assoc) {
+            progress(++$c, $t, 'import storico_associati');
+            
+            $storico_assoc['storico_associati_creation_date'] = $storico_assoc['storico_associati_data_creazione'];
+            unset($storico_assoc['storico_associati_data_creazione']);
+            $storico_assoc['storico_associati_modified_date'] = $storico_assoc['storico_associati_data_modifica'];
+            unset($storico_assoc['storico_associati_data_modifica']);
+            
+            try {
+                $storico_exists = $this->db->get_where('storico_associati', ['storico_associati_id' => $storico_assoc['storico_associati_id']])->row_array();
+                
+                if ($storico_exists) {
+                    $storico_creato = $this->apilib->edit('storico_associati', $storico_assoc['storico_associati_id'], $storico_assoc);
+                } else {
+                    $storico_creato = $this->apilib->create('storico_associati', $storico_assoc);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento storico associati: {$e->getMessage()}");
+                debug($storico_assoc);
+                debug($e->getMessage(), true);
+            }
+        }
+    }
 }
