@@ -50,8 +50,8 @@ class Mailer extends CI_Model
         $email_headers = (!empty($email['mailer_template_headers'])) ? unserialize($email['mailer_template_headers']) : [];
         
         $headers = array_merge(
-            array_filter($email_headers),
-            array_filter($additional_headers)
+            array_filter($email_headers ?? []),
+            array_filter($additional_headers ?? [])
         );
         
         // Usa come replacement i parametri che non sono array, object e risorse

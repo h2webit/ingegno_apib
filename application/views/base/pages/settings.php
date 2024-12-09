@@ -1,4 +1,4 @@
-<?php
+<strong?php
 
 // Cron check last execution
 $interval_cron_execution = 10;
@@ -138,7 +138,7 @@ if (!empty($this->settings['settings_last_cron_cli'])) {
                             <li><?php e('Email logs');?></li>
                             <li><a href=""><?php e('API logs');?></a></li>
                         <?php endif;?>
-                        <li><a href="<?php echo base_url('main/layout/changelog'); ?>"><?php e('Changelog');?></a></li>
+                        <li><a href="<?php echo base_url('main/changelog'); ?>"><?php e('Changelog');?></a></li>
                     </ul>
                 </div>
             </div>
@@ -200,7 +200,13 @@ if (!empty($this->settings['settings_last_cron_cli'])) {
                 </div>
                 
                 <div class="box-body">
-                    
+                    <div class="">
+                        <!-- server date time-->
+                        <span><i style="margin-right:15px" class="fas fa-clock"></i></span> Server info<br />
+                        <small><?php echo date('d-m-Y H:i'); ?>  </small>
+                        <small>PHP Version: <?php echo phpversion(); ?> </small>
+                    </div>
+                    <br />
                     <!-- Cron Check CURL -->
                     <?php if (!empty($this->settings['settings_last_cron_check'])): ?>
                         <?php if ($interval_cron_execution > 5): ?>
@@ -249,15 +255,17 @@ if (!empty($this->settings['settings_last_cron_cli'])) {
                     <br />
                     <!-- Auto Update -->
                     <?php if (array_key_exists('settings_auto_update_client', $this->settings)): ?>
-                        <div class="">
+                        <?php $this->load->model('core');?>
+                        <?php $new_version = $this->core->checkUpdate(null, $this->settings['settings_auto_update_channel'],1);?>
+                        < class="">
                             <?php if ($this->settings['settings_auto_update_client'] == DB_BOOL_TRUE): ?>
                                 <span><i style="color:#009933;margin-right:15px" class="fas fa-check-circle"></i></span> Auto update client <?php echo $this->auth->is_admin() ? '(' . anchor(base_url("db_ajax/switch_bool/settings_auto_update_client/".$this->settings['settings_id']), 'disable it') . ')' : ''; ?>
                             <?php else: ?>
                                 <span><i style="color:#FF0000;margin-right:15px" class="fas fa-thumbs-down"></i></span> Auto update client <?php echo $this->auth->is_admin() ? '(' . anchor(base_url("db_ajax/switch_bool/settings_auto_update_client/".$this->settings['settings_id']), 'enable it') . ')' : ''; ?>
                             <?php endif;?>
-                            <br /><small>Last update: - </small>
+                            <br /><small>Channel: <strong><?php echo (!empty($this->settings['settings_auto_update_channel'])) ?  $this->db->get_where('settings_auto_update_channel', ['settings_auto_update_channel_id' => $this->settings['settings_auto_update_channel']])->row()->settings_auto_update_channel_value : '-' ;?></strong></small>
                             <br /><small>Update in progress: <?php if ($this->settings['settings_update_in_progress'] == DB_BOOL_TRUE): ?>Yes now...<?php else:?>No<?php endif;?> </small>
-                            <br /><small>Current Version: <b><?php echo VERSION; ?></b> </small>
+                            <br /><small>Current Version: <b><?php echo VERSION; ?></b> <?php if (!empty($new_version)):?> - <a target="_blank" href="<?php echo base_url();?>settings-manager/main/UpdatePatches">Update now to <?php echo $new_version;?></a><?php endif;?></small>
                         </div>
                     <?php endif;?>
                 </div>

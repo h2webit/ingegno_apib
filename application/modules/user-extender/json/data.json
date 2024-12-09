@@ -10,7 +10,7 @@
     "modules_raw_data_install": "415,396",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "57",
+    "modules_version_code": "58",
     "modules_thumbnail": "8c24b1ded2956cea0e7338daa1694c58.png",
     "modules_min_client_version": "3.8.3",
     "modules_version_date": "2022-08-24 17:01:41",
@@ -1679,7 +1679,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14718",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -1717,7 +1717,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14719",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -1755,7 +1755,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14720",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -1793,7 +1793,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14721",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -1831,7 +1831,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14990",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -1869,7 +1869,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14991",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3047",
                     "fields_entity_id": "6",
@@ -1907,7 +1907,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "user-extender-grids_fields-18313",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -1945,7 +1945,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-22493",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3490",
                     "fields_entity_id": "6",
@@ -1983,7 +1983,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-22536",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": null,
                     "fields_entity_id": null,
@@ -2119,7 +2119,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14701",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "2839",
                     "fields_entity_id": "6",
@@ -2157,7 +2157,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14723",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2195,7 +2195,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14724",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2233,7 +2233,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-14725",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2337,7 +2337,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "firecrm-grids_fields-14964",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "3049",
                     "fields_entity_id": "415",
@@ -2375,7 +2375,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-17690",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4373",
                     "fields_entity_id": "415",
@@ -2413,7 +2413,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "user-extender-grids_fields-17977",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "contabilita",
                     "grids_fields_width": null,
                     "fields_id": "4439",
                     "fields_entity_id": "415",
@@ -2517,7 +2517,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1269",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2555,7 +2555,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1270",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2593,7 +2593,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1271",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2631,7 +2631,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "1",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1272",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -2669,7 +2669,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-1283",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "63",
                     "fields_entity_id": "6",
@@ -2707,7 +2707,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15750",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "3492",
                     "fields_entity_id": "6",
@@ -2745,7 +2745,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-18312",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "4554",
                     "fields_entity_id": "6",
@@ -2865,7 +2865,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14498",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -2903,7 +2903,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14499",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -2941,7 +2941,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14500",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -2979,7 +2979,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14501",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -3017,7 +3017,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "user-extender-grids_fields-14502",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3528,7 +3528,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15740",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -3566,7 +3566,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15741",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -3604,7 +3604,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15742",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -3642,7 +3642,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15744",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -3762,7 +3762,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15745",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "58",
                     "fields_entity_id": "6",
@@ -3800,7 +3800,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15746",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "59",
                     "fields_entity_id": "6",
@@ -3838,7 +3838,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15747",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "60",
                     "fields_entity_id": "6",
@@ -3876,7 +3876,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15748",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "61",
                     "fields_entity_id": "6",
@@ -3914,7 +3914,7 @@
                     "grids_fields_with_actions": "0",
                     "grids_fields_switch_inline": "0",
                     "grids_fields_module_key": "modulo-hr-grids_fields-15749",
-                    "grids_fields_module": "user-extender",
+                    "grids_fields_module": "customers",
                     "grids_fields_width": null,
                     "fields_id": "62",
                     "fields_entity_id": "6",
@@ -4102,7 +4102,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_58",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4125,7 +4125,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_59",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4148,7 +4148,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_60",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4171,7 +4171,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_61",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4194,7 +4194,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_62",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4217,7 +4217,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_63",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4240,7 +4240,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_445",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4263,7 +4263,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_446",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4286,7 +4286,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_459",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4309,7 +4309,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-183_499",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4359,7 +4359,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_63",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4382,7 +4382,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_60",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4405,7 +4405,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2092_61",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4455,7 +4455,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_58",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4478,7 +4478,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_59",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4501,7 +4501,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_60",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4524,7 +4524,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_61",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4547,7 +4547,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_62",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4570,7 +4570,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_63",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4593,7 +4593,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3047",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4616,7 +4616,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3490",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4639,7 +4639,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2135_3492",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4923,7 +4923,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "firecrm-forms_fields-2193_3049",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 },
                 {
@@ -4946,7 +4946,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "user-extender-forms_fields-2193_4373",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "contabilita",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -4996,7 +4996,7 @@
                     "forms_fields_dependent_on": null,
                     "forms_fields_fieldset": null,
                     "forms_fields_module_key": "modulo-hr-forms_fields-2240_3047",
-                    "forms_fields_module": "user-extender",
+                    "forms_fields_module": "customers",
                     "forms_field_full_data": "0"
                 }
             ]
@@ -5514,6 +5514,34 @@
             "fi_events_cli": "0"
         }
     ],
-    "emails": [],
+    "emails": [
+        {
+            "emails_id": "133",
+            "emails_key": "reset_password_request",
+            "emails_language": null,
+            "emails_subject": "Richiesta di reset password",
+            "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<span style=\"font-family: arial, helvetica, sans-serif;\"><!-- START CENTERED WHITE CONTAINER --><em><br \/><br \/><\/em><\/span>\r\n<table class=\"main\" style=\"border-collapse: separate; background: #ffffff; border-radius: 3px; width: 100%; margin-left: auto; margin-right: auto;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0px auto; text-align: center;\"><span style=\"font-family: arial, helvetica, sans-serif;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/span><\/div>\r\n<h2 style=\"text-align: center;\"><span style=\"font-family: helvetica, arial, sans-serif;\">Richiesta di reset password<\/span><\/h2>\r\n<hr style=\"font-family: sans-serif;\" \/>\r\n<p style=\"text-align: left;\">Ciao, <strong>{user_name}<\/strong><\/p>\r\n<p style=\"text-align: left;\">Questa email ti &egrave; stata inviata perch&egrave; hai richiesto il reset della password su <strong>{sender_name}<\/strong>.<\/p>\r\n<p style=\"text-align: left;\">Clicca il link qui seguente per procedere:<\/p>\r\n<p style=\"text-align: left;\"><a href=\"{reset_link}\">{reset_link}<\/a><\/p>\r\n<p style=\"text-align: left;\">&nbsp;<\/p>\r\n<p style=\"text-align: left;\"><span style=\"font-size: 10pt;\"><em>Se non hai effettuato questa richiesta, ignora pure questa email.<\/em><\/span><\/p>\r\n<br \/>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><span style=\"font-family: helvetica, arial, sans-serif;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/span><\/p>\r\n<span style=\"font-size: 8pt; font-family: helvetica, arial, sans-serif;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<span style=\"font-family: helvetica, arial, sans-serif;\"><!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER --><\/span>\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/cdn1.iconfinder.com\/data\/icons\/logotypes\/32\/circle-linkedin-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<span style=\"font-family: helvetica, arial, sans-serif;\"><!-- END FOOTER --><\/span><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
+            "emails_headers": null,
+            "emails_module": "user-extender"
+        },
+        {
+            "emails_id": "134",
+            "emails_key": "reset_password_complete",
+            "emails_language": null,
+            "emails_subject": "Cambio password",
+            "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<span style=\"font-family: arial, helvetica, sans-serif;\"><!-- START CENTERED WHITE CONTAINER --><em><br \/><br \/><\/em><\/span>\r\n<table class=\"main\" style=\"border-collapse: separate; background: #ffffff; border-radius: 3px; width: 100%; margin-left: auto; margin-right: auto;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0px auto; text-align: center;\"><span style=\"font-family: arial, helvetica, sans-serif;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/span><\/div>\r\n<h2 style=\"text-align: center;\"><span style=\"font-family: helvetica, arial, sans-serif;\">Password cambiata<\/span><\/h2>\r\n<hr \/>\r\n<p style=\"text-align: left;\"><span style=\"font-family: helvetica, arial, sans-serif;\">Ciao, <strong>{user_name}<\/strong><\/span><\/p>\r\n<p style=\"text-align: left;\"><span style=\"font-family: helvetica, arial, sans-serif;\">La tua password su <strong>{sender_name}<\/strong> &egrave; stata cambiata.<\/span><\/p>\r\n<pre style=\"text-align: left;\"><span style=\"font-family: helvetica, arial, sans-serif;\">La tua nuova password &egrave;: <span style=\"font-family: terminal, monaco, monospace;\"><strong>{new_password}<\/strong><\/span><\/span><\/pre>\r\n<p style=\"text-align: left;\">&nbsp;<\/p>\r\n<p style=\"text-align: left;\"><span style=\"font-family: helvetica, arial, sans-serif;\">Ora puoi accedere cliccando sul link qui sotto:<\/span><\/p>\r\n<p style=\"text-align: left;\"><a href=\"{login_link}\">{login_link}<\/a><\/p>\r\n<p style=\"text-align: left;\">&nbsp;<\/p>\r\n<p style=\"text-align: left;\"><span style=\"font-size: 10pt;\"><em>Se non hai effettuato questa richiesta, ignora pure questa email.<\/em><\/span><\/p>\r\n<br \/>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><span style=\"font-family: helvetica, arial, sans-serif;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/span><\/p>\r\n<span style=\"font-size: 8pt; font-family: helvetica, arial, sans-serif;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<span style=\"font-family: helvetica, arial, sans-serif;\"><!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER --><\/span>\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/cdn1.iconfinder.com\/data\/icons\/logotypes\/32\/circle-linkedin-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<span style=\"font-family: helvetica, arial, sans-serif;\"><!-- END FOOTER --><\/span><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
+            "emails_headers": null,
+            "emails_module": "user-extender"
+        },
+        {
+            "emails_id": "135",
+            "emails_key": "confirm_code",
+            "emails_language": null,
+            "emails_subject": "Codice di conferma",
+            "emails_template": "<table class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#f6f6f6\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<td class=\"container\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;\" valign=\"top\" width=\"580\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto;\">&nbsp;<\/div>\r\n<span style=\"font-family: arial, helvetica, sans-serif;\"><!-- START CENTERED WHITE CONTAINER --><em><br \/><br \/><\/em><\/span>\r\n<table class=\"main\" style=\"border-collapse: separate; background: #ffffff; border-radius: 3px; width: 100%; margin-left: auto; margin-right: auto;\" role=\"presentation\" width=\"100%\"><!-- START MAIN CONTENT AREA -->\r\n<tbody>\r\n<tr>\r\n<td class=\"wrapper\" style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\" valign=\"top\">\r\n<div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0px auto; text-align: center;\"><span style=\"font-family: arial, helvetica, sans-serif;\"><img style=\"display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px;\" src=\"https:\/\/static.tildacdn.com\/tild6331-6562-4435-b935-363365613564\/noroot.png\" alt=\"\" width=\"300\" height=\"112\" \/><\/span><\/div>\r\n<h2 style=\"text-align: center;\"><span style=\"font-family: helvetica, arial, sans-serif;\">Codice di conferma<\/span><\/h2>\r\n<hr \/>\r\n<p style=\"text-align: left;\">Ciao, <strong>{user_name}<\/strong><\/p>\r\n<p style=\"text-align: left;\">Hai richiesto di confermare la tua identit&agrave; su <strong>{sender_name}<\/strong>.<\/p>\r\n<p style=\"text-align: left;\">Utilizza il seguente codice per completare il processo:<\/p>\r\n<p style=\"text-align: center;\"><span style=\"font-size: 14pt;\"><strong>{verification_code}<\/strong><\/span><\/p>\r\n<p style=\"text-align: left;\">&nbsp;<\/p>\r\n<p style=\"text-align: left;\"><span style=\"font-size: 10pt;\"><em>Se non hai effettuato questa richiesta, ignora pure questa email.<\/em><\/span><\/p>\r\n<br \/>\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: center; width: 100%;\" valign=\"top\">\r\n<p style=\"font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 30px 0px 15px; text-align: center; margin-left: auto; margin-right: auto;\"><span style=\"font-family: helvetica, arial, sans-serif;\"><a title=\"ingegno\" href=\"https:\/\/ingegnosuite.it\" target=\"_blank\" rel=\"noopener\">www.ingegnosuite.it<\/a><\/span><\/p>\r\n<span style=\"font-size: 8pt; font-family: helvetica, arial, sans-serif;\">H2 S.r.l. - Via IV Novembre 43 - Tavagnacco<\/span><\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/td>\r\n<\/tr>\r\n<!-- END MAIN CONTENT AREA --><\/tbody>\r\n<\/table>\r\n<span style=\"font-family: helvetica, arial, sans-serif;\"><!-- END CENTERED WHITE CONTAINER --> <!-- START FOOTER --><\/span>\r\n<div class=\"footer\" style=\"clear: both; margin-top: 10px; text-align: center; width: 100%;\">\r\n<table style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" role=\"presentation\" border=\"0\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\">\r\n<tbody>\r\n<tr>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/www.facebook.com\/ingegnosuite\"><img src=\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/b\/b8\/2021_Facebook_icon.svg\/2048px-2021_Facebook_icon.svg.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/it.linkedin.com\/showcase\/ingegnosuite\/\"><img src=\"https:\/\/cdn1.iconfinder.com\/data\/icons\/logotypes\/32\/circle-linkedin-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<td class=\"content-block\" style=\"font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;\" align=\"center\" valign=\"top\"><span class=\"apple-link\" style=\"color: #999999; font-size: 12px; text-align: center; font-family: helvetica, arial, sans-serif;\"> <a href=\"https:\/\/ingegnosuite.it\"><img src=\"https:\/\/cdn2.iconfinder.com\/data\/icons\/pittogrammi\/142\/95-512.png\" alt=\"\" width=\"36\" height=\"36\" \/> <\/a> <\/span><\/td>\r\n<\/tr>\r\n<tr><\/tr>\r\n<\/tbody>\r\n<\/table>\r\n<\/div>\r\n<span style=\"font-family: helvetica, arial, sans-serif;\"><!-- END FOOTER --><\/span><\/div>\r\n<\/td>\r\n<td style=\"font-family: sans-serif; font-size: 14px; vertical-align: top;\" valign=\"top\">&nbsp;<\/td>\r\n<\/tr>\r\n<\/tbody>\r\n<\/table>",
+            "emails_headers": null,
+            "emails_module": "user-extender"
+        }
+    ],
     "related_entities": []
 }
