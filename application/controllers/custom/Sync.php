@@ -848,7 +848,7 @@ class Sync extends MY_Controller
                 'customers_description' => $domiciliare['domiciliari_note'],
                 'customers_status' => ($domiciliare['domiciliari_non_attivo'] == 't') ? 3 : 1,
                 'customers_type' => 1, // Assumendo che 1 sia il tipo customer
-                'customers_group' => 1, // Assumendo che 2 sia il tipo privato
+                'customers_group' => 5, // Assumendo che 2 sia il tipo privato
                 'customers_creation_date' => $domiciliare['domiciliari_data_creazione'],
                 'customers_modified_date' => $domiciliare['domiciliari_data_modifica'],
             ];
