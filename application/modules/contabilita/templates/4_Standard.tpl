@@ -47,6 +47,10 @@ $mostra_foto_articoli = $impostazioni_stampa['mostra_foto'] ?? DB_BOOL_FALSE;
 $mostra_prodotti_senza_importi = $impostazioni_stampa['mostra_prodotti_senza_importi'] ?? DB_BOOL_FALSE;
 $mostra_lotto_matricola = $impostazioni_stampa['mostra_lotto_matricola'] ?? DB_BOOL_FALSE;
 
+$periodo_competenza_azienda = $settings['documenti_contabilita_settings_periodo_comp'] ?? DB_BOOL_FALSE;
+$periodo_competenza = $impostazioni_stampa['mostra_periodo_competenza'] ?? DB_BOOL_FALSE;
+$mostra_periodo_competenza = ($periodo_competenza && $periodo_competenza_azienda) ?? DB_BOOL_FALSE;
+
 // PERSONALIZZA LA FRASE NEL FOOTER
 $frase = $settings['documenti_contabilita_settings_frase_pie_pagina'] ?? '';
 
@@ -281,7 +285,59 @@ $documenti_tree = $this->docs->getDocumentiPadri($id);
 $campi_personalizzati = $this->apilib->search('campi_righe_articoli', ['campi_righe_articoli_mostra_in_pdf' => DB_BOOL_TRUE], null, 0, 'campi_righe_articoli_pos');
 // debug($campi_personalizzati);
 
-$count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mostra_prodotti_senza_importi) + $mostra_totali_senza_iva);
+$count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mostra_prodotti_senza_importi) + $mostra_totali_senza_iva) + $mostra_periodo_competenza;
+
+
+// Mittente e destinatario in base al tipo doc: Ordine fornitore (6) e DDT Fornitore (10)
+if (in_array($documento['documenti_contabilita_tipo'], ['6','10'])) {
+    $mittente = [
+        'ragione_sociale' => $destinatario['ragione_sociale'],
+        'partita_iva' => $destinatario['partita_iva'],
+        'codice_fiscale' => $destinatario['codice_fiscale'],
+        'sdi' => '',
+        'indirizzo' => $destinatario['indirizzo'],
+        'cap' => $destinatario['cap'],
+        'citta' => $destinatario['citta'],
+        'provincia' => $destinatario['provincia'],
+        'nazione' => $destinatario['nazione'],
+    ];
+    
+    $destinatario = [
+        'ragione_sociale' => $settings['documenti_contabilita_settings_company_name'],
+        'partita_iva' => $settings['documenti_contabilita_settings_company_vat_number'],
+        'codice_fiscale' => $settings['documenti_contabilita_settings_company_codice_fiscale'],
+        'sdi' => $settings['documenti_contabilita_settings_codice_sdi'],
+        'indirizzo' => $settings['documenti_contabilita_settings_company_address'],
+        'cap' => $settings['documenti_contabilita_settings_company_zipcode'],
+        'citta' => $settings['documenti_contabilita_settings_company_city'],
+        'provincia' => $settings['documenti_contabilita_settings_company_province'],
+        'nazione' => $settings['documenti_contabilita_settings_company_country'],
+    ];
+} else {
+    $mittente = [
+        'ragione_sociale' => $settings['documenti_contabilita_settings_company_name'],
+        'partita_iva' => $settings['documenti_contabilita_settings_company_vat_number'],
+        'codice_fiscale' => $settings['documenti_contabilita_settings_company_codice_fiscale'],
+        'sdi' => $settings['documenti_contabilita_settings_codice_sdi'],
+        'indirizzo' => $settings['documenti_contabilita_settings_company_address'],
+        'cap' => $settings['documenti_contabilita_settings_company_zipcode'],
+        'citta' => $settings['documenti_contabilita_settings_company_city'],
+        'provincia' => $settings['documenti_contabilita_settings_company_province'],
+        'nazione' => $settings['documenti_contabilita_settings_company_country'],
+    ];
+    
+    $destinatario = [
+        'ragione_sociale' => $destinatario['ragione_sociale'],
+        'partita_iva' => $destinatario['partita_iva'],
+        'codice_fiscale' => $destinatario['codice_fiscale'],
+        'sdi' => '',
+        'indirizzo' => $destinatario['indirizzo'],
+        'cap' => $destinatario['cap'],
+        'citta' => $destinatario['citta'],
+        'provincia' => $destinatario['provincia'],
+        'nazione' => $destinatario['nazione'],
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -578,16 +634,16 @@ $count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mos
                                     </h5>
                                     <div class="" style="float: left;">
                                         <div>
-                                            <strong style="color: <?php echo $colore_tpl; ?>"><?php echo $settings['documenti_contabilita_settings_company_name']; ?></strong>
+                                            <strong style="color: <?php echo $colore_tpl; ?>"><?php echo $mittente['ragione_sociale']; ?></strong>
                                         </div>
-                                        <div><?php e('P.IVA'); ?> <?php echo $settings['documenti_contabilita_settings_company_vat_number']; ?></div>
-                                        <div><?php e('CF'); ?> <?php echo $settings['documenti_contabilita_settings_company_codice_fiscale']; ?></div>
-                                        <div><?php e('Codice SDI'); ?> <?php echo $settings['documenti_contabilita_settings_codice_sdi']; ?></div>
-                                        <div><?php echo $settings['documenti_contabilita_settings_company_address']; ?></div>
-                                        <div><?php echo $settings['documenti_contabilita_settings_company_zipcode']; ?> <?php echo $settings['documenti_contabilita_settings_company_city']; ?>
-                                            (<?php echo $settings['documenti_contabilita_settings_company_province']; ?>)
+                                        <div><?php e('P.IVA'); ?> <?php echo $mittente['partita_iva']; ?></div>
+                                        <div><?php e('CF'); ?> <?php echo $mittente['codice_fiscale']; ?></div>
+                                        <div><?php e('Codice SDI'); ?> <?php echo $mittente['sdi']; ?></div>
+                                        <div><?php echo $mittente['indirizzo']; ?></div>
+                                        <div><?php echo $mittente['cap']; ?> <?php echo $mittente['citta']; ?>
+                                            (<?php echo $mittente['provincia']; ?>)
                                         </div>
-                                        <div><?php echo $settings['documenti_contabilita_settings_company_country']; ?></div>
+                                        <div><?php echo $mittente['nazione']; ?></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 destinatario">
@@ -651,6 +707,9 @@ $count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mos
                                             }
                                         }
                                         ?>
+                                        <?php if($mostra_periodo_competenza == DB_BOOL_TRUE) : ?>
+                                        <th><?php e('Periodo comp.'); ?></th>
+                                        <?php endif; ?>
                                         <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
                                             <th class="right"><?php e('Prezzo'); ?></th>
                                         <?php endif; ?>
@@ -673,6 +732,10 @@ $count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mos
                                             }
 
                                             $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] = $iva_totale[$articolo['documenti_contabilita_articoli_iva_perc']] + $articolo['documenti_contabilita_articoli_iva'];
+
+                                            $riga_desc = !empty($articolo['documenti_contabilita_articoli_riga_desc']) && $articolo['documenti_contabilita_articoli_riga_desc'] == DB_BOOL_TRUE ? DB_BOOL_TRUE : DB_BOOL_FALSE;
+
+                                            if($riga_desc == DB_BOOL_FALSE) :
                                     ?>
                                     <tr class="t_rows">
                                         <?php
@@ -716,28 +779,67 @@ $count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mos
                                             }
                                         }
                                         ?>
+                                        <?php if($mostra_periodo_competenza == DB_BOOL_TRUE) : ?>
+                                        <td><?php echo $articolo['documenti_contabilita_articoli_periodo_comp'] ?? ''; ?></td>
+                                        <?php endif; ?>
                                         <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
                                             <td class="right">
-                                                <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo number_format((float)$articolo['documenti_contabilita_articoli_prezzo'], 2, ',', '.'); ?>
-                                                <?php echo (!empty($articolo['documenti_contabilita_articoli_sconto']) && $articolo['documenti_contabilita_articoli_sconto'] > 0) ? "<br /><small>Sconto " . number_format((float)$articolo['documenti_contabilita_articoli_sconto'], 2, ',', '.') . '% </small>' : ''; ?>
+                                                <?php
+                                                    if($riga_desc == DB_BOOL_FALSE) {
+                                                        echo $valuta[$documento['documenti_contabilita_valuta']].' '.number_format((float)$articolo['documenti_contabilita_articoli_prezzo'], 2, ',', '.');
+                                                        echo (!empty($articolo['documenti_contabilita_articoli_sconto']) && $articolo['documenti_contabilita_articoli_sconto'] > 0) ? "<br /><small>Sconto " . number_format((float)$articolo['documenti_contabilita_articoli_sconto'], 2, ',', '.') . '% </small>' : '';
+                                                    }
+                                                ?>
                                             </td>
                                         <?php endif; ?>
-                                        <td class="center"><?php echo $articolo['documenti_contabilita_articoli_quantita']; ?></td>
+                                        <td class="center">
+                                            <?php
+                                                if($riga_desc == DB_BOOL_FALSE) {
+                                                    echo $articolo['documenti_contabilita_articoli_quantita'];
+                                                }
+                                            ?>
+                                        </td>
                                         <?php if($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
                                             <td class="right">
-                                                <?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_iva'], 2, ',', '.'); ?>
-                                                <br /><small><?php echo '('.number_format((float)$articolo['documenti_contabilita_articoli_iva_perc'], 2, ',', '.').'%)'; ?></small>
+                                            <?php
+                                                if($riga_desc == DB_BOOL_FALSE) {
+                                                    echo $valuta[$documento['documenti_contabilita_valuta']].' '.$segno . number_format((float)$articolo['documenti_contabilita_articoli_iva'], 2, ',', '.');
+                                                    echo "<br /><small>";
+                                                    echo '('.number_format((float)$articolo['documenti_contabilita_articoli_iva_perc'], 2, ',', '.').'%)</small>'; 
+                                                }
+                                            ?>
                                             </td>
                                         <?php endif; ?>
                                         <?php if($mostra_prodotti_senza_importi == DB_BOOL_FALSE) : ?>
                                             <?php if ($mostra_totali_senza_iva == DB_BOOL_FALSE) : ?>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_importo_totale'], 2, ',', '.'); ?></td>
+                                                <td class="right">
+                                                    <?php
+                                                        if($riga_desc == DB_BOOL_FALSE) {
+                                                            echo $valuta[$documento['documenti_contabilita_valuta']].' '.$segno . number_format((float)$articolo['documenti_contabilita_articoli_importo_totale'], 2, ',', '.');
+                                                        }
+                                                    ?>
+                                                </td>
                                             <?php else : ?>
-                                                <td class="right"><?php echo $valuta[$documento['documenti_contabilita_valuta']]; ?><?php echo $segno . number_format((float)$articolo['documenti_contabilita_articoli_imponibile'], 2, ',', '.'); ?></td>
+                                                <td class="right">
+                                                    <?php
+                                                        if($riga_desc == DB_BOOL_FALSE) {
+                                                            echo $valuta[$documento['documenti_contabilita_valuta']].' '.$segno . number_format((float)$articolo['documenti_contabilita_articoli_imponibile'], 2, ',', '.');
+                                                        }
+                                                    ?>
+                                                </td>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </tr>
-                                    <?php 
+                                    <?php else : ?>
+                                    <tr class="t_rows">
+                                        <td class="left strong" colspan="<?php echo 7 + $count_colonne; ?>">
+                                            <?php echo $articolo['documenti_contabilita_articoli_name']; ?>
+                                            <br>
+                                            <small><?php echo $articolo['documenti_contabilita_articoli_descrizione']; ?></small>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                            endif;
                                         endif;
                                     endforeach;
                                     ?>
@@ -1051,7 +1153,7 @@ $count_colonne = $mostra_foto_articoli + count($campi_personalizzati) - ((2*$mos
                             
                             <br>
                             
-                            <?php if (in_array($documento['documenti_contabilita_tipo'], [8,10])): ?>
+                            <?php if ($pagina == count($gruppi_articoli) && in_array($documento['documenti_contabilita_tipo'], [8,10])): ?>
                                 <div class="row firme">
                                     <div class="col-sm-4">
                                         <div>

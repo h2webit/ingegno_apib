@@ -490,6 +490,21 @@ class Movimenti extends MX_Controller
                 'data' => '',
             ));
         } else {
+
+            foreach ($input['products'] as $prodotto) {
+                if (!empty($prodotto['movimenti_articoli_name']) && empty($prodotto['movimenti_articoli_prodotto_id'])) {
+                    if (empty($this->magazzino_settings['magazzino_settings_allow_prod_create']) || $this->magazzino_settings['magazzino_settings_allow_prod_create'] != 1) {
+                        echo json_encode([
+                            'status' => 0,
+                            'txt' => 'Non è consentito creare nuovi prodotti dal movimento. Selezionare solo prodotti esistenti a catalogo.',
+                            'data' => '',
+                        ]);
+                        return;
+                    }
+                }
+            }
+
+
             $magazzino = $this->apilib->view('magazzini', $input['movimenti_magazzino']);
             
             if (!empty($magazzino['magazzini_utenti_abilitati']) && !empty($this->auth->get('users_id'))) {
@@ -688,7 +703,7 @@ class Movimenti extends MX_Controller
                                 $campo_prezzo_fornitore_prodotto => $prodotto['movimenti_articoli_prezzo'],
                                 $campo_preview_prodotto => $prodotto['movimenti_articoli_name'],
                         
-                                $campo_nascondi_prodotto => ($input['missing_products_insert']) ? DB_BOOL_FALSE : DB_BOOL_TRUE,
+                                $campo_nascondi_prodotto => (!empty($input['missing_products_insert'])) ? DB_BOOL_FALSE : DB_BOOL_TRUE,
                         
                                 $campo_iva_prodotto => $prodotto['movimenti_articoli_iva_id'],
                                 $campo_tipo_prodotto => '1',
@@ -1060,6 +1075,8 @@ class Movimenti extends MX_Controller
             Having s > 0
             "
         )->result_array();
+
+        //debug($getlottiprod,true);
         //TODO: non basta, bisogna mostrare le quantità corrette raggruppate per lotti
     
         if (empty($getlottiprod)) {
@@ -1105,7 +1122,7 @@ class Movimenti extends MX_Controller
                 LEFT JOIN accantonamenti ON (accantonamenti_riga_ordine = documenti_contabilita_articoli_id AND accantonamenti_prodotto = documenti_contabilita_articoli_prodotto_id AND (accantonamenti_movimento = $movimento_id OR accantonamenti_movimento IS NULL))
                 WHERE documenti_contabilita_articoli_prodotto_id IN (
                     SELECT fw_products_id FROM fw_products WHERE fw_products_barcode = '{$keyword}' AND fw_products_supplier = '$supplier'
-                ) AND documenti_contabilita_stato IN (1,2,5,6)
+                ) AND documenti_contabilita_stato IN (1,2,5,6,8)
                 AND (documenti_contabilita_articoli_id,documenti_contabilita_articoli_quantita) NOT IN (
                     SELECT accantonamenti_riga_ordine,COALESCE(accantonamenti_stk,0)+COALESCE(accantonamenti_shp,0)+COALESCE(accantonamenti_del,0)-accantonamenti_qty  FROM accantonamenti
 

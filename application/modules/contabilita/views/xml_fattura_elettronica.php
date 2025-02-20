@@ -598,8 +598,13 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
 <Causale></Causale>
 <Art73></Art73>--> */ ?>
             </DatiGeneraliDocumento>
-
-            <?php if (!empty($ordine_acquisto = json_decode($dati['fattura']['documenti_contabilita_fe_ordineacquisto'], true)) && array_filter($ordine_acquisto)): ?>
+            <?php
+            $ordine_acquisto = json_decode($dati['fattura']['documenti_contabilita_fe_ordineacquisto'] , true);
+            $ordine_acquisto = array_filter((array)$ordine_acquisto);
+            unset($ordine_acquisto['riferimento_amministrazione']);
+            
+            ?>
+            <?php if (!empty($ordine_acquisto)): ?>
                 <DatiOrdineAcquisto>
                     <?php if (!empty($ordine_acquisto['riferimento_numero_linea'])): ?>
                         <RiferimentoNumeroLinea>
@@ -647,8 +652,12 @@ if (!empty($dati['fattura']['documenti_contabilita_json_editor_xml'])) {
                     <!--<RiferimentoNumeroLinea></RiferimentoNumeroLinea>-->
                 </DatiDDT>
             <?php endif; ?>
-
-            <?php if (!empty($dati_contratto = json_decode($dati['fattura']['documenti_contabilita_fe_dati_contratto'], true)) && array_filter($dati_contratto)): ?>
+                <?php
+                $dati_contratto = json_decode($dati['fattura']['documenti_contabilita_fe_dati_contratto'] , true);
+                $dati_contratto = array_filter((array)$dati_contratto);
+                unset($dati_contratto['riferimento_amministrazione']);
+                ?>
+            <?php if (!empty($dati_contratto)): ?>
                 <DatiContratto>
                     <?php if (!empty($dati_contratto['riferimento_numero_linea'])): ?>
                         <RiferimentoNumeroLinea>

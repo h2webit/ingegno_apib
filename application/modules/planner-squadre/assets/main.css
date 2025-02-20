@@ -1,0 +1,553 @@
+@media print {
+    * {
+        visibility: hidden;
+    }
+
+    /* Show element to print, and any children he has. */
+    .table-week-plan,
+    .table-week-plan * {
+        visibility: initial;
+        font-size: 24px;
+    }
+}
+
+/*
+ * ========================================================
+ * Planner settimanale
+ * ========================================================
+ */
+.table-week-plan {
+    min-height: 750px;
+}
+
+/* Table structure */
+.table-week-plan th {
+    /*background-color: #1f1f1f;*/
+    background-color: #1e293b;
+    color: #fff;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    text-align: center;
+    border: 2px solid white;
+}
+
+.table-week-plan td {
+    background-color: #EFEFEF;
+    border-right: 1px solid #999;
+    border-left: 1px solid #a4a4a4;
+    border-bottom: 1px solid #999;
+    border-top: 1px solid #a4a4a4;
+    width: 290px
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 45px;
+}
+
+.table-week-plan .avatar {
+    /*width: 67px;*/
+}
+
+.table-week-plan .tasks-column {
+    width: 275px;
+    margin: 0 auto;
+    min-height: 100px;
+}
+
+
+
+/* Sortable */
+.portlet-sortable-placeholder {
+    border-color: #bbb;
+    width: 45px;
+    height: 45px;
+
+    background-color: #e3e3e3;
+    z-index: 999999999999;
+    opacity: 0.7;
+}
+
+.table-week-plan .portlet-sortable-placeholder.round-all {
+    border-color: #000;
+    border-radius: 50%;
+}
+
+.table-week-plan .ui-sortable .task-item {
+    cursor: move
+}
+
+
+.container-persone,
+.container-mezzi {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*border: 1px solid #d2d2d2;*/
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 100px;
+}
+
+/*** circle ***/
+.automezzo,
+.persona {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 9px;
+    cursor: grab;
+    overflow: hidden;
+    position: relative;
+    margin-left: -30px;
+    /* Sovrapposizione degli avatar */
+    border: 1px solid white;
+    /* Bordo bianco per separare visivamente gli avatar */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Aggiungi un'ombra per migliorare l'effetto */
+}
+
+.automezzo:first-child,
+.persona:first-child {
+    margin-left: 0;
+    /* Rimuove il margine dal primo elemento */
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    /* Assicura che l'immagine dell'avatar copra l'intero div */
+}
+
+position: relative;
+margin-left: -10px;
+/* Sovrapposizione degli avatar */
+border: 2px solid white;
+/* Bordo bianco per separare visivamente gli avatar */
+border-radius: 50%;
+/* Rendi i bordi rotondi per gli avatar */
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+/* Aggiungi un'ombra per migliorare l'effetto */
+
+.automezzosmall,
+.personasmall {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.customer_container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    /*border: 2px dashed #d6d6d6;*/
+    position: absolute;
+    /*top: 15px;*/
+    top: 5px;
+    left: 0;
+}
+
+.box-persone {
+    /*border-bottom: 1px dashed #999999;*/
+    border-botton: 1px solid #d9d9d9
+}
+
+.box-persone,
+.box-automezzi {
+    width: 100%;
+    height: 50%;
+    min-height: 50px;
+    /*min-width: 200px;*/
+    min-width: 120px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+td.relative {
+    position: relative;
+}
+
+.selected_customer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    background-color: #fefefe;
+    box-shadow: 1px 3px 12px 0px rgb(0 0 0 / 15%);
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.selected_customer div.info {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 0;
+}
+
+.selected_customer div.info>strong {
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.selected_customer a.edit_appuntamento {
+    margin-left: 5px;
+}
+
+.selected_customer_customer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.selected_customer_info {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.customer_detail,
+.customer_detail:hover {
+    color: inherit;
+}
+
+span.day_reference {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.appuntamento {
+    cursor: grab;
+}
+
+.fixed_container {
+    /* position: fixed;
+    z-index: 999;
+    width: 250px;
+    z-index: 999;
+    padding-bottom: 20px;
+    background: #f5f5f5; */
+    display: none;
+    position: fixed;
+    /*top: 154px;
+    position: fixed;
+    top: 304px;
+    right: 36px;*/
+    width: 500px;
+    height: 650px;
+    z-index: 999;
+    padding-top: 8px;
+    padding-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #efefef;
+    border-radius: 4px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 50px;
+    width: 100%;
+    padding-top: 20px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, .25);
+}
+
+.sticky+.calendar_section {
+    padding-top: 200px;
+}
+
+
+.container_appuntamenti .selected_customer {
+    margin-top: 0;
+}
+
+.table-week-plan tbody tr td {
+    height: 140px;
+}
+
+.copia_appuntamento {
+    cursor: pointer;
+}
+
+.copia_appuntamento span {
+    color: #3c8dbc;
+    font-size: 18px;
+}
+
+.custom_label_tecnici:first-of-type {
+    margin-left: 0px;
+}
+
+.custom_label_tecnici {
+    margin-left: 10px;
+}
+
+.custom_label_tecnici i {
+    margin-right: 4px;
+}
+
+.note_appuntamento {
+    color: #3c8dbc;
+}
+
+.info .info_actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info .info_actions .controls {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    width: 100%;
+}
+
+
+.settings_planner {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.intestazione_planner {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.intestazione_planner label,
+.intestazione_planner div {
+    width: 100%;
+}
+
+.settings_planner div.help-block {
+    margin-left: 4px;
+}
+
+.opacity_clicked {
+    opacity: 0.4;
+}
+
+.card_link {
+    transition: all .3s ease-in;
+}
+
+.card_link_customer {
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_link_impianto {
+    font-size: 12px;
+}
+
+.card_link:hover {
+    color: #0073b7 !important;
+}
+
+.toggleUsers {
+    margin-left: 16px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.bg-automezzo {
+    background-color: #059669;
+}
+
+.container-persone {
+    max-height: 155px;
+    overflow-y: hidden;
+}
+
+.container-persone_visible {
+    max-height: unset;
+    overflow-y: visible;
+}
+
+.container_intestazione {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.icon_intestazione {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.sidebar_section_title {
+    font-size: 16px;
+}
+
+/* Per posizione sidebar scelta e labels container */
+.tab-pane.active {
+    position: relative;
+}
+
+.labels_container {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    /*width: 100%;*/
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+    gap: 8px;
+    flex-direction: column;
+    z-index: 999;
+    transform: rotate(270deg);
+    right: 42px;
+    top: -39px;
+}
+
+.label_settings {
+    /*width: 85px;*/
+    width: 50px;
+    display: block;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #086fa3;
+    padding: 4px 8px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border: none;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, .15) 0px 3px 3px 0px;
+}
+
+.label_settings:hover {
+    color: #ffffff;
+    background-color: rgba(8, 111, 163, 0.6);
+}
+
+ul.pager {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.close_persone_mezzi {
+    cursor: pointer;
+}
+
+.js_aggiungi_cliente,
+.js_aggiungi_cliente:hover {
+    color: #ffffff;
+}
+
+.selected_customer_composizione_squadra {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    border: 1px solid #d3d3d3;
+    padding: 2px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+
+.persona.rimanenti {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+    color: #000000;
+    font-weight: bold;
+    font-size: 12px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-left: -30px;
+    margin-right: 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.container_single_persona,
+.container_single_automezzo {
+    margin-left: 0px;
+}
+
+.highlight {
+    /* Colore oro per evidenziare */
+    border: 2px solid #0080ff;
+    /* Un leggero effetto di ombra */
+    box-shadow: 0px 0px 10px rgba(0, 128, 255, 0.6);
+}
+
+.calendar_section {
+    /*margin-top: 32px;*/
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    vertical-align: top !important;
+}
+
+.sortable-fallback {
+    opacity: 0.5;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.duplicate {
+    border: 3px solid red;
+}
+
+.rapportino_creato {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #059669;
+}
+
+.appuntamento_confermato {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 50%;
+}

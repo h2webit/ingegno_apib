@@ -1131,6 +1131,7 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
         'mostra_totali_senza_iva' => DB_BOOL_FALSE,
         'mostra_prodotti_senza_importi' => DB_BOOL_FALSE,
         'mostra_lotto_matricola' => DB_BOOL_FALSE,
+        'mostra_periodo_competenza' => DB_BOOL_FALSE
     ];
 
     $documento_tipo_get = $this->input->get('doc_type') ?? null;
@@ -1172,6 +1173,48 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
         'mostra_prodotti_senza_importi' => DB_BOOL_FALSE,
         'mostra_lotto_matricola' => DB_BOOL_FALSE,
     ]; */
+}
+
+$movimento_id = $this->input->get('movimento_id');
+if ($movimento_id) {
+    $movimento = $this->apilib->view('movimenti', $movimento_id);
+
+    $clone = true;
+    $documento = array();
+    $documento['articoli'] = array();
+
+    // Mappatura automatica dei campi movimento -> documento
+    foreach ($movimento as $field => $value) {
+        $field = str_ireplace('movimenti_', 'documenti_contabilita_', $field);
+        $documento[$field] = $value;
+    }
+
+    // Gestione numero documento e tipo
+    //$documento['documenti_contabilita_numero_documento'] = $movimento['movimenti_numero'];
+    $documento['documenti_contabilita_tipo'] = $movimento['movimenti_documento_tipo'];
+
+    // Gestione articoli
+    $movimento_articoli = $this->apilib->search('movimenti_articoli', ['movimenti_articoli_movimento' => $movimento_id]);
+    foreach ($movimento_articoli as $articolo) {
+        $doc_articolo = array();
+        foreach ($articolo as $field => $value) {
+            $field = str_ireplace('movimenti_articoli_', 'documenti_contabilita_articoli_', $field);
+            $doc_articolo[$field] = $value;
+        }
+        unset($doc_articolo['documenti_contabilita_articoli_id']);
+        $doc_articolo['documenti_contabilita_articoli_rif_riga_mov']=$articolo['movimenti_articoli_id'];
+        $doc_articolo['documenti_contabilita_articoli_codice_asin'] ='';
+        $doc_articolo['documenti_contabilita_articoli_codice_ean'] = '';
+        $doc_articolo['documenti_contabilita_articoli_imponibile'] = $articolo['movimenti_articoli_prezzo'];
+        $doc_articolo['documenti_contabilita_articoli_applica_ritenute'] = $doc_articolo['documenti_contabilita_articoli_applica_sconto'] =  DB_BOOL_TRUE;
+        $documento['articoli'][] = $doc_articolo;
+    }
+
+    // Gestione dati destinatario se presenti
+    if (!empty($movimento['movimenti_destinatario'])) {
+        $documento['documenti_contabilita_destinatario'] = json_decode($movimento['movimenti_destinatario'], true);
+        $_dest_id = $movimento['movimenti_tipo_movimento']==1?$movimento['movimenti_fornitori_id']:$movimento['movimenti_clienti_id'];
+    }
 }
 
 ?>
@@ -1258,6 +1301,9 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
     <?php add_csrf(); ?>
     <?php if ($documento_id && !$clone): ?>
     <input name="documento_id" type="hidden" value="<?php echo $documento_id; ?>" />
+    <?php endif; ?>
+    <?php if ($movimento_id): ?>
+        <input type="hidden" name="movimento_id" value="<?php echo $movimento_id; ?>" />
     <?php endif; ?>
 
     <?php if ($spesa_id): ?>
@@ -1875,6 +1921,13 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                                             <input type="checkbox" class="minimal" name="json_stampa[mostra_lotto_matricola]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_lotto_matricola']) && $json_stampa['mostra_lotto_matricola'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="min-width:80px">Periodo competenza: </label>
+                                            <input type="hidden" name="json_stampa[mostra_periodo_competenza]" value="0">
+                                            <input type="checkbox" class="minimal" name="json_stampa[mostra_periodo_competenza]" class="rcr-adjust" value="1" <?php if (!empty($json_stampa['mostra_periodo_competenza']) && $json_stampa['mostra_periodo_competenza'] == DB_BOOL_TRUE): ?> checked="checked" <?php endif; ?> />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2203,12 +2256,15 @@ if ($documento_id && !$clone && !empty($documento['documenti_contabilita_imposta
                         Attributi Avanzati Fattura Elettronica </label>
                     <?php
                         if ($this->datab->module_installed('magazzino')):
-                        $settings_magazzino = $this->apilib->searchFirst('magazzino_settings');
-                        $aggiungi_a_catalogo = $settings_magazzino['magazzino_settings_aggiungi_articoli_non_presenti'] ?? DB_BOOL_FALSE;
-                    ?>
-                    <label> <input type="checkbox" class="minimal js_fattura_add_articoli" name="documenti_contabilita_aggiungi_articoli" value="<?php echo DB_BOOL_TRUE; ?>" <?php if ($aggiungi_a_catalogo == DB_BOOL_TRUE) : ?> checked="checked" <?php endif; ?>>
-                        Aggiungi articoli non presenti a magazzino </label>
-                    <?php endif; ?>
+                            $settings_magazzino = $this->apilib->searchFirst('magazzino_settings');
+                            $aggiungi_a_catalogo = $settings_magazzino['magazzino_settings_aggiungi_articoli_non_presenti'] ?? DB_BOOL_FALSE;
+                            $consenti_aggiunta_a_catalogo = $settings_magazzino['magazzino_settings_allow_prod_create']??DB_BOOL_FALSE;
+                            if ($consenti_aggiunta_a_catalogo) :
+                            ?>
+                                <label> <input type="checkbox" class="minimal js_fattura_add_articoli" name="documenti_contabilita_aggiungi_articoli" value="<?php echo DB_BOOL_TRUE; ?>" <?php if ($aggiungi_a_catalogo == DB_BOOL_TRUE) : ?> checked="checked" <?php endif; ?>>
+                                    Aggiungi articoli non presenti a magazzino </label>
+                            <?php endif; ?>
+                        <?php endif; ?>
                 </div>
             </div>
             <div class="row js_fattura_accompagnatoria_row hide">

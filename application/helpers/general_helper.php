@@ -654,7 +654,7 @@ if (!function_exists('t')) {
                 $path = sprintf('%slanguage/%s/%s_lang.php', APPPATH, $language, $language);
             }
 
-            $val = addslashes($string);
+            $val = addslashes($string??'');
             $add = '$lang[\'' . $val . '\'] = \'' . $val . '\';' . PHP_EOL;
 
             if (file_exists($path)) {
@@ -695,13 +695,16 @@ if (!function_exists('t')) {
         // Rimpiazza parametri
         if (is_array($params) && !empty($params)) {
             foreach ($params as $v) {
-                $translation = preg_replace("/%s/", $v, $translation, 1);
+               if ($v) {
+                    $translation = preg_replace("/%s/", $v, $translation, 1);
+               }
+                
             }
         }
 
         $modifiers = [1 => 'ucfirst', 2 => 'strtoupper', 3 => 'ucwords'];
         if (isset($modifiers[$ucfirst])) {
-            call_user_func($modifiers[$ucfirst], $translation);
+            call_user_func($modifiers[$ucfirst], $translation??'');
         }
         //debug($translation);
         return $translation;
@@ -1748,7 +1751,7 @@ if (!function_exists('e_money')) {
 if (!function_exists('r_money')) {
     function r_money($number, $format = '{number}', $decimals = 2)
     {
-        return str_ireplace('{number}', number_format($number, $decimals, ',', '.'), $format);
+        return str_ireplace('{number}', number_format($number??0, $decimals, ',', '.'), $format);
     }
 }
 
@@ -2384,5 +2387,31 @@ if (!function_exists('is_valid_image')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('get_filter_url')) {
+    function build_url($base_url, $params)
+    {
+        $query = http_build_query($params);
+        return $base_url . ($query ? '?' . $query : '');
+    }
+    function get_filter_url($url, $params, $new_params)
+{
+    // Unisce i parametri esistenti con i nuovi
+    $merged_params = array_merge($params, $new_params);
+    // Rimuove eventuali parametri vuoti
+    $merged_params = array_filter($merged_params, function ($value) {
+        return ($value !== '' && $value !== null);
+    });
+    return build_url(base_url($url), $merged_params);
+}
+}
+if (!function_exists('get_days_in_month')) {
+    function get_days_in_month($month, $year = null) {
+        if ($year === null) {
+            $year = date('Y');
+        }
+        return cal_days_in_month(CAL_GREGORIAN, $month, $year);
     }
 }

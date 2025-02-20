@@ -4,15 +4,15 @@
     "modules_description": "Search widget to search everything ",
     "modules_installed": "1",
     "modules_home_url": null,
-    "modules_version": "1.0.5",
+    "modules_version": "1.0.6",
     "modules_identifier": "quick-search-widget",
     "modules_base64_zip": null,
     "modules_raw_data_install": "712,688",
     "modules_raw_data_update": null,
     "modules_created_by_user": "1",
-    "modules_version_code": "6",
+    "modules_version_code": "7",
     "modules_thumbnail": "b37777c281cdcfff0a0d8836d6d3e447.webp",
-    "modules_min_client_version": "3.8.0",
+    "modules_min_client_version": "3.8.4",
     "modules_version_date": "2024-02-20 11:23:09",
     "modules_auto_update": "0",
     "modules_last_update": "2024-02-20 11:23:09",
@@ -754,7 +754,7 @@
                 {
                     "fields_draw_id": "5562",
                     "fields_draw_fields_id": "5560",
-                    "fields_draw_label": "Users group enabled",
+                    "fields_draw_label": "Users group disabled",
                     "fields_draw_help_text": null,
                     "fields_draw_onclick": "",
                     "fields_draw_html_type": "multiselect",
@@ -796,7 +796,7 @@
                 {
                     "quick_search_entities_id": "28",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-04-19 08:53:06",
+                    "quick_search_entities_modified_date": "2024-12-05 16:42:42",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -814,13 +814,13 @@
                     "quick_search_entities_layout_detail_in_modal_params": null,
                     "quick_search_entities_layout_detail_modal": "0",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "customers"
                 },
                 {
                     "quick_search_entities_id": "29",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-05-02 09:37:00",
+                    "quick_search_entities_modified_date": "2024-12-05 16:43:14",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -844,7 +844,7 @@
                 {
                     "quick_search_entities_id": "30",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-05-17 15:51:29",
+                    "quick_search_entities_modified_date": "2024-12-05 16:43:03",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -862,13 +862,13 @@
                     "quick_search_entities_layout_detail_in_modal_params": null,
                     "quick_search_entities_layout_detail_modal": "0",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "projects"
                 },
                 {
                     "quick_search_entities_id": "31",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-04-08 11:31:25",
+                    "quick_search_entities_modified_date": "2024-12-05 16:43:34",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -880,19 +880,19 @@
                     "quick_search_entities_preview_print": "#{tasks_id} ({tasks_status_status}) - {projects_name} - {tasks_title}",
                     "quick_search_entities_append_join": "LEFT JOIN projects ON projects_id = tasks_project_id\r\nLEFT JOIN tasks_status ON tasks_status = tasks_status_id",
                     "quick_search_entities_append_where": "projects_status IN (1,2,3)",
-                    "quick_search_entities_order_by": "tasks_status ASC, tasks_id DESC",
+                    "quick_search_entities_order_by": "tasks_status=4 DESC, tasks_status asc, tasks_id DESC",
                     "quick_search_entities_order_entity": "10",
                     "quick_search_entities_override_layout_detail": "get_ajax\/layout_modal\/task-detail\/",
                     "quick_search_entities_layout_detail_in_modal_params": "?_size=extra",
                     "quick_search_entities_layout_detail_modal": "1",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "tasks"
                 },
                 {
                     "quick_search_entities_id": "32",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-05-03 14:43:34",
+                    "quick_search_entities_modified_date": "2024-12-05 16:43:44",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -910,13 +910,13 @@
                     "quick_search_entities_layout_detail_in_modal_params": "?_mode=side_view",
                     "quick_search_entities_layout_detail_modal": "1",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "tickets"
                 },
                 {
                     "quick_search_entities_id": "33",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-04-04 12:46:10",
+                    "quick_search_entities_modified_date": "2024-12-05 16:43:23",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -934,17 +934,17 @@
                     "quick_search_entities_layout_detail_in_modal_params": "?_size=large",
                     "quick_search_entities_layout_detail_modal": "1",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "fw_products"
                 },
                 {
                     "quick_search_entities_id": "36",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": null,
+                    "quick_search_entities_modified_date": "2024-12-05 16:42:23",
                     "quick_search_entities_created_by": null,
-                    "quick_search_entities_edited_by": null,
+                    "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
-                    "quick_search_entities_edit_scope": null,
+                    "quick_search_entities_edit_scope": "form",
                     "quick_search_entities_form_id": "2092",
                     "quick_search_entities_order": null,
                     "quick_search_entities_preview_fields": null,
@@ -958,22 +958,22 @@
                     "quick_search_entities_layout_detail_in_modal_params": null,
                     "quick_search_entities_layout_detail_modal": "0",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "users"
                 },
                 {
                     "quick_search_entities_id": "37",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-04-04 14:27:40",
+                    "quick_search_entities_modified_date": "2024-12-05 16:42:50",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
                     "quick_search_entities_edit_scope": "form",
                     "quick_search_entities_form_id": "1686",
                     "quick_search_entities_order": null,
-                    "quick_search_entities_preview_fields": "customers_contacts_name, customers_contacts_last_name, customers_contacts_mobile_number, customers_contacts_email, customers_full_name",
-                    "quick_search_entities_searchable_fields": "customers_contacts_name, customers_contacts_last_name, customers_contacts_mobile_number, customers_contacts_email, customers_full_name",
-                    "quick_search_entities_preview_print": "{customers_full_name} | {customers_contacts_name} {customers_contacts_last_name} {customers_contacts_mobile_number} - {customers_contacts_email}",
+                    "quick_search_entities_preview_fields": "customers_contacts_name, customers_contacts_last_name, customers_contacts_phone, customers_contacts_mobile_number, customers_contacts_email, customers_full_name",
+                    "quick_search_entities_searchable_fields": "customers_contacts_name, customers_contacts_last_name, customers_contacts_phone, customers_contacts_mobile_number, customers_contacts_email, customers_full_name",
+                    "quick_search_entities_preview_print": "{customers_full_name} | {customers_contacts_name} {customers_contacts_last_name} {customers_contacts_phone} -{customers_contacts_mobile_number} - {customers_contacts_email}",
                     "quick_search_entities_append_join": "LEFT JOIN customers ON customers_contacts_customer_id = customers_id",
                     "quick_search_entities_append_where": null,
                     "quick_search_entities_order_by": "customers_contacts_name ASC",
@@ -982,13 +982,13 @@
                     "quick_search_entities_layout_detail_in_modal_params": null,
                     "quick_search_entities_layout_detail_modal": "0",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "customers_contacts"
                 },
                 {
                     "quick_search_entities_id": "38",
                     "quick_search_entities_creation_date": null,
-                    "quick_search_entities_modified_date": "2024-04-08 11:27:55",
+                    "quick_search_entities_modified_date": "2024-12-05 16:42:33",
                     "quick_search_entities_created_by": null,
                     "quick_search_entities_edited_by": "5",
                     "quick_search_entities_insert_scope": null,
@@ -1006,7 +1006,7 @@
                     "quick_search_entities_layout_detail_in_modal_params": null,
                     "quick_search_entities_layout_detail_modal": "0",
                     "quick_search_entities_users_group": null,
-                    "quick_search_entities_check_users_group": "0",
+                    "quick_search_entities_check_users_group": "1",
                     "quick_search_entities_entity_name": "dipendenti"
                 }
             ],
@@ -1038,14 +1038,49 @@
             "fields_validation": [],
             "raw_data_install": [
                 {
-                    "quick_search_entities_id": "29",
-                    "users_type_id": "1",
-                    "rel_quick_search_users_type_id": "1"
+                    "quick_search_entities_id": "36",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "9"
+                },
+                {
+                    "quick_search_entities_id": "38",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "10"
+                },
+                {
+                    "quick_search_entities_id": "28",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "11"
+                },
+                {
+                    "quick_search_entities_id": "37",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "12"
+                },
+                {
+                    "quick_search_entities_id": "30",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "13"
                 },
                 {
                     "quick_search_entities_id": "29",
-                    "users_type_id": "4",
-                    "rel_quick_search_users_type_id": "2"
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "14"
+                },
+                {
+                    "quick_search_entities_id": "33",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "15"
+                },
+                {
+                    "quick_search_entities_id": "31",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "16"
+                },
+                {
+                    "quick_search_entities_id": "32",
+                    "users_type_id": "2",
+                    "rel_quick_search_users_type_id": "17"
                 }
             ],
             "raw_data_update": []
@@ -1551,11 +1586,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "quick-search-widget-form-2656",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": [
                 {
                     "forms_fields_forms_id": "2656",
@@ -1852,11 +1889,13 @@
             "forms_success_status_edit": null,
             "forms_success_message_edit": null,
             "forms_identifier": null,
-            "forms_submit_button_label": null,
             "forms_json": null,
             "forms_module_key": "quick-search-widget-form-2700",
+            "forms_submit_button_label": null,
             "forms_public": "0",
             "forms_show_duplicate": "0",
+            "forms_label": null,
+            "forms_label_edit": null,
             "fields": []
         }
     ],
@@ -1871,7 +1910,7 @@
             "layouts_fullscreen": "0",
             "layouts_pdf": "0",
             "layouts_dashboardable": "0",
-            "layouts_cachable": "1",
+            "layouts_cachable": "0",
             "layouts_identifier": "",
             "layouts_module": "quick-search-widget",
             "layouts_module_key": "quick-search-widget-layout-1076",

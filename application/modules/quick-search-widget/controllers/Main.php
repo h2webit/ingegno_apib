@@ -9,7 +9,7 @@ class Main extends MY_Controller
 
     public function search()
     {
-        $search_string = $this->input->post("search");
+        $search_string = trim($this->input->post("search"));
 
         // Get searchable entities
         $entities = $this->db->query("SELECT * FROM quick_search_entities LEFT JOIN entity ON quick_search_entities_entity_name = entity_name ORDER BY quick_search_entities_order_entity ASC")->result_array();
@@ -29,7 +29,7 @@ class Main extends MY_Controller
                 $check_user_group = $this->db->get_where('rel_quick_search_users_type', ['quick_search_entities_id' => $entity['quick_search_entities_id'], 'users_type_id' => $this->auth->get('users_type')])->num_rows();
 
                 // Skip this entity
-                if ($check_user_group < 1) {
+                if ($check_user_group > 0) {
                     continue;
                 }
             }
@@ -94,7 +94,7 @@ class Main extends MY_Controller
             if (!empty($entity['entity_action_fields'])) {
                 $entityCustomActions = empty($entity['entity_action_fields']) ? [] : json_decode($entity['entity_action_fields'], true);
                 if (array_key_exists('soft_delete_flag', $entityCustomActions) && !empty($entityCustomActions['soft_delete_flag'])) {
-                    $whereClause = "($whereClause) AND ({$entityCustomActions['soft_delete_flag']} = " . DB_BOOL_FALSE . ")";
+                    $whereClause = "($whereClause) AND ({$entityCustomActions['soft_delete_flag']} <> " . DB_BOOL_TRUE . " OR {$entityCustomActions['soft_delete_flag']} IS NULL)";
                 }
             }
 
@@ -129,11 +129,20 @@ class Main extends MY_Controller
             // Eseguire la query
             $stmt->execute();
 
+            // Debug della query eseguita
+            $executed_query = $query;
+            foreach ($searchTerms as $term) {
+                $executed_query = preg_replace('/\?/', "'$term'", $executed_query, 1);
+            }
+            log_message('debug', 'Executed Query: ' . $executed_query);
+
+            if ($entity['entity_name'] == 'projects') {
+                //debug($executed_query, true);
+            }
+
             $result = $stmt->get_result();
 
             $result_data = $result->fetch_all(MYSQLI_ASSOC);
-
-
 
             // Prepare results
             $results[$entity['entity_name']]['total'] = $result->num_rows;
@@ -149,13 +158,13 @@ class Main extends MY_Controller
         //debug($dati['related_entities']);
         $dati['layout_id'] = null;
         $dati['value_id'] = null;
-        
+
         // Processare i risultati come necessario
         $pagina = $this->load->view('quick-search-widget/results', ['results' => $results], true);
 
-
         e_json(['pagina' => $pagina, 'dati' => $dati]);
     }
+
 
 
 

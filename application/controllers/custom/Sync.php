@@ -124,10 +124,12 @@ class Sync extends MY_Controller
     public function test() {
         $this->mail_model->sendMessage('matteopuppis@gmail.com', 'test', 'test');
     }
+    
     public function migrate_dati() {
         $this->import_associati();
         $this->import_clienti();
         $this->import_sedi();
+        $this->import_sedi_operative_orari_categoria();
         $this->import_orari();
         $this->import_pagamenti();
         $this->import_sedi_operative_associati();
@@ -141,9 +143,12 @@ class Sync extends MY_Controller
         $this->import_variazioni();
 
 
-        $this->inport_tariffe();
+        $this->import_tariffe();
         
         $this->import_allegati_per_fattura();
+        $this->import_richieste_disponibilita();
+        
+        $this->import_documenti_clienti();
     }
     
     public function import_associati() {
@@ -264,6 +269,7 @@ class Sync extends MY_Controller
             }
         }
     }
+    
     public function import_clienti()
     {
         set_log_scope('sync-clienti');
@@ -295,12 +301,12 @@ class Sync extends MY_Controller
                 'customers_description' => $cliente['clienti_note'],
                 'customers_status' => ($cliente['clienti_non_attivo']?3:1),
                 //'clienti_referente' => $cliente['clienti_referente'],
-                //'clienti_referente' => $cliente['clienti_termini_pagamento'],
-                //'clienti_referente' => $cliente['clienti_cp'],
-                //'clienti_referente' => $cliente['clienti_note_cliente'],
+                //'clienti_apib_termini_pagamento' => $cliente['clienti_termini_pagamento'],
+                //'clienti_apib_cp' => $cliente['clienti_cp'],
+                //'clienti_apib_note_cliente' => $cliente['clienti_note_cliente'],
                 'customers_deleted' => $cliente['clienti_deleted'],
                 'customers_code' => $cliente['clienti_id'],
-                'customers_status' => 1,
+                // 'customers_status' => 1,
                 'customers_type' => 1, //customer
                 'customers_group' => 2, //azienda
 
@@ -341,7 +347,20 @@ class Sync extends MY_Controller
         $this->mycache->clearCache();
     }
 
-    
+    public function import_sedi_operative_orari_categoria() {
+        // the only fields are: sedi_operative_orari_categoria_id + sedi_operative_orari_categoria_value
+        
+        $categorie = $this->apib_db->get('sedi_operative_orari_categoria')->result_array();
+        
+        foreach ($categorie as $categoria) {
+            $categoria_db = $this->db->get_where('sedi_operative_orari_categoria', ['sedi_operative_orari_categoria_id' => $categoria['sedi_operative_orari_categoria_id']])->row_array();
+            if (!$categoria_db) {
+                $this->db->insert('sedi_operative_orari_categoria', $categoria);
+            } else {
+                $this->db->where('sedi_operative_orari_categoria_id', $categoria['sedi_operative_orari_categoria_id'])->update('sedi_operative_orari_categoria', $categoria);
+            }
+        }
+    }
 
     public function import_sedi() {
         set_log_scope('sync-sedi');
@@ -358,6 +377,11 @@ class Sync extends MY_Controller
         
         $sedi_cliente = [];
         foreach ($all_sedi as $sede_cliente) {
+            if (empty($sede_cliente['sedi_operative_cliente'])) {
+                echo_log('error', "sede senza cliente: {$sede_cliente['sedi_operative_id']}");
+                continue;
+            }
+            
             $sedi_cliente[$sede_cliente['sedi_operative_cliente']][] = $sede_cliente;
         }
         
@@ -679,6 +703,123 @@ class Sync extends MY_Controller
 
         $this->mycache->clearCache();
     }
+    
+    public function import_richieste_disponibilita()
+    {
+        /** Tabella richieste_disponibilita su apib_db
+         * Column    Type    Comment
+         * richieste_disponibilita_id    integer Auto Increment [nextval('richieste_disponibilita_richieste_disponibilita_id_seq')]
+         * richieste_disponibilita_data_creazione    timestamp NULL
+         * richieste_disponibilita_data_modifica    timestamp NULL
+         * richieste_disponibilita_sede_operativa    integer NULL
+         * richieste_disponibilita_giorno    timestamp NULL
+         * richieste_disponibilita_fascia    integer NULL
+         * richieste_disponibilita_turno_assegnato    integer NULL
+         * richieste_disponibilita_affiancamento    boolean [false]
+         * richieste_disponibilita_studente    boolean [false]
+         */
+        
+        /** Tabella appuntamenti
+         * Column    Type
+         * appuntamenti_id    bigint(20) unsigned Auto Increment
+         * appuntamenti_creation_date    datetime NULL
+         * appuntamenti_modified_date    datetime NULL
+         * appuntamenti_created_by    int(11) NULL
+         * appuntamenti_edited_by    int(11) NULL
+         * appuntamenti_insert_scope    varchar(250) NULL
+         * appuntamenti_edit_scope    varchar(250) NULL
+         * appuntamenti_cliente    int(11) -> rif. customers.customers_id
+         * appuntamenti_impianto    int(11) -> rif. projects.projects_id + filtered by projects_customer_id = customers.customers_id
+         * appuntamenti_persone    int(11)
+         * appuntamenti_automezzi    int(11) NULL
+         * appuntamenti_riga    int(11) NULL
+         * appuntamenti_note    longtext NULL
+         * appuntamenti_giorno    datetime
+         * appuntamenti_all_day    tinyint(1) NULL [0]
+         * appuntamenti_ora_inizio    varchar(250)
+         * appuntamenti_ora_fine    varchar(250)
+         * appuntamenti_pianificazione    int(11) NULL
+         * appuntamenti_titolo    varchar(250) NULL
+         * appuntamenti_da_confermare    tinyint(1) NULL [0]
+         * appuntamenti_colore_calendario    varchar(250) NULL
+         * appuntamenti_annullato    tinyint(1) NULL [0]
+         * appuntamenti_motivazione    longtext NULL
+         * appuntamenti_checklist    int(11) NULL
+         * appuntamenti_mail_cliente    tinyint(1) NULL [0]
+         * appuntamenti_n_ore    varchar(250) NULL
+         * appuntamenti_n_camere    varchar(250) NULL
+         * appuntamenti_fascia_oraria    int(11) NULL
+         * appuntamenti_affiancamento    tinyint(1) NULL
+         * appuntamenti_studente    tinyint(1) NULL
+         * appuntamenti_tipologia    int(11) NULL
+         * appuntamenti_external_id    varchar(250) NULL
+         * appuntamenti_codice    varchar(250) NULL
+         * appuntamenti_note2    longtext NULL
+         * appuntamenti_note3    longtext NULL
+         * appuntamenti_disponibilita	tinyint(1) NULL [0] -> 1 se è una richiesta di disponibilità
+         */
+        
+        set_log_scope('sync-richieste-disponibilita');
+        //Filtro solo dal mese corrente in poi...
+        $previousMonthStart = date('Y-m-01 00:00:00', strtotime('first day of previous month'));
+
+        // Filtra solo dal mese precedente in poi
+        $richieste_disponibilita = $this->apib_db->where('richieste_disponibilita_giorno >=', $previousMonthStart)
+            ->get('richieste_disponibilita')->result_array();
+        
+        $clienti_id_map = [];
+        $sedi_operative = $this->db->where("(projects_customer_id IS NOT NULL AND projects_customer_id <> '')", null, false)->get('projects')->result_array();
+        foreach ($sedi_operative as $sede_operativa) {
+            $clienti_id_map[$sede_operativa['projects_id']] = $sede_operativa['projects_customer_id'];
+        }
+        
+        $t = count($richieste_disponibilita);
+        $c = 0;
+        
+        foreach ($richieste_disponibilita as $richiesta_disponibilita) {
+            if (!in_array($richiesta_disponibilita['richieste_disponibilita_sede_operativa'], array_keys($clienti_id_map))) {
+                my_log('error', "Errore: sede operativa non trovata per richieste_disponibilita_id: " . $richiesta_disponibilita['richieste_disponibilita_id']);
+                progress(++$c, $t, 'import richieste_disponibilita vs richieste');
+                continue;
+            }
+            
+            // map richieste_disponibilita to appuntamenti
+            $appuntamento = [
+                'appuntamenti_id' => $richiesta_disponibilita['richieste_disponibilita_id'],
+                'appuntamenti_cliente' => $clienti_id_map[$richiesta_disponibilita['richieste_disponibilita_sede_operativa']] ?? null, // Assumendo che 1 sia il cliente
+                'appuntamenti_impianto' => $richiesta_disponibilita['richieste_disponibilita_sede_operativa'],
+                'appuntamenti_persone' => [],
+                'appuntamenti_giorno' => $richiesta_disponibilita['richieste_disponibilita_giorno'],
+                'appuntamenti_ora_inizio' => '00:00',
+                'appuntamenti_ora_fine' => '23:59',
+                'appuntamenti_all_day' => DB_BOOL_TRUE,
+                'appuntamenti_da_confermare' => DB_BOOL_FALSE,
+                'appuntamenti_annullato' => DB_BOOL_FALSE,
+                'appuntamenti_titolo' => 'Richiesta di disponibilità',
+                'appuntamenti_creation_date' => $richiesta_disponibilita['richieste_disponibilita_data_creazione'],
+                'appuntamenti_modified_date' => $richiesta_disponibilita['richieste_disponibilita_data_modifica'],
+                'appuntamenti_affiancamento' => $richiesta_disponibilita['richieste_disponibilita_affiancamento'] == 't' ? 1 : 0,
+                'appuntamenti_studente'   => $richiesta_disponibilita['richieste_disponibilita_studente'] == 't' ? 1 : 0,
+                'appuntamenti_disponibilita' => 1,
+            ];
+            
+            try {
+                $appuntamento_exists = $this->db->get_where('appuntamenti', ['appuntamenti_id' => $appuntamento['appuntamenti_id']])->row_array();
+                
+                if ($appuntamento_exists) {
+                    $appuntamento_creato = $this->apilib->edit('appuntamenti', $appuntamento['appuntamenti_id'], $appuntamento);
+                } else {
+                    $appuntamento_creato = $this->apilib->create('appuntamenti', $appuntamento);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento appuntamento: {$e->getMessage()}");
+                debug($appuntamento);
+                debug($e->getMessage(), true);
+            }
+            
+            progress(++$c, $t, 'import richieste_disponibilita vs richieste');
+        }
+    }
 
     public function import_domiciliari()
     {
@@ -707,7 +848,7 @@ class Sync extends MY_Controller
                 'customers_description' => $domiciliare['domiciliari_note'],
                 'customers_status' => ($domiciliare['domiciliari_non_attivo'] == 't') ? 3 : 1,
                 'customers_type' => 1, // Assumendo che 1 sia il tipo customer
-                'customers_group' => 1, // Assumendo che 2 sia il tipo privato
+                'customers_group' => 5, // Assumendo che 2 sia il tipo privato
                 'customers_creation_date' => $domiciliare['domiciliari_data_creazione'],
                 'customers_modified_date' => $domiciliare['domiciliari_data_modifica'],
             ];
@@ -887,7 +1028,6 @@ $count_total = $this->apib_db
                 'rapportini_firma_operatore' => null,
                 'rapportini_foto' => null,
                 'rapportini_compilazione_id' => null,
-                'rapportini_codice' => null,
                 //'rapportini_servizi' => $id_listino_prezzi,
                 'rapportini_fascia' => $report_orario['report_orari_fascia'],
                 'rapportini_costo_differenziato' => $report_orario['report_orari_costo_differenziato'] == 't' ? 1 : 0,
@@ -1036,6 +1176,7 @@ $count_total = $this->apib_db
         }
         $this->mycache->clearCache();
     }
+    
     public function import_note_compensi($associato_id = null)
     {
         set_log_scope('sync-note_compensi');
@@ -1121,8 +1262,6 @@ $count_total = $this->apib_db
             }
         }
     }
-        
-
     
     public function import_allegati_per_fattura() {
         $allegati = $this->apib_db->get('allegati_per_fattura')->result_array();
@@ -1153,5 +1292,178 @@ $count_total = $this->apib_db
         }
 
         $this->mycache->clearCache();
+    }
+    
+    public function import_documenti_clienti() {
+        /** TABELLA documenti_clienti su apib_db
+         * Colonna    Tipo
+         * documenti_clienti_id    integer Auto incremento [nextval('documenti_clienti_documenti_clienti_id_seq')]
+         * documenti_clienti_data_creazione    timestamp NULL
+         * documenti_clienti_data_modifica    timestamp NULL
+         * documenti_clienti_nome    character varying NULL
+         * documenti_clienti_categoria    integer NULL
+         * documenti_clienti_scadenza    character varying NULL
+         * documenti_clienti_documento    character varying NULL
+         * documenti_clienti_cliente    integer NULL
+         */
+
+        /** TABELLA documents
+         * Column    Type
+         * documents_id    bigint(20) unsigned Auto Increment
+         * documents_creation_date    datetime NULL
+         * documents_modified_date    datetime NULL
+         * documents_due_date    datetime NULL
+         * documents_template    int(11) NULL
+         * documents_filename    varchar(250) NULL
+         * documents_title    varchar(250)
+         * documents_file    varchar(250) NULL
+         * documents_required    tinyint(1) NULL [0]
+         * documents_type    int(11) NULL
+         * documents_customer    int(11) NULL
+         * documents_project    int(11) NULL
+         * documents_value    double(18,9) NULL
+         * documents_notes    longtext NULL
+         * documents_date    datetime NULL
+         * documents_protocollo    tinyint(1) NULL [0]
+         * documents_text    longtext NULL
+         * documents_code    varchar(250) NULL
+         * documents_azienda    int(11) NULL
+         * documents_template_protocollo    int(11) NULL
+         * documents_tipo_protocollo    int(11) NULL [1]
+         * documents_seleziona_anagrafica    tinyint(1) NULL [0]
+         * documents_mittente_destinatario    longtext NULL
+         * documents_mail_sent    tinyint(1) NULL [0]
+         * documents_category    int(11) NULL
+         */
+
+        $this->import_documenti_clienti_categorie();
+
+        $documenti = $this->apib_db->get('documenti_clienti')->result_array();
+        
+        //debug($documenti, true);
+        
+        $t = count($documenti);
+        $c = 0;
+        foreach ($documenti as $documento) {
+            progress(++$c, $t, 'import documenti_clienti');
+            
+            $documento['documenti_clienti_nome'] = trim($documento['documenti_clienti_nome']);
+            
+            if (empty($documento['documenti_clienti_nome'])) {
+                $documento['documenti_clienti_nome'] = '**TITOLO MANCANTE**';
+            }
+            
+            $dati_documento = [
+                'documents_id' => $documento['documenti_clienti_id'],
+                'documents_title' => $documento['documenti_clienti_nome'],
+                'documents_category' => $documento['documenti_clienti_categoria'],
+                'documents_due_date' => $documento['documenti_clienti_scadenza'],
+                'documents_file' => $documento['documenti_clienti_documento'],
+                'documents_customer' => $documento['documenti_clienti_cliente'],
+                'documents_creation_date' => $documento['documenti_clienti_data_creazione'],
+                'documents_modified_date' => $documento['documenti_clienti_data_modifica'],
+            ];
+            
+            try {
+                $documento_exists = $this->db->get_where('documents', ['documents_id' => $documento['documenti_clienti_id']])->row_array();
+                
+                if ($documento_exists) {
+                    $documento_creato = $this->apilib->edit('documents', $documento_exists['documents_id'], $dati_documento);
+                } else {
+                    $documento_creato = $this->apilib->create('documents', $dati_documento);
+                    
+                    if (!file_exists(FCPATH . 'uploads/documents/' . $dati_documento['documents_file'])) {
+                        echo '<pre>', print_r(shell_exec("wget -xnH https://crm.apibinfermieribologna.com/uploads/documents/{$dati_documento['documents_file']}")), '</pre>';
+                    }
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento documento cliente: {$e->getMessage()}");
+                debug($documento);
+                debug($e->getMessage(), true);
+            }
+        }
+    }
+    
+    private function import_documenti_clienti_categorie() {
+        $categorie = $this->apib_db->get('documenti_clienti_categoria')->result_array();
+        
+        $t = count($categorie);
+        $c = 0;
+        foreach ($categorie as $categoria) {
+            progress(++$c, $t, 'import documenti_clienti_categoria');
+            
+            $dati_categoria = [
+                'documents_category_id' => $categoria['documenti_clienti_categoria_id'],
+                'documents_category_value' => $categoria['documenti_clienti_categoria_value'],
+            ];
+            
+            try {
+                $categoria_exists = $this->db->get_where('documents_category', ['documents_category_id' => $categoria['documenti_clienti_categoria_id']])->row_array();
+                
+                if ($categoria_exists) {
+                    $categoria_creato = $this->apilib->edit('documents_category', $categoria['documenti_clienti_categoria_id'], $dati_categoria);
+                } else {
+                    $categoria_creato = $this->apilib->create('documents_category', $dati_categoria);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento categoria documenti: {$e->getMessage()}");
+                debug($categoria);
+                debug($e->getMessage(), true);
+            }
+        }
+    }
+    
+    public function import_storico_associati() {
+        /** TABELLA storico_associati su apib_db
+         * Colonna    Tipo
+         * storico_associati_id    integer Auto incremento [nextval('storico_associati_storico_associati_id_seq')]
+         * storico_associati_data_creazione    timestamp NULL
+         * storico_associati_data_modifica    timestamp NULL
+         * storico_associati_associato    integer NULL
+         * storico_associati_percentuale_sedi    double precision NULL
+         * storico_associati_associati_percentuale_domiciliari    double precision NULL
+         */
+
+        /** TABELLA storico_associati
+         * Column    Type
+         * storico_associati_id    bigint(20) unsigned Auto Increment
+         * storico_associati_creation_date    datetime NULL
+         * storico_associati_modified_date    datetime NULL
+         * storico_associati_created_by    int(11) NULL
+         * storico_associati_edited_by    int(11) NULL
+         * storico_associati_insert_scope    varchar(250) NULL
+         * storico_associati_edit_scope    varchar(250) NULL
+         * storico_associati_associato    int(11) NULL
+         * storico_associati_percentuale_sedi    double(18,9) NULL
+         * storico_associati_associati_percentuale_domiciliari    double(18,9) NULL
+         */
+
+        $storico = $this->apib_db->get('storico_associati')->result_array();
+        
+        $t = count($storico);
+        $c = 0;
+        
+        foreach ($storico as $storico_assoc) {
+            progress(++$c, $t, 'import storico_associati');
+            
+            $storico_assoc['storico_associati_creation_date'] = $storico_assoc['storico_associati_data_creazione'];
+            unset($storico_assoc['storico_associati_data_creazione']);
+            $storico_assoc['storico_associati_modified_date'] = $storico_assoc['storico_associati_data_modifica'];
+            unset($storico_assoc['storico_associati_data_modifica']);
+            
+            try {
+                $storico_exists = $this->db->get_where('storico_associati', ['storico_associati_id' => $storico_assoc['storico_associati_id']])->row_array();
+                
+                if ($storico_exists) {
+                    $storico_creato = $this->apilib->edit('storico_associati', $storico_assoc['storico_associati_id'], $storico_assoc);
+                } else {
+                    $storico_creato = $this->apilib->create('storico_associati', $storico_assoc);
+                }
+            } catch (Exception $e) {
+                my_log('error', "errore inserimento storico associati: {$e->getMessage()}");
+                debug($storico_assoc);
+                debug($e->getMessage(), true);
+            }
+        }
     }
 }

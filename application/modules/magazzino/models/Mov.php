@@ -178,13 +178,18 @@ class Mov extends CI_Model
             ])
             ->row_array();
 
+        
 
 
         $prodotto_id = $riga_ordine['documenti_contabilita_articoli_prodotto_id'];
         if (!$prodotto_id) {
             return 0;
         }
-
+//20241118 - MP - Adesso abbiamo anche il campo contrario, ovvero il riferimento alla riga movimento su documenti_contabilita_articoli. Prima di tutto allineo questi riferimenti
+        if ($riga_ordine['documenti_contabilita_articoli_rif_riga_mov']) {
+            $this->db->query("UPDATE movimenti_articoli SET movimenti_articoli_rif_riga_doc = $documenti_contabilita_articoli_id WHERE movimenti_articoli_rif_riga_doc IS NULL AND movimenti_articoli_id = '{$riga_ordine['documenti_contabilita_articoli_rif_riga_mov']}'");
+        }
+        
         //Gli ordini fornitore li gestisco al rovescio (carico/scarico....)
         if (in_array($riga_ordine['documenti_contabilita_tipo'], [6, 10])) {
             $tipo_movimento = 1;
@@ -201,6 +206,7 @@ class Mov extends CI_Model
             WHERE 
                 (
                     movimenti_articoli_rif_riga_doc = '$documenti_contabilita_articoli_id'
+                    
                 )
                 
                 AND movimenti_tipo_movimento = $tipo_movimento
@@ -248,7 +254,7 @@ class Mov extends CI_Model
                 AND
                 documenti_contabilita_articoli_prodotto_id = '$prodotto_id'
                 AND
-                documenti_contabilita_stato IN (1,2,5)
+                documenti_contabilita_stato IN (1,2,5,6,8)
                 AND 
                 $where_documento
         ")->row()->s;

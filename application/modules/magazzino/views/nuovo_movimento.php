@@ -324,8 +324,8 @@ if ($movimenti_id) {
     $movimento['movimenti_documento_tipo'] = $documento['documenti_contabilita_tipo'];
 
     if (empty($documento['documenti_contabilita_magazzino'])) {
-        $magazzino = $this->apilib->searchFirst('magazzini', ['magazzini_azienda' => $documento['documenti_contabilita_azienda']]);
-        
+        $magazzino = $this->apilib->searchFirst('magazzini', ['magazzini_azienda' => $documento['documenti_contabilita_azienda']],0,'magazzini_default=1','DESC');
+        //debug($magazzino,true);
         if (!empty($magazzino)) {
             $movimento['movimenti_magazzino'] = $magazzino['magazzini_id'];
         }
@@ -804,6 +804,9 @@ if ($movimenti_id) {
                                 $selected = 'selected="selected"';
                             }
                         }
+                        // debug($movimento['movimenti_magazzino']);
+                        // debug($magazzino);
+                        // continue;
                     ?>
                     <option value="<?php echo $magazzino['magazzini_id']; ?>" data-azienda="<?php echo $magazzino['magazzini_azienda'] ?>" <?php echo $selected; ?>><?php echo $magazzino['magazzini_titolo']; ?></option>
                     <?php endforeach; ?>
@@ -1711,6 +1714,14 @@ $(document).ready(function() {
 <?php endif; ?>
 var current_row_lotto;
 $(document).ready(function() {
+
+    $('input[name="missing_products_insert"]').on('change', function() {
+        if (this.checked && '<?php echo ($settings["magazzino_settings_allow_prod_create"] ?? "0"); ?>' != '1') {
+            alert('Non è consentito creare nuovi prodotti dal movimento. Selezionare solo prodotti esistenti.');
+            $(this).prop('checked', false);
+        }
+    });
+
     $("[name='movimenti_magazzino']").on('change', function() {
         $('.js_magazzino_ricevente option').prop('disabled', false);
         document.querySelector(".js_magazzino_ricevente option[value='" + this.value + "']").disabled = true;
@@ -1900,7 +1911,11 @@ $(document).ready(function() {
 
 
         }
-
+if ($.fn.DataTable.isDataTable('#lotti_table')) {
+               //alert(1);
+                $('#lotti_table').DataTable().destroy();
+                //alert(2);
+            }
         $('#lotti_modal').modal('hide');
         $('.modal-backdrop').remove();
 
@@ -1993,6 +2008,7 @@ function updateAllCommesse(mittente_movimento = null) {
 }
 
 function getLotti(prodotto_id, row_lotto = null) {
+    //alert(10);
     //console.log(prodotto);
     //console.log(row_lotto);
 
@@ -2037,10 +2053,9 @@ function getLotti(prodotto_id, row_lotto = null) {
                         console.log('TODO: duplicare la riga con la differenza ' + differenza);
                     }
                 } else {
+                     $("#lotti_table tbody").html('');
                     $('#lotti_modal').modal('show');
-                    //console.log(my.data);
-                    $("#lotti_table tbody").html('');
-
+                    
                     $.each(my.data, function(i, item) {
                         var _data_scadenza = item.movimenti_articoli_data_scadenza;
 if (!item.movimenti_articoli_lotto) {

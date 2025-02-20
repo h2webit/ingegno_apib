@@ -110,37 +110,35 @@ $_appuntamenti = $this->db
     ->get('rel_appuntamenti_persone')->result_array();
 //debug($_appuntamenti,true);
 
-// $_richieste = $this->apilib->search('richieste_disponibilita', [
-//     'richieste_disponibilita_sede_operativa' => $value_id,
-//     'richieste_disponibilita_turno_assegnato IS NULL',
-//     "date_part('year', richieste_disponibilita_giorno) = '{$year}'",
-//     "date_part('month', richieste_disponibilita_giorno) = '{$month}'",
-// ]);
-$_richieste = [];
+$_richieste = $this->apilib->search('appuntamenti', [
+    'appuntamenti_impianto' => $value_id,
+    '(appuntamenti_id NOT IN (SELECT appuntamenti_id FROM rel_appuntamenti_persone WHERE appuntamenti_id IS NOT NULL))',
+    "YEAR(appuntamenti_giorno) = '{$year}'",
+    "MONTH(appuntamenti_giorno) = '{$month}'",
+]);
 
 $richieste = [];
 foreach ($_richieste as $richiesta) {
     //debug($richiesta,true);
     for ($i = 1; $i <= 4; $i++) {
-        if ($richiesta['richieste_disponibilita_affiancamento'] == '1') {
-            if (!@in_array($richiesta['richieste_disponibilita_fascia'] . '*', $richieste[substr($richiesta['richieste_disponibilita_giorno'], 0, 10)][$i], true)) {
-                $richieste[substr($richiesta['richieste_disponibilita_giorno'], 0, 10)][$i][] = $richiesta['richieste_disponibilita_fascia'] . '*';
+        if ($richiesta['appuntamenti_affiancamento'] == '1') {
+            if (!@in_array($richiesta['appuntamenti_fascia_oraria'] . '*', $richieste[substr($richiesta['appuntamenti_giorno'], 0, 10)][$i], true)) {
+                $richieste[substr($richiesta['appuntamenti_giorno'], 0, 10)][$i][] = $richiesta['appuntamenti_fascia_oraria'] . '*';
                 break;
             }
-        } elseif ($richiesta['richieste_disponibilita_studente'] == '1') {
-            if (!@in_array($richiesta['richieste_disponibilita_fascia'] . '**', $richieste[substr($richiesta['richieste_disponibilita_giorno'], 0, 10)][$i], true)) {
-                $richieste[substr($richiesta['richieste_disponibilita_giorno'], 0, 10)][$i][] = $richiesta['richieste_disponibilita_fascia'] . '**';
+        } elseif ($richiesta['appuntamenti_studente'] == '1') {
+            if (!@in_array($richiesta['appuntamenti_fascia_oraria'] . '**', $richieste[substr($richiesta['appuntamenti_giorno'], 0, 10)][$i], true)) {
+                $richieste[substr($richiesta['appuntamenti_giorno'], 0, 10)][$i][] = $richiesta['appuntamenti_fascia_oraria'] . '**';
                 break;
             }
         } else {
-            if (!@in_array($richiesta['richieste_disponibilita_fascia'], $richieste[substr($richiesta['richieste_disponibilita_giorno'], 0, 10)][$i])) {
-                $richieste[substr($richiesta['richieste_disponibilita_giorno'], 0, 10)][$i][] = $richiesta['richieste_disponibilita_fascia'];
+            if (!@in_array($richiesta['appuntamenti_fascia_oraria'], $richieste[substr($richiesta['appuntamenti_giorno'], 0, 10)][$i])) {
+                $richieste[substr($richiesta['appuntamenti_giorno'], 0, 10)][$i][] = $richiesta['appuntamenti_fascia_oraria'];
                 break;
             }
         }
     }
 }
-
 
 
 $appuntamenti = $appuntamenti_dati = [];
@@ -627,7 +625,7 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
                                         class="form-control <?php if (empty(@$richieste[$dateString][$i])): ?>js_hover_multiselect<?php else: ?>js_multiselect<?php endif; ?> field_293"
                                         name="richiesta_cella[<?php echo $dateString; ?>][<?php echo $i; ?>]"
                                         data-val="<?php echo @implode(',', @(array) $richieste[$dateString][$i]); ?>"
-                                        data-ref="richieste_disponibilita" data-source-field="" data-minimum-input-length="0">
+                                        data-ref="appuntamenti" data-source-field="" data-minimum-input-length="0">
 
                                         <?php foreach ($fascie_orarie as $fascia_id => $fascia): ?>
                                             <?php $fascia_id = (string) $fascia_id; ?>
@@ -770,24 +768,34 @@ $totalone = $totalone_affiancamenti = $totalone_costo_differenziato = 0;
             console.log(fascie);
             var sede = <?php echo $value_id; ?>;
 
-            var data = {
+            var postData = {
                 'sede': sede,
                 'giorno': giorno,
-                'fascie': fascie
+                'fascie[]': fascie
             };
 
-            console.log(data);
+            console.log(postData);
 
             var url = base_url + "custom/apib/editRichiesteDisponibilita";
 
-            $.ajax(url, {
-                data,
-                success: function (output) {
-                    console.log(output)
-                },
+            $.ajax({
+                url: url,
                 dataType: 'json',
-                method: 'post',
-            });
+                type: 'POST',
+                data: $.param(postData),
+                success: function (output) {
+                    console.log(output);
+                },
+            })
+            
+            // $.ajax(url, {
+            //     data,
+            //     success: function (output) {
+            //         console.log(output)
+            //     },
+            //     dataType: 'json',
+            //     method: 'post',
+            // });
         });
     <?php endif; ?>
 

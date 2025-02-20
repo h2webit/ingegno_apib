@@ -61,3 +61,8 @@ $updates['4.3.6'] = [
         '4.3.6_nuovo_template_generico.php',
     ],
 ];
+$updates['4.8.0'] = [
+    'include' => [
+        '4.8.0_rimuovi_template_generico.php',
+    ],
+];

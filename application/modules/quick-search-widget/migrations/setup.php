@@ -1,0 +1,2 @@
+<?php
+// Set baseurl default

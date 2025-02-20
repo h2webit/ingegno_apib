@@ -1007,11 +1007,54 @@ class Prima_nota extends CI_Model
 
         return $return;
     }
+
+    private function createLabelAutocomplete($p)
+    {
+        if (!empty($p['documenti_contabilita_id']) || !empty($p['prime_note_documento'])) {
+            $data_emissione = substr($p['documenti_contabilita_data_emissione'], 0, 10);
+            $destinatario = json_decode($p['documenti_contabilita_destinatario'], true);
+
+            $numero = $p['documenti_contabilita_numero'];
+            if (!empty($p['documenti_contabilita_serie'])) {
+                $numero .= '/' . $p['documenti_contabilita_serie'];
+            }
+
+            $moment_date = DateTime::createFromFormat('Y-m-d', $data_emissione);
+
+            // Il commento sulla lunghezza della ragione sociale è mantenuto ma commentato come nell'originale
+            /*if (strlen($destinatario['ragione_sociale']) > 10) {
+                //$destinatario['ragione_sociale'] = substr($destinatario['ragione_sociale'], 0, 20) . '...';
+            }*/
+
+            $label = $numero . ' ' . $moment_date->format('d/m/Y') . ' - ' . $destinatario['ragione_sociale'];
+        } elseif (!empty($p['spese_id']) || !empty($p['prime_note_spesa'])) {
+            $moment_date = DateTime::createFromFormat('Y-m-d', $p['spese_data_emissione']);
+            $data_scadenza = $moment_date->format('d/m/Y');
+
+            $mittente = json_decode($p['spese_fornitore'], true);
+
+            // Il commento sulla lunghezza della ragione sociale è mantenuto ma commentato come nell'originale
+            /*if (strlen($mittente['ragione_sociale']) > 10) {
+                //$mittente['ragione_sociale'] = substr($mittente['ragione_sociale'], 0, 10) . '...';
+            }*/
+
+            $label = $p['spese_numero'] . ' del ' . $data_scadenza . ' - ' . $mittente['ragione_sociale'];
+        } elseif (!empty($p['prime_note_numero_documento'])) {
+            $label = $p['prime_note_numero_documento'];
+        } else {
+            $label = '';
+        }
+
+        return $label;
+    }
     public function creaPrimaNotaDaFattura($documento_id, $modello_selezionato = null)
     {
         $today = date('Y-m-d');
         $today_anno = date('Y');
         $documento = $this->apilib->view('documenti_contabilita', $documento_id);
+        $sezionali = $this->apilib->search('sezionali_iva', ['sezionali_iva_tipo' => 1]); //Vendite
+        $sezionali_map = array_key_value_map($sezionali, 'sezionali_iva_sezionale', 'sezionali_iva_id');
+        
         if ($modello_selezionato) {
             //debug('TODO: da gestire.', true);
         } else {
@@ -1067,14 +1110,12 @@ class Prima_nota extends CI_Model
         $prima_nota['prime_note_progressivo_annuo'] = $this->getProgressivoAnno($today_anno, $azienda_id);
         $prima_nota['prime_note_protocollo'] = $documento['documenti_contabilita_numero']; //$this->getProtocolloIva($today, $azienda_id, $prima_nota['prime_note_sezionale']);
         $prima_nota['prime_note_scadenza'] = dateFormat($documento['documenti_contabilita_data_emissione']);
-        $prima_nota['prime_note_numero_documento'] = $documento['documenti_contabilita_numero'];
+        
         $prima_nota['prime_note_json_data'] = json_encode($prima_nota);
-
-        if ($prima_nota['prime_note_protocollo'] != $documento['documenti_contabilita_numero']) {
-            debug($documento);
-            debug($prima_nota, true);
-        }
-
+        $prima_nota['prime_note_sezionale'] = $sezionali_map[$documento['documenti_contabilita_serie']]??$modello_documento['prime_note_sezionale'];
+        $prima_nota['prime_note_numero_documento'] = $this->createLabelAutocomplete($documento);
+        
+        //debug($documento);
         //debug($prima_nota, true);
 
         $prima_nota_id = $this->apilib->create('prime_note', $prima_nota, false);
@@ -1082,6 +1123,7 @@ class Prima_nota extends CI_Model
         //debug($righe,true);
         foreach ($righe as $key => $riga) {
             $righe[$key]['prime_note_registrazioni_prima_nota'] = $prima_nota_id;
+            $righe[$key]['prime_note_registrazioni_rif_doc'] = $this->createLabelAutocomplete($documento);
         }
         $registrazioni = $this->salvaRegistrazioniPrimaNota($righe, $prima_nota_id);
         //debug($registrazioni,true);

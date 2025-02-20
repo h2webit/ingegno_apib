@@ -129,14 +129,14 @@ class Productsmanager extends MY_Controller
                 unset($input['prodotto_id'], $input['_clone']);
             }
             
-            // debug($prodotto, true);
+            $settings = $this->apilib->searchFirst('fw_products_settings');
 
             try {
                 if (!empty($input['prodotto_id'])) {
                     $prodotto_id = $input['prodotto_id'];
 
                     //Prima di salvare verifico se i barcodes inseriti sono già presenti in altri prodotti
-                    if (!empty($prodotto['fw_products_barcode'])) {
+                    if (!empty($prodotto['fw_products_barcode']) && !empty($settings['fw_products_settings_enable_duplicated_bar_check'])) {
                         $barcodes = json_decode($prodotto['fw_products_barcode'], true);
                         $barcodes = array_filter($barcodes);
                         if (!empty($barcodes)) {
@@ -170,7 +170,7 @@ class Productsmanager extends MY_Controller
 
                     $this->apilib->edit('fw_products', $prodotto_id, $prodotto);
                 } else {
-                    if (!empty($prodotto['fw_products_barcode'])) {
+                    if (!empty($prodotto['fw_products_barcode']) && !empty($settings['fw_products_settings_enable_duplicated_bar_check'])) {
                         $barcodes = json_decode($prodotto['fw_products_barcode'], true);
                         $barcodes = array_filter($barcodes);
                         if (!empty($barcodes)) {

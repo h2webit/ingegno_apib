@@ -9,7 +9,7 @@ $filtri = array();
 
 if (!empty($filters["filter_stampe_contabili"])) {
     foreach ($filters["filter_stampe_contabili"] as $field) {
-        if ($field['value'] == '-1') {
+        if ($field['value'] == '-1' || empty($field['value'])) {
             continue;
         }
         $filter_field = $this->datab->get_field($field["field_id"], true);
@@ -17,7 +17,7 @@ if (!empty($filters["filter_stampe_contabili"])) {
 
         // Se ha una entità/support collegata
         if ($filter_field['fields_ref']) {
-
+            //debug($field);
             $entity_data = $this->crmentity->getEntityPreview($filter_field['fields_ref']);
             $filtri[] = array("label" => $filter_field["fields_draw_label"], "value" => $entity_data[$field['value']]);
         } else {

@@ -72,6 +72,9 @@ class Get_ajax extends MY_Controller
 
         if (!$this->datab->can_access_layout($layout_id, $value_id)) {
             $this->layout->setLayoutModule();
+            $user_id = $this->auth->get('id') ?? 'unknown';
+            log_message('error', ' User: ' . $user_id . ' tried to access layout: ' . $layout_id . ' restricted page. IP: ' . $this->input->ip_address());
+            $this->apilib->logSystemAction(Apilib::LOG_UNALLOWED_LAYOUT, ['layout' => $layout_id]);
             show_404();
         }
 
@@ -256,6 +259,7 @@ class Get_ajax extends MY_Controller
         $table = $this->input->post('table');
         $id = ($this->input->post('id') ?: null);
         $referer = ($this->input->post('referer') ?: null);
+        $field = ($this->input->post('field') ?: null);
 
         if (!$table) {
             set_status_header(401); // Unauthorized
@@ -309,12 +313,20 @@ class Get_ajax extends MY_Controller
 
         $where_referer = '';
         if ($referer) {
+            //debug(array('fields_name' => $referer, 'fields_ref' => $table));
+            if (empty($field)) {
             $fReferer = $this->db->get_where('fields', array('fields_name' => $referer, 'fields_ref' => $table))->row();
+            } else {
+                $fReferer = $this->db->get_where('fields', array('fields_name' => $field, 'fields_ref' => $table))->row();
+            }
+            //debug($fReferer);
             if (!empty($fReferer->fields_select_where)) {
                 $where_referer = $this->datab->replace_superglobal_data(trim($fReferer->fields_select_where));
             }
         }
 
+        //debug($referer);
+        //debug($where_referer, true);
         if ($entity['entity_type'] == ENTITY_TYPE_SUPPORT_TABLE) {
             if ($id !== null) {
                 $row = $this->db->get_where($table, array($table . '_id' => $id))->row_array();
@@ -1090,7 +1102,6 @@ class Get_ajax extends MY_Controller
                     if ($field['fields_ref'] && isset($previews[$field['fields_ref']][$event[$field['fields_name']]]) && in_array($field['calendars_fields_type'], array('title', 'description'))) {
                         $ev[$field['calendars_fields_type']] = $previews[$field['fields_ref']][$event[$field['fields_name']]];
                     } else {
-                        //debug($event);
                         $ev[$field['calendars_fields_type']] = $event[$field['fields_name']];
                     }
                 }

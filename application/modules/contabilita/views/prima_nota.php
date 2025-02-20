@@ -158,16 +158,16 @@ if ($documento_id = $this->input->get('documento_id')) {
             }
             $modello_documento = $this->apilib->searchFirst('prime_note_modelli', [
                 "prime_note_modelli_tipo IN (SELECT prime_note_mappature_id FROM prime_note_mappature WHERE prime_note_mappature_tipo_identifier = '$prime_note_mappature_tipo_identifier')",
-            ]);
+            ],0,null,'',3);
         } elseif ($documento['documenti_contabilita_tipo'] == 4) { //E' una nota di credito
             $modello_documento = $this->apilib->searchFirst('prime_note_modelli', [
                 "prime_note_modelli_tipo IN (SELECT prime_note_mappature_id FROM prime_note_mappature WHERE prime_note_mappature_tipo_identifier = 'modello_nota_di_credito_vendita_ita')",
-            ]);
+            ], 0, null, '', 3);
             //debug($modello_documento, true);
         } elseif ($documento['documenti_contabilita_tipo'] == 12) { //E' una nota di credito reverse extra/intra
             $modello_documento = $this->apilib->searchFirst('prime_note_modelli', [
                 "prime_note_modelli_tipo IN (SELECT prime_note_mappature_id FROM prime_note_mappature WHERE prime_note_mappature_tipo_identifier = 'modello_nota_di_credito_extra_reverse')",
-            ]);
+            ], 0, null, '', 3);
 
         }
 

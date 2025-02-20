@@ -693,11 +693,14 @@ function initComponents(container, reset = false) {
             referer = input.attr("name");
           }
 
+          var field = input.data("field") ?? '';
+
           var data_post = [];
           data_post.push({ name: token_name, value: token_hash });
           data_post.push({ name: "q", value: term.term });
           data_post.push({ name: "limit", value: 100 });
           data_post.push({ name: "table", value: input.attr("data-ref") });
+          data_post.push({ name: "field", value: field });
           data_post.push({ name: "referer", value: referer });
 
           return data_post;
@@ -1179,7 +1182,8 @@ function loadModal(url, data, callbackSuccess, method) {
             !$(event.target).closest(".fancybox-skin").length &&
             !$(event.target).closest(".fancybox-item").length &&
             !$(event.target).closest(".select2-selection__choice").length &&
-            !$(event.target).closest(".btn-grid-action-s").length
+            !$(event.target).closest(".btn-grid-action-s").length &&
+            $(event.target).attr("id") !== "widget_button" // Widget assistenza
           ) {
             // Close the modal or perform other actions
             // console.log($(event.target));
