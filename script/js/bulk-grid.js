@@ -11,8 +11,8 @@ function initBulkGrids(container) {
         if ($(this).is(':checked')) {
 
             //Show check all link
-            
-           
+
+
 
             $('input[type="checkbox"].js_bulk_check', grid_container).prop('checked', true).trigger('change');
 
@@ -77,6 +77,7 @@ function initBulkGrids(container) {
             if ($(this).val() == 'bulk_action') {
                 var bulk_type = $(this).find(':selected').data('bulk_type');
                 var form_id = $(this).find(':selected').data('form_id');
+                var layout_id = $(this).find(':selected').data('layout_id');
                 var custom_code = $(this).find(':selected').data('custom_code');
 
                 // Get selected records
@@ -127,6 +128,18 @@ function initBulkGrids(container) {
                                 },
                             });
                         }
+                        break;
+                    case 'detail':
+                        //Apro in target blank il layout_id, passando in post gli id selezionati
+                        var url = base_url + 'main/layout/' + layout_id;
+                        var form = $('<form action="' + url + '" method="post" target="_blank"></form>');
+                        for (var i in chkbx_ids) {
+                            form.append('<input type="hidden" name="ids[]" value="' + chkbx_ids[i] + '" />');
+                        }
+                        //Aggiungo il csrf
+                        form.append('<input type="hidden" name="' + token_name + '" value="' + token_hash + '" />');
+                        $('body').append(form);
+                        form.submit();
                         break;
                     default:
                         alert('No bulk action found');

@@ -32,10 +32,12 @@ $append_class = '';
 if ($grid['grids']['grids_design'] == 2) { //Slim
     $append_class .= ' table-condensed ';
 }
-if(defined('DEFAULT_GRID_LIMIT')) {
-    $limit = DEFAULT_GRID_LIMIT;
+if (defined('OVERRIDE_GRID_LIMIT')) {
+    $limit = OVERRIDE_GRID_LIMIT;
 } elseif ($grid['grids']['grids_pagination']) {
     $limit = $grid['grids']['grids_pagination'];
+} elseif (defined('DEFAULT_GRID_LIMIT')) {
+    $limit = DEFAULT_GRID_LIMIT;
 } else {
     $limit = 10;
 }
@@ -63,7 +65,6 @@ if(defined('DEFAULT_GRID_LIMIT')) {
             data-design="<?php echo $grid['grids']['grids_design']; ?>"
             data-datatable="<?php echo $grid['grids']['grids_datatable']; ?>"
             data-searchable="<?php echo $grid['grids']['grids_searchable']; ?>"
-            data-pagination="<?php echo $grid['grids']['grids_pagination']; ?>"
             data-inline="<?php echo $grid['grids']['grids_inline_edit']; ?>"
             data-totalable="<?php echo $has_totalable ? 1 : 0; ?>" data-get_pars="<?php echo $_SERVER['QUERY_STRING']; ?>"
             data-default-limit="<?php echo $limit; ?>"
@@ -187,7 +188,10 @@ if(defined('DEFAULT_GRID_LIMIT')) {
                                 ?>
                                 <option value="bulk_action" data-custom_code="<?php echo $bulk_action['grids_actions_html']; ?>"
                                     data-bulk_type="<?php echo $bulk_action['grids_actions_type']; ?>"
-                                    data-form_id="<?php echo $bulk_action['grids_actions_form']; ?>" disabled="disabled"><?php echo $bulk_action['grids_actions_name']; ?></option>
+                                    data-form_id="<?php echo $bulk_action['grids_actions_form']; ?>"
+                                    data-layout_id="<?php echo $bulk_action['grids_actions_layout']; ?>" disabled="disabled">
+                                    <?php echo $bulk_action['grids_actions_name']; ?>
+                                </option>
                             <?php endforeach; ?>
                             <!-- old bulk actions (compatibility) -->
                             <?php if ($grid['grids']['grids_bulk_mode'] == 'bulk_mode_edit' or $grid['grids']['grids_bulk_mode'] == 'bulk_mode_delete_edit'): ?>
